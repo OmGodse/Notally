@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="takeNote"
+        android:enabled="true"
+        android:icon="@mipmap/take_note"
+        android:shortcutShortLabel="@string/take_note">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.omgodse.notally"
+            android:targetClass="com.omgodse.notally.activities.TakeNote" />
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="makeList"
+        android:enabled="true"
+        android:icon="@mipmap/make_list"
+        android:shortcutShortLabel="@string/make_list">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.omgodse.notally"
+            android:targetClass="com.omgodse.notally.activities.MakeList" />
+    </shortcut>
+</shortcuts>

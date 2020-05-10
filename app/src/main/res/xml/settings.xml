@@ -1,0 +1,87 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        app:iconSpaceReserved="true"
+        app:title="@string/appearance">
+
+        <ListPreference
+            app:defaultValue="@string/listKey"
+            app:entries="@array/viewEntries"
+            app:entryValues="@array/viewValues"
+            app:iconSpaceReserved="true"
+            app:key="@string/viewKey"
+            app:title="@string/view"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            app:defaultValue="@string/followSystemKey"
+            app:entries="@array/themeEntries"
+            app:entryValues="@array/themeValues"
+            app:iconSpaceReserved="true"
+            app:key="@string/themeKey"
+            app:title="@string/theme"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            app:defaultValue="@string/newestFirstKey"
+            app:entries="@array/sortByEntries"
+            app:entryValues="@array/sortByValues"
+            app:iconSpaceReserved="true"
+            app:key="@string/sortByKey"
+            app:title="@string/sort_by"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            app:defaultValue="@string/elevatedKey"
+            app:entries="@array/noteTypeEntries"
+            app:entryValues="@array/noteTypeValues"
+            app:iconSpaceReserved="true"
+            app:key="@string/cardTypeKey"
+            app:title="@string/card_type"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:iconSpaceReserved="true"
+        app:title="@string/content_density">
+
+        <EditTextPreference
+            app:defaultValue="@string/four"
+            app:dialogLayout="@layout/dialog_preference"
+            app:iconSpaceReserved="true"
+            app:key="@string/maxItemsToDisplayInListKey"
+            app:title="@string/max_items_to_display"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:defaultValue="@string/eight"
+            app:dialogLayout="@layout/dialog_preference"
+            app:iconSpaceReserved="true"
+            app:key="@string/maxLinesToDisplayInNoteKey"
+            app:title="@string/max_lines_to_display"
+            app:useSimpleSummaryProvider="true" />
+
+        <SwitchPreference
+            app:defaultValue="true"
+            app:iconSpaceReserved="true"
+            app:key="@string/showDateCreatedKey"
+            app:title="@string/show_date_created"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:iconSpaceReserved="true"
+        app:title="@string/about">
+
+        <Preference
+            app:iconSpaceReserved="true"
+            app:key="@string/librariesKey"
+            app:title="@string/libraries" />
+
+        <Preference
+            app:iconSpaceReserved="true"
+            app:key="@string/rateKey"
+            app:title="@string/rate" />
+
+    </PreferenceCategory>
+</PreferenceScreen>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sortByEntries">
+        <item>@string/oldest_first</item>
+        <item>@string/newest_first</item>
+    </string-array>
+
+    <string-array name="sortByValues">
+        <item>@string/oldestFirstKey</item>
+        <item>@string/newestFirstKey</item>
+    </string-array>
+
+    <string-array name="themeEntries">
+        <item>@string/light</item>
+        <item>@string/dark</item>
+        <item>@string/follow_system</item>
+    </string-array>
+
+    <string-array name="themeValues">
+        <item>@string/lightKey</item>
+        <item>@string/darkKey</item>
+        <item>@string/followSystemKey</item>
+    </string-array>
+
+    <string-array name="viewEntries">
+        <item>@string/list</item>
+        <item>@string/grid</item>
+    </string-array>
+
+    <string-array name="viewValues">
+        <item>@string/listKey</item>
+        <item>@string/gridKey</item>
+    </string-array>
+
+    <string-array name="noteTypeEntries">
+        <item>@string/elevated</item>
+        <item>@string/flat</item>
+    </string-array>
+
+    <string-array name="noteTypeValues">
+        <item>@string/elevatedKey</item>
+        <item>@string/flatKey</item>
+    </string-array>
+</resources>

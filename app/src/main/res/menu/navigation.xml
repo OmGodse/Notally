@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group
+        android:id="@+id/GroupOne"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/NotesFragment"
+            android:checked="true"
+            android:icon="@drawable/notes"
+            android:title="@string/notes" />
+    </group>
+
+    <group
+        android:id="@+id/GroupTwo"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/LabelsFragment"
+            android:icon="@drawable/label"
+            android:title="@string/labels" />
+    </group>
+
+    <group
+        android:id="@+id/GroupThree"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/DeletedFragment"
+            android:icon="@drawable/delete"
+            android:title="@string/deleted" />
+
+        <item
+            android:id="@+id/ArchivedFragment"
+            android:icon="@drawable/archive"
+            android:title="@string/archived" />
+    </group>
+
+    <group
+        android:id="@+id/GroupFour"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/SettingsFragment"
+            android:icon="@drawable/settings"
+            android:title="@string/settings" />
+    </group>
+</menu>

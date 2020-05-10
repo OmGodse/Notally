@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="LightBlue500">#03a9f4</color>
+    <color name="LightBlue100">#b3e5fc</color>
+    <color name="LightBlueSurface">#11181b</color>
+
+    <color name="FABRipple">#80FFFFFF</color>
+
+    <color name="White">#FFFFFF</color>
+    <color name="Gray">#80C8C8C8</color>
+    <color name="Black">#000000</color>
+    <color name="Transparent">#00000000</color>
+</resources>

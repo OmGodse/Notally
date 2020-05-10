@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fitsSystemWindows="true">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbarHeight"
+        app:title="@string/app_name"
+        app:titleTextAppearance="@style/TextAppearance.Toolbar"
+        app:titleTextColor="?attr/colorSecondary" />
+</FrameLayout>

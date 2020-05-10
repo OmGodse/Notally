@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/Share"
+        android:icon="@drawable/share"
+        android:title="@string/share"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/Labels"
+        android:icon="@drawable/label"
+        android:title="@string/labels"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/Unarchive"
+        android:icon="@drawable/unarchive"
+        android:title="@string/unarchive"
+        app:showAsAction="ifRoom" />
+</menu>

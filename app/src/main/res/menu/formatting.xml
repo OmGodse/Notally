@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/Bold"
+        android:title="@string/bold" />
+
+    <item
+        android:id="@+id/Italic"
+        android:title="@string/italic" />
+
+    <item
+        android:id="@+id/Monospace"
+        android:title="@string/monospace" />
+
+    <item
+        android:id="@+id/Strikethrough"
+        android:title="@string/strikethrough" />
+
+    <item
+        android:id="@+id/ClearFormatting"
+        android:title="@string/clear_formatting" />
+</menu>

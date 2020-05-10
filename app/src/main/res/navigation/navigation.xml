@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:startDestination="@+id/NotesFragment">
+
+    <fragment
+        android:id="@+id/NotesFragment"
+        android:name="com.omgodse.notally.fragments.Notes"
+        android:label="@string/app_name">
+
+        <action
+            android:id="@+id/NotesFragmentToSearchFragment"
+            app:destination="@id/SearchFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/LabelsFragment"
+        android:name="com.omgodse.notally.fragments.Labels"
+        android:label="@string/labels">
+        <action
+            android:id="@+id/LabelsFragmentToDisplayLabel"
+            app:destination="@id/DisplayLabelFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/DeletedFragment"
+        android:name="com.omgodse.notally.fragments.Deleted"
+        android:label="@string/deleted" />
+
+    <fragment
+        android:id="@+id/ArchivedFragment"
+        android:name="com.omgodse.notally.fragments.Archived"
+        android:label="@string/archived" />
+
+    <fragment
+        android:id="@+id/SettingsFragment"
+        android:name="com.omgodse.notally.fragments.Settings"
+        android:label="@string/settings" />
+
+    <fragment
+        android:id="@+id/SearchFragment"
+        android:name="com.omgodse.notally.fragments.Search" />
+
+    <fragment
+        android:id="@+id/DisplayLabelFragment"
+        android:name="com.omgodse.notally.fragments.DisplayLabel">
+        <argument
+            android:name="SelectedLabel"
+            app:argType="string" />
+    </fragment>
+
+</navigation>

@@ -1,0 +1,118 @@
+<resources>
+    <string name="app_name">Notally</string>
+
+    <!-- Fragment Titles -->
+    <string name="notes">Notes</string>
+    <string name="about">About</string>
+    <string name="deleted">Deleted</string>
+    <string name="archived">Archived</string>
+    <string name="settings">Settings</string>
+
+    <!-- Menu Options -->
+    <string name="share">Share</string>
+    <string name="search">Search</string>
+    <string name="labels">Labels</string>
+    <string name="delete">Delete</string>
+    <string name="restore">Restore</string>
+    <string name="archive">Archive</string>
+    <string name="reminder">Reminder</string>
+    <string name="unarchive">Unarchive</string>
+    <string name="delete_forever">Delete forever</string>
+
+    <!-- Chooser dialog hints -->
+    <string name="view_note">View note…</string>
+    <string name="share_note">Share note…</string>
+
+    <!-- Dialogs -->
+    <string name="save">Save</string>
+    <string name="edit">Edit</string>
+    <string name="cancel">Cancel</string>
+    <string name="make_list">Make list</string>
+    <string name="take_note">Take note</string>
+    <string name="add_label">Add label</string>
+    <string name="export">Export</string>
+    <string name="pdf">PDF</string>
+    <string name="plain_text">Plain Text</string>
+    <string name="save_to_device">Save to device</string>
+    <string name="edit_label">Edit label</string>
+    <string name="label_exists">Label exists</string>
+    <string name="delete_label">Delete label?</string>
+    <string name="create_new">No labels yet. Create one?</string>
+    <string name="delete_note_forever">Delete note forever?</string>
+    <string name="your_notes_associated">Your notes associated with this label will not be deleted</string>
+
+    <!-- Lists and Notes -->
+    <string name="note">Note</string>
+    <string name="item">Item</string>
+    <string name="date">Date</string>
+    <string name="title">Title</string>
+    <string name="add_item">Add Item</string>
+    <string name="more_item">more item</string>
+    <string name="more_items">more items</string>
+    <string name="drag_handle">Drag Handle</string>
+    <string name="bold">Bold</string>
+    <string name="italic">Italic</string>
+    <string name="underline">Underline</string>
+    <string name="strikethrough">Strikethrough</string>
+    <string name="clear_formatting">Clear formatting</string>
+    <string name="monospace">Monospace</string>
+
+    <!-- Miscellaneous -->
+    <string name="created">Created</string>
+    <string name="saved_to_notally">Saved to Notally</string>
+    <string name="saved_to_device">Saved to device</string>
+
+    <!-- Settings Page -->
+    <string name="appearance">Appearance</string>
+
+    <string name="view">View</string>
+    <string name="list">List</string>
+    <string name="grid">Grid</string>
+    <string name="viewKey">view</string>
+    <string name="listKey">list</string>
+    <string name="gridKey">grid</string>
+
+    <string name="theme">Theme</string>
+    <string name="light">Light</string>
+    <string name="dark">Dark</string>
+    <string name="follow_system">Follow system</string>
+    <string name="themeKey">theme</string>
+    <string name="lightKey">light</string>
+    <string name="darkKey">dark</string>
+    <string name="followSystemKey">followSystem</string>
+
+    <string name="sort_by">Sort by</string>
+    <string name="newest_first">Newest</string>
+    <string name="oldest_first">Oldest</string>
+    <string name="sortByKey">sortBy</string>
+    <string name="oldestFirstKey">oldestFirst</string>
+    <string name="newestFirstKey">newestFirst</string>
+
+    <string name="card_type">Card type</string>
+    <string name="elevated">Elevated</string>
+    <string name="flat">Flat</string>
+    <string name="cardTypeKey">cardType</string>
+    <string name="elevatedKey">elevated</string>
+    <string name="flatKey">flat</string>
+
+    <string name="content_density">Content density</string>
+    <string name="max_items_to_display">Max items to display in list</string>
+    <string name="max_lines_to_display">Max lines to display in note</string>
+    <string name="maxItemsToDisplayInListKey">maxItemsToDisplayInList</string>
+    <string name="maxLinesToDisplayInNoteKey">maxLinesToDisplayInNote</string>
+
+    <string name="show_date_created">Show date created</string>
+    <string name="showDateCreatedKey">showDateCreated</string>
+
+    <string name="four">4</string>
+    <string name="eight">8</string>
+
+    <string name="rateKey">rate</string>
+    <string name="rate">Rate this app</string>
+    <string name="libraries">Libraries</string>
+    <string name="librariesKey">libraries</string>
+    <string name="itext">iText</string>
+    <string name="pretty_time">Pretty Time</string>
+    <string name="material_components_android">Material Components for Android</string>
+    <string name="word">Word</string>
+</resources>

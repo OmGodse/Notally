@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/Share"
+        android:icon="@drawable/share"
+        android:title="@string/share"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/Labels"
+        android:icon="@drawable/label"
+        android:title="@string/labels"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/Delete"
+        android:icon="@drawable/delete"
+        android:title="@string/delete"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/Archive"
+        android:icon="@drawable/archive"
+        android:title="@string/archive"
+        app:showAsAction="ifRoom" />
+</menu>
