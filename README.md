@@ -16,7 +16,5 @@
 <img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="70"/></a>
 
 # Screenshots
-<img src="https://github.com/OmGodse/Notally/blob/master/images/Notally.png" width="250">
-<img src="https://github.com/OmGodse/Notally/blob/master/images/Take%20Notes.png" width="250">
+<img src="https://github.com/OmGodse/Notally/blob/master/images/Notally.png" width="250"> <img src="https://github.com/OmGodse/Notally/blob/master/images/Take%20Notes.png" width="250">
 <img src="https://github.com/OmGodse/Notally/blob/master/images/Make%20Lists.png" width="250">
-<img src="https://github.com/OmGodse/Notally/blob/master/images/Dark%20Mode.png" width="250">
