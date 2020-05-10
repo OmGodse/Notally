@@ -1,6 +1,5 @@
 # Notally
-
-**Notally** is a minimalistic notes app
+A minimalistic notes app
 
 * Material design
 * Create lists to stay on track
