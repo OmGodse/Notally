@@ -10,37 +10,40 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.R
 import com.omgodse.notally.helpers.NotesHelper
 import com.omgodse.notally.miscellaneous.Constants
+import com.omgodse.notally.viewmodels.NoteModel
 import java.io.File
 import java.util.*
 
 abstract class NotallyActivity : AppCompatActivity() {
 
-    internal var isNew = true
-    internal lateinit var file: File
-
     override fun onBackPressed() {
-        saveNote()
+        val model = getViewModel()
+        model.saveNote()
         super.onBackPressed()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val filePathToEdit = intent.getStringExtra(Constants.FilePath)
 
-        if (filePathToEdit != null){
-            isNew = false
-            val data = Intent()
-            data.putExtra(Constants.FilePath, filePathToEdit)
-            setResult(Constants.ResultCodeEditedFile, data)
-            file = File(filePathToEdit)
-        } else {
-            isNew = true
-            val timestamp = Date().time
-            val notesHelper = NotesHelper(this)
-            file = File(notesHelper.getNotePath(), "$timestamp.xml")
-            val data = Intent()
-            data.putExtra(Constants.FilePath, file.path)
-            setResult(Constants.ResultCodeCreatedFile, data)
+        val filePathToEdit = intent.getStringExtra(Constants.FilePath)
+        val model = getViewModel()
+
+        if (model.isFirstInstance){
+            if (filePathToEdit != null){
+                model.isNewNote = false
+                model.file = File(filePathToEdit)
+                setResultCode(filePathToEdit, Constants.ResultCodeEditedFile)
+            }
+            else {
+                model.isNewNote = true
+                val timestamp = Date().time
+                val notesHelper = NotesHelper(this)
+                val file = File(notesHelper.getNotePath(), "$timestamp.xml")
+                model.file = file
+
+                setResultCode(file.path, Constants.ResultCodeCreatedFile)
+            }
+            model.isFirstInstance = false
         }
     }
 
@@ -71,46 +74,31 @@ abstract class NotallyActivity : AppCompatActivity() {
     }
 
 
-    abstract fun saveNote()
-
     abstract fun shareNote()
 
     abstract fun labelNote()
 
+    abstract fun getViewModel() : NoteModel
+
 
     private fun deleteNote() {
-        saveNote()
-        val data = Intent()
-
-        if (!isNew) {
-            data.putExtra(Constants.FilePath, file.path)
-        }
-
-        setResult(Constants.ResultCodeDeletedFile, data)
+        val model = getViewModel()
+        model.saveNote()
+        setResultCode(model.file?.path, Constants.ResultCodeDeletedFile)
         super.onBackPressed()
     }
 
     private fun restoreNote() {
-        saveNote()
-        val data = Intent()
-
-        if (!isNew) {
-            data.putExtra(Constants.FilePath, file.path)
-        }
-
-        setResult(Constants.ResultCodeRestoredFile, data)
+        val model = getViewModel()
+        model.saveNote()
+        setResultCode(model.file?.path, Constants.ResultCodeRestoredFile)
         super.onBackPressed()
     }
 
     private fun archiveNote() {
-        saveNote()
-        val data = Intent()
-
-        if (!isNew) {
-            data.putExtra(Constants.FilePath, file.path)
-        }
-
-        setResult(Constants.ResultCodeArchivedFile, data)
+        val model = getViewModel()
+        model.saveNote()
+        setResultCode(model.file?.path, Constants.ResultCodeArchivedFile)
         super.onBackPressed()
     }
 
@@ -119,17 +107,23 @@ abstract class NotallyActivity : AppCompatActivity() {
         alertDialogBuilder.setMessage(R.string.delete_note_forever)
         alertDialogBuilder.setPositiveButton(R.string.delete) { dialog, which ->
             val data = Intent()
+            val model = getViewModel()
 
-            if (!isNew) {
-                file.delete()
-                data.putExtra(Constants.FilePath, file.path)
+            if (model.file?.exists() == true) {
+                model.file?.delete()
             }
-
+            data.putExtra(Constants.FilePath, model.file?.path)
             setResult(Constants.ResultCodeDeletedForeverFile, data)
             super.onBackPressed()
         }
         alertDialogBuilder.setNegativeButton(R.string.cancel, null)
         alertDialogBuilder.show()
+    }
+
+    private fun setResultCode(filePath: String?, resultCode: Int) {
+        val data = Intent()
+        data.putExtra(Constants.FilePath, filePath)
+        setResult(resultCode, data)
     }
 
 

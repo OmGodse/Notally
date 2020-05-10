@@ -18,19 +18,11 @@ import com.omgodse.notally.R
 import com.omgodse.notally.databinding.ActivityTakeNoteBinding
 import com.omgodse.notally.helpers.NotesHelper
 import com.omgodse.notally.interfaces.LabelListener
-import com.omgodse.notally.miscellaneous.SpanRepresentation
-import com.omgodse.notally.miscellaneous.applySpans
 import com.omgodse.notally.parents.NotallyActivity
 import com.omgodse.notally.viewmodels.TakeNoteViewModel
-import com.omgodse.notally.xml.XMLReader
-import com.omgodse.notally.xml.XMLTags
-import com.omgodse.notally.xml.XMLWriter
-import java.io.FileWriter
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.collections.HashSet
-import kotlin.collections.LinkedHashSet
 
 class TakeNote : NotallyActivity() {
 
@@ -47,44 +39,13 @@ class TakeNote : NotallyActivity() {
         setupListeners()
         setupToolbar(binding.Toolbar)
 
-        if (!isNew) {
-            if (model.isFirstInstance) {
-                setupEditMode()
-                model.isFirstInstance = false
-            }
-        } else {
-            val formatter = SimpleDateFormat(DateFormat, Locale.US)
-            binding.DateCreated.text = formatter.format(Date())
+        if (model.isNewNote){
             binding.EnterTitle.requestFocus()
         }
 
         setStateFromModel()
     }
 
-
-    override fun saveNote() {
-        if (model.title.isEmpty() && model.body.isNullOrEmpty()){
-            return
-        }
-
-        val timestamp = if (isNew) {
-            Date().time.toString()
-        } else XMLReader(file).getDateCreated()
-
-        val fileWriter = FileWriter(file)
-        val xmlWriter = XMLWriter(XMLTags.Note)
-
-        xmlWriter.startNote()
-        xmlWriter.setDateCreated(timestamp)
-        xmlWriter.setTitle(model.title.trim())
-        xmlWriter.setBody(model.body?.toString()?.trimEnd() ?: String())
-        xmlWriter.setSpans(getFilteredSpans())
-        xmlWriter.setLabels(model.labels.value ?: HashSet())
-        xmlWriter.endNote()
-
-        fileWriter.write(xmlWriter.getNote())
-        fileWriter.close()
-    }
 
     override fun shareNote() {
         val notesHelper = NotesHelper(this)
@@ -101,27 +62,7 @@ class TakeNote : NotallyActivity() {
         notesHelper.labelNote(model.labels.value ?: HashSet(), labelListener)
     }
 
-
-    private fun setupEditMode() {
-        val xmlReader = XMLReader(file)
-        val title = xmlReader.getTitle()
-        val body = xmlReader.getBody()
-        val spans = xmlReader.getSpans()
-        val labels = xmlReader.getLabels()
-
-        val timestamp = xmlReader.getDateCreated()
-        val formatter = SimpleDateFormat(DateFormat, Locale.US)
-        binding.DateCreated.text = formatter.format(Date(timestamp.toLong()))
-
-        model.title = title
-        model.body = body.applySpans(spans)
-        model.labels.value = labels
-    }
-
-    private fun setStateFromModel() {
-        binding.EnterTitle.setText(model.title)
-        binding.EnterBody.text = model.body
-    }
+    override fun getViewModel() = model
 
 
     private fun setupTitle() {
@@ -171,6 +112,14 @@ class TakeNote : NotallyActivity() {
                 binding.LabelGroup.addView(displayLabel)
             }
         })
+    }
+
+    private fun setStateFromModel() {
+        binding.EnterTitle.setText(model.title)
+        binding.EnterBody.text = model.body
+
+        val formatter = SimpleDateFormat(DateFormat, Locale.US)
+        binding.DateCreated.text = formatter.format(model.timestamp)
     }
 
 
@@ -239,66 +188,5 @@ class TakeNote : NotallyActivity() {
         val end = binding.EnterBody.selectionEnd
         val start = binding.EnterBody.selectionStart
         binding.EnterBody.text.setSpan(spanToApply, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-    }
-
-    private fun getFilteredSpans(): ArrayList<SpanRepresentation> {
-        val editable = binding.EnterBody.text
-        val representations = LinkedHashSet<SpanRepresentation>()
-        val spans = editable.getSpans(0, editable.length, Object::class.java)
-        spans.forEach { span ->
-            val end = editable.getSpanEnd(span)
-            val start = editable.getSpanStart(span)
-            val representation =
-                SpanRepresentation(false, false, false, false, start, end)
-
-            if (span is StyleSpan) {
-                if (span.style == Typeface.BOLD) {
-                    representation.isBold = true
-                }
-                else if (span.style == Typeface.ITALIC) {
-                    representation.isItalic = true
-                }
-            }
-            else if (span is TypefaceSpan) {
-                if (span.family == "monospace") {
-                    representation.isMonospace = true
-                }
-            }
-            else if (span is StrikethroughSpan) {
-                representation.isStrikethrough = true
-            }
-
-            if (representation.isNotUseless()) {
-                representations.add(representation)
-            }
-        }
-        return getFilteredRepresentations(ArrayList(representations))
-    }
-
-    private fun getFilteredRepresentations(representations: ArrayList<SpanRepresentation>): ArrayList<SpanRepresentation> {
-        representations.forEachIndexed { index, representation ->
-            val match = representations.find { spanRepresentation ->
-                spanRepresentation.isEqualInSize(representation)
-            }
-            if (match != null && representations.indexOf(match) != index) {
-                if (match.isBold) {
-                    representation.isBold = true
-                }
-                if (match.isItalic) {
-                    representation.isItalic = true
-                }
-                if (match.isMonospace) {
-                    representation.isMonospace = true
-                }
-                if (match.isStrikethrough) {
-                    representation.isStrikethrough = true
-                }
-                val copy = ArrayList(representations)
-                copy[index] = representation
-                copy.remove(match)
-                return getFilteredRepresentations(copy)
-            }
-        }
-        return representations
     }
 }

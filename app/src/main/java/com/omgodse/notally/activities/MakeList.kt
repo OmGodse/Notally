@@ -24,10 +24,6 @@ import com.omgodse.notally.miscellaneous.ListItem
 import com.omgodse.notally.parents.NotallyActivity
 import com.omgodse.notally.viewholders.ListHolder
 import com.omgodse.notally.viewmodels.MakeListViewModel
-import com.omgodse.notally.xml.XMLReader
-import com.omgodse.notally.xml.XMLTags
-import com.omgodse.notally.xml.XMLWriter
-import java.io.FileWriter
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashSet
@@ -48,16 +44,11 @@ class MakeList : NotallyActivity() {
         setupRecyclerView()
         setupToolbar(binding.Toolbar)
 
-        if (model.isFirstInstance){
-            if (!isNew){
-                setupEditMode()
-            }
-            else {
-                val formatter = SimpleDateFormat(DateFormat, Locale.US)
-                binding.DateCreated.text = formatter.format(Date())
+        if (model.isNewNote){
+            binding.EnterTitle.requestFocus()
+            if (model.items.isEmpty()) {
                 addListItem()
             }
-            model.isFirstInstance = false
         }
 
         binding.AddItem.setOnClickListener {
@@ -67,30 +58,6 @@ class MakeList : NotallyActivity() {
         setStateFromModel()
     }
 
-
-    override fun saveNote() {
-        val listItems = model.items.filter { listItem -> listItem.body.isNotEmpty() }
-
-        if (model.title.isEmpty() && listItems.isEmpty()) {
-            return
-        }
-
-        val timestamp = if (isNew) {
-            Date().time.toString()
-        } else XMLReader(file).getDateCreated()
-
-        val fileWriter = FileWriter(file)
-        val xmlWriter = XMLWriter(XMLTags.List)
-        xmlWriter.startNote()
-        xmlWriter.setDateCreated(timestamp)
-        xmlWriter.setTitle(model.title.trim())
-        xmlWriter.setListItems(listItems)
-        xmlWriter.setLabels(model.labels.value ?: HashSet())
-        xmlWriter.endNote()
-
-        fileWriter.write(xmlWriter.getNote())
-        fileWriter.close()
-    }
 
     override fun shareNote() {
         val notesHelper = NotesHelper(this)
@@ -106,6 +73,8 @@ class MakeList : NotallyActivity() {
         }
         notesHelper.labelNote(model.labels.value ?: HashSet(), labelListener)
     }
+
+    override fun getViewModel() = model
 
 
     private fun addListItem() {
@@ -155,25 +124,10 @@ class MakeList : NotallyActivity() {
     }
 
 
-    private fun setupEditMode() {
-        val xmlReader = XMLReader(file)
-
-        val title = xmlReader.getTitle()
-        val labels = xmlReader.getLabels()
-        val items = xmlReader.getListItems()
-
-        val timestamp = xmlReader.getDateCreated()
-        val formatter = SimpleDateFormat(DateFormat, Locale.US)
-        binding.DateCreated.text = formatter.format(Date(timestamp.toLong()))
-
-        model.title = title
-        model.items.clear()
-        model.items.addAll(items)
-        model.labels.value = labels
-    }
-
     private fun setStateFromModel() {
         binding.EnterTitle.setText(model.title)
+        val formatter = SimpleDateFormat(DateFormat, Locale.US)
+        binding.DateCreated.text = formatter.format(model.timestamp)
         listAdapter.notifyDataSetChanged()
     }
 
