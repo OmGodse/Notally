@@ -75,6 +75,11 @@
 
         <Preference
             app:iconSpaceReserved="true"
+            app:key="@string/githubKey"
+            app:title="@string/github" />
+
+        <Preference
+            app:iconSpaceReserved="true"
             app:key="@string/librariesKey"
             app:title="@string/libraries" />
 

@@ -32,7 +32,13 @@ class Settings : PreferenceFragmentCompat() {
         val maxLinesPref: EditTextPreference? = findPreference(mContext.getString(R.string.maxLinesToDisplayInNoteKey))
 
         val ratePref: Preference? = findPreference(mContext.getString(R.string.rateKey))
+        val githubPref: Preference? = findPreference(mContext.getString(R.string.githubKey))
         val librariesPref: Preference? = findPreference(mContext.getString(R.string.librariesKey))
+
+        githubPref?.setOnPreferenceClickListener {
+            openLink(Github)
+            return@setOnPreferenceClickListener true
+        }
 
         ratePref?.setOnPreferenceClickListener {
             openLink(AppLink)
@@ -100,6 +106,7 @@ class Settings : PreferenceFragmentCompat() {
     }
 
     companion object {
+        private const val Github = "https://github.com/OmGodse/Notally"
         private const val iTextLibrary = "https://github.com/itext/itextpdf"
         private const val PrettyTimeLibrary = "https://github.com/ocpsoft/prettytime"
         private const val AppLink = "https://play.google.com/store/apps/details?id=com.omgodse.notally"
