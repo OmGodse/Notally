@@ -28,7 +28,7 @@ class ExportHelper(private val context: Context, private val fragment: Fragment)
 
     private var currentFile: File? = null
 
-    fun exportNoteToPDF(file: File) {
+    fun exportFileToPDF(file: File) {
         val xmlReader = XMLReader(file)
         val title = xmlReader.getTitle()
         val spans = xmlReader.getSpans()
@@ -71,7 +71,7 @@ class ExportHelper(private val context: Context, private val fragment: Fragment)
         showFileOptionsDialog(pdfFile, "application/pdf")
     }
 
-    fun exportNoteToPlainText(file: File) {
+    fun exportFileToPlainText(file: File) {
         val xmlReader = XMLReader(file)
         val title = xmlReader.getTitle()
         val timestamp = xmlReader.getDateCreated()

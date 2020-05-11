@@ -10,30 +10,22 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.android.material.textview.MaterialTextView
 import com.omgodse.notally.R
-import com.omgodse.notally.adapters.NoteAdapter
 import com.omgodse.notally.interfaces.LabelListener
 import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.miscellaneous.ListItem
+import com.omgodse.notally.miscellaneous.Note
 import com.omgodse.notally.xml.XMLReader
-import com.omgodse.notally.xml.XMLTags
-import com.omgodse.notally.xml.XMLWriter
 import java.io.File
-import java.io.FileWriter
 import java.io.StringWriter
 
 class NotesHelper(val context: Context) {
 
-    fun shareNote(file: File) {
-        val xmlReader = XMLReader(file)
-        val title = xmlReader.getTitle()
-        val body = if (xmlReader.isNote()) {
-            val spans = xmlReader.getSpans()
-            xmlReader.getBody()
-        } else {
-            val listItems = xmlReader.getListItems()
-            getBodyFromItems(listItems)
+    fun shareNote(note: Note) {
+        val body = if (note.isNote) {
+            note.body
         }
-        shareNote(title, body)
+        else getBodyFromItems(note.items)
+        shareNote(note.title, body)
     }
 
     fun shareNote(title: String?, body: String?) {
@@ -70,11 +62,11 @@ class NotesHelper(val context: Context) {
     }
 
 
-    fun restoreNote(file: File) = moveFile(file, getNotePath())
+    fun restoreFile(file: File) = moveFile(file, getNotePath())
 
-    fun moveNoteToDeleted(file: File) = moveFile(file, getDeletedPath())
+    fun moveFileToDeleted(file: File) = moveFile(file, getDeletedPath())
 
-    fun moveNoteToArchive(file: File) = moveFile(file, getArchivedPath())
+    fun moveFileToArchive(file: File) = moveFile(file, getArchivedPath())
 
     private fun moveFile (file: File, destinationPath: File) : Boolean {
         val destinationFile = File(destinationPath, file.name)
@@ -91,88 +83,6 @@ class NotesHelper(val context: Context) {
         return arrayList
     }
 
-    fun getSortedFilesList(filesPath: File): ArrayList<File>? {
-        val settingsHelper = SettingsHelper(context)
-
-        val listOfFiles = filesPath.listFiles()?.toCollection(ArrayList())
-        listOfFiles?.sortWith(Comparator { firstFile, secondFile ->
-            firstFile.name.compareTo(secondFile.name)
-        })
-
-        if (settingsHelper.getSortingPreferences() == context.getString(R.string.newestFirstKey))
-            listOfFiles?.reverse()
-
-        return listOfFiles
-    }
-
-
-    fun changeNoteLabel(file: File, noteAdapter: NoteAdapter) {
-        val xmlReader = XMLReader(file)
-        val previousLabels = xmlReader.getLabels()
-
-        val allLabels = getSortedLabelsList().toTypedArray()
-
-        val checkedLabels = getCheckedLabels(previousLabels)
-        val createLabel = View.inflate(context, R.layout.add_label, null) as MaterialTextView
-
-        val alertDialogBuilder = MaterialAlertDialogBuilder(context)
-        alertDialogBuilder.setTitle(context.getString(R.string.labels))
-
-        if (allLabels.isNotEmpty()) {
-            alertDialogBuilder.setMultiChoiceItems(allLabels, checkedLabels, null)
-            alertDialogBuilder.setPositiveButton(R.string.save, null)
-        } else alertDialogBuilder.setView(createLabel)
-
-        alertDialogBuilder.setNegativeButton(R.string.cancel, null)
-
-        val dialog = alertDialogBuilder.create()
-        dialog.show()
-
-        createLabel.setOnClickListener {
-            dialog.dismiss()
-            displayAddLabelDialog(file, noteAdapter)
-        }
-
-        dialog.getButton(DialogInterface.BUTTON_POSITIVE)?.setOnClickListener {
-            val selectedLabels = HashSet<String>()
-            dialog.listView?.checkedItemPositions?.forEach { key, value ->
-                if (value) {
-                    val label = allLabels[key]
-                    selectedLabels.add(label)
-                }
-            }
-            dialog.dismiss()
-            val fileWriter = FileWriter(file)
-
-            val xmlWriter: XMLWriter
-            if (xmlReader.isNote()) {
-                xmlWriter = XMLWriter(XMLTags.Note)
-
-                xmlWriter.startNote()
-                xmlWriter.setDateCreated(xmlReader.getDateCreated())
-                xmlWriter.setTitle(xmlReader.getTitle())
-                xmlWriter.setBody(xmlReader.getBody())
-                xmlWriter.setSpans(xmlReader.getSpans())
-                xmlWriter.setLabels(selectedLabels)
-                xmlWriter.endNote()
-            } else {
-                xmlWriter = XMLWriter(XMLTags.List)
-                xmlWriter.startNote()
-                xmlWriter.setDateCreated(xmlReader.getDateCreated())
-                xmlWriter.setTitle(xmlReader.getTitle())
-                xmlWriter.setListItems(xmlReader.getListItems())
-                xmlWriter.setLabels(selectedLabels)
-                xmlWriter.endNote()
-            }
-
-            val note = xmlWriter.getNote()
-            fileWriter.write(note)
-            fileWriter.close()
-
-            val position = noteAdapter.files.indexOf(file)
-            noteAdapter.notifyItemChanged(position)
-        }
-    }
 
     fun labelNote(previousLabels: HashSet<String>, listener: LabelListener) {
         val allLabels = getSortedLabelsList().toTypedArray()
@@ -234,34 +144,6 @@ class NotesHelper(val context: Context) {
         editor.apply()
     }
 
-    private fun displayAddLabelDialog(file: File, noteAdapter: NoteAdapter) {
-        val priorLabels = getSortedLabelsList()
-
-        val view = View.inflate(context, R.layout.dialog_add_label, null)
-        val textInputLayout: TextInputLayout = view.findViewById(R.id.TextInputLayout)
-        val textInputEditText: TextInputEditText = view.findViewById(R.id.TextInputEditText)
-
-        val dialogBuilder = MaterialAlertDialogBuilder(context)
-        dialogBuilder.setTitle(R.string.add_label)
-        dialogBuilder.setView(view)
-        dialogBuilder.setNegativeButton(R.string.cancel, null)
-        dialogBuilder.setPositiveButton(R.string.save, null)
-
-        val dialog = dialogBuilder.show()
-        textInputEditText.requestFocus()
-
-        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener {
-            val label = textInputEditText.text.toString().trim()
-            if (label.isNotEmpty()) {
-                if (!priorLabels.contains(label)) {
-                    insertLabel(label)
-                    dialog.dismiss()
-                    changeNoteLabel(file, noteAdapter)
-                } else textInputLayout.error = context.getString(R.string.label_exists)
-            } else dialog.dismiss()
-        }
-    }
-
     private fun displayAddLabelDialog(previousLabels: HashSet<String>, listener: LabelListener) {
         val priorLabels = getSortedLabelsList()
 
@@ -287,6 +169,31 @@ class NotesHelper(val context: Context) {
                     labelNote(previousLabels, listener)
                 } else textInputLayout.error = context.getString(R.string.label_exists)
             } else dialog.dismiss()
+        }
+    }
+
+    companion object {
+        fun convertFileToNote(file: File) : Note {
+            val xmlReader = XMLReader(file)
+
+            val isNote = xmlReader.isNote()
+            val title = xmlReader.getTitle()
+            val timestamp = xmlReader.getDateCreated()
+            val body = xmlReader.getBody()
+            val items = xmlReader.getListItems()
+            val spans = xmlReader.getSpans()
+            val labels = xmlReader.getLabels()
+
+            return Note(
+                isNote,
+                title,
+                timestamp,
+                body,
+                items,
+                spans,
+                labels,
+                file.path
+            )
         }
     }
 }

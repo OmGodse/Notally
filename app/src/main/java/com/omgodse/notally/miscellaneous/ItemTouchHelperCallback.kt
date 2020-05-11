@@ -2,9 +2,9 @@ package com.omgodse.notally.miscellaneous
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.omgodse.notally.adapters.ListAdapter
+import com.omgodse.notally.adapters.MakeListAdapter
 
-class ItemTouchHelperCallback(private val adapter: ListAdapter) : ItemTouchHelper.Callback() {
+class ItemTouchHelperCallback(private val adapter: MakeListAdapter) : ItemTouchHelper.Callback() {
 
     override fun isLongPressDragEnabled(): Boolean {
         return true
@@ -15,7 +15,7 @@ class ItemTouchHelperCallback(private val adapter: ListAdapter) : ItemTouchHelpe
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        adapter.onItemDismiss(viewHolder.adapterPosition);
+        adapter.onItemDismiss(viewHolder.adapterPosition)
     }
 
     override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
@@ -25,7 +25,7 @@ class ItemTouchHelperCallback(private val adapter: ListAdapter) : ItemTouchHelpe
     }
 
     override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
-        adapter.onItemMove(viewHolder.adapterPosition, target.adapterPosition);
+        adapter.onItemMove(viewHolder.adapterPosition, target.adapterPosition)
         return true
     }
 }

@@ -87,7 +87,7 @@ class ReceiveNote : AppCompatActivity() {
         xmlWriter.setBody(body)
         xmlWriter.endNote()
 
-        fileWriter.write(xmlWriter.getNote())
+        fileWriter.write(xmlWriter.getText())
         fileWriter.close()
         finish()
     }

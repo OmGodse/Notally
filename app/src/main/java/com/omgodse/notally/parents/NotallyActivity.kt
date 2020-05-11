@@ -10,7 +10,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.R
 import com.omgodse.notally.helpers.NotesHelper
 import com.omgodse.notally.miscellaneous.Constants
-import com.omgodse.notally.viewmodels.NoteModel
+import com.omgodse.notally.viewmodels.BaseModel
 import java.io.File
 import java.util.*
 
@@ -78,7 +78,7 @@ abstract class NotallyActivity : AppCompatActivity() {
 
     abstract fun labelNote()
 
-    abstract fun getViewModel() : NoteModel
+    abstract fun getViewModel() : BaseModel
 
 
     private fun deleteNote() {
@@ -106,14 +106,9 @@ abstract class NotallyActivity : AppCompatActivity() {
         val alertDialogBuilder = MaterialAlertDialogBuilder(this)
         alertDialogBuilder.setMessage(R.string.delete_note_forever)
         alertDialogBuilder.setPositiveButton(R.string.delete) { dialog, which ->
-            val data = Intent()
             val model = getViewModel()
-
-            if (model.file?.exists() == true) {
-                model.file?.delete()
-            }
-            data.putExtra(Constants.FilePath, model.file?.path)
-            setResult(Constants.ResultCodeDeletedForeverFile, data)
+            model.saveNote()
+            setResultCode(model.file?.path, Constants.ResultCodeDeletedForeverFile)
             super.onBackPressed()
         }
         alertDialogBuilder.setNegativeButton(R.string.cancel, null)

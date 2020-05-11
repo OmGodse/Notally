@@ -7,6 +7,7 @@ import android.text.Spanned
 import android.text.style.StrikethroughSpan
 import android.text.style.StyleSpan
 import android.text.style.TypefaceSpan
+import com.omgodse.notally.adapters.NoteAdapter
 import org.xmlpull.v1.XmlPullParser
 
 fun String.applySpans(representations: ArrayList<SpanRepresentation>): Editable {
@@ -35,3 +36,7 @@ private fun Spannable.setSpan(span: Any, start: Int, end: Int) {
 }
 
 fun XmlPullParser.getAttributeValue(attribute: String) = getAttributeValue(null, attribute)
+
+fun NoteAdapter.submitCorrectList(list: ArrayList<Note>) {
+    submitList(ArrayList(list))
+}

@@ -1,5 +1,6 @@
 package com.omgodse.notally.parents
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Drawable
@@ -9,24 +10,38 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.R
 import com.omgodse.notally.activities.MainActivity
+import com.omgodse.notally.activities.MakeList
+import com.omgodse.notally.activities.TakeNote
 import com.omgodse.notally.adapters.NoteAdapter
 import com.omgodse.notally.databinding.FragmentNotesBinding
+import com.omgodse.notally.helpers.ExportHelper
+import com.omgodse.notally.helpers.MenuHelper
 import com.omgodse.notally.helpers.NotesHelper
 import com.omgodse.notally.helpers.SettingsHelper
+import com.omgodse.notally.interfaces.DialogListener
+import com.omgodse.notally.interfaces.LabelListener
 import com.omgodse.notally.interfaces.NoteListener
-import com.omgodse.notally.miscellaneous.Constants
-import com.omgodse.notally.miscellaneous.ItemDecoration
+import com.omgodse.notally.miscellaneous.*
+import com.omgodse.notally.viewmodels.NoteModel
 import java.io.File
 
 abstract class NotallyFragment : Fragment(), NoteListener {
 
-    internal lateinit var binding: FragmentNotesBinding
     internal lateinit var mContext: Context
     internal lateinit var noteAdapter: NoteAdapter
+    internal lateinit var binding: FragmentNotesBinding
+
+    private lateinit var exportHelper: ExportHelper
+
+    internal val model: NoteModel by activityViewModels()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -34,7 +49,11 @@ abstract class NotallyFragment : Fragment(), NoteListener {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        noteAdapter = NoteAdapter(mContext, ArrayList())
+        model.fetchRelevantNotes(getPayload())
+
+        exportHelper = ExportHelper(mContext, this)
+
+        noteAdapter = NoteAdapter(mContext)
         noteAdapter.noteListener = this
         binding.RecyclerView.adapter = noteAdapter
         binding.RecyclerView.setHasFixedSize(true)
@@ -53,14 +72,61 @@ abstract class NotallyFragment : Fragment(), NoteListener {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        when (resultCode) {
-            Constants.ResultCodeEditedFile -> handleFileEdited(data)
-            Constants.ResultCodeCreatedFile -> handleFileCreated(data)
-            Constants.ResultCodeDeletedFile -> handleFileDeleted(data)
-            Constants.ResultCodeArchivedFile -> handleFileArchived(data)
-            Constants.ResultCodeRestoredFile -> handleFileRestored(data)
-            Constants.ResultCodeDeletedForeverFile -> handleFileDeletedForever(data)
+        val payload = getPayload()
+        val filePath = data?.getStringExtra(Constants.FilePath)
+
+        if (requestCode == Constants.RequestCodeExportFile && resultCode == Activity.RESULT_OK) {
+            val uri = data?.data
+            if (uri != null) {
+                exportHelper.writeFileToStream(uri)
+            }
         }
+        else when (resultCode) {
+            Constants.ResultCodeEditedFile -> model.handleNoteEdited(filePath, payload)
+            Constants.ResultCodeCreatedFile -> model.handleNoteCreated(filePath, payload)
+            Constants.ResultCodeDeletedFile -> model.handleNoteDeleted(filePath, payload)
+            Constants.ResultCodeArchivedFile -> model.handleNoteArchived(filePath, payload)
+            Constants.ResultCodeRestoredFile -> model.handleNoteRestored(filePath, payload)
+            Constants.ResultCodeDeletedForeverFile -> model.handleNoteDeletedForever(filePath, payload)
+        }
+    }
+
+
+    override fun onNoteClicked(position: Int) {
+        val note = noteAdapter.currentList[position]
+        val intent = if (note.isNote) {
+            Intent(mContext, TakeNote::class.java)
+        } else Intent(mContext, MakeList::class.java)
+        intent.putExtra(Constants.FilePath, note.filePath)
+        intent.putExtra(Constants.PreviousFragment, getFragmentID())
+        startActivityForResult(intent, Constants.RequestCode)
+    }
+
+    override fun onNoteLongClicked(position: Int) {
+        val note = noteAdapter.currentList[position]
+        val notesHelper = NotesHelper(mContext)
+        val menuHelper = MenuHelper(mContext)
+
+        getSupportedOperations().forEach { operation ->
+            menuHelper.addItem(operation.textId, operation.drawableId)
+        }
+
+        menuHelper.setListener(object : DialogListener {
+            override fun onDialogItemClicked(label: String) {
+                when (label) {
+                    mContext.getString(R.string.share) -> notesHelper.shareNote(note)
+                    mContext.getString(R.string.labels) -> labelNote(note)
+                    mContext.getString(R.string.export) -> showExportDialog(note)
+                    mContext.getString(R.string.delete) -> model.handleNoteDeleted(note.filePath, getPayload())
+                    mContext.getString(R.string.archive) -> model.handleNoteArchived(note.filePath, getPayload())
+                    mContext.getString(R.string.restore) -> model.handleNoteRestored(note.filePath, getPayload())
+                    mContext.getString(R.string.unarchive) -> model.handleNoteRestored(note.filePath, getPayload())
+                    mContext.getString(R.string.delete_forever) -> confirmDeletion(note)
+                }
+            }
+        })
+
+        menuHelper.show()
     }
 
 
@@ -101,68 +167,56 @@ abstract class NotallyFragment : Fragment(), NoteListener {
     }
 
 
-    private fun handleFileEdited(data: Intent?) {
-        val filePath = data?.getStringExtra(Constants.FilePath)
-        if (filePath != null) {
-            val file = File(filePath)
-            val position = noteAdapter.files.indexOf(file)
-            noteAdapter.notifyItemChanged(position)
+    private fun labelNote(note: Note) {
+        val listener = object : LabelListener {
+            override fun onUpdateLabels(labels: HashSet<String>) {
+                model.editNoteLabel(note, labels, getPayload())
+            }
         }
+
+        val notesHelper = NotesHelper(mContext)
+        notesHelper.labelNote(note.labels, listener)
     }
 
-    private fun handleFileCreated(data: Intent?) {
-        val filePath = data?.getStringExtra(Constants.FilePath)
-        if (filePath != null) {
-            val file = File(filePath)
-            val settingsHelper = SettingsHelper(mContext)
-            if (settingsHelper.getSortingPreferences() == getString(R.string.newestFirstKey)) {
-                noteAdapter.files.add(0, file)
-            } else noteAdapter.files.add(file)
-            val position = noteAdapter.files.indexOf(file)
-            noteAdapter.notifyItemInserted(position)
-            binding.RecyclerView.smoothScrollToPosition(position)
-            confirmVisibility()
+    private fun confirmDeletion(note: Note) {
+        val alertDialogBuilder = MaterialAlertDialogBuilder(mContext)
+        alertDialogBuilder.setMessage(R.string.delete_note_forever)
+        alertDialogBuilder.setPositiveButton(R.string.delete) { dialog, which ->
+            model.handleNoteDeletedForever(note.filePath, getPayload())
         }
+        alertDialogBuilder.setNegativeButton(R.string.cancel, null)
+        alertDialogBuilder.show()
     }
 
-    private fun handleFileArchived(data: Intent?) {
-        val filePath = data?.getStringExtra(Constants.FilePath)
-        if (filePath != null) {
-            val file = File(filePath)
-            archiveNote(file)
-        }
-    }
+    private fun showExportDialog(note: Note) {
+        val file = File(note.filePath)
+        val menuHelper = MenuHelper(mContext)
 
-    private fun handleFileDeleted(data: Intent?) {
-        val filePath = data?.getStringExtra(Constants.FilePath)
-        if (filePath != null) {
-            val file = File(filePath)
-            deleteNote(file)
-        }
-    }
+        menuHelper.addItem(R.string.pdf, R.drawable.pdf)
+        menuHelper.addItem(R.string.plain_text, R.drawable.plain_text)
 
-    private fun handleFileRestored(data: Intent?) {
-        val filePath = data?.getStringExtra(Constants.FilePath)
-        if (filePath != null) {
-            val file = File(filePath)
-            restoreNote(file)
-        }
-    }
+        menuHelper.setListener(object : DialogListener {
+            override fun onDialogItemClicked(label: String) {
+                when (label) {
+                    mContext.getString(R.string.pdf) -> exportHelper.exportFileToPDF(file)
+                    mContext.getString(R.string.plain_text) -> exportHelper.exportFileToPlainText(file)
+                }
+            }
+        })
 
-    private fun handleFileDeletedForever(data: Intent?) {
-        val filePath = data?.getStringExtra(Constants.FilePath)
-        if (filePath != null) {
-            val file = File(filePath)
-            val position = noteAdapter.files.indexOf(file)
-            noteAdapter.files.remove(file)
-            noteAdapter.notifyItemRemoved(position)
-            confirmVisibility()
-        }
+        menuHelper.show()
     }
 
 
-    open fun confirmVisibility() {
-        if (noteAdapter.itemCount > 0) {
+    private fun populateRecyclerView() {
+        getObservable()?.observe(viewLifecycleOwner, Observer { notes ->
+            noteAdapter.submitCorrectList(notes)
+            confirmVisibility(notes)
+        })
+    }
+
+    private fun confirmVisibility(notes: List<Note>) {
+        if (notes.isNotEmpty()) {
             binding.RecyclerView.visibility = View.VISIBLE
         } else {
             binding.RecyclerView.visibility = View.GONE
@@ -170,58 +224,15 @@ abstract class NotallyFragment : Fragment(), NoteListener {
         }
     }
 
-    open fun populateRecyclerView() {
-        val folderPath = getFolderPath()
-        if (folderPath != null) {
-            val notesHelper = NotesHelper(mContext)
-            val listOfFiles: ArrayList<File>? = notesHelper.getSortedFilesList(folderPath)
 
-            if (listOfFiles != null) {
-                noteAdapter.files = listOfFiles
-                noteAdapter.notifyDataSetChanged()
-            }
-            confirmVisibility()
-        }
-    }
-
-
-    internal fun deleteNote(file: File) {
-        val position = noteAdapter.files.indexOf(file)
-        val notesHelper = NotesHelper(mContext)
-        if (notesHelper.moveNoteToDeleted(file)) {
-            noteAdapter.files.remove(file)
-            noteAdapter.notifyItemRemoved(position)
-            confirmVisibility()
-        }
-    }
-
-    internal fun archiveNote(file: File) {
-        val position = noteAdapter.files.indexOf(file)
-        val notesHelper = NotesHelper(mContext)
-        if (notesHelper.moveNoteToArchive(file)) {
-            noteAdapter.files.remove(file)
-            noteAdapter.notifyItemRemoved(position)
-            confirmVisibility()
-        }
-    }
-
-    internal fun restoreNote(file: File) {
-        val position = noteAdapter.files.indexOf(file)
-        val notesHelper = NotesHelper(mContext)
-        if (notesHelper.restoreNote(file)) {
-            noteAdapter.files.remove(file)
-            noteAdapter.notifyItemRemoved(position)
-            confirmVisibility()
-        }
-    }
-
-
-    abstract fun getFolderPath(): File?
+    abstract fun getFragmentID(): Int
 
     abstract fun getBackground(): Drawable?
 
+    abstract fun getSupportedOperations(): ArrayList<Operation>
 
-    abstract override fun onNoteClicked(position: Int)
 
-    abstract override fun onNoteLongClicked(position: Int)
+    abstract fun getPayload(): String
+
+    abstract fun getObservable(): MutableLiveData<ArrayList<Note>>?
 }

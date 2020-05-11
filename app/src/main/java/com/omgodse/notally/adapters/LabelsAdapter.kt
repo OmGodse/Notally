@@ -2,15 +2,16 @@ package com.omgodse.notally.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textview.MaterialTextView
 import com.omgodse.notally.R
 import com.omgodse.notally.interfaces.NoteListener
-import com.omgodse.notally.viewholders.LabelHolder
 import java.util.*
 
 class LabelsAdapter(private val context: Context, var items: ArrayList<String>) :
-    RecyclerView.Adapter<LabelHolder>() {
+    RecyclerView.Adapter<LabelsAdapter.LabelHolder>() {
 
     var noteListener: NoteListener? = null
 
@@ -25,6 +26,21 @@ class LabelsAdapter(private val context: Context, var items: ArrayList<String>) 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LabelHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.label_item, parent, false)
-        return LabelHolder(view, noteListener)
+        return LabelHolder(view)
+    }
+
+
+    inner class LabelHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val displayLabel: MaterialTextView = view.findViewById(R.id.DisplayLabel)
+
+        init {
+            view.setOnLongClickListener {
+                noteListener?.onNoteLongClicked(adapterPosition)
+                return@setOnLongClickListener true
+            }
+            view.setOnClickListener {
+                noteListener?.onNoteClicked(adapterPosition)
+            }
+        }
     }
 }

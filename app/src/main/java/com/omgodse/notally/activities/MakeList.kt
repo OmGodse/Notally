@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.omgodse.notally.R
-import com.omgodse.notally.adapters.ListAdapter
+import com.omgodse.notally.adapters.MakeListAdapter
 import com.omgodse.notally.databinding.ActivityMakeListBinding
 import com.omgodse.notally.helpers.NotesHelper
 import com.omgodse.notally.interfaces.LabelListener
@@ -22,17 +22,16 @@ import com.omgodse.notally.interfaces.ListItemListener
 import com.omgodse.notally.miscellaneous.ItemTouchHelperCallback
 import com.omgodse.notally.miscellaneous.ListItem
 import com.omgodse.notally.parents.NotallyActivity
-import com.omgodse.notally.viewholders.ListHolder
-import com.omgodse.notally.viewmodels.MakeListViewModel
+import com.omgodse.notally.viewmodels.MakeListModel
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashSet
 
 class MakeList : NotallyActivity() {
 
-    private lateinit var listAdapter: ListAdapter
+    private lateinit var listAdapter: MakeListAdapter
     private lateinit var binding: ActivityMakeListBinding
-    private val model: MakeListViewModel by viewModels()
+    private val model: MakeListModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,13 +82,13 @@ class MakeList : NotallyActivity() {
         val position = listAdapter.items.size
         listAdapter.notifyItemInserted(position)
         binding.RecyclerView.post {
-            val viewHolder = binding.RecyclerView.findViewHolderForAdapterPosition(position - 1) as ListHolder?
+            val viewHolder = binding.RecyclerView.findViewHolderForAdapterPosition(position - 1) as MakeListAdapter.ListHolder?
             viewHolder?.listItem?.requestFocus()
         }
     }
 
     private fun setupRecyclerView() {
-        listAdapter = ListAdapter(this, model.items)
+        listAdapter = MakeListAdapter(this, model.items)
         val itemTouchHelperCallback = ItemTouchHelperCallback(listAdapter)
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
         itemTouchHelper.attachToRecyclerView(binding.RecyclerView)
@@ -117,7 +116,7 @@ class MakeList : NotallyActivity() {
     }
 
     private fun moveToNext(position: Int) {
-        val viewHolder = binding.RecyclerView.findViewHolderForAdapterPosition(position + 1) as ListHolder?
+        val viewHolder = binding.RecyclerView.findViewHolderForAdapterPosition(position + 1) as MakeListAdapter.ListHolder?
         if (viewHolder != null) {
             viewHolder.listItem.requestFocus()
         } else addListItem()

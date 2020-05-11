@@ -12,7 +12,7 @@ class XMLWriter(private val tag: String) {
 
     fun startNote() {
         xmlSerializer.setOutput(stringWriter)
-        xmlSerializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
+        xmlSerializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true)
         xmlSerializer.startDocument("UTF-8", true)
         xmlSerializer.startTag(null, tag)
     }
@@ -88,7 +88,7 @@ class XMLWriter(private val tag: String) {
         xmlSerializer.endDocument()
     }
 
-    fun getNote(): String {
+    fun getText(): String {
         return stringWriter.toString()
     }
 }

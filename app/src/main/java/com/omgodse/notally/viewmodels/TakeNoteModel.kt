@@ -14,12 +14,12 @@ import java.io.FileWriter
 import java.util.*
 import kotlin.collections.HashSet
 
-class TakeNoteViewModel : NoteModel() {
+class TakeNoteModel : BaseModel() {
 
     var body = Editable.Factory.getInstance().newEditable(String())
 
     override fun saveNote() {
-        if (title.isEmpty() && body.isEmpty()){
+        if (title.isBlank() && body.isBlank()){
             return
         }
 
@@ -35,7 +35,7 @@ class TakeNoteViewModel : NoteModel() {
             xmlWriter.setLabels(labels.value ?: HashSet())
             xmlWriter.endNote()
 
-            fileWriter.write(xmlWriter.getNote())
+            fileWriter.write(xmlWriter.getText())
             fileWriter.close()
         }
     }

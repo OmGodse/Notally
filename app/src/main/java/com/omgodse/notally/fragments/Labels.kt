@@ -288,7 +288,7 @@ class Labels : Fragment(), NoteListener {
                 xmlWriter.endNote()
             }
 
-            fileWriter.write(xmlWriter.getNote())
+            fileWriter.write(xmlWriter.getText())
             fileWriter.close()
         }
     }
@@ -323,7 +323,7 @@ class Labels : Fragment(), NoteListener {
                 xmlWriter.endNote()
             }
 
-            fileWriter.write(xmlWriter.getNote())
+            fileWriter.write(xmlWriter.getText())
             fileWriter.close()
         }
     }

@@ -19,7 +19,7 @@ import com.omgodse.notally.databinding.ActivityTakeNoteBinding
 import com.omgodse.notally.helpers.NotesHelper
 import com.omgodse.notally.interfaces.LabelListener
 import com.omgodse.notally.parents.NotallyActivity
-import com.omgodse.notally.viewmodels.TakeNoteViewModel
+import com.omgodse.notally.viewmodels.TakeNoteModel
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashSet
@@ -27,7 +27,7 @@ import kotlin.collections.HashSet
 class TakeNote : NotallyActivity() {
 
     private lateinit var binding: ActivityTakeNoteBinding
-    private val model: TakeNoteViewModel by viewModels()
+    private val model: TakeNoteModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

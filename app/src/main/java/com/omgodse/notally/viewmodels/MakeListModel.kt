@@ -6,12 +6,12 @@ import com.omgodse.notally.xml.XMLTags
 import com.omgodse.notally.xml.XMLWriter
 import java.io.FileWriter
 
-class MakeListViewModel : NoteModel() {
+class MakeListModel : BaseModel() {
 
     val items = ArrayList<ListItem>()
 
     override fun saveNote() {
-        val listItems = items.filter { item -> item.body.isNotEmpty() }
+        val listItems = items.filter { item -> item.body.isNotBlank() }
         if (title.isEmpty() && listItems.isEmpty()) {
             return
         }
@@ -26,7 +26,7 @@ class MakeListViewModel : NoteModel() {
             xmlWriter.setLabels(labels.value ?: HashSet())
             xmlWriter.endNote()
 
-            fileWriter.write(xmlWriter.getNote())
+            fileWriter.write(xmlWriter.getText())
             fileWriter.close()
         }
     }
