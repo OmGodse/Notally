@@ -11,9 +11,9 @@ A minimalistic notes app
 
 # Download
 
-<a href="https://play.google.com/store/apps/details?id=com.omgodse.notally">
-<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="70"/></a>
+**[Install on Google Play](https://play.google.com/store/apps/details?id=com.omgodse.notally)**  
+**[APK also available on the releases page](https://github.com/OmGodse/Notally/releases)**  
+**[Google - Less users can download it from here](https://apt.izzysoft.de/fdroid/index/apk/com.omgodse.notally)**  
 
 # Screenshots
-<img src="https://github.com/OmGodse/Notally/blob/master/images/Notally.png" width="250"> <img src="https://github.com/OmGodse/Notally/blob/master/images/Take%20Notes.png" width="250">
-<img src="https://github.com/OmGodse/Notally/blob/master/images/Make%20Lists.png" width="250">
+<img src="images/Notally.png" width="25%"/><img src="images/Take%20Notes.png" width="25%"/><img src="images/Make%20Lists.png" width="25%"/><img src="images/Dark%20Mode.png" width="25%"/>
