@@ -16,4 +16,4 @@ A minimalistic notes app
 **[Google - Less users can download it from here](https://apt.izzysoft.de/fdroid/index/apk/com.omgodse.notally)**  
 
 # Screenshots
-<img src="images/Notally.png" width="25%"/><img src="images/Take%20Notes.png" width="25%"/><img src="images/Make%20Lists.png" width="25%"/><img src="images/Dark%20Mode.png" width="25%"/>
+<img src="images/Notally.png" width="250"/><img src="images/Take%20Notes.png" width="250"/><img src="images/Make%20Lists.png" width="250"/>
