@@ -83,8 +83,9 @@ abstract class NotallyActivity : AppCompatActivity() {
 
     private fun deleteNote() {
         val model = getViewModel()
-        model.saveNote()
-        setResultCode(model.file?.path, Constants.ResultCodeDeletedFile)
+        if (model.saveNote()) {
+            setResultCode(model.file?.path, Constants.ResultCodeDeletedFile)
+        }
         super.onBackPressed()
     }
 
@@ -97,8 +98,9 @@ abstract class NotallyActivity : AppCompatActivity() {
 
     private fun archiveNote() {
         val model = getViewModel()
-        model.saveNote()
-        setResultCode(model.file?.path, Constants.ResultCodeArchivedFile)
+        if (model.saveNote()) {
+            setResultCode(model.file?.path, Constants.ResultCodeArchivedFile)
+        }
         super.onBackPressed()
     }
 

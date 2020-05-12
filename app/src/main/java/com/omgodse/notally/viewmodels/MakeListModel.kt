@@ -10,14 +10,13 @@ class MakeListModel : BaseModel() {
 
     val items = ArrayList<ListItem>()
 
-    override fun saveNote() {
+    override fun saveNote() : Boolean {
         val listItems = items.filter { item -> item.body.isNotBlank() }
         if (title.isEmpty() && listItems.isEmpty()) {
-            return
+            return false
         }
-
-        file?.let {
-            val fileWriter = FileWriter(it)
+        else if (file != null) {
+            val fileWriter = FileWriter(file)
             val xmlWriter = XMLWriter(XMLTags.List)
             xmlWriter.startNote()
             xmlWriter.setDateCreated(timestamp.toString())
@@ -28,7 +27,9 @@ class MakeListModel : BaseModel() {
 
             fileWriter.write(xmlWriter.getText())
             fileWriter.close()
+            return true
         }
+        else return false
     }
 
     override fun setStateFromFile() {
