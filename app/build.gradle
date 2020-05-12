@@ -39,7 +39,6 @@ dependencies {
 
     final def stableNavVersion = "2.2.2"
     final def stablePrefVersion = "1.1.1"
-    final def stableLifecycleVersion = "2.2.0"
 
     final def stableITextVersion = "5.5.13.1"
 
@@ -56,11 +55,11 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$stableNavVersion"
     implementation "androidx.navigation:navigation-fragment-ktx:$stableNavVersion"
 
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$stableLifecycleVersion"
-
     implementation "com.itextpdf:itextpdf:$stableITextVersion"
     implementation "com.itextpdf.tool:xmlworker:$stableITextVersion"
 
     implementation 'org.ocpsoft.prettytime:prettytime:4.0.4.Final'
     implementation 'com.google.android.material:material:1.2.0-alpha06'
+
+    implementation 'org.jsoup:jsoup:1.13.1'
 }
