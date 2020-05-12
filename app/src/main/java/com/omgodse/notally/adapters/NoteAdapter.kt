@@ -20,9 +20,8 @@ import com.omgodse.notally.miscellaneous.applySpans
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 
-class NoteAdapter(private val context: Context) : ListAdapter<Note, NoteAdapter.NoteHolder>(
-    NoteDiffCallback()
-) {
+class NoteAdapter(private val context: Context)
+    : ListAdapter<Note, NoteAdapter.NoteHolder>(NoteDiffCallback()) {
 
     var noteListener: NoteListener? = null
 
@@ -118,20 +117,10 @@ class NoteAdapter(private val context: Context) : ListAdapter<Note, NoteAdapter.
     private fun handleChecked(textView: MaterialTextView, checked: Boolean) {
         if (checked) {
             textView.paint.isStrikeThruText = true
-            textView.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                R.drawable.checkbox_16,
-                0,
-                0,
-                0
-            )
+            textView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.checkbox_16, 0, 0, 0)
         } else {
             textView.paint.isStrikeThruText = false
-            textView.setCompoundDrawablesWithIntrinsicBounds(
-                R.drawable.checkbox_outline_16,
-                0,
-                0,
-                0
-            )
+            textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.checkbox_outline_16, 0, 0, 0)
         }
     }
 
