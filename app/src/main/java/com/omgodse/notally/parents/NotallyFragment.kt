@@ -103,30 +103,44 @@ abstract class NotallyFragment : Fragment(), NoteListener {
     }
 
     override fun onNoteLongClicked(position: Int) {
-        val note = noteAdapter.currentList[position]
-        val notesHelper = NotesHelper(mContext)
-        val menuHelper = MenuHelper(mContext)
+        if (getSupportedOperations().isNotEmpty()) {
+            val note = noteAdapter.currentList[position]
+            val notesHelper = NotesHelper(mContext)
+            val menuHelper = MenuHelper(mContext)
 
-        getSupportedOperations().forEach { operation ->
-            menuHelper.addItem(operation.textId, operation.drawableId)
-        }
-
-        menuHelper.setListener(object : DialogListener {
-            override fun onDialogItemClicked(label: String) {
-                when (label) {
-                    mContext.getString(R.string.share) -> notesHelper.shareNote(note)
-                    mContext.getString(R.string.labels) -> labelNote(note)
-                    mContext.getString(R.string.export) -> showExportDialog(note)
-                    mContext.getString(R.string.delete) -> model.handleNoteDeleted(note.filePath, getPayload())
-                    mContext.getString(R.string.archive) -> model.handleNoteArchived(note.filePath, getPayload())
-                    mContext.getString(R.string.restore) -> model.handleNoteRestored(note.filePath, getPayload())
-                    mContext.getString(R.string.unarchive) -> model.handleNoteRestored(note.filePath, getPayload())
-                    mContext.getString(R.string.delete_forever) -> confirmDeletion(note)
-                }
+            getSupportedOperations().forEach { operation ->
+                menuHelper.addItem(operation.textId, operation.drawableId)
             }
-        })
 
-        menuHelper.show()
+            menuHelper.setListener(object : DialogListener {
+                override fun onDialogItemClicked(label: String) {
+                    when (label) {
+                        mContext.getString(R.string.share) -> notesHelper.shareNote(note)
+                        mContext.getString(R.string.labels) -> labelNote(note)
+                        mContext.getString(R.string.export) -> showExportDialog(note)
+                        mContext.getString(R.string.delete) -> model.handleNoteDeleted(
+                            note.filePath,
+                            getPayload()
+                        )
+                        mContext.getString(R.string.archive) -> model.handleNoteArchived(
+                            note.filePath,
+                            getPayload()
+                        )
+                        mContext.getString(R.string.restore) -> model.handleNoteRestored(
+                            note.filePath,
+                            getPayload()
+                        )
+                        mContext.getString(R.string.unarchive) -> model.handleNoteRestored(
+                            note.filePath,
+                            getPayload()
+                        )
+                        mContext.getString(R.string.delete_forever) -> confirmDeletion(note)
+                    }
+                }
+            })
+
+            menuHelper.show()
+        }
     }
 
 
