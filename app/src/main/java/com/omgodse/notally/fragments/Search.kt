@@ -19,6 +19,7 @@ class Search : NotallyFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        model.keyword = String()
         binding.FrameLayout.layoutTransition = LayoutTransition()
 
         (mContext as MainActivity).binding.EnterSearchKeyword.addTextChangedListener(object : TextWatcher {
