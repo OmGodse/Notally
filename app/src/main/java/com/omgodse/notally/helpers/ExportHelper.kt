@@ -8,8 +8,8 @@ import androidx.core.content.FileProvider
 import androidx.core.text.HtmlCompat
 import androidx.core.text.toHtml
 import androidx.fragment.app.Fragment
-import com.itextpdf.text.*
-import com.itextpdf.text.List
+import com.itextpdf.text.Document
+import com.itextpdf.text.PageSize
 import com.itextpdf.text.pdf.PdfWriter
 import com.itextpdf.tool.xml.XMLWorkerHelper
 import com.omgodse.notally.R
@@ -18,78 +18,47 @@ import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.miscellaneous.applySpans
 import com.omgodse.notally.parents.NotallyActivity
 import com.omgodse.notally.xml.XMLReader
+import org.jsoup.Jsoup
 import java.io.File
 import java.io.FileWriter
 import java.io.StringWriter
 import java.text.SimpleDateFormat
 import java.util.*
+import org.jsoup.nodes.Document as JsoupDocument
 
 class ExportHelper(private val context: Context, private val fragment: Fragment) {
 
     private var currentFile: File? = null
 
     fun exportFileToPDF(file: File) {
-        val xmlReader = XMLReader(file)
-        val title = xmlReader.getTitle()
-        val spans = xmlReader.getSpans()
-        val timestamp = xmlReader.getDateCreated()
-
-        val formatter = SimpleDateFormat(NotallyActivity.DateFormat, Locale.US)
-        val date = formatter.format(timestamp.toLong())
-
         val fileName = getFileName(file)
 
         val pdfFile = File(getExportedPath(), "$fileName.pdf")
         val document = Document(PageSize.A4)
         val writer = PdfWriter.getInstance(document, pdfFile.outputStream())
+        val htmlDocument = getHTML(file)
         document.open()
-
-        val boldFont = Font(Font.FontFamily.HELVETICA, 18f, Font.BOLD)
-        val normalFont = Font(Font.FontFamily.HELVETICA, 12f, Font.NORMAL)
-
-        document.add(Phrase(title, boldFont))
-        document.add(Paragraph("\n"))
-        document.add(Phrase(date, normalFont))
-        document.add(Paragraph("\n"))
-
-        if (xmlReader.isNote()) {
-            val body = xmlReader.getBody()
-            val spannedBody = body.applySpans(spans)
-            val html = spannedBody.toHtml(HtmlCompat.TO_HTML_PARAGRAPH_LINES_INDIVIDUAL).replace("<br>", "<br/>")
-            XMLWorkerHelper.getInstance().parseXHtml(writer, document, html.byteInputStream())
-        } else {
-            val list = List(true)
-            val items = xmlReader.getListItems()
-            items.forEach { item ->
-                list.add(item.body)
-            }
-            document.add(list)
-        }
+        XMLWorkerHelper.getInstance().parseXHtml(writer, document, htmlDocument.html().byteInputStream())
         document.close()
         writer.close()
 
         showFileOptionsDialog(pdfFile, "application/pdf")
     }
 
+    fun exportFileToHTML(file: File) {
+        val fileName = getFileName(file)
+        val htmlFile = File(getExportedPath(), "$fileName.html")
+
+        val fileWriter = FileWriter(htmlFile)
+        fileWriter.write(getHTML(file).html())
+        fileWriter.close()
+
+        showFileOptionsDialog(htmlFile, "text/html")
+    }
+
     fun exportFileToPlainText(file: File) {
         val xmlReader = XMLReader(file)
         val title = xmlReader.getTitle()
-        val timestamp = xmlReader.getDateCreated()
-
-        val formatter = SimpleDateFormat(NotallyActivity.DateFormat, Locale.US)
-        val date = formatter.format(timestamp.toLong())
-
-        val fileName = getFileName(file)
-
-        val plainTextFile = File(getExportedPath(), "$fileName.txt")
-
-        val fileWriter = FileWriter(plainTextFile)
-
-        fileWriter.write(title)
-        fileWriter.write("\n\n")
-        fileWriter.write(date)
-        fileWriter.write("\n\n")
-
         val body = if (xmlReader.isNote()) {
             xmlReader.getBody()
         } else {
@@ -98,10 +67,31 @@ class ExportHelper(private val context: Context, private val fragment: Fragment)
             notesHelper.getBodyFromItems(listItems)
         }
 
-        fileWriter.write(body)
+        val formatter = SimpleDateFormat(NotallyActivity.DateFormat, Locale.US)
+        val date = formatter.format(xmlReader.getDateCreated().toLong())
+
+        val fileName = getFileName(file)
+
+        val textFile = File(getExportedPath(), "$fileName.txt")
+
+        val fileWriter = FileWriter(textFile)
+
+        val buffer = StringBuffer()
+        if (title.isNotEmpty()){
+            buffer.append(title)
+            buffer.append("\n")
+            buffer.append("\n")
+        }
+        buffer.append(date)
+        buffer.append("\n")
+        buffer.append("\n")
+
+        buffer.append(body)
+
+        fileWriter.write(buffer.toString())
         fileWriter.close()
 
-        showFileOptionsDialog(plainTextFile, "text/plain")
+        showFileOptionsDialog(textFile, "text/plain")
     }
 
 
@@ -201,5 +191,36 @@ class ExportHelper(private val context: Context, private val fragment: Fragment)
                 "${words[0]} ${words[1]}"
             } else words[0]
         } else title
+    }
+
+    private fun getHTML(file: File) : JsoupDocument {
+        val xmlReader = XMLReader(file)
+
+        val title = xmlReader.getTitle()
+        val body = xmlReader.getBody()
+        val items = xmlReader.getListItems()
+        val spans = xmlReader.getSpans()
+        val htmlBody = body.applySpans(spans).toHtml(HtmlCompat.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE)
+
+        val formatter = SimpleDateFormat(NotallyActivity.DateFormat, Locale.US)
+        val date = formatter.format(xmlReader.getDateCreated().toLong())
+
+        val htmlBuffer = StringBuffer()
+        htmlBuffer.append("<h2>$title</h2>")
+        htmlBuffer.append("<p style=\"color: #7f7f7f;\">$date</p>")
+
+        if (xmlReader.isNote()) {
+            htmlBuffer.append("<p>$htmlBody</p>")
+        }
+        else {
+            htmlBuffer.append("<ol>")
+            items.forEach { item ->
+                htmlBuffer.append("<li>${item.body}</li>")
+            }
+            htmlBuffer.append("</ol>")
+        }
+        val document = Jsoup.parseBodyFragment(htmlBuffer.toString())
+        document.outputSettings().syntax(JsoupDocument.OutputSettings.Syntax.xml)
+        return document
     }
 }

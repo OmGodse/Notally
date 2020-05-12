@@ -193,12 +193,14 @@ abstract class NotallyFragment : Fragment(), NoteListener {
         val menuHelper = MenuHelper(mContext)
 
         menuHelper.addItem(R.string.pdf, R.drawable.pdf)
+        menuHelper.addItem(R.string.html, R.drawable.html)
         menuHelper.addItem(R.string.plain_text, R.drawable.plain_text)
 
         menuHelper.setListener(object : DialogListener {
             override fun onDialogItemClicked(label: String) {
                 when (label) {
                     mContext.getString(R.string.pdf) -> exportHelper.exportFileToPDF(file)
+                    mContext.getString(R.string.html) -> exportHelper.exportFileToHTML(file)
                     mContext.getString(R.string.plain_text) -> exportHelper.exportFileToPlainText(file)
                 }
             }
