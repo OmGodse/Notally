@@ -5,7 +5,7 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:colorEdgeEffect">@color/secondary_translucent</item>
 
-        <item name="snackbarStyle">@style/Widget.MaterialComponents.Snackbar.FullWidth</item>
+        <item name="snackbarStyle">@style/Notally.Snackbar</item>
 
         <item name="alertDialogTheme">@style/Notally.AlertDialog</item>
         <item name="materialAlertDialogTheme">@style/Notally.AlertDialog</item>
@@ -90,6 +90,10 @@
         <item name="android:textColor">?attr/colorSecondary</item>
     </style>
 
+
+    <style name="Notally.Snackbar" parent="Widget.MaterialComponents.Snackbar">
+        <item name="animationMode">slide</item>
+    </style>
 
     <style name="Notally.AlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
         <item name="materialAlertDialogTitleTextStyle">@style/AlertDialog.Title</item>
