@@ -7,12 +7,13 @@ A minimalistic notes app
 * Archive notes to keep them around, but out of your way
 * Create rich text notes with support for bold, italics, mono space and strike-through
 * Export notes as plain text files or PDF files with formatting
+* Auto save
 * Dark mode
 
 # Download
 
 **[Install on Google Play](https://play.google.com/store/apps/details?id=com.omgodse.notally)**  
-**[APK also available on the releases page](https://github.com/OmGodse/Notally/releases)**  
+**[APK available on the releases page](https://github.com/OmGodse/Notally/releases)**  
 **[Google - Less users can download it from here](https://apt.izzysoft.de/fdroid/index/apk/com.omgodse.notally)**  
 
 # Screenshots
