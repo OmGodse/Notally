@@ -101,7 +101,10 @@ abstract class NotallyFragment : Fragment(), NoteListener {
                     if (note.isEmpty()){
                         model.handleNoteDeleted(filePath, getPayload())
                         val rootView = (mContext as MainActivity).binding.CoordinatorLayout
-                        Snackbar.make(rootView, R.string.discarded_empty_note, Snackbar.LENGTH_SHORT).show()
+                        if (note.isNote) {
+                            Snackbar.make(rootView, R.string.discarded_empty_note, Snackbar.LENGTH_SHORT).show()
+                        }
+                        else Snackbar.make(rootView, R.string.discarded_empty_list, Snackbar.LENGTH_SHORT).show()
                     }
                 }
             }

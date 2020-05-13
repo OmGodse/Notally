@@ -18,7 +18,7 @@ class TakeNoteModel : BaseModel() {
 
     var body = Editable.Factory.getInstance().newEditable(String())
 
-    override fun saveNote() : Boolean {
+    override fun saveNote() {
         if (file != null) {
             val fileWriter = FileWriter(file)
             val xmlWriter = XMLWriter(XMLTags.Note)
@@ -33,9 +33,7 @@ class TakeNoteModel : BaseModel() {
 
             fileWriter.write(xmlWriter.getText())
             fileWriter.close()
-            return true
         }
-        else return false
     }
 
     override fun setStateFromFile() {

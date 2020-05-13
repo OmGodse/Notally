@@ -85,7 +85,6 @@ class NoteModel(private val app: Application) : AndroidViewModel(app) {
             val note = list.find { note -> note.filePath == filePath }
 
             if (notesHelper.moveFileToDeleted(file)){
-                println("Removed file from list")
                 list.remove(note)
                 liveData.value = list
             }

@@ -22,7 +22,7 @@ abstract class BaseModel : ViewModel() {
             setStateFromFile()
         }
 
-    abstract fun saveNote() : Boolean
+    abstract fun saveNote()
 
     abstract fun setStateFromFile()
 }
