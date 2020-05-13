@@ -96,18 +96,35 @@ class MakeList : NotallyActivity() {
         listAdapter.listItemListener = object : ListItemListener {
             override fun onMoveToNext(position: Int) {
                 moveToNext(position)
+                model.saveNote()
             }
 
             override fun onStartDrag(viewHolder: RecyclerView.ViewHolder) {
                 itemTouchHelper.startDrag(viewHolder)
+                model.saveNote()
+            }
+
+            override fun onItemDeleted(position: Int) {
+                model.items.removeAt(position)
+                listAdapter.notifyItemRemoved(position)
+                listAdapter.notifyItemRangeChanged(position, model.items.size)
+                model.saveNote()
+            }
+
+            override fun onItemSwapped(fromPosition: Int, toPosition: Int) {
+                Collections.swap(model.items, fromPosition, toPosition)
+                listAdapter.notifyItemMoved(fromPosition, toPosition)
+                model.saveNote()
             }
 
             override fun onItemTextChange(position: Int, newText: String) {
                 listAdapter.items[position].body = newText
+                model.saveNote()
             }
 
             override fun onItemCheckedChange(position: Int, checked: Boolean) {
                 listAdapter.items[position].checked = checked
+                model.saveNote()
             }
         }
 
@@ -157,10 +174,12 @@ class MakeList : NotallyActivity() {
 
             override fun onTextChanged(text: CharSequence?, start: Int, before: Int, count: Int) {
                 model.title = text.toString().trim()
+                model.saveNote()
             }
         })
 
         model.labels.observe(this, Observer { labels ->
+            model.saveNote()
             binding.LabelGroup.removeAllViews()
             labels?.forEach { label ->
                 val displayLabel = View.inflate(this, R.layout.chip_label, null) as MaterialButton

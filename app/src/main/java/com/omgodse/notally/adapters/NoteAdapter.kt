@@ -56,6 +56,11 @@ class NoteAdapter(private val context: Context)
             holder.displayBody.visibility = View.GONE
         } else holder.displayBody.visibility = View.VISIBLE
 
+        if (note.isEmpty()) {
+            holder.displayBody.setText(R.string.empty_note)
+            holder.displayBody.visibility = View.VISIBLE
+        }
+
         for (label in note.labels) {
             val labelChip = View.inflate(context, R.layout.chip_label, null) as MaterialButton
             labelChip.text = label
@@ -105,6 +110,15 @@ class NoteAdapter(private val context: Context)
             view.text = listItem.body
             handleChecked(view, listItem.checked)
             holder.displayList.addView(view)
+        }
+
+        if (note.items.isEmpty()){
+            holder.displayList.visibility = View.GONE
+        } else holder.displayList.visibility = View.VISIBLE
+
+        if (note.isEmpty()) {
+            holder.displayBody.setText(R.string.empty_list)
+            holder.displayBody.visibility = View.VISIBLE
         }
 
         for (label in note.labels) {

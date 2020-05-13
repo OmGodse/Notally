@@ -16,6 +16,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import com.omgodse.notally.R
 import com.omgodse.notally.activities.MainActivity
 import com.omgodse.notally.activities.MakeList
@@ -36,9 +37,9 @@ import java.io.File
 abstract class NotallyFragment : Fragment(), NoteListener {
 
     internal lateinit var mContext: Context
-    internal lateinit var noteAdapter: NoteAdapter
     internal lateinit var binding: FragmentNotesBinding
 
+    private lateinit var noteAdapter: NoteAdapter
     private lateinit var exportHelper: ExportHelper
 
     internal val model: NoteModel by activityViewModels()
@@ -83,7 +84,27 @@ abstract class NotallyFragment : Fragment(), NoteListener {
         }
         else when (resultCode) {
             Constants.ResultCodeEditedFile -> model.handleNoteEdited(filePath, payload)
-            Constants.ResultCodeCreatedFile -> model.handleNoteCreated(filePath, payload)
+            Constants.ResultCodeCreatedFile -> {
+                model.handleNoteCreated(filePath, payload)
+
+                binding.RecyclerView.post {
+                    val settingsHelper = SettingsHelper(mContext)
+                    if (settingsHelper.getSortingPreferences() == mContext.getString(R.string.newestFirstKey)){
+                        binding.RecyclerView.smoothScrollToPosition(0)
+                    }
+                    else binding.RecyclerView.smoothScrollToPosition(noteAdapter.itemCount)
+                }
+
+                if (filePath != null) {
+                    val file = File(filePath)
+                    val note = NotesHelper.convertFileToNote(file)
+                    if (note.isEmpty()){
+                        model.handleNoteDeleted(filePath, getPayload())
+                        val rootView = (mContext as MainActivity).binding.CoordinatorLayout
+                        Snackbar.make(rootView, R.string.discarded_empty_note, Snackbar.LENGTH_SHORT).show()
+                    }
+                }
+            }
             Constants.ResultCodeDeletedFile -> model.handleNoteDeleted(filePath, payload)
             Constants.ResultCodeArchivedFile -> model.handleNoteArchived(filePath, payload)
             Constants.ResultCodeRestoredFile -> model.handleNoteRestored(filePath, payload)
@@ -118,22 +139,10 @@ abstract class NotallyFragment : Fragment(), NoteListener {
                         mContext.getString(R.string.share) -> notesHelper.shareNote(note)
                         mContext.getString(R.string.labels) -> labelNote(note)
                         mContext.getString(R.string.export) -> showExportDialog(note)
-                        mContext.getString(R.string.delete) -> model.handleNoteDeleted(
-                            note.filePath,
-                            getPayload()
-                        )
-                        mContext.getString(R.string.archive) -> model.handleNoteArchived(
-                            note.filePath,
-                            getPayload()
-                        )
-                        mContext.getString(R.string.restore) -> model.handleNoteRestored(
-                            note.filePath,
-                            getPayload()
-                        )
-                        mContext.getString(R.string.unarchive) -> model.handleNoteRestored(
-                            note.filePath,
-                            getPayload()
-                        )
+                        mContext.getString(R.string.delete) -> model.handleNoteDeleted(note.filePath, getPayload())
+                        mContext.getString(R.string.archive) -> model.handleNoteArchived(note.filePath, getPayload())
+                        mContext.getString(R.string.restore) -> model.handleNoteRestored(note.filePath, getPayload())
+                        mContext.getString(R.string.unarchive) -> model.handleNoteRestored(note.filePath, getPayload())
                         mContext.getString(R.string.delete_forever) -> confirmDeletion(note)
                     }
                 }

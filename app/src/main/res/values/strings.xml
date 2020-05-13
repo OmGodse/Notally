@@ -118,4 +118,7 @@
     <string name="githubKey">github</string>
     <string name="github">Github</string>
     <string name="html">HTML</string>
+    <string name="discarded_empty_note">Discarded empty note</string>
+    <string name="empty_note">Empty note</string>
+    <string name="empty_list">Empty list</string>
 </resources>

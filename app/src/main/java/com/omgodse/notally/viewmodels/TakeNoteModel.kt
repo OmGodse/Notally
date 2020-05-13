@@ -19,10 +19,7 @@ class TakeNoteModel : BaseModel() {
     var body = Editable.Factory.getInstance().newEditable(String())
 
     override fun saveNote() : Boolean {
-        if (title.isBlank() && body.isBlank()){
-            return false
-        }
-        else if (file != null) {
+        if (file != null) {
             val fileWriter = FileWriter(file)
             val xmlWriter = XMLWriter(XMLTags.Note)
 
@@ -60,8 +57,7 @@ class TakeNoteModel : BaseModel() {
         spans.forEach { span ->
             val end = body.getSpanEnd(span)
             val start = body.getSpanStart(span)
-            val representation =
-                SpanRepresentation(false, false, false, false, start, end)
+            val representation = SpanRepresentation(false, false, false, false, start, end)
 
             if (span is StyleSpan) {
                 if (span.style == Typeface.BOLD) {

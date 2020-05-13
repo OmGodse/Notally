@@ -16,12 +16,6 @@ import java.util.*
 
 abstract class NotallyActivity : AppCompatActivity() {
 
-    override fun onBackPressed() {
-        val model = getViewModel()
-        model.saveNote()
-        super.onBackPressed()
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -83,25 +77,20 @@ abstract class NotallyActivity : AppCompatActivity() {
 
     private fun deleteNote() {
         val model = getViewModel()
-        if (model.saveNote()) {
-            setResultCode(model.file?.path, Constants.ResultCodeDeletedFile)
-        }
-        super.onBackPressed()
+        setResultCode(model.file?.path, Constants.ResultCodeDeletedFile)
+        onBackPressed()
     }
 
     private fun restoreNote() {
         val model = getViewModel()
-        model.saveNote()
         setResultCode(model.file?.path, Constants.ResultCodeRestoredFile)
-        super.onBackPressed()
+        onBackPressed()
     }
 
     private fun archiveNote() {
         val model = getViewModel()
-        if (model.saveNote()) {
-            setResultCode(model.file?.path, Constants.ResultCodeArchivedFile)
-        }
-        super.onBackPressed()
+        setResultCode(model.file?.path, Constants.ResultCodeArchivedFile)
+        onBackPressed()
     }
 
     private fun deleteNoteForever() {
@@ -109,9 +98,8 @@ abstract class NotallyActivity : AppCompatActivity() {
         alertDialogBuilder.setMessage(R.string.delete_note_forever)
         alertDialogBuilder.setPositiveButton(R.string.delete) { dialog, which ->
             val model = getViewModel()
-            model.saveNote()
             setResultCode(model.file?.path, Constants.ResultCodeDeletedForeverFile)
-            super.onBackPressed()
+            onBackPressed()
         }
         alertDialogBuilder.setNegativeButton(R.string.cancel, null)
         alertDialogBuilder.show()

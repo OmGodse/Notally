@@ -20,19 +20,6 @@ class MakeListAdapter(private val context: Context, var items: ArrayList<ListIte
 
     var listItemListener: ListItemListener? = null
 
-    fun onItemDismiss(position: Int) {
-        items.removeAt(position)
-        notifyItemRemoved(position)
-        notifyItemRangeChanged(position, items.size)
-    }
-
-    fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
-        Collections.swap(items, fromPosition, toPosition)
-        notifyItemMoved(fromPosition, toPosition)
-        return true
-    }
-
-
     override fun getItemCount(): Int {
         return items.size
     }

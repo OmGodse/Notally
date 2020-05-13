@@ -89,6 +89,7 @@ class TakeNote : NotallyActivity() {
 
             override fun onTextChanged(text: CharSequence?, start: Int, before: Int, count: Int) {
                 model.title = text.toString().trim()
+                model.saveNote()
             }
 
             override fun afterTextChanged(s: Editable?) {}
@@ -101,10 +102,12 @@ class TakeNote : NotallyActivity() {
 
             override fun afterTextChanged(editable: Editable?) {
                 model.body = binding.EnterBody.text
+                model.saveNote()
             }
         })
 
         model.labels.observe(this, Observer { labels ->
+            model.saveNote()
             binding.LabelGroup.removeAllViews()
             labels?.forEach { label ->
                 val displayLabel = View.inflate(this, R.layout.chip_label, null) as MaterialButton
@@ -182,11 +185,14 @@ class TakeNote : NotallyActivity() {
         strikethroughSpans.forEach { span ->
             binding.EnterBody.text.removeSpan(span)
         }
+
+        model.saveNote()
     }
 
     private fun applySpan(spanToApply: Any) {
         val end = binding.EnterBody.selectionEnd
         val start = binding.EnterBody.selectionStart
         binding.EnterBody.text.setSpan(spanToApply, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        model.saveNote()
     }
 }

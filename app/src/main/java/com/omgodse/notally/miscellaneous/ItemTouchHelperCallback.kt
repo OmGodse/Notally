@@ -15,7 +15,7 @@ class ItemTouchHelperCallback(private val adapter: MakeListAdapter) : ItemTouchH
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        adapter.onItemDismiss(viewHolder.adapterPosition)
+        adapter.listItemListener?.onItemDeleted(viewHolder.adapterPosition)
     }
 
     override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
@@ -25,7 +25,7 @@ class ItemTouchHelperCallback(private val adapter: MakeListAdapter) : ItemTouchH
     }
 
     override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
-        adapter.onItemMove(viewHolder.adapterPosition, target.adapterPosition)
+        adapter.listItemListener?.onItemSwapped(viewHolder.adapterPosition, target.adapterPosition)
         return true
     }
 }

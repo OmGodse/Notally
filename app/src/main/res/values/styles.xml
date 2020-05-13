@@ -5,6 +5,8 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:colorEdgeEffect">@color/secondary_translucent</item>
 
+        <item name="snackbarStyle">@style/Widget.MaterialComponents.Snackbar.FullWidth</item>
+
         <item name="alertDialogTheme">@style/Notally.AlertDialog</item>
         <item name="materialAlertDialogTheme">@style/Notally.AlertDialog</item>
         <item name="bottomSheetDialogTheme">@style/Notally.BottomSheetDialog</item>

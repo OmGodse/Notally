@@ -28,4 +28,10 @@ data class Note (val isNote: Boolean,
         result = 31 * result + filePath.hashCode()
         return result
     }
+
+    fun isEmpty(): Boolean {
+        return if (isNote){
+            title.isBlank() && body.isBlank()
+        } else title.isBlank() && items.isEmpty()
+    }
 }

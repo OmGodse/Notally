@@ -14,7 +14,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:paddingStart="16dp"
         android:paddingTop="8dp"
+        android:paddingEnd="16dp"
         android:paddingBottom="8dp">
 
         <com.google.android.material.textview.MaterialTextView
@@ -24,9 +26,7 @@
             android:ellipsize="end"
             android:fontFamily="@font/nunito_semibold"
             android:maxLines="1"
-            android:paddingStart="16dp"
             android:paddingTop="8dp"
-            android:paddingEnd="16dp"
             android:paddingBottom="8dp"
             android:text="@string/title"
             android:textColor="?attr/colorOnSurface"
@@ -40,8 +40,6 @@
             android:gravity="center_vertical"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
             android:text="@string/date" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -51,9 +49,7 @@
             android:ellipsize="end"
             android:fontFamily="@font/nunito"
             android:maxLines="4"
-            android:paddingStart="16dp"
             android:paddingTop="8dp"
-            android:paddingEnd="16dp"
             android:paddingBottom="8dp"
             android:text="@string/note" />
 
@@ -62,26 +58,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingTop="8dp"/>
+            android:paddingBottom="8dp" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/ItemsRemaining"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/nunito"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
             android:paddingBottom="8dp"
             android:text="@string/more_items" />
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/LabelGroup"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp" />
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
