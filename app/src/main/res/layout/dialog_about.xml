@@ -19,6 +19,13 @@
             android:text="@string/itext" />
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/Jsoup"
+            style="@style/About.TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/jsoup" />
+
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/PrettyTime"
             style="@style/About.TextView"
             android:layout_width="match_parent"

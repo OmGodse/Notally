@@ -48,6 +48,7 @@ class Settings : PreferenceFragmentCompat() {
         librariesPref?.setOnPreferenceClickListener {
             val libraries = View.inflate(mContext, R.layout.dialog_about, null)
             val iText: MaterialTextView = libraries.findViewById(R.id.iText)
+            val jsoup: MaterialTextView = libraries.findViewById(R.id.Jsoup)
             val prettyTime: MaterialTextView = libraries.findViewById(R.id.PrettyTime)
             val materialComponents: MaterialTextView = libraries.findViewById(R.id.MaterialComponentsAndroid)
 
@@ -58,19 +59,23 @@ class Settings : PreferenceFragmentCompat() {
             builder.setNegativeButton(R.string.cancel, null)
             val dialog = builder.create()
 
+            jsoup.setOnClickListener {
+                openLink(JsoupLink)
+            }
+
             iText.setOnClickListener {
                 dialog.dismiss()
-                openLink(iTextLibrary)
+                openLink(iTextLink)
             }
 
             prettyTime.setOnClickListener {
                 dialog.dismiss()
-                openLink(PrettyTimeLibrary)
+                openLink(PrettyTimeLink)
             }
 
             materialComponents.setOnClickListener {
                 dialog.dismiss()
-                openLink(MaterialComponentsLibrary)
+                openLink(MaterialComponentsLink)
             }
 
             dialog.show()
@@ -107,9 +112,10 @@ class Settings : PreferenceFragmentCompat() {
 
     companion object {
         private const val Github = "https://github.com/OmGodse/Notally"
-        private const val iTextLibrary = "https://github.com/itext/itextpdf"
-        private const val PrettyTimeLibrary = "https://github.com/ocpsoft/prettytime"
         private const val AppLink = "https://play.google.com/store/apps/details?id=com.omgodse.notally"
-        private const val MaterialComponentsLibrary = "https://github.com/material-components/material-components-android"
+        private const val iTextLink = "https://github.com/itext/itextpdf"
+        private const val JsoupLink = "https://github.com/jhy/jsoup/"
+        private const val PrettyTimeLink = "https://github.com/ocpsoft/prettytime"
+        private const val MaterialComponentsLink = "https://github.com/material-components/material-components-android"
     }
 }
