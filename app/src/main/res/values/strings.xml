@@ -15,7 +15,6 @@
     <string name="delete">Delete</string>
     <string name="restore">Restore</string>
     <string name="archive">Archive</string>
-    <string name="reminder">Reminder</string>
     <string name="unarchive">Unarchive</string>
     <string name="delete_forever">Delete forever</string>
 
@@ -32,6 +31,7 @@
     <string name="add_label">Add label</string>
     <string name="export">Export</string>
     <string name="pdf">PDF</string>
+    <string name="html">HTML</string>
     <string name="plain_text">Plain Text</string>
     <string name="save_to_device">Save to device</string>
     <string name="edit_label">Edit label</string>
@@ -65,7 +65,6 @@
     <string name="empty_list">Empty list</string>
     <string name="discarded_empty_note">Discarded empty note</string>
     <string name="discarded_empty_list">Discarded empty list</string>
-
 
     <!-- Settings Page -->
     <string name="appearance">Appearance</string>
@@ -116,12 +115,6 @@
     <string name="rate">Rate this app</string>
     <string name="libraries">Libraries</string>
     <string name="librariesKey">libraries</string>
-    <string name="itext">iText</string>
-    <string name="jsoup">Jsoup</string>
-    <string name="pretty_time">Pretty Time</string>
-    <string name="material_components_android">Material Components for Android</string>
-    <string name="word">Word</string>
     <string name="githubKey">github</string>
-    <string name="github">Github</string>
-    <string name="html">HTML</string>
+    <string name="github">GitHub</string>
 </resources>
