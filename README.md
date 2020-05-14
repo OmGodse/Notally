@@ -1,14 +1,21 @@
 # Notally
 A minimalistic notes app
 
+* Auto save
+* Dark mode
 * Material design
 * Create lists to stay on track
 * Add labels to your notes for quick organisation
 * Archive notes to keep them around, but out of your way
+* Export notes as plain text, HTML or PDF files with formatting
 * Create rich text notes with support for bold, italics, mono space and strike-through
-* Export notes as plain text files or PDF files with formatting
-* Auto save
-* Dark mode
+
+Languages
+
+* English
+* Italian
+
+If you would like to help translate the app, please contact me [here](mailto:omgodseapps@gmail.com)
 
 # Download
 
