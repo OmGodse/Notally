@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fragment Titles -->
+    <string name="notes">Note</string>
+    <string name="deleted">Cestino</string>
+    <string name="archived">Archivio</string>
+    <string name="settings">Impostazioni</string>
+
+    <!-- Menu Options -->
+    <string name="share">Condividi</string>
+    <string name="search">Cerca</string>
+    <string name="labels">Etichette</string>
+    <string name="delete">Elimina</string>
+    <string name="restore">Ripristina</string>
+    <string name="archive">Archivia</string>
+    <string name="unarchive">Annulla Archiviazione</string>
+    <string name="delete_forever">Elimina Definitivamente</string>
+
+    <!-- Chooser dialog hints -->
+    <string name="view_note">Vedi nota…</string>
+    <string name="share_note">Condividi nota…</string>
+
+    <!-- Dialogs -->
+    <string name="save">Salva</string>
+    <string name="edit">Modifica</string>
+    <string name="cancel">Cancella</string>
+    <string name="make_list">Nuovo elenco</string>
+    <string name="take_note">Scrivere nota</string>
+    <string name="add_label">Aggiungi etichetta</string>
+    <string name="export">Esporta</string>
+    <string name="plain_text">Documento di testo TXT</string>
+    <string name="save_to_device">Salva sul dispositivo</string>
+    <string name="edit_label">Modifica etichetta</string>
+    <string name="label_exists">Etichetta esiste</string>
+    <string name="delete_label">Eliminare etichetta?</string>
+    <string name="create_new">Non c\'è un etichetta.Vuoi crearne una?</string>
+    <string name="delete_note_forever">Eliminare nota definitivamente?</string>
+    <string name="your_notes_associated">Le note associate a questa etichetta non verranno eliminate</string>
+
+    <!-- Lists and Notes -->
+    <string name="note">Nota</string>
+    <string name="item">Elemento</string>
+    <string name="date">Date</string>
+    <string name="title">Titolo</string>
+    <string name="add_item">Aggiungi elemento</string>
+    <string name="more_item">Altro elemento</string>
+    <string name="more_items">Più elementi</string>
+    <string name="drag_handle">Trascina</string>
+    <string name="bold">Grassetto</string>
+    <string name="italic">Corsivo</string>
+    <string name="underline">Sottolineato</string>
+    <string name="strikethrough">Barrato</string>
+    <string name="clear_formatting">Cancella formattazione del testo</string>
+    <string name="monospace">Monospazio</string>
+
+    <!-- Miscellaneous -->
+    <string name="created">Creata</string>
+    <string name="saved_to_device">Salvata sul dispositivo</string>
+    <string name="saved_to_notally">Salvata su Notally</string>
+    <string name="empty_note">Nota vuota</string>
+    <string name="empty_list">Lista vuota</string>
+    <string name="discarded_empty_note">Nota vuota non salvata</string>
+    <string name="discarded_empty_list">Elenco vuoto non salvato</string>
+
+    <!-- Settings Page -->
+    <string name="appearance">Aspetto</string>
+
+    <string name="view">Vista</string>
+    <string name="list">Lista</string>
+    <string name="grid">Griglia</string>
+
+    <string name="theme">Tema</string>
+    <string name="light">Chiaro</string>
+    <string name="dark">Scuro</string>
+    <string name="follow_system">Tema di Sistema</string>
+
+    <string name="sort_by">Ordina per</string>
+    <string name="newest_first">Nuove</string>
+    <string name="oldest_first">Vecchie</string>
+
+    <string name="card_type">Tipo di visualizzazione</string>
+    <string name="elevated">Con bordi</string>
+    <string name="flat">Senza bordi</string>
+
+    <string name="content_density">Densità del contenuto</string>
+    <string name="max_items_to_display">Numero massimo di elementi da visualizzare nella lista</string>
+    <string name="max_lines_to_display">Numero massimo di elementi da visualizzare nella nota</string>
+
+    <string name="show_date_created">Mostra la data di creazione</string>
+
+    <string name="about">Informazioni</string>
+    <string name="rate">Recensisci questa app</string>
+    <string name="libraries">Librerie</string>
+</resources>

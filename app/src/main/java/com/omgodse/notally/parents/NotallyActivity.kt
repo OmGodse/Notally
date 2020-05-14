@@ -111,7 +111,6 @@ abstract class NotallyActivity : AppCompatActivity() {
         setResult(resultCode, data)
     }
 
-
     internal fun setupToolbar(toolbar: MaterialToolbar) {
         setSupportActionBar(toolbar)
         supportActionBar?.title = null

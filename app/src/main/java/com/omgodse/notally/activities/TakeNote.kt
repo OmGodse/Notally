@@ -18,11 +18,10 @@ import com.omgodse.notally.R
 import com.omgodse.notally.databinding.ActivityTakeNoteBinding
 import com.omgodse.notally.helpers.NotesHelper
 import com.omgodse.notally.interfaces.LabelListener
+import com.omgodse.notally.miscellaneous.getLocale
 import com.omgodse.notally.parents.NotallyActivity
 import com.omgodse.notally.viewmodels.TakeNoteModel
 import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.HashSet
 
 class TakeNote : NotallyActivity() {
 
@@ -121,7 +120,7 @@ class TakeNote : NotallyActivity() {
         binding.EnterTitle.setText(model.title)
         binding.EnterBody.text = model.body
 
-        val formatter = SimpleDateFormat(DateFormat, Locale.US)
+        val formatter = SimpleDateFormat(DateFormat, getLocale())
         binding.DateCreated.text = formatter.format(model.timestamp)
     }
 

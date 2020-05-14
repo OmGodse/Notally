@@ -21,6 +21,7 @@ import com.omgodse.notally.interfaces.LabelListener
 import com.omgodse.notally.interfaces.ListItemListener
 import com.omgodse.notally.miscellaneous.ItemTouchHelperCallback
 import com.omgodse.notally.miscellaneous.ListItem
+import com.omgodse.notally.miscellaneous.getLocale
 import com.omgodse.notally.parents.NotallyActivity
 import com.omgodse.notally.viewmodels.MakeListModel
 import java.text.SimpleDateFormat
@@ -142,7 +143,7 @@ class MakeList : NotallyActivity() {
 
     private fun setStateFromModel() {
         binding.EnterTitle.setText(model.title)
-        val formatter = SimpleDateFormat(DateFormat, Locale.US)
+        val formatter = SimpleDateFormat(DateFormat, getLocale())
         binding.DateCreated.text = formatter.format(model.timestamp)
         listAdapter.notifyDataSetChanged()
     }

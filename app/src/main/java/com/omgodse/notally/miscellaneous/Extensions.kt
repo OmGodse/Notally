@@ -1,6 +1,8 @@
 package com.omgodse.notally.miscellaneous
 
+import android.content.Context
 import android.graphics.Typeface
+import android.os.Build
 import android.text.Editable
 import android.text.Spannable
 import android.text.Spanned
@@ -9,6 +11,8 @@ import android.text.style.StyleSpan
 import android.text.style.TypefaceSpan
 import com.omgodse.notally.adapters.NoteAdapter
 import org.xmlpull.v1.XmlPullParser
+import java.util.*
+import kotlin.collections.ArrayList
 
 fun String.applySpans(representations: ArrayList<SpanRepresentation>): Editable {
     val editable = Editable.Factory.getInstance().newEditable(this)
@@ -39,4 +43,10 @@ fun XmlPullParser.getAttributeValue(attribute: String) = getAttributeValue(null,
 
 fun NoteAdapter.submitCorrectList(list: ArrayList<Note>) {
     submitList(ArrayList(list))
+}
+
+fun Context.getLocale() : Locale {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        resources.configuration.locales[0]
+    } else resources.configuration.locale
 }
