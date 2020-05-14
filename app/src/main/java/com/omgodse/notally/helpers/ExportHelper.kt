@@ -8,14 +8,15 @@ import androidx.core.content.FileProvider
 import androidx.core.text.HtmlCompat
 import androidx.core.text.toHtml
 import androidx.fragment.app.Fragment
-import com.itextpdf.text.Document
-import com.itextpdf.text.PageSize
+import com.itextpdf.text.*
 import com.itextpdf.text.pdf.PdfWriter
+import com.itextpdf.tool.xml.XMLWorkerFontProvider
 import com.itextpdf.tool.xml.XMLWorkerHelper
 import com.omgodse.notally.R
 import com.omgodse.notally.interfaces.DialogListener
 import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.miscellaneous.applySpans
+import com.omgodse.notally.miscellaneous.getLocale
 import com.omgodse.notally.parents.NotallyActivity
 import com.omgodse.notally.xml.XMLReader
 import org.jsoup.Jsoup
@@ -37,8 +38,16 @@ class ExportHelper(private val context: Context, private val fragment: Fragment)
         val document = Document(PageSize.A4)
         val writer = PdfWriter.getInstance(document, pdfFile.outputStream())
         val htmlDocument = getHTML(file)
+        val stylesheet = "<style>body { font-family : Roboto ; } h2 { letter-spacing : 0.5px; } tt { font-family : 'Roboto Mono' ;}</style>"
+        htmlDocument.head().append(stylesheet)
         document.open()
-        XMLWorkerHelper.getInstance().parseXHtml(writer, document, htmlDocument.html().byteInputStream())
+
+        val fontProvider = XMLWorkerFontProvider(XMLWorkerFontProvider.DONTLOOKFORFONTS)
+        fontProvider.register("assets/roboto.ttf", "Roboto")
+        fontProvider.register("assets/roboto_mono.ttf", "Roboto Mono")
+
+        println(htmlDocument.html())
+        XMLWorkerHelper.getInstance().parseXHtml(writer, document, htmlDocument.html().byteInputStream(), Charsets.UTF_8, fontProvider)
         document.close()
         writer.close()
 
@@ -202,12 +211,12 @@ class ExportHelper(private val context: Context, private val fragment: Fragment)
         val spans = xmlReader.getSpans()
         val htmlBody = body.applySpans(spans).toHtml(HtmlCompat.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE)
 
-        val formatter = SimpleDateFormat(NotallyActivity.DateFormat, Locale.US)
+        val formatter = SimpleDateFormat(NotallyActivity.DateFormat, context.getLocale())
         val date = formatter.format(xmlReader.getDateCreated().toLong())
 
         val htmlBuffer = StringBuffer()
         htmlBuffer.append("<h2>$title</h2>")
-        htmlBuffer.append("<p style=\"color: #7f7f7f;\">$date</p>")
+        htmlBuffer.append("<p>$date</p>")
 
         if (xmlReader.isNote()) {
             htmlBuffer.append("<p>$htmlBody</p>")
@@ -220,6 +229,7 @@ class ExportHelper(private val context: Context, private val fragment: Fragment)
             htmlBuffer.append("</ol>")
         }
         val document = Jsoup.parseBodyFragment(htmlBuffer.toString())
+        document.charset(Charsets.UTF_8)
         document.outputSettings().syntax(JsoupDocument.OutputSettings.Syntax.xml)
         return document
     }
