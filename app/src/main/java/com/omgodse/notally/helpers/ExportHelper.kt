@@ -46,7 +46,6 @@ class ExportHelper(private val context: Context, private val fragment: Fragment)
         fontProvider.register("assets/roboto.ttf", "Roboto")
         fontProvider.register("assets/roboto_mono.ttf", "Roboto Mono")
 
-        println(htmlDocument.html())
         XMLWorkerHelper.getInstance().parseXHtml(writer, document, htmlDocument.html().byteInputStream(), Charsets.UTF_8, fontProvider)
         document.close()
         writer.close()
