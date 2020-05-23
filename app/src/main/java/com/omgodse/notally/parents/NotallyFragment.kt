@@ -27,7 +27,6 @@ import com.omgodse.notally.helpers.ExportHelper
 import com.omgodse.notally.helpers.MenuHelper
 import com.omgodse.notally.helpers.NotesHelper
 import com.omgodse.notally.helpers.SettingsHelper
-import com.omgodse.notally.interfaces.DialogListener
 import com.omgodse.notally.interfaces.LabelListener
 import com.omgodse.notally.interfaces.NoteListener
 import com.omgodse.notally.miscellaneous.*
@@ -129,16 +128,12 @@ abstract class NotallyFragment : Fragment(), NoteListener {
     override fun onNoteLongClicked(position: Int) {
         if (getSupportedOperations().isNotEmpty()) {
             val note = noteAdapter.currentList[position]
-            val notesHelper = NotesHelper(mContext)
             val menuHelper = MenuHelper(mContext)
+            val notesHelper = NotesHelper(mContext)
 
             getSupportedOperations().forEach { operation ->
-                menuHelper.addItem(operation.textId, operation.drawableId)
-            }
-
-            menuHelper.setListener(object : DialogListener {
-                override fun onDialogItemClicked(label: String) {
-                    when (label) {
+                menuHelper.addItem(operation.textId, operation.drawableId) {
+                    when (mContext.getString(operation.textId)) {
                         mContext.getString(R.string.share) -> notesHelper.shareNote(note)
                         mContext.getString(R.string.labels) -> labelNote(note)
                         mContext.getString(R.string.export) -> showExportDialog(note)
@@ -149,12 +144,11 @@ abstract class NotallyFragment : Fragment(), NoteListener {
                         mContext.getString(R.string.delete_forever) -> confirmDeletion(note)
                     }
                 }
-            })
+            }
 
             menuHelper.show()
         }
     }
-
 
     private fun setupPadding() {
         val padding = mContext.resources.getDimensionPixelSize(R.dimen.recyclerViewPadding)
@@ -218,19 +212,9 @@ abstract class NotallyFragment : Fragment(), NoteListener {
         val file = File(note.filePath)
         val menuHelper = MenuHelper(mContext)
 
-        menuHelper.addItem(R.string.pdf, R.drawable.pdf)
-        menuHelper.addItem(R.string.html, R.drawable.html)
-        menuHelper.addItem(R.string.plain_text, R.drawable.plain_text)
-
-        menuHelper.setListener(object : DialogListener {
-            override fun onDialogItemClicked(label: String) {
-                when (label) {
-                    mContext.getString(R.string.pdf) -> exportHelper.exportFileToPDF(file)
-                    mContext.getString(R.string.html) -> exportHelper.exportFileToHTML(file)
-                    mContext.getString(R.string.plain_text) -> exportHelper.exportFileToPlainText(file)
-                }
-            }
-        })
+        menuHelper.addItem(R.string.pdf, R.drawable.pdf) { exportHelper.exportFileToPDF(file) }
+        menuHelper.addItem(R.string.html, R.drawable.html) { exportHelper.exportFileToHTML(file) }
+        menuHelper.addItem(R.string.plain_text, R.drawable.plain_text) { exportHelper.exportFileToPlainText(file) }
 
         menuHelper.show()
     }

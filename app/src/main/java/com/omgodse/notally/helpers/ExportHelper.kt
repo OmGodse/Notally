@@ -13,7 +13,6 @@ import com.itextpdf.text.pdf.PdfWriter
 import com.itextpdf.tool.xml.XMLWorkerFontProvider
 import com.itextpdf.tool.xml.XMLWorkerHelper
 import com.omgodse.notally.R
-import com.omgodse.notally.interfaces.DialogListener
 import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.miscellaneous.applySpans
 import com.omgodse.notally.miscellaneous.getLocale
@@ -150,19 +149,9 @@ class ExportHelper(private val context: Context, private val fragment: Fragment)
 
         val menuHelper = MenuHelper(context)
 
-        menuHelper.addItem(R.string.view, R.drawable.view)
-        menuHelper.addItem(R.string.share, R.drawable.share)
-        menuHelper.addItem(R.string.save_to_device, R.drawable.save)
-
-        menuHelper.setListener(object : DialogListener {
-            override fun onDialogItemClicked(label: String) {
-                when (label) {
-                    context.getString(R.string.view) -> viewFile(uri, mimeType)
-                    context.getString(R.string.share) -> shareFile(uri, mimeType)
-                    context.getString(R.string.save_to_device) -> saveFileToDevice(uri, file, mimeType)
-                }
-            }
-        })
+        menuHelper.addItem(R.string.view, R.drawable.view) { viewFile(uri, mimeType) }
+        menuHelper.addItem(R.string.share, R.drawable.share) { shareFile(uri, mimeType) }
+        menuHelper.addItem(R.string.save_to_device, R.drawable.save) { saveFileToDevice(uri, file, mimeType) }
 
         menuHelper.show()
     }

@@ -21,7 +21,6 @@ import com.omgodse.notally.adapters.LabelsAdapter
 import com.omgodse.notally.databinding.FragmentNotesBinding
 import com.omgodse.notally.helpers.MenuHelper
 import com.omgodse.notally.helpers.NotesHelper
-import com.omgodse.notally.interfaces.DialogListener
 import com.omgodse.notally.interfaces.NoteListener
 import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.xml.XMLReader
@@ -82,17 +81,8 @@ class Labels : Fragment(), NoteListener {
     override fun onNoteLongClicked(position: Int) {
         val menuHelper = MenuHelper(mContext)
 
-        menuHelper.addItem(R.string.edit, R.drawable.edit)
-        menuHelper.addItem(R.string.delete, R.drawable.delete)
-
-        menuHelper.setListener(object : DialogListener {
-            override fun onDialogItemClicked(label: String) {
-                when (label) {
-                    mContext.getString(R.string.edit) -> displayEditLabelDialog(position)
-                    mContext.getString(R.string.delete) -> confirmDeletion(position)
-                }
-            }
-        })
+        menuHelper.addItem(R.string.edit, R.drawable.edit) { displayEditLabelDialog(position) }
+        menuHelper.addItem(R.string.delete, R.drawable.delete) { confirmDeletion(position) }
 
         menuHelper.show()
     }

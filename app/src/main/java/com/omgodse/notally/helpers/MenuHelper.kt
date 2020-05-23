@@ -6,11 +6,9 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.core.view.children
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textview.MaterialTextView
 import com.omgodse.notally.R
-import com.omgodse.notally.interfaces.DialogListener
 
 class MenuHelper(private val context: Context) {
 
@@ -21,22 +19,15 @@ class MenuHelper(private val context: Context) {
         bottomSheetDialog.setContentView(linearLayout)
     }
 
-    fun show() {
-        bottomSheetDialog.show()
-    }
+    fun show() = bottomSheetDialog.show()
 
-    fun setListener(dialogListener: DialogListener) {
-        linearLayout.children.forEach { item ->
-            item.setOnClickListener {
-                bottomSheetDialog.dismiss()
-                dialogListener.onDialogItemClicked((item as MaterialTextView).text.toString())
-            }
-        }
-    }
-
-    fun addItem(@StringRes label: Int, @DrawableRes drawable: Int) {
+    fun addItem(@StringRes label: Int, @DrawableRes drawable: Int, clickListener: () -> Unit) {
         val item = MaterialTextView(ContextThemeWrapper(context, R.style.Options_Button))
         item.setText(label)
+        item.setOnClickListener {
+            bottomSheetDialog.dismiss()
+            clickListener()
+        }
         item.setCompoundDrawablesRelativeWithIntrinsicBounds(drawable, 0, 0, 0)
         linearLayout.addView(item)
     }

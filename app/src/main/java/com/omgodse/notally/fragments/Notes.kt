@@ -13,7 +13,6 @@ import com.omgodse.notally.activities.MakeList
 import com.omgodse.notally.activities.TakeNote
 import com.omgodse.notally.helpers.ExportHelper
 import com.omgodse.notally.helpers.MenuHelper
-import com.omgodse.notally.interfaces.DialogListener
 import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.miscellaneous.Operation
 import com.omgodse.notally.parents.NotallyFragment
@@ -54,25 +53,16 @@ class Notes : NotallyFragment() {
     private fun displayNoteTypes() {
         val menuHelper = MenuHelper(mContext)
 
-        menuHelper.addItem(R.string.make_list, R.drawable.checkbox)
-        menuHelper.addItem(R.string.take_note, R.drawable.edit)
-
-        menuHelper.setListener(object : DialogListener {
-            override fun onDialogItemClicked(label: String) {
-                when (label) {
-                    mContext.getString(R.string.make_list) -> {
-                        val intent = Intent(mContext, MakeList::class.java)
-                        intent.putExtra(Constants.PreviousFragment, R.id.NotesFragment)
-                        startActivityForResult(intent, Constants.RequestCode)
-                    }
-                    mContext.getString(R.string.take_note) -> {
-                        val intent = Intent(mContext, TakeNote::class.java)
-                        intent.putExtra(Constants.PreviousFragment, R.id.NotesFragment)
-                        startActivityForResult(intent, Constants.RequestCode)
-                    }
-                }
-            }
-        })
+        menuHelper.addItem(R.string.make_list, R.drawable.checkbox) {
+            val intent = Intent(mContext, MakeList::class.java)
+            intent.putExtra(Constants.PreviousFragment, R.id.NotesFragment)
+            startActivityForResult(intent, Constants.RequestCode)
+        }
+        menuHelper.addItem(R.string.take_note, R.drawable.edit) {
+            val intent = Intent(mContext, TakeNote::class.java)
+            intent.putExtra(Constants.PreviousFragment, R.id.NotesFragment)
+            startActivityForResult(intent, Constants.RequestCode)
+        }
 
         menuHelper.show()
     }
