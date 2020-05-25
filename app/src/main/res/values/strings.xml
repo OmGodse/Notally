@@ -46,8 +46,8 @@
     <string name="date">Date</string>
     <string name="title">Title</string>
     <string name="add_item">Add Item</string>
-    <string name="more_item">more item</string>
-    <string name="more_items">more items</string>
+    <string name="one_more_item">1 more item</string>
+    <string name="more_items">%1$d more items</string>
     <string name="drag_handle">Drag Handle</string>
     <string name="bold">Bold</string>
     <string name="italic">Italic</string>
@@ -88,10 +88,17 @@
     <string name="content_density">Content density</string>
     <string name="max_items_to_display">Max items to display in list</string>
     <string name="max_lines_to_display">Max lines to display in note</string>
-
     <string name="show_date_created">Show date created</string>
+
+    <string name="backup">Backup</string>
+    <string name="export_notes_to_a_file">Export notes to a file</string>
+    <string name="import_notes_from_a_file">Import notes from a file</string>
+
     <string name="about">About</string>
     <string name="libraries">Libraries</string>
+    <string name="rate">Rate this app</string>
+
+    <string name="github" translatable="false">GitHub</string>
 
     <string name="viewKey" translatable="false">view</string>
     <string name="listKey" translatable="false">list</string>
@@ -118,9 +125,10 @@
     <string name="four" translatable="false">4</string>
     <string name="eight" translatable="false">8</string>
 
+    <string name="exportNotesToAFileKey" translatable="false">exportNotesToAFile</string>
+    <string name="importNotesFromAFileKey" translatable="false">importNotesFromAFile</string>
+
     <string name="rateKey" translatable="false">rate</string>
-    <string name="rate">Rate this app</string>
-    <string name="librariesKey" translatable="false">libraries</string>
     <string name="githubKey" translatable="false">github</string>
-    <string name="github" translatable="false">GitHub</string>
+    <string name="librariesKey" translatable="false">libraries</string>
 </resources>

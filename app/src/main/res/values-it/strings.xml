@@ -43,8 +43,8 @@
     <string name="date">Date</string>
     <string name="title">Titolo</string>
     <string name="add_item">Aggiungi elemento</string>
-    <string name="more_item">Altro elemento</string>
-    <string name="more_items">Più elementi</string>
+    <string name="one_more_item">Altro elemento</string>
+    <string name="more_items">Più di %1$d elementi</string>
     <string name="drag_handle">Trascina</string>
     <string name="bold">Grassetto</string>
     <string name="italic">Corsivo</string>
@@ -88,7 +88,11 @@
 
     <string name="show_date_created">Mostra la data di creazione</string>
 
+    <string name="backup">Backup</string>
+    <string name="export_notes_to_a_file">Esporta le note in un file</string>
+    <string name="import_notes_from_a_file">Importa note da un file</string>
+
     <string name="about">Informazioni</string>
-    <string name="rate">Recensisci questa app</string>
     <string name="libraries">Librerie</string>
+    <string name="rate">Recensisci questa app</string>
 </resources>
