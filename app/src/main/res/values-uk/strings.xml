@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fragment Titles -->
+    <string name="notes">Нотатки</string>
+    <string name="deleted">Видалені</string>
+    <string name="archived">Архівовані</string>
+    <string name="settings">Налаштування</string>
+
+    <!-- Menu Options -->
+    <string name="share">Надіслати</string>
+    <string name="search">Пошук</string>
+    <string name="labels">Мітки</string>
+    <string name="delete">Видалити</string>
+    <string name="restore">Відновити</string>
+    <string name="archive">Архів</string>
+    <string name="unarchive">Розархівувати</string>
+    <string name="delete_forever">Видалити назавжди</string>
+
+    <!-- Chooser dialog hints -->
+    <string name="view_note">Переглянути…</string>
+    <string name="share_note">Поширити…</string>
+
+    <!-- Dialogs -->
+    <string name="save">Зберегти</string>
+    <string name="edit">Редагувати</string>
+    <string name="cancel">Відмінити</string>
+    <string name="make_list">Створити список</string>
+    <string name="take_note">Взяти до відома</string>
+    <string name="add_label">Додати мітку</string>
+    <string name="export">Експорт</string>
+    <string name="plain_text">Звичайний текст</string>
+    <string name="save_to_device">Зберегти на пристрої</string>
+    <string name="edit_label">Редагувати мітку</string>
+    <string name="label_exists">Мітка вже існує</string>
+    <string name="delete_label">Видалити мітку?</string>
+    <string name="create_new">Мітки відсутні. Створити?</string>
+    <string name="delete_note_forever">Видалити запис назавжди?</string>
+    <string name="your_notes_associated">Ваші нотатки, пов’язані з цією міткою, не будуть видалені</string>
+
+    <!-- Lists and Notes -->
+    <string name="note">Запис</string>
+    <string name="item">Елементи</string>
+    <string name="date">Дата</string>
+    <string name="title">Назва</string>
+    <string name="add_item">Додати елемент</string>
+    <string name="one_more_item">Ще 1 предмет</string>
+    <string name="more_items">%1$d більше елементів</string>
+    <string name="drag_handle">Перетягніть вручну</string>
+    <string name="bold">Напівжирний</string>
+    <string name="italic">Курсив</string>
+    <string name="underline">Підкреслення</string>
+    <string name="strikethrough">Перекреслити</string>
+    <string name="clear_formatting">Очистити форматування</string>
+    <string name="monospace">Монопростір</string>
+
+    <!-- Miscellaneous -->
+    <string name="created">Створено</string>
+    <string name="saved_to_device">Збережено на пристрій</string>
+    <string name="saved_to_notally">Збережено в Notally</string>
+    <string name="empty_note">Пустий запис</string>
+    <string name="empty_list">Пустий список</string>
+    <string name="discarded_empty_note">Відхилено порожній запис</string>
+    <string name="discarded_empty_list">Відхилено порожній список</string>
+
+    <!-- Settings Page -->
+    <string name="appearance">Зовнішній вигляд</string>
+
+    <string name="view">Вигляд</string>
+    <string name="list">Список</string>
+    <string name="grid">Сітка</string>
+
+    <string name="theme">Тема</string>
+    <string name="light">Світла</string>
+    <string name="dark">Темна</string>
+    <string name="follow_system">Системні налаштування</string>
+
+    <string name="sort_by">Сортувати за</string>
+    <string name="newest_first">Найновіші</string>
+    <string name="oldest_first">Найстаріші</string>
+
+    <string name="card_type">Тип картки</string>
+    <string name="elevated">Підвищений</string>
+    <string name="flat">Плоский</string>
+
+    <string name="content_density">Щільність вмісту</string>
+    <string name="max_items_to_display">Максимальна кількількість елементів в списку</string>
+    <string name="max_lines_to_display">Максимальна кількість рядків в нотатці</string>
+
+    <string name="show_date_created">Показувати дату створення</string>
+
+    <string name="backup">Резервне копіювання</string>
+    <string name="export_notes_to_a_file">Експорт нотаток у файл</string>
+    <string name="import_notes_from_a_file">Імпорт нотаток з файлу</string>
+
+    <string name="about">Про програму</string>
+    <string name="libraries">Бібліотеки</string>
+    <string name="rate">Цінити цей додаток</string>
+</resources>
