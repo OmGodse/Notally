@@ -57,7 +57,7 @@ abstract class NotallyActivity : AppCompatActivity() {
         when (item.itemId) {
             android.R.id.home -> onBackPressed()
             R.id.Labels -> labelNote()
-            R.id.Share -> shareNote()
+            R.id.Share -> getViewModel().shareNote()
             R.id.Delete -> deleteNote()
             R.id.Archive -> archiveNote()
             R.id.Restore -> restoreNote()
@@ -67,8 +67,6 @@ abstract class NotallyActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-
-    abstract fun shareNote()
 
     abstract fun labelNote()
 

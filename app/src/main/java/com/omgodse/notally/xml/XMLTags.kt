@@ -19,5 +19,10 @@ class XMLTags {
         const val Italic = "italic"
         const val Monospace = "monospace"
         const val Strike = "strike"
+
+        const val ExportedNotes = "exported-notes"
+        const val Notes = "notes"
+        const val DeletedNotes = "deleted-notes"
+        const val ArchivedNotes = "archived-notes"
     }
 }

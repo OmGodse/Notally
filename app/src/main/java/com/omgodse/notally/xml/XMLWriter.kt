@@ -3,21 +3,24 @@ package com.omgodse.notally.xml
 import android.util.Xml
 import com.omgodse.notally.miscellaneous.ListItem
 import com.omgodse.notally.miscellaneous.SpanRepresentation
-import java.io.StringWriter
+import java.io.File
 
-class XMLWriter(private val tag: String) {
+class XMLWriter(private val tag: String, private val file: File) {
 
-    private var stringWriter = StringWriter()
     private var xmlSerializer = Xml.newSerializer()
 
-    fun startNote() {
-        xmlSerializer.setOutput(stringWriter)
+    fun start() {
+        xmlSerializer.setOutput(file.outputStream(), null)
         xmlSerializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true)
         xmlSerializer.startDocument("UTF-8", true)
         xmlSerializer.startTag(null, tag)
     }
 
-    fun setDateCreated(date: String) {
+    fun startTag(tag: String) {
+        xmlSerializer.startTag(null, tag)
+    }
+
+    fun setTimestamp(date: String) {
         xmlSerializer.startTag(null, XMLTags.DateCreated)
         xmlSerializer.text(date)
         xmlSerializer.endTag(null, XMLTags.DateCreated)
@@ -83,12 +86,12 @@ class XMLWriter(private val tag: String) {
         }
     }
 
-    fun endNote() {
+    fun end() {
         xmlSerializer.endTag(null, tag)
         xmlSerializer.endDocument()
     }
 
-    fun getText(): String {
-        return stringWriter.toString()
+    fun endTag(tag: String) {
+        xmlSerializer.endTag(null, tag)
     }
 }

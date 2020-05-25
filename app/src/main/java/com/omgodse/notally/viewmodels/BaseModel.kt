@@ -1,12 +1,13 @@
 package com.omgodse.notally.viewmodels
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import java.io.File
 import java.util.*
 import kotlin.collections.HashSet
 
-abstract class BaseModel : ViewModel() {
+abstract class BaseModel(app: Application) : AndroidViewModel(app) {
 
     var isNewNote = true
     var isFirstInstance = true
@@ -23,6 +24,8 @@ abstract class BaseModel : ViewModel() {
         }
 
     abstract fun saveNote()
+
+    abstract fun shareNote()
 
     abstract fun setStateFromFile()
 }

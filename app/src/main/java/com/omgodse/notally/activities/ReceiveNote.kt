@@ -13,7 +13,6 @@ import com.omgodse.notally.helpers.NotesHelper
 import com.omgodse.notally.xml.XMLTags
 import com.omgodse.notally.xml.XMLWriter
 import java.io.File
-import java.io.FileWriter
 import java.util.*
 
 class ReceiveNote : AppCompatActivity() {
@@ -78,17 +77,14 @@ class ReceiveNote : AppCompatActivity() {
 
         val file = File(filePath, "$timestamp.xml")
 
-        val fileWriter = FileWriter(file)
-        val xmlWriter = XMLWriter(XMLTags.Note)
+        val xmlWriter = XMLWriter(XMLTags.Note, file)
 
-        xmlWriter.startNote()
-        xmlWriter.setDateCreated(timestamp)
+        xmlWriter.start()
+        xmlWriter.setTimestamp(timestamp)
         xmlWriter.setTitle(title)
         xmlWriter.setBody(body)
-        xmlWriter.endNote()
+        xmlWriter.end()
 
-        fileWriter.write(xmlWriter.getText())
-        fileWriter.close()
         finish()
     }
 }

@@ -44,7 +44,7 @@ class MakeList : NotallyActivity() {
         setupRecyclerView()
         setupToolbar(binding.Toolbar)
 
-        if (model.isNewNote){
+        if (model.isNewNote) {
             binding.EnterTitle.requestFocus()
             if (model.items.isEmpty()) {
                 addListItem()
@@ -56,12 +56,6 @@ class MakeList : NotallyActivity() {
         }
 
         setStateFromModel()
-    }
-
-
-    override fun shareNote() {
-        val notesHelper = NotesHelper(this)
-        notesHelper.shareNote(model.title, listAdapter.items)
     }
 
     override fun labelNote() {

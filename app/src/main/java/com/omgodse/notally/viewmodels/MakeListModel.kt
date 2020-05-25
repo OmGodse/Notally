@@ -1,30 +1,34 @@
 package com.omgodse.notally.viewmodels
 
+import android.app.Application
+import com.omgodse.notally.helpers.NotesHelper
 import com.omgodse.notally.miscellaneous.ListItem
 import com.omgodse.notally.xml.XMLReader
 import com.omgodse.notally.xml.XMLTags
 import com.omgodse.notally.xml.XMLWriter
-import java.io.FileWriter
 
-class MakeListModel : BaseModel() {
+class MakeListModel(private val app: Application) : BaseModel(app) {
 
     val items = ArrayList<ListItem>()
 
     override fun saveNote() {
         val listItems = items.filter { item -> item.body.isNotBlank() }
-        if (file != null) {
-            val fileWriter = FileWriter(file)
-            val xmlWriter = XMLWriter(XMLTags.List)
-            xmlWriter.startNote()
-            xmlWriter.setDateCreated(timestamp.toString())
+        file?.let {
+            val xmlWriter = XMLWriter(XMLTags.List, it)
+
+            xmlWriter.start()
+            xmlWriter.setTimestamp(timestamp.toString())
             xmlWriter.setTitle(title)
             xmlWriter.setListItems(listItems)
             xmlWriter.setLabels(labels.value ?: HashSet())
-            xmlWriter.endNote()
 
-            fileWriter.write(xmlWriter.getText())
-            fileWriter.close()
+            xmlWriter.end()
         }
+    }
+
+    override fun shareNote() {
+        val notesHelper = NotesHelper(app)
+        notesHelper.shareNote(title, items)
     }
 
     override fun setStateFromFile() {
@@ -32,12 +36,11 @@ class MakeListModel : BaseModel() {
             if (file.exists()){
                 val xmlReader = XMLReader(file)
                 title = xmlReader.getTitle()
-                timestamp = xmlReader.getDateCreated().toLong()
+                timestamp = xmlReader.getTimestamp().toLong()
 
-                items.apply {
-                    clear()
-                    addAll(xmlReader.getListItems())
-                }
+                items.clear()
+                items.addAll(xmlReader.getListItems())
+
                 labels.value = xmlReader.getLabels()
             }
         }

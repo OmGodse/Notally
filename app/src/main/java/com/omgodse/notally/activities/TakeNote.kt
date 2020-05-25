@@ -38,17 +38,11 @@ class TakeNote : NotallyActivity() {
         setupListeners()
         setupToolbar(binding.Toolbar)
 
-        if (model.isNewNote){
+        if (model.isNewNote) {
             binding.EnterTitle.requestFocus()
         }
 
         setStateFromModel()
-    }
-
-
-    override fun shareNote() {
-        val notesHelper = NotesHelper(this)
-        notesHelper.shareNote(model.title, model.body.toString())
     }
 
     override fun labelNote() {

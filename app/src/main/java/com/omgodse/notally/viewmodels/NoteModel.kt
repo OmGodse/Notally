@@ -12,7 +12,6 @@ import com.omgodse.notally.xml.XMLTags
 import com.omgodse.notally.xml.XMLWriter
 import kotlinx.coroutines.launch
 import java.io.File
-import java.io.FileWriter
 
 class NoteModel(private val app: Application) : AndroidViewModel(app) {
 
@@ -269,29 +268,26 @@ class NoteModel(private val app: Application) : AndroidViewModel(app) {
 
     fun editNoteLabel(note: Note, labels: HashSet<String>, payload: String) {
         val file = File(note.filePath)
-        val fileWriter = FileWriter(file)
 
         val xmlWriter: XMLWriter
         if (note.isNote) {
-            xmlWriter = XMLWriter(XMLTags.Note)
-            xmlWriter.startNote()
-            xmlWriter.setDateCreated(note.timestamp)
+            xmlWriter = XMLWriter(XMLTags.Note, file)
+            xmlWriter.start()
+            xmlWriter.setTimestamp(note.timestamp)
             xmlWriter.setTitle(note.title)
             xmlWriter.setBody(note.body)
             xmlWriter.setSpans(note.spans)
         } else {
-            xmlWriter = XMLWriter(XMLTags.List)
-            xmlWriter.startNote()
-            xmlWriter.setDateCreated(note.timestamp)
+            xmlWriter = XMLWriter(XMLTags.List, file)
+            xmlWriter.start()
+            xmlWriter.setTimestamp(note.timestamp)
             xmlWriter.setTitle(note.title)
             xmlWriter.setListItems(note.items)
         }
 
         xmlWriter.setLabels(labels)
-        xmlWriter.endNote()
 
-        fileWriter.write(xmlWriter.getText())
-        fileWriter.close()
+        xmlWriter.end()
 
         handleNoteEdited(note.filePath, payload)
     }

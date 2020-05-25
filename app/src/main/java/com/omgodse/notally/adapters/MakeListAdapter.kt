@@ -74,8 +74,7 @@ class MakeListAdapter(private val context: Context, var items: ArrayList<ListIte
             listItem.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {}
 
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                }
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
                 override fun onTextChanged(text: CharSequence?, start: Int, before: Int, count: Int) {
                     listItemListener?.onItemTextChange(adapterPosition, text.toString())

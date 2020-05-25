@@ -178,22 +178,13 @@ class NotesHelper(val context: Context) {
 
             val isNote = xmlReader.isNote()
             val title = xmlReader.getTitle()
-            val timestamp = xmlReader.getDateCreated()
+            val timestamp = xmlReader.getTimestamp()
             val body = xmlReader.getBody()
             val items = xmlReader.getListItems()
             val spans = xmlReader.getSpans()
             val labels = xmlReader.getLabels()
 
-            return Note(
-                isNote,
-                title,
-                timestamp,
-                body,
-                items,
-                spans,
-                labels,
-                file.path
-            )
+            return Note(isNote, title, timestamp, body, items, spans, labels, file.path)
         }
     }
 }

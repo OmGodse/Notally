@@ -27,7 +27,6 @@ import com.omgodse.notally.xml.XMLReader
 import com.omgodse.notally.xml.XMLTags
 import com.omgodse.notally.xml.XMLWriter
 import java.io.File
-import java.io.FileWriter
 
 class Labels : Fragment(), NoteListener {
 
@@ -251,70 +250,62 @@ class Labels : Fragment(), NoteListener {
 
     private fun deleteLabelFromFile(label: String, file: File) {
         val xmlReader = XMLReader(file)
-        val labels = xmlReader.getLabels()
 
+        val labels = xmlReader.getLabels()
         if (labels.contains(label)) {
             labels.remove(label)
 
-            val fileWriter = FileWriter(file)
             val xmlWriter: XMLWriter
 
             if (xmlReader.isNote()) {
-                xmlWriter = XMLWriter(XMLTags.Note)
-                xmlWriter.startNote()
-                xmlWriter.setDateCreated(xmlReader.getDateCreated())
+                xmlWriter = XMLWriter(XMLTags.Note, file)
+                xmlWriter.start()
+                xmlWriter.setTimestamp(xmlReader.getTimestamp())
                 xmlWriter.setTitle(xmlReader.getTitle())
                 xmlWriter.setBody(xmlReader.getBody())
                 xmlWriter.setSpans(xmlReader.getSpans())
                 xmlWriter.setLabels(labels)
-                xmlWriter.endNote()
             } else {
-                xmlWriter = XMLWriter(XMLTags.List)
-                xmlWriter.startNote()
-                xmlWriter.setDateCreated(xmlReader.getDateCreated())
+                xmlWriter = XMLWriter(XMLTags.List, file)
+                xmlWriter.start()
+                xmlWriter.setTimestamp(xmlReader.getTimestamp())
                 xmlWriter.setTitle(xmlReader.getTitle())
                 xmlWriter.setListItems(xmlReader.getListItems())
-                xmlWriter.setLabels(labels)
-                xmlWriter.endNote()
+                xmlWriter.setLabels(xmlReader.getLabels())
             }
 
-            fileWriter.write(xmlWriter.getText())
-            fileWriter.close()
+            xmlWriter.end()
         }
     }
 
     private fun editLabelFromFile(oldLabel: String, newLabel: String, file: File) {
         val xmlReader = XMLReader(file)
-        val labels = xmlReader.getLabels()
 
+        val labels = xmlReader.getLabels()
         if (labels.contains(oldLabel)) {
             labels.remove(oldLabel)
             labels.add(newLabel)
 
-            val fileWriter = FileWriter(file)
             val xmlWriter: XMLWriter
 
             if (xmlReader.isNote()) {
-                xmlWriter = XMLWriter(XMLTags.Note)
-                xmlWriter.startNote()
-                xmlWriter.setDateCreated(xmlReader.getDateCreated())
+                xmlWriter = XMLWriter(XMLTags.Note, file)
+                xmlWriter.start()
+                xmlWriter.setTimestamp(xmlReader.getTimestamp())
                 xmlWriter.setTitle(xmlReader.getTitle())
                 xmlWriter.setBody(xmlReader.getBody())
                 xmlWriter.setSpans(xmlReader.getSpans())
                 xmlWriter.setLabels(labels)
-                xmlWriter.endNote()
             } else {
-                xmlWriter = XMLWriter(XMLTags.List)
-                xmlWriter.startNote()
-                xmlWriter.setDateCreated(xmlReader.getDateCreated())
+                xmlWriter = XMLWriter(XMLTags.List, file)
+                xmlWriter.start()
+                xmlWriter.setTimestamp(xmlReader.getTimestamp())
                 xmlWriter.setTitle(xmlReader.getTitle())
                 xmlWriter.setListItems(xmlReader.getListItems())
-                xmlWriter.setLabels(labels)
-                xmlWriter.endNote()
+                xmlWriter.setLabels(xmlReader.getLabels())
             }
 
-            fileWriter.write(xmlWriter.getText())
-            fileWriter.close()
+            xmlWriter.end()
         }
     }
 

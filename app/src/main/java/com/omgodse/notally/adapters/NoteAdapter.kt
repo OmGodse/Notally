@@ -20,8 +20,7 @@ import com.omgodse.notally.miscellaneous.applySpans
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 
-class NoteAdapter(private val context: Context)
-    : ListAdapter<Note, NoteAdapter.NoteHolder>(NoteDiffCallback()) {
+class NoteAdapter(private val context: Context) : ListAdapter<Note, NoteAdapter.NoteHolder>(NoteDiffCallback()) {
 
     var noteListener: NoteListener? = null
 
@@ -101,8 +100,8 @@ class NoteAdapter(private val context: Context)
         holder.listItemsRemaining.text = if (note.items.size > limit) {
             val itemsRemaining = note.items.size - limit
             if (itemsRemaining == 1) {
-                "$itemsRemaining ${context.getString(R.string.more_item)}"
-            } else "$itemsRemaining ${context.getString(R.string.more_items)}"
+                context.getString(R.string.one_more_item)
+            } else context.getString(R.string.more_items, itemsRemaining)
         } else null
 
         for (listItem in filteredList) {
@@ -112,7 +111,7 @@ class NoteAdapter(private val context: Context)
             holder.displayList.addView(view)
         }
 
-        if (note.items.isEmpty()){
+        if (note.items.isEmpty()) {
             holder.displayList.visibility = View.GONE
         } else holder.displayList.visibility = View.VISIBLE
 

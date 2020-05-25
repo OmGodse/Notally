@@ -1,39 +1,41 @@
 package com.omgodse.notally.viewmodels
 
+import android.app.Application
 import android.graphics.Typeface
 import android.text.Editable
 import android.text.style.StrikethroughSpan
 import android.text.style.StyleSpan
 import android.text.style.TypefaceSpan
+import com.omgodse.notally.helpers.NotesHelper
 import com.omgodse.notally.miscellaneous.SpanRepresentation
-import com.omgodse.notally.miscellaneous.applySpans
 import com.omgodse.notally.xml.XMLReader
 import com.omgodse.notally.xml.XMLTags
 import com.omgodse.notally.xml.XMLWriter
-import java.io.FileWriter
 import java.util.*
 import kotlin.collections.HashSet
 
-class TakeNoteModel : BaseModel() {
+class TakeNoteModel(private val app: Application) : BaseModel(app) {
 
     var body = Editable.Factory.getInstance().newEditable(String())
 
     override fun saveNote() {
-        if (file != null) {
-            val fileWriter = FileWriter(file)
-            val xmlWriter = XMLWriter(XMLTags.Note)
+        file?.let {
+            val xmlWriter = XMLWriter(XMLTags.Note, it)
 
-            xmlWriter.startNote()
-            xmlWriter.setDateCreated(timestamp.toString())
+            xmlWriter.start()
+            xmlWriter.setTimestamp(timestamp.toString())
             xmlWriter.setTitle(title)
             xmlWriter.setBody(body.toString().trimEnd())
             xmlWriter.setSpans(getFilteredSpans())
             xmlWriter.setLabels(labels.value ?: HashSet())
-            xmlWriter.endNote()
 
-            fileWriter.write(xmlWriter.getText())
-            fileWriter.close()
+            xmlWriter.end()
         }
+    }
+
+    override fun shareNote() {
+        val notesHelper = NotesHelper(app)
+        notesHelper.shareNote(title, body.toString())
     }
 
     override fun setStateFromFile() {
@@ -41,8 +43,8 @@ class TakeNoteModel : BaseModel() {
             if (file.exists()){
                 val xmlReader = XMLReader(file)
                 title = xmlReader.getTitle()
-                timestamp = xmlReader.getDateCreated().toLong()
-                body = xmlReader.getBody().applySpans(xmlReader.getSpans())
+                timestamp = xmlReader.getTimestamp().toLong()
+                body = Editable.Factory.getInstance().newEditable(xmlReader.getBody())
                 labels.value = xmlReader.getLabels()
             }
         }
