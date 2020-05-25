@@ -71,6 +71,22 @@
 
     <PreferenceCategory
         app:iconSpaceReserved="true"
+        app:title="@string/backup">
+
+        <Preference
+            app:iconSpaceReserved="true"
+            app:key="@string/exportNotesToAFileKey"
+            app:title="@string/export_notes_to_a_file" />
+
+        <Preference
+            app:iconSpaceReserved="true"
+            app:key="@string/importNotesFromAFileKey"
+            app:title="@string/import_notes_from_a_file"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:iconSpaceReserved="true"
         app:title="@string/about">
 
         <Preference

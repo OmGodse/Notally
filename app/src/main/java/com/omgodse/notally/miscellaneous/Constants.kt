@@ -12,12 +12,13 @@ class Constants {
 
         const val RequestCode = 0
         const val RequestCodeExportFile = 10
+        const val RequestCodeImportFile = 20
 
-        const val ResultCodeEditedFile = 20
-        const val ResultCodeCreatedFile = 30
-        const val ResultCodeDeletedFile = 40
-        const val ResultCodeArchivedFile = 50
-        const val ResultCodeRestoredFile = 60
-        const val ResultCodeDeletedForeverFile = 70
+        const val ResultCodeEditedFile = 30
+        const val ResultCodeCreatedFile = 40
+        const val ResultCodeDeletedFile = 50
+        const val ResultCodeArchivedFile = 60
+        const val ResultCodeRestoredFile = 70
+        const val ResultCodeDeletedForeverFile = 80
     }
 }

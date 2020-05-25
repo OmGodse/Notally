@@ -1,5 +1,6 @@
 package com.omgodse.notally.fragments
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -12,10 +13,13 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.R
+import com.omgodse.notally.helpers.ExportHelper
+import com.omgodse.notally.miscellaneous.Constants
 
 class Settings : PreferenceFragmentCompat() {
 
     private lateinit var mContext: Context
+    private lateinit var exportHelper: ExportHelper
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -25,14 +29,34 @@ class Settings : PreferenceFragmentCompat() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        exportHelper = ExportHelper(mContext, this)
+
         val themePreference: ListPreference? = findPreference(mContext.getString(R.string.themeKey))
 
         val maxItemsPref: EditTextPreference? = findPreference(mContext.getString(R.string.maxItemsToDisplayInListKey))
         val maxLinesPref: EditTextPreference? = findPreference(mContext.getString(R.string.maxLinesToDisplayInNoteKey))
 
+        val exportNotesPref: Preference? = findPreference(mContext.getString(R.string.exportNotesToAFileKey))
+        val importNotesPref: Preference? = findPreference(mContext.getString(R.string.importNotesFromAFileKey))
+
         val ratePref: Preference? = findPreference(mContext.getString(R.string.rateKey))
         val githubPref: Preference? = findPreference(mContext.getString(R.string.githubKey))
         val librariesPref: Preference? = findPreference(mContext.getString(R.string.librariesKey))
+
+        exportNotesPref?.setOnPreferenceClickListener {
+            exportHelper.exportBackup()
+            return@setOnPreferenceClickListener true
+        }
+
+        importNotesPref?.setOnPreferenceClickListener {
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                addCategory(Intent.CATEGORY_OPENABLE)
+                type = "text/xml"
+            }
+
+            startActivityForResult(intent, Constants.RequestCodeImportFile)
+            return@setOnPreferenceClickListener true
+        }
 
         githubPref?.setOnPreferenceClickListener {
             openLink(Github)
@@ -82,6 +106,25 @@ class Settings : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.settings, rootKey)
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == Constants.RequestCodeExportFile && resultCode == Activity.RESULT_OK) {
+            val uri = data?.data
+            if (uri != null) {
+                exportHelper.writeFileToStream(uri)
+            }
+        }
+        if (requestCode == Constants.RequestCodeImportFile && resultCode == Activity.RESULT_OK) {
+            val uri = data?.data
+            if (uri != null) {
+                val inputStream = mContext.contentResolver.openInputStream(uri)
+                if (inputStream != null) {
+                    exportHelper.importBackup(inputStream)
+                }
+            }
+        }
+    }
+
 
     private fun openLink(link: String) {
         val uri = Uri.parse(link)
