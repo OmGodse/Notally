@@ -51,7 +51,6 @@
     <string name="drag_handle">Drag Handle</string>
     <string name="bold">Bold</string>
     <string name="italic">Italic</string>
-    <string name="underline">Underline</string>
     <string name="strikethrough">Strikethrough</string>
     <string name="clear_formatting">Clear formatting</string>
     <string name="monospace">Monospace</string>

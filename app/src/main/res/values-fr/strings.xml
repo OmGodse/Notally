@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fragment Titles -->
+    <string name="notes">Note</string>
+    <string name="deleted">Éléments supprimés</string>
+    <string name="archived">Éléments archivés</string>
+    <string name="settings">Paramètres</string>
+
+    <!-- Menu Options -->
+    <string name="share">Partager</string>
+    <string name="search">Rechercher</string>
+    <string name="labels">Étiquettes</string>
+    <string name="delete">Supprimer</string>
+    <string name="restore">Restaurer</string>
+    <string name="archive">Archiver</string>
+    <string name="unarchive">Restaurer</string>
+    <string name="delete_forever">Supprimer définitivement</string>
+
+    <!-- Chooser dialog hints -->
+    <string name="view_note">Voir la note…</string>
+    <string name="share_note">Partager la note…</string>
+
+    <!-- Dialogs -->
+    <string name="save">Sauvegarder</string>
+    <string name="edit">Modifier</string>
+    <string name="cancel">Annuler</string>
+    <string name="make_list">Créer une liste</string>
+    <string name="take_note">Prendre des notes</string>
+    <string name="add_label">Ajouter une étiquette</string>
+    <string name="export">Exporter</string>
+    <string name="plain_text">Text brut</string>
+    <string name="save_to_device">Sauvegarder sur l\'appareil</string>
+    <string name="edit_label">Modifier l\'étiquette</string>
+    <string name="label_exists">L\'étiquette existe</string>
+    <string name="delete_label">Supprimer l\'étiquette ?</string>
+    <string name="create_new">Il n\'existe pas encore d\'étiquettes. En créer une ?</string>
+    <string name="delete_note_forever">Supprimer la note définitivement ?</string>
+    <string name="your_notes_associated">Vos notes associées à cette étiquette ne seront pas supprimées</string>
+
+    <!-- Lists and Notes -->
+    <string name="note">Note</string>
+    <string name="item">Élément</string>
+    <string name="date">Date</string>
+    <string name="title">Titre</string>
+    <string name="add_item">Ajouter un élément</string>
+    <string name="one_more_item">un élément de plus</string>
+    <string name="more_items">%1$d éléments de plus</string>
+    <string name="drag_handle">Poignée de glissement</string>
+    <string name="bold">Gras</string>
+    <string name="italic">Italique</string>
+    <string name="strikethrough">Barré</string>
+    <string name="clear_formatting">Supprimer le formatage</string>
+    <string name="monospace">Chasse fixe</string>
+
+    <!-- Miscellaneous -->
+    <string name="created">Créé</string>
+    <string name="saved_to_device">Sauvegardé sur l\'appareil</string>
+    <string name="saved_to_notally">Sauvegardé sur Notally</string>
+    <string name="empty_note">Note vide</string>
+    <string name="empty_list">Liste vide</string>
+    <string name="discarded_empty_note">Note vide supprimée</string>
+    <string name="discarded_empty_list">Liste vide supprimée</string>
+
+    <!-- Settings Page -->
+    <string name="appearance">Apparence</string>
+
+    <string name="view">Vue</string>
+    <string name="list">Liste</string>
+    <string name="grid">Grille</string>
+
+    <string name="theme">Thème</string>
+    <string name="light">Lumineux</string>
+    <string name="dark">Sombre</string>
+    <string name="follow_system">En fonction du système</string>
+
+    <string name="sort_by">Trier par</string>
+    <string name="newest_first">Plus récent</string>
+    <string name="oldest_first">Plus ancien</string>
+
+    <string name="card_type">Modèle des cartes</string>
+    <string name="elevated">Relief</string>
+    <string name="flat">Plat</string>
+
+    <string name="content_density">Densité d\'affichage</string>
+    <string name="max_items_to_display">Nombre maximum d\'éléments à afficher dans une liste</string>
+    <string name="max_lines_to_display">Nombre maximum de lignes à afficher dans une note</string>
+
+    <string name="show_date_created">Afficher la date de création</string>
+
+    <string name="backup">Sauvegarde</string>
+    <string name="export_notes_to_a_file">Exporter des notes vers un fichier</string>
+    <string name="import_notes_from_a_file">Importer des notes depuis un fichier</string>
+
+    <string name="about">A propos</string>
+    <string name="libraries">Librairies</string>
+    <string name="rate">Noter cette application</string>
+</resources>

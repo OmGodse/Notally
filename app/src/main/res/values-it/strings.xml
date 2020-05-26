@@ -48,7 +48,6 @@
     <string name="drag_handle">Trascina</string>
     <string name="bold">Grassetto</string>
     <string name="italic">Corsivo</string>
-    <string name="underline">Sottolineato</string>
     <string name="strikethrough">Barrato</string>
     <string name="clear_formatting">Cancella formattazione del testo</string>
     <string name="monospace">Monospazio</string>
