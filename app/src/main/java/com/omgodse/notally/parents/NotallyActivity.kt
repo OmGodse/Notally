@@ -116,6 +116,6 @@ abstract class NotallyActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val DateFormat = "EEE, d MMM yyyy"
+        const val DateFormat = "EEE d MMM yyyy"
     }
 }
