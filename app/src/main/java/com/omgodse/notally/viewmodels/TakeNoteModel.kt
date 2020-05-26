@@ -8,6 +8,7 @@ import android.text.style.StyleSpan
 import android.text.style.TypefaceSpan
 import com.omgodse.notally.helpers.NotesHelper
 import com.omgodse.notally.miscellaneous.SpanRepresentation
+import com.omgodse.notally.miscellaneous.applySpans
 import com.omgodse.notally.xml.XMLReader
 import com.omgodse.notally.xml.XMLTags
 import com.omgodse.notally.xml.XMLWriter
@@ -44,7 +45,7 @@ class TakeNoteModel(private val app: Application) : BaseModel(app) {
                 val xmlReader = XMLReader(file)
                 title = xmlReader.getTitle()
                 timestamp = xmlReader.getTimestamp().toLong()
-                body = Editable.Factory.getInstance().newEditable(xmlReader.getBody())
+                body = xmlReader.getBody().applySpans(xmlReader.getSpans())
                 labels.value = xmlReader.getLabels()
             }
         }
