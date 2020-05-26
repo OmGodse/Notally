@@ -13,7 +13,9 @@ A minimalistic notes app
 Languages
 
 * English
-* Italian
+* Italian by Luigi Sforza
+* Ukrainian by Alex Shpak
+* French by Arnaud Dieumegard
 
 If you would like to help translate the app, please contact me [here](mailto:omgodseapps@gmail.com)
 
