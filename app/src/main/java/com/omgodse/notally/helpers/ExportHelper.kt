@@ -293,12 +293,14 @@ class ExportHelper(private val context: Context, private val fragment: Fragment)
             stringWriter.toString()
         }
 
-        return if (xmlReader.getTitle().isEmpty()) {
+        val fileName =  if (xmlReader.getTitle().isEmpty()) {
             val words = body.split(" ")
             if (words.size > 1) {
                 "${words[0]} ${words[1]}"
             } else words[0]
         } else xmlReader.getTitle()
+
+        return fileName.replace("/", "")
     }
 
     private fun getHTML(file: File): JsoupDocument {
