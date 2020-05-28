@@ -1,12 +1,10 @@
 package com.omgodse.notally.viewmodels
 
-import android.app.Application
 import android.graphics.Typeface
 import android.text.Editable
 import android.text.style.StrikethroughSpan
 import android.text.style.StyleSpan
 import android.text.style.TypefaceSpan
-import com.omgodse.notally.helpers.NotesHelper
 import com.omgodse.notally.miscellaneous.SpanRepresentation
 import com.omgodse.notally.miscellaneous.applySpans
 import com.omgodse.notally.xml.XMLReader
@@ -15,7 +13,7 @@ import com.omgodse.notally.xml.XMLWriter
 import java.util.*
 import kotlin.collections.HashSet
 
-class TakeNoteModel(private val app: Application) : BaseModel(app) {
+class TakeNoteModel : BaseModel() {
 
     var body = Editable.Factory.getInstance().newEditable(String())
 
@@ -32,11 +30,6 @@ class TakeNoteModel(private val app: Application) : BaseModel(app) {
 
             xmlWriter.end()
         }
-    }
-
-    override fun shareNote() {
-        val notesHelper = NotesHelper(app)
-        notesHelper.shareNote(title, body.toString())
     }
 
     override fun setStateFromFile() {

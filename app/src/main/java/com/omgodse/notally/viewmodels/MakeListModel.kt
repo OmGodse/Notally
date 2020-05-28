@@ -1,13 +1,11 @@
 package com.omgodse.notally.viewmodels
 
-import android.app.Application
-import com.omgodse.notally.helpers.NotesHelper
 import com.omgodse.notally.miscellaneous.ListItem
 import com.omgodse.notally.xml.XMLReader
 import com.omgodse.notally.xml.XMLTags
 import com.omgodse.notally.xml.XMLWriter
 
-class MakeListModel(private val app: Application) : BaseModel(app) {
+class MakeListModel : BaseModel() {
 
     val items = ArrayList<ListItem>()
 
@@ -24,11 +22,6 @@ class MakeListModel(private val app: Application) : BaseModel(app) {
 
             xmlWriter.end()
         }
-    }
-
-    override fun shareNote() {
-        val notesHelper = NotesHelper(app)
-        notesHelper.shareNote(title, items)
     }
 
     override fun setStateFromFile() {

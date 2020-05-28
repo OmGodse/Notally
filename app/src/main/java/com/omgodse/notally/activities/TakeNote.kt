@@ -55,6 +55,11 @@ class TakeNote : NotallyActivity() {
         notesHelper.labelNote(model.labels.value ?: HashSet(), labelListener)
     }
 
+    override fun shareNote() {
+        val notesHelper = NotesHelper(this)
+        notesHelper.shareNote(model.title, model.body.toString())
+    }
+
     override fun getViewModel() = model
 
 

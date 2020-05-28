@@ -68,6 +68,11 @@ class MakeList : NotallyActivity() {
         notesHelper.labelNote(model.labels.value ?: HashSet(), labelListener)
     }
 
+    override fun shareNote() {
+        val notesHelper = NotesHelper(this)
+        notesHelper.shareNote(model.title, model.items)
+    }
+
     override fun getViewModel() = model
 
 
