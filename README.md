@@ -52,6 +52,7 @@ Sample list
   <item>
     <text>The Last Ship</text>
     <checked>false</checked>
+  </item>
 </list>
 ```
 
