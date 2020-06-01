@@ -19,6 +19,42 @@ Languages
 
 If you would like to help translate the app, please contact me [here](mailto:omgodseapps@gmail.com)
 
+# How it works
+
+Notes and lists are stored as XML files in the following directories:
+
+ ```files/notes```  
+ ```files/deleted```  
+ ```files/archived```  
+ 
+Sample note
+
+```
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<note>
+  <date-created>1588238090719</date-created>
+  <title>The Millionaire's Convenient Bride</title>
+  <body>She stared through the window at the stars.</body>
+</note>
+```
+
+Sample list
+
+```
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<list>
+  <date-created>1589699099326</date-created>
+  <title>Amazon Prime TV</title>
+  <item>
+    <text>Suits</text>
+    <checked>false</checked>
+  </item>
+  <item>
+    <text>The Last Ship</text>
+    <checked>false</checked>
+</list>
+```
+
 # Download
 
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" alt="Get it on Google Play"  height="70"/>](https://play.google.com/store/apps/details?id=com.omgodse.notally)
