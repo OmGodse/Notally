@@ -32,10 +32,11 @@ import org.jsoup.nodes.Document as JsoupDocument
 class ExportHelper(private val context: Context, private val fragment: Fragment) {
 
     private var currentFile: File? = null
+    private val notesHelper = NotesHelper(context)
+    private val settingsHelper = SettingsHelper(context)
 
     fun exportBackup() {
         val backupFile = File(getExportedPath(), "Notally Backup.xml")
-        val notesHelper = NotesHelper(context)
 
         val notes = notesHelper.getNotePath().listFiles()
         val deletedNotes = notesHelper.getDeletedPath().listFiles()
@@ -79,7 +80,6 @@ class ExportHelper(private val context: Context, private val fragment: Fragment)
     }
 
     fun importBackup(inputStream: InputStream) {
-        val notesHelper = NotesHelper(context)
         val backupReader = BackupReader(inputStream)
         val backup = backupReader.getBackup()
 
@@ -155,13 +155,13 @@ class ExportHelper(private val context: Context, private val fragment: Fragment)
         val document = Document(PageSize.A4)
         val writer = PdfWriter.getInstance(document, pdfFile.outputStream())
         val htmlDocument = getHTML(file)
-        val stylesheet = "<style>body { font-family : Roboto ; } h2 { letter-spacing : 0.5px; } tt { font-family : 'Roboto Mono' ;}</style>"
+        val stylesheet = "<style>body { font-family : sans-serif ; } h2 { letter-spacing : 0.5px; } tt { font-family : monospace ;}</style>"
         htmlDocument.head().append(stylesheet)
         document.open()
 
         val fontProvider = XMLWorkerFontProvider(XMLWorkerFontProvider.DONTLOOKFORFONTS)
-        fontProvider.register("assets/roboto.ttf", "Roboto")
-        fontProvider.register("assets/roboto_mono.ttf", "Roboto Mono")
+        fontProvider.register("assets/roboto.ttf", "sans-serif")
+        fontProvider.register("assets/roboto_mono.ttf", "monospace")
 
         XMLWorkerHelper.getInstance().parseXHtml(writer, document, htmlDocument.html().byteInputStream(), Charsets.UTF_8, fontProvider)
         document.close()
@@ -186,7 +186,6 @@ class ExportHelper(private val context: Context, private val fragment: Fragment)
         val body = if (xmlReader.isNote()) {
             xmlReader.getBody()
         } else {
-            val notesHelper = NotesHelper(context)
             notesHelper.getBodyFromItems(xmlReader.getListItems())
         }
 
@@ -196,20 +195,21 @@ class ExportHelper(private val context: Context, private val fragment: Fragment)
         val fileName = getFileName(file)
 
         val textFile = File(getExportedPath(), "$fileName.txt")
-
-        val buffer = StringBuffer()
-        if (title.isNotEmpty()) {
-            buffer.append(title)
-            buffer.append("\n")
-            buffer.append("\n")
+        val content = buildString {
+            if (title.isNotEmpty()){
+                append(title)
+                append("\n")
+                append("\n")
+            }
+            if (settingsHelper.getShowDateCreatedPreference()){
+                append(date)
+                append("\n")
+                append("\n")
+            }
+            append(body)
         }
-        buffer.append(date)
-        buffer.append("\n")
-        buffer.append("\n")
 
-        buffer.append(body)
-
-        textFile.writeText(buffer.toString())
+        textFile.writeText(content)
 
         showFileOptionsDialog(textFile, "text/plain")
     }
@@ -311,20 +311,26 @@ class ExportHelper(private val context: Context, private val fragment: Fragment)
         val formatter = SimpleDateFormat(NotallyActivity.DateFormat, context.getLocale())
         val date = formatter.format(xmlReader.getTimestamp().toLong())
 
-        val htmlBuffer = StringBuffer()
-        htmlBuffer.append("<h2>${xmlReader.getTitle()}</h2>")
-        htmlBuffer.append("<p>$date</p>")
+        val html = buildString {
+            append("<h2>${xmlReader.getTitle()}</h2>")
 
-        if (xmlReader.isNote()) {
-            htmlBuffer.append("<p>$htmlBody</p>")
-        } else {
-            htmlBuffer.append("<ol>")
-            xmlReader.getListItems().forEach { item ->
-                htmlBuffer.append("<li>${item.body}</li>")
+            if (settingsHelper.getShowDateCreatedPreference()) {
+                append("<p>$date</p>")
             }
-            htmlBuffer.append("</ol>")
+
+            if (xmlReader.isNote()) {
+                append("<p>$htmlBody</p>")
+            }
+            else {
+                append("<ol>")
+                xmlReader.getListItems().forEach { item ->
+                    append("<li>${item.body}</li>")
+                }
+                append("</ol>")
+            }
         }
-        val document = Jsoup.parseBodyFragment(htmlBuffer.toString())
+
+        val document = Jsoup.parseBodyFragment(html)
         document.charset(Charsets.UTF_8)
         document.outputSettings().syntax(JsoupDocument.OutputSettings.Syntax.xml)
         return document
