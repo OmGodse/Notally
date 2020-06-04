@@ -2,6 +2,7 @@ package com.omgodse.notally.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.text.InputType
 import android.view.*
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
@@ -102,7 +103,7 @@ class Labels : Fragment(), NoteListener {
 
     private fun populateRecyclerView() {
         val labels = notesHelper.getSortedLabelsList()
-        labelsAdapter.items = ArrayList(labels)
+        labelsAdapter.items = labels
         labelsAdapter.notifyDataSetChanged()
         confirmVisibility()
     }
@@ -111,18 +112,42 @@ class Labels : Fragment(), NoteListener {
     private fun displayAddLabelDialog() {
         val priorLabels = notesHelper.getSortedLabelsList()
 
-        val dialogHelper = DialogHelper(mContext)
-        dialogHelper.setTitle(R.string.add_label)
-        dialogHelper.onPositiveButtonClicked(View.OnClickListener {
-            val label = dialogHelper.getEnteredValue()
-            if (label.isNotEmpty()) {
-                if (!priorLabels.contains(label)) {
-                    insertLabel(label)
-                    dialogHelper.dismiss()
-                } else dialogHelper.displayValueExistsError()
-            } else dialogHelper.dismiss()
-        })
-        dialogHelper.showDialog()
+        val builder = MaterialAlertDialogBuilder(mContext)
+
+        val view = View.inflate(context, R.layout.dialog_input, null)
+        val editText: TextInputEditText = view.findViewById(android.R.id.edit)
+        val textInputLayout: TextInputLayout = view.findViewById(R.id.TextInputLayout)
+
+        editText.inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS
+        editText.filters = arrayOf()
+
+        builder.setView(view)
+        builder.setTitle(R.string.add_label)
+        builder.setPositiveButton(R.string.save, null)
+        builder.setNegativeButton(R.string.cancel, null)
+
+        val dialog = builder.create()
+
+        dialog.setOnShowListener {
+            val positiveButton: Button = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            positiveButton.setOnClickListener {
+                val label = editText.text.toString().trim()
+                if (label.isNotEmpty()) {
+                    if (!priorLabels.contains(label)) {
+                        insertLabel(label)
+                        dialog.dismiss()
+                    }
+                    else {
+                        textInputLayout.isErrorEnabled = true
+                        textInputLayout.error = mContext.getString(R.string.label_exists)
+                    }
+                }
+                else dialog.dismiss()
+            }
+        }
+
+        dialog.show()
+        editText.requestFocus()
     }
 
     private fun confirmDeletion(position: Int) {
@@ -141,22 +166,45 @@ class Labels : Fragment(), NoteListener {
         val label = labelsAdapter.items[position]
         val priorLabels = notesHelper.getSortedLabelsList()
 
-        val dialogHelper = DialogHelper(mContext)
-        dialogHelper.setTitle(R.string.edit_label)
-        dialogHelper.setInputText(label)
-        dialogHelper.onPositiveButtonClicked(View.OnClickListener {
-            val enteredValue = dialogHelper.getEnteredValue()
-            when {
-                enteredValue.isEmpty() -> dialogHelper.dismiss()
-                enteredValue == label -> dialogHelper.dismiss()
-                !priorLabels.contains(enteredValue) -> {
-                    editLabel(position, enteredValue)
-                    dialogHelper.dismiss()
+        val builder = MaterialAlertDialogBuilder(mContext)
+
+        val view = View.inflate(context, R.layout.dialog_input, null)
+        val editText: TextInputEditText = view.findViewById(android.R.id.edit)
+        val textInputLayout: TextInputLayout = view.findViewById(R.id.TextInputLayout)
+
+        editText.inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS
+        editText.filters = arrayOf()
+
+        editText.setText(label)
+
+        builder.setView(view)
+        builder.setTitle(R.string.edit_label)
+        builder.setPositiveButton(R.string.save, null)
+        builder.setNegativeButton(R.string.cancel, null)
+
+        val dialog = builder.create()
+
+        dialog.setOnShowListener {
+            val positiveButton: Button = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            positiveButton.setOnClickListener {
+                val enteredLabel = editText.text.toString().trim()
+                when {
+                    enteredLabel.isEmpty() -> dialog.dismiss()
+                    enteredLabel == label -> dialog.dismiss()
+                    !priorLabels.contains(enteredLabel) -> {
+                        editLabel(position, enteredLabel)
+                        dialog.dismiss()
+                    }
+                    priorLabels.contains(enteredLabel) -> {
+                        textInputLayout.isErrorEnabled = true
+                        textInputLayout.error = mContext.getString(R.string.label_exists)
+                    }
                 }
-                priorLabels.contains(enteredValue) -> dialogHelper.displayValueExistsError()
             }
-        })
-        dialogHelper.showDialog()
+        }
+
+        dialog.show()
+        editText.requestFocus()
     }
 
 
@@ -264,16 +312,15 @@ class Labels : Fragment(), NoteListener {
                 xmlWriter.setTitle(xmlReader.getTitle())
                 xmlWriter.setBody(xmlReader.getBody())
                 xmlWriter.setSpans(xmlReader.getSpans())
-                xmlWriter.setLabels(labels)
             } else {
                 xmlWriter = XMLWriter(XMLTags.List, file)
                 xmlWriter.start()
                 xmlWriter.setTimestamp(xmlReader.getTimestamp())
                 xmlWriter.setTitle(xmlReader.getTitle())
                 xmlWriter.setListItems(xmlReader.getListItems())
-                xmlWriter.setLabels(xmlReader.getLabels())
             }
 
+            xmlWriter.setLabels(labels)
             xmlWriter.end()
         }
     }
@@ -295,65 +342,16 @@ class Labels : Fragment(), NoteListener {
                 xmlWriter.setTitle(xmlReader.getTitle())
                 xmlWriter.setBody(xmlReader.getBody())
                 xmlWriter.setSpans(xmlReader.getSpans())
-                xmlWriter.setLabels(labels)
             } else {
                 xmlWriter = XMLWriter(XMLTags.List, file)
                 xmlWriter.start()
                 xmlWriter.setTimestamp(xmlReader.getTimestamp())
                 xmlWriter.setTitle(xmlReader.getTitle())
                 xmlWriter.setListItems(xmlReader.getListItems())
-                xmlWriter.setLabels(xmlReader.getLabels())
             }
 
+            xmlWriter.setLabels(labels)
             xmlWriter.end()
-        }
-    }
-
-    private class DialogHelper(private val context: Context) {
-
-        val dialog: AlertDialog
-        val editText: TextInputEditText
-        val textInputLayout: TextInputLayout
-
-        init {
-            val builder = MaterialAlertDialogBuilder(context)
-
-            val view = View.inflate(context, R.layout.dialog_add_label, null)
-            editText = view.findViewById(R.id.TextInputEditText)
-            textInputLayout = view.findViewById(R.id.TextInputLayout)
-
-            builder.setView(view)
-            builder.setPositiveButton(R.string.save, null)
-            builder.setNegativeButton(R.string.cancel, null)
-
-            dialog = builder.create()
-        }
-
-        fun showDialog() {
-            dialog.show()
-            editText.requestFocus()
-        }
-
-        fun dismiss() = dialog.cancel()
-
-        fun setTitle(titleId: Int) = dialog.setTitle(titleId)
-
-        fun setInputText(text: String) = editText.setText(text)
-
-        fun displayValueExistsError() {
-            textInputLayout.isErrorEnabled = true
-            textInputLayout.error = context.getString(R.string.label_exists)
-        }
-
-        fun getEnteredValue(): String {
-            return editText.text.toString().trim()
-        }
-
-        fun onPositiveButtonClicked(positiveButtonClickListener: View.OnClickListener) {
-            dialog.setOnShowListener {
-                val positiveButton: Button = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
-                positiveButton.setOnClickListener(positiveButtonClickListener)
-            }
         }
     }
 }

@@ -3,6 +3,7 @@ package com.omgodse.notally.helpers
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.text.InputType
 import android.view.View
 import androidx.core.util.forEach
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -147,9 +148,12 @@ class NotesHelper(val context: Context) {
     private fun displayAddLabelDialog(previousLabels: HashSet<String>, listener: LabelListener) {
         val priorLabels = getSortedLabelsList()
 
-        val view = View.inflate(context, R.layout.dialog_add_label, null)
+        val view = View.inflate(context, R.layout.dialog_input, null)
         val textInputLayout: TextInputLayout = view.findViewById(R.id.TextInputLayout)
-        val textInputEditText: TextInputEditText = view.findViewById(R.id.TextInputEditText)
+        val textInputEditText: TextInputEditText = view.findViewById(android.R.id.edit)
+
+        textInputEditText.inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS
+        textInputEditText.filters = arrayOf()
 
         val dialogBuilder = MaterialAlertDialogBuilder(context)
         dialogBuilder.setTitle(R.string.add_label)

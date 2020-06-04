@@ -48,7 +48,7 @@
 
         <EditTextPreference
             app:defaultValue="@string/four"
-            app:dialogLayout="@layout/dialog_preference"
+            app:dialogLayout="@layout/dialog_input"
             app:iconSpaceReserved="true"
             app:key="@string/maxItemsToDisplayInListKey"
             app:title="@string/max_items_to_display"
@@ -56,7 +56,7 @@
 
         <EditTextPreference
             app:defaultValue="@string/eight"
-            app:dialogLayout="@layout/dialog_preference"
+            app:dialogLayout="@layout/dialog_input"
             app:iconSpaceReserved="true"
             app:key="@string/maxLinesToDisplayInNoteKey"
             app:title="@string/max_lines_to_display"
