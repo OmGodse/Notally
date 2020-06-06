@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fragment Titles -->
+    <string name="notes">Заметки</string>
+    <string name="deleted">Удаленные</string>
+    <string name="archived">Архивированные</string>
+    <string name="settings">Настройки</string>
+
+    <!-- Menu Options -->
+    <string name="share">Поделиться</string>
+    <string name="search">Поиск</string>
+    <string name="labels">Метки</string>
+    <string name="delete">Удалить</string>
+    <string name="restore">Восстановить</string>
+    <string name="archive">Архивировать</string>
+    <string name="unarchive">Разархивировать</string>
+    <string name="delete_forever">Удалить навсегда</string>
+
+    <!-- Chooser dialog hints -->
+    <string name="view_note">Посмотреть заметку…</string>
+    <string name="share_note">Поделиться заметкой…</string>
+
+    <!-- Dialogs -->
+    <string name="save">Сохранить</string>
+    <string name="edit">Редактировать</string>
+    <string name="cancel">Отменить</string>
+    <string name="make_list">Сделать список</string>
+    <string name="take_note">Создать заметку</string>
+    <string name="add_label">Добавить метку</string>
+    <string name="export">Скачать</string>
+    <string name="plain_text">Простой текст</string>
+    <string name="save_to_device">Сохранить на устройство</string>
+    <string name="edit_label">Изменить метку</string>
+    <string name="label_exists">Ярлык существует</string>
+    <string name="delete_label">Удалить метку?</string>
+    <string name="create_new">Еще нет меток, создать?</string>
+    <string name="delete_note_forever">Удалить заметку навсегда?</string>
+    <string name="your_notes_associated">Все ваши заметки с этим тегом не будут удалены</string>
+
+    <!-- Lists and Notes -->
+    <string name="note">Заметка</string>
+    <string name="item">Пункт</string>
+    <string name="date">Дата</string>
+    <string name="title">Заголовок</string>
+    <string name="add_item">Добавить пункт</string>
+    <string name="one_more_item">Еще 1 пунктов</string>
+    <string name="more_items">Еще %1$d пунктов</string>
+    <string name="drag_handle">Перетащить ручку</string>
+    <string name="bold">Жирный</string>
+    <string name="italic">Курсив</string>
+    <string name="strikethrough">Перечеркнутый</string>
+    <string name="clear_formatting">Стандартный стиль</string>
+    <string name="monospace">Пространство между символами</string>
+
+    <!-- Miscellaneous -->
+    <string name="created">Создано</string>
+    <string name="saved_to_device">Сохранено на телефоне</string>
+    <string name="saved_to_notally">Сохранено в Notally</string>
+    <string name="empty_note">Пустая заметка</string>
+    <string name="empty_list">Пустой список</string>
+    <string name="discarded_empty_note">Удалить пустую заметку</string>
+    <string name="discarded_empty_list">Удалить пустой список</string>
+
+    <!-- Settings Page -->
+    <string name="appearance">Внешний вид</string>
+
+    <string name="view">Вид</string>
+    <string name="list">Список</string>
+    <string name="grid">Сетка</string>
+
+    <string name="theme">Тема</string>
+    <string name="light">Светлая</string>
+    <string name="dark">Темная</string>
+    <string name="follow_system">Как на устройстве</string>
+
+    <string name="sort_by">Сортировать по</string>
+    <string name="newest_first">Самый новый</string>
+    <string name="oldest_first">Самые старые</string>
+
+    <string name="card_type">Вид карточек</string>
+    <string name="elevated">поднятый</string>
+    <string name="flat">Плоские</string>
+
+    <string name="content_density">Плотность содержимого</string>
+    <string name="max_items_to_display">Максимум отображаемых пунктов в списке</string>
+    <string name="max_lines_to_display">Максимум отображаемых строк в заметке</string>
+
+    <string name="show_date_created">Показывать дату создания</string>
+
+    <string name="backup">Резервная копия</string>
+    <string name="export_notes_to_a_file">Экспорт заметок в файл</string>
+    <string name="import_notes_from_a_file">Импорт заметок из файла</string>
+
+    <string name="about">Про приложение</string>
+    <string name="libraries">Библиотеки</string>
+    <string name="rate">Оценить приложение</string>
+</resources>
