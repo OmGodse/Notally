@@ -60,6 +60,7 @@
     <string name="empty_list">Liste vide</string>
     <string name="discarded_empty_note">Note vide supprimée</string>
     <string name="discarded_empty_list">Liste vide supprimée</string>
+    <string name="something_went_wrong">Quelque chose a mal tourné. Veuillez réessayer.</string>
 
     <!-- Settings Page -->
     <string name="appearance">Apparence</string>
@@ -72,10 +73,6 @@
     <string name="light">Lumineux</string>
     <string name="dark">Sombre</string>
     <string name="follow_system">En fonction du système</string>
-
-    <string name="sort_by">Trier par</string>
-    <string name="newest_first">Plus récent</string>
-    <string name="oldest_first">Plus ancien</string>
 
     <string name="card_type">Modèle des cartes</string>
     <string name="elevated">Relief</string>

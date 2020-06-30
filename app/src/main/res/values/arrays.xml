@@ -1,15 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="sortByEntries">
-        <item>@string/oldest_first</item>
-        <item>@string/newest_first</item>
-    </string-array>
-
-    <string-array name="sortByValues">
-        <item>@string/oldestFirstKey</item>
-        <item>@string/newestFirstKey</item>
-    </string-array>
-
     <string-array name="themeEntries">
         <item>@string/light</item>
         <item>@string/dark</item>

@@ -60,6 +60,7 @@
     <string name="empty_list">Пустой список</string>
     <string name="discarded_empty_note">Удалить пустую заметку</string>
     <string name="discarded_empty_list">Удалить пустой список</string>
+    <string name="something_went_wrong">Что-то пошло не так. Пожалуйста, попробуйте еще раз.</string>
 
     <!-- Settings Page -->
     <string name="appearance">Внешний вид</string>
@@ -72,10 +73,6 @@
     <string name="light">Светлая</string>
     <string name="dark">Темная</string>
     <string name="follow_system">Как на устройстве</string>
-
-    <string name="sort_by">Сортировать по</string>
-    <string name="newest_first">Самый новый</string>
-    <string name="oldest_first">Самые старые</string>
 
     <string name="card_type">Вид карточек</string>
     <string name="elevated">поднятый</string>

@@ -63,6 +63,7 @@
     <string name="empty_list">Empty list</string>
     <string name="discarded_empty_note">Discarded empty note</string>
     <string name="discarded_empty_list">Discarded empty list</string>
+    <string name="something_went_wrong">Something went wrong. Please try again.</string>
 
     <!-- Settings Page -->
     <string name="appearance">Appearance</string>
@@ -75,10 +76,6 @@
     <string name="light">Light</string>
     <string name="dark">Dark</string>
     <string name="follow_system">Follow system</string>
-
-    <string name="sort_by">Sort by</string>
-    <string name="newest_first">Newest</string>
-    <string name="oldest_first">Oldest</string>
 
     <string name="card_type">Card type</string>
     <string name="elevated">Elevated</string>
@@ -107,10 +104,6 @@
     <string name="lightKey" translatable="false">light</string>
     <string name="darkKey" translatable="false">dark</string>
     <string name="followSystemKey" translatable="false">followSystem</string>
-
-    <string name="sortByKey" translatable="false">sortBy</string>
-    <string name="oldestFirstKey" translatable="false">oldestFirst</string>
-    <string name="newestFirstKey" translatable="false">newestFirst</string>
 
     <string name="cardTypeKey" translatable="false">cardType</string>
     <string name="elevatedKey" translatable="false">elevated</string>

@@ -60,6 +60,7 @@
     <string name="empty_list">Пустий список</string>
     <string name="discarded_empty_note">Відхилено порожній запис</string>
     <string name="discarded_empty_list">Відхилено порожній список</string>
+    <string name="something_went_wrong">Щось пішло не так. Будь ласка спробуйте ще раз.</string>
 
     <!-- Settings Page -->
     <string name="appearance">Зовнішній вигляд</string>
@@ -72,10 +73,6 @@
     <string name="light">Світла</string>
     <string name="dark">Темна</string>
     <string name="follow_system">Системні налаштування</string>
-
-    <string name="sort_by">Сортувати за</string>
-    <string name="newest_first">Найновіші</string>
-    <string name="oldest_first">Найстаріші</string>
 
     <string name="card_type">Тип картки</string>
     <string name="elevated">Підвищений</string>

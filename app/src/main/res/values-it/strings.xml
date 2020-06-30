@@ -60,6 +60,7 @@
     <string name="empty_list">Lista vuota</string>
     <string name="discarded_empty_note">Nota vuota non salvata</string>
     <string name="discarded_empty_list">Elenco vuoto non salvato</string>
+    <string name="something_went_wrong">Qualcosa è andato storto. Per favore riprova.</string>
 
     <!-- Settings Page -->
     <string name="appearance">Aspetto</string>
@@ -72,10 +73,6 @@
     <string name="light">Chiaro</string>
     <string name="dark">Scuro</string>
     <string name="follow_system">Tema di Sistema</string>
-
-    <string name="sort_by">Ordina per</string>
-    <string name="newest_first">Nuove</string>
-    <string name="oldest_first">Vecchie</string>
 
     <string name="card_type">Tipo di visualizzazione</string>
     <string name="elevated">Con bordi</string>

@@ -23,15 +23,6 @@
             app:useSimpleSummaryProvider="true" />
 
         <ListPreference
-            app:defaultValue="@string/newestFirstKey"
-            app:entries="@array/sortByEntries"
-            app:entryValues="@array/sortByValues"
-            app:iconSpaceReserved="true"
-            app:key="@string/sortByKey"
-            app:title="@string/sort_by"
-            app:useSimpleSummaryProvider="true" />
-
-        <ListPreference
             app:defaultValue="@string/elevatedKey"
             app:entries="@array/noteTypeEntries"
             app:entryValues="@array/noteTypeValues"
