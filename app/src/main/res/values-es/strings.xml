@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fragment Titles -->
+    <string name="notes">Notas</string>
+    <string name="deleted">Eliminados</string>
+    <string name="archived">Archivados</string>
+    <string name="settings">Ajustes</string>
+
+    <!-- Menu Options -->
+    <string name="share">Compartir</string>
+    <string name="search">Buscar</string>
+    <string name="labels">Etiquetas</string>
+    <string name="delete">Eliminar</string>
+    <string name="restore">Restaurar</string>
+    <string name="archive">Archivar</string>
+    <string name="unarchive">Desarchivar</string>
+    <string name="delete_forever">Eliminar para siempre</string>
+
+    <!-- Chooser dialog hints -->
+    <string name="view_note">Ver nota…</string>
+    <string name="share_note">Compartir nota…</string>
+
+    <!-- Dialogs -->
+    <string name="save">Guardar</string>
+    <string name="edit">Editar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="make_list">Hacer lista</string>
+    <string name="take_note">Tomar nota</string>
+    <string name="add_label">Añadir etiqueta</string>
+    <string name="export">Exportar</string>
+    <string name="plain_text">Texto sin formato</string>
+    <string name="save_to_device">Guardar a dispositivo</string>
+    <string name="edit_label">Editar etiqueta</string>
+    <string name="label_exists">Etiqueta existe</string>
+    <string name="delete_label">¿Eliminar etiqueta?</string>
+    <string name="create_new">No hay etiquetas. ¿Crear una?</string>
+    <string name="delete_note_forever">¿Eliminar nota para siempre?</string>
+    <string name="your_notes_associated">Tus notas asociadas con esta etiqueta no serán eliminadas</string>
+
+    <!-- Lists and Notes -->
+    <string name="note">Nota</string>
+    <string name="item">Elemento</string>
+    <string name="date">Fecha</string>
+    <string name="title">Título</string>
+    <string name="add_item">Añadir elemento</string>
+    <string name="one_more_item">1 elemento más</string>
+    <string name="more_items">%1$d más elementos</string>
+    <string name="drag_handle">Arrastra la asa</string>
+    <string name="bold">Negritas</string>
+    <string name="italic">Cursiva</string>
+    <string name="strikethrough">Tachado</string>
+    <string name="clear_formatting">Borrar formato</string>
+    <string name="monospace">Monoespaciado</string>
+
+    <!-- Miscellaneous -->
+    <string name="created">Creadas</string>
+    <string name="saved_to_device">Guardadas a dispositivo</string>
+    <string name="saved_to_notally">Guardadas a Notally</string>
+    <string name="empty_note">Vaciar nota</string>
+    <string name="empty_list">Vaciar lista</string>
+    <string name="discarded_empty_note">Nota vacía descartada</string>
+    <string name="discarded_empty_list">Lista vacía descartada</string>
+    <string name="something_went_wrong">Algo salió mal. Inténtalo de nuevo.</string>
+
+    <!-- Settings Page -->
+    <string name="appearance">Apariencia</string>
+
+    <string name="view">Vista</string>
+    <string name="list">Lista</string>
+    <string name="grid">Cuadrícula</string>
+
+    <string name="theme">Tema</string>
+    <string name="light">Claro</string>
+    <string name="dark">Oscuro</string>
+    <string name="follow_system">Seguir el sistema</string>
+
+    <string name="card_type">Tipo de tarjeta</string>
+    <string name="elevated">Elevada</string>
+    <string name="flat">Plana</string>
+
+    <string name="content_density">Densidad de contenido</string>
+    <string name="max_items_to_display">Elementos máximos para mostrar en lista</string>
+    <string name="max_lines_to_display">Elementos máximos para mostrar en nota</string>
+
+    <string name="show_date_created">Mostrar fecha de creación</string>
+
+    <string name="backup">Respaldar</string>
+    <string name="export_notes_to_a_file">Exportar notas a un archivo</string>
+    <string name="import_notes_from_a_file">Importar notas desde un archivo</string>
+
+    <string name="about">Sobre</string>
+    <string name="libraries">Bibliotecas</string>
+    <string name="rate">Calificar esta app</string>
+</resources>
