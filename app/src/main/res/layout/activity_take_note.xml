@@ -43,7 +43,7 @@
                 android:id="@+id/DateCreated"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/nunito"
+                android:fontFamily="@font/nunito_regular"
                 android:paddingStart="24dp"
                 android:paddingTop="16dp"
                 android:paddingEnd="24dp"

@@ -61,7 +61,7 @@
     </style>
 
     <style name="TextAppearance.ChipLikeButton" parent="TextAppearance.MaterialComponents.Body2">
-        <item name="fontFamily">@font/nunito</item>
+        <item name="fontFamily">@font/nunito_regular</item>
     </style>
 
 
