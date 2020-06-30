@@ -1,40 +1,33 @@
 package com.omgodse.notally.viewmodels
 
-import com.omgodse.notally.miscellaneous.ListItem
-import com.omgodse.notally.xml.XMLReader
-import com.omgodse.notally.xml.XMLTags
-import com.omgodse.notally.xml.XMLWriter
+import android.app.Application
+import com.omgodse.notally.xml.BaseNote
+import com.omgodse.notally.xml.List
+import com.omgodse.notally.xml.ListItem
 
-class MakeListModel : BaseModel() {
+class MakeListModel(app: Application) : NotallyModel(app) {
 
     val items = ArrayList<ListItem>()
 
     override fun saveNote() {
         val listItems = items.filter { item -> item.body.isNotBlank() }
         file?.let {
-            val xmlWriter = XMLWriter(XMLTags.List, it)
-
-            xmlWriter.start()
-            xmlWriter.setTimestamp(timestamp.toString())
-            xmlWriter.setTitle(title)
-            xmlWriter.setListItems(listItems)
-            xmlWriter.setLabels(labels.value ?: HashSet())
-
-            xmlWriter.end()
+            val list = List(title, it.path, labels.value ?: HashSet(), timestamp.toString(), listItems)
+            list.writeToFile()
         }
     }
 
     override fun setStateFromFile() {
         file?.let { file ->
-            if (file.exists()){
-                val xmlReader = XMLReader(file)
-                title = xmlReader.getTitle()
-                timestamp = xmlReader.getTimestamp().toLong()
+            if (file.exists()) {
+                val baseNote = BaseNote.readFromFile(file) as List
+                title = baseNote.title
+                timestamp = baseNote.timestamp.toLong()
 
                 items.clear()
-                items.addAll(xmlReader.getListItems())
+                items.addAll(baseNote.items)
 
-                labels.value = xmlReader.getLabels()
+                labels.value = baseNote.labels
             }
         }
     }

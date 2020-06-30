@@ -9,6 +9,7 @@ import androidx.annotation.StringRes
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textview.MaterialTextView
 import com.omgodse.notally.R
+import com.omgodse.notally.miscellaneous.Operation
 
 class MenuHelper(private val context: Context) {
 
@@ -21,14 +22,16 @@ class MenuHelper(private val context: Context) {
 
     fun show() = bottomSheetDialog.show()
 
-    fun addItem(@StringRes label: Int, @DrawableRes drawable: Int, clickListener: () -> Unit) {
+    fun addItem(@StringRes label: Int, @DrawableRes drawable: Int, onClick: () -> Unit) {
         val item = MaterialTextView(ContextThemeWrapper(context, R.style.Options_Button))
         item.setText(label)
         item.setOnClickListener {
             bottomSheetDialog.dismiss()
-            clickListener()
+            onClick()
         }
         item.setCompoundDrawablesRelativeWithIntrinsicBounds(drawable, 0, 0, 0)
         linearLayout.addView(item)
     }
+
+    fun addItem(operation: Operation) = addItem(operation.textId, operation.drawableId, operation.operation)
 }

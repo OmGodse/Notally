@@ -4,42 +4,50 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textview.MaterialTextView
 import com.omgodse.notally.R
-import com.omgodse.notally.interfaces.NoteListener
-import java.util.*
 
-class LabelsAdapter(private val context: Context, var items: ArrayList<String>) :
-    RecyclerView.Adapter<LabelsAdapter.LabelHolder>() {
+class LabelsAdapter(private val context: Context) :
+    ListAdapter<String, LabelsAdapter.ViewHolder>(DiffCallback()) {
 
-    var noteListener: NoteListener? = null
+    var onLabelClicked: ((position: Int) -> Unit)? = null
+    var onLabelLongClicked: ((position: Int) -> Unit)? = null
 
-    override fun getItemCount(): Int {
-        return items.size
-    }
-
-    override fun onBindViewHolder(holder: LabelHolder, position: Int) {
-        val label = items[position]
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val label = getItem(position)
         holder.displayLabel.text = label
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LabelHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.label_item, parent, false)
-        return LabelHolder(view)
+        return ViewHolder(view)
     }
 
 
-    inner class LabelHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class DiffCallback : DiffUtil.ItemCallback<String>() {
+        override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
+            return oldItem == newItem
+        }
+
+        override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
+            return oldItem == newItem
+        }
+    }
+
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val displayLabel: MaterialTextView = view.findViewById(R.id.DisplayLabel)
 
         init {
-            view.setOnLongClickListener {
-                noteListener?.onNoteLongClicked(adapterPosition)
-                return@setOnLongClickListener true
-            }
             view.setOnClickListener {
-                noteListener?.onNoteClicked(adapterPosition)
+                onLabelClicked?.invoke(adapterPosition)
+            }
+
+            view.setOnLongClickListener {
+                onLabelLongClicked?.invoke(adapterPosition)
+                return@setOnLongClickListener true
             }
         }
     }

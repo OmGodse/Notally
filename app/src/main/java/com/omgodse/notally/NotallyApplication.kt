@@ -1,9 +1,8 @@
-package com.omgodse.notally.parents
+package com.omgodse.notally
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
-import com.omgodse.notally.R
 
 class NotallyApplication : Application() {
 

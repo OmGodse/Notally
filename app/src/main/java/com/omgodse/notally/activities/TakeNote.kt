@@ -3,23 +3,23 @@ package com.omgodse.notally.activities
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Editable
-import android.text.InputType
 import android.text.Spanned
 import android.text.TextWatcher
 import android.text.style.StrikethroughSpan
 import android.text.style.StyleSpan
 import android.text.style.TypefaceSpan
-import android.view.*
-import android.view.inputmethod.EditorInfo
+import android.view.ActionMode
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.button.MaterialButton
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.ActivityTakeNoteBinding
 import com.omgodse.notally.helpers.NotesHelper
-import com.omgodse.notally.interfaces.LabelListener
 import com.omgodse.notally.miscellaneous.getLocale
-import com.omgodse.notally.parents.NotallyActivity
+import com.omgodse.notally.miscellaneous.setOnNextAction
 import com.omgodse.notally.viewmodels.TakeNoteModel
 import java.text.SimpleDateFormat
 
@@ -33,7 +33,10 @@ class TakeNote : NotallyActivity() {
         binding = ActivityTakeNoteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupTitle()
+        binding.EnterTitle.setOnNextAction {
+            binding.EnterBody.requestFocus()
+        }
+
         setupEditor()
         setupListeners()
         setupToolbar(binding.Toolbar)
@@ -45,41 +48,14 @@ class TakeNote : NotallyActivity() {
         setStateFromModel()
     }
 
-    override fun labelNote() {
-        val notesHelper = NotesHelper(this)
-        val labelListener = object : LabelListener {
-            override fun onUpdateLabels(labels: HashSet<String>) {
-                model.labels.value = labels
-            }
-        }
-        notesHelper.labelNote(model.labels.value ?: HashSet(), labelListener)
-    }
 
     override fun shareNote() {
         val notesHelper = NotesHelper(this)
-        notesHelper.shareNote(model.title, model.body.toString())
+        notesHelper.shareNote(model.title, model.body)
     }
 
     override fun getViewModel() = model
 
-
-    private fun setupTitle() {
-        binding.EnterTitle.setRawInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES)
-
-        binding.EnterTitle.setOnKeyListener { v, keyCode, event ->
-            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                binding.EnterBody.requestFocus()
-                return@setOnKeyListener true
-            } else return@setOnKeyListener false
-        }
-
-        binding.EnterTitle.setOnEditorActionListener { v, actionId, event ->
-            if (actionId == EditorInfo.IME_ACTION_NEXT) {
-                binding.EnterBody.requestFocus()
-                return@setOnEditorActionListener true
-            } else return@setOnEditorActionListener false
-        }
-    }
 
     private fun setupListeners() {
         binding.EnterTitle.addTextChangedListener(object : TextWatcher {

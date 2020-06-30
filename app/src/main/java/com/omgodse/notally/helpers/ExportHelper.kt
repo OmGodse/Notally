@@ -3,31 +3,25 @@ package com.omgodse.notally.helpers
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.print.PrintAttributes
 import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.core.text.HtmlCompat
 import androidx.core.text.toHtml
 import androidx.fragment.app.Fragment
-import com.itextpdf.text.*
-import com.itextpdf.text.pdf.PdfWriter
-import com.itextpdf.tool.xml.XMLWorkerFontProvider
-import com.itextpdf.tool.xml.XMLWorkerHelper
 import com.omgodse.notally.R
+import com.omgodse.notally.activities.NotallyActivity
 import com.omgodse.notally.miscellaneous.Constants
-import com.omgodse.notally.miscellaneous.Note
 import com.omgodse.notally.miscellaneous.applySpans
 import com.omgodse.notally.miscellaneous.getLocale
-import com.omgodse.notally.parents.NotallyActivity
-import com.omgodse.notally.xml.BackupReader
-import com.omgodse.notally.xml.XMLReader
-import com.omgodse.notally.xml.XMLTags
-import com.omgodse.notally.xml.XMLWriter
-import org.jsoup.Jsoup
+import com.omgodse.notally.xml.Backup
+import com.omgodse.notally.xml.BaseNote
+import com.omgodse.notally.xml.List
+import com.omgodse.notally.xml.Note
+import com.uttampanchasara.pdfgenerator.CreatePdf
 import java.io.File
 import java.io.InputStream
-import java.io.StringWriter
 import java.text.SimpleDateFormat
-import org.jsoup.nodes.Document as JsoupDocument
 
 class ExportHelper(private val context: Context, private val fragment: Fragment) {
 
@@ -38,61 +32,32 @@ class ExportHelper(private val context: Context, private val fragment: Fragment)
     fun exportBackup() {
         val backupFile = File(getExportedPath(), "Notally Backup.xml")
 
-        val notes = notesHelper.getNotePath().listFiles()
-        val deletedNotes = notesHelper.getDeletedPath().listFiles()
-        val archivedNotes = notesHelper.getArchivedPath().listFiles()
+        val baseNotes = notesHelper.getNotePath().listFiles().convertFilesToNotes()
+        val deletedBaseNotes = notesHelper.getDeletedPath().listFiles().convertFilesToNotes()
+        val archivedBaseNotes = notesHelper.getArchivedPath().listFiles().convertFilesToNotes()
 
-        val labels = notesHelper.getSortedLabelsList()
+        val labels = notesHelper.getSortedLabelsList().toHashSet()
 
-        val xmlWriter = XMLWriter(XMLTags.ExportedNotes, backupFile)
-        xmlWriter.start()
+        val backup = Backup(baseNotes, deletedBaseNotes, archivedBaseNotes, labels)
+        backup.writeToFile(backupFile)
 
-        if (notes?.isNotEmpty() == true) {
-            xmlWriter.startTag(XMLTags.Notes)
-
-            notes.forEach { file -> appendFileToWriter(file, xmlWriter) }
-
-            xmlWriter.endTag(XMLTags.Notes)
-        }
-
-        if (deletedNotes?.isNotEmpty() == true) {
-            xmlWriter.startTag(XMLTags.DeletedNotes)
-
-            deletedNotes.forEach { file -> appendFileToWriter(file, xmlWriter) }
-
-            xmlWriter.endTag(XMLTags.DeletedNotes)
-        }
-
-        if (archivedNotes?.isNotEmpty() == true) {
-            xmlWriter.startTag(XMLTags.ArchivedNotes)
-
-            archivedNotes.forEach { file -> appendFileToWriter(file, xmlWriter) }
-
-            xmlWriter.endTag(XMLTags.ArchivedNotes)
-        }
-
-        xmlWriter.setLabels(labels.toHashSet())
-
-        xmlWriter.end()
         val uri = FileProvider.getUriForFile(context, "${context.packageName}.provider", backupFile)
-
         saveFileToDevice(uri, backupFile, "text/xml")
     }
 
     fun importBackup(inputStream: InputStream) {
-        val backupReader = BackupReader(inputStream)
-        val backup = backupReader.getBackup()
+        val backup = Backup.readFromStream(inputStream)
 
-        backup.notes.forEach { note ->
-            saveImportedNote(notesHelper.getNotePath(), note)
+        backup.baseNotes.forEach { baseNote ->
+            saveImportedNote(notesHelper.getNotePath(), baseNote)
         }
 
-        backup.deletedNotes.forEach { note ->
-            saveImportedNote(notesHelper.getDeletedPath(), note)
+        backup.deletedBaseNotes.forEach { baseNote ->
+            saveImportedNote(notesHelper.getDeletedPath(), baseNote)
         }
 
-        backup.archivedNotes.forEach { note ->
-            saveImportedNote(notesHelper.getArchivedPath(), note)
+        backup.archivedBaseNotes.forEach { baseNote ->
+            saveImportedNote(notesHelper.getArchivedPath(), baseNote)
         }
 
         val preferences = context.getSharedPreferences(Constants.labelsPreferences, Context.MODE_PRIVATE)
@@ -103,47 +68,26 @@ class ExportHelper(private val context: Context, private val fragment: Fragment)
         editor.apply()
     }
 
-    private fun saveImportedNote(path: File, note: Note) {
-        val fileName = getFileName(path, note.timestamp)
-        val file = File (path, fileName)
+    private fun saveImportedNote(path: File, baseNote: BaseNote) {
+        val fileName = getFileName(path, baseNote.timestamp)
+        val file = File(path, fileName)
 
-        val xmlWriter: XMLWriter
-        if (note.isNote) {
-            xmlWriter = XMLWriter(XMLTags.Note, file)
-            xmlWriter.start()
-            xmlWriter.setTitle(note.title)
-            xmlWriter.setTimestamp(note.timestamp)
-            xmlWriter.setBody(note.body)
-            xmlWriter.setSpans(note.spans)
+        when (baseNote) {
+            is Note -> baseNote.copy(filePath = file.path).writeToFile()
+            is List -> baseNote.copy(filePath = file.path).writeToFile()
         }
-        else {
-            xmlWriter = XMLWriter(XMLTags.List, file)
-            xmlWriter.start()
-            xmlWriter.setTitle(note.title)
-            xmlWriter.setTimestamp(note.timestamp)
-            xmlWriter.setListItems(note.items)
-        }
-        xmlWriter.setLabels(note.labels)
-        xmlWriter.end()
     }
 
-    private fun appendFileToWriter(file: File, xmlWriter: XMLWriter) {
-        val note = NotesHelper.convertFileToNote(file)
-        if (note.isNote) {
-            xmlWriter.startTag(XMLTags.Note)
-            xmlWriter.setTitle(note.title)
-            xmlWriter.setTimestamp(note.timestamp)
-            xmlWriter.setBody(note.body)
-            xmlWriter.setSpans(note.spans)
-            xmlWriter.setLabels(note.labels)
-            xmlWriter.endTag(XMLTags.Note)
+    private fun Array<File>?.convertFilesToNotes(): ArrayList<BaseNote> {
+        return if (this == null){
+            ArrayList()
         } else {
-            xmlWriter.startTag(XMLTags.List)
-            xmlWriter.setTitle(note.title)
-            xmlWriter.setTimestamp(note.timestamp)
-            xmlWriter.setListItems(note.items)
-            xmlWriter.setLabels(note.labels)
-            xmlWriter.endTag(XMLTags.List)
+            val baseNotes = ArrayList<BaseNote>()
+            forEach { file ->
+                val note = BaseNote.readFromFile(file)
+                baseNotes.add(note)
+            }
+            baseNotes
         }
     }
 
@@ -151,57 +95,59 @@ class ExportHelper(private val context: Context, private val fragment: Fragment)
     fun exportFileToPDF(file: File) {
         val fileName = getFileName(file)
 
-        val pdfFile = File(getExportedPath(), "$fileName.pdf")
-        val document = Document(PageSize.A4)
-        val writer = PdfWriter.getInstance(document, pdfFile.outputStream())
-        val htmlDocument = getHTML(file)
-        val stylesheet = "<style>body { font-family : sans-serif ; } h2 { letter-spacing : 0.5px; } tt { font-family : monospace ;}</style>"
-        htmlDocument.head().append(stylesheet)
-        document.open()
+        val html = getHTML(file)
 
-        val fontProvider = XMLWorkerFontProvider(XMLWorkerFontProvider.DONTLOOKFORFONTS)
-        fontProvider.register("assets/roboto.ttf", "sans-serif")
-        fontProvider.register("assets/roboto_mono.ttf", "monospace")
+        CreatePdf(context)
+            .setPdfName(fileName)
+            .openPrintDialog(false)
+            .setContentBaseUrl(null)
+            .setPageSize(PrintAttributes.MediaSize.ISO_A4)
+            .setContent(html)
+            .setFilePath(getExportedPath().path)
+            .setCallbackListener(object : CreatePdf.PdfCallbackListener {
+                override fun onFailure(errorMsg: String) {
+                    Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_SHORT).show()
+                }
 
-        XMLWorkerHelper.getInstance().parseXHtml(writer, document, htmlDocument.html().byteInputStream(), Charsets.UTF_8, fontProvider)
-        document.close()
-        writer.close()
-
-        showFileOptionsDialog(pdfFile, "application/pdf")
+                override fun onSuccess(filePath: String) {
+                    showFileOptionsDialog(File(filePath), "application/pdf")
+                }
+            })
+            .create()
     }
 
     fun exportFileToHTML(file: File) {
         val fileName = getFileName(file)
         val htmlFile = File(getExportedPath(), "$fileName.html")
 
-        val html = getHTML(file).html()
+        val html = getHTML(file)
         htmlFile.writeText(html)
 
         showFileOptionsDialog(htmlFile, "text/html")
     }
 
     fun exportFileToPlainText(file: File) {
-        val xmlReader = XMLReader(file)
-        val title = xmlReader.getTitle()
-        val body = if (xmlReader.isNote()) {
-            xmlReader.getBody()
-        } else {
-            notesHelper.getBodyFromItems(xmlReader.getListItems())
+        val baseNote = BaseNote.readFromFile(file)
+
+        val title = baseNote.title
+        val body = when (baseNote) {
+            is Note -> baseNote.body
+            is List -> notesHelper.getBodyFromItems(baseNote.items)
         }
 
         val formatter = SimpleDateFormat(NotallyActivity.DateFormat, context.getLocale())
-        val date = formatter.format(xmlReader.getTimestamp().toLong())
+        val date = formatter.format(baseNote.timestamp.toLong())
 
         val fileName = getFileName(file)
 
         val textFile = File(getExportedPath(), "$fileName.txt")
         val content = buildString {
-            if (title.isNotEmpty()){
+            if (title.isNotEmpty()) {
                 append(title)
                 append("\n")
                 append("\n")
             }
-            if (settingsHelper.getShowDateCreatedPreference()){
+            if (settingsHelper.getShowDateCreatedPreference()) {
                 append(date)
                 append("\n")
                 append("\n")
@@ -282,66 +228,60 @@ class ExportHelper(private val context: Context, private val fragment: Fragment)
     }
 
     private fun getFileName(file: File): String {
-        val xmlReader = XMLReader(file)
-        val body = if (xmlReader.isNote()) {
-            xmlReader.getBody()
-        } else {
-            val stringWriter = StringWriter()
-            xmlReader.getListItems().forEach { listItem ->
-                stringWriter.append("${listItem.body} ")
-            }
-            stringWriter.toString()
-        }
+        val baseNote = BaseNote.readFromFile(file)
 
-        val fileName =  if (xmlReader.getTitle().isEmpty()) {
+        val title = baseNote.title
+        val body = when (baseNote) {
+            is Note -> baseNote.body
+            is List -> notesHelper.getBodyFromItems(baseNote.items)
+        }
+        val fileName = if (title.isEmpty()) {
             val words = body.split(" ")
             if (words.size > 1) {
                 "${words[0]} ${words[1]}"
             } else words[0]
-        } else xmlReader.getTitle()
-
-        return fileName.replace("/", "")
+        } else title
+        return fileName.take(64).replace("/", "")
     }
 
-    private fun getHTML(file: File): JsoupDocument {
-        val xmlReader = XMLReader(file)
-
-        val htmlBody = xmlReader.getBody().applySpans(xmlReader.getSpans()).toHtml(HtmlCompat.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE)
+    private fun getHTML(file: File): String {
+        val baseNote = BaseNote.readFromFile(file)
 
         val formatter = SimpleDateFormat(NotallyActivity.DateFormat, context.getLocale())
-        val date = formatter.format(xmlReader.getTimestamp().toLong())
+        val date = formatter.format(baseNote.timestamp.toLong())
 
         val html = buildString {
-            append("<h2>${xmlReader.getTitle()}</h2>")
+            append("<html><head><meta charset=\"UTF-8\" /></head><body>")
+            append("<h2>${baseNote.title}</h2>")
 
             if (settingsHelper.getShowDateCreatedPreference()) {
                 append("<p>$date</p>")
             }
 
-            if (xmlReader.isNote()) {
-                append("<p>$htmlBody</p>")
-            }
-            else {
-                append("<ol>")
-                xmlReader.getListItems().forEach { item ->
-                    append("<li>${item.body}</li>")
+            when (baseNote) {
+                is Note -> {
+                    val body = baseNote.body.applySpans(baseNote.spans).toHtml(HtmlCompat.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE)
+                    append("<p>$body</p>")
                 }
-                append("</ol>")
+                is List -> {
+                    append("<ol>")
+                    baseNote.items.forEach { item ->
+                        append("<li>${item.body}</li>")
+                    }
+                    append("</ol>")
+                }
             }
+            append("</body></html")
         }
 
-        val document = Jsoup.parseBodyFragment(html)
-        document.charset(Charsets.UTF_8)
-        document.outputSettings().syntax(JsoupDocument.OutputSettings.Syntax.xml)
-        return document
+        return html
     }
 
-    private fun getFileName(folder: File, name: String, index: Int = 0) : String {
-        val fileName = if (index == 0){
+    private fun getFileName(folder: File, name: String, index: Int = 0): String {
+        val fileName = if (index == 0) {
             "$name.xml"
-        }
-        else "$name ($index) .xml"
-        val file = File (folder, fileName)
+        } else "$name ($index) .xml"
+        val file = File(folder, fileName)
         return if (file.exists()) {
             getFileName(folder, name, index + 1)
         } else fileName

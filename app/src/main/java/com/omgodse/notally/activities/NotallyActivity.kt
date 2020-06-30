@@ -1,4 +1,4 @@
-package com.omgodse.notally.parents
+package com.omgodse.notally.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,7 +10,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.R
 import com.omgodse.notally.helpers.NotesHelper
 import com.omgodse.notally.miscellaneous.Constants
-import com.omgodse.notally.viewmodels.BaseModel
+import com.omgodse.notally.viewmodels.NotallyModel
 import java.io.File
 import java.util.*
 
@@ -22,20 +22,20 @@ abstract class NotallyActivity : AppCompatActivity() {
         val filePathToEdit = intent.getStringExtra(Constants.FilePath)
         val model = getViewModel()
 
-        if (model.isFirstInstance){
-            if (filePathToEdit != null){
+        if (model.isFirstInstance) {
+            if (filePathToEdit != null) {
                 model.isNewNote = false
                 model.file = File(filePathToEdit)
-                setResultCode(filePathToEdit, Constants.ResultCodeEditedFile)
-            }
-            else {
+            } else {
                 model.isNewNote = true
                 val timestamp = Date().time
                 val notesHelper = NotesHelper(this)
                 val file = File(notesHelper.getNotePath(), "$timestamp.xml")
                 model.file = file
 
-                setResultCode(file.path, Constants.ResultCodeCreatedFile)
+                val data = Intent()
+                data.putExtra(Constants.FilePath, file.path)
+                setResult(Constants.ResultCodeCreatedFile, data)
             }
             model.isFirstInstance = false
         }
@@ -68,28 +68,31 @@ abstract class NotallyActivity : AppCompatActivity() {
     }
 
 
-    abstract fun labelNote()
-
     abstract fun shareNote()
 
-    abstract fun getViewModel() : BaseModel
+    abstract fun getViewModel(): NotallyModel
 
+
+    private fun labelNote() {
+        val model = getViewModel()
+        val notesHelper = NotesHelper(this)
+        notesHelper.labelNote(model.labels.value ?: HashSet()) { labels ->
+            model.labels.value = labels
+        }
+    }
 
     private fun deleteNote() {
-        val model = getViewModel()
-        setResultCode(model.file?.path, Constants.ResultCodeDeletedFile)
+        getViewModel().moveFileToDeleted()
         onBackPressed()
     }
 
     private fun restoreNote() {
-        val model = getViewModel()
-        setResultCode(model.file?.path, Constants.ResultCodeRestoredFile)
+        getViewModel().restoreFile()
         onBackPressed()
     }
 
     private fun archiveNote() {
-        val model = getViewModel()
-        setResultCode(model.file?.path, Constants.ResultCodeArchivedFile)
+        getViewModel().moveFileToArchive()
         onBackPressed()
     }
 
@@ -97,19 +100,13 @@ abstract class NotallyActivity : AppCompatActivity() {
         val alertDialogBuilder = MaterialAlertDialogBuilder(this)
         alertDialogBuilder.setMessage(R.string.delete_note_forever)
         alertDialogBuilder.setPositiveButton(R.string.delete) { dialog, which ->
-            val model = getViewModel()
-            setResultCode(model.file?.path, Constants.ResultCodeDeletedForeverFile)
+            getViewModel().deleteFileForever()
             onBackPressed()
         }
         alertDialogBuilder.setNegativeButton(R.string.cancel, null)
         alertDialogBuilder.show()
     }
 
-    private fun setResultCode(filePath: String?, resultCode: Int) {
-        val data = Intent()
-        data.putExtra(Constants.FilePath, filePath)
-        setResult(resultCode, data)
-    }
 
     internal fun setupToolbar(toolbar: MaterialToolbar) {
         setSupportActionBar(toolbar)

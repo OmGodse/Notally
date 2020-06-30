@@ -11,32 +11,22 @@ import com.omgodse.notally.R
 import com.omgodse.notally.activities.MainActivity
 import com.omgodse.notally.activities.MakeList
 import com.omgodse.notally.activities.TakeNote
-import com.omgodse.notally.helpers.ExportHelper
 import com.omgodse.notally.helpers.MenuHelper
+import com.omgodse.notally.helpers.NotesHelper
 import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.miscellaneous.Operation
-import com.omgodse.notally.parents.NotallyFragment
-import com.omgodse.notally.viewmodels.NoteModel
+import com.omgodse.notally.xml.BaseNote
 
 class Notes : NotallyFragment() {
-
-    private lateinit var exportHelper: ExportHelper
-
-    override fun onResume() {
-        super.onResume()
-        model.fetchRelevantNotes(getPayload())
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
 
-        exportHelper = ExportHelper(mContext, this)
         (mContext as MainActivity).binding.TakeNoteFAB.setOnClickListener {
             displayNoteTypes()
         }
     }
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.Search) {
@@ -68,22 +58,19 @@ class Notes : NotallyFragment() {
     }
 
 
-    override fun getPayload() = NoteModel.NOTES
-
-    override fun getObservable() = model.observableNotes
-
+    override fun getObservable() = model.notes
 
     override fun getFragmentID() = R.id.NotesFragment
 
     override fun getBackground() = mContext.getDrawable(R.drawable.layout_background_notes)
 
-    override fun getSupportedOperations() : ArrayList<Operation> {
-        val supportedOperations = ArrayList<Operation>()
-        supportedOperations.add(Operation(R.string.share, R.drawable.share))
-        supportedOperations.add(Operation(R.string.labels, R.drawable.label))
-        supportedOperations.add(Operation(R.string.export, R.drawable.export))
-        supportedOperations.add(Operation(R.string.delete, R.drawable.delete))
-        supportedOperations.add(Operation(R.string.archive, R.drawable.archive))
-        return supportedOperations
+    override fun getSupportedOperations(notesHelper: NotesHelper, baseNote: BaseNote) : ArrayList<Operation> {
+        val operations = ArrayList<Operation>()
+        operations.add(Operation(R.string.share, R.drawable.share) { notesHelper.shareNote(baseNote) })
+        operations.add(Operation(R.string.labels, R.drawable.label) { labelBaseNote(baseNote) })
+        operations.add(Operation(R.string.export, R.drawable.export) { showExportDialog(baseNote) })
+        operations.add(Operation(R.string.delete, R.drawable.delete) { model.moveFileToDeleted(baseNote.filePath) })
+        operations.add(Operation(R.string.archive, R.drawable.archive) { model.moveFileToArchive(baseNote.filePath) })
+        return operations
     }
 }

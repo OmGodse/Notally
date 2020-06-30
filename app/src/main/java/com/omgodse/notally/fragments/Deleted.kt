@@ -1,25 +1,22 @@
 package com.omgodse.notally.fragments
 
 import com.omgodse.notally.R
+import com.omgodse.notally.helpers.NotesHelper
 import com.omgodse.notally.miscellaneous.Operation
-import com.omgodse.notally.parents.NotallyFragment
-import com.omgodse.notally.viewmodels.NoteModel
+import com.omgodse.notally.xml.BaseNote
 
 class Deleted : NotallyFragment() {
 
-    override fun getPayload() = NoteModel.DELETED_NOTES
-
-    override fun getObservable() = model.observableDeletedNotes
-
+    override fun getObservable() = model.deletedNotes
 
     override fun getFragmentID() = R.id.DeletedFragment
 
     override fun getBackground() = mContext.getDrawable(R.drawable.layout_background_delete)
 
-    override fun getSupportedOperations(): ArrayList<Operation> {
-        val supportedOperations = ArrayList<Operation>()
-        supportedOperations.add(Operation(R.string.restore, R.drawable.restore))
-        supportedOperations.add(Operation(R.string.delete_forever, R.drawable.delete))
-        return supportedOperations
+    override fun getSupportedOperations(notesHelper: NotesHelper, baseNote: BaseNote): ArrayList<Operation> {
+        val operations = ArrayList<Operation>()
+        operations.add(Operation(R.string.restore, R.drawable.restore) { model.restoreFile(baseNote.filePath) })
+        operations.add(Operation(R.string.delete_forever, R.drawable.delete) { confirmDeletion(baseNote) })
+        return operations
     }
 }

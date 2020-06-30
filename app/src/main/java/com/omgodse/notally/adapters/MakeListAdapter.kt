@@ -4,70 +4,55 @@ import android.content.Context
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
-import android.view.*
-import android.view.inputmethod.EditorInfo
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.textfield.TextInputEditText
 import com.omgodse.notally.R
 import com.omgodse.notally.interfaces.ListItemListener
-import com.omgodse.notally.miscellaneous.ListItem
+import com.omgodse.notally.miscellaneous.setOnNextAction
+import com.omgodse.notally.xml.ListItem
 import java.util.*
 
 class MakeListAdapter(private val context: Context, var items: ArrayList<ListItem>) :
-    RecyclerView.Adapter<MakeListAdapter.ListHolder>() {
+    RecyclerView.Adapter<MakeListAdapter.ViewHolder>() {
 
     var listItemListener: ListItemListener? = null
 
-    override fun getItemCount(): Int {
-        return items.size
-    }
+    override fun getItemCount() = items.size
 
-    override fun onBindViewHolder(holder: ListHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val listItem = items[position]
         holder.listItem.setText(listItem.body)
         holder.checkBox.isChecked = listItem.checked
         holder.listItem.setRawInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.list_item, parent, false)
-        return ListHolder(view)
+        return ViewHolder(view)
     }
 
 
-    inner class ListHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         val listItem: TextInputEditText = view.findViewById(R.id.ListItem)
         val checkBox: MaterialCheckBox = view.findViewById(R.id.CheckBox)
         private val dragHandle: ImageView = view.findViewById(R.id.DragHandle)
 
         init {
-            listItem.setOnKeyListener { v, keyCode, event ->
-                if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                    listItemListener?.onMoveToNext(adapterPosition)
-                    return@setOnKeyListener true
-                }
-                return@setOnKeyListener false
-            }
-
-            listItem.setOnEditorActionListener { v, actionId, event ->
-                if (actionId == EditorInfo.IME_ACTION_NEXT) {
-                    listItemListener?.onMoveToNext(adapterPosition)
-                    return@setOnEditorActionListener true
-                }
-                return@setOnEditorActionListener false
+            listItem.setOnNextAction {
+                listItemListener?.onMoveToNext(adapterPosition)
             }
 
             checkBox.setOnCheckedChangeListener { buttonView, isChecked ->
-                if (isChecked) {
-                    listItem.paint.isStrikeThruText = true
-                    listItem.isEnabled = false
-                } else {
-                    listItem.paint.isStrikeThruText = false
-                    listItem.isEnabled = true
-                }
+                listItem.paint.isStrikeThruText = isChecked
+                listItem.isEnabled = !isChecked
+
                 listItemListener?.onItemCheckedChange(adapterPosition, isChecked)
             }
 

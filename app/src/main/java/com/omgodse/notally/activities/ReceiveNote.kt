@@ -2,18 +2,18 @@ package com.omgodse.notally.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.InputType
-import android.view.KeyEvent
-import android.view.inputmethod.EditorInfo
+import android.text.Editable
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.ActivityReceiveNoteBinding
 import com.omgodse.notally.helpers.NotesHelper
-import com.omgodse.notally.xml.XMLTags
-import com.omgodse.notally.xml.XMLWriter
+import com.omgodse.notally.miscellaneous.getFilteredSpans
+import com.omgodse.notally.miscellaneous.setOnNextAction
+import com.omgodse.notally.xml.Note
 import java.io.File
 import java.util.*
+import kotlin.collections.HashSet
 
 class ReceiveNote : AppCompatActivity() {
 
@@ -25,38 +25,22 @@ class ReceiveNote : AppCompatActivity() {
         setContentView(binding.root)
         setFinishOnTouchOutside(true)
 
-        setupTitle()
+        binding.EnterTitle.setOnNextAction {
+            binding.EnterBody.requestFocus()
+        }
 
         if (intent.action == Intent.ACTION_SEND) {
             handleSharedNote()
         }
     }
 
-    private fun setupTitle() {
-        binding.EnterTitle.setRawInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES)
-
-        binding.EnterTitle.setOnKeyListener { v, keyCode, event ->
-            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                binding.EnterBody.requestFocus()
-                return@setOnKeyListener true
-            } else return@setOnKeyListener false
-        }
-
-        binding.EnterTitle.setOnEditorActionListener { v, actionId, event ->
-            if (actionId == EditorInfo.IME_ACTION_NEXT) {
-                binding.EnterBody.requestFocus()
-                return@setOnEditorActionListener true
-            } else return@setOnEditorActionListener false
-        }
-    }
-
     private fun handleSharedNote() {
-        val body = intent.getStringExtra(Intent.EXTRA_TEXT)
         val title = intent.getStringExtra(Intent.EXTRA_SUBJECT)
+        val body = intent.getCharSequenceExtra(Intent.EXTRA_TEXT)
 
         binding.SaveButton.setOnClickListener {
             val enteredTitle = binding.EnterTitle.text.toString().trim()
-            val enteredBody = binding.EnterBody.text.toString().trim()
+            val enteredBody = binding.EnterBody.text
 
             if (enteredTitle.isNotEmpty() || enteredBody.isNotEmpty()) {
                 saveNote(enteredTitle, enteredBody)
@@ -69,21 +53,14 @@ class ReceiveNote : AppCompatActivity() {
         binding.EnterTitle.setText(title)
     }
 
-    private fun saveNote(title: String, body: String) {
+    private fun saveNote(title: String, body: Editable) {
         val notesHelper = NotesHelper(this)
-        val filePath = notesHelper.getNotePath()
 
         val timestamp = Date().time.toString()
+        val file = File(notesHelper.getNotePath(), "$timestamp.xml")
 
-        val file = File(filePath, "$timestamp.xml")
-
-        val xmlWriter = XMLWriter(XMLTags.Note, file)
-
-        xmlWriter.start()
-        xmlWriter.setTimestamp(timestamp)
-        xmlWriter.setTitle(title)
-        xmlWriter.setBody(body)
-        xmlWriter.end()
+        val note = Note(title, file.path, HashSet(), timestamp, body.toString().trimEnd(), body.getFilteredSpans())
+        note.writeToFile()
 
         finish()
     }

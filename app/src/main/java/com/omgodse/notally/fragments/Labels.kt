@@ -22,19 +22,16 @@ import com.omgodse.notally.adapters.LabelsAdapter
 import com.omgodse.notally.databinding.FragmentNotesBinding
 import com.omgodse.notally.helpers.MenuHelper
 import com.omgodse.notally.helpers.NotesHelper
-import com.omgodse.notally.interfaces.NoteListener
 import com.omgodse.notally.miscellaneous.Constants
-import com.omgodse.notally.xml.XMLReader
-import com.omgodse.notally.xml.XMLTags
-import com.omgodse.notally.xml.XMLWriter
+import com.omgodse.notally.xml.BaseNote
 import java.io.File
 
-class Labels : Fragment(), NoteListener {
+class Labels : Fragment() {
 
     private lateinit var mContext: Context
     private lateinit var notesHelper: NotesHelper
     private lateinit var labelsAdapter: LabelsAdapter
-    private lateinit var binding: FragmentNotesBinding
+    private var binding: FragmentNotesBinding? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -52,14 +49,23 @@ class Labels : Fragment(), NoteListener {
         inflater.inflate(R.menu.label, menu)
     }
 
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         notesHelper = NotesHelper(mContext)
-        labelsAdapter = LabelsAdapter(mContext, ArrayList())
-        labelsAdapter.noteListener = this
+        labelsAdapter = LabelsAdapter(mContext)
 
-        binding.RecyclerView.adapter = labelsAdapter
-        binding.RecyclerView.layoutManager = LinearLayoutManager(mContext)
-        binding.RecyclerView.addItemDecoration(DividerItemDecoration(mContext, RecyclerView.VERTICAL))
+        labelsAdapter.onLabelClicked = this::onLabelClicked
+        labelsAdapter.onLabelLongClicked = this::onLabelLongClicked
+
+        binding?.RecyclerView?.adapter = labelsAdapter
+        binding?.RecyclerView?.layoutManager = LinearLayoutManager(mContext)
+        val itemDecoration = DividerItemDecoration(mContext, RecyclerView.VERTICAL)
+        binding?.RecyclerView?.addItemDecoration(itemDecoration)
 
         setupFrameLayout()
         populateRecyclerView()
@@ -68,17 +74,17 @@ class Labels : Fragment(), NoteListener {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
         binding = FragmentNotesBinding.inflate(inflater)
-        return binding.root
+        return binding?.root
     }
 
 
-    override fun onNoteClicked(position: Int) {
-        val label = labelsAdapter.items[position]
+    private fun onLabelClicked(position: Int) {
+        val label = labelsAdapter.currentList[position]
         val bundle = bundleOf(Constants.argLabelKey to label)
         findNavController().navigate(R.id.LabelsFragmentToDisplayLabel, bundle)
     }
 
-    override fun onNoteLongClicked(position: Int) {
+    private fun onLabelLongClicked(position: Int) {
         val menuHelper = MenuHelper(mContext)
 
         menuHelper.addItem(R.string.edit, R.drawable.edit) { displayEditLabelDialog(position) }
@@ -88,24 +94,23 @@ class Labels : Fragment(), NoteListener {
     }
 
 
-    private fun confirmVisibility() {
-        if (labelsAdapter.itemCount > 0) {
-            binding.RecyclerView.visibility = View.VISIBLE
+    private fun confirmVisibility(labels: List<String>) {
+        if (labels.isNotEmpty()) {
+            binding?.RecyclerView?.visibility = View.VISIBLE
         } else {
-            binding.RecyclerView.visibility = View.GONE
+            binding?.RecyclerView?.visibility = View.GONE
             (mContext as MainActivity).binding.AppBarLayout.setExpanded(true, true)
         }
     }
 
     private fun setupFrameLayout() {
-        binding.FrameLayout.background = mContext.getDrawable(R.drawable.layout_background_labels)
+        binding?.FrameLayout?.background = mContext.getDrawable(R.drawable.layout_background_labels)
     }
 
     private fun populateRecyclerView() {
         val labels = notesHelper.getSortedLabelsList()
-        labelsAdapter.items = labels
-        labelsAdapter.notifyDataSetChanged()
-        confirmVisibility()
+        labelsAdapter.submitList(labels)
+        confirmVisibility(labels)
     }
 
 
@@ -129,20 +134,18 @@ class Labels : Fragment(), NoteListener {
         val dialog = builder.create()
 
         dialog.setOnShowListener {
-            val positiveButton: Button = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
             positiveButton.setOnClickListener {
                 val label = editText.text.toString().trim()
                 if (label.isNotEmpty()) {
                     if (!priorLabels.contains(label)) {
                         insertLabel(label)
                         dialog.dismiss()
-                    }
-                    else {
+                    } else {
                         textInputLayout.isErrorEnabled = true
                         textInputLayout.error = mContext.getString(R.string.label_exists)
                     }
-                }
-                else dialog.dismiss()
+                } else dialog.dismiss()
             }
         }
 
@@ -156,14 +159,13 @@ class Labels : Fragment(), NoteListener {
         alertDialogBuilder.setMessage(R.string.your_notes_associated)
         alertDialogBuilder.setPositiveButton(R.string.delete) { dialog, which ->
             deleteLabel(position)
-            confirmVisibility()
         }
         alertDialogBuilder.setNegativeButton(R.string.cancel, null)
         alertDialogBuilder.show()
     }
 
     private fun displayEditLabelDialog(position: Int) {
-        val label = labelsAdapter.items[position]
+        val label = labelsAdapter.currentList[position]
         val priorLabels = notesHelper.getSortedLabelsList()
 
         val builder = MaterialAlertDialogBuilder(mContext)
@@ -209,7 +211,7 @@ class Labels : Fragment(), NoteListener {
 
 
     private fun deleteLabel(position: Int) {
-        val label = labelsAdapter.items[position]
+        val label = labelsAdapter.currentList[position]
 
         val priorLabels = notesHelper.getSortedLabelsList()
         val newLabels = HashSet(priorLabels)
@@ -220,14 +222,14 @@ class Labels : Fragment(), NoteListener {
         editor.putStringSet(Constants.labelItems, newLabels)
         editor.apply()
 
-        labelsAdapter.items.removeAt(position)
-        labelsAdapter.notifyItemRemoved(position)
+        labelsAdapter.submitList(notesHelper.getSortedLabelsList())
+        confirmVisibility(notesHelper.getSortedLabelsList())
 
-        val notesFiles = notesHelper.getNotePath().listFiles()
+        val files = notesHelper.getNotePath().listFiles()
         val deletedFiles = notesHelper.getDeletedPath().listFiles()
         val archivedFiles = notesHelper.getArchivedPath().listFiles()
 
-        notesFiles?.forEach { file ->
+        files?.forEach { file ->
             deleteLabelFromFile(label, file)
         }
 
@@ -250,21 +252,20 @@ class Labels : Fragment(), NoteListener {
         editor.putStringSet(Constants.labelItems, newLabels)
         editor.apply()
 
-        labelsAdapter.items.add(label)
-        labelsAdapter.items.sort()
-        labelsAdapter.notifyDataSetChanged()
-        binding.RecyclerView.layoutManager?.scrollToPosition(labelsAdapter.items.indexOf(label))
+        labelsAdapter.submitList(notesHelper.getSortedLabelsList())
+        confirmVisibility(notesHelper.getSortedLabelsList())
+
+        binding?.RecyclerView?.layoutManager?.scrollToPosition(labelsAdapter.currentList.indexOf(label))
         val message = "${mContext.getString(R.string.created)} $label"
 
         val rootView = (mContext as MainActivity).binding.CoordinatorLayout
         Snackbar.make(rootView, message, Snackbar.LENGTH_SHORT).show()
-        confirmVisibility()
     }
 
     private fun editLabel(position: Int, newLabel: String) {
         val priorLabels = notesHelper.getSortedLabelsList()
 
-        val oldLabel = labelsAdapter.items[position]
+        val oldLabel = labelsAdapter.currentList[position]
         val newLabels = HashSet(priorLabels)
         newLabels.remove(oldLabel)
         newLabels.add(newLabel)
@@ -274,15 +275,13 @@ class Labels : Fragment(), NoteListener {
         editor.putStringSet(Constants.labelItems, newLabels)
         editor.apply()
 
-        labelsAdapter.items[position] = newLabel
-        labelsAdapter.items.sort()
-        labelsAdapter.notifyDataSetChanged()
+        labelsAdapter.submitList(notesHelper.getSortedLabelsList())
 
-        val notesFiles = notesHelper.getNotePath().listFiles()
+        val files = notesHelper.getNotePath().listFiles()
         val deletedFiles = notesHelper.getDeletedPath().listFiles()
         val archivedFiles = notesHelper.getArchivedPath().listFiles()
 
-        notesFiles?.forEach { file ->
+        files?.forEach { file ->
             editLabelFromFile(oldLabel, newLabel, file)
         }
 
@@ -297,61 +296,21 @@ class Labels : Fragment(), NoteListener {
 
 
     private fun deleteLabelFromFile(label: String, file: File) {
-        val xmlReader = XMLReader(file)
+        val baseNote = BaseNote.readFromFile(file)
 
-        val labels = xmlReader.getLabels()
-        if (labels.contains(label)) {
-            labels.remove(label)
-
-            val xmlWriter: XMLWriter
-
-            if (xmlReader.isNote()) {
-                xmlWriter = XMLWriter(XMLTags.Note, file)
-                xmlWriter.start()
-                xmlWriter.setTimestamp(xmlReader.getTimestamp())
-                xmlWriter.setTitle(xmlReader.getTitle())
-                xmlWriter.setBody(xmlReader.getBody())
-                xmlWriter.setSpans(xmlReader.getSpans())
-            } else {
-                xmlWriter = XMLWriter(XMLTags.List, file)
-                xmlWriter.start()
-                xmlWriter.setTimestamp(xmlReader.getTimestamp())
-                xmlWriter.setTitle(xmlReader.getTitle())
-                xmlWriter.setListItems(xmlReader.getListItems())
-            }
-
-            xmlWriter.setLabels(labels)
-            xmlWriter.end()
+        if (baseNote.labels.contains(label)) {
+            baseNote.labels.remove(label)
+            baseNote.writeToFile()
         }
     }
 
     private fun editLabelFromFile(oldLabel: String, newLabel: String, file: File) {
-        val xmlReader = XMLReader(file)
+        val baseNote = BaseNote.readFromFile(file)
 
-        val labels = xmlReader.getLabels()
-        if (labels.contains(oldLabel)) {
-            labels.remove(oldLabel)
-            labels.add(newLabel)
-
-            val xmlWriter: XMLWriter
-
-            if (xmlReader.isNote()) {
-                xmlWriter = XMLWriter(XMLTags.Note, file)
-                xmlWriter.start()
-                xmlWriter.setTimestamp(xmlReader.getTimestamp())
-                xmlWriter.setTitle(xmlReader.getTitle())
-                xmlWriter.setBody(xmlReader.getBody())
-                xmlWriter.setSpans(xmlReader.getSpans())
-            } else {
-                xmlWriter = XMLWriter(XMLTags.List, file)
-                xmlWriter.start()
-                xmlWriter.setTimestamp(xmlReader.getTimestamp())
-                xmlWriter.setTitle(xmlReader.getTitle())
-                xmlWriter.setListItems(xmlReader.getListItems())
-            }
-
-            xmlWriter.setLabels(labels)
-            xmlWriter.end()
+        if (baseNote.labels.contains(oldLabel)) {
+            baseNote.labels.remove(oldLabel)
+            baseNote.labels.add(newLabel)
+            baseNote.writeToFile()
         }
     }
 }

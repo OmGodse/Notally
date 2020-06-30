@@ -11,41 +11,47 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.android.material.textview.MaterialTextView
 import com.omgodse.notally.R
-import com.omgodse.notally.interfaces.LabelListener
 import com.omgodse.notally.miscellaneous.Constants
-import com.omgodse.notally.miscellaneous.ListItem
-import com.omgodse.notally.miscellaneous.Note
-import com.omgodse.notally.xml.XMLReader
+import com.omgodse.notally.miscellaneous.applySpans
+import com.omgodse.notally.xml.BaseNote
+import com.omgodse.notally.xml.List
+import com.omgodse.notally.xml.ListItem
+import com.omgodse.notally.xml.Note
 import java.io.File
 import java.io.StringWriter
 
 class NotesHelper(val context: Context) {
 
-    fun shareNote(note: Note) {
-        val body = if (note.isNote) {
-            note.body
+    fun shareNote(baseNote: BaseNote) {
+        when (baseNote) {
+            is Note -> shareNote(baseNote)
+            is List -> shareNote(baseNote)
         }
-        else getBodyFromItems(note.items)
-        shareNote(note.title, body)
     }
 
-    fun shareNote(title: String?, body: String?) {
+    fun shareNote(title: String?, body: CharSequence?) {
         val shareIntent = Intent(Intent.ACTION_SEND)
         shareIntent.type = "text/plain"
         shareIntent.putExtra(Intent.EXTRA_TEXT, body)
+        shareIntent.putExtra(Intent.EXTRA_TEXT, body.toString())
         shareIntent.putExtra(Intent.EXTRA_SUBJECT, title)
         context.startActivity(Intent.createChooser(shareIntent, context.getString(R.string.share_note)))
     }
 
     fun shareNote(title: String?, items: ArrayList<ListItem>?) = shareNote(title, getBodyFromItems(items))
 
-    fun getBodyFromItems(items: ArrayList<ListItem>?): String {
+
+    fun getBodyFromItems(items: kotlin.collections.List<ListItem>?): String {
         val stringWriter = StringWriter()
         items?.forEachIndexed { index, listItem ->
             stringWriter.appendln("${(index + 1)}) ${listItem.body}")
         }
         return stringWriter.toString()
     }
+
+    private fun shareNote(note: Note) = shareNote(note.title, note.body.applySpans(note.spans))
+
+    private fun shareNote(list: List) = shareNote(list.title, getBodyFromItems(list.items))
 
 
     fun getNotePath() = getFolder("notes")
@@ -78,14 +84,14 @@ class NotesHelper(val context: Context) {
 
     fun getSortedLabelsList(): ArrayList<String> {
         val sharedPreferences = context.getSharedPreferences(Constants.labelsPreferences, Context.MODE_PRIVATE)
-        val labels = sharedPreferences.getStringSet("labelItems", HashSet<String>()) as HashSet<String>
+        val labels = sharedPreferences.getStringSet(Constants.labelItems, HashSet<String>()) as HashSet<String>
         val arrayList = ArrayList(labels)
         arrayList.sort()
         return arrayList
     }
 
 
-    fun labelNote(previousLabels: HashSet<String>, listener: LabelListener) {
+    fun labelNote(previousLabels: HashSet<String>, onLabelsUpdated: (labels: HashSet<String>) -> Unit) {
         val allLabels = getSortedLabelsList().toTypedArray()
 
         val checkedLabels = getCheckedLabels(previousLabels)
@@ -105,7 +111,7 @@ class NotesHelper(val context: Context) {
 
         createLabel.setOnClickListener {
             dialog.dismiss()
-            displayAddLabelDialog(previousLabels, listener)
+            displayAddLabelDialog(previousLabels, onLabelsUpdated)
         }
 
         dialog.getButton(DialogInterface.BUTTON_POSITIVE)?.setOnClickListener {
@@ -117,35 +123,11 @@ class NotesHelper(val context: Context) {
                 }
             }
             dialog.dismiss()
-            listener.onUpdateLabels(selectedLabels)
+            onLabelsUpdated(selectedLabels)
         }
     }
 
-    private fun getCheckedLabels(labels: HashSet<String>) : BooleanArray {
-        val allLabels = getSortedLabelsList().toTypedArray()
-        val checkedLabels = BooleanArray(allLabels.size)
-        allLabels.forEachIndexed { index, label ->
-            if (labels.contains(label)){
-                checkedLabels[index] = true
-            }
-        }
-        return checkedLabels
-    }
-
-
-    private fun insertLabel(label: String) {
-        val priorLabels = getSortedLabelsList()
-
-        val newLabels = HashSet(priorLabels)
-        newLabels.add(label)
-
-        val sharedPreferences = context.getSharedPreferences(Constants.labelsPreferences, Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.putStringSet(Constants.labelItems, newLabels)
-        editor.apply()
-    }
-
-    private fun displayAddLabelDialog(previousLabels: HashSet<String>, listener: LabelListener) {
+    private fun displayAddLabelDialog(previousLabels: HashSet<String>, onLabelsUpdated: (labels: HashSet<String>) -> Unit) {
         val priorLabels = getSortedLabelsList()
 
         val view = View.inflate(context, R.layout.dialog_input, null)
@@ -170,25 +152,33 @@ class NotesHelper(val context: Context) {
                 if (!priorLabels.contains(label)) {
                     insertLabel(label)
                     dialog.dismiss()
-                    labelNote(previousLabels, listener)
+                    labelNote(previousLabels, onLabelsUpdated)
                 } else textInputLayout.error = context.getString(R.string.label_exists)
             } else dialog.dismiss()
         }
     }
 
-    companion object {
-        fun convertFileToNote(file: File) : Note {
-            val xmlReader = XMLReader(file)
 
-            val isNote = xmlReader.isNote()
-            val title = xmlReader.getTitle()
-            val timestamp = xmlReader.getTimestamp()
-            val body = xmlReader.getBody()
-            val items = xmlReader.getListItems()
-            val spans = xmlReader.getSpans()
-            val labels = xmlReader.getLabels()
+    private fun insertLabel(label: String) {
+        val priorLabels = getSortedLabelsList()
 
-            return Note(isNote, title, timestamp, body, items, spans, labels, file.path)
+        val newLabels = HashSet(priorLabels)
+        newLabels.add(label)
+
+        val sharedPreferences = context.getSharedPreferences(Constants.labelsPreferences, Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putStringSet(Constants.labelItems, newLabels)
+        editor.apply()
+    }
+
+    private fun getCheckedLabels(labels: HashSet<String>) : BooleanArray {
+        val allLabels = getSortedLabelsList().toTypedArray()
+        val checkedLabels = BooleanArray(allLabels.size)
+        allLabels.forEachIndexed { index, label ->
+            if (labels.contains(label)){
+                checkedLabels[index] = true
+            }
         }
+        return checkedLabels
     }
 }
