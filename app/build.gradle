@@ -10,8 +10,8 @@ android {
         applicationId "com.omgodse.notally"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 19
-        versionName "2.4"
+        versionCode 20
+        versionName "2.5"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
