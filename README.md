@@ -18,6 +18,7 @@
 
 ## Translations
 * English
+* Spanish by Jose Casas
 * Italian by Luigi Sforza
 * Ukrainian by Alex Shpak
 * Russian by Denis Bondarenko
