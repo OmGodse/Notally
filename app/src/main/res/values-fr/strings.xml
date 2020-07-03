@@ -91,4 +91,5 @@
     <string name="about">A propos</string>
     <string name="libraries">Librairies</string>
     <string name="rate">Noter cette application</string>
+    <string name="last_modified">"Dernière modification "</string>
 </resources>

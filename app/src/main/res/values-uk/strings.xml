@@ -91,4 +91,5 @@
     <string name="about">Про програму</string>
     <string name="libraries">Бібліотеки</string>
     <string name="rate">Цінити цей додаток</string>
+    <string name="last_modified">Остання зміна</string>
 </resources>

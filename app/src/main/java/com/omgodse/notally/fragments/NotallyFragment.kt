@@ -115,7 +115,16 @@ abstract class NotallyFragment : Fragment() {
 
         val operations = getSupportedOperations(notesHelper, baseNote)
         if (operations.isNotEmpty()) {
-            operations.forEach { operation -> menuHelper.addItem(operation) }
+            operations.forEach { operation ->
+                if (mContext.getString(operation.textId) == mContext.getString(R.string.last_modified)) {
+                    val lastModified = notesHelper.getLastModified(baseNote)
+                    if (lastModified != Constants.noModifiedDate) {
+                        menuHelper.addItem(getText(operation.textId).toString() + lastModified)
+                    }
+                } else {
+                    menuHelper.addItem(operation)
+                }
+            }
             menuHelper.show()
         }
     }

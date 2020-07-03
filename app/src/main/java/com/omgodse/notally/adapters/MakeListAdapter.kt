@@ -15,10 +15,11 @@ import com.google.android.material.textfield.TextInputEditText
 import com.omgodse.notally.R
 import com.omgodse.notally.interfaces.ListItemListener
 import com.omgodse.notally.miscellaneous.setOnNextAction
+import com.omgodse.notally.viewmodels.MakeListModel
 import com.omgodse.notally.xml.ListItem
 import java.util.*
 
-class MakeListAdapter(private val context: Context, var items: ArrayList<ListItem>) :
+class MakeListAdapter(private val context: Context, var items: ArrayList<ListItem>, var model: MakeListModel) :
     RecyclerView.Adapter<MakeListAdapter.ViewHolder>() {
 
     var listItemListener: ListItemListener? = null
@@ -47,6 +48,10 @@ class MakeListAdapter(private val context: Context, var items: ArrayList<ListIte
         init {
             listItem.setOnNextAction {
                 listItemListener?.onMoveToNext(adapterPosition)
+            }
+            checkBox.setOnClickListener {
+                model.timeModified = Date().time
+                model.saveNote()
             }
 
             checkBox.setOnCheckedChangeListener { buttonView, isChecked ->

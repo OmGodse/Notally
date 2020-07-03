@@ -12,7 +12,7 @@ class MakeListModel(app: Application) : NotallyModel(app) {
     override fun saveNote() {
         val listItems = items.filter { item -> item.body.isNotBlank() }
         file?.let {
-            val list = List(title, it.path, labels.value ?: HashSet(), timestamp.toString(), listItems)
+            val list = List(title, it.path, labels.value ?: HashSet(), timestamp.toString(), timeModified.toString(), listItems)
             list.writeToFile()
         }
     }
@@ -23,7 +23,9 @@ class MakeListModel(app: Application) : NotallyModel(app) {
                 val baseNote = BaseNote.readFromFile(file) as List
                 title = baseNote.title
                 timestamp = baseNote.timestamp.toLong()
-
+                if (baseNote.timeModified.toLongOrNull() != null) {
+                    timeModified = baseNote.timeModified.toLong()
+                }
                 items.clear()
                 items.addAll(baseNote.items)
 

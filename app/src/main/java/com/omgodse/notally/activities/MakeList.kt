@@ -72,6 +72,9 @@ class MakeList : NotallyActivity() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(text: CharSequence?, start: Int, before: Int, count: Int) {
+                if (model.title !=text.toString()) {
+                    model.timeModified = Date().time
+                }
                 model.title = text.toString().trim()
                 model.saveNote()
             }
@@ -108,7 +111,7 @@ class MakeList : NotallyActivity() {
     }
 
     private fun setupRecyclerView() {
-        adapter = MakeListAdapter(this, model.items)
+        adapter = MakeListAdapter(this, model.items, model)
         val itemTouchHelperCallback = ItemTouchHelperCallback(adapter)
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
         itemTouchHelper.attachToRecyclerView(binding.RecyclerView)
@@ -134,10 +137,14 @@ class MakeList : NotallyActivity() {
             override fun onItemSwapped(fromPosition: Int, toPosition: Int) {
                 Collections.swap(model.items, fromPosition, toPosition)
                 adapter.notifyItemMoved(fromPosition, toPosition)
+                model.timeModified = Date().time
                 model.saveNote()
             }
 
             override fun onItemTextChange(position: Int, newText: String) {
+                if(adapter.items[position].body!=newText){
+                    model.timeModified = Date().time
+                }
                 adapter.items[position].body = newText
                 model.saveNote()
             }

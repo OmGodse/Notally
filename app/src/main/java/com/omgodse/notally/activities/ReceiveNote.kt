@@ -57,9 +57,10 @@ class ReceiveNote : AppCompatActivity() {
         val notesHelper = NotesHelper(this)
 
         val timestamp = Date().time.toString()
+        val timeModified: String = Date().time.toString()
         val file = File(notesHelper.getNotePath(), "$timestamp.xml")
 
-        val note = Note(title, file.path, HashSet(), timestamp, body.toString().trimEnd(), body.getFilteredSpans())
+        val note = Note(title, file.path, HashSet(), timestamp, timeModified, body.toString().trimEnd(), body.getFilteredSpans())
         note.writeToFile()
 
         finish()

@@ -17,8 +17,12 @@ import com.omgodse.notally.xml.BaseNote
 import com.omgodse.notally.xml.List
 import com.omgodse.notally.xml.ListItem
 import com.omgodse.notally.xml.Note
+import org.ocpsoft.prettytime.PrettyTime
 import java.io.File
 import java.io.StringWriter
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashSet
 
 class NotesHelper(val context: Context) {
 
@@ -40,6 +44,13 @@ class NotesHelper(val context: Context) {
 
     fun shareNote(title: String?, items: ArrayList<ListItem>?) = shareNote(title, getBodyFromItems(items))
 
+    fun getLastModified(baseNote: BaseNote): String {
+        return if (baseNote.timeModified!="") {
+            " : " + PrettyTime().format(Date(baseNote.timeModified.toLong()))
+        }else{
+            Constants.noModifiedDate
+        }
+    }
 
     fun getBodyFromItems(items: kotlin.collections.List<ListItem>?): String {
         val stringWriter = StringWriter()

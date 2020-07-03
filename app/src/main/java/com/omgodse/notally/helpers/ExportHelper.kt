@@ -54,6 +54,7 @@ class ExportHelper(private val context: Context, private val fragment: Fragment)
 
         backup.deletedBaseNotes.forEach { baseNote ->
             saveImportedNote(notesHelper.getDeletedPath(), baseNote)
+            saveImportedNote(notesHelper.getDeletedPath(), baseNote)
         }
 
         backup.archivedBaseNotes.forEach { baseNote ->

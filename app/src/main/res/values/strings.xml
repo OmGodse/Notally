@@ -16,6 +16,7 @@
     <string name="archive">Archive</string>
     <string name="unarchive">Unarchive</string>
     <string name="delete_forever">Delete forever</string>
+    <string name="last_modified">Last Modified</string>
 
     <!-- Chooser dialog hints -->
     <string name="view_note">View note…</string>

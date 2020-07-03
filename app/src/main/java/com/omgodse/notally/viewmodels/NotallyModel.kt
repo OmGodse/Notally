@@ -15,6 +15,7 @@ abstract class NotallyModel(app: Application) : AndroidViewModel(app) {
 
     var title = String()
     var timestamp = Date().time
+    var timeModified = Date().time
 
     val labels = MutableLiveData(HashSet<String>())
 

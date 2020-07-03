@@ -7,6 +7,7 @@ class XMLTags {
         const val Title = "title"
         const val Body = "body"
         const val DateCreated = "date-created"
+        const val TimeModified = "date-modified"
         const val Label = "label"
         const val ListItem = "item"
         const val ListItemText = "text"

@@ -91,4 +91,5 @@
     <string name="about">Про приложение</string>
     <string name="libraries">Библиотеки</string>
     <string name="rate">Оценить приложение</string>
+    <string name="last_modified">" Последнее изменение"</string>
 </resources>

@@ -91,4 +91,5 @@
     <string name="about">Sobre</string>
     <string name="libraries">Bibliotecas</string>
     <string name="rate">Calificar esta app</string>
+    <string name="last_modified">Última modificación</string>
 </resources>

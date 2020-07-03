@@ -22,16 +22,19 @@ import com.omgodse.notally.miscellaneous.getLocale
 import com.omgodse.notally.miscellaneous.setOnNextAction
 import com.omgodse.notally.viewmodels.TakeNoteModel
 import java.text.SimpleDateFormat
+import java.util.*
 
 class TakeNote : NotallyActivity() {
 
     private lateinit var binding: ActivityTakeNoteBinding
     private val model: TakeNoteModel by viewModels()
+    private lateinit var savedNote: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTakeNoteBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        savedNote = model.body.toString()
 
         binding.EnterTitle.setOnNextAction {
             binding.EnterBody.requestFocus()
@@ -62,6 +65,9 @@ class TakeNote : NotallyActivity() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(text: CharSequence?, start: Int, before: Int, count: Int) {
+                if (model.title !=text.toString()) {
+                    model.timeModified = Date().time
+                }
                 model.title = text.toString().trim()
                 model.saveNote()
             }
@@ -76,7 +82,13 @@ class TakeNote : NotallyActivity() {
 
             override fun afterTextChanged(editable: Editable?) {
                 model.body = binding.EnterBody.text
-                model.saveNote()
+                if (savedNote!=model.body.toString()){
+                    model.timeModified = Date().time
+                    model.saveNote()
+                    savedNote = model.body.toString()
+                } else{
+                    model.saveNote()
+                }
             }
         })
 

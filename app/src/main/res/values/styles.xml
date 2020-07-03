@@ -50,6 +50,16 @@
         <item name="android:background">?selectableItemBackground</item>
     </style>
 
+    <style name="Modified.Detail" parent="Widget.MaterialComponents.TextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:gravity">center_horizontal|center_vertical</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:background">?selectableItemBackground</item>
+    </style>
+
     <style name="TextAppearance.Error" parent="TextAppearance.Design.Error">
         <item name="android:letterSpacing">0</item>
     </style>

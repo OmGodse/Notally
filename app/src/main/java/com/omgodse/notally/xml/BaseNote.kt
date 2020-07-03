@@ -9,7 +9,9 @@ import kotlin.collections.List
 sealed class BaseNote(open val title: String,
                       open val filePath: String,
                       open val labels: HashSet<String>,
-                      open val timestamp: String) {
+                      open val timestamp: String,
+                      open val timeModified: String
+) {
 
     abstract fun isEmpty(): Boolean
 
@@ -33,8 +35,9 @@ data class Note(override val title: String,
                 override val filePath: String,
                 override val labels: HashSet<String>,
                 override val timestamp: String,
+                override val timeModified: String,
                 val body: String,
-                val spans: ArrayList<SpanRepresentation>) : BaseNote(title, filePath, labels, timestamp) {
+                val spans: ArrayList<SpanRepresentation>) : BaseNote(title, filePath, labels, timestamp, timeModified) {
 
     override fun isEmpty(): Boolean {
         return title.isBlank() && body.isBlank()
@@ -69,7 +72,8 @@ data class List(override val title: String,
                 override val filePath: String,
                 override val labels: HashSet<String>,
                 override val timestamp: String,
-                val items: List<ListItem>) : BaseNote(title, filePath, labels, timestamp) {
+                override val timeModified: String,
+                val items: List<ListItem>) : BaseNote(title, filePath, labels, timestamp, timeModified) {
 
     override fun isEmpty(): Boolean {
         return title.isBlank() && items.isEmpty()

@@ -9,6 +9,8 @@ class Constants {
         const val argLabelKey = "selectedLabel"
         const val labelsPreferences = "labelsPreferences"
 
+        const val noModifiedDate = "noModifiedDate"
+
         const val RequestCode = 0
         const val RequestCodeExportFile = 10
         const val RequestCodeImportFile = 20

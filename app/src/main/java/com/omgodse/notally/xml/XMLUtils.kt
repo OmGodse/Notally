@@ -98,6 +98,7 @@ class XMLUtils {
             xmlSerializer.startTag(null, XMLTags.Note)
 
             xmlSerializer.writeTagContent(XMLTags.DateCreated, note.timestamp)
+            xmlSerializer.writeTagContent(XMLTags.TimeModified, note.timeModified)
             xmlSerializer.writeTagContent(XMLTags.Title, note.title)
             xmlSerializer.writeTagContent(XMLTags.Body, note.body)
 
@@ -132,6 +133,7 @@ class XMLUtils {
             xmlSerializer.startTag(null, XMLTags.List)
 
             xmlSerializer.writeTagContent(XMLTags.DateCreated, list.timestamp)
+            xmlSerializer.writeTagContent(XMLTags.TimeModified, list.timeModified)
             xmlSerializer.writeTagContent(XMLTags.Title, list.title)
 
             list.items.forEach { listItem ->
@@ -185,6 +187,7 @@ class XMLUtils {
             var body = String()
             var title = String()
             var timestamp = String()
+            var timeModified = String()
             val listItems = ArrayList<ListItem>()
 
             val labels = HashSet<String>()
@@ -196,6 +199,7 @@ class XMLUtils {
                         XMLTags.Title -> title = parser.nextText()
                         XMLTags.Body -> body = parser.nextText()
                         XMLTags.DateCreated -> timestamp = parser.nextText()
+                        XMLTags.TimeModified -> timeModified = parser.nextText()
                         XMLTags.Label -> labels.add(parser.nextText())
                         XMLTags.ListItem -> listItems.add(parseItem(parser))
                         XMLTags.Span -> spans.add(parseSpan(parser))
@@ -208,8 +212,8 @@ class XMLUtils {
             }
 
             return if (rootTag == XMLTags.Note) {
-                Note(title, String(), labels, timestamp, body, spans)
-            } else List(title, String(), labels, timestamp, listItems)
+                Note(title, String(), labels, timestamp, timeModified, body, spans)
+            } else List(title, String(), labels, timestamp, timeModified, listItems)
         }
 
 
