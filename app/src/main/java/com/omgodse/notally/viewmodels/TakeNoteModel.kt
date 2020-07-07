@@ -14,7 +14,12 @@ class TakeNoteModel(app: Application) : NotallyModel(app) {
     override fun saveNote() {
         file?.let {
             val note = Note(title, it.path, labels.value ?: HashSet(), timestamp.toString(), body.toString().trimEnd(), body.getFilteredSpans())
-            note.writeToFile()
+            if (it.exists()) {
+                val savedNote = BaseNote.readFromFile(it)
+                if (savedNote != note) {
+                    note.writeToFile()
+                }
+            } else note.writeToFile()
         }
     }
 

@@ -13,7 +13,12 @@ class MakeListModel(app: Application) : NotallyModel(app) {
         val listItems = items.filter { item -> item.body.isNotBlank() }
         file?.let {
             val list = List(title, it.path, labels.value ?: HashSet(), timestamp.toString(), listItems)
-            list.writeToFile()
+            if (it.exists()) {
+                val savedList = BaseNote.readFromFile(it)
+                if (savedList != list) {
+                    list.writeToFile()
+                }
+            } else list.writeToFile()
         }
     }
 
