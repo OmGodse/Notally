@@ -3,68 +3,68 @@
     android:height="96dp"
     android:viewportWidth="878"
     android:viewportHeight="470">
-  <path
-      android:pathData="M0,0h878v470h-878z"
-      android:fillColor="?colorSecondary"/>
-  <path
-      android:pathData="M39,31h376v412h-376z"
-      android:fillColor="?colorSurface"/>
-  <path
-      android:pathData="M839,443l-376,-0l-0,-412l376,-0z"
-      android:fillColor="?colorSurface"/>
-  <path
-      android:pathData="M69,83h298v10h-298z"
-      android:strokeAlpha="0.4"
-      android:fillColor="?colorSecondary"
-      android:fillAlpha="0.4"/>
-  <path
-      android:pathData="M69,123h298v10h-298z"
-      android:strokeAlpha="0.4"
-      android:fillColor="?colorSecondary"
-      android:fillAlpha="0.4"/>
-  <path
-      android:pathData="M69,163h298v10h-298z"
-      android:strokeAlpha="0.4"
-      android:fillColor="?colorSecondary"
-      android:fillAlpha="0.4"/>
-  <path
-      android:pathData="M494,83h298v10h-298z"
-      android:strokeAlpha="0.4"
-      android:fillColor="?colorSecondary"
-      android:fillAlpha="0.4"/>
-  <path
-      android:pathData="M494,123h298v10h-298z"
-      android:strokeAlpha="0.4"
-      android:fillColor="?colorSecondary"
-      android:fillAlpha="0.4"/>
-  <path
-      android:pathData="M494,163h298v10h-298z"
-      android:strokeAlpha="0.4"
-      android:fillColor="?colorSecondary"
-      android:fillAlpha="0.4"/>
-  <path
-      android:pathData="M69,203h298v10h-298z"
-      android:strokeAlpha="0.4"
-      android:fillColor="?colorSecondary"
-      android:fillAlpha="0.4"/>
-  <path
-      android:pathData="M69,243h298v10h-298z"
-      android:strokeAlpha="0.4"
-      android:fillColor="?colorSecondary"
-      android:fillAlpha="0.4"/>
-  <path
-      android:pathData="M69,283h298v10h-298z"
-      android:strokeAlpha="0.4"
-      android:fillColor="?colorSecondary"
-      android:fillAlpha="0.4"/>
-  <path
-      android:pathData="M69,323h298v10h-298z"
-      android:strokeAlpha="0.4"
-      android:fillColor="?colorSecondary"
-      android:fillAlpha="0.4"/>
-  <path
-      android:pathData="M69,363h298v10h-298z"
-      android:strokeAlpha="0.4"
-      android:fillColor="?colorSecondary"
-      android:fillAlpha="0.4"/>
+    <path
+        android:fillColor="?colorSecondary"
+        android:pathData="M0,0h878v470h-878z" />
+    <path
+        android:fillColor="?colorSurface"
+        android:pathData="M39,31h376v412h-376z" />
+    <path
+        android:fillColor="?colorSurface"
+        android:pathData="M839,443l-376,-0l-0,-412l376,-0z" />
+    <path
+        android:fillAlpha="0.4"
+        android:fillColor="?colorSecondary"
+        android:pathData="M69,83h298v10h-298z"
+        android:strokeAlpha="0.4" />
+    <path
+        android:fillAlpha="0.4"
+        android:fillColor="?colorSecondary"
+        android:pathData="M69,123h298v10h-298z"
+        android:strokeAlpha="0.4" />
+    <path
+        android:fillAlpha="0.4"
+        android:fillColor="?colorSecondary"
+        android:pathData="M69,163h298v10h-298z"
+        android:strokeAlpha="0.4" />
+    <path
+        android:fillAlpha="0.4"
+        android:fillColor="?colorSecondary"
+        android:pathData="M494,83h298v10h-298z"
+        android:strokeAlpha="0.4" />
+    <path
+        android:fillAlpha="0.4"
+        android:fillColor="?colorSecondary"
+        android:pathData="M494,123h298v10h-298z"
+        android:strokeAlpha="0.4" />
+    <path
+        android:fillAlpha="0.4"
+        android:fillColor="?colorSecondary"
+        android:pathData="M494,163h298v10h-298z"
+        android:strokeAlpha="0.4" />
+    <path
+        android:fillAlpha="0.4"
+        android:fillColor="?colorSecondary"
+        android:pathData="M69,203h298v10h-298z"
+        android:strokeAlpha="0.4" />
+    <path
+        android:fillAlpha="0.4"
+        android:fillColor="?colorSecondary"
+        android:pathData="M69,243h298v10h-298z"
+        android:strokeAlpha="0.4" />
+    <path
+        android:fillAlpha="0.4"
+        android:fillColor="?colorSecondary"
+        android:pathData="M69,283h298v10h-298z"
+        android:strokeAlpha="0.4" />
+    <path
+        android:fillAlpha="0.4"
+        android:fillColor="?colorSecondary"
+        android:pathData="M69,323h298v10h-298z"
+        android:strokeAlpha="0.4" />
+    <path
+        android:fillAlpha="0.4"
+        android:fillColor="?colorSecondary"
+        android:pathData="M69,363h298v10h-298z"
+        android:strokeAlpha="0.4" />
 </vector>
