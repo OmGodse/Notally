@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fragment Titles -->
+    <string name="notes">Mga Tala</string>
+    <string name="deleted">Mga Tinanggal</string>
+    <string name="archived">Mga Na-archive</string>
+    <string name="settings">Settings</string>
+
+    <!-- Menu Options -->
+    <string name="share">Ibahagi</string>
+    <string name="search">Hanapin</string>
+    <string name="labels">Tatak</string>
+    <string name="delete">Tanggalin</string>
+    <string name="restore">Ibalik</string>
+    <string name="archive">Archive</string>
+    <string name="unarchive">Tanggalin sa archive</string>
+    <string name="delete_forever">Tanggalin habambuhay</string>
+
+    <!-- Chooser dialog hints -->
+    <string name="view_note">Tignan ang tala…</string>
+    <string name="share_note">Ibahagi ang tala…</string>
+
+    <!-- Dialogs -->
+    <string name="save">Isalba</string>
+    <string name="edit">I-edit</string>
+    <string name="cancel">Kanselahin</string>
+    <string name="make_list">Gumawa ng listahan</string>
+    <string name="take_note">Gumawa ng tala</string>
+    <string name="add_label">Magdagdag ng label</string>
+    <string name="export">I-export</string>
+    <string name="plain_text">Payak na Teskto</string>
+    <string name="save_to_device">Isalba</string>
+    <string name="edit_label">I-edit ang tatak</string>
+    <string name="label_exists">Ang tatak ay mayroon na</string>
+    <string name="delete_label">Tanggalin ang tatak?</string>
+    <string name="create_new">Wala pang mga tatak. Gumawa ng isa?</string>
+    <string name="delete_note_forever">Tanggalin ang tala habambuhay?</string>
+    <string name="your_notes_associated">Ang mga tala na nakaugnay sa tatak na ito ay hindi tatanggalin</string>
+
+    <!-- Lists and Notes -->
+    <string name="note">Tala</string>
+    <string name="item">Bagong Item</string>
+    <string name="date">Petsa</string>
+    <string name="title">Pamagat</string>
+    <string name="add_item">Magdagdag ng item</string>
+    <string name="one_more_item">1 pang item</string>
+    <string name="more_items">%1$d madaming mga item</string>
+    <string name="drag_handle">Hawakan sa pag-drag</string>
+    <string name="bold">Bold</string>
+    <string name="italic">Italic</string>
+    <string name="strikethrough">Strikethrough</string>
+    <string name="clear_formatting">Tanggalin ang formatting</string>
+    <string name="monospace">Monospace</string>
+
+    <!-- Miscellaneous -->
+    <string name="created">Ginawa</string>
+    <string name="saved_to_device">Nakasalba sa device</string>
+    <string name="saved_to_notally">Nakasalba sa Notally</string>
+    <string name="empty_note">Walang laman na tala</string>
+    <string name="empty_list">Walang laman na listahan</string>
+    <string name="discarded_empty_note">Tinapon na walang laman na tala</string>
+    <string name="discarded_empty_list">Tinapon na walang laman na listahan</string>
+    <string name="something_went_wrong">May nangyari na mali. Pakiulit muli.</string>
+
+    <!-- Settings Page -->
+    <string name="appearance">Itsura</string>
+
+    <string name="view">Tignan</string>
+    <string name="list">Listahan</string>
+    <string name="grid">Grid</string>
+
+    <string name="theme">Tema</string>
+    <string name="light">Maliwanag</string>
+    <string name="dark">Madilim</string>
+    <string name="follow_system">Sundin ang System</string>
+
+    <string name="card_type">Tipo na tarheta</string>
+    <string name="elevated">Nakataas</string>
+    <string name="flat">Patag</string>
+
+    <string name="content_density">Siksikan ng laman</string>
+    <string name="max_items_to_display">Pinamadaming item na ipapakita sa listahan</string>
+    <string name="max_lines_to_display">Pinamadaming linya na ipapakita sa tala</string>
+
+    <string name="show_date_created">Ipakita ang petsya ng paggawa</string>
+
+    <string name="backup">Backup</string>
+    <string name="export_notes_to_a_file">I-export ang mga tala sa isang file</string>
+    <string name="import_notes_from_a_file">I-import ang mga tala mula sa isang file</string>
+
+    <string name="about">Tungkol</string>
+    <string name="libraries">Mga Library</string>
+    <string name="rate">Markahan ang app</string>
+</resources>
