@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fragment Titles -->
+    <string name="notes">Notater</string>
+    <string name="deleted">Papirkurv</string>
+    <string name="archived">Arkiv</string>
+    <string name="settings">Innstillinger</string>
+
+    <!-- Menu Options -->
+    <string name="share">Del</string>
+    <string name="search">Søk</string>
+    <string name="labels">Etiketter</string>
+    <string name="delete">Slett</string>
+    <string name="restore">Gjenopprett</string>
+    <string name="archive">Arkiver</string>
+    <string name="unarchive">Dearkiver</string>
+    <string name="delete_forever">Slett for alltid</string>
+
+    <!-- Chooser dialog hints -->
+    <string name="view_note">Se notat…</string>
+    <string name="share_note">Del notat…</string>
+
+    <!-- Dialogs -->
+    <string name="save">Lagre</string>
+    <string name="edit">Rediger</string>
+    <string name="cancel">Avbryt</string>
+    <string name="make_list">Lag en liste</string>
+    <string name="take_note">Ta et notat</string>
+    <string name="add_label">Legg til etikett</string>
+    <string name="export">Eksporter</string>
+    <string name="plain_text">Ren tekst</string>
+    <string name="save_to_device">Lagre til enhet</string>
+    <string name="edit_label">Rediger etikett</string>
+    <string name="label_exists">Etiketten finnes fra før</string>
+    <string name="delete_label">Slette etiketten?</string>
+    <string name="create_new">Ingen etiketter. Opprette en?</string>
+    <string name="delete_note_forever">Slett notatet for alltid?</string>
+    <string name="your_notes_associated">Notatene assosiert med etikketten vil ikke bli slettet.</string>
+
+    <!-- Lists and Notes -->
+    <string name="note">Notat</string>
+    <string name="item">Element</string>
+    <string name="date">Dato</string>
+    <string name="title">Tittel</string>
+    <string name="add_item">Legg til element</string>
+    <string name="one_more_item">Ett element til</string>
+    <string name="more_items">%1$d flere elementer</string>
+    <string name="drag_handle">Drahåndtak</string>
+    <string name="bold">Fet</string>
+    <string name="italic">Kursiv</string>
+    <string name="strikethrough">Gjennomstreket</string>
+    <string name="clear_formatting">Fjern formatering</string>
+    <string name="monospace">Fastbreddeskrift</string>
+
+    <!-- Miscellaneous -->
+    <string name="created">Opprettet</string>
+    <string name="saved_to_device">Lagre til enhet</string>
+    <string name="saved_to_notally">Lagre til Notally</string>
+    <string name="empty_note">Tomt notat</string>
+    <string name="empty_list">Tom liste</string>
+    <string name="discarded_empty_note">Forkastet tomt notat</string>
+    <string name="discarded_empty_list">Forkastet tom liste</string>
+    <string name="something_went_wrong">Noe gikk galt. Prøv igjen.</string>
+
+    <!-- Settings Page -->
+    <string name="appearance">Utseende</string>
+
+    <string name="view">Format</string>
+    <string name="list">Liste</string>
+    <string name="grid">Rutenett</string>
+
+    <string name="theme">Tema</string>
+    <string name="light">Lyst</string>
+    <string name="dark">Mørkt</string>
+    <string name="follow_system">Følg systeminnstillinger</string>
+
+    <string name="card_type">Visningstype</string>
+    <string name="elevated">Forhøyet</string>
+    <string name="flat">Flatt</string>
+
+    <string name="content_density">Innholdstetthet</string>
+    <string name="max_items_to_display">Maks antall elementer fremvist av liste</string>
+    <string name="max_lines_to_display">Maks antall linjer vist fra notatene</string>
+
+    <string name="show_date_created">Vis opprettelsesdato</string>
+
+    <string name="backup">Sikkerhetskopi</string>
+    <string name="export_notes_to_a_file">Eksporter notater til fil</string>
+    <string name="import_notes_from_a_file">Importer notater fra fil</string>
+
+    <string name="about">Om</string>
+    <string name="libraries">Tredjepartsbiblioteker</string>
+    <string name="rate">Bedøm denne appen</string>
+</resources>
