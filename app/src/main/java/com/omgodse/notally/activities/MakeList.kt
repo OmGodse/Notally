@@ -11,13 +11,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.omgodse.notally.R
-import com.omgodse.notally.adapters.MakeListAdapter
 import com.omgodse.notally.databinding.ActivityMakeListBinding
 import com.omgodse.notally.helpers.NotesHelper
 import com.omgodse.notally.interfaces.ListItemListener
-import com.omgodse.notally.miscellaneous.ItemTouchHelperCallback
 import com.omgodse.notally.miscellaneous.getLocale
 import com.omgodse.notally.miscellaneous.setOnNextAction
+import com.omgodse.notally.adapters.MakeListAdapter
+import com.omgodse.notally.viewholders.MakeListViewHolder
 import com.omgodse.notally.viewmodels.MakeListModel
 import com.omgodse.notally.xml.ListItem
 import java.text.SimpleDateFormat
@@ -102,15 +102,37 @@ class MakeList : NotallyActivity() {
         val position = adapter.items.size
         adapter.notifyItemInserted(position)
         binding.RecyclerView.post {
-            val viewHolder = binding.RecyclerView.findViewHolderForAdapterPosition(position - 1) as MakeListAdapter.ViewHolder?
-            viewHolder?.listItem?.requestFocus()
+            val viewHolder = binding.RecyclerView.findViewHolderForAdapterPosition(position - 1) as MakeListViewHolder?
+            viewHolder?.requestFocus()
         }
     }
 
     private fun setupRecyclerView() {
         adapter = MakeListAdapter(this, model.items)
-        val itemTouchHelperCallback = ItemTouchHelperCallback(adapter)
-        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
+        
+        val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.Callback() {
+            
+            override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
+                val drag = ItemTouchHelper.UP or ItemTouchHelper.DOWN
+                val swipe = ItemTouchHelper.START or ItemTouchHelper.END
+                return makeMovementFlags(drag, swipe)
+            }
+
+            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+                Collections.swap(model.items, viewHolder.adapterPosition, target.adapterPosition)
+                adapter.notifyItemMoved(viewHolder.adapterPosition, target.adapterPosition)
+                model.saveNote()
+                return true
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                model.items.removeAt(viewHolder.adapterPosition)
+                adapter.notifyItemRemoved(viewHolder.adapterPosition)
+                adapter.notifyItemRangeChanged(viewHolder.adapterPosition, model.items.size)
+                model.saveNote()
+            }
+
+        })
         itemTouchHelper.attachToRecyclerView(binding.RecyclerView)
 
         adapter.listItemListener = object : ListItemListener {
@@ -121,19 +143,6 @@ class MakeList : NotallyActivity() {
 
             override fun onStartDrag(viewHolder: RecyclerView.ViewHolder) {
                 itemTouchHelper.startDrag(viewHolder)
-                model.saveNote()
-            }
-
-            override fun onItemDeleted(position: Int) {
-                model.items.removeAt(position)
-                adapter.notifyItemRemoved(position)
-                adapter.notifyItemRangeChanged(position, model.items.size)
-                model.saveNote()
-            }
-
-            override fun onItemSwapped(fromPosition: Int, toPosition: Int) {
-                Collections.swap(model.items, fromPosition, toPosition)
-                adapter.notifyItemMoved(fromPosition, toPosition)
                 model.saveNote()
             }
 
@@ -153,9 +162,9 @@ class MakeList : NotallyActivity() {
     }
 
     private fun moveToNext(position: Int) {
-        val viewHolder = binding.RecyclerView.findViewHolderForAdapterPosition(position + 1) as MakeListAdapter.ViewHolder?
+        val viewHolder = binding.RecyclerView.findViewHolderForAdapterPosition(position + 1) as MakeListViewHolder?
         if (viewHolder != null) {
-            viewHolder.listItem.requestFocus()
+            viewHolder.requestFocus()
         } else addListItem()
     }
 }

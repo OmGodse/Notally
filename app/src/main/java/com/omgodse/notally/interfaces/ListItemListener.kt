@@ -8,10 +8,6 @@ interface ListItemListener {
 
     fun onStartDrag(viewHolder: RecyclerView.ViewHolder)
 
-    fun onItemDeleted(position: Int)
-
-    fun onItemSwapped(fromPosition: Int, toPosition: Int)
-
     fun onItemTextChange(position: Int, newText: String)
 
     fun onItemCheckedChange(position: Int, checked: Boolean)
