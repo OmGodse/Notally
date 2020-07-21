@@ -35,16 +35,9 @@ class BaseNoteModel(app: Application) : AndroidViewModel(app) {
     private val archivedObserver: NotallyFileObserver
 
     init {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            observer = NotallyFileObserver(notesHelper.getNotePath())
-            deletedObserver = NotallyFileObserver(notesHelper.getDeletedPath())
-            archivedObserver = NotallyFileObserver(notesHelper.getArchivedPath())
-        }
-        else {
-            observer = NotallyFileObserver(notesHelper.getNotePath().path)
-            deletedObserver = NotallyFileObserver(notesHelper.getDeletedPath().path)
-            archivedObserver = NotallyFileObserver(notesHelper.getArchivedPath().path)
-        }
+        observer = NotallyFileObserver.getInstance(notesHelper.getNotePath())
+        deletedObserver = NotallyFileObserver.getInstance(notesHelper.getDeletedPath())
+        archivedObserver = NotallyFileObserver.getInstance(notesHelper.getArchivedPath())
 
         observer.onEventCallback = { event, path ->
             onEvent(event, path, notes, notesHelper.getNotePath())
@@ -272,9 +265,9 @@ class BaseNoteModel(app: Application) : AndroidViewModel(app) {
         var onEventCallback: ((event: Int, path: String) -> Unit)? = null
 
         @RequiresApi(Build.VERSION_CODES.Q)
-        constructor(file: File) : super(file, mask)
+        private constructor(file: File) : super(file, mask)
 
-        constructor(filePath: String) : super(filePath, mask)
+        private constructor(filePath: String) : super(filePath, mask)
 
         override fun onEvent(event: Int, path: String?) {
             /*
@@ -291,6 +284,12 @@ class BaseNoteModel(app: Application) : AndroidViewModel(app) {
 
         companion object {
             const val mask = DELETE or CREATE or MODIFY
+
+            fun getInstance(file: File) : NotallyFileObserver {
+                return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    NotallyFileObserver(file)
+                } else NotallyFileObserver(file.path)
+            }
         }
     }
 }
