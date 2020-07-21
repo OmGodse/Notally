@@ -1,12 +1,8 @@
 # Notally
+There are many notes apps out there, but they're all hideous, glitchy, low quality or all 3 at the same time.
 
-[![GitHub release](https://img.shields.io/github/v/release/OmGodse/Notally)](https://github.com/OmGodse/Notally/releases)
-[![License: MIT](https://img.shields.io/github/license/OmGodse/Notally.svg)](https://github.com/OmGodse/Notally/blob/master/LICENSE.md)
+Well, Notally is none of these things. It's extremely light, minimalistic and elegant. There are minimal dependencies and lines of code. (All without compromising on readability)
 
-[<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" alt="Get it on Google Play"  height="70"/>](https://play.google.com/store/apps/details?id=com.omgodse.notally)
-[<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" alt="Get it on IzzyOnDroid" height="70"/>](https://apt.izzysoft.de/fdroid/index/apk/com.omgodse.notally)
-
-## Overview
 * Auto save
 * Dark mode
 * Material design
@@ -16,13 +12,20 @@
 * Export notes as plain text, HTML or PDF files with formatting
 * Create rich text notes with support for bold, italics, mono space and strike-through
 
+[<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" alt="Get it on Google Play"  height="70"/>](https://play.google.com/store/apps/details?id=com.omgodse.notally)
+[<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" alt="Get it on IzzyOnDroid" height="70"/>](https://apt.izzysoft.de/fdroid/index/apk/com.omgodse.notally)
+
 ## Translations
-* English
-* Spanish by Jose Casas
-* Italian by Luigi Sforza
-* Ukrainian by Alex Shpak
-* Russian by Denis Bondarenko
-* French by Arnaud Dieumegard
+| Language  | Contributor            |
+| --------  | ------------           |
+| English   | Om Godse               |
+| Italian   | Luigi Sforza           |
+| French    | Arnaud Dieumegard      |
+| Spanish   | Jose Casas             |
+| Norwegian | Fredrik Magnussen      |
+| Russian   | Denis Bondarenko       |
+| Ukrainian | Alex Shpak             |
+| Tagalog   | Collins von Ludendorff |
 
 If you would like to help translate the app, please contact me [here](mailto:omgodseapps@gmail.com)
 
