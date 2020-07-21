@@ -14,8 +14,7 @@
         android:layout_height="wrap_content"
         app:boxStrokeColor="?attr/colorSecondary"
         app:errorEnabled="true"
-        app:errorIconDrawable="@null"
-        app:errorTextAppearance="@style/TextAppearance.Error">
+        app:errorIconDrawable="@null">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@android:id/edit"

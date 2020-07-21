@@ -14,26 +14,17 @@
 
         <EditText
             android:id="@+id/EnterTitle"
-            style="@style/Title.EditText"
+            style="@style/EditText.Title"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:importantForAutofill="no" />
+            android:layout_height="wrap_content" />
 
         <EditText
             android:id="@+id/EnterBody"
+            style="@style/EditText.Body"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/EnterTitle"
-            android:background="@null"
-            android:fontFamily="sans-serif"
-            android:hint="@string/note"
-            android:importantForAutofill="no"
-            android:inputType="textMultiLine|textCapSentences"
-            android:paddingStart="24dp"
-            android:paddingTop="16dp"
-            android:paddingEnd="24dp"
-            android:paddingBottom="16dp"
-            android:textSize="15sp" />
+            android:textAppearance="?attr/textAppearanceBody2" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/SaveButton"

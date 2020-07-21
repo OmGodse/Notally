@@ -7,7 +7,6 @@
     tools:context=".activities.TakeNote">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/AppBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -34,22 +33,15 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/EnterTitle"
-                style="@style/Title.EditText"
+                style="@style/EditText.Title"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:importantForAutofill="no" />
+                android:layout_height="wrap_content" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/DateCreated"
+                style="@style/TextView.DateCreated"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/nunito_regular"
-                android:paddingStart="24dp"
-                android:paddingTop="16dp"
-                android:paddingEnd="24dp"
-                android:paddingBottom="16dp"
-                android:text="@string/date"
-                android:freezesText="true"/>
+                android:layout_height="wrap_content" />
 
             <View
                 android:layout_width="match_parent"
@@ -58,19 +50,10 @@
 
             <EditText
                 android:id="@+id/EnterBody"
+                style="@style/EditText.Body"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:focusableInTouchMode="true"
-                android:fontFamily="sans-serif"
-                android:hint="@string/note"
-                android:importantForAutofill="no"
-                android:inputType="textMultiLine|textCapSentences"
-                android:paddingStart="24dp"
-                android:paddingTop="16dp"
-                android:paddingEnd="24dp"
-                android:paddingBottom="8dp"
-                android:textSize="16sp" />
+                android:focusableInTouchMode="true" />
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/LabelGroup"

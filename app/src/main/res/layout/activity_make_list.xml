@@ -13,8 +13,7 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/Toolbar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/toolbarHeight"
-            app:titleTextAppearance="@style/TextAppearance.Toolbar" />
+            android:layout_height="@dimen/toolbarHeight" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -34,22 +33,15 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/EnterTitle"
-                style="@style/Title.EditText"
+                style="@style/EditText.Title"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:importantForAutofill="no" />
+                android:layout_height="wrap_content" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/DateCreated"
+                style="@style/TextView.DateCreated"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/nunito_regular"
-                android:paddingStart="24dp"
-                android:paddingTop="16dp"
-                android:paddingEnd="24dp"
-                android:paddingBottom="16dp"
-                android:text="@string/date"
-                android:freezesText="true"/>
+                android:layout_height="wrap_content" />
 
             <View
                 android:id="@+id/Divider"

@@ -2,7 +2,6 @@
 
     <style name="Base.AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:statusBarColor">@color/Transparent</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:colorEdgeEffect">@color/secondary_translucent</item>
 
         <item name="snackbarStyle">@style/Notally.Snackbar</item>
@@ -25,18 +24,37 @@
     </style>
 
 
-    <style name="Title.EditText" parent="Widget.AppCompat.EditText">
+    <style name="TextAppearance.Toolbar" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:textSize">20dp</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="fontFamily">@font/nunito_bold</item>
+    </style>
+
+
+    <style name="EditText" parent="Widget.AppCompat.EditText">
         <item name="android:background">@null</item>
-        <item name="android:hint">@string/title</item>
         <item name="android:paddingStart">24dp</item>
         <item name="android:paddingEnd">24dp</item>
         <item name="android:paddingTop">16dp</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:paddingBottom">16dp</item>
         <item name="android:inputType">textMultiLine|textCapSentences</item>
+        <item name="android:importantForAutofill">no</item>
+    </style>
+
+    <style name="EditText.Body">
+        <item name="android:textAppearance">?attr/textAppearanceBody1</item>
+        <item name="android:hint">@string/note</item>
+    </style>
+
+    <style name="EditText.Title">
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:hint">@string/title</item>
         <item name="android:imeOptions">actionNext</item>
         <item name="android:fontFamily">@font/nunito_semibold</item>
         <item name="android:textColor">?attr/colorSecondary</item>
+        <item name="android:textAppearance">?attr/textAppearanceHeadline6</item>
     </style>
+
 
     <style name="Options.Button" parent="Widget.MaterialComponents.TextView">
         <item name="android:layout_width">match_parent</item>
@@ -50,18 +68,14 @@
         <item name="android:background">?selectableItemBackground</item>
     </style>
 
-    <style name="TextAppearance.Error" parent="TextAppearance.Design.Error">
-        <item name="android:letterSpacing">0</item>
-    </style>
-
-    <style name="TextAppearance.Toolbar" parent="TextAppearance.MaterialComponents.Headline6">
-        <item name="android:textSize">20dp</item>
-        <item name="android:letterSpacing">0</item>
-        <item name="fontFamily">@font/nunito_bold</item>
-    </style>
-
-    <style name="TextAppearance.ChipLikeButton" parent="TextAppearance.MaterialComponents.Body2">
-        <item name="fontFamily">@font/nunito_regular</item>
+    <style name="TextView.DateCreated" parent="Widget.MaterialComponents.TextView">
+        <item name="android:paddingStart">24dp</item>
+        <item name="android:paddingEnd">24dp</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:text">@string/date</item>
+        <item name="android:textColor">?android:textColorHint</item>
+        <item name="android:textAppearance">?attr/textAppearanceBody2</item>
     </style>
 
 
