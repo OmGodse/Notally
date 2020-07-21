@@ -18,11 +18,11 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.omgodse.notally.R
 import com.omgodse.notally.activities.MainActivity
-import com.omgodse.notally.adapters.LabelsAdapter
 import com.omgodse.notally.databinding.FragmentNotesBinding
 import com.omgodse.notally.helpers.MenuHelper
 import com.omgodse.notally.helpers.NotesHelper
 import com.omgodse.notally.miscellaneous.Constants
+import com.omgodse.notally.adapters.LabelsAdapter
 import com.omgodse.notally.xml.BaseNote
 import java.io.File
 
@@ -97,10 +97,7 @@ class Labels : Fragment() {
     private fun confirmVisibility(labels: List<String>) {
         if (labels.isNotEmpty()) {
             binding?.RecyclerView?.visibility = View.VISIBLE
-        } else {
-            binding?.RecyclerView?.visibility = View.GONE
-            (mContext as MainActivity).binding.AppBarLayout.setExpanded(true, true)
-        }
+        } else binding?.RecyclerView?.visibility = View.GONE
     }
 
     private fun setupFrameLayout() {

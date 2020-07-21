@@ -15,7 +15,6 @@
         android:layout_height="match_parent">
 
         <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/AppBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -25,7 +24,6 @@
                 android:layout_height="@dimen/toolbarHeight"
                 app:contentInsetEnd="16dp"
                 app:contentInsetStartWithNavigation="64dp"
-                app:layout_scrollFlags="enterAlways|scroll"
                 app:title="@string/app_name"
                 app:titleTextAppearance="@style/TextAppearance.Toolbar"
                 android:focusableInTouchMode="true">

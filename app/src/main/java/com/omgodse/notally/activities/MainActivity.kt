@@ -71,7 +71,6 @@ class MainActivity : AppCompatActivity() {
         })
 
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
-            binding.AppBarLayout.setExpanded(true, true)
             fragmentIdToLoad = destination.id
             binding.NavigationView.setCheckedItem(destination.id)
             handleDestinationChange(destination, arguments)

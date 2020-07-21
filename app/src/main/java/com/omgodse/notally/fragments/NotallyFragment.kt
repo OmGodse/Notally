@@ -197,10 +197,7 @@ abstract class NotallyFragment : Fragment() {
     private fun confirmVisibility(notes: List<BaseNote>) {
         if (notes.isNotEmpty()) {
             binding?.RecyclerView?.visibility = View.VISIBLE
-        } else {
-            binding?.RecyclerView?.visibility = View.GONE
-            (mContext as MainActivity).binding.AppBarLayout.setExpanded(true, true)
-        }
+        } else binding?.RecyclerView?.visibility = View.GONE
     }
 
 
