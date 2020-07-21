@@ -10,13 +10,14 @@ android {
         applicationId "com.omgodse.notally"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 20
-        versionName "2.5"
+        versionCode 21
+        versionName "2.6"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
             minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -27,7 +28,9 @@ android {
 
     kotlinOptions { jvmTarget = JavaVersion.VERSION_1_8.toString() }
 
-    viewBinding { enabled = true }
+    buildFeatures {
+        viewBinding true
+    }
 
     androidExtensions { features = ["parcelize"] }
 }
@@ -52,7 +55,7 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$stableNavVersion"
 
     implementation 'org.ocpsoft.prettytime:prettytime:4.0.5.Final'
-    implementation 'com.google.android.material:material:1.2.0-alpha06'
+    implementation 'com.google.android.material:material:1.3.0-alpha01'
 
     implementation 'com.uttampanchasara.pdfgenerator:pdfgenerator:1.3'
 }
