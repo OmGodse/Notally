@@ -4,7 +4,7 @@
     <string name="notes">Mga Tala</string>
     <string name="deleted">Mga Tinanggal</string>
     <string name="archived">Mga Na-archive</string>
-    <string name="settings">Settings</string>
+    <string name="settings">Mga Setting</string>
 
     <!-- Menu Options -->
     <string name="share">Ibahagi</string>
@@ -44,7 +44,7 @@
     <string name="title">Pamagat</string>
     <string name="add_item">Magdagdag ng item</string>
     <string name="one_more_item">1 pang item</string>
-    <string name="more_items">%1$d madaming mga item</string>
+    <string name="more_items">%1$d madami pang mga item</string>
     <string name="drag_handle">Hawakan sa pag-drag</string>
     <string name="bold">Bold</string>
     <string name="italic">Italic</string>
@@ -74,7 +74,7 @@
     <string name="dark">Madilim</string>
     <string name="follow_system">Sundin ang System</string>
 
-    <string name="card_type">Tipo na tarheta</string>
+    <string name="card_type">Tipo ng tarheta</string>
     <string name="elevated">Nakataas</string>
     <string name="flat">Patag</string>
 
@@ -90,5 +90,5 @@
 
     <string name="about">Tungkol</string>
     <string name="libraries">Mga Library</string>
-    <string name="rate">Markahan ang app</string>
+    <string name="rate">Markahan ang app na ito</string>
 </resources>
