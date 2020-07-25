@@ -20,10 +20,11 @@ I started this as a side project back in October 2019. It's my first app and was
 * Italian by Luigi Sforza
 * Spanish by Jose Casas
 * Ukrainian by Alex Shpak
+* Swedish by Erik Lindström
 * Russian by Denis Bondarenko
 * French by Arnaud Dieumegard
 * Norwegian by Fredrik Magnussen
-* Tagalog by Collins von Ludendorff
+* Tagalog by Isaiah Collins Abetong
 
 If you would like to help translate the app, please contact me [here](mailto:omgodseapps@gmail.com)
 
