@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fragment Titles -->
+    <string name="notes">Anteckningar</string>
+    <string name="deleted">Borttagen</string>
+    <string name="archived">Arkiverad</string>
+    <string name="settings">Inställningar</string>
+
+    <!-- Menu Options -->
+    <string name="share">Dela</string>
+    <string name="search">Sök</string>
+    <string name="labels">Etiketter</string>
+    <string name="delete">Radera</string>
+    <string name="restore">Återställ</string>
+    <string name="archive">Arkiv</string>
+    <string name="unarchive">Avarkivera</string>
+    <string name="delete_forever">Radera för alltid</string>
+
+    <!-- Chooser dialog hints -->
+    <string name="view_note">Se anteckning…</string>
+    <string name="share_note">Dela anteckning…</string>
+
+    <!-- Dialogs -->
+    <string name="save">Spara</string>
+    <string name="edit">Redigera</string>
+    <string name="cancel">Avbryt</string>
+    <string name="make_list">Skapa lista</string>
+    <string name="take_note">Skapa anteckning</string>
+    <string name="add_label">Lägg till etikett</string>
+    <string name="export">Exportera</string>
+    <string name="plain_text">Oformatterad text</string>
+    <string name="save_to_device">Spara till enhet</string>
+    <string name="edit_label">Redigera etikett</string>
+    <string name="label_exists">Etiketten finns redan</string>
+    <string name="delete_label">Radera etikett?</string>
+    <string name="create_new">Inga etiketter än. Skapa en?</string>
+    <string name="delete_note_forever">Radera anteckning för alltid?</string>
+    <string name="your_notes_associated">Dina anteckningar som är associerad till denna etikett kommer inte raderas</string>
+
+    <!-- Lists and Notes -->
+    <string name="note">Anteckning</string>
+    <string name="item">Objekt</string>
+    <string name="date">Datum</string>
+    <string name="title">Titel</string>
+    <string name="add_item">Lägg till objekt</string>
+    <string name="one_more_item">1 till objekt</string>
+    <string name="more_items">%1$d fler objekt</string>
+    <string name="drag_handle">Grepphandtag</string>
+    <string name="bold">Fet</string>
+    <string name="italic">Kursiv</string>
+    <string name="strikethrough">Genomstruken</string>
+    <string name="clear_formatting">Rensa formatering</string>
+    <string name="monospace">Monospace</string>
+
+    <!-- Miscellaneous -->
+    <string name="created">Skapad</string>
+    <string name="saved_to_device">Sparad till enhet</string>
+    <string name="saved_to_notally">Sparad till Notally</string>
+    <string name="empty_note">Tom anteckning</string>
+    <string name="empty_list">Tom lista</string>
+    <string name="discarded_empty_note">Kasserad tom anteckning</string>
+    <string name="discarded_empty_list">Kasserad tom lista</string>
+    <string name="something_went_wrong">Ett fel uppstod. Var vänligt försök igen.</string>
+
+    <!-- Settings Page -->
+    <string name="appearance">Utseende</string>
+
+    <string name="view">Visa</string>
+    <string name="list">Lista</string>
+    <string name="grid">Rutnät</string>
+
+    <string name="theme">Tema</string>
+    <string name="light">Ljus</string>
+    <string name="dark">Mörk</string>
+    <string name="follow_system">Följ systemet</string>
+
+    <string name="card_type">Kort typ</string>
+    <string name="elevated">Upphöjd</string>
+    <string name="flat">Platt</string>
+
+    <string name="content_density">Innehållstäthet</string>
+    <string name="max_items_to_display">Max objekt att visa i lista</string>
+    <string name="max_lines_to_display">Max rader att visa i anteckning</string>
+
+    <string name="show_date_created">Visa datum skapat</string>
+
+    <string name="backup">Säkerhetskopiering</string>
+    <string name="export_notes_to_a_file">Exportera anteckningar till en fil</string>
+    <string name="import_notes_from_a_file">Importera anteckningar från en fil</string>
+
+    <string name="about">Om</string>
+    <string name="libraries">Bibliotek</string>
+    <string name="rate">Betygsätt denna app</string>
+</resources>
