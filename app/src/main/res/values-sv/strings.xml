@@ -2,7 +2,7 @@
 <resources>
     <!-- Fragment Titles -->
     <string name="notes">Anteckningar</string>
-    <string name="deleted">Borttagen</string>
+    <string name="deleted">Raderat</string>
     <string name="archived">Arkiverad</string>
     <string name="settings">Inställningar</string>
 
@@ -12,7 +12,7 @@
     <string name="labels">Etiketter</string>
     <string name="delete">Radera</string>
     <string name="restore">Återställ</string>
-    <string name="archive">Arkiv</string>
+    <string name="archive">Arkivera</string>
     <string name="unarchive">Avarkivera</string>
     <string name="delete_forever">Radera för alltid</string>
 
@@ -50,7 +50,7 @@
     <string name="italic">Kursiv</string>
     <string name="strikethrough">Genomstruken</string>
     <string name="clear_formatting">Rensa formatering</string>
-    <string name="monospace">Monospace</string>
+    <string name="monospace">Fast bredd</string>
 
     <!-- Miscellaneous -->
     <string name="created">Skapad</string>
@@ -79,16 +79,16 @@
     <string name="flat">Platt</string>
 
     <string name="content_density">Innehållstäthet</string>
-    <string name="max_items_to_display">Max objekt att visa i lista</string>
-    <string name="max_lines_to_display">Max rader att visa i anteckning</string>
+    <string name="max_items_to_display">Max antal objekt att visa i lista</string>
+    <string name="max_lines_to_display">Max antal rader att visa i anteckning</string>
 
-    <string name="show_date_created">Visa datum skapat</string>
+    <string name="show_date_created">Visa datum när anteckning skapades</string>
 
     <string name="backup">Säkerhetskopiering</string>
     <string name="export_notes_to_a_file">Exportera anteckningar till en fil</string>
     <string name="import_notes_from_a_file">Importera anteckningar från en fil</string>
 
     <string name="about">Om</string>
-    <string name="libraries">Bibliotek</string>
+    <string name="libraries">Tredjepartsbibliotek</string>
     <string name="rate">Betygsätt denna app</string>
 </resources>
