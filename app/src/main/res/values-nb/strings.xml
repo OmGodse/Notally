@@ -53,7 +53,7 @@
     <string name="monospace">Fastbreddeskrift</string>
 
     <!-- Miscellaneous -->
-    <string name="created">Opprettet</string>
+    <string name="created">Opprettet %1$s</string>
     <string name="saved_to_device">Lagre til enhet</string>
     <string name="saved_to_notally">Lagre til Notally</string>
     <string name="empty_note">Tomt notat</string>

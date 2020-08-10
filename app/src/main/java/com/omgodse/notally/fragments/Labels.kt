@@ -101,7 +101,7 @@ class Labels : Fragment() {
     }
 
     private fun setupFrameLayout() {
-        binding?.FrameLayout?.background = mContext.getDrawable(R.drawable.layout_background_labels)
+        binding?.ImageView?.setImageResource(R.drawable.colored_label)
     }
 
     private fun populateRecyclerView() {
@@ -253,7 +253,7 @@ class Labels : Fragment() {
         confirmVisibility(notesHelper.getSortedLabelsList())
 
         binding?.RecyclerView?.layoutManager?.scrollToPosition(labelsAdapter.currentList.indexOf(label))
-        val message = "${mContext.getString(R.string.created)} $label"
+        val message = mContext.getString(R.string.created, label)
 
         val rootView = (mContext as MainActivity).binding.CoordinatorLayout
         Snackbar.make(rootView, message, Snackbar.LENGTH_SHORT).show()

@@ -53,7 +53,7 @@
     <string name="monospace">Пространство между символами</string>
 
     <!-- Miscellaneous -->
-    <string name="created">Создано</string>
+    <string name="created">Создано %1$s</string>
     <string name="saved_to_device">Сохранено на телефоне</string>
     <string name="saved_to_notally">Сохранено в Notally</string>
     <string name="empty_note">Пустая заметка</string>

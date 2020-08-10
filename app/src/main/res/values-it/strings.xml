@@ -53,7 +53,7 @@
     <string name="monospace">Monospazio</string>
 
     <!-- Miscellaneous -->
-    <string name="created">Creata</string>
+    <string name="created">Creata %1$s</string>
     <string name="saved_to_device">Salvata sul dispositivo</string>
     <string name="saved_to_notally">Salvata su Notally</string>
     <string name="empty_note">Nota vuota</string>

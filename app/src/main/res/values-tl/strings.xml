@@ -53,7 +53,7 @@
     <string name="monospace">Monospace</string>
 
     <!-- Miscellaneous -->
-    <string name="created">Ginawa</string>
+    <string name="created">Ginawa %1$s</string>
     <string name="saved_to_device">Nakasalba sa device</string>
     <string name="saved_to_notally">Nakasalba sa Notally</string>
     <string name="empty_note">Walang laman na tala</string>

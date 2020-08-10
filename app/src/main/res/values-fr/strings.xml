@@ -53,7 +53,7 @@
     <string name="monospace">Chasse fixe</string>
 
     <!-- Miscellaneous -->
-    <string name="created">Créé</string>
+    <string name="created">Créé %1$s</string>
     <string name="saved_to_device">Sauvegardé sur l\'appareil</string>
     <string name="saved_to_notally">Sauvegardé sur Notally</string>
     <string name="empty_note">Note vide</string>

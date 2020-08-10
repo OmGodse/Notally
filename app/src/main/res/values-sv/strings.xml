@@ -53,7 +53,7 @@
     <string name="monospace">Fast bredd</string>
 
     <!-- Miscellaneous -->
-    <string name="created">Skapad</string>
+    <string name="created">Skapad %1$s</string>
     <string name="saved_to_device">Sparad till enhet</string>
     <string name="saved_to_notally">Sparad till Notally</string>
     <string name="empty_note">Tom anteckning</string>

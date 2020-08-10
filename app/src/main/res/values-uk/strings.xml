@@ -53,7 +53,7 @@
     <string name="monospace">Монопростір</string>
 
     <!-- Miscellaneous -->
-    <string name="created">Створено</string>
+    <string name="created">Створено %1$s</string>
     <string name="saved_to_device">Збережено на пристрій</string>
     <string name="saved_to_notally">Збережено в Notally</string>
     <string name="empty_note">Пустий запис</string>
