@@ -69,13 +69,12 @@ class Settings : PreferenceFragmentCompat() {
         }
 
         librariesPref?.setOnPreferenceClickListener {
-            val libraries = arrayOf("Pretty Time", "PDF Generator", "Material Components for Android")
+            val libraries = arrayOf("Pretty Time", "Material Components for Android")
             val builder = MaterialAlertDialogBuilder(mContext)
             builder.setTitle(R.string.libraries)
             builder.setItems(libraries) { dialog, which ->
                 when (which) {
                     0 -> openLink(PrettyTime)
-                    1 -> openLink(PDFGenerator)
                     2 -> openLink(MaterialComponents)
                 }
             }
@@ -135,7 +134,6 @@ class Settings : PreferenceFragmentCompat() {
         private const val Github = "https://github.com/OmGodse/Notally"
         private const val PlayStore = "https://play.google.com/store/apps/details?id=com.omgodse.notally"
         private const val PrettyTime = "https://github.com/ocpsoft/prettytime"
-        private const val PDFGenerator = "https://github.com/UttamPanchasara/PDF-Generator"
         private const val MaterialComponents = "https://github.com/material-components/material-components-android"
     }
 }

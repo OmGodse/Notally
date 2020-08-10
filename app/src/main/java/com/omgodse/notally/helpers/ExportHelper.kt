@@ -3,7 +3,6 @@ package com.omgodse.notally.helpers
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.print.PrintAttributes
 import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.core.text.HtmlCompat
@@ -18,7 +17,7 @@ import com.omgodse.notally.xml.Backup
 import com.omgodse.notally.xml.BaseNote
 import com.omgodse.notally.xml.List
 import com.omgodse.notally.xml.Note
-import com.uttampanchasara.pdfgenerator.CreatePdf
+import com.omgodse.post.PostPDFGenerator
 import java.io.File
 import java.io.InputStream
 import java.text.SimpleDateFormat
@@ -94,25 +93,24 @@ class ExportHelper(private val context: Context, private val fragment: Fragment)
 
     fun exportFileToPDF(file: File) {
         val fileName = getFileName(file)
+        val pdfFile = File(getExportedPath(), "$fileName.pdf")
 
         val html = getHTML(file)
 
-        CreatePdf(context)
-            .setPdfName(fileName)
-            .openPrintDialog(false)
-            .setContentBaseUrl(null)
-            .setPageSize(PrintAttributes.MediaSize.ISO_A4)
+        PostPDFGenerator.Builder()
+            .setFile(pdfFile)
             .setContent(html)
-            .setFilePath(getExportedPath().path)
-            .setCallbackListener(object : CreatePdf.PdfCallbackListener {
-                override fun onFailure(errorMsg: String) {
-                    Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_SHORT).show()
+            .setContext(context.applicationContext)
+            .setOnResult(object : PostPDFGenerator.OnResult {
+                override fun onSuccess(file: File) {
+                    showFileOptionsDialog(file, "application/pdf")
                 }
 
-                override fun onSuccess(filePath: String) {
-                    showFileOptionsDialog(File(filePath), "application/pdf")
+                override fun onFailure(message: String?) {
+                    Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_SHORT).show()
                 }
             })
+            .build()
             .create()
     }
 
