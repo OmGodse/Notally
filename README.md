@@ -25,6 +25,7 @@ I started this as a side project back in October 2019. There are many notes apps
 * 🇫🇷 French by Arnaud Dieumegard
 * 🇳🇴 Norwegian by Fredrik Magnussen
 * 🇵🇭 Tagalog by Isaiah Collins Abetong
+* 🇩🇪 German by Maximilian Braunschmied
 
 If you would like to help translate the app, please contact me [here](mailto:omgodseapps@gmail.com)
 
