@@ -11,7 +11,7 @@ class Deleted : NotallyFragment() {
 
     override fun getFragmentID() = R.id.DeletedFragment
 
-    override fun getBackground() = mContext.getDrawable(R.drawable.layout_background_delete)
+    override fun getBackground() = R.drawable.colored_delete
 
     override fun getSupportedOperations(notesHelper: NotesHelper, baseNote: BaseNote): ArrayList<Operation> {
         val operations = ArrayList<Operation>()

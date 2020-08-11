@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="Base.AppTheme">
+        <item name="colorPrimaryDark">@color/White</item>
+        <item name="colorSecondary">@color/LightBlue500</item>
+
+        <item name="onSurfaceTranslucent">@color/BlackTranslucent</item>
+        <item name="secondaryTranslucent">@color/LightBlue500Translucent</item>
+
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+</resources>

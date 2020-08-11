@@ -24,7 +24,6 @@
         android:layout_toStartOf="@id/DragHandle"
         android:layout_toEndOf="@id/CheckBox"
         android:background="@null"
-        android:fontFamily="sans-serif"
         android:hint="@string/item"
         android:imeOptions="actionNext"
         android:inputType="textMultiLine"
@@ -39,8 +38,8 @@
         android:layout_centerVertical="true"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
+        android:contentDescription="@string/drag_handle"
         android:focusable="true"
         android:padding="10dp"
-        app:srcCompat="@drawable/drag_handle"
-        android:contentDescription="@string/drag_handle" />
+        app:srcCompat="@drawable/drag_handle" />
 </RelativeLayout>

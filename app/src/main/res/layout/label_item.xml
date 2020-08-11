@@ -7,7 +7,7 @@
     android:ellipsize="end"
     android:focusable="true"
     android:fontFamily="@font/nunito_semibold"
-    android:foreground="?attr/selectableItemBackground"
+    android:background="?attr/selectableItemBackground"
     android:maxLines="1"
     android:padding="16dp"
     android:text="@string/labels"

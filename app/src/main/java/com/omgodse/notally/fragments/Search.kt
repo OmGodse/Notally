@@ -45,7 +45,7 @@ class Search : NotallyFragment() {
 
     override fun getFragmentID() = R.id.SearchFragment
 
-    override fun getBackground() = mContext.getDrawable(R.drawable.layout_background_search)
+    override fun getBackground() = R.drawable.colored_search
 
     override fun getSupportedOperations(notesHelper: NotesHelper, baseNote: BaseNote): ArrayList<Operation> {
         val operations = ArrayList<Operation>()

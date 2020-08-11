@@ -3,7 +3,6 @@ package com.omgodse.notally.fragments
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -62,7 +61,7 @@ abstract class NotallyFragment : Fragment() {
         binding?.RecyclerView?.setHasFixedSize(true)
 
         setupPadding()
-        setupFrameLayout()
+        setupImageView()
         setupLayoutManager()
         setupItemDecoration()
 
@@ -131,8 +130,8 @@ abstract class NotallyFragment : Fragment() {
         }
     }
 
-    private fun setupFrameLayout() {
-        binding?.FrameLayout?.background = getBackground()
+    private fun setupImageView() {
+        binding?.ImageView?.setImageResource(getBackground())
     }
 
     private fun setupLayoutManager() {
@@ -203,7 +202,7 @@ abstract class NotallyFragment : Fragment() {
 
     abstract fun getFragmentID(): Int
 
-    abstract fun getBackground(): Drawable?
+    abstract fun getBackground(): Int
 
     abstract fun getObservable(): MutableLiveData<ArrayList<BaseNote>>
 

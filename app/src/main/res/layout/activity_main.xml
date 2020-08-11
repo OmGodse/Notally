@@ -63,7 +63,6 @@
             android:layout_gravity="bottom|end"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            app:backgroundTint="?attr/colorSecondary"
             app:rippleColor="@color/FABRipple"
             app:srcCompat="@drawable/add"
             app:tint="?attr/colorSurface" />

@@ -48,7 +48,7 @@
                 android:layout_height="1dp"
                 android:background="?android:attr/listDivider" />
 
-            <EditText
+            <com.omgodse.notally.NotallyEditText
                 android:id="@+id/EnterBody"
                 style="@style/EditText.Body"
                 android:layout_width="match_parent"

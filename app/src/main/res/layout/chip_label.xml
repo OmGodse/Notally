@@ -10,6 +10,6 @@
     android:maxLines="1"
     android:textAppearance="?attr/textAppearanceBody2"
     android:textColor="?attr/colorSecondary"
-    app:backgroundTint="@color/secondary_translucent"
+    app:backgroundTint="?attr/secondaryTranslucent"
     app:rippleColor="?attr/colorControlHighlight"
     app:strokeColor="?attr/colorSecondary" />

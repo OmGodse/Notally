@@ -3,5 +3,5 @@
     android:shape="rectangle">
 
     <corners android:radius="32dp"/>
-    <solid android:color="@color/on_surface_translucent"/>
+    <solid android:color="?attr/onSurfaceTranslucent"/>
 </shape>

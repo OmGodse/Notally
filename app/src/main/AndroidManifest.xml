@@ -23,6 +23,7 @@
         </provider>
 
         <activity
+            android:theme="@style/MainActivity"
             android:name=".activities.MainActivity"
             android:windowSoftInputMode="adjustPan">
 

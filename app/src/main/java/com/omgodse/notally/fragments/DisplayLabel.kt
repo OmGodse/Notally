@@ -22,7 +22,7 @@ class DisplayLabel : NotallyFragment() {
 
     override fun getFragmentID() = R.id.DisplayLabelFragment
 
-    override fun getBackground() = mContext.getDrawable(R.drawable.layout_background_labels)
+    override fun getBackground() = R.drawable.colored_label
 
     override fun getSupportedOperations(notesHelper: NotesHelper, baseNote: BaseNote): ArrayList<Operation> {
         return ArrayList()

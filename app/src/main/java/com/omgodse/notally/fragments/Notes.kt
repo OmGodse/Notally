@@ -62,7 +62,7 @@ class Notes : NotallyFragment() {
 
     override fun getFragmentID() = R.id.NotesFragment
 
-    override fun getBackground() = mContext.getDrawable(R.drawable.layout_background_notes)
+    override fun getBackground() = R.drawable.notebook
 
     override fun getSupportedOperations(notesHelper: NotesHelper, baseNote: BaseNote) : ArrayList<Operation> {
         val operations = ArrayList<Operation>()

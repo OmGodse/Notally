@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="AppTheme" parent="Base.AppTheme">
-        <item name="colorPrimary">@color/LightBlueSurface</item>
         <item name="colorPrimaryDark">@color/LightBlueSurface</item>
         <item name="colorSecondary">@color/LightBlue100</item>
         <item name="colorSurface">@color/LightBlueSurface</item>
 
-        <item name="android:windowBackground">@color/LightBlueSurface</item>
+        <item name="onSurfaceTranslucent">@color/WhiteTranslucent</item>
+        <item name="secondaryTranslucent">@color/LightBlue100Translucent</item>
+
         <item name="android:navigationBarColor">@color/Black</item>
     </style>
 </resources>

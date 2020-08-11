@@ -11,7 +11,7 @@ class Archived : NotallyFragment() {
 
     override fun getFragmentID() = R.id.ArchivedFragment
 
-    override fun getBackground() = mContext.getDrawable(R.drawable.layout_background_archived)
+    override fun getBackground() = R.drawable.colored_archive
 
     override fun getSupportedOperations(notesHelper: NotesHelper, baseNote: BaseNote): ArrayList<Operation> {
         val operations = ArrayList<Operation>()

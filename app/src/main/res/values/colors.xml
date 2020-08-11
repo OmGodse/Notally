@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="LightBlue500">#03a9f4</color>
-    <color name="LightBlue100">#b3e5fc</color>
-    <color name="LightBlueSurface">#11181b</color>
+    <color name="LightBlue500">#03A9F4</color>
+    <color name="LightBlue100">#B3E5fC</color>
+    <color name="LightBlueSurface">#11181B</color>
+
+    <color name="LightBlue500Translucent">#E8F7FE</color>
+    <color name="LightBlue100Translucent">#3c464b</color>
+
+    <color name="BlackTranslucent">#F3F3F3</color>
+    <color name="WhiteTranslucent">#2F3538</color>
 
     <color name="FABRipple">#80FFFFFF</color>
 

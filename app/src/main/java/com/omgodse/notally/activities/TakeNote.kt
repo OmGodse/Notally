@@ -129,6 +129,7 @@ class TakeNote : NotallyActivity() {
             }
 
             override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+                binding.EnterBody.isActionModeOn = true
                 mode?.menuInflater?.inflate(R.menu.formatting, menu)
                 return true
             }
@@ -137,7 +138,9 @@ class TakeNote : NotallyActivity() {
                 return true
             }
 
-            override fun onDestroyActionMode(mode: ActionMode?) {}
+            override fun onDestroyActionMode(mode: ActionMode?) {
+                binding.EnterBody.isActionModeOn = false
+            }
         }
     }
 
@@ -145,19 +148,19 @@ class TakeNote : NotallyActivity() {
         val end = binding.EnterBody.selectionEnd
         val start = binding.EnterBody.selectionStart
 
-        val styleSpans = binding.EnterBody.text.getSpans(start, end, StyleSpan::class.java)
-        styleSpans.forEach { span ->
-            binding.EnterBody.text.removeSpan(span)
+        val styleSpans = binding.EnterBody.text?.getSpans(start, end, StyleSpan::class.java)
+        styleSpans?.forEach { span ->
+            binding.EnterBody.text?.removeSpan(span)
         }
 
-        val typefaceSpans = binding.EnterBody.text.getSpans(start, end, TypefaceSpan::class.java)
-        typefaceSpans.forEach { span ->
-            binding.EnterBody.text.removeSpan(span)
+        val typefaceSpans = binding.EnterBody.text?.getSpans(start, end, TypefaceSpan::class.java)
+        typefaceSpans?.forEach { span ->
+            binding.EnterBody.text?.removeSpan(span)
         }
 
-        val strikethroughSpans = binding.EnterBody.text.getSpans(start, end, StrikethroughSpan::class.java)
-        strikethroughSpans.forEach { span ->
-            binding.EnterBody.text.removeSpan(span)
+        val strikethroughSpans = binding.EnterBody.text?.getSpans(start, end, StrikethroughSpan::class.java)
+        strikethroughSpans?.forEach { span ->
+            binding.EnterBody.text?.removeSpan(span)
         }
 
         model.saveNote()
@@ -166,7 +169,7 @@ class TakeNote : NotallyActivity() {
     private fun applySpan(spanToApply: Any) {
         val end = binding.EnterBody.selectionEnd
         val start = binding.EnterBody.selectionStart
-        binding.EnterBody.text.setSpan(spanToApply, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        binding.EnterBody.text?.setSpan(spanToApply, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         model.saveNote()
     }
 }
