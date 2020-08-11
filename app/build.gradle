@@ -1,19 +1,19 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
+
     defaultConfig {
         applicationId "com.omgodse.notally"
-        minSdkVersion 23
+        minSdkVersion 21
         targetSdkVersion 29
-        versionCode 22
-        versionName "2.7"
+        versionCode 23
+        versionName "2.8"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled true
@@ -21,6 +21,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -31,8 +32,6 @@ android {
     buildFeatures {
         viewBinding true
     }
-
-    androidExtensions { features = ["parcelize"] }
 }
 
 dependencies {
@@ -42,12 +41,8 @@ dependencies {
     final def stablePrefVersion = "1.1.1"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.3.0'
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-
-    testImplementation 'junit:junit:4.13'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation 'androidx.core:core-ktx:1.3.1'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
 
     implementation "androidx.preference:preference-ktx:$stablePrefVersion"
 
@@ -55,7 +50,7 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$stableNavVersion"
 
     implementation 'org.ocpsoft.prettytime:prettytime:4.0.5.Final'
-    implementation 'com.google.android.material:material:1.3.0-alpha01'
+    implementation 'com.google.android.material:material:1.3.0-alpha02'
 
-    implementation 'com.uttampanchasara.pdfgenerator:pdfgenerator:1.3'
+    implementation project(':Post')
 }
