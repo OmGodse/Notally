@@ -2,8 +2,8 @@ package com.omgodse.notally.helpers
 
 import android.content.Context
 import android.view.ContextThemeWrapper
-import android.view.View
 import android.widget.LinearLayout
+import android.widget.LinearLayout.LayoutParams
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -14,16 +14,18 @@ import com.omgodse.notally.miscellaneous.Operation
 class MenuHelper(private val context: Context) {
 
     private val bottomSheetDialog = BottomSheetDialog(context)
-    private val linearLayout = View.inflate(context, R.layout.dialog_options, null) as LinearLayout
+    private val linearLayout = LinearLayout(context)
 
     init {
+        linearLayout.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+        linearLayout.orientation = LinearLayout.VERTICAL
         bottomSheetDialog.setContentView(linearLayout)
     }
 
     fun show() = bottomSheetDialog.show()
 
     fun addItem(@StringRes label: Int, @DrawableRes drawable: Int, onClick: () -> Unit) {
-        val item = MaterialTextView(ContextThemeWrapper(context, R.style.Options_Button))
+        val item = MaterialTextView(ContextThemeWrapper(context, R.style.Options))
         item.setText(label)
         item.setOnClickListener {
             bottomSheetDialog.dismiss()
