@@ -14,15 +14,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import com.omgodse.notally.R
 import com.omgodse.notally.activities.MainActivity
+import com.omgodse.notally.databinding.DialogInputBinding
 import com.omgodse.notally.databinding.FragmentNotesBinding
 import com.omgodse.notally.helpers.MenuHelper
 import com.omgodse.notally.helpers.NotesHelper
 import com.omgodse.notally.miscellaneous.Constants
-import com.omgodse.notally.adapters.LabelsAdapter
+import com.omgodse.notally.recyclerview.adapters.LabelsAdapter
 import com.omgodse.notally.xml.BaseNote
 import java.io.File
 
@@ -115,15 +114,12 @@ class Labels : Fragment() {
         val priorLabels = notesHelper.getSortedLabelsList()
 
         val builder = MaterialAlertDialogBuilder(mContext)
+        val dialogBinding = DialogInputBinding.inflate(LayoutInflater.from(context))
 
-        val view = View.inflate(context, R.layout.dialog_input, null)
-        val editText: TextInputEditText = view.findViewById(android.R.id.edit)
-        val textInputLayout: TextInputLayout = view.findViewById(R.id.TextInputLayout)
+        dialogBinding.edit.inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS
+        dialogBinding.edit.filters = arrayOf()
 
-        editText.inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS
-        editText.filters = arrayOf()
-
-        builder.setView(view)
+        builder.setView(dialogBinding.root)
         builder.setTitle(R.string.add_label)
         builder.setPositiveButton(R.string.save, null)
         builder.setNegativeButton(R.string.cancel, null)
@@ -133,21 +129,19 @@ class Labels : Fragment() {
         dialog.setOnShowListener {
             val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
             positiveButton.setOnClickListener {
-                val label = editText.text.toString().trim()
+                val label = dialogBinding.edit.text.toString().trim()
                 if (label.isNotEmpty()) {
                     if (!priorLabels.contains(label)) {
                         insertLabel(label)
                         dialog.dismiss()
-                    } else {
-                        textInputLayout.isErrorEnabled = true
-                        textInputLayout.error = mContext.getString(R.string.label_exists)
-                    }
+                    } else dialogBinding.TextInputLayout.error =
+                        mContext.getString(R.string.label_exists)
                 } else dialog.dismiss()
             }
         }
 
         dialog.show()
-        editText.requestFocus()
+        dialogBinding.edit.requestFocus()
     }
 
     private fun confirmDeletion(position: Int) {
@@ -166,17 +160,14 @@ class Labels : Fragment() {
         val priorLabels = notesHelper.getSortedLabelsList()
 
         val builder = MaterialAlertDialogBuilder(mContext)
+        val dialogBinding = DialogInputBinding.inflate(LayoutInflater.from(context))
 
-        val view = View.inflate(context, R.layout.dialog_input, null)
-        val editText: TextInputEditText = view.findViewById(android.R.id.edit)
-        val textInputLayout: TextInputLayout = view.findViewById(R.id.TextInputLayout)
+        dialogBinding.edit.inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS
+        dialogBinding.edit.filters = arrayOf()
 
-        editText.inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS
-        editText.filters = arrayOf()
+        dialogBinding.edit.setText(label)
 
-        editText.setText(label)
-
-        builder.setView(view)
+        builder.setView(dialogBinding.root)
         builder.setTitle(R.string.edit_label)
         builder.setPositiveButton(R.string.save, null)
         builder.setNegativeButton(R.string.cancel, null)
@@ -186,7 +177,7 @@ class Labels : Fragment() {
         dialog.setOnShowListener {
             val positiveButton: Button = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
             positiveButton.setOnClickListener {
-                val enteredLabel = editText.text.toString().trim()
+                val enteredLabel = dialogBinding.edit.text.toString().trim()
                 when {
                     enteredLabel.isEmpty() -> dialog.dismiss()
                     enteredLabel == label -> dialog.dismiss()
@@ -194,16 +185,13 @@ class Labels : Fragment() {
                         editLabel(position, enteredLabel)
                         dialog.dismiss()
                     }
-                    priorLabels.contains(enteredLabel) -> {
-                        textInputLayout.isErrorEnabled = true
-                        textInputLayout.error = mContext.getString(R.string.label_exists)
-                    }
+                    priorLabels.contains(enteredLabel) -> dialogBinding.TextInputLayout.error = mContext.getString(R.string.label_exists)
                 }
             }
         }
 
         dialog.show()
-        editText.requestFocus()
+        dialogBinding.edit.requestFocus()
     }
 
 

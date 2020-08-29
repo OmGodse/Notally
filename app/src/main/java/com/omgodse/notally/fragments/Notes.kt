@@ -64,13 +64,13 @@ class Notes : NotallyFragment() {
 
     override fun getBackground() = R.drawable.notebook
 
-    override fun getSupportedOperations(notesHelper: NotesHelper, baseNote: BaseNote) : ArrayList<Operation> {
+    override fun getSupportedOperations(notesHelper: NotesHelper, baseNote: BaseNote): ArrayList<Operation> {
         val operations = ArrayList<Operation>()
         operations.add(Operation(R.string.share, R.drawable.share) { notesHelper.shareNote(baseNote) })
         operations.add(Operation(R.string.labels, R.drawable.label) { labelBaseNote(baseNote) })
         operations.add(Operation(R.string.export, R.drawable.export) { showExportDialog(baseNote) })
-        operations.add(Operation(R.string.delete, R.drawable.delete) { model.moveFileToDeleted(baseNote.filePath) })
-        operations.add(Operation(R.string.archive, R.drawable.archive) { model.moveFileToArchive(baseNote.filePath) })
+        operations.add(Operation(R.string.delete, R.drawable.delete) { model.moveBaseNoteToDeleted(baseNote) })
+        operations.add(Operation(R.string.archive, R.drawable.archive) { model.moveBaseNoteToArchive(baseNote) })
         return operations
     }
 }

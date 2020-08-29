@@ -15,7 +15,7 @@ class Deleted : NotallyFragment() {
 
     override fun getSupportedOperations(notesHelper: NotesHelper, baseNote: BaseNote): ArrayList<Operation> {
         val operations = ArrayList<Operation>()
-        operations.add(Operation(R.string.restore, R.drawable.restore) { model.restoreFile(baseNote.filePath) })
+        operations.add(Operation(R.string.restore, R.drawable.restore) { model.restoreBaseNote(baseNote) })
         operations.add(Operation(R.string.delete_forever, R.drawable.delete) { confirmDeletion(baseNote) })
         return operations
     }

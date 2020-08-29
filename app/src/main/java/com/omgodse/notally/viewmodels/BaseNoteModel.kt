@@ -84,7 +84,7 @@ class BaseNoteModel(app: Application) : AndroidViewModel(app) {
     private fun insertFileInList(file: File, list: ArrayList<BaseNote>, liveData: MutableLiveData<ArrayList<BaseNote>>) {
         val baseNote = BaseNote.readFromFile(file)
 
-        var index = list.binarySearch(baseNote, Comparator { o1, o2 ->
+        var index = list.binarySearch(baseNote, { o1, o2 ->
             o2.filePath.compareTo(o1.filePath)
         })
         if (index < 0) {
@@ -159,33 +159,25 @@ class BaseNoteModel(app: Application) : AndroidViewModel(app) {
     }
 
 
-    fun moveFileToArchive(filePath: String?) {
-        filePath?.let {
-            val file = File(filePath)
-            notesHelper.moveFileToArchive(file)
-        }
+    fun moveBaseNoteToArchive(baseNote: BaseNote) {
+        val file = File(baseNote.filePath)
+        notesHelper.moveFileToArchive(file)
     }
 
-    fun moveFileToDeleted(filePath: String?) {
-        filePath?.let {
-            val file = File(filePath)
-            notesHelper.moveFileToDeleted(file)
-        }
+    fun moveBaseNoteToDeleted(baseNote: BaseNote) {
+        val file = File(baseNote.filePath)
+        notesHelper.moveFileToDeleted(file)
     }
 
 
-    fun restoreFile(filePath: String?) {
-        filePath?.let {
-            val file = File(filePath)
-            notesHelper.restoreFile(file)
-        }
+    fun restoreBaseNote(baseNote: BaseNote) {
+        val file = File(baseNote.filePath)
+        notesHelper.restoreFile(file)
     }
 
-    fun deleteFileForever(filePath: String?) {
-        filePath?.let {
-            val file = File(filePath)
-            file.delete()
-        }
+    fun deleteBaseNoteForever(baseNote: BaseNote) {
+        val file = File(baseNote.filePath)
+        file.delete()
     }
 
 
@@ -243,9 +235,9 @@ class BaseNoteModel(app: Application) : AndroidViewModel(app) {
         val files = ArrayList<File>()
         path.listFiles()?.toCollection(files)
 
-        files.sortWith(Comparator { firstFile, secondFile ->
+        files.sortWith { firstFile, secondFile ->
             secondFile.name.compareTo(firstFile.name)
-        })
+        }
 
         return files
     }

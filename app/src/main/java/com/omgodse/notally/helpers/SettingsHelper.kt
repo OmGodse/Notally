@@ -14,13 +14,13 @@ class SettingsHelper(private val context: Context) {
         return preferences.getString(actualKey, defaultValueString).toString()
     }
 
-    fun getViewPreference() = getPreferenceValue(R.string.viewKey, R.string.listKey)
+    fun getView() = getPreferenceValue(R.string.viewKey, R.string.listKey)
 
-    fun getNoteTypePreferences() = getPreferenceValue(R.string.cardTypeKey, R.string.elevatedKey)
+    fun getCardType() = getPreferenceValue(R.string.cardTypeKey, R.string.elevatedKey)
 
-    fun getMaxLinesPreference() = getPreferenceValue(R.string.maxLinesToDisplayInNoteKey, R.string.eight).toInt()
+    fun getMaxLines() = getPreferenceValue(R.string.maxLinesToDisplayInNoteKey, R.string.eight).toInt()
 
-    fun getMaxItemsPreference() = getPreferenceValue(R.string.maxItemsToDisplayInListKey, R.string.four).toInt()
+    fun getMaxItems() = getPreferenceValue(R.string.maxItemsToDisplayInListKey, R.string.four).toInt()
 
-    fun getShowDateCreatedPreference() = preferences.getBoolean(context.getString(R.string.showDateCreatedKey), true)
+    fun getShowDateCreated() = preferences.getBoolean(context.getString(R.string.showDateCreatedKey), true)
 }

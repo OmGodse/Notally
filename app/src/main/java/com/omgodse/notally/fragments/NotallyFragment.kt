@@ -11,22 +11,21 @@ import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.omgodse.notally.R
 import com.omgodse.notally.activities.MainActivity
-import com.omgodse.notally.adapters.BaseNoteAdapter
 import com.omgodse.notally.databinding.FragmentNotesBinding
 import com.omgodse.notally.helpers.ExportHelper
 import com.omgodse.notally.helpers.MenuHelper
 import com.omgodse.notally.helpers.NotesHelper
 import com.omgodse.notally.helpers.SettingsHelper
 import com.omgodse.notally.miscellaneous.Constants
-import com.omgodse.notally.miscellaneous.ItemDecoration
 import com.omgodse.notally.miscellaneous.Operation
+import com.omgodse.notally.recyclerview.ItemDecoration
+import com.omgodse.notally.recyclerview.adapters.BaseNoteAdapter
 import com.omgodse.notally.viewmodels.BaseNoteModel
 import com.omgodse.notally.xml.BaseNote
 import java.io.File
@@ -36,6 +35,7 @@ abstract class NotallyFragment : Fragment() {
     internal lateinit var mContext: Context
     private lateinit var adapter: BaseNoteAdapter
     private lateinit var exportHelper: ExportHelper
+    private lateinit var settingsHelper: SettingsHelper
 
     internal var binding: FragmentNotesBinding? = null
 
@@ -53,6 +53,7 @@ abstract class NotallyFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         exportHelper = ExportHelper(mContext, this)
+        settingsHelper = SettingsHelper(mContext)
 
         adapter = BaseNoteAdapter(mContext)
         adapter.onNoteClicked = this::onBaseNoteClicked
@@ -88,7 +89,7 @@ abstract class NotallyFragment : Fragment() {
                     if (file.exists()) {
                         val baseNote = BaseNote.readFromFile(file)
                         if (baseNote.isEmpty()) {
-                            model.moveFileToDeleted(filePath)
+                            model.moveBaseNoteToDeleted(baseNote)
                             val rootView = (mContext as MainActivity).binding.CoordinatorLayout
                             Snackbar.make(rootView, baseNote.getEmptyMessage(), Snackbar.LENGTH_SHORT).show()
                         } else binding?.RecyclerView?.layoutManager?.scrollToPosition(0)
@@ -109,12 +110,12 @@ abstract class NotallyFragment : Fragment() {
 
     private fun onBaseNoteLongClicked(position: Int) {
         val baseNote = adapter.currentList[position]
-        val menuHelper = MenuHelper(mContext)
         val notesHelper = NotesHelper(mContext)
 
         val operations = getSupportedOperations(notesHelper, baseNote)
         if (operations.isNotEmpty()) {
-            operations.forEach { operation -> menuHelper.addItem(operation) }
+            val menuHelper = MenuHelper(mContext)
+            operations.forEach { menuHelper.addItem(it) }
             menuHelper.show()
         }
     }
@@ -122,35 +123,23 @@ abstract class NotallyFragment : Fragment() {
 
     private fun setupPadding() {
         val padding = mContext.resources.getDimensionPixelSize(R.dimen.recyclerViewPadding)
-        val settingsHelper = SettingsHelper(mContext)
-        val cardPreference = settingsHelper.getNoteTypePreferences()
-
-        if (cardPreference == mContext.getString(R.string.elevatedKey)) {
+        if (settingsHelper.getCardType() == mContext.getString(R.string.elevatedKey)) {
             binding?.RecyclerView?.setPaddingRelative(padding, 0, padding, 0)
         }
     }
 
-    private fun setupImageView() {
-        binding?.ImageView?.setImageResource(getBackground())
-    }
+    private fun setupImageView() = binding?.ImageView?.setImageResource(getBackground())
 
     private fun setupLayoutManager() {
-        val settingsHelper = SettingsHelper(mContext)
-        val viewPreference = settingsHelper.getViewPreference()
-
-        binding?.RecyclerView?.layoutManager = if (viewPreference == mContext.getString(R.string.gridKey)) {
+        binding?.RecyclerView?.layoutManager = if (settingsHelper.getView() == mContext.getString(R.string.gridKey)) {
             StaggeredGridLayoutManager(2, LinearLayout.VERTICAL)
         } else LinearLayoutManager(mContext)
     }
 
     private fun setupItemDecoration() {
-        val settingsHelper = SettingsHelper(mContext)
         val cardMargin = mContext.resources.getDimensionPixelSize(R.dimen.cardMargin)
-        val viewPreference = settingsHelper.getViewPreference()
-        val cardPreference = settingsHelper.getNoteTypePreferences()
-
-        if (cardPreference == mContext.getString(R.string.elevatedKey)) {
-            if (viewPreference == mContext.getString(R.string.gridKey)) {
+        if (settingsHelper.getCardType() == mContext.getString(R.string.elevatedKey)) {
+            if (settingsHelper.getView() == mContext.getString(R.string.gridKey)) {
                 binding?.RecyclerView?.addItemDecoration(ItemDecoration(cardMargin, 2))
             } else binding?.RecyclerView?.addItemDecoration(ItemDecoration(cardMargin, 1))
         }
@@ -168,26 +157,25 @@ abstract class NotallyFragment : Fragment() {
         val alertDialogBuilder = MaterialAlertDialogBuilder(mContext)
         alertDialogBuilder.setMessage(R.string.delete_note_forever)
         alertDialogBuilder.setPositiveButton(R.string.delete) { dialog, which ->
-            model.deleteFileForever(baseNote.filePath)
+            model.deleteBaseNoteForever(baseNote)
         }
         alertDialogBuilder.setNegativeButton(R.string.cancel, null)
         alertDialogBuilder.show()
     }
 
     internal fun showExportDialog(baseNote: BaseNote) {
-        val file = File(baseNote.filePath)
         val menuHelper = MenuHelper(mContext)
 
-        menuHelper.addItem(R.string.pdf, R.drawable.pdf) { exportHelper.exportFileToPDF(file) }
-        menuHelper.addItem(R.string.html, R.drawable.html) { exportHelper.exportFileToHTML(file) }
-        menuHelper.addItem(R.string.plain_text, R.drawable.plain_text) { exportHelper.exportFileToPlainText(file) }
+        menuHelper.addItem(R.string.pdf, R.drawable.pdf) { exportHelper.exportBaseNoteToPDF(baseNote) }
+        menuHelper.addItem(R.string.html, R.drawable.html) { exportHelper.exportBaseNoteToHTML(baseNote) }
+        menuHelper.addItem(R.string.plain_text, R.drawable.plain_text) { exportHelper.exportBaseNoteToPlainText(baseNote) }
 
         menuHelper.show()
     }
 
 
     private fun populateRecyclerView() {
-        getObservable().observe(viewLifecycleOwner, Observer { list ->
+        getObservable().observe(viewLifecycleOwner, { list ->
             adapter.submitList(ArrayList(list))
             confirmVisibility(list)
         })
