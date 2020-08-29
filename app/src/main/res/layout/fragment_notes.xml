@@ -14,7 +14,7 @@
         android:id="@+id/RecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?colorSurface"
+        android:background="?attr/colorSurface"
         android:clipToPadding="false"
         android:scrollbarStyle="outsideOverlay"
         android:visibility="gone" />

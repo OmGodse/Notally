@@ -39,12 +39,11 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/DateCreated"
-                style="@style/TextView.DateCreated"
+                style="@style/DateCreated"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <View
-                android:id="@+id/Divider"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="?android:attr/listDivider" />
@@ -59,7 +58,6 @@
                     style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-medium"
                     android:gravity="center"
                     android:insetLeft="6dp"
                     android:insetRight="6dp"
@@ -77,13 +75,11 @@
                     android:id="@+id/RecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="?colorSurface"
+                    android:background="?attr/colorSurface"
                     android:clipToPadding="false"
                     android:overScrollMode="never"
                     android:paddingTop="4dp"
-                    android:paddingBottom="2dp"
-                    tools:itemCount="5"
-                    tools:listitem="@layout/list_item" />
+                    android:paddingBottom="2dp" />
 
             </FrameLayout>
 

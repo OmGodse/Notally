@@ -28,7 +28,7 @@
         android:imeOptions="actionNext"
         android:inputType="textMultiLine"
         android:padding="8dp"
-        android:textSize="16sp" />
+        android:textAppearance="?attr/textAppearanceBody1" />
 
     <ImageView
         android:id="@+id/DragHandle"

@@ -39,7 +39,7 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/DateCreated"
-                style="@style/TextView.DateCreated"
+                style="@style/DateCreated"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

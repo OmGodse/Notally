@@ -20,9 +20,9 @@
             android:id="@android:id/edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLength="1"
             android:digits="123456789"
             android:inputType="number"
-            android:theme="@style/Notally.TextInputEditText" />
+            android:maxLength="1"
+            android:theme="@style/TextInputEditText" />
     </com.google.android.material.textfield.TextInputLayout>
 </FrameLayout>

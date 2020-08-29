@@ -22,25 +22,24 @@
                 android:id="@+id/Toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/toolbarHeight"
+                android:focusableInTouchMode="true"
                 app:contentInsetEnd="16dp"
-                app:contentInsetStartWithNavigation="64dp"
                 app:title="@string/app_name"
-                app:titleTextAppearance="@style/TextAppearance.Toolbar"
-                android:focusableInTouchMode="true">
+                app:titleTextAppearance="@style/TextAppearance.Toolbar">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/EnterSearchKeyword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/search_bar"
-                    android:fontFamily="@font/nunito_regular"
                     android:hint="@string/search"
                     android:imeOptions="actionDone"
                     android:paddingStart="16dp"
-                    android:paddingTop="8dp"
+                    android:paddingTop="10dp"
                     android:paddingEnd="16dp"
-                    android:paddingBottom="8dp"
+                    android:paddingBottom="10dp"
                     android:singleLine="true"
+                    android:textAppearance="?attr/textAppearanceBody1"
                     android:visibility="gone" />
 
             </com.google.android.material.appbar.MaterialToolbar>

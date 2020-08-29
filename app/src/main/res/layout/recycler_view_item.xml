@@ -3,9 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clickable="true"
-    android:focusable="true"
-    android:foreground="?attr/selectableItemBackground"
     app:cardCornerRadius="@dimen/cardCornerRadius"
     app:cardElevation="2dp"
     app:strokeColor="@color/Gray">
@@ -37,7 +34,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/nunito_regular"
-            android:gravity="center_vertical"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
             android:text="@string/date" />
@@ -48,7 +44,6 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:fontFamily="@font/nunito"
-            android:maxLines="4"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
             android:text="@string/note" />
