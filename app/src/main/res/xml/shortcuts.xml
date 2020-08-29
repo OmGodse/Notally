@@ -3,7 +3,7 @@
     <shortcut
         android:shortcutId="takeNote"
         android:enabled="true"
-        android:icon="@mipmap/take_note"
+        android:icon="@drawable/take_note"
         android:shortcutShortLabel="@string/take_note">
         <intent
             android:action="android.intent.action.VIEW"
@@ -14,7 +14,7 @@
     <shortcut
         android:shortcutId="makeList"
         android:enabled="true"
-        android:icon="@mipmap/make_list"
+        android:icon="@drawable/make_list"
         android:shortcutShortLabel="@string/make_list">
         <intent
             android:action="android.intent.action.VIEW"
