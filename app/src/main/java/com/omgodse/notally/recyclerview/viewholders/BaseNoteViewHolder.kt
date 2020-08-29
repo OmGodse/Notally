@@ -1,4 +1,4 @@
-package com.omgodse.notally.viewholders
+package com.omgodse.notally.recyclerview.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
@@ -6,6 +6,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.textview.MaterialTextView
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.RecyclerViewItemBinding
+import com.omgodse.notally.helpers.SettingsHelper
 import com.omgodse.notally.miscellaneous.applySpans
 import com.omgodse.notally.xml.BaseNote
 import com.omgodse.notally.xml.List
@@ -14,18 +15,15 @@ import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 
 class BaseNoteViewHolder(private val binding: RecyclerViewItemBinding,
-                         maxLines: Int,
-                         private val maxItems: Int,
-                         noteType: String,
-                         isDateVisible: Boolean,
+                         private val settingsHelper: SettingsHelper,
                          onNoteClicked: ((position: Int) -> Unit)?,
                          onNoteLongClicked: ((position: Int) -> Unit)?) : RecyclerView.ViewHolder(binding.root) {
 
     init {
-        binding.Note.maxLines = maxLines
-        binding.Date.setVisible(isDateVisible)
+        binding.Note.maxLines = settingsHelper.getMaxLines()
+        binding.Date.setVisible(settingsHelper.getShowDateCreated())
 
-        when (noteType) {
+        when (settingsHelper.getCardType()) {
             binding.root.context.getString(R.string.flatKey) -> setCardFlat()
             binding.root.context.getString(R.string.elevatedKey) -> setCardElevated()
         }
@@ -76,6 +74,7 @@ class BaseNoteViewHolder(private val binding: RecyclerViewItemBinding,
 
         binding.Title.setVisible(list.title.isNotEmpty())
 
+        val maxItems = settingsHelper.getMaxItems()
         val filteredList = list.items.take(maxItems)
 
         binding.ItemsRemaining.setVisible(list.items.size > maxItems)
@@ -119,8 +118,8 @@ class BaseNoteViewHolder(private val binding: RecyclerViewItemBinding,
     }
 
     private fun setCardElevated() {
-        binding.root.cardElevation = binding.root.context.resources.getDimension(R.dimen.cardElevation)
-        binding.root.radius = binding.root.context.resources.getDimension(R.dimen.cardCornerRadius)
+        binding.root.cardElevation = binding.root.resources.getDimension(R.dimen.cardElevation)
+        binding.root.radius = binding.root.resources.getDimension(R.dimen.cardCornerRadius)
         binding.root.strokeWidth = 0
     }
 

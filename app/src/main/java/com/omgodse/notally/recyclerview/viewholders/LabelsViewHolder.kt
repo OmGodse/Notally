@@ -1,4 +1,4 @@
-package com.omgodse.notally.viewholders
+package com.omgodse.notally.recyclerview.viewholders
 
 import androidx.recyclerview.widget.RecyclerView
 import com.omgodse.notally.databinding.LabelItemBinding

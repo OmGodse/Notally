@@ -1,4 +1,4 @@
-package com.omgodse.notally.miscellaneous
+package com.omgodse.notally.recyclerview
 
 import android.graphics.Rect
 import android.view.View

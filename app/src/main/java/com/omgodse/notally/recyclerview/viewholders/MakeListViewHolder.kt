@@ -1,4 +1,4 @@
-package com.omgodse.notally.viewholders
+package com.omgodse.notally.recyclerview.viewholders
 
 import android.text.Editable
 import android.text.InputType
@@ -6,7 +6,7 @@ import android.text.TextWatcher
 import android.view.MotionEvent
 import androidx.recyclerview.widget.RecyclerView
 import com.omgodse.notally.databinding.ListItemBinding
-import com.omgodse.notally.interfaces.ListItemListener
+import com.omgodse.notally.recyclerview.ListItemListener
 import com.omgodse.notally.miscellaneous.setOnNextAction
 import com.omgodse.notally.xml.ListItem
 

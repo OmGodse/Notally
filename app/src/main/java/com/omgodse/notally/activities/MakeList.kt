@@ -13,11 +13,11 @@ import com.google.android.material.button.MaterialButton
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.ActivityMakeListBinding
 import com.omgodse.notally.helpers.NotesHelper
-import com.omgodse.notally.interfaces.ListItemListener
 import com.omgodse.notally.miscellaneous.getLocale
 import com.omgodse.notally.miscellaneous.setOnNextAction
-import com.omgodse.notally.adapters.MakeListAdapter
-import com.omgodse.notally.viewholders.MakeListViewHolder
+import com.omgodse.notally.recyclerview.ListItemListener
+import com.omgodse.notally.recyclerview.adapters.MakeListAdapter
+import com.omgodse.notally.recyclerview.viewholders.MakeListViewHolder
 import com.omgodse.notally.viewmodels.MakeListModel
 import com.omgodse.notally.xml.ListItem
 import java.text.SimpleDateFormat
@@ -109,9 +109,9 @@ class MakeList : NotallyActivity() {
 
     private fun setupRecyclerView() {
         adapter = MakeListAdapter(this, model.items)
-        
+
         val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.Callback() {
-            
+
             override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
                 val drag = ItemTouchHelper.UP or ItemTouchHelper.DOWN
                 val swipe = ItemTouchHelper.START or ItemTouchHelper.END
@@ -131,8 +131,8 @@ class MakeList : NotallyActivity() {
                 adapter.notifyItemRangeChanged(viewHolder.adapterPosition, model.items.size)
                 model.saveNote()
             }
-
         })
+
         itemTouchHelper.attachToRecyclerView(binding.RecyclerView)
 
         adapter.listItemListener = object : ListItemListener {

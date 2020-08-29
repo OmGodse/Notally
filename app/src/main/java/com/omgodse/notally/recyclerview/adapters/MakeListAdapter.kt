@@ -1,12 +1,12 @@
-package com.omgodse.notally.adapters
+package com.omgodse.notally.recyclerview.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.omgodse.notally.databinding.ListItemBinding
-import com.omgodse.notally.interfaces.ListItemListener
-import com.omgodse.notally.viewholders.MakeListViewHolder
+import com.omgodse.notally.recyclerview.ListItemListener
+import com.omgodse.notally.recyclerview.viewholders.MakeListViewHolder
 import com.omgodse.notally.xml.ListItem
 import java.util.*
 

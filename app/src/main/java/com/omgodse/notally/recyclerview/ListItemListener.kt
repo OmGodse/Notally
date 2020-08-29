@@ -1,4 +1,4 @@
-package com.omgodse.notally.interfaces
+package com.omgodse.notally.recyclerview
 
 import androidx.recyclerview.widget.RecyclerView
 

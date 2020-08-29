@@ -1,4 +1,4 @@
-package com.omgodse.notally.adapters
+package com.omgodse.notally.recyclerview.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.omgodse.notally.databinding.RecyclerViewItemBinding
 import com.omgodse.notally.helpers.SettingsHelper
-import com.omgodse.notally.viewholders.BaseNoteViewHolder
+import com.omgodse.notally.recyclerview.viewholders.BaseNoteViewHolder
 import com.omgodse.notally.xml.BaseNote
 
 class BaseNoteAdapter(private val context: Context) :
@@ -17,10 +17,6 @@ class BaseNoteAdapter(private val context: Context) :
     var onNoteLongClicked: ((position: Int) -> Unit)? = null
 
     private val settingsHelper = SettingsHelper(context)
-    private val maxLines = settingsHelper.getMaxLinesPreference()
-    private val maxItems = settingsHelper.getMaxItemsPreference()
-    private val noteType = settingsHelper.getNoteTypePreferences()
-    private val isDateVisible = settingsHelper.getShowDateCreatedPreference()
 
     override fun onBindViewHolder(holder: BaseNoteViewHolder, position: Int) {
         val baseNote = getItem(position)
@@ -29,7 +25,7 @@ class BaseNoteAdapter(private val context: Context) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseNoteViewHolder {
         val binding = RecyclerViewItemBinding.inflate(LayoutInflater.from(context), parent, false)
-        return BaseNoteViewHolder(binding, maxLines, maxItems, noteType, isDateVisible, onNoteClicked, onNoteLongClicked)
+        return BaseNoteViewHolder(binding, settingsHelper, onNoteClicked, onNoteLongClicked)
     }
 
 
