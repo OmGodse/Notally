@@ -40,8 +40,7 @@ class ExportHelper(private val context: Context, private val fragment: Fragment)
         val backup = Backup(baseNotes, deletedBaseNotes, archivedBaseNotes, labels)
         backup.writeToFile(backupFile)
 
-        val uri = FileProvider.getUriForFile(context, "${context.packageName}.provider", backupFile)
-        saveFileToDevice(uri, backupFile, "text/xml")
+        saveFileToDevice(backupFile, "text/xml")
     }
 
     fun importBackup(inputStream: InputStream) {
@@ -78,7 +77,7 @@ class ExportHelper(private val context: Context, private val fragment: Fragment)
     }
 
     private fun Array<File>?.convertFilesToNotes(): ArrayList<BaseNote> {
-        return if (this == null){
+        return if (this == null) {
             ArrayList()
         } else {
             val baseNotes = ArrayList<BaseNote>()
@@ -91,11 +90,11 @@ class ExportHelper(private val context: Context, private val fragment: Fragment)
     }
 
 
-    fun exportFileToPDF(file: File) {
-        val fileName = getFileName(file)
+    fun exportBaseNoteToPDF(baseNote: BaseNote) {
+        val fileName = getFileName(baseNote)
         val pdfFile = File(getExportedPath(), "$fileName.pdf")
 
-        val html = getHTML(file)
+        val html = getHTML(baseNote)
 
         PostPDFGenerator.Builder()
             .setFile(pdfFile)
@@ -114,45 +113,21 @@ class ExportHelper(private val context: Context, private val fragment: Fragment)
             .create()
     }
 
-    fun exportFileToHTML(file: File) {
-        val fileName = getFileName(file)
+    fun exportBaseNoteToHTML(baseNote: BaseNote) {
+        val fileName = getFileName(baseNote)
         val htmlFile = File(getExportedPath(), "$fileName.html")
 
-        val html = getHTML(file)
+        val html = getHTML(baseNote)
         htmlFile.writeText(html)
 
         showFileOptionsDialog(htmlFile, "text/html")
     }
 
-    fun exportFileToPlainText(file: File) {
-        val baseNote = BaseNote.readFromFile(file)
-
-        val title = baseNote.title
-        val body = when (baseNote) {
-            is Note -> baseNote.body
-            is List -> notesHelper.getBodyFromItems(baseNote.items)
-        }
-
-        val formatter = SimpleDateFormat(NotallyActivity.DateFormat, context.getLocale())
-        val date = formatter.format(baseNote.timestamp.toLong())
-
-        val fileName = getFileName(file)
-
+    fun exportBaseNoteToPlainText(baseNote: BaseNote) {
+        val fileName = getFileName(baseNote)
         val textFile = File(getExportedPath(), "$fileName.txt")
-        val content = buildString {
-            if (title.isNotEmpty()) {
-                append(title)
-                append("\n")
-                append("\n")
-            }
-            if (settingsHelper.getShowDateCreatedPreference()) {
-                append(date)
-                append("\n")
-                append("\n")
-            }
-            append(body)
-        }
 
+        val content = getPlainText(baseNote)
         textFile.writeText(content)
 
         showFileOptionsDialog(textFile, "text/plain")
@@ -174,7 +149,7 @@ class ExportHelper(private val context: Context, private val fragment: Fragment)
     private fun viewFile(uri: Uri, mimeType: String) {
         val intent = Intent(Intent.ACTION_VIEW).apply {
             setDataAndType(uri, mimeType)
-            flags = Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_GRANT_READ_URI_PERMISSION
+            flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
         }
         val chooser = Intent.createChooser(intent, context.getString(R.string.view_note))
         context.startActivity(chooser)
@@ -182,20 +157,18 @@ class ExportHelper(private val context: Context, private val fragment: Fragment)
 
     private fun shareFile(uri: Uri, mimeType: String) {
         val intent = Intent(Intent.ACTION_SEND).apply {
+            type = mimeType
             putExtra(Intent.EXTRA_STREAM, uri)
-            setDataAndType(uri, mimeType)
-            flags = Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_GRANT_READ_URI_PERMISSION
         }
         val chooser = Intent.createChooser(intent, context.getString(R.string.share_note))
         context.startActivity(chooser)
     }
 
-    private fun saveFileToDevice(uri: Uri, file: File, mimeType: String) {
+    private fun saveFileToDevice(file: File, mimeType: String) {
         val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-            addCategory(Intent.CATEGORY_OPENABLE)
-            putExtra(Intent.EXTRA_STREAM, uri)
-            putExtra(Intent.EXTRA_TITLE, file.nameWithoutExtension)
             type = mimeType
+            addCategory(Intent.CATEGORY_OPENABLE)
+            putExtra(Intent.EXTRA_TITLE, file.nameWithoutExtension)
         }
         currentFile = file
         fragment.startActivityForResult(intent, Constants.RequestCodeExportFile)
@@ -208,7 +181,7 @@ class ExportHelper(private val context: Context, private val fragment: Fragment)
 
         menuHelper.addItem(R.string.view, R.drawable.view) { viewFile(uri, mimeType) }
         menuHelper.addItem(R.string.share, R.drawable.share) { shareFile(uri, mimeType) }
-        menuHelper.addItem(R.string.save_to_device, R.drawable.save) { saveFileToDevice(uri, file, mimeType) }
+        menuHelper.addItem(R.string.save_to_device, R.drawable.save) { saveFileToDevice(file, mimeType) }
 
         menuHelper.show()
     }
@@ -225,34 +198,33 @@ class ExportHelper(private val context: Context, private val fragment: Fragment)
         return filePath
     }
 
-    private fun getFileName(file: File): String {
-        val baseNote = BaseNote.readFromFile(file)
-
+    private fun getFileName(baseNote: BaseNote): String {
         val title = baseNote.title
         val body = when (baseNote) {
             is Note -> baseNote.body
             is List -> notesHelper.getBodyFromItems(baseNote.items)
         }
         val fileName = if (title.isEmpty()) {
-            val words = body.split(" ")
-            if (words.size > 1) {
-                "${words[0]} ${words[1]}"
-            } else words[0]
+            val words = body.split(" ").take(2)
+            buildString {
+                words.forEach {
+                    append(it)
+                    append(" ")
+                }
+            }
         } else title
         return fileName.take(64).replace("/", "")
     }
 
-    private fun getHTML(file: File): String {
-        val baseNote = BaseNote.readFromFile(file)
-
+    private fun getHTML(baseNote: BaseNote): String {
         val formatter = SimpleDateFormat(NotallyActivity.DateFormat, context.getLocale())
         val date = formatter.format(baseNote.timestamp.toLong())
 
-        val html = buildString {
+        return buildString {
             append("<html><head><meta charset=\"UTF-8\" /></head><body>")
             append("<h2>${baseNote.title}</h2>")
 
-            if (settingsHelper.getShowDateCreatedPreference()) {
+            if (settingsHelper.getShowDateCreated()) {
                 append("<p>$date</p>")
             }
 
@@ -271,8 +243,30 @@ class ExportHelper(private val context: Context, private val fragment: Fragment)
             }
             append("</body></html")
         }
+    }
 
-        return html
+    private fun getPlainText(baseNote: BaseNote): String {
+        val formatter = SimpleDateFormat(NotallyActivity.DateFormat, context.getLocale())
+        val date = formatter.format(baseNote.timestamp.toLong())
+
+        val body = when (baseNote) {
+            is Note -> baseNote.body
+            is List -> notesHelper.getBodyFromItems(baseNote.items)
+        }
+
+        return buildString {
+            if (baseNote.title.isNotEmpty()) {
+                append(baseNote.title)
+                append("\n")
+                append("\n")
+            }
+            if (settingsHelper.getShowDateCreated()) {
+                append(date)
+                append("\n")
+                append("\n")
+            }
+            append(body)
+        }
     }
 
     private fun getFileName(folder: File, name: String, index: Int = 0): String {
