@@ -5,12 +5,12 @@
         <item name="android:windowBackground">?attr/colorSurface</item>
         <item name="android:colorEdgeEffect">?attr/colorSecondary</item>
 
-        <item name="snackbarStyle">@style/Notally.Snackbar</item>
+        <item name="snackbarStyle">@style/Snackbar</item>
         <item name="windowActionModeOverlay">true</item>
 
-        <item name="alertDialogTheme">@style/Notally.AlertDialog</item>
-        <item name="materialAlertDialogTheme">@style/Notally.AlertDialog</item>
-        <item name="bottomSheetDialogTheme">@style/Notally.BottomSheetDialog</item>
+        <item name="alertDialogTheme">@style/AlertDialog</item>
+        <item name="materialAlertDialogTheme">@style/AlertDialog</item>
+        <item name="bottomSheetDialogTheme">@style/BottomSheetDialog</item>
     </style>
 
     <style name="AppTheme" parent="Base.AppTheme">
@@ -23,10 +23,6 @@
 
     <style name="MainActivity" parent="AppTheme">
         <item name="android:statusBarColor">@color/Transparent</item>
-    </style>
-
-    <style name="MaterialDialogTheme" parent="Theme.MaterialComponents.DayNight.Dialog">
-        <item name="windowNoTitle">true</item>
     </style>
 
 
@@ -63,19 +59,18 @@
     </style>
 
 
-    <style name="Options.Button" parent="Widget.MaterialComponents.TextView">
+    <style name="Options" parent="Widget.MaterialComponents.TextView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">16dp</item>
         <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:gravity">start|center_vertical</item>
         <item name="android:drawablePadding">24dp</item>
         <item name="android:textColor">?attr/colorOnSurface</item>
-        <item name="android:background">?selectableItemBackground</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
         <item name="drawableTint">?attr/colorOnSurface</item>
     </style>
 
-    <style name="TextView.DateCreated" parent="Widget.MaterialComponents.TextView">
+    <style name="DateCreated" parent="Widget.MaterialComponents.TextView">
         <item name="android:paddingStart">24dp</item>
         <item name="android:paddingEnd">24dp</item>
         <item name="android:paddingTop">16dp</item>
@@ -99,21 +94,21 @@
     </style>
 
 
-    <style name="Notally.Snackbar" parent="Widget.MaterialComponents.Snackbar">
+    <style name="Snackbar" parent="Widget.MaterialComponents.Snackbar">
         <item name="animationMode">slide</item>
     </style>
 
-    <style name="Notally.AlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+    <style name="AlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
         <item name="materialAlertDialogTitleTextStyle">@style/AlertDialog.Title</item>
         <item name="buttonBarNegativeButtonStyle">@style/AlertDialog.Button</item>
         <item name="buttonBarPositiveButtonStyle">@style/AlertDialog.Button</item>
     </style>
 
-    <style name="Notally.BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.DayNight.BottomSheetDialog">
+    <style name="BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.DayNight.BottomSheetDialog">
         <item name="android:windowIsFloating">false</item>
     </style>
 
-    <style name="Notally.TextInputEditText" parent="ThemeOverlay.MaterialComponents.TextInputEditText.OutlinedBox">
+    <style name="TextInputEditText" parent="ThemeOverlay.MaterialComponents.TextInputEditText.OutlinedBox">
         <item name="colorPrimary">?attr/colorSecondary</item>
     </style>
 </resources>
