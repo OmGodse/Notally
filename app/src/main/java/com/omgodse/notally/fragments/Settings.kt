@@ -69,10 +69,9 @@ class Settings : PreferenceFragmentCompat() {
         }
 
         librariesPref?.setOnPreferenceClickListener {
-            val libraries = arrayOf("Pretty Time", "Material Components for Android")
             val builder = MaterialAlertDialogBuilder(mContext)
             builder.setTitle(R.string.libraries)
-            builder.setItems(libraries) { dialog, which ->
+            builder.setItems(R.array.libraries) { dialog, which ->
                 when (which) {
                     0 -> openLink(PrettyTime)
                     2 -> openLink(MaterialComponents)

@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array name="linkOptions">
+        <item>@string/view</item>
+        <item>@string/edit</item>
+    </string-array>
+
+    <string-array name="libraries">
+        <item>@string/pretty_time</item>
+        <item>@string/material_components_android</item>
+    </string-array>
+
     <string-array name="themeEntries">
         <item>@string/light</item>
         <item>@string/dark</item>
