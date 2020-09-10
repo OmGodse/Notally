@@ -37,6 +37,11 @@ abstract class NotallyActivity : AppCompatActivity() {
                 data.putExtra(Constants.FilePath, file.path)
                 setResult(Constants.ResultCodeCreatedFile, data)
             }
+
+            if (intent.action == Intent.ACTION_SEND) {
+                receiveSharedNote()
+            }
+
             model.isFirstInstance = false
         }
     }
@@ -71,6 +76,9 @@ abstract class NotallyActivity : AppCompatActivity() {
     abstract fun shareNote()
 
     abstract fun getViewModel(): NotallyModel
+
+
+    open fun receiveSharedNote() {}
 
 
     private fun labelNote() {

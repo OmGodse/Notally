@@ -23,8 +23,8 @@
         </provider>
 
         <activity
-            android:theme="@style/MainActivity"
             android:name=".activities.MainActivity"
+            android:theme="@style/MainActivity"
             android:windowSoftInputMode="adjustPan">
 
             <intent-filter>
@@ -38,9 +38,13 @@
         </activity>
 
         <activity
-            android:name=".activities.ReceiveNote"
-            android:excludeFromRecents="true"
-            android:theme="@style/MaterialDialogTheme">
+            android:name=".activities.MakeList"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".activities.TakeNote"
+            android:windowSoftInputMode="adjustResize">
+
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -48,12 +52,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".activities.MakeList"
-            android:windowSoftInputMode="adjustResize" />
-
-        <activity
-            android:name=".activities.TakeNote"
-            android:windowSoftInputMode="adjustResize" />
     </application>
+
 </manifest>

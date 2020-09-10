@@ -4,13 +4,13 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.text.InputType
-import android.view.View
+import android.view.LayoutInflater
 import androidx.core.util.forEach
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
-import com.google.android.material.textview.MaterialTextView
 import com.omgodse.notally.R
+import com.omgodse.notally.activities.TakeNote
+import com.omgodse.notally.databinding.AddLabelBinding
+import com.omgodse.notally.databinding.DialogInputBinding
 import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.miscellaneous.applySpans
 import com.omgodse.notally.xml.BaseNote
@@ -18,7 +18,6 @@ import com.omgodse.notally.xml.List
 import com.omgodse.notally.xml.ListItem
 import com.omgodse.notally.xml.Note
 import java.io.File
-import java.io.StringWriter
 
 class NotesHelper(val context: Context) {
 
@@ -32,21 +31,19 @@ class NotesHelper(val context: Context) {
     fun shareNote(title: String?, body: CharSequence?) {
         val shareIntent = Intent(Intent.ACTION_SEND)
         shareIntent.type = "text/plain"
-        shareIntent.putExtra(Intent.EXTRA_TEXT, body)
-        shareIntent.putExtra(Intent.EXTRA_TEXT, body.toString())
         shareIntent.putExtra(Intent.EXTRA_SUBJECT, title)
+        shareIntent.putExtra(TakeNote.EXTRA_SPANNABLE, body)
+        shareIntent.putExtra(Intent.EXTRA_TEXT, body.toString())
         context.startActivity(Intent.createChooser(shareIntent, context.getString(R.string.share_note)))
     }
 
     fun shareNote(title: String?, items: ArrayList<ListItem>?) = shareNote(title, getBodyFromItems(items))
 
 
-    fun getBodyFromItems(items: kotlin.collections.List<ListItem>?): String {
-        val stringWriter = StringWriter()
+    fun getBodyFromItems(items: kotlin.collections.List<ListItem>?) = buildString {
         items?.forEachIndexed { index, listItem ->
-            stringWriter.appendln("${(index + 1)}) ${listItem.body}")
+            appendLine("${(index + 1)}) ${listItem.body}")
         }
-        return stringWriter.toString()
     }
 
     private fun shareNote(note: Note) = shareNote(note.title, note.body.applySpans(note.spans))
@@ -75,7 +72,7 @@ class NotesHelper(val context: Context) {
 
     fun moveFileToArchive(file: File) = moveFile(file, getArchivedPath())
 
-    private fun moveFile (file: File, destinationPath: File) : Boolean {
+    private fun moveFile(file: File, destinationPath: File): Boolean {
         val destinationFile = File(destinationPath, file.name)
         destinationFile.writeText(file.readText())
         return file.delete()
@@ -95,7 +92,7 @@ class NotesHelper(val context: Context) {
         val allLabels = getSortedLabelsList().toTypedArray()
 
         val checkedLabels = getCheckedLabels(previousLabels)
-        val createLabel = View.inflate(context, R.layout.add_label, null) as MaterialTextView
+        val binding = AddLabelBinding.inflate(LayoutInflater.from(context))
 
         val alertDialogBuilder = MaterialAlertDialogBuilder(context)
         alertDialogBuilder.setTitle(R.string.labels)
@@ -104,12 +101,12 @@ class NotesHelper(val context: Context) {
         if (allLabels.isNotEmpty()) {
             alertDialogBuilder.setMultiChoiceItems(allLabels, checkedLabels, null)
             alertDialogBuilder.setPositiveButton(R.string.save, null)
-        } else alertDialogBuilder.setView(createLabel)
+        } else alertDialogBuilder.setView(binding.root)
 
         val dialog = alertDialogBuilder.create()
         dialog.show()
 
-        createLabel.setOnClickListener {
+        binding.root.setOnClickListener {
             dialog.dismiss()
             displayAddLabelDialog(previousLabels, onLabelsUpdated)
         }
@@ -130,30 +127,28 @@ class NotesHelper(val context: Context) {
     private fun displayAddLabelDialog(previousLabels: HashSet<String>, onLabelsUpdated: (labels: HashSet<String>) -> Unit) {
         val priorLabels = getSortedLabelsList()
 
-        val view = View.inflate(context, R.layout.dialog_input, null)
-        val textInputLayout: TextInputLayout = view.findViewById(R.id.TextInputLayout)
-        val textInputEditText: TextInputEditText = view.findViewById(android.R.id.edit)
+        val binding = DialogInputBinding.inflate(LayoutInflater.from(context))
 
-        textInputEditText.inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS
-        textInputEditText.filters = arrayOf()
+        binding.edit.inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS
+        binding.edit.filters = arrayOf()
 
         val dialogBuilder = MaterialAlertDialogBuilder(context)
         dialogBuilder.setTitle(R.string.add_label)
-        dialogBuilder.setView(view)
+        dialogBuilder.setView(binding.root)
         dialogBuilder.setNegativeButton(R.string.cancel, null)
         dialogBuilder.setPositiveButton(R.string.save, null)
 
         val dialog = dialogBuilder.show()
-        textInputEditText.requestFocus()
+        binding.edit.requestFocus()
 
         dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener {
-            val label = textInputEditText.text.toString().trim()
+            val label = binding.edit.text.toString().trim()
             if (label.isNotEmpty()) {
                 if (!priorLabels.contains(label)) {
                     insertLabel(label)
                     dialog.dismiss()
                     labelNote(previousLabels, onLabelsUpdated)
-                } else textInputLayout.error = context.getString(R.string.label_exists)
+                } else binding.TextInputLayout.error = context.getString(R.string.label_exists)
             } else dialog.dismiss()
         }
     }
@@ -171,11 +166,11 @@ class NotesHelper(val context: Context) {
         editor.apply()
     }
 
-    private fun getCheckedLabels(labels: HashSet<String>) : BooleanArray {
+    private fun getCheckedLabels(labels: HashSet<String>): BooleanArray {
         val allLabels = getSortedLabelsList().toTypedArray()
         val checkedLabels = BooleanArray(allLabels.size)
         allLabels.forEachIndexed { index, label ->
-            if (labels.contains(label)){
+            if (labels.contains(label)) {
                 checkedLabels[index] = true
             }
         }
