@@ -112,6 +112,9 @@ class XMLUtils {
                 if (spanRepresentation.isBold) {
                     xmlSerializer.attribute(XMLTags.Bold, spanRepresentation.isBold.toString())
                 }
+                if (spanRepresentation.isLink) {
+                    xmlSerializer.attribute(XMLTags.Link, spanRepresentation.isLink.toString())
+                }
                 if (spanRepresentation.isItalic) {
                     xmlSerializer.attribute(XMLTags.Italic, spanRepresentation.isItalic.toString())
                 }
@@ -233,10 +236,11 @@ class XMLUtils {
         }
 
         private fun parseSpan(parser: XmlPullParser): SpanRepresentation {
-            val representation = SpanRepresentation(false, false, false, false, 0, 0)
+            val representation = SpanRepresentation(false, false, false, false, false, 0, 0)
             representation.start = parser.getAttributeValue(XMLTags.Start).toInt()
             representation.end = parser.getAttributeValue(XMLTags.End).toInt()
             representation.isBold = parser.getAttributeValue(XMLTags.Bold)?.toBoolean() ?: false
+            representation.isLink = parser.getAttributeValue(XMLTags.Link)?.toBoolean() ?: false
             representation.isItalic = parser.getAttributeValue(XMLTags.Italic)?.toBoolean() ?: false
             representation.isMonospace = parser.getAttributeValue(XMLTags.Monospace)?.toBoolean() ?: false
             representation.isStrikethrough = parser.getAttributeValue(XMLTags.Strike)?.toBoolean() ?: false

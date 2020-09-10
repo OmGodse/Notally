@@ -47,6 +47,7 @@
     <string name="more_items">%1$d madami pang mga item</string>
     <string name="drag_handle">Hawakan sa pag-drag</string>
     <string name="bold">Bold</string>
+    <string name="link">Link</string>
     <string name="italic">Italic</string>
     <string name="strikethrough">Strikethrough</string>
     <string name="clear_formatting">Tanggalin ang formatting</string>
@@ -60,6 +61,7 @@
     <string name="empty_list">Walang laman na listahan</string>
     <string name="discarded_empty_note">Tinapon na walang laman na tala</string>
     <string name="discarded_empty_list">Tinapon na walang laman na listahan</string>
+    <string name="cant_open_link">Hindi mabuksan ang link</string>
     <string name="something_went_wrong">May nangyari na mali. Pakiulit muli.</string>
 
     <!-- Settings Page -->

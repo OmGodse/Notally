@@ -47,6 +47,7 @@
     <string name="more_items">%1$d éléments de plus</string>
     <string name="drag_handle">Poignée de glissement</string>
     <string name="bold">Gras</string>
+    <string name="link">Lien</string>
     <string name="italic">Italique</string>
     <string name="strikethrough">Barré</string>
     <string name="clear_formatting">Supprimer le formatage</string>
@@ -60,6 +61,7 @@
     <string name="empty_list">Liste vide</string>
     <string name="discarded_empty_note">Note vide supprimée</string>
     <string name="discarded_empty_list">Liste vide supprimée</string>
+    <string name="cant_open_link">Ouverture du lien impossible</string>
     <string name="something_went_wrong">Quelque chose a mal tourné. Veuillez réessayer.</string>
 
     <!-- Settings Page -->

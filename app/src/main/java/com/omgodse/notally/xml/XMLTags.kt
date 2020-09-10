@@ -16,6 +16,7 @@ class XMLTags {
         const val Start = "start"
         const val End = "end"
         const val Bold = "bold"
+        const val Link = "link"
         const val Italic = "italic"
         const val Monospace = "monospace"
         const val Strike = "strike"

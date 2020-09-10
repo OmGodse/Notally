@@ -47,6 +47,7 @@
     <string name="more_items">%1$d más elementos</string>
     <string name="drag_handle">Arrastra la asa</string>
     <string name="bold">Negritas</string>
+    <string name="link">Enlace</string>
     <string name="italic">Cursiva</string>
     <string name="strikethrough">Tachado</string>
     <string name="clear_formatting">Borrar formato</string>
@@ -60,6 +61,7 @@
     <string name="empty_list">Vaciar lista</string>
     <string name="discarded_empty_note">Nota vacía descartada</string>
     <string name="discarded_empty_list">Lista vacía descartada</string>
+    <string name="cant_open_link">No se puede abrir el enlace</string>
     <string name="something_went_wrong">Algo salió mal. Inténtalo de nuevo.</string>
 
     <!-- Settings Page -->

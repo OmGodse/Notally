@@ -47,6 +47,7 @@
     <string name="more_items">Più di %1$d elementi</string>
     <string name="drag_handle">Trascina</string>
     <string name="bold">Grassetto</string>
+    <string name="link">Link</string>
     <string name="italic">Corsivo</string>
     <string name="strikethrough">Barrato</string>
     <string name="clear_formatting">Cancella formattazione del testo</string>
@@ -60,6 +61,7 @@
     <string name="empty_list">Lista vuota</string>
     <string name="discarded_empty_note">Nota vuota non salvata</string>
     <string name="discarded_empty_list">Elenco vuoto non salvato</string>
+    <string name="cant_open_link">Impossibile aprire il link</string>
     <string name="something_went_wrong">Qualcosa è andato storto. Per favore riprova.</string>
 
     <!-- Settings Page -->

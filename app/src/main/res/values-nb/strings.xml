@@ -47,6 +47,7 @@
     <string name="more_items">%1$d flere elementer</string>
     <string name="drag_handle">Drahåndtak</string>
     <string name="bold">Fet</string>
+    <string name="link">Lenke</string>
     <string name="italic">Kursiv</string>
     <string name="strikethrough">Gjennomstreket</string>
     <string name="clear_formatting">Fjern formatering</string>
@@ -60,6 +61,7 @@
     <string name="empty_list">Tom liste</string>
     <string name="discarded_empty_note">Forkastet tomt notat</string>
     <string name="discarded_empty_list">Forkastet tom liste</string>
+    <string name="cant_open_link">Kan ikke åpne lenken</string>
     <string name="something_went_wrong">Noe gikk galt. Prøv igjen.</string>
 
     <!-- Settings Page -->

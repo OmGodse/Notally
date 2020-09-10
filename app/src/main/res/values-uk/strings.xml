@@ -47,6 +47,7 @@
     <string name="more_items">%1$d більше елементів</string>
     <string name="drag_handle">Перетягніть вручну</string>
     <string name="bold">Напівжирний</string>
+    <string name="link">Посилання</string>
     <string name="italic">Курсив</string>
     <string name="strikethrough">Перекреслити</string>
     <string name="clear_formatting">Очистити форматування</string>
@@ -60,6 +61,7 @@
     <string name="empty_list">Пустий список</string>
     <string name="discarded_empty_note">Відхилено порожній запис</string>
     <string name="discarded_empty_list">Відхилено порожній список</string>
+    <string name="cant_open_link">Неможливо відкрити посилання</string>
     <string name="something_went_wrong">Щось пішло не так. Будь ласка спробуйте ще раз.</string>
 
     <!-- Settings Page -->

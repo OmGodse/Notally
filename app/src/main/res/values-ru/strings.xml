@@ -47,6 +47,7 @@
     <string name="more_items">Еще %1$d пунктов</string>
     <string name="drag_handle">Перетащить ручку</string>
     <string name="bold">Жирный</string>
+    <string name="link">Ссылка</string>
     <string name="italic">Курсив</string>
     <string name="strikethrough">Перечеркнутый</string>
     <string name="clear_formatting">Стандартный стиль</string>
@@ -60,6 +61,7 @@
     <string name="empty_list">Пустой список</string>
     <string name="discarded_empty_note">Удалить пустую заметку</string>
     <string name="discarded_empty_list">Удалить пустой список</string>
+    <string name="cant_open_link">Ссылку открыть невозможно</string>
     <string name="something_went_wrong">Что-то пошло не так. Пожалуйста, попробуйте еще раз.</string>
 
     <!-- Settings Page -->

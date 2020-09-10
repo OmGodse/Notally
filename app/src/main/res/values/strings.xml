@@ -50,6 +50,7 @@
     <string name="more_items">%1$d more items</string>
     <string name="drag_handle">Drag Handle</string>
     <string name="bold">Bold</string>
+    <string name="link">Link</string>
     <string name="italic">Italic</string>
     <string name="strikethrough">Strikethrough</string>
     <string name="clear_formatting">Clear formatting</string>
@@ -63,6 +64,7 @@
     <string name="empty_list">Empty list</string>
     <string name="discarded_empty_note">Discarded empty note</string>
     <string name="discarded_empty_list">Discarded empty list</string>
+    <string name="cant_open_link">Can\'t open link</string>
     <string name="something_went_wrong">Something went wrong. Please try again.</string>
 
     <!-- Settings Page -->
@@ -123,4 +125,7 @@
     <string name="rateKey" translatable="false">rate</string>
     <string name="githubKey" translatable="false">github</string>
     <string name="librariesKey" translatable="false">libraries</string>
+
+    <string name="pretty_time" translatable="false">Pretty Time</string>
+    <string name="material_components_android" translatable="false">Material Components for Android</string>
 </resources>

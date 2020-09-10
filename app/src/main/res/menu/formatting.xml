@@ -6,6 +6,10 @@
         android:title="@string/bold" />
 
     <item
+        android:id="@+id/Link"
+        android:title="@string/link" />
+
+    <item
         android:id="@+id/Italic"
         android:title="@string/italic" />
 

@@ -47,6 +47,7 @@
     <string name="more_items">%1$d weitere Einträge</string>
     <string name="drag_handle">Zieh-Handle</string>
     <string name="bold">Fett</string>
+    <string name="link">Link</string>
     <string name="italic">Kursiv</string>
     <string name="strikethrough">Durchgestrichen</string>
     <string name="clear_formatting">Formatierung löschen</string>
@@ -60,6 +61,7 @@
     <string name="empty_list">Leere Liste</string>
     <string name="discarded_empty_note">Verworfene leere notiz</string>
     <string name="discarded_empty_list">Verworfene leere liste</string>
+    <string name="cant_open_link">Link konnte nicht geöffnet werden</string>
     <string name="something_went_wrong">Etwas ist schief gelaufen. Bitte versuchen Sie es nochmal.</string>
 
     <!-- Settings Page -->

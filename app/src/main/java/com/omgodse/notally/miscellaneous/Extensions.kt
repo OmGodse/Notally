@@ -10,9 +10,11 @@ import android.text.Spanned
 import android.text.style.StrikethroughSpan
 import android.text.style.StyleSpan
 import android.text.style.TypefaceSpan
+import android.text.style.URLSpan
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
-import android.widget.EditText
+import com.google.android.material.textfield.TextInputEditText
+import com.omgodse.notally.activities.TakeNote
 import com.omgodse.notally.xml.SpanRepresentation
 import java.util.*
 
@@ -24,6 +26,10 @@ fun String.applySpans(representations: ArrayList<SpanRepresentation>): Editable 
         }
         if (representation.isItalic) {
             editable.setSpan(StyleSpan(Typeface.ITALIC), representation.start, representation.end)
+        }
+        if (representation.isLink) {
+            val url = TakeNote.getURLFrom(substring(representation.start, representation.end))
+            editable.setSpan(URLSpan(url), representation.start, representation.end)
         }
         if (representation.isMonospace) {
             editable.setSpan(TypefaceSpan("monospace"), representation.start, representation.end)
@@ -47,7 +53,7 @@ fun Context.getLocale(): Locale {
     } else resources.configuration.locale
 }
 
-fun EditText.setOnNextAction(onNext: () -> Unit) {
+fun TextInputEditText.setOnNextAction(onNext: () -> Unit) {
     setRawInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES)
 
     setOnKeyListener { v, keyCode, event ->
@@ -63,63 +69,4 @@ fun EditText.setOnNextAction(onNext: () -> Unit) {
             return@setOnEditorActionListener true
         } else return@setOnEditorActionListener false
     }
-}
-
-fun Spannable.getFilteredSpans(): ArrayList<SpanRepresentation> {
-    val representations = LinkedHashSet<SpanRepresentation>()
-    val spans = getSpans(0, length, Object::class.java)
-    spans.forEach { span ->
-        val end = getSpanEnd(span)
-        val start = getSpanStart(span)
-        val representation = SpanRepresentation(false, false, false, false, start, end)
-
-        if (span is StyleSpan) {
-            if (span.style == Typeface.BOLD) {
-                representation.isBold = true
-            }
-            else if (span.style == Typeface.ITALIC) {
-                representation.isItalic = true
-            }
-        }
-        else if (span is TypefaceSpan) {
-            if (span.family == "monospace") {
-                representation.isMonospace = true
-            }
-        }
-        else if (span is StrikethroughSpan) {
-            representation.isStrikethrough = true
-        }
-
-        if (representation.isNotUseless()) {
-            representations.add(representation)
-        }
-    }
-    return getFilteredRepresentations(ArrayList(representations))
-}
-
-private fun getFilteredRepresentations(representations: ArrayList<SpanRepresentation>): ArrayList<SpanRepresentation> {
-    representations.forEachIndexed { index, representation ->
-        val match = representations.find { spanRepresentation ->
-            spanRepresentation.isEqualInSize(representation)
-        }
-        if (match != null && representations.indexOf(match) != index) {
-            if (match.isBold) {
-                representation.isBold = true
-            }
-            if (match.isItalic) {
-                representation.isItalic = true
-            }
-            if (match.isMonospace) {
-                representation.isMonospace = true
-            }
-            if (match.isStrikethrough) {
-                representation.isStrikethrough = true
-            }
-            val copy = ArrayList(representations)
-            copy[index] = representation
-            copy.remove(match)
-            return getFilteredRepresentations(copy)
-        }
-    }
-    return representations
 }
