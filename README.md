@@ -1,15 +1,21 @@
 ### Background
-I started this as a side project back in October 2019. There are many notes apps out there, but they're all hideous, glitchy, low quality or all 3 at the same time. Well, Notally is none of these things. It's extremely light, minimalistic and elegant. There are minimal dependencies and lines of code. (All without compromising on readability)
+I started this as a side project back in October 2019. You all are probably used to the many notes apps out there, which are hideous, glitchy, low quality or all 3 at the same time.
+
+Maybe the developer views developing a beautiful user interface as the realm of _lowly_ designers. Maybe he just doesn't care.
+
+Well, Notally is none of these things. It's extremely light, minimalistic and elegant. There are minimal dependencies and lines of code. (All without compromising on readability)
 
 ### Features
 * Auto save
 * Dark mode
 * Material design
 * Create lists to stay on track
+* Support for Lollipop devices and up
 * Add labels to your notes for quick organisation
 * Archive notes to keep them around, but out of your way
 * Export notes as plain text, HTML or PDF files with formatting
 * Create rich text notes with support for bold, italics, mono space and strike-through
+* Add clickable links to notes with support for phone numbers, email addresses and web urls
 
 ### Downloads
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" alt="Get it on Google Play"  height="70"/>](https://play.google.com/store/apps/details?id=com.omgodse.notally)
