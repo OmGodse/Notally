@@ -1,0 +1,131 @@
+<resources>
+    <string name="app_name" translatable="false">Notally</string>
+
+    <!-- Fragment Titles -->
+    <string name="notes">Notas</string>
+    <string name="deleted">Deletadas</string>
+    <string name="archived">Arquivadas</string>
+    <string name="settings">Configurações</string>
+
+    <!-- Menu Options -->
+    <string name="share">Compartilhar</string>
+    <string name="search">Pesquisar</string>
+    <string name="labels">Etiquetas</string>
+    <string name="delete">Deletar</string>
+    <string name="restore">Restaurar</string>
+    <string name="archive">Arquivas</string>
+    <string name="unarchive">Desarquivar</string>
+    <string name="delete_forever">Deletar para sempre</string>
+
+    <!-- Chooser dialog hints -->
+    <string name="view_note">Ver nota...</string>
+    <string name="share_note">Compartilhar nota...</string>
+
+    <!-- Dialogs -->
+    <string name="save">Salvar</string>
+    <string name="edit">Editar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="make_list">Criar lista</string>
+    <string name="take_note">Fazer anotação</string>
+    <string name="add_label">Adicionar etiqueta</string>
+    <string name="export">Exportar</string>
+    <string name="pdf" translatable="false">PDF</string>
+    <string name="html" translatable="false">HTML</string>
+    <string name="plain_text">Texto plano</string>
+    <string name="save_to_device">Salvar no disposito</string>
+    <string name="edit_label">Editar etiqueta</string>
+    <string name="label_exists">Essa etiqueta já existe</string>
+    <string name="delete_label">Deletar etiqueta?</string>
+    <string name="create_new">Nenhuma etiqueta ainda. Criar uma?</string>
+    <string name="delete_note_forever">Deletar nota para sempre?</string>
+    <string name="your_notes_associated">As suas notas associadas com essa etiqueta não serão deletadas</string>
+
+    <!-- Lists and Notes -->
+    <string name="note">Nota</string>
+    <string name="item">Item</string>
+    <string name="date">Data</string>
+    <string name="title">Título</string>
+    <string name="add_item">Adicionar item</string>
+    <string name="one_more_item">Mais 1 item</string>
+    <string name="more_items">Mais %1$d item</string>
+    <string name="drag_handle">Arrastar e soltar</string>
+    <string name="bold">Negrito</string>
+    <string name="link">Link</string>
+    <string name="italic">Itálico</string>
+    <string name="strikethrough">Tachado</string>
+    <string name="clear_formatting">Limpar formatação</string>
+    <string name="monospace">Monoespaçado</string>
+
+    <!-- Miscellaneous -->
+    <string name="created">%1$s criado</string>
+    <string name="saved_to_device">Salvo no dispositivo</string>
+    <string name="saved_to_notally">Salno no Notally</string>
+    <string name="empty_note">Nota vazia</string>
+    <string name="empty_list">Lista vazia</string>
+    <string name="discarded_empty_note">Nota vazia descartada</string>
+    <string name="discarded_empty_list">Lista vazia descartada</string>
+    <string name="cant_open_link">Não foi possível abrir o link</string>
+    <string name="something_went_wrong">Algo deu errado. Por favor, tente novamente.</string>
+
+    <!-- Settings Page -->
+    <string name="appearance">Aparêcia</string>
+
+    <string name="view">Exibir</string>
+    <string name="list">Lista</string>
+    <string name="grid">Grade</string>
+
+    <string name="theme">Tema</string>
+    <string name="light">Claro</string>
+    <string name="dark">Escuro</string>
+    <string name="follow_system">Seguir o sistema</string>
+
+    <string name="card_type">Tipo de cartão</string>
+    <string name="elevated">Elevado</string>
+    <string name="flat">Plano</string>
+
+    <string name="content_density">Densidade do conteúdo</string>
+    <string name="max_items_to_display">Máximo de itens a serem exibidos nas listas</string>
+    <string name="max_lines_to_display">Máximo de linhas a serem exibidos nas notas</string>
+    <string name="show_date_created">Mostrar data de criação</string>
+
+    <string name="backup">Backup</string>
+    <string name="export_notes_to_a_file">Exportar notas para um arquivo</string>
+    <string name="import_notes_from_a_file">Importar notas de um arquivo</string>
+
+    <string name="about">Sobre</string>
+    <string name="libraries">Bibliotecas</string>
+    <string name="rate">Avaliar este aplicativo</string>
+
+    <string name="github" translatable="false">GitHub</string>
+
+    <string name="viewKey" translatable="false">view</string>
+    <string name="listKey" translatable="false">list</string>
+    <string name="gridKey" translatable="false">grid</string>
+
+    <string name="themeKey" translatable="false">theme</string>
+    <string name="lightKey" translatable="false">light</string>
+    <string name="darkKey" translatable="false">dark</string>
+    <string name="followSystemKey" translatable="false">followSystem</string>
+
+    <string name="cardTypeKey" translatable="false">cardType</string>
+    <string name="elevatedKey" translatable="false">elevated</string>
+    <string name="flatKey" translatable="false">flat</string>
+
+    <string name="maxItemsToDisplayInListKey" translatable="false">maxItemsToDisplayInList</string>
+    <string name="maxLinesToDisplayInNoteKey" translatable="false">maxLinesToDisplayInNote</string>
+
+    <string name="showDateCreatedKey" translatable="false">showDateCreated</string>
+
+    <string name="four" translatable="false">4</string>
+    <string name="eight" translatable="false">8</string>
+
+    <string name="exportNotesToAFileKey" translatable="false">exportNotesToAFile</string>
+    <string name="importNotesFromAFileKey" translatable="false">importNotesFromAFile</string>
+
+    <string name="rateKey" translatable="false">rate</string>
+    <string name="githubKey" translatable="false">github</string>
+    <string name="librariesKey" translatable="false">libraries</string>
+
+    <string name="pretty_time" translatable="false">Pretty Time</string>
+    <string name="material_components_android" translatable="false">Material Components for Android</string>
+</resources>
