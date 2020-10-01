@@ -32,7 +32,7 @@
     <string name="pdf" translatable="false">PDF</string>
     <string name="html" translatable="false">HTML</string>
     <string name="plain_text">Texto plano</string>
-    <string name="save_to_device">Salvar no disposito</string>
+    <string name="save_to_device">Salvar no dispositivo</string>
     <string name="edit_label">Editar etiqueta</string>
     <string name="label_exists">Essa etiqueta já existe</string>
     <string name="delete_label">Deletar etiqueta?</string>
@@ -47,7 +47,7 @@
     <string name="title">Título</string>
     <string name="add_item">Adicionar item</string>
     <string name="one_more_item">Mais 1 item</string>
-    <string name="more_items">Mais %1$d item</string>
+    <string name="more_items">Mais %1$d itens</string>
     <string name="drag_handle">Arrastar e soltar</string>
     <string name="bold">Negrito</string>
     <string name="link">Link</string>
@@ -59,7 +59,7 @@
     <!-- Miscellaneous -->
     <string name="created">%1$s criado</string>
     <string name="saved_to_device">Salvo no dispositivo</string>
-    <string name="saved_to_notally">Salno no Notally</string>
+    <string name="saved_to_notally">Salvar no Notally</string>
     <string name="empty_note">Nota vazia</string>
     <string name="empty_list">Lista vazia</string>
     <string name="discarded_empty_note">Nota vazia descartada</string>
@@ -68,7 +68,7 @@
     <string name="something_went_wrong">Algo deu errado. Por favor, tente novamente.</string>
 
     <!-- Settings Page -->
-    <string name="appearance">Aparêcia</string>
+    <string name="appearance">Aparência</string>
 
     <string name="view">Exibir</string>
     <string name="list">Lista</string>
