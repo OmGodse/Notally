@@ -43,4 +43,4 @@ Different screens in the app (Aside from the Take Note and Make List) are repres
 If you would like to help translate the app, please contact me [here](mailto:omgodseapps@gmail.com)
 
 ### Screenshots
-<img src="images/Notally.png" width="250"/><img src="images/Take%20Notes.png" width="250"/><img src="images/Make%20Lists.png" width="250"/>
+<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width="250"/><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width="250"/><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width="250"/>

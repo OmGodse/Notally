@@ -1,0 +1,27 @@
+Notally is a minimalistic note taking app with a beautiful material design and powerful features.
+
+<b>Organization</b>
+
+Create lists to stay on track
+Add labels to your notes for quick organisation
+Archive notes to keep them around, but out of your way
+Create rich text notes with support for bold, italics, mono space and strike-through
+Add clickable links to notes with support for phone numbers, email addresses and web urls
+
+<b>Export notes in the following formats</b>
+
+• PDF
+• HTML
+• Plain Text
+
+<b>Convenience</b>
+
+• Auto save
+• Dark mode
+• Completely free
+
+<b>Privacy</b>
+
+There are no ads, trackers or analytics of any kind. All your notes are stored completely on and never leave your device.
+
+https://github.com/OmGodse/Notally
