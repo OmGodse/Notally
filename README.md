@@ -1,9 +1,16 @@
 ### Background
-I started this as a side project back in October 2019. Although they're many notes apps out there, they're all hideous, glitchy, low quality or all 3 at the same time.
+I started this as a side project back in October 2019. Although there are many notes apps out there, they're all hideous, glitchy, low quality or all 3 at the same time.
 
 Maybe the developer views developing a beautiful user interface as the realm of _lowly_ designers. Maybe he just doesn't care.
 
 Well, Notally is none of these things. It's extremely light, minimalistic and elegant. There are minimal dependencies and lines of code. (All without compromising on readability)
+
+### Architecture
+Notes and lists are stored as XML files in the app's internal directory under different folders. Parsing of XML is done by the native pull parser available on Android. Labels are stored in the shared preferences.
+
+The different directories containing notes are observed by FileObservers and relevant updates are dispatched via LiveData to observing fragments, which updates the UI.
+
+Different screens in the app (Aside from the Take Note and Make List) are represented by fragments, managed by the Android Navigation Component.
 
 ### Features
 * Auto save
