@@ -1,6 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">Notally</string>
-
     <!-- Fragment Titles -->
     <string name="notes">Notas</string>
     <string name="deleted">Deletadas</string>
@@ -30,8 +29,6 @@
     <string name="take_note">Fazer anotação</string>
     <string name="add_label">Adicionar etiqueta</string>
     <string name="export">Exportar</string>
-    <string name="pdf" translatable="false">PDF</string>
-    <string name="html" translatable="false">HTML</string>
     <string name="plain_text">Texto plano</string>
     <string name="save_to_device">Salvar no dispositivo</string>
     <string name="edit_label">Editar etiqueta</string>
@@ -96,37 +93,4 @@
     <string name="about">Sobre</string>
     <string name="libraries">Bibliotecas</string>
     <string name="rate">Avaliar este aplicativo</string>
-
-    <string name="github" translatable="false">GitHub</string>
-
-    <string name="viewKey" translatable="false">view</string>
-    <string name="listKey" translatable="false">list</string>
-    <string name="gridKey" translatable="false">grid</string>
-
-    <string name="themeKey" translatable="false">theme</string>
-    <string name="lightKey" translatable="false">light</string>
-    <string name="darkKey" translatable="false">dark</string>
-    <string name="followSystemKey" translatable="false">followSystem</string>
-
-    <string name="cardTypeKey" translatable="false">cardType</string>
-    <string name="elevatedKey" translatable="false">elevated</string>
-    <string name="flatKey" translatable="false">flat</string>
-
-    <string name="maxItemsToDisplayInListKey" translatable="false">maxItemsToDisplayInList</string>
-    <string name="maxLinesToDisplayInNoteKey" translatable="false">maxLinesToDisplayInNote</string>
-
-    <string name="showDateCreatedKey" translatable="false">showDateCreated</string>
-
-    <string name="four" translatable="false">4</string>
-    <string name="eight" translatable="false">8</string>
-
-    <string name="exportNotesToAFileKey" translatable="false">exportNotesToAFile</string>
-    <string name="importNotesFromAFileKey" translatable="false">importNotesFromAFile</string>
-
-    <string name="rateKey" translatable="false">rate</string>
-    <string name="githubKey" translatable="false">github</string>
-    <string name="librariesKey" translatable="false">libraries</string>
-
-    <string name="pretty_time" translatable="false">Pretty Time</string>
-    <string name="material_components_android" translatable="false">Material Components for Android</string>
 </resources>
