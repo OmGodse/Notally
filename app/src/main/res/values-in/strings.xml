@@ -1,0 +1,96 @@
+<resources>
+    <!-- Fragment Titles -->
+    <string name="notes">Catatan</string>
+    <string name="deleted">Dihapus</string>
+    <string name="archived">Diarsipkan</string>
+    <string name="settings">Pengaturan</string>
+
+    <!-- Menu Options -->
+    <string name="share">Bagikan</string>
+    <string name="search">Cari</string>
+    <string name="labels">Label</string>
+    <string name="delete">Hapus</string>
+    <string name="restore">Pulihkan</string>
+    <string name="archive">Arsipkan</string>
+    <string name="unarchive">Batal arsip</string>
+    <string name="delete_forever">Hapus selamanya</string>
+
+    <!-- Chooser dialog hints -->
+    <string name="view_note">Lihat catatan…</string>
+    <string name="share_note">Bagikan catatan…</string>
+
+    <!-- Dialogs -->
+    <string name="save">Simpan</string>
+    <string name="edit">Sunting</string>
+    <string name="cancel">Batal</string>
+    <string name="make_list">Buat daftar</string>
+    <string name="take_note">Buat catatan</string>
+    <string name="add_label">Tambah label</string>
+    <string name="export">Ekspor</string>
+    <string name="plain_text">Teks biasa</string>
+    <string name="save_to_device">Simpan ke perangkat</string>
+    <string name="edit_label">Sunting label</string>
+    <string name="label_exists">Label sudah ada</string>
+    <string name="delete_label">Hapus label?</string>
+    <string name="create_new">Belum ada label. Buat baru?</string>
+    <string name="delete_note_forever">Hapus catatan selamanya?</string>
+    <string name="your_notes_associated">Catatan anda yang terkait dengan label ini tidak akan dihapus</string>
+
+    <!-- Lists and Notes -->
+    <string name="note">Catatan</string>
+    <string name="item">Item</string>
+    <string name="date">Tanggal</string>
+    <string name="title">Judul</string>
+    <string name="add_item">Tambah Item</string>
+    <string name="one_more_item">1 item lagi</string>
+    <string name="more_items">%1$d item lagi</string>
+    <string name="drag_handle">Handel Seret</string>
+    <string name="bold">Tebal</string>
+    <string name="link">Tautan</string>
+    <string name="italic">Miring</string>
+    <string name="strikethrough">Coret</string>
+    <string name="clear_formatting">Hapus pemformatan</string>
+    <string name="monospace">Monospace</string>
+
+    <!-- Miscellaneous -->
+    <string name="created">Dibuat pada %1$s</string>
+    <string name="saved_to_device">Disimpan ke perangkat</string>
+    <string name="saved_to_notally">Disimpan ke Notally</string>
+    <string name="empty_note">Catatan kosong</string>
+    <string name="empty_list">Daftar kosong</string>
+    <string name="discarded_empty_note">Catatan kosong dibuang</string>
+    <string name="discarded_empty_list">Daftar kosong dibuang</string>
+    <string name="cant_open_link">Tidak bisa membuka tautan</string>
+    <string name="something_went_wrong">Telah terjadi kesalahan. Silakan coba lagi.</string>
+
+    <!-- Settings Page -->
+    <string name="appearance">Penampilan</string>
+
+    <string name="view">Tampilan</string>
+    <string name="list">Daftar</string>
+    <string name="grid">Kotak</string>
+
+    <string name="theme">Tema</string>
+    <string name="light">Terang</string>
+    <string name="dark">Gelap</string>
+    <string name="follow_system">Ikuti sistem</string>
+
+    <string name="card_type">Tipe kartu</string>
+    <string name="elevated">Mengambang</string>
+    <string name="flat">Datar</string>
+
+    <string name="content_density">Kerapatan konten</string>
+    <string name="max_items_to_display">Item maks yang ditampilkan dalam daftar</string>
+    <string name="max_lines_to_display">Baris maks yang ditampilkan dalam catatan</string>
+    <string name="show_date_created">Tampilkan tanggal dibuat</string>
+
+    <string name="backup">Cadangan</string>
+    <string name="export_notes_to_a_file">Ekspor catatan ke berkas</string>
+    <string name="import_notes_from_a_file">Impor catatan dari berkas</string>
+
+    <string name="about">Tentang</string>
+    <string name="libraries">Pustaka</string>
+    <string name="rate">Nilai apl ini</string>
+
+    <string name="support_development">Dukung pengembangan</string>
+</resources>
