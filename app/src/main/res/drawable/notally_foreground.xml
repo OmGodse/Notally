@@ -22,7 +22,7 @@
         </aapt:attr>
     </path>
     <path
-        android:fillColor="@color/White"
+        android:fillColor="@android:color/white"
         android:pathData="M32,32L76,32L76,76L32,76L32,32Z" />
     <path
         android:fillColor="@color/Grey200"

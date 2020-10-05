@@ -8,6 +8,6 @@
         <item name="onSurfaceTranslucent">@color/WhiteTranslucent</item>
         <item name="secondaryTranslucent">@color/LightBlue100Translucent</item>
 
-        <item name="android:navigationBarColor">@color/Black</item>
+        <item name="android:navigationBarColor">@android:color/black</item>
     </style>
 </resources>

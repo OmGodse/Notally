@@ -12,10 +12,7 @@
 
     <color name="FABRipple">#80FFFFFF</color>
 
-    <color name="White">#FFFFFF</color>
     <color name="Gray">#80C8C8C8</color>
-    <color name="Black">#000000</color>
     <color name="Grey100">#F5F5F5</color>
     <color name="Grey200">#EEEEEE</color>
-    <color name="Transparent">#00000000</color>
 </resources>
