@@ -36,9 +36,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupNavigation() {
-        val topLevelDestinations = getTopLevelDestinations()
         navController = findNavController(R.id.NavigationHost)
-        appBarConfiguration = AppBarConfiguration(topLevelDestinations, binding.DrawerLayout)
+        appBarConfiguration = AppBarConfiguration(binding.NavigationView.menu, binding.DrawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         var fragmentIdToLoad: Int? = null
@@ -75,10 +74,6 @@ class MainActivity : AppCompatActivity() {
             binding.NavigationView.setCheckedItem(destination.id)
             handleDestinationChange(destination, arguments)
         }
-    }
-
-    private fun getTopLevelDestinations(): Set<Int> {
-        return setOf(R.id.NotesFragment, R.id.LabelsFragment, R.id.DeletedFragment, R.id.ArchivedFragment, R.id.SettingsFragment)
     }
 
     private fun handleDestinationChange(destination: NavDestination, arguments: Bundle?) {
