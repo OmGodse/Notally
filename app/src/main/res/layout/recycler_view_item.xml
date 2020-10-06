@@ -18,35 +18,21 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/Title"
+            style="@style/Preview.Title"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:fontFamily="@font/nunito_semibold"
-            android:maxLines="1"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:text="@string/title"
-            android:textColor="?attr/colorOnSurface"
-            android:textSize="16sp" />
+            android:layout_height="wrap_content" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/Date"
+            style="@style/Preview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/nunito_regular"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:text="@string/date" />
+            android:layout_height="wrap_content" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/Note"
+            style="@style/Preview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:fontFamily="@font/nunito"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:text="@string/note" />
+            android:layout_height="wrap_content" />
 
         <LinearLayout
             android:id="@+id/LinearLayout"
@@ -57,11 +43,10 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/ItemsRemaining"
+            style="@style/Preview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/nunito_regular"
-            android:paddingBottom="8dp"
-            android:text="@string/more_items" />
+            android:paddingTop="0dp" />
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/LabelGroup"

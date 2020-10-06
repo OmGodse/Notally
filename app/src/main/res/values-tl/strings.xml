@@ -2,14 +2,15 @@
 <resources>
     <!-- Fragment Titles -->
     <string name="notes">Mga Tala</string>
+    <string name="labels">Tatak</string>
     <string name="deleted">Mga Tinanggal</string>
     <string name="archived">Mga Na-archive</string>
     <string name="settings">Mga Setting</string>
+    <string name="support_development">Suportahan</string>
 
     <!-- Menu Options -->
     <string name="share">Ibahagi</string>
     <string name="search">Hanapin</string>
-    <string name="labels">Tatak</string>
     <string name="delete">Tanggalin</string>
     <string name="restore">Ibalik</string>
     <string name="archive">Archive</string>
@@ -54,7 +55,6 @@
     <string name="monospace">Monospace</string>
 
     <!-- Miscellaneous -->
-    <string name="created">Ginawa %1$s</string>
     <string name="saved_to_device">Nakasalba sa device</string>
     <string name="saved_to_notally">Nakasalba sa Notally</string>
     <string name="empty_note">Walang laman na tala</string>

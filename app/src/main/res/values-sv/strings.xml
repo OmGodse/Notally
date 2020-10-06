@@ -2,14 +2,15 @@
 <resources>
     <!-- Fragment Titles -->
     <string name="notes">Anteckningar</string>
+    <string name="labels">Etiketter</string>
     <string name="deleted">Raderat</string>
     <string name="archived">Arkiverad</string>
     <string name="settings">Inställningar</string>
+    <string name="support_development">Stötta utvecklingen</string>
 
     <!-- Menu Options -->
     <string name="share">Dela</string>
     <string name="search">Sök</string>
-    <string name="labels">Etiketter</string>
     <string name="delete">Radera</string>
     <string name="restore">Återställ</string>
     <string name="archive">Arkivera</string>
@@ -54,7 +55,6 @@
     <string name="monospace">Fast bredd</string>
 
     <!-- Miscellaneous -->
-    <string name="created">Skapad %1$s</string>
     <string name="saved_to_device">Sparad till enhet</string>
     <string name="saved_to_notally">Sparad till Notally</string>
     <string name="empty_note">Tom anteckning</string>

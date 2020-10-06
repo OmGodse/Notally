@@ -2,14 +2,15 @@
 <resources>
     <!-- Fragment Titles -->
     <string name="notes">Note</string>
+    <string name="labels">Etichette</string>
     <string name="deleted">Cestino</string>
     <string name="archived">Archivio</string>
     <string name="settings">Impostazioni</string>
+    <string name="support_development">Sostieni lo sviluppatore</string>
 
     <!-- Menu Options -->
     <string name="share">Condividi</string>
     <string name="search">Cerca</string>
-    <string name="labels">Etichette</string>
     <string name="delete">Elimina</string>
     <string name="restore">Ripristina</string>
     <string name="archive">Archivia</string>
@@ -54,7 +55,6 @@
     <string name="monospace">Monospazio</string>
 
     <!-- Miscellaneous -->
-    <string name="created">Creata %1$s</string>
     <string name="saved_to_device">Salvata sul dispositivo</string>
     <string name="saved_to_notally">Salvata su Notally</string>
     <string name="empty_note">Nota vuota</string>

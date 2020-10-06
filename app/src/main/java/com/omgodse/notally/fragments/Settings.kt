@@ -3,7 +3,6 @@ package com.omgodse.notally.fragments
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
@@ -15,6 +14,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.R
 import com.omgodse.notally.helpers.ExportHelper
 import com.omgodse.notally.miscellaneous.Constants
+import com.omgodse.notally.miscellaneous.openLink
 
 class Settings : PreferenceFragmentCompat() {
 
@@ -108,7 +108,7 @@ class Settings : PreferenceFragmentCompat() {
         if (requestCode == Constants.RequestCodeExportFile && resultCode == Activity.RESULT_OK) {
             val uri = data?.data
             if (uri != null) {
-                exportHelper.writeFileToStream(uri)
+                exportHelper.writeFileToUri(uri)
             }
         }
         if (requestCode == Constants.RequestCodeImportFile && resultCode == Activity.RESULT_OK) {
@@ -120,13 +120,6 @@ class Settings : PreferenceFragmentCompat() {
                 }
             }
         }
-    }
-
-
-    private fun openLink(link: String) {
-        val uri = Uri.parse(link)
-        val intent = Intent(Intent.ACTION_VIEW, uri)
-        startActivity(intent)
     }
 
     companion object {

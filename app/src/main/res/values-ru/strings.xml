@@ -2,14 +2,15 @@
 <resources>
     <!-- Fragment Titles -->
     <string name="notes">Заметки</string>
+    <string name="labels">Метки</string>
     <string name="deleted">Удаленные</string>
     <string name="archived">Архивированные</string>
     <string name="settings">Настройки</string>
+    <string name="support_development">Поддержать разработчика</string>
 
     <!-- Menu Options -->
     <string name="share">Поделиться</string>
     <string name="search">Поиск</string>
-    <string name="labels">Метки</string>
     <string name="delete">Удалить</string>
     <string name="restore">Восстановить</string>
     <string name="archive">Архивировать</string>
@@ -54,7 +55,6 @@
     <string name="monospace">Пространство между символами</string>
 
     <!-- Miscellaneous -->
-    <string name="created">Создано %1$s</string>
     <string name="saved_to_device">Сохранено на телефоне</string>
     <string name="saved_to_notally">Сохранено в Notally</string>
     <string name="empty_note">Пустая заметка</string>

@@ -6,9 +6,9 @@ Maybe the developer views developing a beautiful user interface as the realm of 
 Well, Notally is none of these things. It's extremely light, minimalistic and elegant. There are minimal dependencies and lines of code. (All without compromising on readability)
 
 ### Architecture
-Notes and lists are stored as XML files in the app's internal directory under different folders. Parsing of XML is done by the native pull parser available on Android. Labels are stored in the shared preferences.
+Notes and lists are stored as XML files in the app's internal directory under different folders. Labels are stored in the shared preferences.
 
-The different directories containing notes are observed by FileObservers and relevant updates are dispatched via LiveData to observing fragments, which updates the UI.
+The different directories containing notes are observed by FileObservers and relevant updates are dispatched via LiveData to update the UI.
 
 Different screens in the app (Aside from the Take Note and Make List) are represented by fragments, managed by the Android Navigation Component.
 
@@ -30,12 +30,14 @@ Different screens in the app (Aside from the Take Note and Make List) are repres
 
 ### Translations
 * 🇬🇧 English
+* 🇮🇩 Indonesian by [zmni](https://github.com/zmni)
 * 🇮🇷 Italian by Luigi Sforza
 * 🇪🇸 Spanish by Jose Casas
 * 🇺🇦 Ukrainian by Alex Shpak
 * 🇸🇪 Swedish by Erik Lindström
 * 🇷🇺 Russian by Denis Bondarenko
 * 🇫🇷 French by Arnaud Dieumegard
+* 🇧🇷 Brazilian Portuguese by [fabianski7](https://github.com/fabianski7)
 * 🇳🇴 Norwegian by Fredrik Magnussen
 * 🇵🇭 Tagalog by Isaiah Collins Abetong
 * 🇩🇪 German by Maximilian Braunschmied

@@ -3,14 +3,15 @@
 
     <!-- Fragment Titles -->
     <string name="notes">Notes</string>
+    <string name="labels">Labels</string>
     <string name="deleted">Deleted</string>
     <string name="archived">Archived</string>
     <string name="settings">Settings</string>
+    <string name="support_development">Support</string>
 
     <!-- Menu Options -->
     <string name="share">Share</string>
     <string name="search">Search</string>
-    <string name="labels">Labels</string>
     <string name="delete">Delete</string>
     <string name="restore">Restore</string>
     <string name="archive">Archive</string>
@@ -57,7 +58,6 @@
     <string name="monospace">Monospace</string>
 
     <!-- Miscellaneous -->
-    <string name="created">Created %1$s</string>
     <string name="saved_to_device">Saved to device</string>
     <string name="saved_to_notally">Saved to Notally</string>
     <string name="empty_note">Empty note</string>
@@ -66,6 +66,11 @@
     <string name="discarded_empty_list">Discarded empty list</string>
     <string name="cant_open_link">Can\'t open link</string>
     <string name="something_went_wrong">Something went wrong. Please try again.</string>
+
+    <!-- Support Development -->
+    <string name="patreon" translatable="false">Patreon</string>
+    <string name="note_from_the_developer" translatable="false">Note from the developer (Om Godse)</string>
+    <string name="this_app_is_free" translatable="false">This app is free and always will be. However, maintaining it takes up a non trivial amount of my time.\n\nIf you would like to support it\'s development, click on the link to the Patreon page given below and consider becoming a patron.\n\nPatrons will get an exclusive shout out in the app, along with other benefits.</string>
 
     <!-- Settings Page -->
     <string name="appearance">Appearance</string>
@@ -86,6 +91,7 @@
     <string name="content_density">Content density</string>
     <string name="max_items_to_display">Max items to display in list</string>
     <string name="max_lines_to_display">Max lines to display in note</string>
+
     <string name="show_date_created">Show date created</string>
 
     <string name="backup">Backup</string>

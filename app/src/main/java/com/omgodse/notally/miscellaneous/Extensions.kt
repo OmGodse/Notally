@@ -1,7 +1,9 @@
 package com.omgodse.notally.miscellaneous
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Typeface
+import android.net.Uri
 import android.os.Build
 import android.text.Editable
 import android.text.InputType
@@ -13,10 +15,17 @@ import android.text.style.TypefaceSpan
 import android.text.style.URLSpan
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
+import androidx.fragment.app.Fragment
 import com.google.android.material.textfield.TextInputEditText
 import com.omgodse.notally.activities.TakeNote
 import com.omgodse.notally.xml.SpanRepresentation
 import java.util.*
+
+fun Fragment.openLink(link: String) {
+    val uri = Uri.parse(link)
+    val intent = Intent(Intent.ACTION_VIEW, uri)
+    startActivity(intent)
+}
 
 fun String.applySpans(representations: ArrayList<SpanRepresentation>): Editable {
     val editable = Editable.Factory.getInstance().newEditable(this)

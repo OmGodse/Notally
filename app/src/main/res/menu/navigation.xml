@@ -42,6 +42,11 @@
         android:checkableBehavior="single">
 
         <item
+            android:id="@+id/SupportDevelopment"
+            android:icon="@drawable/support"
+            android:title="@string/support_development" />
+
+        <item
             android:id="@+id/SettingsFragment"
             android:icon="@drawable/settings"
             android:title="@string/settings" />

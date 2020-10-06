@@ -2,14 +2,15 @@
 <resources>
     <!-- Fragment Titles -->
     <string name="notes">Notater</string>
+    <string name="labels">Etiketter</string>
     <string name="deleted">Papirkurv</string>
     <string name="archived">Arkiv</string>
     <string name="settings">Innstillinger</string>
+    <string name="support_development">Støtte Utvikling</string>
 
     <!-- Menu Options -->
     <string name="share">Del</string>
     <string name="search">Søk</string>
-    <string name="labels">Etiketter</string>
     <string name="delete">Slett</string>
     <string name="restore">Gjenopprett</string>
     <string name="archive">Arkiver</string>
@@ -54,7 +55,6 @@
     <string name="monospace">Fastbreddeskrift</string>
 
     <!-- Miscellaneous -->
-    <string name="created">Opprettet %1$s</string>
     <string name="saved_to_device">Lagre til enhet</string>
     <string name="saved_to_notally">Lagre til Notally</string>
     <string name="empty_note">Tomt notat</string>

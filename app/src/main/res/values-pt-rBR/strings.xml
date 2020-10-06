@@ -2,15 +2,15 @@
 <resources>
     <!-- Fragment Titles -->
     <string name="notes">Notas</string>
+    <string name="labels">Etiquetas</string>
     <string name="deleted">Deletadas</string>
     <string name="archived">Arquivadas</string>
-    <string name="support_development">Apoiar o desenvolvimento</string>
     <string name="settings">Configurações</string>
+    <string name="support_development">Apoiar o desenvolvimento</string>
 
     <!-- Menu Options -->
     <string name="share">Compartilhar</string>
     <string name="search">Pesquisar</string>
-    <string name="labels">Etiquetas</string>
     <string name="delete">Deletar</string>
     <string name="restore">Restaurar</string>
     <string name="archive">Arquivas</string>
@@ -18,8 +18,8 @@
     <string name="delete_forever">Deletar para sempre</string>
 
     <!-- Chooser dialog hints -->
-    <string name="view_note">Ver nota...</string>
-    <string name="share_note">Compartilhar nota...</string>
+    <string name="view_note">Ver nota…</string>
+    <string name="share_note">Compartilhar nota…</string>
 
     <!-- Dialogs -->
     <string name="save">Salvar</string>
@@ -55,7 +55,6 @@
     <string name="monospace">Monoespaçado</string>
 
     <!-- Miscellaneous -->
-    <string name="created">%1$s criado</string>
     <string name="saved_to_device">Salvo no dispositivo</string>
     <string name="saved_to_notally">Salvar no Notally</string>
     <string name="empty_note">Nota vazia</string>
@@ -84,6 +83,7 @@
     <string name="content_density">Densidade do conteúdo</string>
     <string name="max_items_to_display">Máximo de itens a serem exibidos nas listas</string>
     <string name="max_lines_to_display">Máximo de linhas a serem exibidos nas notas</string>
+
     <string name="show_date_created">Mostrar data de criação</string>
 
     <string name="backup">Backup</string>

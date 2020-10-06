@@ -1,14 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Fragment Titles -->
     <string name="notes">Catatan</string>
+    <string name="labels">Label</string>
     <string name="deleted">Dihapus</string>
     <string name="archived">Diarsipkan</string>
     <string name="settings">Pengaturan</string>
+    <string name="support_development">Dukung pengembangan</string>
 
     <!-- Menu Options -->
     <string name="share">Bagikan</string>
     <string name="search">Cari</string>
-    <string name="labels">Label</string>
     <string name="delete">Hapus</string>
     <string name="restore">Pulihkan</string>
     <string name="archive">Arsipkan</string>
@@ -53,7 +55,6 @@
     <string name="monospace">Monospace</string>
 
     <!-- Miscellaneous -->
-    <string name="created">Dibuat pada %1$s</string>
     <string name="saved_to_device">Disimpan ke perangkat</string>
     <string name="saved_to_notally">Disimpan ke Notally</string>
     <string name="empty_note">Catatan kosong</string>
@@ -82,6 +83,7 @@
     <string name="content_density">Kerapatan konten</string>
     <string name="max_items_to_display">Item maks yang ditampilkan dalam daftar</string>
     <string name="max_lines_to_display">Baris maks yang ditampilkan dalam catatan</string>
+
     <string name="show_date_created">Tampilkan tanggal dibuat</string>
 
     <string name="backup">Cadangan</string>
@@ -91,6 +93,4 @@
     <string name="about">Tentang</string>
     <string name="libraries">Pustaka</string>
     <string name="rate">Nilai apl ini</string>
-
-    <string name="support_development">Dukung pengembangan</string>
 </resources>

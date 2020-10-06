@@ -2,14 +2,15 @@
 <resources>
     <!-- Fragment Titles -->
     <string name="notes">Notizen</string>
+    <string name="labels">Etiketten</string>
     <string name="deleted">Gelöscht</string>
     <string name="archived">Archiviert</string>
     <string name="settings">Einstellungen</string>
+    <string name="support_development">unterstützende Entwicklung</string>
 
     <!-- Menu Options -->
     <string name="share">Teilen</string>
     <string name="search">Suchen</string>
-    <string name="labels">Etiketten</string>
     <string name="delete">Löschen</string>
     <string name="restore">Wiederherstellen</string>
     <string name="archive">Archivieren</string>
@@ -54,7 +55,6 @@
     <string name="monospace">Monospace</string>
 
     <!-- Miscellaneous -->
-    <string name="created">Erstellt %1$s</string>
     <string name="saved_to_device">Auf dem Gerät gespeichert</string>
     <string name="saved_to_notally">In Notally gespeichert</string>
     <string name="empty_note">Leere Notiz</string>
@@ -87,8 +87,8 @@
     <string name="show_date_created">Erstellungsdatum anzeigen</string>
 
     <string name="backup">Backup</string>
-    <string name="export_notes_to_a_file">Notizen in datei exportieren</string>
-    <string name="import_notes_from_a_file">Notizen aus datei importieren</string>
+    <string name="export_notes_to_a_file">Notizen in Datei exportieren</string>
+    <string name="import_notes_from_a_file">Notizen aus Datei importieren</string>
 
     <string name="about">Über</string>
     <string name="libraries">Bibliotheken</string>

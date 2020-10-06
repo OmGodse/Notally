@@ -46,6 +46,11 @@
         android:label="@string/settings" />
 
     <fragment
+        android:id="@+id/SupportDevelopment"
+        android:name="com.omgodse.notally.fragments.SupportDevelopment"
+        android:label="@string/support_development" />
+
+    <fragment
         android:id="@+id/SearchFragment"
         android:name="com.omgodse.notally.fragments.Search" />
 
