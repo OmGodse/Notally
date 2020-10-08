@@ -7,9 +7,9 @@
     android:clickable="false"
     android:ellipsize="end"
     android:focusable="false"
-    android:fontFamily="@font/nunito_regular"
     android:maxLines="1"
-    android:textAppearance="?attr/textAppearanceBody2"
+    android:textAppearance="@style/TextAppearance.Preview"
     android:textColor="?attr/colorSecondary"
     app:backgroundTint="?attr/secondaryTranslucent"
+    app:rippleColor="?attr/colorControlHighlight"
     app:strokeColor="?attr/colorSecondary" />
