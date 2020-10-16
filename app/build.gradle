@@ -9,9 +9,9 @@ android {
         applicationId "com.omgodse.notally"
         minSdkVersion rootProject.ext.minSDKVersion
         targetSdkVersion rootProject.ext.targetSDKVersion
-        versionCode 24
-        versionName "2.9"
-        resConfigs 'en', 'de', 'es', 'fr', 'it', 'nb', 'ru', 'sv', 'tl', 'uk'
+        versionCode 25
+        versionName "3.0"
+        resConfigs 'en', 'de', 'es', 'fr', 'in', 'it', 'nb', 'pt', 'ru', 'sv', 'tl', 'uk'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -28,6 +28,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    aaptOptions {
+        cruncherEnabled false
+    }
+
     kotlinOptions { jvmTarget = JavaVersion.VERSION_1_8.toString() }
 
     buildFeatures {
@@ -36,11 +40,11 @@ android {
 }
 
 dependencies {
-    final def stableNavVersion = "2.3.0"
+    final def stableNavVersion = "2.3.1"
     final def stablePrefVersion = "1.1.1"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
-    implementation 'androidx.core:core-ktx:1.3.1'
+    implementation 'androidx.core:core-ktx:1.3.2'
     implementation 'androidx.appcompat:appcompat:1.2.0'
 
     implementation "androidx.preference:preference-ktx:$stablePrefVersion"
@@ -49,7 +53,7 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$stableNavVersion"
 
     implementation 'org.ocpsoft.prettytime:prettytime:4.0.5.Final'
-    implementation 'com.google.android.material:material:1.3.0-alpha02'
+    implementation 'com.google.android.material:material:1.3.0-alpha03'
 
     implementation project(':Post')
 }
