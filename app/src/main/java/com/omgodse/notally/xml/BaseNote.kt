@@ -1,10 +1,7 @@
 package com.omgodse.notally.xml
 
 import com.omgodse.notally.R
-import com.omgodse.notally.activities.MakeList
-import com.omgodse.notally.activities.TakeNote
 import java.io.File
-import kotlin.collections.List
 
 sealed class BaseNote(open val title: String,
                       open val filePath: String,
@@ -20,9 +17,7 @@ sealed class BaseNote(open val title: String,
 
     abstract fun writeToFile()
 
-    abstract fun getAssociatedActivity() : Class<*>
-
-    companion object  {
+    companion object {
         fun readFromFile(file: File): BaseNote {
             return XMLUtils.readBaseNoteFromFile(file)
         }
@@ -61,15 +56,15 @@ data class Note(override val title: String,
     override fun writeToFile() {
         XMLUtils.writeNoteToFile(this)
     }
-
-    override fun getAssociatedActivity() = TakeNote::class.java
 }
 
-data class List(override val title: String,
-                override val filePath: String,
-                override val labels: HashSet<String>,
-                override val timestamp: String,
-                val items: List<ListItem>) : BaseNote(title, filePath, labels, timestamp) {
+data class List(
+    override val title: String,
+    override val filePath: String,
+    override val labels: HashSet<String>,
+    override val timestamp: String,
+    val items: kotlin.collections.List<ListItem>
+) : BaseNote(title, filePath, labels, timestamp) {
 
     override fun isEmpty(): Boolean {
         return title.isBlank() && items.isEmpty()
@@ -98,6 +93,4 @@ data class List(override val title: String,
     override fun writeToFile() {
         XMLUtils.writeListToFile(this)
     }
-
-    override fun getAssociatedActivity() = MakeList::class.java
 }

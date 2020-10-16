@@ -3,12 +3,12 @@ package com.omgodse.notally.viewmodels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.omgodse.notally.helpers.NotesHelper
+import com.omgodse.notally.xml.BaseNote
 import java.io.File
 import java.util.*
 import kotlin.collections.HashSet
 
-abstract class NotallyModel(app: Application) : AndroidViewModel(app) {
+abstract class NotallyModel(private val app: Application) : AndroidViewModel(app) {
 
     var isNewNote = true
     var isFirstInstance = true
@@ -18,38 +18,37 @@ abstract class NotallyModel(app: Application) : AndroidViewModel(app) {
 
     val labels = MutableLiveData(HashSet<String>())
 
-    var file: File? = null
-        set(value) {
-            field = value
-            setStateFromFile()
-        }
+    internal lateinit var file: File
 
-    private val notesHelper = NotesHelper(app)
-
-    abstract fun saveNote()
-
-    abstract fun setStateFromFile()
-
-
-    internal fun restoreFile() {
-        file?.let {
-            notesHelper.restoreFile(it)
+    fun setFile(file: File) {
+        this.file = file
+        if (file.exists()) {
+            val baseNote = BaseNote.readFromFile(file)
+            setStateFromBaseNote(baseNote)
         }
     }
 
-    internal fun deleteFileForever() {
-        file?.delete()
+    fun saveNote() {
+        val currentNote = getBaseNote()
+        if (file.exists()) {
+            val savedNote = BaseNote.readFromFile(file)
+            if (savedNote != currentNote) {
+                currentNote.writeToFile()
+            }
+        } else currentNote.writeToFile()
     }
 
-    internal fun moveFileToArchive() {
-        file?.let {
-            notesHelper.moveFileToArchive(it)
-        }
-    }
 
-    internal fun moveFileToDeleted() {
-        file?.let {
-            notesHelper.moveFileToDeleted(it)
-        }
-    }
+    abstract fun getBaseNote(): BaseNote
+
+    abstract fun setStateFromBaseNote(baseNote: BaseNote)
+
+
+    fun deleteBaseNoteForever() = file.delete()
+
+    fun restoreBaseNote() = BaseNoteModel.restoreBaseNote(getBaseNote(), app)
+
+    fun moveBaseNoteToArchive() = BaseNoteModel.moveBaseNoteToArchive(getBaseNote(), app)
+
+    fun moveBaseNoteToDeleted() = BaseNoteModel.moveBaseNoteToDeleted(getBaseNote(), app)
 }

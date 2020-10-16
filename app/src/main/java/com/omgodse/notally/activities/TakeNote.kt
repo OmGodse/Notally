@@ -24,7 +24,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.NotallyLinkMovementMethod
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.ActivityTakeNoteBinding
-import com.omgodse.notally.helpers.NotesHelper
 import com.omgodse.notally.miscellaneous.getLocale
 import com.omgodse.notally.miscellaneous.setOnNextAction
 import com.omgodse.notally.viewmodels.TakeNoteModel
@@ -33,7 +32,7 @@ import java.text.SimpleDateFormat
 class TakeNote : NotallyActivity() {
 
     private lateinit var binding: ActivityTakeNoteBinding
-    private val model: TakeNoteModel by viewModels()
+    override val model: TakeNoteModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,10 +55,7 @@ class TakeNote : NotallyActivity() {
     }
 
 
-    override fun shareNote() {
-        val notesHelper = NotesHelper(this)
-        notesHelper.shareNote(model.title, model.body)
-    }
+    override fun shareNote() = operationsHelper.shareNote(model.title, model.body)
 
     override fun receiveSharedNote() {
         val title = intent.getStringExtra(Intent.EXTRA_SUBJECT)
@@ -68,15 +64,11 @@ class TakeNote : NotallyActivity() {
         val spannableBody = intent.getCharSequenceExtra(EXTRA_SPANNABLE) as Spannable?
         val body = spannableBody ?: plainTextBody
 
-        body?.let {
-            model.body = Editable.Factory.getInstance().newEditable(it)
-        }
-        title?.let {
-            model.title = it
-        }
-    }
+        body?.let { model.body = Editable.Factory.getInstance().newEditable(it) }
+        title?.let { model.title = it }
 
-    override fun getViewModel() = model
+        Toast.makeText(this, R.string.saved_to_notally, Toast.LENGTH_SHORT).show()
+    }
 
 
     private fun setupListeners() {
@@ -85,7 +77,6 @@ class TakeNote : NotallyActivity() {
 
             override fun onTextChanged(text: CharSequence?, start: Int, before: Int, count: Int) {
                 model.title = text.toString().trim()
-                model.saveNote()
             }
 
             override fun afterTextChanged(s: Editable?) {}
@@ -98,15 +89,13 @@ class TakeNote : NotallyActivity() {
 
             override fun afterTextChanged(editable: Editable?) {
                 model.body = binding.EnterBody.text
-                model.saveNote()
             }
         })
 
-        model.labels.observe(this, { labels ->
-            model.saveNote()
+        model.labels.observe(this, {
             binding.LabelGroup.removeAllViews()
-            labels?.forEach { label ->
-                val displayLabel = View.inflate(this, R.layout.chip_label, null) as MaterialButton
+            it?.forEach { label ->
+                val displayLabel = View.inflate(this, R.layout.label, null) as MaterialButton
                 displayLabel.text = label
                 binding.LabelGroup.addView(displayLabel)
             }
@@ -172,29 +161,28 @@ class TakeNote : NotallyActivity() {
 
     private fun setupMovementMethod() {
         val movementMethod = NotallyLinkMovementMethod {
-            val builder = MaterialAlertDialogBuilder(this)
-            builder.setItems(R.array.linkOptions) { dialog, which ->
-                if (which == 0) {
-                    val spanStart = binding.EnterBody.text?.getSpanStart(it)
-                    val spanEnd = binding.EnterBody.text?.getSpanEnd(it)
+            MaterialAlertDialogBuilder(this)
+                .setItems(R.array.linkOptions) { dialog, which ->
+                    if (which == 0) {
+                        val spanStart = binding.EnterBody.text?.getSpanStart(it)
+                        val spanEnd = binding.EnterBody.text?.getSpanEnd(it)
 
-                    ifBothNotNullAndInvalid(spanStart, spanEnd) { start, end ->
-                        val text = binding.EnterBody.text?.substring(start, end)
-                        text?.let {
-                            val link = getURLFrom(it)
-                            val uri = Uri.parse(link)
+                        ifBothNotNullAndInvalid(spanStart, spanEnd) { start, end ->
+                            val text = binding.EnterBody.text?.substring(start, end)
+                            text?.let {
+                                val link = getURLFrom(it)
+                                val uri = Uri.parse(link)
 
-                            val intent = Intent(Intent.ACTION_VIEW, uri)
-                            try {
-                                startActivity(intent)
-                            } catch (e: Exception) {
-                                Toast.makeText(this, R.string.cant_open_link, Toast.LENGTH_LONG).show()
+                                val intent = Intent(Intent.ACTION_VIEW, uri)
+                                try {
+                                    startActivity(intent)
+                                } catch (exception: Exception) {
+                                    Toast.makeText(this, R.string.cant_open_link, Toast.LENGTH_LONG).show()
+                                }
                             }
                         }
                     }
-                }
-            }
-            builder.show()
+                }.show()
         }
         binding.EnterBody.movementMethod = movementMethod
     }
@@ -224,8 +212,6 @@ class TakeNote : NotallyActivity() {
             strikethroughSpans?.forEach { span ->
                 binding.EnterBody.text?.removeSpan(span)
             }
-
-            model.saveNote()
         }
     }
 
@@ -235,7 +221,6 @@ class TakeNote : NotallyActivity() {
 
         ifBothNotNullAndInvalid(selectionStart, selectionEnd) { start, end ->
             binding.EnterBody.text?.setSpan(spanToApply, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-            model.saveNote()
         }
     }
 

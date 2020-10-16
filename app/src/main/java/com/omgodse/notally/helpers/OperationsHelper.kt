@@ -4,27 +4,27 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.text.InputType
+import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import androidx.core.util.forEach
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.textview.MaterialTextView
 import com.omgodse.notally.R
 import com.omgodse.notally.activities.TakeNote
-import com.omgodse.notally.databinding.AddLabelBinding
 import com.omgodse.notally.databinding.DialogInputBinding
-import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.miscellaneous.applySpans
+import com.omgodse.notally.viewmodels.BaseNoteModel
 import com.omgodse.notally.xml.BaseNote
 import com.omgodse.notally.xml.List
 import com.omgodse.notally.xml.ListItem
 import com.omgodse.notally.xml.Note
-import java.io.File
 
-class NotesHelper(val context: Context) {
+class OperationsHelper(private val context: Context) {
 
     fun shareNote(baseNote: BaseNote) {
         when (baseNote) {
-            is Note -> shareNote(baseNote)
-            is List -> shareNote(baseNote)
+            is Note -> shareNote(baseNote.title, baseNote.body.applySpans(baseNote.spans))
+            is List -> shareNote(baseNote.title, baseNote.items)
         }
     }
 
@@ -37,62 +37,13 @@ class NotesHelper(val context: Context) {
         context.startActivity(Intent.createChooser(shareIntent, context.getString(R.string.share_note)))
     }
 
-    fun shareNote(title: String?, items: ArrayList<ListItem>?) = shareNote(title, getBodyFromItems(items))
-
-
-    fun getBodyFromItems(items: kotlin.collections.List<ListItem>?) = buildString {
-        items?.forEachIndexed { index, listItem ->
-            appendLine("${(index + 1)}) ${listItem.body}")
-        }
-    }
-
-    private fun shareNote(note: Note) = shareNote(note.title, note.body.applySpans(note.spans))
-
-    private fun shareNote(list: List) = shareNote(list.title, getBodyFromItems(list.items))
-
-
-    fun getNotePath() = getFolder("notes")
-
-    fun getDeletedPath() = getFolder("deleted")
-
-    fun getArchivedPath() = getFolder("archived")
-
-    private fun getFolder(folderName: String): File {
-        val folder = File(context.filesDir, folderName)
-        if (!folder.exists()) {
-            folder.mkdir()
-        }
-        return folder
-    }
-
-
-    fun restoreFile(file: File) = moveFile(file, getNotePath())
-
-    fun moveFileToDeleted(file: File) = moveFile(file, getDeletedPath())
-
-    fun moveFileToArchive(file: File) = moveFile(file, getArchivedPath())
-
-    private fun moveFile(file: File, destinationPath: File): Boolean {
-        val destinationFile = File(destinationPath, file.name)
-        destinationFile.writeText(file.readText())
-        return file.delete()
-    }
-
-
-    fun getSortedLabelsList(): ArrayList<String> {
-        val sharedPreferences = context.getSharedPreferences(Constants.labelsPreferences, Context.MODE_PRIVATE)
-        val labels = sharedPreferences.getStringSet(Constants.labelItems, HashSet<String>()) as HashSet<String>
-        val arrayList = ArrayList(labels)
-        arrayList.sort()
-        return arrayList
-    }
-
+    fun shareNote(title: String?, items: kotlin.collections.List<ListItem>?) = shareNote(title, getBodyFromItems(items))
 
     fun labelNote(previousLabels: HashSet<String>, onLabelsUpdated: (labels: HashSet<String>) -> Unit) {
-        val allLabels = getSortedLabelsList().toTypedArray()
+        val allLabels = BaseNoteModel.getSortedLabels(context).toTypedArray()
 
-        val checkedLabels = getCheckedLabels(previousLabels)
-        val binding = AddLabelBinding.inflate(LayoutInflater.from(context))
+        val checkedLabels = getCheckedLabels(allLabels, previousLabels)
+        val addLabel = MaterialTextView(ContextThemeWrapper(context, R.style.AddLabel))
 
         val alertDialogBuilder = MaterialAlertDialogBuilder(context)
         alertDialogBuilder.setTitle(R.string.labels)
@@ -101,14 +52,14 @@ class NotesHelper(val context: Context) {
         if (allLabels.isNotEmpty()) {
             alertDialogBuilder.setMultiChoiceItems(allLabels, checkedLabels, null)
             alertDialogBuilder.setPositiveButton(R.string.save, null)
-        } else alertDialogBuilder.setView(binding.root)
+        } else alertDialogBuilder.setView(addLabel)
 
         val dialog = alertDialogBuilder.create()
         dialog.show()
 
-        binding.root.setOnClickListener {
+        addLabel.setOnClickListener {
             dialog.dismiss()
-            displayAddLabelDialog(previousLabels, onLabelsUpdated)
+            displayAddLabelDialog(allLabels, previousLabels, onLabelsUpdated)
         }
 
         dialog.getButton(DialogInterface.BUTTON_POSITIVE)?.setOnClickListener {
@@ -124,9 +75,8 @@ class NotesHelper(val context: Context) {
         }
     }
 
-    private fun displayAddLabelDialog(previousLabels: HashSet<String>, onLabelsUpdated: (labels: HashSet<String>) -> Unit) {
-        val priorLabels = getSortedLabelsList()
 
+    private fun displayAddLabelDialog(allLabels: Array<String>, previousLabels: HashSet<String>, onLabelsUpdated: (labels: HashSet<String>) -> Unit) {
         val binding = DialogInputBinding.inflate(LayoutInflater.from(context))
 
         binding.edit.inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS
@@ -144,8 +94,8 @@ class NotesHelper(val context: Context) {
         dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener {
             val label = binding.edit.text.toString().trim()
             if (label.isNotEmpty()) {
-                if (!priorLabels.contains(label)) {
-                    insertLabel(label)
+                if (!allLabels.contains(label)) {
+                    insertLabel(allLabels, label)
                     dialog.dismiss()
                     labelNote(previousLabels, onLabelsUpdated)
                 } else binding.TextInputLayout.error = context.getString(R.string.label_exists)
@@ -154,26 +104,25 @@ class NotesHelper(val context: Context) {
     }
 
 
-    private fun insertLabel(label: String) {
-        val priorLabels = getSortedLabelsList()
-
-        val newLabels = HashSet(priorLabels)
-        newLabels.add(label)
-
-        val sharedPreferences = context.getSharedPreferences(Constants.labelsPreferences, Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.putStringSet(Constants.labelItems, newLabels)
-        editor.apply()
+    private fun insertLabel(allLabels: Array<String>, label: String) {
+        val labels = allLabels.toHashSet()
+        labels.add(label)
+        BaseNoteModel.saveLabels(context, labels)
     }
 
-    private fun getCheckedLabels(labels: HashSet<String>): BooleanArray {
-        val allLabels = getSortedLabelsList().toTypedArray()
+    private fun getCheckedLabels(allLabels: Array<String>, labels: HashSet<String>): BooleanArray {
         val checkedLabels = BooleanArray(allLabels.size)
         allLabels.forEachIndexed { index, label ->
-            if (labels.contains(label)) {
-                checkedLabels[index] = true
-            }
+            checkedLabels[index] = labels.contains(label)
         }
         return checkedLabels
+    }
+
+    companion object {
+        fun getBodyFromItems(items: kotlin.collections.List<ListItem>?) = buildString {
+            items?.forEachIndexed { index, listItem ->
+                appendLine("${(index + 1)}) ${listItem.body}")
+            }
+        }
     }
 }

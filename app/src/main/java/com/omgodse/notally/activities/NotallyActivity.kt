@@ -8,30 +8,45 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.R
-import com.omgodse.notally.helpers.NotesHelper
+import com.omgodse.notally.helpers.OperationsHelper
 import com.omgodse.notally.miscellaneous.Constants
+import com.omgodse.notally.viewmodels.BaseNoteModel
 import com.omgodse.notally.viewmodels.NotallyModel
 import java.io.File
 import java.util.*
+import kotlin.collections.HashSet
 
 abstract class NotallyActivity : AppCompatActivity() {
 
+    internal abstract val model: NotallyModel
+    internal lateinit var operationsHelper: OperationsHelper
+
+    override fun onBackPressed() {
+        model.saveNote()
+        super.onBackPressed()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        model.saveNote()
+        super.onSaveInstanceState(outState)
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        operationsHelper = OperationsHelper(this)
 
         val filePathToEdit = intent.getStringExtra(Constants.FilePath)
-        val model = getViewModel()
 
         if (model.isFirstInstance) {
             if (filePathToEdit != null) {
                 model.isNewNote = false
-                model.file = File(filePathToEdit)
+                model.setFile(File(filePathToEdit))
             } else {
                 model.isNewNote = true
                 val timestamp = Date().time
-                val notesHelper = NotesHelper(this)
-                val file = File(notesHelper.getNotePath(), "$timestamp.xml")
-                model.file = file
+                val file = File(BaseNoteModel.getNotePath(this), "$timestamp.xml")
+                model.setFile(file)
 
                 val data = Intent()
                 data.putExtra(Constants.FilePath, file.path)
@@ -61,8 +76,8 @@ abstract class NotallyActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> onBackPressed()
-            R.id.Labels -> labelNote()
             R.id.Share -> shareNote()
+            R.id.Labels -> labelNote()
             R.id.Delete -> deleteNote()
             R.id.Archive -> archiveNote()
             R.id.Restore -> restoreNote()
@@ -75,41 +90,36 @@ abstract class NotallyActivity : AppCompatActivity() {
 
     abstract fun shareNote()
 
-    abstract fun getViewModel(): NotallyModel
-
-
     open fun receiveSharedNote() {}
 
 
     private fun labelNote() {
-        val model = getViewModel()
-        val notesHelper = NotesHelper(this)
-        notesHelper.labelNote(model.labels.value ?: HashSet()) { labels ->
-            model.labels.value = labels
+        operationsHelper.labelNote(model.labels.value ?: HashSet()) {
+            model.labels.value = it
         }
     }
 
     private fun deleteNote() {
-        getViewModel().moveFileToDeleted()
-        onBackPressed()
+        model.moveBaseNoteToDeleted()
+        super.onBackPressed()
     }
 
     private fun restoreNote() {
-        getViewModel().restoreFile()
-        onBackPressed()
+        model.restoreBaseNote()
+        super.onBackPressed()
     }
 
     private fun archiveNote() {
-        getViewModel().moveFileToArchive()
-        onBackPressed()
+        model.moveBaseNoteToArchive()
+        super.onBackPressed()
     }
 
     private fun deleteNoteForever() {
         val alertDialogBuilder = MaterialAlertDialogBuilder(this)
         alertDialogBuilder.setMessage(R.string.delete_note_forever)
         alertDialogBuilder.setPositiveButton(R.string.delete) { dialog, which ->
-            getViewModel().deleteFileForever()
-            onBackPressed()
+            model.deleteBaseNoteForever()
+            super.onBackPressed()
         }
         alertDialogBuilder.setNegativeButton(R.string.cancel, null)
         alertDialogBuilder.show()

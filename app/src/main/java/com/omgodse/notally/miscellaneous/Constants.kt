@@ -5,9 +5,7 @@ class Constants {
         const val FilePath = "FilePath"
         const val PreviousFragment = "PreviousFragment"
 
-        const val labelItems = "labelItems"
         const val argLabelKey = "selectedLabel"
-        const val labelsPreferences = "labelsPreferences"
 
         const val RequestCode = 0
         const val RequestCodeExportFile = 10

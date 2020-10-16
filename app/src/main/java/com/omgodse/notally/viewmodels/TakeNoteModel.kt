@@ -19,28 +19,16 @@ class TakeNoteModel(app: Application) : NotallyModel(app) {
 
     var body = Editable.Factory.getInstance().newEditable(String())
 
-    override fun saveNote() {
-        file?.let {
-            val note = Note(title, it.path, labels.value ?: HashSet(), timestamp.toString(), body.toString().trimEnd(), body.getFilteredSpans())
-            if (it.exists()) {
-                val savedNote = BaseNote.readFromFile(it)
-                if (savedNote != note) {
-                    note.writeToFile()
-                }
-            } else note.writeToFile()
-        }
+    override fun getBaseNote(): BaseNote {
+        return Note(title, file.path, labels.value ?: HashSet(), timestamp.toString(), body.toString().trimEnd(), body.getFilteredSpans())
     }
 
-    override fun setStateFromFile() {
-        file?.let { file ->
-            if (file.exists()) {
-                val baseNote = BaseNote.readFromFile(file) as Note
-                title = baseNote.title
-                timestamp = baseNote.timestamp.toLong()
-                body = baseNote.body.applySpans(baseNote.spans)
-                labels.value = baseNote.labels
-            }
-        }
+    override fun setStateFromBaseNote(baseNote: BaseNote) {
+        baseNote as Note
+        title = baseNote.title
+        timestamp = baseNote.timestamp.toLong()
+        body = baseNote.body.applySpans(baseNote.spans)
+        labels.value = baseNote.labels
     }
 
     private fun Spannable.getFilteredSpans(): ArrayList<SpanRepresentation> {

@@ -1,97 +1,95 @@
 package com.omgodse.notally.viewmodels
 
 import android.app.Application
-import android.os.Build
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.FileObserver
 import android.os.Handler
 import android.os.Looper
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.omgodse.notally.helpers.NotesHelper
 import com.omgodse.notally.xml.BaseNote
 import com.omgodse.notally.xml.List
 import com.omgodse.notally.xml.Note
 import kotlinx.coroutines.launch
 import java.io.File
 
-class BaseNoteModel(app: Application) : AndroidViewModel(app) {
+class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
+    val labels = MutableLiveData(ArrayList<String>())
     val notes = MutableLiveData(ArrayList<BaseNote>())
-    val archivedNotes = MutableLiveData(ArrayList<BaseNote>())
     val deletedNotes = MutableLiveData(ArrayList<BaseNote>())
+    val archivedNotes = MutableLiveData(ArrayList<BaseNote>())
 
     var keyword = String()
+        set(value) {
+            field = value
+            fetchSearchResults()
+        }
     val searchResults = MutableLiveData(ArrayList<BaseNote>())
 
-    var label = String()
-    val labelledNotes = MutableLiveData(ArrayList<BaseNote>())
+    private val labelsMap = HashMap<String, MutableLiveData<ArrayList<BaseNote>>>()
 
-    private val notesHelper = NotesHelper(app)
+    private val labelsObserver: SharedPreferences.OnSharedPreferenceChangeListener
 
-    private val observer: NotallyFileObserver
+    private val notesObserver: NotallyFileObserver
     private val deletedObserver: NotallyFileObserver
     private val archivedObserver: NotallyFileObserver
 
+    private val notesPath = getNotePath(app)
+    private val deletedPath = getDeletedPath(app)
+    private val archivedPath = getArchivedPath(app)
+
+    private val handler = Handler(Looper.getMainLooper())
+
     init {
-        observer = NotallyFileObserver.getInstance(notesHelper.getNotePath())
-        deletedObserver = NotallyFileObserver.getInstance(notesHelper.getDeletedPath())
-        archivedObserver = NotallyFileObserver.getInstance(notesHelper.getArchivedPath())
-
-        observer.onEventCallback = { event, path ->
-            onEvent(event, path, notes, notesHelper.getNotePath())
-            onEvent(event, path, labelledNotes, notesHelper.getNotePath())
-            onEvent(event, path, searchResults, notesHelper.getNotePath())
+        labelsObserver = SharedPreferences.OnSharedPreferenceChangeListener { preferences, key ->
+            labels.value = getSortedLabels(app)
         }
 
-        deletedObserver.onEventCallback = { event, path ->
-            onEvent(event, path, deletedNotes, notesHelper.getDeletedPath())
+        notesObserver = NotallyFileObserver(notesPath) { event, path ->
+            onEvent(event, path, notes, notesPath)
+            onEvent(event, path, searchResults, notesPath)
         }
-
-        archivedObserver.onEventCallback = { event, path ->
-            onEvent(event, path, archivedNotes, notesHelper.getArchivedPath())
+        deletedObserver = NotallyFileObserver(deletedPath) { event, path ->
+            onEvent(event, path, deletedNotes, deletedPath)
+        }
+        archivedObserver = NotallyFileObserver(archivedPath) { event, path ->
+            onEvent(event, path, archivedNotes, archivedPath)
         }
 
         viewModelScope.launch {
-            notes.value = getBaseNotes()
-            deletedNotes.value = getDeletedBaseNotes()
-            archivedNotes.value = getArchivedBaseNotes()
+            notes.value = getBaseNotes(notesPath, true)
+            deletedNotes.value = getBaseNotes(deletedPath)
+            archivedNotes.value = getBaseNotes(archivedPath)
+            labels.value = getSortedLabels(app)
 
-            observer.startWatching()
+            notesObserver.startWatching()
             deletedObserver.startWatching()
             archivedObserver.startWatching()
+            getLabelsPreferences(app).registerOnSharedPreferenceChangeListener(labelsObserver)
         }
     }
 
     private fun onEvent(event: Int, filePath: String, liveData: MutableLiveData<ArrayList<BaseNote>>, rootDirectory: File) {
-        val handler = Handler(Looper.getMainLooper())
+        println("Event : $event : $filePath")
         handler.post {
-            val list = liveData.value
-            list?.let {
+            liveData.value?.let {
                 val file = File(rootDirectory, filePath)
 
                 when (event) {
-                    FileObserver.CREATE -> insertFileInList(file, list, liveData)
-                    FileObserver.DELETE -> removeFileFromList(file, list, liveData)
-                    FileObserver.MODIFY -> modifyFileInList(file, list, liveData)
+                    FileObserver.CREATE -> insertFileInList(file, it, liveData)
+                    FileObserver.MODIFY -> modifyFileInList(file, it, liveData)
+                    FileObserver.DELETE -> removeFileFromList(file, it, liveData)
                 }
             }
-
         }
     }
 
     private fun insertFileInList(file: File, list: ArrayList<BaseNote>, liveData: MutableLiveData<ArrayList<BaseNote>>) {
         val baseNote = BaseNote.readFromFile(file)
-
-        var index = list.binarySearch(baseNote, { o1, o2 ->
-            o2.filePath.compareTo(o1.filePath)
-        })
-        if (index < 0) {
-            index = index.inv()
-        }
-
-        list.add(index, baseNote)
+        list.addSorted(baseNote)
         liveData.value = list
     }
 
@@ -100,6 +98,10 @@ class BaseNoteModel(app: Application) : AndroidViewModel(app) {
         baseNote?.let {
             list.remove(baseNote)
             liveData.value = list
+
+            if (liveData == notes) {
+                removeBaseNoteFromMap(it)
+            }
         }
     }
 
@@ -109,28 +111,20 @@ class BaseNoteModel(app: Application) : AndroidViewModel(app) {
         val editedNote = BaseNote.readFromFile(file)
 
         when (liveData) {
-            labelledNotes -> {
-                if (editedNote.labels.contains(label)) {
-                    if (index != -1) {
-                        list[index] = editedNote
-                        liveData.value = list
-                    }
-                    else insertFileInList(file, list, liveData)
-                }
-                else {
-                    list.remove(baseNote)
-                    liveData.value = list
-                }
+            notes -> {
+                list[index] = editedNote
+                liveData.value = list
+
+                removeBaseNoteFromMap(baseNote)
+                putBaseNoteInMap(editedNote)
             }
             searchResults -> {
                 if (editedNote.matchesKeyword(keyword)) {
                     if (index != -1) {
                         list[index] = editedNote
                         liveData.value = list
-                    }
-                    else insertFileInList(file, list, liveData)
-                }
-                else {
+                    } else insertFileInList(file, list, liveData)
+                } else {
                     list.remove(baseNote)
                     liveData.value = list
                 }
@@ -143,56 +137,47 @@ class BaseNoteModel(app: Application) : AndroidViewModel(app) {
     }
 
 
-    private fun getBaseNotes() : ArrayList<BaseNote> {
-        val files = getSortedFiles(notesHelper.getNotePath())
-        return convertFilesToNotes(files)
+    private fun deleteLabelFromBaseNote(label: String, baseNote: BaseNote) {
+        baseNote.labels.remove(label)
+        baseNote.writeToFile()
     }
 
-    private fun getDeletedBaseNotes() : ArrayList<BaseNote> {
-        val files = getSortedFiles(notesHelper.getDeletedPath())
-        return convertFilesToNotes(files)
-    }
-
-    private fun getArchivedBaseNotes() : ArrayList<BaseNote> {
-        val files = getSortedFiles(notesHelper.getArchivedPath())
-        return convertFilesToNotes(files)
+    private fun editLabelFromBaseNote(oldLabel: String, newLabel: String, baseNote: BaseNote) {
+        baseNote.labels.remove(oldLabel)
+        baseNote.labels.add(newLabel)
+        baseNote.writeToFile()
     }
 
 
-    fun moveBaseNoteToArchive(baseNote: BaseNote) {
-        val file = File(baseNote.filePath)
-        notesHelper.moveFileToArchive(file)
-    }
+    private fun putBaseNoteInMap(baseNote: BaseNote) {
+        baseNote.labels.forEach {
+            if (labelsMap[it] == null) {
+                labelsMap[it] = MutableLiveData()
+            }
+            val list = labelsMap[it]?.value ?: ArrayList()
 
-    fun moveBaseNoteToDeleted(baseNote: BaseNote) {
-        val file = File(baseNote.filePath)
-        notesHelper.moveFileToDeleted(file)
-    }
-
-
-    fun restoreBaseNote(baseNote: BaseNote) {
-        val file = File(baseNote.filePath)
-        notesHelper.restoreFile(file)
-    }
-
-    fun deleteBaseNoteForever(baseNote: BaseNote) {
-        val file = File(baseNote.filePath)
-        file.delete()
-    }
-
-
-    fun fetchSearchResults() {
-        if (keyword.isEmpty()) {
-            searchResults.value = ArrayList()
-            return
+            list.addSorted(baseNote)
+            labelsMap[it]?.value = list
         }
+    }
 
-        viewModelScope.launch {
-            val baseNotes = getBaseNotes()
+    private fun removeBaseNoteFromMap(baseNote: BaseNote?) {
+        baseNote?.labels?.forEach {
+            val labelsList = labelsMap[it]?.value
+            labelsList?.remove(baseNote)
+            labelsMap[it]?.value = labelsList
+        }
+    }
+
+
+    private fun fetchSearchResults() {
+        if (keyword.isEmpty()) {
+            searchResults.value = arrayListOf()
+        } else viewModelScope.launch {
             val results = ArrayList<BaseNote>()
 
-            baseNotes.forEach { baseNote ->
-                if (baseNote.matchesKeyword(keyword)){
+            notes.value?.forEach { baseNote ->
+                if (baseNote.matchesKeyword(keyword)) {
                     results.add(baseNote)
                 }
             }
@@ -201,29 +186,64 @@ class BaseNoteModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
-    fun fetchLabelledNotes() {
-        if (label.isEmpty()){
-            labelledNotes.value = ArrayList()
-            return
+
+    fun deleteLabel(label: String) {
+        labels.value?.let {
+            it.remove(label)
+            saveLabels(app, it.toSet())
+
+            labelsMap[label]?.value?.forEach { baseNote -> deleteLabelFromBaseNote(label, baseNote) }
         }
+    }
 
-        viewModelScope.launch {
-            val baseNotes = getBaseNotes()
-            val results = ArrayList<BaseNote>()
-
-            baseNotes.forEach { baseNote ->
-                if (baseNote.labels.contains(label)){
-                    results.add(baseNote)
-                }
+    fun insertLabel(label: String, onResult: (success: Boolean) -> Unit) {
+        labels.value?.let {
+            if (it.contains(label)) {
+                onResult.invoke(false)
+            } else {
+                it.add(label)
+                saveLabels(app, it.toSet())
+                onResult.invoke(true)
             }
+        }
+    }
 
-            labelledNotes.value = results
+    fun editLabel(oldLabel: String, newLabel: String, onResult: (success: Boolean) -> Unit) {
+        labels.value?.let {
+            if (it.contains(newLabel)) {
+                onResult.invoke(false)
+            } else {
+                it.add(newLabel)
+                it.remove(oldLabel)
+                saveLabels(app, it.toSet())
+
+                val oldList = labelsMap[oldLabel]?.value
+                oldList?.forEach { baseNote -> editLabelFromBaseNote(oldLabel, newLabel, baseNote) }
+                labelsMap[newLabel] = MutableLiveData(oldList)
+
+                onResult.invoke(true)
+            }
         }
     }
 
 
+    fun moveBaseNoteToArchive(baseNote: BaseNote) = moveBaseNoteToArchive(baseNote, app)
+
+    fun moveBaseNoteToDeleted(baseNote: BaseNote) = moveBaseNoteToDeleted(baseNote, app)
+
+
+    fun restoreBaseNote(baseNote: BaseNote) = restoreBaseNote(baseNote, app)
+
+    fun deleteBaseNoteForever(baseNote: BaseNote) {
+        val file = File(baseNote.filePath)
+        file.delete()
+    }
+
+
+    fun getLabelledNotes(label: String) = labelsMap[label]
+
     fun editNoteLabel(baseNote: BaseNote, labels: HashSet<String>) {
-        val note = when(baseNote) {
+        val note = when (baseNote) {
             is Note -> baseNote.copy(labels = labels)
             is List -> baseNote.copy(labels = labels)
         }
@@ -231,35 +251,33 @@ class BaseNoteModel(app: Application) : AndroidViewModel(app) {
     }
 
 
-    private fun getSortedFiles(path: File) : ArrayList<File> {
-        val files = ArrayList<File>()
-        path.listFiles()?.toCollection(files)
-
-        files.sortWith { firstFile, secondFile ->
-            secondFile.name.compareTo(firstFile.name)
-        }
-
-        return files
-    }
-
-    private fun convertFilesToNotes(files: ArrayList<File>) : ArrayList<BaseNote> {
+    private fun getBaseNotes(path: File, map: Boolean = false): ArrayList<BaseNote> {
         val baseNotes = ArrayList<BaseNote>()
-        files.forEach { file ->
-            val note = BaseNote.readFromFile(file)
-            baseNotes.add(note)
+
+        path.listFiles()?.forEach {
+            val baseNote = BaseNote.readFromFile(it)
+            baseNotes.addSorted(baseNote)
+
+            if (map) {
+                putBaseNoteInMap(baseNote)
+            }
         }
+
         return baseNotes
     }
 
+    private fun ArrayList<BaseNote>.addSorted(element: BaseNote) {
+        var index = binarySearch(element, { o1, o2 -> o2.filePath.compareTo(o1.filePath) })
 
-    class NotallyFileObserver : FileObserver {
+        if (index < 0) {
+            index = index.inv()
+        }
 
-        var onEventCallback: ((event: Int, path: String) -> Unit)? = null
+        add(index, element)
+    }
 
-        @RequiresApi(Build.VERSION_CODES.Q)
-        private constructor(file: File) : super(file, mask)
 
-        private constructor(filePath: String) : super(filePath, mask)
+    private class NotallyFileObserver(file: File, val onEventCallback: (event: Int, path: String) -> Unit) : FileObserver(file.path, mask) {
 
         override fun onEvent(event: Int, path: String?) {
             /*
@@ -270,18 +288,66 @@ class BaseNoteModel(app: Application) : AndroidViewModel(app) {
             if (path == null) {
                 stopWatching()
                 startWatching()
-            }
-            else onEventCallback?.invoke(event, path)
+            } else onEventCallback.invoke(event, path)
         }
 
         companion object {
-            const val mask = DELETE or CREATE or MODIFY
-
-            fun getInstance(file: File) : NotallyFileObserver {
-                return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    NotallyFileObserver(file)
-                } else NotallyFileObserver(file.path)
-            }
+            private const val mask = DELETE or CREATE or MODIFY
         }
+    }
+
+    companion object {
+
+        // TODO: 06-10-2020 Move these functions to external repository
+        fun getNotePath(context: Context) = getFolder(context, "notes")
+
+        fun getDeletedPath(context: Context) = getFolder(context, "deleted")
+
+        fun getArchivedPath(context: Context) = getFolder(context, "archived")
+
+        private fun getFolder(context: Context, name: String): File {
+            val folder = File(context.filesDir, name)
+            if (!folder.exists()) {
+                folder.mkdir()
+            }
+            return folder
+        }
+
+
+        fun restoreBaseNote(baseNote: BaseNote, context: Context) = moveBaseNote(baseNote, getNotePath(context))
+
+        fun moveBaseNoteToDeleted(baseNote: BaseNote, context: Context) = moveBaseNote(baseNote, getDeletedPath(context))
+
+        fun moveBaseNoteToArchive(baseNote: BaseNote, context: Context) = moveBaseNote(baseNote, getArchivedPath(context))
+
+        private fun moveBaseNote(baseNote: BaseNote, destination: File) {
+            val currentFile = File(baseNote.filePath)
+            val destinationPath = File(destination, currentFile.name).path
+
+            when (baseNote) {
+                is Note -> baseNote.copy(filePath = destinationPath).writeToFile()
+                is List -> baseNote.copy(filePath = destinationPath).writeToFile()
+            }
+
+            currentFile.delete()
+        }
+
+
+        fun saveLabels(context: Context, labels: Set<String>) {
+            val editor = getLabelsPreferences(context).edit()
+            editor.putStringSet("labelItems", labels)
+            editor.apply()
+        }
+
+        fun getSortedLabels(context: Context): ArrayList<String> {
+            val labels = getLabelsPreferences(context).getLabels()
+            val arrayList = ArrayList(labels)
+            arrayList.sort()
+            return arrayList
+        }
+
+        private fun SharedPreferences.getLabels() = getStringSet("labelItems", HashSet()) as HashSet<String>
+
+        private fun getLabelsPreferences(context: Context) = context.getSharedPreferences("labelsPreferences", Context.MODE_PRIVATE)
     }
 }

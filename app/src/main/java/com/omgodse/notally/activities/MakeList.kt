@@ -5,14 +5,12 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.ActivityMakeListBinding
-import com.omgodse.notally.helpers.NotesHelper
 import com.omgodse.notally.miscellaneous.getLocale
 import com.omgodse.notally.miscellaneous.setOnNextAction
 import com.omgodse.notally.recyclerview.ListItemListener
@@ -27,7 +25,7 @@ class MakeList : NotallyActivity() {
 
     private lateinit var adapter: MakeListAdapter
     private lateinit var binding: ActivityMakeListBinding
-    private val model: MakeListModel by viewModels()
+    override val model: MakeListModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,12 +55,7 @@ class MakeList : NotallyActivity() {
     }
 
 
-    override fun shareNote() {
-        val notesHelper = NotesHelper(this)
-        notesHelper.shareNote(model.title, model.items)
-    }
-
-    override fun getViewModel() = model
+    override fun shareNote() = operationsHelper.shareNote(model.title, model.items)
 
 
     private fun setupListeners() {
@@ -73,15 +66,13 @@ class MakeList : NotallyActivity() {
 
             override fun onTextChanged(text: CharSequence?, start: Int, before: Int, count: Int) {
                 model.title = text.toString().trim()
-                model.saveNote()
             }
         })
 
-        model.labels.observe(this, Observer { labels ->
-            model.saveNote()
+        model.labels.observe(this, {
             binding.LabelGroup.removeAllViews()
-            labels?.forEach { label ->
-                val displayLabel = View.inflate(this, R.layout.chip_label, null) as MaterialButton
+            it?.forEach { label ->
+                val displayLabel = View.inflate(this, R.layout.label, null) as MaterialButton
                 displayLabel.text = label
                 binding.LabelGroup.addView(displayLabel)
             }
@@ -121,7 +112,6 @@ class MakeList : NotallyActivity() {
             override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
                 Collections.swap(model.items, viewHolder.adapterPosition, target.adapterPosition)
                 adapter.notifyItemMoved(viewHolder.adapterPosition, target.adapterPosition)
-                model.saveNote()
                 return true
             }
 
@@ -129,7 +119,6 @@ class MakeList : NotallyActivity() {
                 model.items.removeAt(viewHolder.adapterPosition)
                 adapter.notifyItemRemoved(viewHolder.adapterPosition)
                 adapter.notifyItemRangeChanged(viewHolder.adapterPosition, model.items.size)
-                model.saveNote()
             }
         })
 
@@ -138,22 +127,18 @@ class MakeList : NotallyActivity() {
         adapter.listItemListener = object : ListItemListener {
             override fun onMoveToNext(position: Int) {
                 moveToNext(position)
-                model.saveNote()
             }
 
             override fun onStartDrag(viewHolder: RecyclerView.ViewHolder) {
                 itemTouchHelper.startDrag(viewHolder)
-                model.saveNote()
             }
 
             override fun onItemTextChange(position: Int, newText: String) {
                 adapter.items[position].body = newText
-                model.saveNote()
             }
 
             override fun onItemCheckedChange(position: Int, checked: Boolean) {
                 adapter.items[position].checked = checked
-                model.saveNote()
             }
         }
 

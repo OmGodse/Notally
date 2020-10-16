@@ -9,31 +9,19 @@ class MakeListModel(app: Application) : NotallyModel(app) {
 
     val items = ArrayList<ListItem>()
 
-    override fun saveNote() {
-        val listItems = items.filter { item -> item.body.isNotBlank() }
-        file?.let {
-            val list = List(title, it.path, labels.value ?: HashSet(), timestamp.toString(), listItems)
-            if (it.exists()) {
-                val savedList = BaseNote.readFromFile(it)
-                if (savedList != list) {
-                    list.writeToFile()
-                }
-            } else list.writeToFile()
-        }
+    override fun getBaseNote(): BaseNote {
+        val listItems = items.filter { it.body.isNotBlank() }
+        return List(title, file.path, labels.value ?: HashSet(), timestamp.toString(), listItems)
     }
 
-    override fun setStateFromFile() {
-        file?.let { file ->
-            if (file.exists()) {
-                val baseNote = BaseNote.readFromFile(file) as List
-                title = baseNote.title
-                timestamp = baseNote.timestamp.toLong()
+    override fun setStateFromBaseNote(baseNote: BaseNote) {
+        baseNote as List
+        title = baseNote.title
+        timestamp = baseNote.timestamp.toLong()
 
-                items.clear()
-                items.addAll(baseNote.items)
+        items.clear()
+        items.addAll(baseNote.items)
 
-                labels.value = baseNote.labels
-            }
-        }
+        labels.value = baseNote.labels
     }
 }

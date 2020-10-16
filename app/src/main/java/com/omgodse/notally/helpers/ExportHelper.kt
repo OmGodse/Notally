@@ -11,8 +11,10 @@ import androidx.fragment.app.Fragment
 import com.omgodse.notally.R
 import com.omgodse.notally.activities.NotallyActivity
 import com.omgodse.notally.miscellaneous.Constants
+import com.omgodse.notally.miscellaneous.Operation
 import com.omgodse.notally.miscellaneous.applySpans
 import com.omgodse.notally.miscellaneous.getLocale
+import com.omgodse.notally.viewmodels.BaseNoteModel
 import com.omgodse.notally.xml.Backup
 import com.omgodse.notally.xml.BaseNote
 import com.omgodse.notally.xml.List
@@ -25,17 +27,16 @@ import java.text.SimpleDateFormat
 class ExportHelper(private val context: Context, private val fragment: Fragment) {
 
     private var currentFile: File? = null
-    private val notesHelper = NotesHelper(context)
     private val settingsHelper = SettingsHelper(context)
 
     fun exportBackup() {
         val backupFile = File(getExportedPath(), "Notally Backup.xml")
 
-        val baseNotes = notesHelper.getNotePath().listFiles().convertFilesToNotes()
-        val deletedBaseNotes = notesHelper.getDeletedPath().listFiles().convertFilesToNotes()
-        val archivedBaseNotes = notesHelper.getArchivedPath().listFiles().convertFilesToNotes()
+        val baseNotes = BaseNoteModel.getNotePath(context).listFiles().convertFilesToNotes()
+        val deletedBaseNotes = BaseNoteModel.getDeletedPath(context).listFiles().convertFilesToNotes()
+        val archivedBaseNotes = BaseNoteModel.getArchivedPath(context).listFiles().convertFilesToNotes()
 
-        val labels = notesHelper.getSortedLabelsList().toHashSet()
+        val labels = BaseNoteModel.getSortedLabels(context).toHashSet()
 
         val backup = Backup(baseNotes, deletedBaseNotes, archivedBaseNotes, labels)
         backup.writeToFile(backupFile)
@@ -46,24 +47,15 @@ class ExportHelper(private val context: Context, private val fragment: Fragment)
     fun importBackup(inputStream: InputStream) {
         val backup = Backup.readFromStream(inputStream)
 
-        backup.baseNotes.forEach { baseNote ->
-            saveImportedNote(notesHelper.getNotePath(), baseNote)
-        }
+        backup.baseNotes.forEach { saveImportedNote(BaseNoteModel.getNotePath(context), it) }
 
-        backup.deletedBaseNotes.forEach { baseNote ->
-            saveImportedNote(notesHelper.getDeletedPath(), baseNote)
-        }
+        backup.deletedBaseNotes.forEach { saveImportedNote(BaseNoteModel.getDeletedPath(context), it) }
 
-        backup.archivedBaseNotes.forEach { baseNote ->
-            saveImportedNote(notesHelper.getArchivedPath(), baseNote)
-        }
+        backup.archivedBaseNotes.forEach { saveImportedNote(BaseNoteModel.getArchivedPath(context), it) }
 
-        val preferences = context.getSharedPreferences(Constants.labelsPreferences, Context.MODE_PRIVATE)
-        val previousLabels = preferences.getStringSet(Constants.labelItems, HashSet<String>())
-        previousLabels?.addAll(backup.labels)
-        val editor = preferences.edit()
-        editor.putStringSet(Constants.labelItems, previousLabels)
-        editor.apply()
+        val previousLabels = BaseNoteModel.getSortedLabels(context)
+        previousLabels.addAll(backup.labels)
+        BaseNoteModel.saveLabels(context, previousLabels.toHashSet())
     }
 
     private fun saveImportedNote(path: File, baseNote: BaseNote) {
@@ -81,8 +73,8 @@ class ExportHelper(private val context: Context, private val fragment: Fragment)
             ArrayList()
         } else {
             val baseNotes = ArrayList<BaseNote>()
-            forEach { file ->
-                val note = BaseNote.readFromFile(file)
+            forEach {
+                val note = BaseNote.readFromFile(it)
                 baseNotes.add(note)
             }
             baseNotes
@@ -134,8 +126,8 @@ class ExportHelper(private val context: Context, private val fragment: Fragment)
     }
 
 
-    fun writeFileToStream(destinationURI: Uri) {
-        val outputStream = context.contentResolver.openOutputStream(destinationURI)
+    fun writeFileToUri(destinationUri: Uri) {
+        val outputStream = context.contentResolver.openOutputStream(destinationUri)
         val byteArray = currentFile?.readBytes()
         if (byteArray != null) {
             outputStream?.write(byteArray)
@@ -177,13 +169,11 @@ class ExportHelper(private val context: Context, private val fragment: Fragment)
     private fun showFileOptionsDialog(file: File, mimeType: String) {
         val uri = FileProvider.getUriForFile(context, "${context.packageName}.provider", file)
 
-        val menuHelper = MenuHelper(context)
-
-        menuHelper.addItem(R.string.view, R.drawable.view) { viewFile(uri, mimeType) }
-        menuHelper.addItem(R.string.share, R.drawable.share) { shareFile(uri, mimeType) }
-        menuHelper.addItem(R.string.save_to_device, R.drawable.save) { saveFileToDevice(file, mimeType) }
-
-        menuHelper.show()
+        MenuHelper(context)
+            .addItem(Operation(R.string.view, R.drawable.view) { viewFile(uri, mimeType) })
+            .addItem(Operation(R.string.share, R.drawable.share) { shareFile(uri, mimeType) })
+            .addItem(Operation(R.string.save_to_device, R.drawable.save) { saveFileToDevice(file, mimeType) })
+            .show()
     }
 
 
@@ -192,9 +182,7 @@ class ExportHelper(private val context: Context, private val fragment: Fragment)
         if (!filePath.exists()) {
             filePath.mkdir()
         }
-        filePath.listFiles()?.forEach { file ->
-            file.delete()
-        }
+        filePath.listFiles()?.forEach { it.delete() }
         return filePath
     }
 
@@ -202,7 +190,7 @@ class ExportHelper(private val context: Context, private val fragment: Fragment)
         val title = baseNote.title
         val body = when (baseNote) {
             is Note -> baseNote.body
-            is List -> notesHelper.getBodyFromItems(baseNote.items)
+            is List -> OperationsHelper.getBodyFromItems(baseNote.items)
         }
         val fileName = if (title.isEmpty()) {
             val words = body.split(" ").take(2)
@@ -216,57 +204,49 @@ class ExportHelper(private val context: Context, private val fragment: Fragment)
         return fileName.take(64).replace("/", "")
     }
 
-    private fun getHTML(baseNote: BaseNote): String {
+    private fun getHTML(baseNote: BaseNote) = buildString {
         val formatter = SimpleDateFormat(NotallyActivity.DateFormat, context.getLocale())
         val date = formatter.format(baseNote.timestamp.toLong())
 
-        return buildString {
-            append("<html><head><meta charset=\"UTF-8\" /></head><body>")
-            append("<h2>${baseNote.title}</h2>")
+        append("<html><head><meta charset=\"UTF-8\" /></head><body>")
+        append("<h2>${baseNote.title}</h2>")
 
-            if (settingsHelper.getShowDateCreated()) {
-                append("<p>$date</p>")
-            }
-
-            when (baseNote) {
-                is Note -> {
-                    val body = baseNote.body.applySpans(baseNote.spans).toHtml(HtmlCompat.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE)
-                    append("<p>$body</p>")
-                }
-                is List -> {
-                    append("<ol>")
-                    baseNote.items.forEach { item ->
-                        append("<li>${item.body}</li>")
-                    }
-                    append("</ol>")
-                }
-            }
-            append("</body></html")
+        if (settingsHelper.getShowDateCreated()) {
+            append("<p>$date</p>")
         }
+
+        when (baseNote) {
+            is Note -> {
+                val body = baseNote.body.applySpans(baseNote.spans).toHtml(HtmlCompat.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE)
+                append("<p>$body</p>")
+            }
+            is List -> {
+                append("<ol>")
+                baseNote.items.forEach {
+                    append("<li>${it.body}</li>")
+                }
+                append("</ol>")
+            }
+        }
+        append("</body></html")
     }
 
-    private fun getPlainText(baseNote: BaseNote): String {
+    private fun getPlainText(baseNote: BaseNote) = buildString {
         val formatter = SimpleDateFormat(NotallyActivity.DateFormat, context.getLocale())
         val date = formatter.format(baseNote.timestamp.toLong())
 
         val body = when (baseNote) {
             is Note -> baseNote.body
-            is List -> notesHelper.getBodyFromItems(baseNote.items)
+            is List -> OperationsHelper.getBodyFromItems(baseNote.items)
         }
 
-        return buildString {
-            if (baseNote.title.isNotEmpty()) {
-                append(baseNote.title)
-                append("\n")
-                append("\n")
-            }
-            if (settingsHelper.getShowDateCreated()) {
-                append(date)
-                append("\n")
-                append("\n")
-            }
-            append(body)
+        if (baseNote.title.isNotEmpty()) {
+            append("${baseNote.title}\n\n")
         }
+        if (settingsHelper.getShowDateCreated()) {
+            append("$date\n\n")
+        }
+        append(body)
     }
 
     private fun getFileName(folder: File, name: String, index: Int = 0): String {
