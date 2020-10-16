@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="@dimen/cardCornerRadius"
-    app:cardElevation="2dp"
+    app:cardElevation="@dimen/cardElevation"
     app:strokeColor="@color/Gray">
 
     <LinearLayout

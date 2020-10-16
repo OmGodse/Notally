@@ -104,9 +104,9 @@ class BaseNoteViewHolder(private val binding: RecyclerViewItemBinding,
     private fun bindLabels(labels: HashSet<String>) {
         binding.LabelGroup.removeAllViews()
         labels.forEach {
-            val labelChip = View.inflate(binding.root.context, R.layout.chip_label, null) as MaterialButton
-            labelChip.text = it
-            binding.LabelGroup.addView(labelChip)
+            val displayLabel = View.inflate(binding.root.context, R.layout.label, null) as MaterialButton
+            displayLabel.text = it
+            binding.LabelGroup.addView(displayLabel)
         }
     }
 
@@ -136,7 +136,7 @@ class BaseNoteViewHolder(private val binding: RecyclerViewItemBinding,
             setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.checkbox_16, 0, 0, 0)
         } else {
             paint.isStrikeThruText = false
-            setCompoundDrawablesWithIntrinsicBounds(R.drawable.checkbox_outline_16, 0, 0, 0)
+            setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.checkbox_outline_16, 0, 0, 0)
         }
     }
 }
