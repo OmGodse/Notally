@@ -61,7 +61,7 @@ class TakeNote : NotallyActivity() {
         val title = intent.getStringExtra(Intent.EXTRA_SUBJECT)
 
         val plainTextBody = intent.getStringExtra(Intent.EXTRA_TEXT)
-        val spannableBody = intent.getCharSequenceExtra(EXTRA_SPANNABLE) as Spannable?
+        val spannableBody = intent.getCharSequenceExtra(EXTRA_SPANNABLE) as? Spannable?
         val body = spannableBody ?: plainTextBody
 
         body?.let { model.body = Editable.Factory.getInstance().newEditable(it) }

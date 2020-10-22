@@ -9,8 +9,8 @@ android {
         applicationId "com.omgodse.notally"
         minSdkVersion rootProject.ext.minSDKVersion
         targetSdkVersion rootProject.ext.targetSDKVersion
-        versionCode 25
-        versionName "3.0"
+        versionCode 26
+        versionName "3.1"
         resConfigs 'en', 'de', 'es', 'fr', 'in', 'it', 'nb', 'pt-rBR', 'ru', 'sv', 'tl', 'uk'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
