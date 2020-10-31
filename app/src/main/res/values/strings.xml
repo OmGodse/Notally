@@ -7,7 +7,6 @@
     <string name="deleted">Deleted</string>
     <string name="archived">Archived</string>
     <string name="settings">Settings</string>
-    <string name="support_development">Support</string>
 
     <!-- Menu Options -->
     <string name="share">Share</string>
@@ -66,11 +65,6 @@
     <string name="discarded_empty_list">Discarded empty list</string>
     <string name="cant_open_link">Can\'t open link</string>
     <string name="something_went_wrong">Something went wrong. Please try again.</string>
-
-    <!-- Support Development -->
-    <string name="patreon" translatable="false">Patreon</string>
-    <string name="note_from_the_developer" translatable="false">Note from the developer (Om Godse)</string>
-    <string name="this_app_is_free" translatable="false">This app is free and always will be. However, maintaining it takes up a non trivial amount of my time.\n\nIf you would like to support it\'s development, click on the link to the Patreon page given below and consider becoming a patron.\n\nPatrons will get an exclusive shout out in the app, along with other benefits.</string>
 
     <!-- Settings Page -->
     <string name="appearance">Appearance</string>
