@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fragment Titles -->
+    <string name="notes">Notes</string>
+    <string name="labels">Etiquetes</string>
+    <string name="deleted">Eliminat</string>
+    <string name="archived">Arivat</string>
+    <string name="settings">Configuració</string>
+
+    <!-- Menu Options -->
+    <string name="share">Comparteix</string>
+    <string name="search">Cercar</string>
+    <string name="delete">Esborrar</string>
+    <string name="restore">Restaurar</string>
+    <string name="archive">Arxivar</string>
+    <string name="unarchive">Desarxivar</string>
+    <string name="delete_forever">Esborrar per sempre</string>
+
+    <!-- Chooser dialog hints -->
+    <string name="view_note">Visualitzar la nota…</string>
+    <string name="share_note">Compartir la nota…</string>
+
+    <!-- Dialogs -->
+    <string name="save">Desar</string>
+    <string name="edit">Editar</string>
+    <string name="cancel">Cancel·lar</string>
+    <string name="make_list">Fer una llista</string>
+    <string name="take_note">Fer una nota</string>
+    <string name="add_label">Afegir una etiqueta</string>
+    <string name="export">Exportar</string>
+    <string name="plain_text">Text pla</string>
+    <string name="save_to_device">Desar al dispositiu</string>
+    <string name="edit_label">Editar etiqueta</string>
+    <string name="label_exists">L\'etiqueta ja existeix</string>
+    <string name="delete_label">Esborrar etiqueta?</string>
+    <string name="create_new">Encara no hi ha etiquetes. Crear-ne una?</string>
+    <string name="delete_note_forever">Esborrar nota per sempre?</string>
+    <string name="your_notes_associated">Les notes associades a aquesta etiqueta no s\'esborraran</string>
+
+    <!-- Lists and Notes -->
+    <string name="note">Nota</string>
+    <string name="item">Element</string>
+    <string name="date">Data</string>
+    <string name="title">Títol</string>
+    <string name="add_item">Afegir element</string>
+    <string name="one_more_item">1 nou element</string>
+    <string name="more_items">%1$d nous elements</string>
+    <string name="drag_handle">Arrossega la nansa</string>
+    <string name="bold">Negreta</string>
+    <string name="link">Enllaç</string>
+    <string name="italic">Cursiva</string>
+    <string name="strikethrough">Ratllat</string>
+    <string name="clear_formatting">Netejar la formatació</string>
+    <string name="monospace">Monoespai</string>
+
+    <!-- Miscellaneous -->
+    <string name="saved_to_device">Desat al dispositiu</string>
+    <string name="saved_to_notally">Desat a Notally</string>
+    <string name="empty_note">Nota buida</string>
+    <string name="empty_list">Llista buida</string>
+    <string name="discarded_empty_note">Nota buida descartada</string>
+    <string name="discarded_empty_list">Llista buida descartada</string>
+    <string name="cant_open_link">No es pot obrir l\'enllaç</string>
+    <string name="something_went_wrong">Alguna cosa ha anat malament. Torna-ho a provar.</string>
+
+    <!-- Settings Page -->
+    <string name="appearance">Aparença</string>
+
+    <string name="view">Visualitzar</string>
+    <string name="list">Llista</string>
+    <string name="grid">Quadrícula</string>
+
+    <string name="theme">Tema</string>
+    <string name="light">Clar</string>
+    <string name="dark">Fosc</string>
+    <string name="follow_system">Segueix el sistema</string>
+
+    <string name="card_type">Tipus de targeta</string>
+    <string name="elevated">Elevat</string>
+    <string name="flat">Pla</string>
+
+    <string name="content_density">Densitat del contingut</string>
+    <string name="max_items_to_display">Nombre màxim d\'elements a mostrar a la llista</string>
+    <string name="max_lines_to_display">Màxim de línies a mostrar a la nota</string>
+
+    <string name="show_date_created">Mostra la data de creació</string>
+
+    <string name="backup">Còpia de seguretat</string>
+    <string name="export_notes_to_a_file">Exportar les notes a un fitxer</string>
+    <string name="import_notes_from_a_file">Importar les notes des d\’un fitxer</string>
+
+    <string name="about">Quant a</string>
+    <string name="libraries">Biblioteques</string>
+    <string name="rate">Valora aquesta aplicació</string>
+</resources>
