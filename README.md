@@ -31,6 +31,7 @@ Different screens in the app (Aside from the Take Note and Make List) are repres
 ### Translations
 * 🇬🇧 English
 * 🇦🇩 Catalan by retiolus
+* 🇵🇱 Polish by [ZiomaleQ](https://github.com/ZiomaleQ)
 * 🇮🇩 Indonesian by [zmni](https://github.com/zmni)
 * 🇮🇷 Italian by Luigi Sforza
 * 🇪🇸 Spanish by Jose Casas
