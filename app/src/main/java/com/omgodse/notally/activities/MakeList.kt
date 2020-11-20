@@ -87,13 +87,12 @@ class MakeList : NotallyActivity() {
     }
 
 
-    private fun addListItem() {
+    private fun addListItem(position: Int = adapter.items.size) {
         val listItem = ListItem(String(), false)
-        adapter.items.add(listItem)
-        val position = adapter.items.size
+        adapter.items.add(position, listItem)
         adapter.notifyItemInserted(position)
         binding.RecyclerView.post {
-            val viewHolder = binding.RecyclerView.findViewHolderForAdapterPosition(position - 1) as MakeListViewHolder?
+            val viewHolder = binding.RecyclerView.findViewHolderForAdapterPosition(position) as MakeListViewHolder?
             viewHolder?.requestFocus()
         }
     }
@@ -148,8 +147,8 @@ class MakeList : NotallyActivity() {
 
     private fun moveToNext(position: Int) {
         val viewHolder = binding.RecyclerView.findViewHolderForAdapterPosition(position + 1) as MakeListViewHolder?
-        if (viewHolder != null) {
+        if (viewHolder != null && !viewHolder.binding.CheckBox.isChecked) {
             viewHolder.requestFocus()
-        } else addListItem()
+        } else addListItem(position + 1)
     }
 }
