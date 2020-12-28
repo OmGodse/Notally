@@ -1,0 +1,97 @@
+<resources>
+    <!-- Fragment Titles -->
+    <string name="notes">Notities</string>
+    <string name="labels">Labels</string>
+    <string name="deleted">Verwijderd</string>
+    <string name="archived">Gearchiveerd</string>
+    <string name="settings">Instellingen</string>
+
+    <!-- Menu Options -->
+    <string name="share">Delen</string>
+    <string name="search">Zoeken</string>
+    <string name="delete">Verwijderen</string>
+    <string name="restore">Herstellen</string>
+    <string name="archive">Archief</string>
+    <string name="unarchive">unarchief</string>
+    <string name="delete_forever">Voor altijd verwijderen</string>
+
+    <!-- Chooser dialog hints -->
+    <string name="view_note">Notitie bekijken�</string>
+    <string name="share_note">Notitie delen�</string>
+
+    <!-- Dialogs -->
+    <string name="save">Opgeslagen</string>
+    <string name="edit">Bewerk</string>
+    <string name="cancel">Annuleren</string>
+    <string name="make_list">Maak een lijst</string>
+    <string name="take_note">Maak een Notitie</string>
+    <string name="add_label">Label toevoegen </string>
+    <string name="export">Exporteren</string>
+    <string name="plain_text">Platte tekst</string>
+    <string name="save_to_device">Opslaan op apparaat</string>
+    <string name="edit_label">Bewerk label</string>
+    <string name="label_exists">Label bestaat</string>
+    <string name="delete_label">Label verwijderen?</string>
+    <string name="create_new">Nog geen labels. Creëer er een?</string>
+    <string name="delete_note_forever"Notitie definitief verwijderen?</string>
+    <string name="your_notes_associated">Uw notities die aan dit label zijn gekoppeld, worden niet verwijderd</string>
+
+    <!-- Lists and Notes -->
+    <string name="note">Notitie</string>
+    <string name="item">Item</string>
+    <string name="date">Datum</string>
+    <string name="title">Titel</string>
+    <string name="add_item">Voeg item toe</string>
+    <string name="one_more_item">Nog een item</string>
+    <string name="more_items">%1$d meer items</string>
+    <string name="drag_handle">Sleephandvat</string> 
+    <string name="bold">Vetgedrukt</string> 
+    <string name="link">Link</string>
+    <string name="italic">Cursieve</string>
+    <string name="strikethrough">Doorgestreepte</string>
+    <string name="clear_formatting">Heldere opmaak</string>
+    <string name="monospace">Monospace</string>
+
+    <!-- Miscellaneous -->
+    <string name="saved_to_device">Opgeslagen op apparaat</string>
+    <string name="saved_to_notally">Opgeslagen in Notally</string>
+    <string name="empty_note">Lege notitie</string>
+    <string name="empty_list">Lege lijst</string>
+    <string name="discarded_empty_note">weggegooid Lege notitie</string>
+    <string name="discarded_empty_list">Weggegooide lege lijst</string>
+    <string name="cant_open_link">Kan link niet openen</string>
+    <string name="something_went_wrong">Er is iets fout gegaan. Probeer het opnieuw.</string>
+
+    <string name="pin">Vastmaken</string>
+    <string name="unpin">losmaken</string>
+
+    <!-- Settings Page -->
+    <string name="appearance">Verschijning</string>
+
+    <string name="view">Bekijk</string>
+    <string name="list">Lijst</string>
+    <string name="grid">Raster</string>
+
+    <string name="theme">Thema</string>
+    <string name="light">Licht</string>
+    <string name="dark">Donker</string>
+    <string name="follow_system">Volg de systeem</string>
+
+    <string name="card_type">Kaart type/string>
+    <string name="elevated">Verhoogd</string>
+    <string name="flat">Vlak</string>
+
+    <string name="content_density">Inhoudsdichtheid</string>
+    <string name="max_items_to_display">Maximum aantal items dat in de lijst kan worden weergegeven</string>
+    <string name="max_lines_to_display">Maximum lijnen in de notitie weer te geven</string>
+
+    <string name="show_date_created">Toon aangemaakte datum</string>
+
+    <string name="backup">Back-up</string>
+    <string name="export_notes_to_a_file">Exporteer notities naar een bestand</string>
+    <string name="import_notes_from_a_file">Importeer notities uit een bestand</string>
+
+    <string name="about">Over</string>
+    <string name="libraries">Bibliotheken</string>
+    <string name="rate">Beoordeel deze appк</string>
+</resources>
