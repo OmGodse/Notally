@@ -32,7 +32,7 @@ Well, Notally is none of these things. It's extremely light, minimalistic and el
 * 🇦🇩 Catalan by retiolus
 * 🇵🇱 Polish by [ZiomaleQ](https://github.com/ZiomaleQ)
 * 🇮🇩 Indonesian by [zmni](https://github.com/zmni)
-* 🇮🇷 Italian by Luigi Sforza
+* 🇮🇹 Italian by Luigi Sforza
 * 🇪🇸 Spanish by Jose Casas
 * 🇺🇦 Ukrainian by Alex Shpak
 * 🇸🇪 Swedish by Erik Lindström
