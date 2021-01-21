@@ -20,6 +20,11 @@
     <string name="view_note">Se anteckning…</string>
     <string name="share_note">Dela anteckning…</string>
 
+    <!-- Pinning -->
+    <string name="pin">Fäst</string>
+    <string name="unpin">Ta bort</string>
+    <string name="pinned">Fästa</string>
+
     <!-- Dialogs -->
     <string name="save">Spara</string>
     <string name="edit">Redigera</string>

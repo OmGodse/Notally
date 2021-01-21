@@ -15,6 +15,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.ActivityMainBinding
 import com.omgodse.notally.miscellaneous.Constants
+import com.omgodse.notally.miscellaneous.setVisible
 
 class MainActivity : AppCompatActivity() {
 
@@ -78,24 +79,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleDestinationChange(destination: NavDestination, arguments: Bundle?) {
         when (destination.id) {
-            R.id.NotesFragment -> {
-                binding.TakeNoteFAB.show()
-                binding.EnterSearchKeyword.visibility = View.GONE
-            }
+            R.id.NotesFragment -> binding.TakeNoteFAB.show()
             R.id.SearchFragment -> {
                 binding.TakeNoteFAB.hide()
-                binding.EnterSearchKeyword.text = null
-                binding.EnterSearchKeyword.visibility = View.VISIBLE
+                binding.EnterSearchKeyword.requestFocus()
             }
             R.id.DisplayLabelFragment -> {
                 binding.TakeNoteFAB.hide()
-                binding.EnterSearchKeyword.visibility = View.GONE
-                supportActionBar?.setTitle(arguments?.getString(Constants.argLabelKey))
+                supportActionBar?.setTitle(arguments?.getString(Constants.SelectedLabel))
             }
-            else -> {
-                binding.TakeNoteFAB.hide()
-                binding.EnterSearchKeyword.visibility = View.GONE
-            }
+            else -> binding.TakeNoteFAB.hide()
         }
+        binding.EnterSearchKeyword.setVisible(destination.id == R.id.SearchFragment)
     }
 }

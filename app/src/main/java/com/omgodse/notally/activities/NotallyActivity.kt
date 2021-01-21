@@ -1,56 +1,59 @@
 package com.omgodse.notally.activities
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import androidx.transition.AutoTransition
+import androidx.transition.TransitionManager
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.chip.ChipGroup
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.R
-import com.omgodse.notally.helpers.OperationsHelper
+import com.omgodse.notally.helpers.OperationsParent
 import com.omgodse.notally.miscellaneous.Constants
-import com.omgodse.notally.viewmodels.BaseNoteModel
+import com.omgodse.notally.miscellaneous.bindLabels
+import com.omgodse.notally.miscellaneous.setVisible
+import com.omgodse.notally.room.BaseNote
+import com.omgodse.notally.room.Label
 import com.omgodse.notally.viewmodels.NotallyModel
-import java.io.File
-import java.util.*
-import kotlin.collections.HashSet
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-abstract class NotallyActivity : AppCompatActivity() {
+abstract class NotallyActivity : AppCompatActivity(), OperationsParent {
 
     internal abstract val model: NotallyModel
-    internal lateinit var operationsHelper: OperationsHelper
 
     override fun onBackPressed() {
-        model.saveNote()
-        super.onBackPressed()
+        model.saveNote {
+            super.onBackPressed()
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        model.saveNote()
         super.onSaveInstanceState(outState)
+        model.saveNote()
     }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        operationsHelper = OperationsHelper(this)
 
-        val filePathToEdit = intent.getStringExtra(Constants.FilePath)
+        val selectedBaseNote = intent.getParcelableExtra<BaseNote>(Constants.SelectedBaseNote)
 
         if (model.isFirstInstance) {
-            if (filePathToEdit != null) {
+            if (selectedBaseNote != null) {
                 model.isNewNote = false
-                model.setFile(File(filePathToEdit))
+                model.setStateFromBaseNote(selectedBaseNote)
             } else {
                 model.isNewNote = true
-                val timestamp = Date().time
-                val file = File(BaseNoteModel.getNotePath(this), "$timestamp.xml")
-                model.setFile(file)
-
-                val data = Intent()
-                data.putExtra(Constants.FilePath, file.path)
-                setResult(Constants.ResultCodeCreatedFile, data)
+                setResult(Constants.ResultCodeCreatedFile)
             }
 
             if (intent.action == Intent.ACTION_SEND) {
@@ -70,6 +73,7 @@ abstract class NotallyActivity : AppCompatActivity() {
         }
 
         menuInflater.inflate(menuId, menu)
+        bindPinned(menu?.findItem(R.id.Pin))
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -78,6 +82,7 @@ abstract class NotallyActivity : AppCompatActivity() {
             android.R.id.home -> onBackPressed()
             R.id.Share -> shareNote()
             R.id.Labels -> labelNote()
+            R.id.Pin -> pinNote(item)
             R.id.Delete -> deleteNote()
             R.id.Archive -> archiveNote()
             R.id.Restore -> restoreNote()
@@ -88,51 +93,85 @@ abstract class NotallyActivity : AppCompatActivity() {
     }
 
 
+    override fun accessContext(): Context {
+        return this
+    }
+
+    override fun insertLabel(label: Label, onComplete: (success: Boolean) -> Unit) {
+        model.insertLabel(label, onComplete)
+    }
+
+
     abstract fun shareNote()
+
+    abstract fun getLabelGroup(): ChipGroup
+
+    abstract fun getPinnedIndicator(): TextView
+
+    abstract fun getPinnedParent(): LinearLayout
+
 
     open fun receiveSharedNote() {}
 
 
     private fun labelNote() {
-        operationsHelper.labelNote(model.labels.value ?: HashSet()) {
-            model.labels.value = it
+        lifecycleScope.launch {
+            val labels = withContext(Dispatchers.IO) { model.getAllLabelsAsList() }
+            labelNote(labels, model.labels) { updatedLabels ->
+                model.labels = updatedLabels
+                getLabelGroup().bindLabels(updatedLabels)
+            }
         }
     }
 
     private fun deleteNote() {
         model.moveBaseNoteToDeleted()
-        super.onBackPressed()
+        onBackPressed()
     }
 
     private fun restoreNote() {
         model.restoreBaseNote()
-        super.onBackPressed()
+        onBackPressed()
     }
 
     private fun archiveNote() {
         model.moveBaseNoteToArchive()
-        super.onBackPressed()
+        onBackPressed()
     }
 
     private fun deleteNoteForever() {
         val alertDialogBuilder = MaterialAlertDialogBuilder(this)
         alertDialogBuilder.setMessage(R.string.delete_note_forever)
         alertDialogBuilder.setPositiveButton(R.string.delete) { dialog, which ->
-            model.deleteBaseNoteForever()
-            super.onBackPressed()
+            model.deleteBaseNoteForever {
+                super.onBackPressed()
+            }
         }
         alertDialogBuilder.setNegativeButton(R.string.cancel, null)
         alertDialogBuilder.show()
     }
 
+    private fun pinNote(item: MenuItem) {
+        model.pinned = !model.pinned
+        bindPinned(item, true)
+    }
+
+
+    private fun bindPinned(item: MenuItem?, fromUser: Boolean = false) {
+        if (fromUser) {
+            TransitionManager.beginDelayedTransition(getPinnedParent(), AutoTransition())
+        }
+        getPinnedIndicator().setVisible(model.pinned)
+        item?.title = if (model.pinned) {
+            getString(R.string.unpin)
+        } else {
+            getString(R.string.pin)
+        }
+    }
 
     internal fun setupToolbar(toolbar: MaterialToolbar) {
         setSupportActionBar(toolbar)
         supportActionBar?.title = null
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
-
-    companion object {
-        const val DateFormat = "EEE d MMM yyyy"
     }
 }

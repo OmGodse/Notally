@@ -1,27 +1,21 @@
 package com.omgodse.notally.viewmodels
 
 import android.app.Application
-import com.omgodse.notally.xml.BaseNote
-import com.omgodse.notally.xml.List
-import com.omgodse.notally.xml.ListItem
+import com.omgodse.notally.room.ListItem
+import com.omgodse.notally.room.BaseNote
 
 class MakeListModel(app: Application) : NotallyModel(app) {
 
     val items = ArrayList<ListItem>()
 
     override fun getBaseNote(): BaseNote {
-        val listItems = items.filter { it.body.isNotBlank() }
-        return List(title, file.path, labels.value ?: HashSet(), timestamp.toString(), listItems)
+        val filteredItems = items.filter { (body) -> body.isNotBlank() }
+        return BaseNote.createList(id, folder, title, pinned, timestamp, labels, filteredItems)
     }
 
     override fun setStateFromBaseNote(baseNote: BaseNote) {
-        baseNote as List
-        title = baseNote.title
-        timestamp = baseNote.timestamp.toLong()
-
+        super.setStateFromBaseNote(baseNote)
         items.clear()
         items.addAll(baseNote.items)
-
-        labels.value = baseNote.labels
     }
 }

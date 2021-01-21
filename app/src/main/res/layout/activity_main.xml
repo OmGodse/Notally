@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/DrawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".activities.MainActivity"
-    tools:openDrawer="start">
+    android:fitsSystemWindows="true">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/CoordinatorLayout"
@@ -22,7 +19,6 @@
                 android:id="@+id/Toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/toolbarHeight"
-                android:focusableInTouchMode="true"
                 app:contentInsetEnd="16dp"
                 app:title="@string/app_name"
                 app:titleTextAppearance="@style/TextAppearance.Toolbar">
@@ -31,12 +27,12 @@
                     android:id="@+id/EnterSearchKeyword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/search_bar"
+                    android:background="@null"
                     android:hint="@string/search"
                     android:imeOptions="actionDone"
-                    android:paddingStart="16dp"
+                    android:paddingStart="8dp"
                     android:paddingTop="10dp"
-                    android:paddingEnd="16dp"
+                    android:paddingEnd="8dp"
                     android:paddingBottom="10dp"
                     android:singleLine="true"
                     android:textAppearance="?attr/textAppearanceBody1"
@@ -73,9 +69,9 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:headerLayout="@layout/header_layout"
+        android:theme="@style/PrimarySecondarySwap"
+        app:headerLayout="@layout/drawer_header"
         app:itemIconTint="@color/navigation_view_item"
-        app:itemShapeFillColor="@color/navigation_view_shape"
         app:itemTextColor="@color/navigation_view_item"
         app:menu="@menu/navigation" />
 

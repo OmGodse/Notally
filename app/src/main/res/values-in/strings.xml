@@ -20,6 +20,11 @@
     <string name="view_note">Lihat catatan…</string>
     <string name="share_note">Bagikan catatan…</string>
 
+    <!-- Pinning -->
+    <string name="pin">Semat</string>
+    <string name="unpin">Buang semat</string>
+    <string name="pinned">Tersemat</string>
+
     <!-- Dialogs -->
     <string name="save">Simpan</string>
     <string name="edit">Sunting</string>

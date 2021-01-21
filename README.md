@@ -16,6 +16,7 @@ Well, Notally is none of these things. It's extremely light, minimalistic and el
 * Material design
 * Create lists to stay on track
 * Support for Lollipop devices and up
+* Pin notes to always keep them at the top
 * APK size of 1.6 MB (2.1 MB Uncompressed)
 * Add labels to your notes for quick organisation
 * Archive notes to keep them around, but out of your way
@@ -29,6 +30,7 @@ Well, Notally is none of these things. It's extremely light, minimalistic and el
 
 ### Translations
 * 🇬🇧 English
+* 🇳🇱 Dutch by [tlmnot](https://github.com/tlmnot)
 * 🇦🇩 Catalan by retiolus
 * 🇵🇱 Polish by [ZiomaleQ](https://github.com/ZiomaleQ)
 * 🇮🇩 Indonesian by [zmni](https://github.com/zmni)
@@ -44,6 +46,7 @@ Well, Notally is none of these things. It's extremely light, minimalistic and el
 * 🇩🇪 German by Maximilian Braunschmied
 
 If you would like to help translate the app, please contact me [here](mailto:omgodseapps@gmail.com)
+(Even in few of the languages specified, there are some untranslated phrases)
 
 ### Screenshots
 <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width="250"/><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width="250"/><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width="250"/>

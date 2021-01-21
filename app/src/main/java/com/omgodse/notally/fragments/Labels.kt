@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.InputType
 import android.view.*
 import androidx.appcompat.app.AlertDialog
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -17,11 +18,13 @@ import com.omgodse.notally.databinding.DialogInputBinding
 import com.omgodse.notally.databinding.FragmentNotesBinding
 import com.omgodse.notally.helpers.MenuHelper
 import com.omgodse.notally.miscellaneous.Constants
-import com.omgodse.notally.miscellaneous.Operation
+import com.omgodse.notally.helpers.MenuHelper.Operation
+import com.omgodse.notally.recyclerview.ItemListener
 import com.omgodse.notally.recyclerview.adapters.LabelsAdapter
+import com.omgodse.notally.room.Label
 import com.omgodse.notally.viewmodels.BaseNoteModel
 
-class Labels : Fragment() {
+class Labels : Fragment(), ItemListener {
 
     private lateinit var mContext: Context
     private var labelsAdapter: LabelsAdapter? = null
@@ -53,10 +56,7 @@ class Labels : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        labelsAdapter = LabelsAdapter(mContext)
-
-        labelsAdapter?.onLabelClicked = this::onLabelClicked
-        labelsAdapter?.onLabelLongClicked = this::onLabelLongClicked
+        labelsAdapter = LabelsAdapter(this)
 
         binding?.RecyclerView?.adapter = labelsAdapter
         binding?.RecyclerView?.layoutManager = LinearLayoutManager(mContext)
@@ -75,19 +75,18 @@ class Labels : Fragment() {
     }
 
 
-    private fun onLabelClicked(position: Int) {
-        labelsAdapter?.currentList?.get(position)?.let {
-            val bundle = Bundle()
-            bundle.putString(Constants.argLabelKey, it)
-            findNavController().navigate(R.id.LabelsFragmentToDisplayLabel, bundle)
+    override fun onClick(position: Int) {
+        labelsAdapter?.currentList?.get(position)?.let { (value) ->
+            val bundle = bundleOf(Constants.SelectedLabel to value)
+            findNavController().navigate(R.id.LabelsToDisplayLabel, bundle)
         }
     }
 
-    private fun onLabelLongClicked(position: Int) {
-        labelsAdapter?.currentList?.get(position)?.let {
+    override fun onLongClick(position: Int) {
+        labelsAdapter?.currentList?.get(position)?.let { label ->
             MenuHelper(mContext)
-                .addItem(Operation(R.string.edit, R.drawable.edit) { displayEditLabelDialog(it) })
-                .addItem(Operation(R.string.delete, R.drawable.delete) { confirmDeletion(it) })
+                .addItem(Operation(R.string.edit, R.drawable.edit) { displayEditLabelDialog(label) })
+                .addItem(Operation(R.string.delete, R.drawable.delete) { confirmDeletion(label) })
                 .show()
         }
     }
@@ -95,7 +94,7 @@ class Labels : Fragment() {
 
     private fun populateRecyclerView() {
         model.labels.observe(viewLifecycleOwner, {
-            labelsAdapter?.submitList(ArrayList(it))
+            labelsAdapter?.submitList(it)
 
             if (it.isNotEmpty()) {
                 binding?.RecyclerView?.visibility = View.VISIBLE
@@ -122,8 +121,9 @@ class Labels : Fragment() {
             dialogBinding.edit.requestFocus()
             val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
             positiveButton.setOnClickListener {
-                val label = dialogBinding.edit.text.toString().trim()
-                if (label.isNotEmpty()) {
+                val value = dialogBinding.edit.text.toString().trim()
+                if (value.isNotEmpty()) {
+                    val label = Label(value)
                     model.insertLabel(label) { success ->
                         if (success) {
                             dialog.dismiss()
@@ -136,7 +136,7 @@ class Labels : Fragment() {
         dialog.show()
     }
 
-    private fun confirmDeletion(label: String) {
+    private fun confirmDeletion(label: Label) {
         val alertDialogBuilder = MaterialAlertDialogBuilder(mContext)
         alertDialogBuilder.setTitle(R.string.delete_label)
         alertDialogBuilder.setMessage(R.string.your_notes_associated)
@@ -147,14 +147,14 @@ class Labels : Fragment() {
         alertDialogBuilder.show()
     }
 
-    private fun displayEditLabelDialog(oldLabel: String) {
+    private fun displayEditLabelDialog(oldLabel: Label) {
         val builder = MaterialAlertDialogBuilder(mContext)
         val dialogBinding = DialogInputBinding.inflate(LayoutInflater.from(context))
 
         dialogBinding.edit.inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS
         dialogBinding.edit.filters = arrayOf()
 
-        dialogBinding.edit.setText(oldLabel)
+        dialogBinding.edit.setText(oldLabel.value)
 
         builder.setView(dialogBinding.root)
         builder.setTitle(R.string.edit_label)
@@ -167,10 +167,10 @@ class Labels : Fragment() {
             dialogBinding.edit.requestFocus()
             val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
             positiveButton.setOnClickListener {
-                val enteredLabel = dialogBinding.edit.text.toString().trim()
+                val value = dialogBinding.edit.text.toString().trim()
 
-                if (enteredLabel.isNotEmpty() && enteredLabel != oldLabel) {
-                    model.editLabel(oldLabel, enteredLabel) { success ->
+                if (value.isNotEmpty()) {
+                    model.updateLabel(oldLabel.value, value) { success ->
                         if (success) {
                             dialog.dismiss()
                         } else dialogBinding.TextInputLayout.error = mContext.getString(R.string.label_exists)

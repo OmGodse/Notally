@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activities.TakeNote">
+    android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -24,12 +22,20 @@
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <LinearLayout
+            android:id="@+id/LinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipToPadding="false"
             android:focusableInTouchMode="true"
             android:orientation="vertical"
+            android:paddingTop="8dp"
             android:paddingBottom="16dp">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/Pinned"
+                style="@style/Pinned"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/EnterTitle"
@@ -50,10 +56,12 @@
 
             <com.omgodse.notally.NotallyEditText
                 android:id="@+id/EnterBody"
-                style="@style/EditText.Body"
+                style="@style/EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:focusableInTouchMode="true" />
+                android:focusableInTouchMode="true"
+                android:hint="@string/note"
+                android:textAppearance="?attr/textAppearanceBody1" />
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/LabelGroup"

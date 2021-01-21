@@ -11,9 +11,8 @@ import com.omgodse.notally.activities.MainActivity
 import com.omgodse.notally.activities.MakeList
 import com.omgodse.notally.activities.TakeNote
 import com.omgodse.notally.helpers.MenuHelper
-import com.omgodse.notally.helpers.OperationsHelper
-import com.omgodse.notally.miscellaneous.Operation
-import com.omgodse.notally.xml.BaseNote
+import com.omgodse.notally.helpers.MenuHelper.Operation
+import com.omgodse.notally.room.BaseNote
 
 class Notes : NotallyFragment() {
 
@@ -46,19 +45,17 @@ class Notes : NotallyFragment() {
     }
 
 
-    override fun getObservable() = model.notes
-
-    override fun getFragmentID() = R.id.NotesFragment
+    override fun getObservable() = model.baseNotes
 
     override fun getBackground() = R.drawable.notebook
 
-    override fun getSupportedOperations(operationsHelper: OperationsHelper, baseNote: BaseNote): ArrayList<Operation> {
+    override fun getSupportedOperations(baseNote: BaseNote): ArrayList<Operation> {
         val operations = ArrayList<Operation>()
-        operations.add(Operation(R.string.share, R.drawable.share) { operationsHelper.shareNote(baseNote) })
+        operations.add(Operation(R.string.share, R.drawable.share) { shareNote(baseNote) })
         operations.add(Operation(R.string.labels, R.drawable.label) { labelBaseNote(baseNote) })
         operations.add(Operation(R.string.export, R.drawable.export) { showExportDialog(baseNote) })
-        operations.add(Operation(R.string.delete, R.drawable.delete) { model.moveBaseNoteToDeleted(baseNote) })
-        operations.add(Operation(R.string.archive, R.drawable.archive) { model.moveBaseNoteToArchive(baseNote) })
+        operations.add(Operation(R.string.delete, R.drawable.delete) { model.moveBaseNoteToDeleted(baseNote.id) })
+        operations.add(Operation(R.string.archive, R.drawable.archive) { model.moveBaseNoteToArchive(baseNote.id) })
         return operations
     }
 }

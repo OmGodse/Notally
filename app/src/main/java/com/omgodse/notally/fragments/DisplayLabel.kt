@@ -1,24 +1,19 @@
 package com.omgodse.notally.fragments
 
-import androidx.lifecycle.MutableLiveData
 import com.omgodse.notally.R
-import com.omgodse.notally.helpers.OperationsHelper
+import com.omgodse.notally.helpers.MenuHelper.Operation
 import com.omgodse.notally.miscellaneous.Constants
-import com.omgodse.notally.miscellaneous.Operation
-import com.omgodse.notally.xml.BaseNote
+import com.omgodse.notally.room.BaseNote
 
 class DisplayLabel : NotallyFragment() {
 
-    override fun getObservable(): MutableLiveData<ArrayList<BaseNote>>? {
-        val label = arguments?.getString(Constants.argLabelKey)!!
-        return model.getLabelledNotes(label)
-    }
-
-    override fun getFragmentID() = R.id.DisplayLabelFragment
+    private val label by lazy { requireNotNull(requireArguments().getString(Constants.SelectedLabel)) }
 
     override fun getBackground() = R.drawable.label
 
-    override fun getSupportedOperations(operationsHelper: OperationsHelper, baseNote: BaseNote): ArrayList<Operation> {
+    override fun getObservable() = model.getNotesByLabel(label)
+
+    override fun getSupportedOperations(baseNote: BaseNote): ArrayList<Operation> {
         return ArrayList()
     }
 }

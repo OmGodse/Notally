@@ -4,15 +4,8 @@
     <color name="LightBlue100">#B3E5fC</color>
     <color name="LightBlueSurface">#11181B</color>
 
-    <color name="LightBlue500Translucent">#1A03A9F4</color>
-    <color name="LightBlue100Translucent">#1AB3E5FC</color>
-
-    <color name="BlackTranslucent">#0D000000</color>
-    <color name="WhiteTranslucent">#0DFFFFFF</color>
-
     <color name="FABRipple">#80FFFFFF</color>
 
-    <color name="Gray">#80C8C8C8</color>
     <color name="Grey100">#F5F5F5</color>
     <color name="Grey200">#EEEEEE</color>
 </resources>

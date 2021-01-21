@@ -3,23 +3,22 @@ package com.omgodse.notally.fragments
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.preference.EditTextPreference
-import androidx.preference.ListPreference
+import androidx.fragment.app.activityViewModels
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.R
-import com.omgodse.notally.helpers.ExportHelper
 import com.omgodse.notally.miscellaneous.Constants
-import com.omgodse.notally.miscellaneous.openLink
+import com.omgodse.notally.viewmodels.BaseNoteModel
 
 class Settings : PreferenceFragmentCompat() {
 
     private lateinit var mContext: Context
-    private lateinit var exportHelper: ExportHelper
+    private val model: BaseNoteModel by activityViewModels()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -29,51 +28,45 @@ class Settings : PreferenceFragmentCompat() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        exportHelper = ExportHelper(mContext, this)
-
-        val themePreference: ListPreference? = findPreference(mContext.getString(R.string.themeKey))
-
-        val maxItemsPref: EditTextPreference? = findPreference(mContext.getString(R.string.maxItemsToDisplayInListKey))
-        val maxLinesPref: EditTextPreference? = findPreference(mContext.getString(R.string.maxLinesToDisplayInNoteKey))
-
-        val exportNotesPref: Preference? = findPreference(mContext.getString(R.string.exportNotesToAFileKey))
-        val importNotesPref: Preference? = findPreference(mContext.getString(R.string.importNotesFromAFileKey))
-
-        val ratePref: Preference? = findPreference(mContext.getString(R.string.rateKey))
-        val githubPref: Preference? = findPreference(mContext.getString(R.string.githubKey))
-        val librariesPref: Preference? = findPreference(mContext.getString(R.string.librariesKey))
-
-        exportNotesPref?.setOnPreferenceClickListener {
-            exportHelper.exportBackup()
+        findPreference<Preference>(R.string.exportNotesToAFileKey)?.setOnPreferenceClickListener {
+            val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
+            intent.type = "text/xml"
+            intent.addCategory(Intent.CATEGORY_OPENABLE)
+            intent.putExtra(Intent.EXTRA_TITLE, "Notally Backup")
+            startActivityForResult(intent, Constants.RequestCodeExportFile)
             return@setOnPreferenceClickListener true
         }
 
-        importNotesPref?.setOnPreferenceClickListener {
-            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-                addCategory(Intent.CATEGORY_OPENABLE)
-                type = "text/xml"
-            }
-
+        findPreference<Preference>(R.string.importNotesFromAFileKey)?.setOnPreferenceClickListener {
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+            intent.type = "text/xml"
+            intent.addCategory(Intent.CATEGORY_OPENABLE)
             startActivityForResult(intent, Constants.RequestCodeImportFile)
             return@setOnPreferenceClickListener true
         }
 
-        githubPref?.setOnPreferenceClickListener {
+        findPreference<Preference>(R.string.githubKey)?.setOnPreferenceClickListener {
             openLink(Github)
             return@setOnPreferenceClickListener true
         }
 
-        ratePref?.setOnPreferenceClickListener {
+        findPreference<Preference>(R.string.patreonKey)?.setOnPreferenceClickListener {
+            openLink(Patreon)
+            return@setOnPreferenceClickListener true
+        }
+
+        findPreference<Preference>(R.string.rateKey)?.setOnPreferenceClickListener {
             openLink(PlayStore)
             return@setOnPreferenceClickListener true
         }
 
-        librariesPref?.setOnPreferenceClickListener {
+        findPreference<Preference>(R.string.librariesKey)?.setOnPreferenceClickListener {
             val builder = MaterialAlertDialogBuilder(mContext)
             builder.setTitle(R.string.libraries)
             builder.setItems(R.array.libraries) { dialog, which ->
                 when (which) {
-                    0 -> openLink(PrettyTime)
+                    0 -> openLink(Room)
+                    1 -> openLink(PrettyTime)
                     2 -> openLink(MaterialComponents)
                 }
             }
@@ -82,15 +75,15 @@ class Settings : PreferenceFragmentCompat() {
             return@setOnPreferenceClickListener true
         }
 
-        maxItemsPref?.setOnPreferenceChangeListener { preference, newValue ->
+        findPreference<Preference>(R.string.maxItemsToDisplayInListKey)?.setOnPreferenceChangeListener { preference, newValue ->
             return@setOnPreferenceChangeListener newValue.toString().isNotEmpty()
         }
 
-        maxLinesPref?.setOnPreferenceChangeListener { preference, newValue ->
+        findPreference<Preference>(R.string.maxLinesToDisplayInNoteKey)?.setOnPreferenceChangeListener { preference, newValue ->
             return@setOnPreferenceChangeListener newValue.toString().isNotEmpty()
         }
 
-        themePreference?.setOnPreferenceChangeListener { preference, newValue ->
+        findPreference<Preference>(R.string.themeKey)?.setOnPreferenceChangeListener { preference, newValue ->
             when (newValue) {
                 getString(R.string.darkKey) -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 getString(R.string.lightKey) -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
@@ -104,28 +97,37 @@ class Settings : PreferenceFragmentCompat() {
         setPreferencesFromResource(R.xml.settings, rootKey)
     }
 
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == Constants.RequestCodeExportFile && resultCode == Activity.RESULT_OK) {
             val uri = data?.data
             if (uri != null) {
-                exportHelper.writeFileToUri(uri)
+                model.exportBackup(uri)
             }
         }
         if (requestCode == Constants.RequestCodeImportFile && resultCode == Activity.RESULT_OK) {
             val uri = data?.data
             if (uri != null) {
-                val inputStream = mContext.contentResolver.openInputStream(uri)
-                if (inputStream != null) {
-                    exportHelper.importBackup(inputStream)
-                }
+                model.importBackup(uri)
             }
         }
     }
 
+
+    private fun openLink(link: String) {
+        val uri = Uri.parse(link)
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        startActivity(intent)
+    }
+
+    private fun <T> findPreference(id: Int): T? = findPreference(mContext.getString(id))
+
     companion object {
+        private const val Patreon = "https://www.patreon.com/omgodse"
         private const val Github = "https://github.com/OmGodse/Notally"
-        private const val PlayStore = "https://play.google.com/store/apps/details?id=com.omgodse.notally"
         private const val PrettyTime = "https://github.com/ocpsoft/prettytime"
+        private const val Room = "https://mvnrepository.com/artifact/androidx.room"
+        private const val PlayStore = "https://play.google.com/store/apps/details?id=com.omgodse.notally"
         private const val MaterialComponents = "https://github.com/material-components/material-components-android"
     }
 }

@@ -1,23 +1,21 @@
 package com.omgodse.notally.activities
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.view.View
 import androidx.activity.viewModels
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.button.MaterialButton
-import com.omgodse.notally.R
 import com.omgodse.notally.databinding.ActivityMakeListBinding
+import com.omgodse.notally.miscellaneous.bindLabels
 import com.omgodse.notally.miscellaneous.getLocale
 import com.omgodse.notally.miscellaneous.setOnNextAction
 import com.omgodse.notally.recyclerview.ListItemListener
 import com.omgodse.notally.recyclerview.adapters.MakeListAdapter
 import com.omgodse.notally.recyclerview.viewholders.MakeListViewHolder
+import com.omgodse.notally.room.ListItem
+import com.omgodse.notally.viewmodels.BaseNoteModel
 import com.omgodse.notally.viewmodels.MakeListModel
-import com.omgodse.notally.xml.ListItem
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -25,6 +23,7 @@ class MakeList : NotallyActivity() {
 
     private lateinit var adapter: MakeListAdapter
     private lateinit var binding: ActivityMakeListBinding
+
     override val model: MakeListModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,41 +54,19 @@ class MakeList : NotallyActivity() {
     }
 
 
-    override fun shareNote() = operationsHelper.shareNote(model.title, model.items)
+    override fun getLabelGroup() = binding.LabelGroup
+
+    override fun getPinnedIndicator() = binding.Pinned
+
+    override fun getPinnedParent() = binding.LinearLayout
+
+    override fun shareNote() = shareNote(model.title, model.items)
 
 
-    private fun setupListeners() {
-        binding.EnterTitle.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {}
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(text: CharSequence?, start: Int, before: Int, count: Int) {
-                model.title = text.toString().trim()
-            }
-        })
-
-        model.labels.observe(this, {
-            binding.LabelGroup.removeAllViews()
-            it?.forEach { label ->
-                val displayLabel = View.inflate(this, R.layout.label, null) as MaterialButton
-                displayLabel.text = label
-                binding.LabelGroup.addView(displayLabel)
-            }
-        })
-    }
-
-    private fun setStateFromModel() {
-        binding.EnterTitle.setText(model.title)
-        val formatter = SimpleDateFormat(DateFormat, getLocale())
-        binding.DateCreated.text = formatter.format(model.timestamp)
-        adapter.notifyDataSetChanged()
-    }
-
-
-    private fun addListItem(position: Int = adapter.items.size) {
+    private fun addListItem() {
+        val position = adapter.items.size
         val listItem = ListItem(String(), false)
-        adapter.items.add(position, listItem)
+        adapter.items.add(listItem)
         adapter.notifyItemInserted(position)
         binding.RecyclerView.post {
             val viewHolder = binding.RecyclerView.findViewHolderForAdapterPosition(position) as MakeListViewHolder?
@@ -97,9 +74,14 @@ class MakeList : NotallyActivity() {
         }
     }
 
-    private fun setupRecyclerView() {
-        adapter = MakeListAdapter(this, model.items)
+    private fun setupListeners() {
+        binding.EnterTitle.addTextChangedListener(onTextChanged = { text, start, count, after ->
+            model.title = text.toString().trim()
+        })
+    }
 
+
+    private fun setupRecyclerView() {
         val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.Callback() {
 
             override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
@@ -108,22 +90,20 @@ class MakeList : NotallyActivity() {
                 return makeMovementFlags(drag, swipe)
             }
 
-            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
-                Collections.swap(model.items, viewHolder.adapterPosition, target.adapterPosition)
-                adapter.notifyItemMoved(viewHolder.adapterPosition, target.adapterPosition)
-                return true
-            }
-
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 model.items.removeAt(viewHolder.adapterPosition)
                 adapter.notifyItemRemoved(viewHolder.adapterPosition)
                 adapter.notifyItemRangeChanged(viewHolder.adapterPosition, model.items.size)
             }
+
+            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+                Collections.swap(model.items, viewHolder.adapterPosition, target.adapterPosition)
+                adapter.notifyItemMoved(viewHolder.adapterPosition, target.adapterPosition)
+                return true
+            }
         })
 
-        itemTouchHelper.attachToRecyclerView(binding.RecyclerView)
-
-        adapter.listItemListener = object : ListItemListener {
+        adapter = MakeListAdapter(model.items, object : ListItemListener {
             override fun onMoveToNext(position: Int) {
                 moveToNext(position)
             }
@@ -139,16 +119,29 @@ class MakeList : NotallyActivity() {
             override fun onItemCheckedChange(position: Int, checked: Boolean) {
                 adapter.items[position].checked = checked
             }
-        }
+        })
+
+        itemTouchHelper.attachToRecyclerView(binding.RecyclerView)
 
         binding.RecyclerView.adapter = adapter
         binding.RecyclerView.layoutManager = LinearLayoutManager(this)
     }
 
-    private fun moveToNext(position: Int) {
-        val viewHolder = binding.RecyclerView.findViewHolderForAdapterPosition(position + 1) as MakeListViewHolder?
-        if (viewHolder != null && !viewHolder.binding.CheckBox.isChecked) {
-            viewHolder.requestFocus()
-        } else addListItem(position + 1)
+    private fun setStateFromModel() {
+        val formatter = SimpleDateFormat(BaseNoteModel.DateFormat, getLocale())
+
+        binding.EnterTitle.setText(model.title)
+        binding.DateCreated.text = formatter.format(model.timestamp)
+
+        binding.LabelGroup.bindLabels(model.labels)
+    }
+
+    private fun moveToNext(currentPosition: Int) {
+        val viewHolder = binding.RecyclerView.findViewHolderForAdapterPosition(currentPosition + 1) as MakeListViewHolder?
+        if (viewHolder != null) {
+            if (viewHolder.binding.CheckBox.isChecked) {
+                moveToNext(currentPosition + 1)
+            } else viewHolder.requestFocus()
+        } else addListItem()
     }
 }

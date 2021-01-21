@@ -1,14 +1,13 @@
 package com.omgodse.notally.recyclerview.viewholders
 
-import android.text.Editable
 import android.text.InputType
-import android.text.TextWatcher
 import android.view.MotionEvent
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import com.omgodse.notally.databinding.ListItemBinding
-import com.omgodse.notally.recyclerview.ListItemListener
 import com.omgodse.notally.miscellaneous.setOnNextAction
-import com.omgodse.notally.xml.ListItem
+import com.omgodse.notally.recyclerview.ListItemListener
+import com.omgodse.notally.room.ListItem
 
 class MakeListViewHolder(val binding: ListItemBinding, listItemListener: ListItemListener?) :
     RecyclerView.ViewHolder(binding.root) {
@@ -25,14 +24,8 @@ class MakeListViewHolder(val binding: ListItemBinding, listItemListener: ListIte
             listItemListener?.onItemCheckedChange(adapterPosition, isChecked)
         }
 
-        binding.ListItem.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {}
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(text: CharSequence?, start: Int, before: Int, count: Int) {
-                listItemListener?.onItemTextChange(adapterPosition, text.toString())
-            }
+        binding.ListItem.addTextChangedListener(onTextChanged = { text, start, count, after ->
+            listItemListener?.onItemTextChange(adapterPosition, text.toString())
         })
 
         binding.DragHandle.setOnTouchListener { v, event ->
@@ -49,7 +42,5 @@ class MakeListViewHolder(val binding: ListItemBinding, listItemListener: ListIte
         binding.ListItem.setRawInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES)
     }
 
-    fun requestFocus() {
-        binding.ListItem.requestFocus()
-    }
+    fun requestFocus() = binding.ListItem.requestFocus()
 }

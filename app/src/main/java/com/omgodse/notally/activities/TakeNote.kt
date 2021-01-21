@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.Spannable
 import android.text.Spanned
-import android.text.TextWatcher
 import android.text.style.StrikethroughSpan
 import android.text.style.StyleSpan
 import android.text.style.TypefaceSpan
@@ -16,16 +15,17 @@ import android.util.Patterns
 import android.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
-import com.google.android.material.button.MaterialButton
+import androidx.core.widget.addTextChangedListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.NotallyLinkMovementMethod
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.ActivityTakeNoteBinding
+import com.omgodse.notally.miscellaneous.bindLabels
 import com.omgodse.notally.miscellaneous.getLocale
 import com.omgodse.notally.miscellaneous.setOnNextAction
+import com.omgodse.notally.viewmodels.BaseNoteModel
 import com.omgodse.notally.viewmodels.TakeNoteModel
 import java.text.SimpleDateFormat
 
@@ -55,8 +55,6 @@ class TakeNote : NotallyActivity() {
     }
 
 
-    override fun shareNote() = operationsHelper.shareNote(model.title, model.body)
-
     override fun receiveSharedNote() {
         val title = intent.getStringExtra(Intent.EXTRA_SUBJECT)
 
@@ -64,51 +62,24 @@ class TakeNote : NotallyActivity() {
         val spannableBody = intent.getCharSequenceExtra(EXTRA_SPANNABLE) as? Spannable?
         val body = spannableBody ?: plainTextBody
 
-        body?.let { model.body = Editable.Factory.getInstance().newEditable(it) }
-        title?.let { model.title = it }
+        if (body != null) {
+            model.body = Editable.Factory.getInstance().newEditable(body)
+        }
+        if (title != null) {
+            model.title = title
+        }
 
         Toast.makeText(this, R.string.saved_to_notally, Toast.LENGTH_SHORT).show()
     }
 
 
-    private fun setupListeners() {
-        binding.EnterTitle.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+    override fun getLabelGroup() = binding.LabelGroup
 
-            override fun onTextChanged(text: CharSequence?, start: Int, before: Int, count: Int) {
-                model.title = text.toString().trim()
-            }
+    override fun getPinnedIndicator() = binding.Pinned
 
-            override fun afterTextChanged(s: Editable?) {}
-        })
+    override fun getPinnedParent() = binding.LinearLayout
 
-        binding.EnterBody.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(text: CharSequence?, start: Int, before: Int, count: Int) {}
-
-            override fun afterTextChanged(editable: Editable?) {
-                model.body = binding.EnterBody.text
-            }
-        })
-
-        model.labels.observe(this, {
-            binding.LabelGroup.removeAllViews()
-            it?.forEach { label ->
-                val displayLabel = View.inflate(this, R.layout.label, null) as MaterialButton
-                displayLabel.text = label
-                binding.LabelGroup.addView(displayLabel)
-            }
-        })
-    }
-
-    private fun setStateFromModel() {
-        binding.EnterTitle.setText(model.title)
-        binding.EnterBody.text = model.body
-
-        val formatter = SimpleDateFormat(DateFormat, getLocale())
-        binding.DateCreated.text = formatter.format(model.timestamp)
-    }
+    override fun shareNote() = shareNote(model.title, model.body)
 
 
     private fun setupEditor() {
@@ -159,18 +130,38 @@ class TakeNote : NotallyActivity() {
         }
     }
 
+    private fun setupListeners() {
+        binding.EnterTitle.addTextChangedListener(onTextChanged = { text, start, count, after ->
+            model.title = text.toString().trim()
+        })
+
+        binding.EnterBody.addTextChangedListener(afterTextChanged = { editable ->
+            model.body = editable
+        })
+    }
+
+    private fun setStateFromModel() {
+        val formatter = SimpleDateFormat(BaseNoteModel.DateFormat, getLocale())
+
+        binding.EnterTitle.setText(model.title)
+        binding.EnterBody.text = model.body
+        binding.DateCreated.text = formatter.format(model.timestamp)
+
+        binding.LabelGroup.bindLabels(model.labels)
+    }
+
     private fun setupMovementMethod() {
-        val movementMethod = NotallyLinkMovementMethod {
+        val movementMethod = NotallyLinkMovementMethod { span ->
             MaterialAlertDialogBuilder(this)
                 .setItems(R.array.linkOptions) { dialog, which ->
                     if (which == 0) {
-                        val spanStart = binding.EnterBody.text?.getSpanStart(it)
-                        val spanEnd = binding.EnterBody.text?.getSpanEnd(it)
+                        val spanStart = binding.EnterBody.text?.getSpanStart(span)
+                        val spanEnd = binding.EnterBody.text?.getSpanEnd(span)
 
                         ifBothNotNullAndInvalid(spanStart, spanEnd) { start, end ->
                             val text = binding.EnterBody.text?.substring(start, end)
-                            text?.let {
-                                val link = getURLFrom(it)
+                            if (text != null) {
+                                val link = getURLFrom(text)
                                 val uri = Uri.parse(link)
 
                                 val intent = Intent(Intent.ACTION_VIEW, uri)

@@ -17,6 +17,11 @@
     <string name="unarchive">Unarchive</string>
     <string name="delete_forever">Delete forever</string>
 
+    <!-- Pinning -->
+    <string name="pin">Pin</string>
+    <string name="unpin">Unpin</string>
+    <string name="pinned">Pinned</string>
+
     <!-- Chooser dialog hints -->
     <string name="view_note">View note…</string>
     <string name="share_note">Share note…</string>
@@ -96,7 +101,8 @@
     <string name="libraries">Libraries</string>
     <string name="rate">Rate this app</string>
 
-    <string name="github" translatable="false">GitHub</string>
+    <string name="github" translatable="false">Github</string>
+    <string name="patreon" translatable="false">Patreon</string>
 
     <string name="viewKey" translatable="false">view</string>
     <string name="listKey" translatable="false">list</string>
@@ -124,8 +130,10 @@
 
     <string name="rateKey" translatable="false">rate</string>
     <string name="githubKey" translatable="false">github</string>
+    <string name="patreonKey" translatable="false">patreon</string>
     <string name="librariesKey" translatable="false">libraries</string>
 
+    <string name="room" translatable="false">Room</string>
     <string name="pretty_time" translatable="false">Pretty Time</string>
     <string name="material_components_android" translatable="false">Material Components for Android</string>
 </resources>

@@ -23,6 +23,6 @@
             android:digits="123456789"
             android:inputType="number"
             android:maxLength="1"
-            android:theme="@style/TextInputEditText" />
+            android:theme="@style/PrimarySecondarySwap" />
     </com.google.android.material.textfield.TextInputLayout>
 </FrameLayout>

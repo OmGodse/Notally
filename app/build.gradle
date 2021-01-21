@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -11,10 +13,9 @@ android {
         applicationId "com.omgodse.notally"
         minSdkVersion rootProject.ext.minSDKVersion
         targetSdkVersion rootProject.ext.targetSDKVersion
-        versionCode 27
-        versionName "3.2"
-        resConfigs 'en', 'ca', 'de', 'es', 'fr', 'in', 'it', 'nb', 'pl', 'pt-rBR', 'ru', 'sv', 'tl', 'uk'
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        versionCode 28
+        versionName "3.3"
+        resConfigs 'en', 'ca', 'de', 'es', 'fr', 'in', 'it', 'nb', 'nl', 'pl', 'pt-rBR', 'ru', 'sv', 'tl', 'uk'
     }
 
     buildTypes {
@@ -30,27 +31,32 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    aaptOptions { cruncherEnabled false }
-
     kotlinOptions { jvmTarget = JavaVersion.VERSION_1_8.toString() }
 
     buildFeatures { viewBinding true }
+
+    aaptOptions { cruncherEnabled false }
 }
 
 dependencies {
-    final def stableNavVersion = "2.3.1"
+    final def roomVersion = "2.2.6"
+    final def stableNavVersion = "2.3.2"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
-    implementation 'androidx.core:core-ktx:1.3.2'
-    implementation 'androidx.appcompat:appcompat:1.2.0'
 
     implementation 'androidx.preference:preference-ktx:1.1.1'
+
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
+
+    kapt "androidx.room:room-compiler:$roomVersion"
+    implementation "androidx.room:room-ktx:$roomVersion"
+    implementation "androidx.room:room-runtime:$roomVersion"
 
     implementation "androidx.navigation:navigation-ui-ktx:$stableNavVersion"
     implementation "androidx.navigation:navigation-fragment-ktx:$stableNavVersion"
 
     implementation 'org.ocpsoft.prettytime:prettytime:4.0.6.Final'
-    implementation 'com.google.android.material:material:1.3.0-alpha03'
+    implementation 'com.google.android.material:material:1.3.0-rc01'
 
     implementation project(':Post')
 }

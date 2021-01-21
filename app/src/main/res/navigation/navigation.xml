@@ -21,13 +21,15 @@
         android:id="@+id/LabelsFragment"
         android:name="com.omgodse.notally.fragments.Labels"
         android:label="@string/labels">
+
         <action
-            android:id="@+id/LabelsFragmentToDisplayLabel"
+            android:id="@+id/LabelsToDisplayLabel"
             app:destination="@id/DisplayLabelFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
     </fragment>
 
     <fragment
@@ -51,10 +53,6 @@
 
     <fragment
         android:id="@+id/DisplayLabelFragment"
-        android:name="com.omgodse.notally.fragments.DisplayLabel">
-        <argument
-            android:name="SelectedLabel"
-            app:argType="string" />
-    </fragment>
+        android:name="com.omgodse.notally.fragments.DisplayLabel" />
 
 </navigation>

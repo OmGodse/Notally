@@ -1,19 +1,15 @@
 package com.omgodse.notally.recyclerview.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.omgodse.notally.databinding.ListItemBinding
 import com.omgodse.notally.recyclerview.ListItemListener
 import com.omgodse.notally.recyclerview.viewholders.MakeListViewHolder
-import com.omgodse.notally.xml.ListItem
+import com.omgodse.notally.room.ListItem
 import java.util.*
 
-class MakeListAdapter(private val context: Context, var items: ArrayList<ListItem>) :
-    RecyclerView.Adapter<MakeListViewHolder>() {
-
-    var listItemListener: ListItemListener? = null
+class MakeListAdapter(var items: ArrayList<ListItem>, private val listItemListener: ListItemListener) : RecyclerView.Adapter<MakeListViewHolder>() {
 
     override fun getItemCount() = items.size
 
@@ -23,7 +19,8 @@ class MakeListAdapter(private val context: Context, var items: ArrayList<ListIte
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MakeListViewHolder {
-        val binding = ListItemBinding.inflate(LayoutInflater.from(context), parent, false)
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = ListItemBinding.inflate(inflater, parent, false)
         return MakeListViewHolder(binding, listItemListener)
     }
 }

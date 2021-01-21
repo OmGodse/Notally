@@ -2,22 +2,24 @@ package com.omgodse.notally.recyclerview.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.button.MaterialButton
 import com.google.android.material.textview.MaterialTextView
 import com.omgodse.notally.R
-import com.omgodse.notally.databinding.RecyclerViewItemBinding
+import com.omgodse.notally.databinding.RecyclerBaseNoteBinding
 import com.omgodse.notally.helpers.SettingsHelper
 import com.omgodse.notally.miscellaneous.applySpans
-import com.omgodse.notally.xml.BaseNote
-import com.omgodse.notally.xml.List
-import com.omgodse.notally.xml.Note
+import com.omgodse.notally.miscellaneous.bindLabels
+import com.omgodse.notally.miscellaneous.setVisible
+import com.omgodse.notally.recyclerview.ItemListener
+import com.omgodse.notally.room.BaseNote
+import com.omgodse.notally.room.Type
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 
-class BaseNoteViewHolder(private val binding: RecyclerViewItemBinding,
-                         private val settingsHelper: SettingsHelper,
-                         onNoteClicked: ((position: Int) -> Unit)?,
-                         onNoteLongClicked: ((position: Int) -> Unit)?) : RecyclerView.ViewHolder(binding.root) {
+class BaseNoteViewHolder(
+    private val binding: RecyclerBaseNoteBinding,
+    private val settingsHelper: SettingsHelper,
+    private val itemListener: ItemListener
+) : RecyclerView.ViewHolder(binding.root) {
 
     init {
         binding.Note.maxLines = settingsHelper.getMaxLines()
@@ -29,48 +31,48 @@ class BaseNoteViewHolder(private val binding: RecyclerViewItemBinding,
         }
 
         binding.root.setOnClickListener {
-            onNoteClicked?.invoke(adapterPosition)
+            itemListener.onClick(adapterPosition)
         }
 
         binding.root.setOnLongClickListener {
-            onNoteLongClicked?.invoke(adapterPosition)
+            itemListener.onLongClick(adapterPosition)
             return@setOnLongClickListener true
         }
     }
 
     fun bind(baseNote: BaseNote) {
-        when (baseNote) {
-            is Note -> bind(baseNote)
-            is List -> bind(baseNote)
+        when (baseNote.type) {
+            Type.NOTE -> bindNote(baseNote)
+            Type.LIST -> bindList(baseNote)
         }
-        bindLabels(baseNote.labels)
+        binding.Pinned.setVisible(baseNote.pinned)
+        binding.LabelGroup.bindLabels(baseNote.labels)
+        if (baseNote.isEmpty()) {
+            binding.Note.setText(baseNote.getEmptyMessage())
+            binding.Note.setVisible(true)
+        }
     }
 
-    private fun bind(note: Note) {
+    private fun bindNote(note: BaseNote) {
         binding.LinearLayout.setVisible(false)
         binding.ItemsRemaining.setVisible(false)
 
         binding.Title.text = note.title
         binding.Note.text = note.body.applySpans(note.spans)
-        binding.Date.text = PrettyTime().format(Date(note.timestamp.toLong()))
+        binding.Date.text = PrettyTime().format(Date(note.timestamp))
 
         binding.Title.setVisible(note.title.isNotEmpty())
         binding.Note.setVisible(note.body.isNotEmpty())
-
-        if (note.isEmpty()) {
-            binding.Note.setText(R.string.empty_note)
-            binding.Note.setVisible(true)
-        }
     }
 
-    private fun bind(list: List) {
+    private fun bindList(list: BaseNote) {
         binding.LinearLayout.removeAllViews()
 
         binding.Note.setVisible(false)
         binding.LinearLayout.setVisible(true)
 
         binding.Title.text = list.title
-        binding.Date.text = PrettyTime().format(Date(list.timestamp.toLong()))
+        binding.Date.text = PrettyTime().format(Date(list.timestamp))
 
         binding.Title.setVisible(list.title.isNotEmpty())
 
@@ -86,28 +88,14 @@ class BaseNoteViewHolder(private val binding: RecyclerViewItemBinding,
             } else binding.root.context.getString(R.string.more_items, itemsRemaining)
         } else null
 
-        for (listItem in filteredList) {
-            val view = View.inflate(binding.root.context, R.layout.preview_item, null) as MaterialTextView
-            view.text = listItem.body
-            view.handleChecked(listItem.checked)
+        for ((body, checked) in filteredList) {
+            val view = View.inflate(binding.root.context, R.layout.list_item_preview, null) as MaterialTextView
+            view.text = body
+            view.handleChecked(checked)
             binding.LinearLayout.addView(view)
         }
 
         binding.LinearLayout.setVisible(list.items.isNotEmpty())
-
-        if (list.isEmpty()) {
-            binding.Note.setText(R.string.empty_list)
-            binding.Note.setVisible(true)
-        }
-    }
-
-    private fun bindLabels(labels: HashSet<String>) {
-        binding.LabelGroup.removeAllViews()
-        labels.forEach {
-            val displayLabel = View.inflate(binding.root.context, R.layout.label, null) as MaterialButton
-            displayLabel.text = it
-            binding.LabelGroup.addView(displayLabel)
-        }
     }
 
 
@@ -123,20 +111,10 @@ class BaseNoteViewHolder(private val binding: RecyclerViewItemBinding,
         binding.root.strokeWidth = 0
     }
 
-
-    private fun View.setVisible(visible: Boolean) {
-        visibility = if (visible) {
-            View.VISIBLE
-        } else View.GONE
-    }
-
     private fun MaterialTextView.handleChecked(checked: Boolean) {
         if (checked) {
-            paint.isStrikeThruText = true
             setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.checkbox_16, 0, 0, 0)
-        } else {
-            paint.isStrikeThruText = false
-            setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.checkbox_outline_16, 0, 0, 0)
-        }
+        } else setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.checkbox_outline_16, 0, 0, 0)
+        paint.isStrikeThruText = checked
     }
 }

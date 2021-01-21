@@ -3,6 +3,7 @@ Notally is a minimalistic note taking app with a beautiful material design and p
 <b>Organization</b>
 
 Create lists to stay on track
+Pin notes to always keep them at the top
 Add labels to your notes for quick organisation
 Archive notes to keep them around, but out of your way
 Create rich text notes with support for bold, italics, mono space and strike-through
@@ -19,6 +20,7 @@ Add clickable links to notes with support for phone numbers, email addresses and
 • Auto save
 • Dark mode
 • Completely free
+• APK size of 1.6 MB (2.1 MB Uncompressed)
 
 <b>Privacy</b>
 

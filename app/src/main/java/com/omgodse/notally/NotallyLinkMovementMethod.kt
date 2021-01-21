@@ -75,14 +75,13 @@ class NotallyLinkMovementMethod(private var onURLClick: (span: URLSpan) -> Unit)
         touchX += textView.scrollX
         touchY += textView.scrollY
 
-        val layout = textView.layout
-        val touchedLine = layout.getLineForVertical(touchY)
-        val touchOffset = layout.getOffsetForHorizontal(touchedLine, touchX.toFloat())
+        val touchedLine = textView.layout.getLineForVertical(touchY)
+        val touchOffset = textView.layout.getOffsetForHorizontal(touchedLine, touchX.toFloat())
 
-        touchedLineBounds.left = layout.getLineLeft(touchedLine)
-        touchedLineBounds.top = layout.getLineTop(touchedLine).toFloat()
-        touchedLineBounds.right = layout.getLineWidth(touchedLine) + touchedLineBounds.left
-        touchedLineBounds.bottom = layout.getLineBottom(touchedLine).toFloat()
+        touchedLineBounds.left = textView.layout.getLineLeft(touchedLine)
+        touchedLineBounds.top = textView.layout.getLineTop(touchedLine).toFloat()
+        touchedLineBounds.right = textView.layout.getLineWidth(touchedLine) + touchedLineBounds.left
+        touchedLineBounds.bottom = textView.layout.getLineBottom(touchedLine).toFloat()
 
         return if (touchedLineBounds.contains(touchX.toFloat(), touchY.toFloat())) {
             val spans = text.getSpans(touchOffset, touchOffset, URLSpan::class.java)
@@ -110,8 +109,8 @@ class NotallyLinkMovementMethod(private var onURLClick: (span: URLSpan) -> Unit)
     }
 
     private fun dispatchUrlClick(urlSpan: URLSpan?) {
-        urlSpan?.let {
-            onURLClick.invoke(it)
+        if (urlSpan != null) {
+            onURLClick.invoke(urlSpan)
         }
     }
 }

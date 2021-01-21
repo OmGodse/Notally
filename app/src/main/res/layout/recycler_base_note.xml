@@ -3,9 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="@dimen/cardCornerRadius"
-    app:cardElevation="@dimen/cardElevation"
-    app:strokeColor="@color/Gray">
+    app:strokeColor="?attr/colorControlHighlight">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,10 +15,20 @@
         android:paddingBottom="8dp">
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/Title"
-            style="@style/Preview.Title"
+            android:id="@+id/Pinned"
+            style="@style/Preview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:paddingBottom="0dp"
+            android:text="@string/pinned"
+            android:textAppearance="@style/TextAppearance.Pinned" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/Title"
+            style="@style/Preview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Title" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/Date"
@@ -46,7 +54,7 @@
             style="@style/Preview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="0dp" />
+            android:paddingTop="4dp" />
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/LabelGroup"

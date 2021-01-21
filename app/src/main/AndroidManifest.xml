@@ -9,7 +9,6 @@
         android:icon="@mipmap/notally"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/notally_round"
-        android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
         <provider

@@ -20,6 +20,11 @@
     <string name="view_note">Visualitzar la nota…</string>
     <string name="share_note">Compartir la nota…</string>
 
+    <!-- Pinning -->
+    <string name="pin">Fixar</string>
+    <string name="unpin">Desfixar</string>
+    <string name="pinned">Fixada</string>
+
     <!-- Dialogs -->
     <string name="save">Desar</string>
     <string name="edit">Editar</string>

@@ -1,18 +1,15 @@
 package com.omgodse.notally.recyclerview.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.omgodse.notally.databinding.LabelItemBinding
+import com.omgodse.notally.databinding.RecyclerLabelBinding
+import com.omgodse.notally.recyclerview.ItemListener
 import com.omgodse.notally.recyclerview.viewholders.LabelsViewHolder
+import com.omgodse.notally.room.Label
 
-class LabelsAdapter(private val context: Context) :
-    ListAdapter<String, LabelsViewHolder>(DiffCallback()) {
-
-    var onLabelClicked: ((position: Int) -> Unit)? = null
-    var onLabelLongClicked: ((position: Int) -> Unit)? = null
+class LabelsAdapter(private val itemListener: ItemListener) : ListAdapter<Label, LabelsViewHolder>(DiffCallback()) {
 
     override fun onBindViewHolder(holder: LabelsViewHolder, position: Int) {
         val label = getItem(position)
@@ -20,17 +17,18 @@ class LabelsAdapter(private val context: Context) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LabelsViewHolder {
-        val binding = LabelItemBinding.inflate(LayoutInflater.from(context), parent, false)
-        return LabelsViewHolder(binding, onLabelClicked, onLabelLongClicked)
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = RecyclerLabelBinding.inflate(inflater, parent, false)
+        return LabelsViewHolder(binding, itemListener)
     }
 
 
-    class DiffCallback : DiffUtil.ItemCallback<String>() {
-        override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
+    class DiffCallback : DiffUtil.ItemCallback<Label>() {
+        override fun areItemsTheSame(oldItem: Label, newItem: Label): Boolean {
             return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
+        override fun areContentsTheSame(oldItem: Label, newItem: Label): Boolean {
             return oldItem == newItem
         }
     }

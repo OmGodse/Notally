@@ -20,6 +20,11 @@
     <string name="view_note">Notiz ansehen…</string>
     <string name="share_note">Notiz teilen…</string>
 
+    <!-- Pinning -->
+    <string name="pin">Anheften</string>
+    <string name="unpin">Losheften</string>
+    <string name="pinned">Angeheftet</string>
+
     <!-- Dialogs -->
     <string name="save">Speichern</string>
     <string name="edit">Bearbeiten</string>

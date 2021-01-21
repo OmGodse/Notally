@@ -1,57 +1,44 @@
 package com.omgodse.notally.fragments
 
-import android.animation.LayoutTransition
 import android.os.Bundle
-import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import androidx.core.widget.addTextChangedListener
 import com.omgodse.notally.R
 import com.omgodse.notally.activities.MainActivity
-import com.omgodse.notally.helpers.OperationsHelper
-import com.omgodse.notally.miscellaneous.Operation
-import com.omgodse.notally.xml.BaseNote
+import com.omgodse.notally.helpers.MenuHelper.Operation
+import com.omgodse.notally.room.BaseNote
 
 class Search : NotallyFragment() {
 
     private var textWatcher: TextWatcher? = null
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        model.keyword = String()
-        binding?.FrameLayout?.layoutTransition = LayoutTransition()
-
-        textWatcher = object : TextWatcher {
-            override fun afterTextChanged(query: Editable?) {
-                model.keyword = query.toString().trim()
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-        }
-
-        (mContext as MainActivity).binding.EnterSearchKeyword.addTextChangedListener(textWatcher)
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
         (mContext as MainActivity).binding.EnterSearchKeyword.removeTextChangedListener(textWatcher)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun getObservable() = model.searchResults
+        (mContext as MainActivity).binding.EnterSearchKeyword.setText(model.keyword)
+        textWatcher = (mContext as MainActivity).binding.EnterSearchKeyword.addTextChangedListener(onTextChanged = { text, start, count, after ->
+            model.keyword = text?.toString()?.trim() ?: String()
+        })
+    }
 
-    override fun getFragmentID() = R.id.SearchFragment
 
     override fun getBackground() = R.drawable.search
 
-    override fun getSupportedOperations(operationsHelper: OperationsHelper, baseNote: BaseNote): ArrayList<Operation> {
+    override fun getObservable() = model.searchResults
+
+    override fun getSupportedOperations(baseNote: BaseNote): ArrayList<Operation> {
         val operations = ArrayList<Operation>()
-        operations.add(Operation(R.string.share, R.drawable.share) { operationsHelper.shareNote(baseNote) })
+        operations.add(Operation(R.string.share, R.drawable.share) { shareNote(baseNote) })
         operations.add(Operation(R.string.labels, R.drawable.label) { labelBaseNote(baseNote) })
         operations.add(Operation(R.string.export, R.drawable.export) { showExportDialog(baseNote) })
-        operations.add(Operation(R.string.delete, R.drawable.delete) { model.moveBaseNoteToDeleted(baseNote) })
-        operations.add(Operation(R.string.archive, R.drawable.archive) { model.moveBaseNoteToArchive(baseNote) })
+        operations.add(Operation(R.string.delete, R.drawable.delete) { model.moveBaseNoteToDeleted(baseNote.id) })
+        operations.add(Operation(R.string.archive, R.drawable.archive) { model.moveBaseNoteToArchive(baseNote.id) })
         return operations
     }
 }

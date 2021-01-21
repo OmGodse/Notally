@@ -20,6 +20,11 @@
     <string name="view_note">Voir la note…</string>
     <string name="share_note">Partager la note…</string>
 
+    <!-- Pinning -->
+    <string name="pin">Épingler</string>
+    <string name="unpin">Détacher</string>
+    <string name="pinned">Épinglé</string>
+
     <!-- Dialogs -->
     <string name="save">Sauvegarder</string>
     <string name="edit">Modifier</string>

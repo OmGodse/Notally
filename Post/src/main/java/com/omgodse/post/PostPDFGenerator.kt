@@ -8,14 +8,16 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import java.io.File
 
-class PostPDFGenerator private constructor(private val file: File,
-                                           private val baseURL: String?,
-                                           private val content: String,
-                                           private val context: Context,
-                                           private val encoding: String,
-                                           private val mimeType: String,
-                                           private val printAttributes: PrintAttributes,
-                                           private val onResult: OnResult) {
+class PostPDFGenerator private constructor(
+    private val file: File,
+    private val baseURL: String?,
+    private val content: String,
+    private val context: Context,
+    private val encoding: String,
+    private val mimeType: String,
+    private val printAttributes: PrintAttributes,
+    private val onResult: OnResult
+) {
 
     fun create() {
         val webView = WebView(context)

@@ -1,9 +1,7 @@
 package com.omgodse.notally.miscellaneous
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.Typeface
-import android.net.Uri
 import android.os.Build
 import android.text.Editable
 import android.text.InputType
@@ -14,37 +12,57 @@ import android.text.style.StyleSpan
 import android.text.style.TypefaceSpan
 import android.text.style.URLSpan
 import android.view.KeyEvent
+import android.view.View
 import android.view.inputmethod.EditorInfo
-import androidx.fragment.app.Fragment
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.chip.ChipGroup
 import com.google.android.material.textfield.TextInputEditText
+import com.omgodse.notally.R
 import com.omgodse.notally.activities.TakeNote
-import com.omgodse.notally.xml.SpanRepresentation
+import com.omgodse.notally.room.ListItem
+import com.omgodse.notally.room.SpanRepresentation
 import java.util.*
 
-fun Fragment.openLink(link: String) {
-    val uri = Uri.parse(link)
-    val intent = Intent(Intent.ACTION_VIEW, uri)
-    startActivity(intent)
+fun View.setVisible(visible: Boolean) {
+    visibility = if (visible) {
+        View.VISIBLE
+    } else View.GONE
 }
 
-fun String.applySpans(representations: ArrayList<SpanRepresentation>): Editable {
+fun List<ListItem>?.getBody() = buildString {
+    this@getBody?.forEachIndexed { index, (body) ->
+        appendLine("${(index + 1)}) $body")
+    }
+}
+
+fun ChipGroup.bindLabels(labels: HashSet<String>) {
+    removeAllViews()
+    for (label in labels) {
+        val displayLabel = View.inflate(context, R.layout.label, null) as MaterialButton
+        displayLabel.backgroundTintList = displayLabel.backgroundTintList?.withAlpha(25)
+        displayLabel.text = label
+        addView(displayLabel)
+    }
+}
+
+fun String.applySpans(representations: List<SpanRepresentation>): Editable {
     val editable = Editable.Factory.getInstance().newEditable(this)
-    representations.forEach { representation ->
-        if (representation.isBold) {
-            editable.setSpan(StyleSpan(Typeface.BOLD), representation.start, representation.end)
+    representations.forEach { (bold, link, italic, monospace, strikethrough, start, end) ->
+        if (bold) {
+            editable.setSpan(StyleSpan(Typeface.BOLD), start, end)
         }
-        if (representation.isItalic) {
-            editable.setSpan(StyleSpan(Typeface.ITALIC), representation.start, representation.end)
+        if (italic) {
+            editable.setSpan(StyleSpan(Typeface.ITALIC), start, end)
         }
-        if (representation.isLink) {
-            val url = TakeNote.getURLFrom(substring(representation.start, representation.end))
-            editable.setSpan(URLSpan(url), representation.start, representation.end)
+        if (link) {
+            val url = TakeNote.getURLFrom(substring(start, end))
+            editable.setSpan(URLSpan(url), start, end)
         }
-        if (representation.isMonospace) {
-            editable.setSpan(TypefaceSpan("monospace"), representation.start, representation.end)
+        if (monospace) {
+            editable.setSpan(TypefaceSpan("monospace"), start, end)
         }
-        if (representation.isStrikethrough) {
-            editable.setSpan(StrikethroughSpan(), representation.start, representation.end)
+        if (strikethrough) {
+            editable.setSpan(StrikethroughSpan(), start, end)
         }
     }
     return editable

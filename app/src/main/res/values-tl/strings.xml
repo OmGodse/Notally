@@ -16,6 +16,11 @@
     <string name="unarchive">Tanggalin sa archive</string>
     <string name="delete_forever">Tanggalin habambuhay</string>
 
+    <!-- Pinning -->
+    <string name="pin">Pin</string>
+    <string name="unpin">Tanggalin ang pin</string>
+    <string name="pinned">Mga na-pin</string>
+
     <!-- Chooser dialog hints -->
     <string name="view_note">Tignan ang tala…</string>
     <string name="share_note">Ibahagi ang tala…</string>

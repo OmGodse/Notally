@@ -12,12 +12,17 @@
     <string name="delete">Verwijderen</string>
     <string name="restore">Herstellen</string>
     <string name="archive">Archief</string>
-    <string name="unarchive">unarchief</string>
+    <string name="unarchive">Unarchief</string>
     <string name="delete_forever">Voor altijd verwijderen</string>
 
     <!-- Chooser dialog hints -->
-    <string name="view_note">Notitie bekijken�</string>
-    <string name="share_note">Notitie delen�</string>
+    <string name="view_note">Notitie bekijken…</string>
+    <string name="share_note">Notitie delen…</string>
+
+    <!-- Pinning -->
+    <string name="pin">Vastmaken</string>
+    <string name="unpin">Losmaken</string>
+    <string name="pinned">Vastgemaakt</string>
 
     <!-- Dialogs -->
     <string name="save">Opgeslagen</string>
@@ -33,7 +38,7 @@
     <string name="label_exists">Label bestaat</string>
     <string name="delete_label">Label verwijderen?</string>
     <string name="create_new">Nog geen labels. Creëer er een?</string>
-    <string name="delete_note_forever"Notitie definitief verwijderen?</string>
+    <string name="delete_note_forever">Notitie definitief verwijderen?</string>
     <string name="your_notes_associated">Uw notities die aan dit label zijn gekoppeld, worden niet verwijderd</string>
 
     <!-- Lists and Notes -->
@@ -44,8 +49,8 @@
     <string name="add_item">Voeg item toe</string>
     <string name="one_more_item">Nog een item</string>
     <string name="more_items">%1$d meer items</string>
-    <string name="drag_handle">Sleephandvat</string> 
-    <string name="bold">Vetgedrukt</string> 
+    <string name="drag_handle">Sleephandvat</string>
+    <string name="bold">Vetgedrukt</string>
     <string name="link">Link</string>
     <string name="italic">Cursieve</string>
     <string name="strikethrough">Doorgestreepte</string>
@@ -62,9 +67,6 @@
     <string name="cant_open_link">Kan link niet openen</string>
     <string name="something_went_wrong">Er is iets fout gegaan. Probeer het opnieuw.</string>
 
-    <string name="pin">Vastmaken</string>
-    <string name="unpin">losmaken</string>
-
     <!-- Settings Page -->
     <string name="appearance">Verschijning</string>
 
@@ -77,7 +79,7 @@
     <string name="dark">Donker</string>
     <string name="follow_system">Volg de systeem</string>
 
-    <string name="card_type">Kaart type/string>
+    <string name="card_type">Kaart type</string>
     <string name="elevated">Verhoogd</string>
     <string name="flat">Vlak</string>
 

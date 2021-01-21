@@ -5,9 +5,6 @@
         <item name="colorSecondary">@color/LightBlue100</item>
         <item name="colorSurface">@color/LightBlueSurface</item>
 
-        <item name="onSurfaceTranslucent">@color/WhiteTranslucent</item>
-        <item name="secondaryTranslucent">@color/LightBlue100Translucent</item>
-
         <item name="android:navigationBarColor">@android:color/black</item>
     </style>
 </resources>

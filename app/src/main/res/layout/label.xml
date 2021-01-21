@@ -8,8 +8,8 @@
     android:ellipsize="end"
     android:focusable="false"
     android:maxLines="1"
+    android:minWidth="0dp"
     android:textAppearance="@style/TextAppearance.Preview"
     android:textColor="?attr/colorSecondary"
-    app:backgroundTint="?attr/secondaryTranslucent"
-    app:rippleColor="?attr/colorControlHighlight"
+    app:backgroundTint="?attr/colorSecondary"
     app:strokeColor="?attr/colorSecondary" />

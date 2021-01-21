@@ -7,16 +7,15 @@ import android.widget.LinearLayout.LayoutParams
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textview.MaterialTextView
 import com.omgodse.notally.R
-import com.omgodse.notally.miscellaneous.Operation
 
 class MenuHelper(private val context: Context) {
 
-    private val bottomSheetDialog = BottomSheetDialog(context)
     private val linearLayout = LinearLayout(context)
+    private val bottomSheetDialog = BottomSheetDialog(context)
 
     init {
-        linearLayout.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
         linearLayout.orientation = LinearLayout.VERTICAL
+        linearLayout.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
         bottomSheetDialog.setContentView(linearLayout)
     }
 
@@ -32,4 +31,6 @@ class MenuHelper(private val context: Context) {
         item.setCompoundDrawablesRelativeWithIntrinsicBounds(operation.drawableId, 0, 0, 0)
         linearLayout.addView(item)
     }
+
+    data class Operation(val textId: Int, val drawableId: Int, val operation: () -> Unit)
 }

@@ -9,27 +9,23 @@ import android.text.style.StyleSpan
 import android.text.style.TypefaceSpan
 import android.text.style.URLSpan
 import com.omgodse.notally.miscellaneous.applySpans
-import com.omgodse.notally.xml.BaseNote
-import com.omgodse.notally.xml.Note
-import com.omgodse.notally.xml.SpanRepresentation
+import com.omgodse.notally.room.BaseNote
+import com.omgodse.notally.room.SpanRepresentation
 import java.util.*
-import kotlin.collections.HashSet
 
 class TakeNoteModel(app: Application) : NotallyModel(app) {
 
     var body = Editable.Factory.getInstance().newEditable(String())
 
     override fun getBaseNote(): BaseNote {
-        return Note(title, file.path, labels.value ?: HashSet(), timestamp.toString(), body.toString().trimEnd(), body.getFilteredSpans())
+        return BaseNote.createNote(id, folder, title, pinned, timestamp, labels, body.toString().trimEnd(), body.getFilteredSpans())
     }
 
     override fun setStateFromBaseNote(baseNote: BaseNote) {
-        baseNote as Note
-        title = baseNote.title
-        timestamp = baseNote.timestamp.toLong()
+        super.setStateFromBaseNote(baseNote)
         body = baseNote.body.applySpans(baseNote.spans)
-        labels.value = baseNote.labels
     }
+
 
     private fun Spannable.getFilteredSpans(): ArrayList<SpanRepresentation> {
         val representations = LinkedHashSet<SpanRepresentation>()
@@ -41,12 +37,12 @@ class TakeNoteModel(app: Application) : NotallyModel(app) {
 
             when (span) {
                 is StyleSpan -> {
-                    representation.isBold = span.style == Typeface.BOLD
-                    representation.isItalic = span.style == Typeface.ITALIC
+                    representation.bold = span.style == Typeface.BOLD
+                    representation.italic = span.style == Typeface.ITALIC
                 }
-                is URLSpan -> representation.isLink = true
-                is TypefaceSpan -> representation.isMonospace = span.family == "monospace"
-                is StrikethroughSpan -> representation.isStrikethrough = true
+                is URLSpan -> representation.link = true
+                is TypefaceSpan -> representation.monospace = span.family == "monospace"
+                is StrikethroughSpan -> representation.strikethrough = true
             }
 
             if (representation.isNotUseless()) {
@@ -62,11 +58,11 @@ class TakeNoteModel(app: Application) : NotallyModel(app) {
                 spanRepresentation.isEqualInSize(representation)
             }
             if (match != null && representations.indexOf(match) != index) {
-                representation.isBold = match.isBold
-                representation.isLink = match.isLink
-                representation.isItalic = match.isItalic
-                representation.isMonospace = match.isMonospace
-                representation.isStrikethrough = match.isStrikethrough
+                representation.bold = match.bold
+                representation.link = match.link
+                representation.italic = match.italic
+                representation.monospace = match.monospace
+                representation.strikethrough = match.strikethrough
 
                 val copy = ArrayList(representations)
                 copy[index] = representation

@@ -15,6 +15,12 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/Pin"
+        android:icon="@drawable/pin"
+        android:title="@string/pin"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/Delete"
         android:icon="@drawable/delete"
         android:title="@string/delete"

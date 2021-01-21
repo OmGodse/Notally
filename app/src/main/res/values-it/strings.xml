@@ -16,6 +16,11 @@
     <string name="unarchive">Annulla Archiviazione</string>
     <string name="delete_forever">Elimina Definitivamente</string>
 
+    <!-- Pinning -->
+    <string name="pin">Fissa nota in alto</string>
+    <string name="unpin">Sblocca nota</string>
+    <string name="pinned">Blocca nota</string>
+
     <!-- Chooser dialog hints -->
     <string name="view_note">Vedi nota…</string>
     <string name="share_note">Condividi nota…</string>
