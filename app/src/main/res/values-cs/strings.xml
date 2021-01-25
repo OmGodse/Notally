@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name" translatable="false">Notally</string>
-
     <!-- Fragment Titles -->
     <string name="notes">Poznámky</string>
     <string name="labels">Štítky</string>
