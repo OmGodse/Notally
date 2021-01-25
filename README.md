@@ -29,24 +29,9 @@ Well, Notally is none of these things. It's extremely light, minimalistic and el
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="70"/>](https://f-droid.org/packages/com.omgodse.notally/)
 
 ### Translations
-* 🇬🇧 English
-* 🇳🇱 Dutch by [tlmnot](https://github.com/tlmnot)
-* 🇦🇩 Catalan by retiolus
-* 🇵🇱 Polish by [ZiomaleQ](https://github.com/ZiomaleQ)
-* 🇮🇩 Indonesian by [zmni](https://github.com/zmni)
-* 🇮🇹 Italian by Luigi Sforza
-* 🇪🇸 Spanish by Jose Casas
-* 🇺🇦 Ukrainian by Alex Shpak
-* 🇸🇪 Swedish by Erik Lindström
-* 🇷🇺 Russian by Denis Bondarenko
-* 🇫🇷 French by Arnaud Dieumegard
-* 🇧🇷 Brazilian Portuguese by [fabianski7](https://github.com/fabianski7)
-* 🇳🇴 Norwegian by Fredrik Magnussen
-* 🇵🇭 Tagalog by Isaiah Collins Abetong
-* 🇩🇪 German by Maximilian Braunschmied
+The list of supported languages is present in [CONTRIBUTORS.md](CONTRIBUTORS.md)
 
-If you would like to help translate the app, please contact me [here](mailto:omgodseapps@gmail.com)
-(Even in few of the languages specified, there are some untranslated phrases)
+If you would like to help translate the app further, please contact me [here](mailto:omgodseapps@gmail.com)
 
 ### Screenshots
 <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width="250"/><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width="250"/><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width="250"/>
