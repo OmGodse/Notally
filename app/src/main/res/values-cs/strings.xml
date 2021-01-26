@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Fragment Titles -->
     <string name="notes">Poznámky</string>
@@ -32,8 +33,6 @@
     <string name="take_note">Napsat poznámku</string>
     <string name="add_label">Nový štítek</string>
     <string name="export">Exportovat</string>
-    <string name="pdf" translatable="false">PDF</string>
-    <string name="html" translatable="false">HTML</string>
     <string name="plain_text">Prostý text</string>
     <string name="save_to_device">Uložit do zařízení</string>
     <string name="edit_label">Upravit štítek</string>

@@ -15,7 +15,8 @@ android {
         targetSdkVersion rootProject.ext.targetSDKVersion
         versionCode 28
         versionName "3.3"
-        resConfigs 'en', 'ca', 'de', 'es', 'fr', 'in', 'it', 'nb', 'nl', 'pl', 'pt-rBR', 'ru', 'sv', 'tl', 'uk'
+        resConfigs 'en', 'ca', 'cs', 'de', 'es', 'fr', 'in', 'it', 'nb', 'nl', 'pl', 'pt-rBR', 'ru', 'sv', 'tl', 'uk'
+        vectorDrawables.generatedDensities = []
     }
 
     buildTypes {

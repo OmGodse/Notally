@@ -31,7 +31,7 @@ Well, Notally is none of these things. It's extremely light, minimalistic and el
 ### Translations
 The list of supported languages is present in [CONTRIBUTORS.md](CONTRIBUTORS.md)
 
-If you would like to help translate the app further, please contact me [here](mailto:omgodseapps@gmail.com)
+If you would like to help translate the app further, please contact me via [email](mailto:omgodseapps@gmail.com) or open a pull request.
 
 ### Screenshots
 <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width="250"/><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width="250"/><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width="250"/>

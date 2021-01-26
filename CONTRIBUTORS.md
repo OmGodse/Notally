@@ -1,6 +1,7 @@
 ### Translations
 * 🇬🇧 English
 * 🇳🇱 Dutch by [tlmnot](https://github.com/tlmnot)
+* 🇨🇿 Czech by [tomo90](https://github.com/tomo90)
 * 🇦🇩 Catalan by retiolus
 * 🇵🇱 Polish by [ZiomaleQ](https://github.com/ZiomaleQ)
 * 🇮🇩 Indonesian by [zmni](https://github.com/zmni)
