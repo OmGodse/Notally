@@ -18,8 +18,8 @@
 
     <!-- Pinning -->
     <string name="pin">Fissa nota in alto</string>
-    <string name="unpin">Sblocca nota</string>
-    <string name="pinned">Blocca nota</string>
+    <string name="unpin">Non fissare nota in alto</string>
+    <string name="pinned">Nota fissata in alto</string>
 
     <!-- Chooser dialog hints -->
     <string name="view_note">Vedi nota…</string>
