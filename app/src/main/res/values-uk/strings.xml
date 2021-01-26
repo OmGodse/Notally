@@ -16,6 +16,11 @@
     <string name="unarchive">Розархівувати</string>
     <string name="delete_forever">Видалити назавжди</string>
 
+    <!-- Pinning -->
+    <string name="pin">Закріпити</string>
+    <string name="unpin">Відкріпити</string>
+    <string name="pinned">Закріплено</string>
+
     <!-- Chooser dialog hints -->
     <string name="view_note">Переглянути…</string>
     <string name="share_note">Поширити…</string>
