@@ -3,9 +3,9 @@ package com.omgodse.notally.viewmodels
 import android.app.Application
 import android.content.Context
 import android.net.Uri
+import android.text.Html
 import android.widget.Toast
 import androidx.core.content.edit
-import androidx.core.text.HtmlCompat
 import androidx.core.text.toHtml
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
@@ -39,6 +39,8 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     private val labelCache = HashMap<String, Content<BaseNote>>()
 
     private val settingsHelper = SettingsHelper(app)
+    private val formatter = SimpleDateFormat(DateFormat, app.getLocale())
+
     var currentFile: File? = null
 
     val labels = Content(labelDao.getAllLabels())
@@ -211,11 +213,10 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     }
 
     private fun getHTML(baseNote: BaseNote) = buildString {
-        val formatter = SimpleDateFormat(DateFormat, app.getLocale())
         val date = formatter.format(baseNote.timestamp)
 
-        append("<html><head><meta charset=\"UTF-8\" /></head><body>")
-        append("<h2>${baseNote.title}</h2>")
+        append("<html><head><meta charset=\"UTF-8\"></head><body>")
+        append("<h2>${Html.escapeHtml(baseNote.title)}</h2>")
 
         if (settingsHelper.getShowDateCreated()) {
             append("<p>$date</p>")
@@ -223,7 +224,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
         when (baseNote.type) {
             Type.NOTE -> {
-                val body = baseNote.body.applySpans(baseNote.spans).toHtml(HtmlCompat.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE)
+                val body = baseNote.body.applySpans(baseNote.spans).toHtml()
                 append("<p>$body</p>")
             }
             Type.LIST -> {
@@ -238,7 +239,6 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     }
 
     private fun getPlainText(baseNote: BaseNote) = buildString {
-        val formatter = SimpleDateFormat(DateFormat, app.getLocale())
         val date = formatter.format(baseNote.timestamp)
 
         val body = when (baseNote.type) {
