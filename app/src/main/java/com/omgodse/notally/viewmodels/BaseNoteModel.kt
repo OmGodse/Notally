@@ -235,7 +235,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
                 append("</ol>")
             }
         }
-        append("</body></html")
+        append("</body></html>")
     }
 
     private fun getPlainText(baseNote: BaseNote) = buildString {
