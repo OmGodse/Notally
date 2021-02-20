@@ -143,7 +143,6 @@
 
     <style name="AlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
         <item name="materialAlertDialogTitleTextStyle">@style/AlertDialog.Title</item>
-        <item name="buttonBarNeutralButtonStyle">@style/AlertDialog.Button</item>
         <item name="buttonBarNegativeButtonStyle">@style/AlertDialog.Button</item>
         <item name="buttonBarPositiveButtonStyle">@style/AlertDialog.Button</item>
     </style>

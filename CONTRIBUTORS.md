@@ -9,6 +9,7 @@
 * 🇪🇸 Spanish by Jose Casas
 * 🇺🇦 Ukrainian by Alex Shpak
 * 🇸🇪 Swedish by Erik Lindström
+* 🇭🇺 Hungarian by Helpful User
 * 🇷🇺 Russian by Denis Bondarenko
 * 🇫🇷 French by Arnaud Dieumegard
 * 🇧🇷 Brazilian Portuguese by [fabianski7](https://github.com/fabianski7)

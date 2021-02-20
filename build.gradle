@@ -4,7 +4,7 @@ buildscript {
         minSDKVersion = 21
         targetSDKVersion = 29
         compileSDKVersion = 30
-        kotlinVersion = '1.4.21'
+        kotlinVersion = "1.4.30"
     }
 
     repositories {
@@ -13,7 +13,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.2'
+        classpath "com.android.tools.build:gradle:4.1.2"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     }
 }
