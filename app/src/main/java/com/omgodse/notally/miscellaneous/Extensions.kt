@@ -23,17 +23,18 @@ import com.omgodse.notally.room.ListItem
 import com.omgodse.notally.room.SpanRepresentation
 import java.util.*
 
+fun List<ListItem>?.getBody() = buildString {
+    this@getBody?.forEachIndexed { index, (body) ->
+        appendLine("${(index + 1)}) $body")
+    }
+}
+
 fun View.setVisible(visible: Boolean) {
     visibility = if (visible) {
         View.VISIBLE
     } else View.GONE
 }
 
-fun List<ListItem>?.getBody() = buildString {
-    this@getBody?.forEachIndexed { index, (body) ->
-        appendLine("${(index + 1)}) $body")
-    }
-}
 
 fun ChipGroup.bindLabels(labels: HashSet<String>) {
     removeAllViews()
@@ -55,7 +56,7 @@ fun String.applySpans(representations: List<SpanRepresentation>): Editable {
             editable.setSpan(StyleSpan(Typeface.ITALIC), start, end)
         }
         if (link) {
-            val url = TakeNote.getURLFrom(substring(start, end))
+            val url = getURL(start, end)
             editable.setSpan(URLSpan(url), start, end)
         }
         if (monospace) {
@@ -68,11 +69,19 @@ fun String.applySpans(representations: List<SpanRepresentation>): Editable {
     return editable
 }
 
+
+private fun String.getURL(start: Int, end: Int): String {
+    return if (end <= length) {
+        TakeNote.getURLFrom(substring(start, end))
+    } else TakeNote.getURLFrom(substring(start, length))
+}
+
 private fun Spannable.setSpan(span: Any, start: Int, end: Int) {
     if (end <= length) {
         setSpan(span, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
     } else setSpan(span, start, length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 }
+
 
 fun Context.getLocale(): Locale {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
