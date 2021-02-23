@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="AppTheme" parent="Base.AppTheme">
-        <item name="colorPrimaryDark">@color/LightBlueSurface</item>
+        <item name="colorPrimaryDark">?attr/colorSurface</item>
         <item name="colorSecondary">@color/LightBlue100</item>
-        <item name="colorSurface">@color/LightBlueSurface</item>
 
         <item name="android:navigationBarColor">@android:color/black</item>
     </style>

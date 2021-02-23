@@ -2,7 +2,6 @@
 <resources>
     <color name="LightBlue500">#03A9F4</color>
     <color name="LightBlue100">#B3E5fC</color>
-    <color name="LightBlueSurface">#11181B</color>
 
     <color name="FABRipple">#80FFFFFF</color>
 
