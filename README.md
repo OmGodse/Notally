@@ -1,3 +1,5 @@
+*Development has paused and will resume in June*
+
 ### Background
 Although there are many notes apps out there, they're all hideous, glitchy, low quality or all 3 at the same time.
 
