@@ -1,4 +1,4 @@
-*Development has paused and will resume in June*
+*Development has paused and will resume in June. Please use the issues tab only for bug reports*
 
 ### Background
 Although there are many notes apps out there, they're all hideous, glitchy, low quality or all 3 at the same time.
