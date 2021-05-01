@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fragment Titles -->
+    <string name="notes">ملاحظات</string>
+    <string name="labels">اسماء لأنواع المهام</string>
+    <string name="deleted">محذوف</string>
+    <string name="archived">مؤرشف</string>
+    <string name="settings">الاِعدادات</string>
+
+    <!-- Menu Options -->
+    <string name="share">مشاركة</string>
+    <string name="search">بحث</string>
+    <string name="delete">حذف</string>
+    <string name="restore">استرجاع</string>
+    <string name="archive">ارشفة</string>
+    <string name="unarchive">الغاء الارشفة</string>
+    <string name="delete_forever">حذف مجلد</string>
+
+    <!-- Chooser dialog hints -->
+    <string name="view_note">اظهار الملاحظة…</string>
+    <string name="share_note">مشاركة الملاحاظة…</string>
+
+    <!-- Pinning -->
+    <string name="pin">ثبت</string>
+    <string name="unpin">الغاء التثبيت</string>
+    <string name="pinned">مثبت</string>
+
+    <!-- Dialogs -->
+    <string name="save">احفظ</string>
+    <string name="edit">عدل</string>
+    <string name="cancel">الغاء</string>
+    <string name="make_list">صنع قائمة</string>
+    <string name="take_note">خذ ملاحظة</string>
+    <string name="add_label">ضع نوع </string>
+    <string name="export">تصدير</string>
+    <string name="plain_text">نص اعتيادي</string>
+    <string name="save_to_device">حفظ الى الجهاز</string>
+    <string name="edit_label">تحرير النوع</string>
+    <string name="label_exists">النوع الموجود</string>
+    <string name="delete_label">حذف النوع ؟</string>
+    <string name="create_new"> لا يوجد اي انواع , اتريد صنع واحد؟</string>
+    <string name="delete_note_forever">حذف النوع للابد ؟</string>
+    <string name="your_notes_associated">لم بتم حذف ملاحظاتك المرتبطة بهذا النوع</string>
+
+    <!-- Lists and Notes -->
+    <string name="note">ملاحظة</string>
+    <string name="item">عنصر</string>
+    <string name="date">تاريخ</string>
+    <string name="title">عنوان</string>
+    <string name="add_item">اضف عنوان</string>
+    <string name="one_more_item">عنصر اضافي واحد</string>
+    <string name="more_items">%1$d عناصر اضافية</string>
+    <string name="drag_handle">اسحب العنصر</string>
+    <string name="bold">غليظ</string>
+    <string name="link">رابط</string>
+    <string name="italic">مائل</string>
+    <string name="strikethrough">في وسطه خط</string>
+    <string name="clear_formatting">تنسيق واطح</string>
+    <string name="monospace">خط monospace</string>
+
+    <!-- Miscellaneous -->
+    <string name="saved_to_device">حفظ في جهاز</string>
+    <string name="saved_to_notally">حفظ في نوتلي</string>
+    <string name="empty_note">ملاحظة فارغة</string>
+    <string name="empty_list">قائمة فارغة</string>
+    <string name="discarded_empty_note">ملاحظة فارغة تم التخلص منها </string>
+    <string name="discarded_empty_list">قائمة فارغة تم التخلص منها</string>
+    <string name="cant_open_link">لا بمكن فتح الرابط </string>
+    <string name="something_went_wrong">حصل خطاء ما .</string>
+
+    <!-- Settings Page -->
+    <string name="appearance">المظهر</string>
+
+    <string name="view">المنظر</string>
+    <string name="list">قائمة</string>
+    <string name="grid">شبكة</string>
+
+    <string name="theme">الثيم</string>
+    <string name="light">فاتح</string>
+    <string name="dark">غامق</string>
+    <string name="follow_system">اتبع النظام</string>
+
+    <string name="card_type">نوع البطاقة</string>
+    <string name="elevated">مرفوع</string>
+    <string name="flat">مسطح</string>
+
+    <string name="content_density">كثافة المحتوى</string>
+    <string name="max_items_to_display">اكثر عناصر للشاشة</string>
+    <string name="max_lines_to_display">اكثر سطور للشاشة</string>
+
+    <string name="show_date_created">عرض تاريخ الانشاء </string>
+
+    <string name="backup">نسخ احياطي</string>
+    <string name="export_notes_to_a_file">صدر الملاحظات الى ملف </string>
+    <string name="import_notes_from_a_file">استيراد الملاحظات من ملف</string>
+
+    <string name="about">عن</string>
+    <string name="libraries">المكتبات</string>
+    <string name="rate">قيمنا</string>
+</resources>
