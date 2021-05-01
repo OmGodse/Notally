@@ -76,13 +76,13 @@
     <string name="grid">Rutnät</string>
 
     <string name="theme">Tema</string>
-    <string name="light">Ljus</string>
     <string name="dark">Mörk</string>
+    <string name="light">Ljus</string>
     <string name="follow_system">Följ systemet</string>
 
     <string name="card_type">Kort typ</string>
-    <string name="elevated">Upphöjd</string>
     <string name="flat">Platt</string>
+    <string name="elevated">Upphöjd</string>
 
     <string name="content_density">Innehållstäthet</string>
     <string name="max_items_to_display">Max antal objekt att visa i lista</string>

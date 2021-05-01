@@ -12,14 +12,14 @@
     </string-array>
 
     <string-array name="themeEntries">
-        <item>@string/light</item>
         <item>@string/dark</item>
+        <item>@string/light</item>
         <item>@string/follow_system</item>
     </string-array>
 
     <string-array name="themeValues">
-        <item>@string/lightKey</item>
         <item>@string/darkKey</item>
+        <item>@string/lightKey</item>
         <item>@string/followSystemKey</item>
     </string-array>
 
@@ -34,12 +34,12 @@
     </string-array>
 
     <string-array name="noteTypeEntries">
-        <item>@string/elevated</item>
         <item>@string/flat</item>
+        <item>@string/elevated</item>
     </string-array>
 
     <string-array name="noteTypeValues">
-        <item>@string/elevatedKey</item>
         <item>@string/flatKey</item>
+        <item>@string/elevatedKey</item>
     </string-array>
 </resources>

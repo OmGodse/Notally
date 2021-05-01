@@ -76,13 +76,13 @@
     <string name="grid">Raster</string>
 
     <string name="theme">Design</string>
-    <string name="light">Hell</string>
     <string name="dark">Dunkel</string>
+    <string name="light">Hell</string>
     <string name="follow_system">An system anpassen</string>
 
     <string name="card_type">Kartentyp</string>
-    <string name="elevated">Erhöht</string>
     <string name="flat">Flach</string>
+    <string name="elevated">Erhöht</string>
 
     <string name="content_density">Dichte des inhalts</string>
     <string name="max_items_to_display">Maximale anzahl anzuzeigender elemente in liste</string>

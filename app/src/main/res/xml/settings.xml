@@ -57,7 +57,7 @@
             app:defaultValue="true"
             app:iconSpaceReserved="false"
             app:key="@string/showDateCreatedKey"
-            app:title="@string/show_date_created"/>
+            app:title="@string/show_date_created" />
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -72,7 +72,7 @@
         <Preference
             app:iconSpaceReserved="false"
             app:key="@string/importNotesFromAFileKey"
-            app:title="@string/import_notes_from_a_file"/>
+            app:title="@string/import_notes_from_a_file" />
 
     </PreferenceCategory>
 

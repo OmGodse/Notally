@@ -76,13 +76,13 @@
     <string name="grid">Mřížka</string>
 
     <string name="theme">Téma</string>
-    <string name="light">Světlé</string>
     <string name="dark">Tmavé</string>
+    <string name="light">Světlé</string>
     <string name="follow_system">Podle systému</string>
 
     <string name="card_type">Styl poznámky</string>
-    <string name="elevated">Vyvýšený</string>
     <string name="flat">Plochý</string>
+    <string name="elevated">Vyvýšený</string>
 
     <string name="content_density">Kompaktnost obsahu</string>
     <string name="max_items_to_display">Max. počet položek v seznamu</string>

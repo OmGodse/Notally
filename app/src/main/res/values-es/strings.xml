@@ -76,13 +76,13 @@
     <string name="grid">Cuadrícula</string>
 
     <string name="theme">Tema</string>
-    <string name="light">Claro</string>
     <string name="dark">Oscuro</string>
+    <string name="light">Claro</string>
     <string name="follow_system">Seguir el sistema</string>
 
     <string name="card_type">Tipo de tarjeta</string>
-    <string name="elevated">Elevada</string>
     <string name="flat">Plana</string>
+    <string name="elevated">Elevada</string>
 
     <string name="content_density">Densidad de contenido</string>
     <string name="max_items_to_display">Elementos máximos para mostrar en lista</string>

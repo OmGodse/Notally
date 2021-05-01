@@ -76,13 +76,13 @@
     <string name="grid">Сітка</string>
 
     <string name="theme">Тема</string>
-    <string name="light">Світла</string>
     <string name="dark">Темна</string>
+    <string name="light">Світла</string>
     <string name="follow_system">Системні налаштування</string>
 
     <string name="card_type">Тип картки</string>
-    <string name="elevated">Підвищений</string>
     <string name="flat">Плоский</string>
+    <string name="elevated">Підвищений</string>
 
     <string name="content_density">Щільність вмісту</string>
     <string name="max_items_to_display">Максимальна кількількість елементів в списку</string>

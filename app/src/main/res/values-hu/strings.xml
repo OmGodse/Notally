@@ -76,13 +76,13 @@
     <string name="grid">Rács</string>
 
     <string name="theme">Téma</string>
-    <string name="light">Világos</string>
     <string name="dark">Sötét</string>
+    <string name="light">Világos</string>
     <string name="follow_system">Rendszer követése</string>
 
     <string name="card_type">Kártya típusa</string>
-    <string name="elevated">Lebegő</string>
     <string name="flat">Lapos</string>
+    <string name="elevated">Lebegő</string>
 
     <string name="content_density">Tartalom sűrűsége</string>
     <string name="max_items_to_display">Elemek száma egy listában</string>

@@ -76,13 +76,13 @@
     <string name="grid">Сетка</string>
 
     <string name="theme">Тема</string>
-    <string name="light">Светлая</string>
     <string name="dark">Темная</string>
+    <string name="light">Светлая</string>
     <string name="follow_system">Как на устройстве</string>
 
     <string name="card_type">Вид карточек</string>
-    <string name="elevated">поднятый</string>
     <string name="flat">Плоские</string>
+    <string name="elevated">поднятый</string>
 
     <string name="content_density">Плотность содержимого</string>
     <string name="max_items_to_display">Максимум отображаемых пунктов в списке</string>

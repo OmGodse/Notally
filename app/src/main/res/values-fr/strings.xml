@@ -76,13 +76,13 @@
     <string name="grid">Grille</string>
 
     <string name="theme">Thème</string>
-    <string name="light">Lumineux</string>
     <string name="dark">Sombre</string>
+    <string name="light">Lumineux</string>
     <string name="follow_system">En fonction du système</string>
 
     <string name="card_type">Modèle des cartes</string>
-    <string name="elevated">Relief</string>
     <string name="flat">Plat</string>
+    <string name="elevated">Relief</string>
 
     <string name="content_density">Densité d\'affichage</string>
     <string name="max_items_to_display">Nombre maximum d\'éléments à afficher dans une liste</string>

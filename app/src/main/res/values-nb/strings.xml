@@ -71,13 +71,13 @@
     <string name="grid">Rutenett</string>
 
     <string name="theme">Tema</string>
-    <string name="light">Lyst</string>
     <string name="dark">Mørkt</string>
+    <string name="light">Lyst</string>
     <string name="follow_system">Følg systeminnstillinger</string>
 
     <string name="card_type">Visningstype</string>
-    <string name="elevated">Forhøyet</string>
     <string name="flat">Flatt</string>
+    <string name="elevated">Forhøyet</string>
 
     <string name="content_density">Innholdstetthet</string>
     <string name="max_items_to_display">Maks antall elementer fremvist av liste</string>

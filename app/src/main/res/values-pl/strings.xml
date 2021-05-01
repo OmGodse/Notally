@@ -76,13 +76,13 @@
     <string name="grid">Siatka</string>
 
     <string name="theme">Motyw</string>
-    <string name="light">Jasny</string>
     <string name="dark">Ciemny</string>
+    <string name="light">Jasny</string>
     <string name="follow_system">Systemowy</string>
 
     <string name="card_type">Typ karty</string>
-    <string name="elevated">Podniesiony</string>
     <string name="flat">Płaski</string>
+    <string name="elevated">Podniesiony</string>
 
     <string name="content_density">Gęstość</string>
     <string name="max_items_to_display">Maksymalna ilość elementów w liście do pokazania</string>
