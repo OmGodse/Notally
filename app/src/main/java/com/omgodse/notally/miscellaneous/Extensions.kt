@@ -76,10 +76,20 @@ private fun String.getURL(start: Int, end: Int): String {
     } else TakeNote.getURLFrom(substring(start, length))
 }
 
+/**
+ * For some reason, this method crashes sometimes with an
+ * IndexOutOfBoundsException that I've not been able to replicate.
+ * When this happens, to prevent the entire app from crashing and becoming
+ * unusable, the exception is suppressed.
+ */
 private fun Spannable.setSpan(span: Any, start: Int, end: Int) {
-    if (end <= length) {
-        setSpan(span, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-    } else setSpan(span, start, length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+    try {
+        if (end <= length) {
+            setSpan(span, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        } else setSpan(span, start, length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+    } catch (exception: Exception) {
+        exception.printStackTrace()
+    }
 }
 
 

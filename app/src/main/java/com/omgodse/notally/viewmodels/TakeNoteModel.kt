@@ -12,6 +12,7 @@ import com.omgodse.notally.miscellaneous.applySpans
 import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.SpanRepresentation
 import java.util.*
+import kotlin.collections.ArrayList
 
 class TakeNoteModel(app: Application) : NotallyModel(app) {
 
@@ -58,12 +59,21 @@ class TakeNoteModel(app: Application) : NotallyModel(app) {
                 spanRepresentation.isEqualInSize(representation)
             }
             if (match != null && representations.indexOf(match) != index) {
-                representation.bold = match.bold
-                representation.link = match.link
-                representation.italic = match.italic
-                representation.monospace = match.monospace
-                representation.strikethrough = match.strikethrough
-
+                if (match.bold) {
+                    representation.bold = true
+                }
+                if (match.link) {
+                    representation.link = true
+                }
+                if (match.italic) {
+                    representation.italic = true
+                }
+                if (match.monospace) {
+                    representation.monospace = true
+                }
+                if (match.strikethrough) {
+                    representation.strikethrough = true
+                }
                 val copy = ArrayList(representations)
                 copy[index] = representation
                 copy.remove(match)

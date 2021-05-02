@@ -7,10 +7,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.Spannable
 import android.text.Spanned
-import android.text.style.StrikethroughSpan
-import android.text.style.StyleSpan
-import android.text.style.TypefaceSpan
-import android.text.style.URLSpan
+import android.text.style.*
 import android.util.Patterns
 import android.view.ActionMode
 import android.view.Menu
@@ -184,23 +181,7 @@ class TakeNote : NotallyActivity() {
         val selectionStart = binding.EnterBody.selectionStart
 
         ifBothNotNullAndInvalid(selectionStart, selectionEnd) { start, end ->
-            val styleSpans = binding.EnterBody.text?.getSpans(start, end, StyleSpan::class.java)
-            styleSpans?.forEach { span ->
-                binding.EnterBody.text?.removeSpan(span)
-            }
-
-            val linkSpans = binding.EnterBody.text?.getSpans(start, end, URLSpan::class.java)
-            linkSpans?.forEach { span ->
-                binding.EnterBody.text?.removeSpan(span)
-            }
-
-            val typefaceSpans = binding.EnterBody.text?.getSpans(start, end, TypefaceSpan::class.java)
-            typefaceSpans?.forEach { span ->
-                binding.EnterBody.text?.removeSpan(span)
-            }
-
-            val strikethroughSpans = binding.EnterBody.text?.getSpans(start, end, StrikethroughSpan::class.java)
-            strikethroughSpans?.forEach { span ->
+            binding.EnterBody.text?.getSpans(start, end, CharacterStyle::class.java)?.forEach { span ->
                 binding.EnterBody.text?.removeSpan(span)
             }
         }
