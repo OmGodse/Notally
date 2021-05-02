@@ -6,7 +6,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.activityViewModels
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -41,33 +40,24 @@ class Settings : PreferenceFragmentCompat() {
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
             intent.type = "text/xml"
             intent.addCategory(Intent.CATEGORY_OPENABLE)
-            startActivityForResult(intent, Constants.RequestCodeImportFile)
+            startActivityForResult(intent, RequestCodeImportFile)
             return@setOnPreferenceClickListener true
         }
 
-        findPreference<Preference>(R.string.githubKey)?.setOnPreferenceClickListener {
-            openLink(Github)
-            return@setOnPreferenceClickListener true
-        }
+        bindPreferenceToLink(R.string.githubKey, "https://github.com/OmGodse/Notally")
 
-        findPreference<Preference>(R.string.patreonKey)?.setOnPreferenceClickListener {
-            openLink(Patreon)
-            return@setOnPreferenceClickListener true
-        }
+        bindPreferenceToLink(R.string.patreonKey, "https://www.patreon.com/omgodse")
 
-        findPreference<Preference>(R.string.rateKey)?.setOnPreferenceClickListener {
-            openLink(PlayStore)
-            return@setOnPreferenceClickListener true
-        }
+        bindPreferenceToLink(R.string.rateKey, "https://play.google.com/store/apps/details?id=com.omgodse.notally")
 
         findPreference<Preference>(R.string.librariesKey)?.setOnPreferenceClickListener {
             val builder = MaterialAlertDialogBuilder(mContext)
             builder.setTitle(R.string.libraries)
             builder.setItems(R.array.libraries) { dialog, which ->
                 when (which) {
-                    0 -> openLink(Room)
-                    1 -> openLink(PrettyTime)
-                    2 -> openLink(MaterialComponents)
+                    0 -> openLink("https://mvnrepository.com/artifact/androidx.room")
+                    1 -> openLink("https://github.com/ocpsoft/prettytime")
+                    2 -> openLink("https://github.com/material-components/material-components-android")
                 }
             }
             builder.setNegativeButton(R.string.cancel, null)
@@ -82,15 +72,6 @@ class Settings : PreferenceFragmentCompat() {
         findPreference<Preference>(R.string.maxLinesToDisplayInNoteKey)?.setOnPreferenceChangeListener { preference, newValue ->
             return@setOnPreferenceChangeListener newValue.toString().isNotEmpty()
         }
-
-        findPreference<Preference>(R.string.themeKey)?.setOnPreferenceChangeListener { preference, newValue ->
-            when (newValue) {
-                getString(R.string.darkKey) -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                getString(R.string.lightKey) -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                getString(R.string.followSystemKey) -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-            }
-            return@setOnPreferenceChangeListener true
-        }
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -98,17 +79,13 @@ class Settings : PreferenceFragmentCompat() {
     }
 
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == Constants.RequestCodeExportFile && resultCode == Activity.RESULT_OK) {
-            val uri = data?.data
-            if (uri != null) {
-                model.exportBackup(uri)
-            }
-        }
-        if (requestCode == Constants.RequestCodeImportFile && resultCode == Activity.RESULT_OK) {
-            val uri = data?.data
-            if (uri != null) {
-                model.importBackup(uri)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
+        if (resultCode == Activity.RESULT_OK) {
+            intent?.data?.let { uri ->
+                when (requestCode) {
+                    RequestCodeImportFile -> model.importBackup(uri)
+                    Constants.RequestCodeExportFile -> model.exportBackup(uri)
+                }
             }
         }
     }
@@ -120,14 +97,16 @@ class Settings : PreferenceFragmentCompat() {
         startActivity(intent)
     }
 
+    private fun bindPreferenceToLink(keyId: Int, link: String) {
+        findPreference<Preference>(keyId)?.setOnPreferenceClickListener {
+            openLink(link)
+            return@setOnPreferenceClickListener true
+        }
+    }
+
     private fun <T> findPreference(id: Int): T? = findPreference(mContext.getString(id))
 
     companion object {
-        private const val Patreon = "https://www.patreon.com/omgodse"
-        private const val Github = "https://github.com/OmGodse/Notally"
-        private const val PrettyTime = "https://github.com/ocpsoft/prettytime"
-        private const val Room = "https://mvnrepository.com/artifact/androidx.room"
-        private const val PlayStore = "https://play.google.com/store/apps/details?id=com.omgodse.notally"
-        private const val MaterialComponents = "https://github.com/material-components/material-components-android"
+        private const val RequestCodeImportFile = 20
     }
 }

@@ -17,8 +17,8 @@ import com.omgodse.notally.R
 import com.omgodse.notally.databinding.DialogInputBinding
 import com.omgodse.notally.databinding.FragmentNotesBinding
 import com.omgodse.notally.helpers.MenuHelper
-import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.helpers.MenuHelper.Operation
+import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.recyclerview.ItemListener
 import com.omgodse.notally.recyclerview.adapters.LabelsAdapter
 import com.omgodse.notally.room.Label
@@ -58,6 +58,7 @@ class Labels : Fragment(), ItemListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         labelsAdapter = LabelsAdapter(this)
 
+        binding?.RecyclerView?.setHasFixedSize(true)
         binding?.RecyclerView?.adapter = labelsAdapter
         binding?.RecyclerView?.layoutManager = LinearLayoutManager(mContext)
         val itemDecoration = DividerItemDecoration(mContext, RecyclerView.VERTICAL)
@@ -104,18 +105,17 @@ class Labels : Fragment(), ItemListener {
 
 
     private fun displayAddLabelDialog() {
-        val builder = MaterialAlertDialogBuilder(mContext)
-        val dialogBinding = DialogInputBinding.inflate(LayoutInflater.from(context))
+        val dialogBinding = DialogInputBinding.inflate(LayoutInflater.from(mContext))
 
         dialogBinding.edit.inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS
         dialogBinding.edit.filters = arrayOf()
 
-        builder.setView(dialogBinding.root)
-        builder.setTitle(R.string.add_label)
-        builder.setPositiveButton(R.string.save, null)
-        builder.setNegativeButton(R.string.cancel, null)
-
-        val dialog = builder.create()
+        val dialog = MaterialAlertDialogBuilder(mContext)
+            .setView(dialogBinding.root)
+            .setTitle(R.string.add_label)
+            .setPositiveButton(R.string.save, null)
+            .setNegativeButton(R.string.cancel, null)
+            .create()
 
         dialog.setOnShowListener {
             dialogBinding.edit.requestFocus()
@@ -148,20 +148,19 @@ class Labels : Fragment(), ItemListener {
     }
 
     private fun displayEditLabelDialog(oldLabel: Label) {
-        val builder = MaterialAlertDialogBuilder(mContext)
-        val dialogBinding = DialogInputBinding.inflate(LayoutInflater.from(context))
+        val dialogBinding = DialogInputBinding.inflate(LayoutInflater.from(mContext))
 
         dialogBinding.edit.inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS
         dialogBinding.edit.filters = arrayOf()
 
         dialogBinding.edit.setText(oldLabel.value)
 
-        builder.setView(dialogBinding.root)
-        builder.setTitle(R.string.edit_label)
-        builder.setPositiveButton(R.string.save, null)
-        builder.setNegativeButton(R.string.cancel, null)
-
-        val dialog = builder.create()
+        val dialog = MaterialAlertDialogBuilder(mContext)
+            .setView(dialogBinding.root)
+            .setTitle(R.string.edit_label)
+            .setPositiveButton(R.string.save, null)
+            .setNegativeButton(R.string.cancel, null)
+            .create()
 
         dialog.setOnShowListener {
             dialogBinding.edit.requestFocus()

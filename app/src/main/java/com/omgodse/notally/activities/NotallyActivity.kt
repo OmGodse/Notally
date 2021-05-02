@@ -51,10 +51,7 @@ abstract class NotallyActivity : AppCompatActivity(), OperationsParent {
             if (selectedBaseNote != null) {
                 model.isNewNote = false
                 model.setStateFromBaseNote(selectedBaseNote)
-            } else {
-                model.isNewNote = true
-                setResult(Constants.ResultCodeCreatedFile)
-            }
+            } else model.isNewNote = true
 
             if (intent.action == Intent.ACTION_SEND) {
                 receiveSharedNote()

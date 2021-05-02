@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
     <shortcut
-        android:shortcutId="takeNote"
         android:enabled="true"
         android:icon="@drawable/take_note"
+        android:shortcutId="takeNote"
         android:shortcutShortLabel="@string/take_note">
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetPackage="com.omgodse.notally"
-            android:targetClass="com.omgodse.notally.activities.TakeNote" />
+            android:targetClass="com.omgodse.notally.activities.TakeNote"
+            android:targetPackage="com.omgodse.notally" />
     </shortcut>
 
     <shortcut
-        android:shortcutId="makeList"
         android:enabled="true"
         android:icon="@drawable/make_list"
+        android:shortcutId="makeList"
         android:shortcutShortLabel="@string/make_list">
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetPackage="com.omgodse.notally"
-            android:targetClass="com.omgodse.notally.activities.MakeList" />
+            android:targetClass="com.omgodse.notally.activities.MakeList"
+            android:targetPackage="com.omgodse.notally" />
     </shortcut>
 </shortcuts>

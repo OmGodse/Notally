@@ -3,8 +3,8 @@ package com.omgodse.notally.room.dao
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import androidx.room.*
-import com.omgodse.notally.room.Folder
 import com.omgodse.notally.room.BaseNote
+import com.omgodse.notally.room.Folder
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import org.json.JSONArray

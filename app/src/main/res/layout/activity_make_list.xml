@@ -33,9 +33,9 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/Pinned"
+                style="@style/Pinned"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Pinned" />
+                android:layout_height="wrap_content" />
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/EnterTitle"
@@ -64,16 +64,12 @@
                     style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:insetLeft="16dp"
                     android:insetRight="16dp"
-                    android:letterSpacing="0"
-                    android:paddingStart="16dp"
+                    android:minHeight="0dp"
                     android:paddingTop="10dp"
-                    android:paddingEnd="16dp"
                     android:paddingBottom="10dp"
                     android:text="@string/add_item"
-                    android:textAllCaps="false"
                     android:textColor="?android:textColorHint"
                     app:rippleColor="?attr/colorControlHighlight" />
 

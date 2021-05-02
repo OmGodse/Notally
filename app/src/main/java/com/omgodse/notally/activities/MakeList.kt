@@ -93,7 +93,6 @@ class MakeList : NotallyActivity() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 model.items.removeAt(viewHolder.adapterPosition)
                 adapter.notifyItemRemoved(viewHolder.adapterPosition)
-                adapter.notifyItemRangeChanged(viewHolder.adapterPosition, model.items.size)
             }
 
             override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {

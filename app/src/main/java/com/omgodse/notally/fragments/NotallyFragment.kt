@@ -21,7 +21,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.R
-import com.omgodse.notally.activities.MainActivity
 import com.omgodse.notally.activities.MakeList
 import com.omgodse.notally.activities.TakeNote
 import com.omgodse.notally.databinding.FragmentNotesBinding
@@ -47,14 +46,9 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
     private lateinit var settingsHelper: SettingsHelper
 
     private var adapter: BaseNoteAdapter? = null
-    internal var binding: FragmentNotesBinding? = null
+    private var binding: FragmentNotesBinding? = null
 
     internal val model: BaseNoteModel by activityViewModels()
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        mContext = context
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -89,6 +83,12 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentNotesBinding.inflate(layoutInflater)
         return binding?.root
+    }
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mContext = context
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -200,7 +200,7 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
 
 
     private fun exportBaseNoteToPDF(baseNote: BaseNote) {
-        model.getPDFFile(baseNote, object : PostPDFGenerator.OnResult {
+        model.getPDFFile(baseNote, settingsHelper.getShowDateCreated(), object : PostPDFGenerator.OnResult {
 
             override fun onSuccess(file: File) {
                 showFileOptionsDialog(file, "application/pdf")
@@ -214,14 +214,14 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
 
     private fun exportBaseNoteToHTML(baseNote: BaseNote) {
         lifecycleScope.launch {
-            val file = model.getHTMLFile(baseNote)
+            val file = model.getHTMLFile(baseNote, settingsHelper.getShowDateCreated())
             showFileOptionsDialog(file, "text/html")
         }
     }
 
     private fun exportBaseNoteToPlainText(baseNote: BaseNote) {
         lifecycleScope.launch {
-            val file = model.getPlainTextFile(baseNote)
+            val file = model.getPlainTextFile(baseNote, settingsHelper.getShowDateCreated())
             showFileOptionsDialog(file, "text/plain")
         }
     }

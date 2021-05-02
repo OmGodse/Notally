@@ -5,10 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.navigation.NavController
-import androidx.navigation.NavDestination
-import androidx.navigation.NavOptions
-import androidx.navigation.findNavController
+import androidx.navigation.*
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -57,15 +54,17 @@ class MainActivity : AppCompatActivity() {
 
             override fun onDrawerClosed(drawerView: View) {
                 if (fragmentIdToLoad != null && navController.currentDestination?.id != fragmentIdToLoad) {
-                    val builder = NavOptions.Builder()
-                    builder.setLaunchSingleTop(true)
-                    builder.setEnterAnim(R.anim.nav_default_enter_anim)
-                    builder.setExitAnim(R.anim.nav_default_exit_anim)
-                    builder.setPopEnterAnim(R.anim.nav_default_pop_enter_anim)
-                    builder.setPopExitAnim(R.anim.nav_default_pop_exit_anim)
-                    builder.setPopUpTo(navController.graph.startDestination, false)
-                    val options = builder.build()
-                    navController.navigate(fragmentIdToLoad!!, null, options)
+                    val options = navOptions {
+                        launchSingleTop = true
+                        anim {
+                            exit = R.anim.nav_default_exit_anim
+                            enter = R.anim.nav_default_enter_anim
+                            popExit = R.anim.nav_default_pop_exit_anim
+                            popEnter = R.anim.nav_default_pop_enter_anim
+                        }
+                        popUpTo = navController.graph.startDestination
+                    }
+                    navController.navigate(requireNotNull(fragmentIdToLoad), null, options)
                 }
             }
         })

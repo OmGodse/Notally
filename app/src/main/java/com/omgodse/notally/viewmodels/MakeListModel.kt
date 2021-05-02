@@ -1,8 +1,8 @@
 package com.omgodse.notally.viewmodels
 
 import android.app.Application
-import com.omgodse.notally.room.ListItem
 import com.omgodse.notally.room.BaseNote
+import com.omgodse.notally.room.ListItem
 
 class MakeListModel(app: Application) : NotallyModel(app) {
 

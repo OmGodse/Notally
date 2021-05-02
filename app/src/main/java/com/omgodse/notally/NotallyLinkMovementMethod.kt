@@ -91,21 +91,19 @@ class NotallyLinkMovementMethod(private var onURLClick: (span: URLSpan) -> Unit)
 
 
     private fun removeUrlHighlightColor(textView: TextView) {
-        if (!isUrlHighlighted) {
-            return
+        if (isUrlHighlighted) {
+            isUrlHighlighted = false
+            Selection.removeSelection(textView.text as Spannable)
         }
-        isUrlHighlighted = false
-        Selection.removeSelection(textView.text as Spannable)
     }
 
     private fun highlightUrl(span: URLSpan?, text: Spannable) {
-        if (isUrlHighlighted) {
-            return
+        if (!isUrlHighlighted) {
+            isUrlHighlighted = true
+            val spanStart = text.getSpanStart(span)
+            val spanEnd = text.getSpanEnd(span)
+            Selection.setSelection(text, spanStart, spanEnd)
         }
-        isUrlHighlighted = true
-        val spanStart = text.getSpanStart(span)
-        val spanEnd = text.getSpanEnd(span)
-        Selection.setSelection(text, spanStart, spanEnd)
     }
 
     private fun dispatchUrlClick(urlSpan: URLSpan?) {

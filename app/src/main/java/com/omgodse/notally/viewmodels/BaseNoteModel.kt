@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.room.withTransaction
 import com.omgodse.notally.R
-import com.omgodse.notally.helpers.SettingsHelper
 import com.omgodse.notally.miscellaneous.applySpans
 import com.omgodse.notally.miscellaneous.getBody
 import com.omgodse.notally.miscellaneous.getLocale
@@ -37,8 +36,6 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     private val baseNoteDao = database.baseNoteDao
 
     private val labelCache = HashMap<String, Content<BaseNote>>()
-
-    private val settingsHelper = SettingsHelper(app)
     private val formatter = SimpleDateFormat(DateFormat, app.getLocale())
 
     var currentFile: File? = null
@@ -133,27 +130,27 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     }
 
 
-    suspend fun getHTMLFile(baseNote: BaseNote) = withContext(Dispatchers.IO) {
+    suspend fun getHTMLFile(baseNote: BaseNote, showDateCreated: Boolean) = withContext(Dispatchers.IO) {
         val fileName = getFileName(baseNote)
         val file = File(getExportedPath(), "$fileName.html")
-        val content = getHTML(baseNote)
+        val content = getHTML(baseNote, showDateCreated)
         file.writeText(content)
         file
     }
 
-    suspend fun getPlainTextFile(baseNote: BaseNote) = withContext(Dispatchers.IO) {
+    suspend fun getPlainTextFile(baseNote: BaseNote, showDateCreated: Boolean) = withContext(Dispatchers.IO) {
         val fileName = getFileName(baseNote)
         val file = File(getExportedPath(), "$fileName.txt")
-        val content = getPlainText(baseNote)
+        val content = getPlainText(baseNote, showDateCreated)
         file.writeText(content)
         file
     }
 
-    fun getPDFFile(baseNote: BaseNote, result: PostPDFGenerator.OnResult) {
+    fun getPDFFile(baseNote: BaseNote, showDateCreated: Boolean, result: PostPDFGenerator.OnResult) {
         val fileName = getFileName(baseNote)
         val pdfFile = File(getExportedPath(), "$fileName.pdf")
 
-        val html = getHTML(baseNote)
+        val html = getHTML(baseNote, showDateCreated)
 
         PostPDFGenerator.Builder()
             .setFile(pdfFile)
@@ -212,13 +209,13 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         return fileName.take(64).replace("/", "")
     }
 
-    private fun getHTML(baseNote: BaseNote) = buildString {
+    private fun getHTML(baseNote: BaseNote, showDateCreated: Boolean) = buildString {
         val date = formatter.format(baseNote.timestamp)
 
         append("<html><head><meta charset=\"UTF-8\"></head><body>")
         append("<h2>${Html.escapeHtml(baseNote.title)}</h2>")
 
-        if (settingsHelper.getShowDateCreated()) {
+        if (showDateCreated) {
             append("<p>$date</p>")
         }
 
@@ -238,7 +235,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         append("</body></html>")
     }
 
-    private fun getPlainText(baseNote: BaseNote) = buildString {
+    private fun getPlainText(baseNote: BaseNote, showDateCreated: Boolean) = buildString {
         val date = formatter.format(baseNote.timestamp)
 
         val body = when (baseNote.type) {
@@ -249,7 +246,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         if (baseNote.title.isNotEmpty()) {
             append("${baseNote.title}\n\n")
         }
-        if (settingsHelper.getShowDateCreated()) {
+        if (showDateCreated) {
             append("$date\n\n")
         }
         append(body)
