@@ -2,7 +2,6 @@
 <resources>
 
     <style name="AppTheme" parent="Base.AppTheme">
-        <item name="colorPrimaryDark">?attr/colorSurface</item>
         <item name="colorSecondary">@color/LightBlue100</item>
 
         <item name="android:navigationBarColor">@android:color/black</item>
