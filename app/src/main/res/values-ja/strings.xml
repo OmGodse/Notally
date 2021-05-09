@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fragment Titles -->
+    <string name="notes">ノート</string>
+    <string name="labels">ラベル</string>
+    <string name="deleted">削除済み</string>
+    <string name="archived">アーカイブ済み</string>
+    <string name="settings">設定</string>
+
+    <!-- Menu Options -->
+    <string name="share">共有</string>
+    <string name="search">検索</string>
+    <string name="delete">削除</string>
+    <string name="restore">復元</string>
+    <string name="archive">アーカイブ</string>
+    <string name="unarchive">アーカイブの解除</string>
+    <string name="delete_forever">完全に削除</string>
+
+    <!-- Chooser dialog hints -->
+    <string name="view_note">ノートを見る…</string>
+    <string name="share_note">ノートを共有する…</string>
+
+    <!-- Pinning -->
+    <string name="pin">ピン</string>
+    <string name="unpin">ピンを解除</string>
+    <string name="pinned">ピン済み</string>
+
+    <!-- Dialogs -->
+    <string name="save">保存</string>
+    <string name="edit">編集</string>
+    <string name="cancel">キャンセル</string>
+    <string name="make_list">リストを作成</string>
+    <string name="take_note">ノートを作成</string>
+    <string name="add_label">ラベルを付与</string>
+    <string name="export">エクスポート</string>
+    <string name="plain_text">プレーンテキスト</string>
+    <string name="save_to_device">端末に保存する</string>
+    <string name="edit_label">ラベルを編集</string>
+    <string name="label_exists">ラベルの存在</string>
+    <string name="delete_label">ラベルを削除しますか？</string>
+    <string name="create_new">ラベルが存在しません。クリックして作成</string>
+    <string name="delete_note_forever">ノートを完全に削除しますか？</string>
+    <string name="your_notes_associated">ラベルに関連付けられたメモは削除されません</string>
+
+    <!-- Lists and Notes -->
+    <string name="note">ノート</string>
+    <string name="item">アイテム</string>
+    <string name="date">日時</string>
+    <string name="title">タイトル</string>
+    <string name="add_item">アイテムを追加</string>
+    <string name="one_more_item">もう一つのアイテム</string>
+    <string name="more_items">%1$d個のアイテム</string>
+    <string name="drag_handle">ドラッグハンドル</string>
+    <string name="bold">太字</string>
+    <string name="link">リンク</string>
+    <string name="italic">斜体</string>
+    <string name="strikethrough">打ち消し線</string>
+    <string name="clear_formatting">書式を削除</string>
+    <string name="monospace">等幅</string>
+
+    <!-- Miscellaneous -->
+    <string name="saved_to_device">端末に保存されました</string>
+    <string name="saved_to_notally">Notallyに保存されました</string>
+    <string name="empty_note">空のノート</string>
+    <string name="empty_list">空のリスト</string>
+    <string name="discarded_empty_note">破棄された空のノート</string>
+    <string name="discarded_empty_list">破棄された空のリスト</string>
+    <string name="cant_open_link">リンクを開けません</string>
+    <string name="something_went_wrong">不具合が発生しました。やり直してください</string>
+
+    <!-- Settings Page -->
+    <string name="appearance">外観</string>
+
+    <string name="view">表示方法</string>
+    <string name="list">リスト</string>
+    <string name="grid">グリッド</string>
+
+    <string name="theme">テーマ</string>
+    <string name="dark">ダーク</string>
+    <string name="light">ライト</string>
+    <string name="follow_system">システムのテーマを使用</string>
+
+    <string name="card_type">カードの形式</string>
+    <string name="flat">フラット</string>
+    <string name="elevated">シャドウ</string>
+
+    <string name="content_density">プレビュー</string>
+    <string name="max_items_to_display">プレビューするリストの数</string>
+    <string name="max_lines_to_display">プレビューするノートの行数</string>
+
+    <string name="show_date_created">作成日時を表示</string>
+
+    <string name="backup">バックアップ</string>
+    <string name="export_notes_to_a_file">ノートをファイルに出力</string>
+    <string name="import_notes_from_a_file">バックアップからノートを復元</string>
+
+    <string name="about">このアプリについて</string>
+    <string name="libraries">ライブラリ</string>
+    <string name="rate">アプリを評価</string>
+</resources>
