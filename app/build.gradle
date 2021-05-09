@@ -15,7 +15,7 @@ android {
         targetSdkVersion rootProject.ext.targetSDKVersion
         versionCode 31
         versionName "3.6"
-        resConfigs "en", "ca", "cs", "de", "es", "fr", "hu", "in", "it", "nb", "nl", "pl", "pt-rBR", "ru", "sv", "tl", "uk"
+        resConfigs "en", "ca", "cs", "de", "es", "fr", "hu", "in", "it", "nb", "nl", "pl", "pt-rBR", "ru", "sv", "tl", "uk", "ja"
         vectorDrawables.generatedDensities = []
     }
 
