@@ -6,16 +6,16 @@ plugins {
 }
 
 android {
-    compileSdkVersion rootProject.ext.compileSDKVersion
-    buildToolsVersion "30.0.3"
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
         applicationId "com.omgodse.notally"
-        minSdkVersion rootProject.ext.minSDKVersion
-        targetSdkVersion rootProject.ext.targetSDKVersion
-        versionCode 31
-        versionName "3.6"
-        resConfigs "en", "ca", "cs", "de", "es", "fr", "hu", "in", "it", "nb", "nl", "pl", "pt-rBR", "ru", "sv", "tl", "uk", "ja"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 32
+        versionName "3.7"
+        resConfigs "en", "ca", "cs", "de", "es", "fr", "hu", "in", "it", "ja", "nb", "nl", "pl", "pt-rBR", "ru", "sv", "tl", "uk"
         vectorDrawables.generatedDensities = []
     }
 
@@ -34,19 +34,14 @@ android {
         }
     }
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
     kotlinOptions { jvmTarget = JavaVersion.VERSION_1_8 }
 
     buildFeatures { viewBinding true }
 }
 
 dependencies {
+    final def navVersion = "2.3.5"
     final def roomVersion = "2.3.0"
-    final def stableNavVersion = "2.3.5"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
@@ -57,8 +52,8 @@ dependencies {
     implementation "androidx.room:room-ktx:$roomVersion"
     implementation "androidx.room:room-runtime:$roomVersion"
 
-    implementation "androidx.navigation:navigation-ui-ktx:$stableNavVersion"
-    implementation "androidx.navigation:navigation-fragment-ktx:$stableNavVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
 
     implementation "org.ocpsoft.prettytime:prettytime:4.0.6.Final"
     implementation "com.google.android.material:material:1.3.0"
