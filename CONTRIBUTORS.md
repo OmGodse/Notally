@@ -2,6 +2,7 @@
 * 🇬🇧 English
 * 🇳🇱 Dutch by [tlmnot](https://github.com/tlmnot)
 * 🇨🇿 Czech by [tomo90](https://github.com/tomo90)
+* 🇯🇵 Japanese by [kato-k](https://github.com/kato-k)
 * 🇦🇩 Catalan by retiolus
 * 🇵🇱 Polish by [ZiomaleQ](https://github.com/ZiomaleQ)
 * 🇮🇩 Indonesian by [zmni](https://github.com/zmni)
