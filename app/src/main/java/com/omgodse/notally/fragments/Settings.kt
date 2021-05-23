@@ -51,17 +51,17 @@ class Settings : PreferenceFragmentCompat() {
         bindPreferenceToLink(R.string.rateKey, "https://play.google.com/store/apps/details?id=com.omgodse.notally")
 
         findPreference<Preference>(R.string.librariesKey)?.setOnPreferenceClickListener {
-            val builder = MaterialAlertDialogBuilder(mContext)
-            builder.setTitle(R.string.libraries)
-            builder.setItems(R.array.libraries) { dialog, which ->
-                when (which) {
-                    0 -> openLink("https://mvnrepository.com/artifact/androidx.room")
-                    1 -> openLink("https://github.com/ocpsoft/prettytime")
-                    2 -> openLink("https://github.com/material-components/material-components-android")
+            MaterialAlertDialogBuilder(mContext)
+                .setTitle(R.string.libraries)
+                .setItems(R.array.libraries) { dialog, which ->
+                    when (which) {
+                        0 -> openLink("https://mvnrepository.com/artifact/androidx.room")
+                        1 -> openLink("https://github.com/ocpsoft/prettytime")
+                        2 -> openLink("https://github.com/material-components/material-components-android")
+                    }
                 }
-            }
-            builder.setNegativeButton(R.string.cancel, null)
-            builder.show()
+                .setNegativeButton(R.string.cancel, null)
+                .show()
             return@setOnPreferenceClickListener true
         }
 

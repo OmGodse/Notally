@@ -6,7 +6,7 @@ import android.view.View
 import androidx.core.widget.addTextChangedListener
 import com.omgodse.notally.R
 import com.omgodse.notally.activities.MainActivity
-import com.omgodse.notally.helpers.MenuHelper.Operation
+import com.omgodse.notally.helpers.MenuDialog.Operation
 import com.omgodse.notally.room.BaseNote
 
 class Search : NotallyFragment() {

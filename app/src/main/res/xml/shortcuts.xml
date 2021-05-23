@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
     <shortcut
-        android:enabled="true"
         android:icon="@drawable/take_note"
         android:shortcutId="takeNote"
         android:shortcutShortLabel="@string/take_note">
@@ -12,7 +11,6 @@
     </shortcut>
 
     <shortcut
-        android:enabled="true"
         android:icon="@drawable/make_list"
         android:shortcutId="makeList"
         android:shortcutShortLabel="@string/make_list">

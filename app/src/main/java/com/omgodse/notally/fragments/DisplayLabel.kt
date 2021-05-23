@@ -1,7 +1,7 @@
 package com.omgodse.notally.fragments
 
 import com.omgodse.notally.R
-import com.omgodse.notally.helpers.MenuHelper.Operation
+import com.omgodse.notally.helpers.MenuDialog.Operation
 import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.room.BaseNote
 

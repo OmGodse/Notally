@@ -10,8 +10,8 @@ import com.omgodse.notally.R
 import com.omgodse.notally.activities.MainActivity
 import com.omgodse.notally.activities.MakeList
 import com.omgodse.notally.activities.TakeNote
-import com.omgodse.notally.helpers.MenuHelper
-import com.omgodse.notally.helpers.MenuHelper.Operation
+import com.omgodse.notally.helpers.MenuDialog
+import com.omgodse.notally.helpers.MenuDialog.Operation
 import com.omgodse.notally.room.BaseNote
 
 class Notes : NotallyFragment() {
@@ -38,7 +38,7 @@ class Notes : NotallyFragment() {
 
 
     private fun displayNoteTypes() {
-        MenuHelper(mContext)
+        MenuDialog(mContext)
             .addItem(Operation(R.string.make_list, R.drawable.checkbox) { goToActivity(MakeList::class.java) })
             .addItem(Operation(R.string.take_note, R.drawable.edit) { goToActivity(TakeNote::class.java) })
             .show()

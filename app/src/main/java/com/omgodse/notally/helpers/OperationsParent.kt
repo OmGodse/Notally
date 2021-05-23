@@ -4,19 +4,18 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.text.InputType
-import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import androidx.core.util.forEach
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.textview.MaterialTextView
 import com.omgodse.notally.R
 import com.omgodse.notally.activities.TakeNote
+import com.omgodse.notally.databinding.AddLabelBinding
 import com.omgodse.notally.databinding.DialogInputBinding
 import com.omgodse.notally.miscellaneous.applySpans
 import com.omgodse.notally.miscellaneous.getBody
+import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Label
 import com.omgodse.notally.room.ListItem
-import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Type
 
 interface OperationsParent {
@@ -48,8 +47,8 @@ interface OperationsParent {
     fun labelNote(labels: List<String>, previousLabels: HashSet<String>, onLabelsUpdated: (labels: HashSet<String>) -> Unit) {
         val checkedLabels = getCheckedLabels(labels, previousLabels)
 
-        val wrapper = ContextThemeWrapper(accessContext(), R.style.AddLabel)
-        val addLabel = MaterialTextView(wrapper)
+        val inflater = LayoutInflater.from(accessContext())
+        val addLabel = AddLabelBinding.inflate(inflater).root
 
         val alertDialogBuilder = MaterialAlertDialogBuilder(accessContext())
         alertDialogBuilder.setTitle(R.string.labels)
@@ -105,7 +104,7 @@ interface OperationsParent {
                     if (success) {
                         dialog.dismiss()
                         labelNote(listOf(value), previousLabels, onLabelsUpdated)
-                    } else binding.TextInputLayout.error = accessContext().getString(R.string.label_exists)
+                    } else binding.root.error = accessContext().getString(R.string.label_exists)
                 }
             } else dialog.dismiss()
         }

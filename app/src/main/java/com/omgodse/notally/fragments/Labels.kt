@@ -16,8 +16,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.DialogInputBinding
 import com.omgodse.notally.databinding.FragmentNotesBinding
-import com.omgodse.notally.helpers.MenuHelper
-import com.omgodse.notally.helpers.MenuHelper.Operation
+import com.omgodse.notally.helpers.MenuDialog
+import com.omgodse.notally.helpers.MenuDialog.Operation
 import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.recyclerview.ItemListener
 import com.omgodse.notally.recyclerview.adapters.LabelsAdapter
@@ -85,7 +85,7 @@ class Labels : Fragment(), ItemListener {
 
     override fun onLongClick(position: Int) {
         labelsAdapter?.currentList?.get(position)?.let { label ->
-            MenuHelper(mContext)
+            MenuDialog(mContext)
                 .addItem(Operation(R.string.edit, R.drawable.edit) { displayEditLabelDialog(label) })
                 .addItem(Operation(R.string.delete, R.drawable.delete) { confirmDeletion(label) })
                 .show()
@@ -127,7 +127,7 @@ class Labels : Fragment(), ItemListener {
                     model.insertLabel(label) { success ->
                         if (success) {
                             dialog.dismiss()
-                        } else dialogBinding.TextInputLayout.error = mContext.getString(R.string.label_exists)
+                        } else dialogBinding.root.error = mContext.getString(R.string.label_exists)
                     }
                 } else dialog.dismiss()
             }
@@ -137,14 +137,14 @@ class Labels : Fragment(), ItemListener {
     }
 
     private fun confirmDeletion(label: Label) {
-        val alertDialogBuilder = MaterialAlertDialogBuilder(mContext)
-        alertDialogBuilder.setTitle(R.string.delete_label)
-        alertDialogBuilder.setMessage(R.string.your_notes_associated)
-        alertDialogBuilder.setPositiveButton(R.string.delete) { dialog, which ->
-            model.deleteLabel(label)
-        }
-        alertDialogBuilder.setNegativeButton(R.string.cancel, null)
-        alertDialogBuilder.show()
+        MaterialAlertDialogBuilder(mContext)
+            .setTitle(R.string.delete_label)
+            .setMessage(R.string.your_notes_associated)
+            .setPositiveButton(R.string.delete) { dialog, which ->
+                model.deleteLabel(label)
+            }
+            .setNegativeButton(R.string.cancel, null)
+            .show()
     }
 
     private fun displayEditLabelDialog(oldLabel: Label) {
@@ -172,7 +172,7 @@ class Labels : Fragment(), ItemListener {
                     model.updateLabel(oldLabel.value, value) { success ->
                         if (success) {
                             dialog.dismiss()
-                        } else dialogBinding.TextInputLayout.error = mContext.getString(R.string.label_exists)
+                        } else dialogBinding.root.error = mContext.getString(R.string.label_exists)
                     }
                 } else dialog.dismiss()
             }

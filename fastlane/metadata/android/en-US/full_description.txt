@@ -20,10 +20,15 @@ Add clickable links to notes with support for phone numbers, email addresses and
 • Auto save
 • Dark mode
 • Completely free
-• APK size of 1.6 MB (2.1 MB Uncompressed)
+• No permissions required
+• APK size of 1.5 MB (1.9 MB Uncompressed)
 
 <b>Privacy</b>
 
 There are no ads, trackers or analytics of any kind. All your notes are stored completely on and never leave your device.
+
+<b>Note</b>
+
+Due to a bug on Xiaomi's part, some MiUI devices might not be able to access the text formatting options.
 
 https://github.com/OmGodse/Notally

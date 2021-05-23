@@ -4,28 +4,28 @@ import android.text.InputType
 import android.view.MotionEvent
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
-import com.omgodse.notally.databinding.ListItemBinding
+import com.omgodse.notally.databinding.RecyclerListItemBinding
 import com.omgodse.notally.miscellaneous.setOnNextAction
 import com.omgodse.notally.recyclerview.ListItemListener
 import com.omgodse.notally.room.ListItem
 
-class MakeListViewHolder(val binding: ListItemBinding, listItemListener: ListItemListener?) :
+class MakeListViewHolder(val binding: RecyclerListItemBinding, listItemListener: ListItemListener) :
     RecyclerView.ViewHolder(binding.root) {
 
     init {
         binding.ListItem.setOnNextAction {
-            listItemListener?.onMoveToNext(adapterPosition)
+            listItemListener.onMoveToNext(adapterPosition)
         }
 
         binding.CheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
             binding.ListItem.paint.isStrikeThruText = isChecked
             binding.ListItem.isEnabled = !isChecked
 
-            listItemListener?.onItemCheckedChange(adapterPosition, isChecked)
+            listItemListener.onItemCheckedChange(adapterPosition, isChecked)
         }
 
         binding.ListItem.addTextChangedListener(onTextChanged = { text, start, count, after ->
-            listItemListener?.onItemTextChange(adapterPosition, text.toString())
+            listItemListener.onItemTextChange(adapterPosition, text.toString())
         })
 
         binding.DragHandle.setOnTouchListener { v, event ->

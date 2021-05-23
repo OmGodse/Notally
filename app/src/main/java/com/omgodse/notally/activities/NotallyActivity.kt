@@ -137,15 +137,15 @@ abstract class NotallyActivity : AppCompatActivity(), OperationsParent {
     }
 
     private fun deleteNoteForever() {
-        val alertDialogBuilder = MaterialAlertDialogBuilder(this)
-        alertDialogBuilder.setMessage(R.string.delete_note_forever)
-        alertDialogBuilder.setPositiveButton(R.string.delete) { dialog, which ->
-            model.deleteBaseNoteForever {
-                super.onBackPressed()
+        MaterialAlertDialogBuilder(this)
+            .setMessage(R.string.delete_note_forever)
+            .setPositiveButton(R.string.delete) { dialog, which ->
+                model.deleteBaseNoteForever {
+                    super.onBackPressed()
+                }
             }
-        }
-        alertDialogBuilder.setNegativeButton(R.string.cancel, null)
-        alertDialogBuilder.show()
+            .setNegativeButton(R.string.cancel, null)
+            .show()
     }
 
     private fun pinNote(item: MenuItem) {

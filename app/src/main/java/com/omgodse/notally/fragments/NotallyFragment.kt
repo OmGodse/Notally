@@ -24,8 +24,8 @@ import com.omgodse.notally.R
 import com.omgodse.notally.activities.MakeList
 import com.omgodse.notally.activities.TakeNote
 import com.omgodse.notally.databinding.FragmentNotesBinding
-import com.omgodse.notally.helpers.MenuHelper
-import com.omgodse.notally.helpers.MenuHelper.Operation
+import com.omgodse.notally.helpers.MenuDialog
+import com.omgodse.notally.helpers.MenuDialog.Operation
 import com.omgodse.notally.helpers.OperationsParent
 import com.omgodse.notally.helpers.SettingsHelper
 import com.omgodse.notally.miscellaneous.Constants
@@ -114,7 +114,7 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
         adapter?.currentList?.get(position)?.let { baseNote ->
             val operations = getSupportedOperations(baseNote)
             if (operations.isNotEmpty()) {
-                val menuHelper = MenuHelper(mContext)
+                val menuHelper = MenuDialog(mContext)
                 operations.forEach { menuHelper.addItem(it) }
                 menuHelper.show()
             }
@@ -174,17 +174,17 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
     }
 
     internal fun confirmDeletion(baseNote: BaseNote) {
-        val alertDialogBuilder = MaterialAlertDialogBuilder(mContext)
-        alertDialogBuilder.setMessage(R.string.delete_note_forever)
-        alertDialogBuilder.setPositiveButton(R.string.delete) { dialog, which ->
-            model.deleteBaseNoteForever(baseNote)
-        }
-        alertDialogBuilder.setNegativeButton(R.string.cancel, null)
-        alertDialogBuilder.show()
+        MaterialAlertDialogBuilder(mContext)
+            .setMessage(R.string.delete_note_forever)
+            .setPositiveButton(R.string.delete) { dialog, which ->
+                model.deleteBaseNoteForever(baseNote)
+            }
+            .setNegativeButton(R.string.cancel, null)
+            .show()
     }
 
     internal fun showExportDialog(baseNote: BaseNote) {
-        MenuHelper(mContext)
+        MenuDialog(mContext)
             .addItem(Operation(R.string.pdf, R.drawable.pdf) { exportBaseNoteToPDF(baseNote) })
             .addItem(Operation(R.string.html, R.drawable.html) { exportBaseNoteToHTML(baseNote) })
             .addItem(Operation(R.string.plain_text, R.drawable.plain_text) { exportBaseNoteToPlainText(baseNote) })
@@ -229,7 +229,7 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
     private fun showFileOptionsDialog(file: File, mimeType: String) {
         val uri = FileProvider.getUriForFile(mContext, "${mContext.packageName}.provider", file)
 
-        MenuHelper(mContext)
+        MenuDialog(mContext)
             .addItem(Operation(R.string.view, R.drawable.view) { viewFile(uri, mimeType) })
             .addItem(Operation(R.string.share, R.drawable.share) { shareFile(uri, mimeType) })
             .addItem(Operation(R.string.save_to_device, R.drawable.save) { saveFileToDevice(file, mimeType) })

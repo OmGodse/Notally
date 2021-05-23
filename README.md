@@ -16,10 +16,11 @@ Well, Notally is none of these things. It's extremely light, minimalistic and el
 * Auto save
 * Dark mode
 * Material design
+* No permissions required
 * Create lists to stay on track
 * Support for Lollipop devices and up
 * Pin notes to always keep them at the top
-* APK size of 1.5 MB (2 MB Uncompressed)
+* APK size of 1.5 MB (1.9 MB Uncompressed)
 * Add labels to your notes for quick organisation
 * Archive notes to keep them around, but out of your way
 * Export notes as plain text, HTML or PDF files with formatting

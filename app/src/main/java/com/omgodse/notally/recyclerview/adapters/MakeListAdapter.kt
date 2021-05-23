@@ -3,7 +3,7 @@ package com.omgodse.notally.recyclerview.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.omgodse.notally.databinding.ListItemBinding
+import com.omgodse.notally.databinding.RecyclerListItemBinding
 import com.omgodse.notally.recyclerview.ListItemListener
 import com.omgodse.notally.recyclerview.viewholders.MakeListViewHolder
 import com.omgodse.notally.room.ListItem
@@ -20,7 +20,7 @@ class MakeListAdapter(var items: ArrayList<ListItem>, private val listItemListen
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MakeListViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = ListItemBinding.inflate(inflater, parent, false)
+        val binding = RecyclerListItemBinding.inflate(inflater, parent, false)
         return MakeListViewHolder(binding, listItemListener)
     }
 }

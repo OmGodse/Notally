@@ -30,14 +30,12 @@
     </style>
 
 
-    <style name="TextAppearance.Title" parent="TextAppearance.MaterialComponents.Body1">
-        <item name="android:letterSpacing">0.05</item>
-        <item name="fontFamily">sans-serif-medium</item>
+    <style name="TextAppearance.Pinned" parent="TextAppearance.Button">
+        <item name="android:textColor">?attr/colorSecondary</item>
     </style>
 
-    <style name="TextAppearance.Pinned" parent="TextAppearance.MaterialComponents.Body2">
+    <style name="TextAppearance.Title" parent="TextAppearance.MaterialComponents.Body1">
         <item name="android:letterSpacing">0.05</item>
-        <item name="android:textColor">?attr/colorSecondary</item>
         <item name="fontFamily">sans-serif-medium</item>
     </style>
 
@@ -88,7 +86,6 @@
         <item name="android:paddingTop">16dp</item>
         <item name="android:paddingBottom">16dp</item>
         <item name="android:inputType">textMultiLine|textCapSentences</item>
-        <item name="android:importantForAutofill">no</item>
     </style>
 
     <style name="Pinned" parent="Widget.MaterialComponents.TextView">
@@ -109,31 +106,6 @@
         <item name="android:text">@string/date</item>
         <item name="android:textColor">?android:textColorHint</item>
         <item name="android:textAppearance">?attr/textAppearanceBody2</item>
-    </style>
-
-
-    <style name="Option" parent="Widget.MaterialComponents.TextView">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:padding">16dp</item>
-        <item name="android:letterSpacing">0.02</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:drawablePadding">24dp</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:textColor">?attr/colorOnSurface</item>
-        <item name="android:background">?attr/selectableItemBackground</item>
-        <item name="drawableTint">?attr/colorOnSurface</item>
-    </style>
-
-    <style name="AddLabel" parent="Widget.MaterialComponents.TextView">
-        <item name="android:clickable">true</item>
-        <item name="android:focusable">true</item>
-        <item name="android:paddingTop">16dp</item>
-        <item name="android:paddingEnd">24dp</item>
-        <item name="android:paddingStart">24dp</item>
-        <item name="android:paddingBottom">16dp</item>
-        <item name="android:text">@string/create_new</item>
-        <item name="android:background">?attr/selectableItemBackground</item>
     </style>
 
 
