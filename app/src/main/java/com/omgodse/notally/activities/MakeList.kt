@@ -16,7 +16,6 @@ import com.omgodse.notally.recyclerview.viewholders.MakeListViewHolder
 import com.omgodse.notally.room.ListItem
 import com.omgodse.notally.viewmodels.BaseNoteModel
 import com.omgodse.notally.viewmodels.MakeListModel
-import java.text.SimpleDateFormat
 import java.util.*
 
 class MakeList : NotallyActivity() {
@@ -127,7 +126,7 @@ class MakeList : NotallyActivity() {
     }
 
     private fun setStateFromModel() {
-        val formatter = SimpleDateFormat(BaseNoteModel.DateFormat, getLocale())
+        val formatter = BaseNoteModel.getDateFormatter(getLocale())
 
         binding.EnterTitle.setText(model.title)
         binding.DateCreated.text = formatter.format(model.timestamp)

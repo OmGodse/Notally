@@ -27,6 +27,8 @@ import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.HashMap
 
 class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
@@ -36,7 +38,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     private val baseNoteDao = database.baseNoteDao
 
     private val labelCache = HashMap<String, Content<BaseNote>>()
-    private val formatter = SimpleDateFormat(DateFormat, app.getLocale())
+    private val formatter = getDateFormatter(app.getLocale())
 
     var currentFile: File? = null
 
@@ -291,6 +293,12 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     }
 
     companion object {
-        const val DateFormat = "EEE d MMM yyyy"
+
+        fun getDateFormatter(locale: Locale): SimpleDateFormat {
+            val pattern = if (locale.language == Locale.JAPANESE.language) {
+                "yyyy年 MMM d日 (EEE)"
+            } else "EEE d MMM yyyy"
+            return SimpleDateFormat(pattern, locale)
+        }
     }
 }

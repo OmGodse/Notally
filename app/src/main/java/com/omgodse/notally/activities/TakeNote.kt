@@ -24,7 +24,6 @@ import com.omgodse.notally.miscellaneous.getLocale
 import com.omgodse.notally.miscellaneous.setOnNextAction
 import com.omgodse.notally.viewmodels.BaseNoteModel
 import com.omgodse.notally.viewmodels.TakeNoteModel
-import java.text.SimpleDateFormat
 
 class TakeNote : NotallyActivity() {
 
@@ -138,7 +137,7 @@ class TakeNote : NotallyActivity() {
     }
 
     private fun setStateFromModel() {
-        val formatter = SimpleDateFormat(BaseNoteModel.DateFormat, getLocale())
+        val formatter = BaseNoteModel.getDateFormatter(getLocale())
 
         binding.EnterTitle.setText(model.title)
         binding.EnterBody.text = model.body
