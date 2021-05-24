@@ -1,4 +1,4 @@
-*Development has paused and will resume in June. Please use the issues tab only for bug reports*
+*Please use the issues tab only for bug reports*
 
 ### Background
 Although there are many notes apps out there, they're all hideous, glitchy, low quality or all 3 at the same time.
@@ -33,7 +33,6 @@ Well, Notally is none of these things. It's extremely light, minimalistic and el
 
 ### Translations
 The list of supported languages is present in [CONTRIBUTORS.md](CONTRIBUTORS.md)
-
 If you would like to help translate the app further, please contact me via [email](mailto:omgodseapps@gmail.com) or open a pull request.
 
 ### Screenshots

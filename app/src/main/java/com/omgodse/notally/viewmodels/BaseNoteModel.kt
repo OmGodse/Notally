@@ -228,8 +228,8 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
             }
             Type.LIST -> {
                 append("<ol>")
-                baseNote.items.forEach {
-                    append("<li>${it.body}</li>")
+                baseNote.items.forEach { (body) ->
+                    append("<li>${Html.escapeHtml(body)}</li>")
                 }
                 append("</ol>")
             }
