@@ -8,6 +8,7 @@
 * 🇮🇩 Indonesian by [zmni](https://github.com/zmni)
 * 🇮🇹 Italian by Luigi Sforza
 * 🇪🇸 Spanish by Jose Casas
+* 🇹🇷 Turkish by Helpful User
 * 🇺🇦 Ukrainian by Alex Shpak
 * 🇸🇪 Swedish by Erik Lindström
 * 🇭🇺 Hungarian by Helpful User

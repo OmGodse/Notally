@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fragment Titles -->
+    <string name="notes">Notlar</string>
+    <string name="labels">Etiketler</string>
+    <string name="deleted">Çöp Kutusu</string>
+    <string name="archived">Arşiv</string>
+    <string name="settings">Ayarlar</string>
+
+    <!-- Menu Options -->
+    <string name="share">Paylaş</string>
+    <string name="search">Ara</string>
+    <string name="delete">Sil</string>
+    <string name="restore">Geri yükle</string>
+    <string name="archive">Arşiv</string>
+    <string name="unarchive">Arşivden kaldır</string>
+    <string name="delete_all">Hepsini sil</string>
+    <string name="delete_forever">Tamamen sil</string>
+
+    <!-- Chooser dialog hints -->
+    <string name="view_note">Notu önizle…</string>
+    <string name="share_note">Notu paylaş…</string>
+
+    <!-- Pinning -->
+    <string name="pin">Sabitle</string>
+    <string name="unpin">Sabitlemeyi kaldır</string>
+    <string name="pinned">Sabitlendi</string>
+
+    <!-- Dialogs -->
+    <string name="save">Kaydet</string>
+    <string name="edit">Düzenle</string>
+    <string name="cancel">İptal</string>
+    <string name="make_list">Liste yap</string>
+    <string name="take_note">Not al</string>
+    <string name="add_label">Etiket ekle</string>
+    <string name="export">Dışa aktar</string>
+    <string name="save_to_device">Cihaza kaydet</string>
+    <string name="edit_label">Etiketi düzenle</string>
+    <string name="label_exists">Etiket var</string>
+    <string name="delete_label">Etiket silinsin mi?</string>
+    <string name="create_new">Henüz etiket yok. Oluşturmaya ne dersin?</string>
+    <string name="delete_all_notes">Tüm notlar silinsin mi?</string>
+    <string name="delete_note_forever">Notunuz tamamen silinsin mi?</string>
+    <string name="your_notes_associated">Bu etiketle ilgili notlarınız silinmeyecek</string>
+
+    <!-- Lists and Notes -->
+    <string name="note">Not</string>
+    <string name="item">Öge</string>
+    <string name="date">Tarih</string>
+    <string name="title">Başlık</string>
+    <string name="add_item">Öge ekle</string>
+    <string name="one_more_item">1 öge daha</string>
+    <string name="more_items">%1$d öge daha</string>
+    <string name="drag_handle">Sürükleme Tutamacı</string>
+    <string name="bold">Kalın</string>
+    <string name="link">Bağlantı</string>
+    <string name="italic">İtalik</string>
+    <string name="strikethrough">Üstü çizgili</string>
+    <string name="clear_formatting">Biçimlendirmeyi temizle</string>
+    <string name="monospace">Sabit aralıklı</string>
+
+    <!-- Miscellaneous -->
+    <string name="saved_to_device">Cihaza kaydedildi</string>
+    <string name="saved_to_notally">Notally’ye kaydedildi</string>
+    <string name="empty_note">Boş not</string>
+    <string name="empty_list">Boş liste</string>
+    <string name="discarded_empty_note">Boş not ıskarta edildi</string>
+    <string name="discarded_empty_list">Boş liste ıskarta edildi</string>
+    <string name="cant_open_link">Bağlantı açılmadı</string>
+    <string name="something_went_wrong">Bir terslik oldu. Lütfen tekrar deneyin.</string>
+
+    <!-- Settings Page -->
+    <string name="appearance">Görünüm</string>
+
+    <string name="view">Önizlemesi</string>
+    <string name="list">Liste</string>
+    <string name="grid">Izgara</string>
+
+    <string name="theme">Tema</string>
+    <string name="dark">Koyu</string>
+    <string name="light">Açık</string>
+    <string name="follow_system">Sistem varsayılanı</string>
+
+    <string name="card_type">Kart tipi</string>
+    <string name="flat">Düz</string>
+    <string name="elevated">Yüksek</string>
+
+    <string name="content_density">Anasayfa içerik detayları</string>
+    <string name="max_items_to_display">Listede görüntülenecek en fazla kutucuk sayısı</string>
+    <string name="max_lines_to_display">Notta görüntülenecek maksimum satır sayısı</string>
+
+    <string name="show_date_created">Oluşturulma tarihini göster</string>
+
+    <string name="backup">Yedek</string>
+    <string name="export_notes_to_a_file">Notları bir dosyaya aktar</string>
+    <string name="import_notes_from_a_file">Notları bir dosyadan içeri aktar</string>
+
+    <string name="about">Hakkında</string>
+    <string name="libraries">Kütüphaneler</string>
+    <string name="rate">Uygulamayı değerlendir</string>
+</resources>
