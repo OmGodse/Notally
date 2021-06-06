@@ -33,7 +33,6 @@
     <string name="take_note">Feljegyzés</string>
     <string name="add_label">Címke létrehozása</string>
     <string name="export">Exportálás</string>
-    <string name="plain_text">Sima szöveg</string>
     <string name="save_to_device">Mentés az eszközre</string>
     <string name="edit_label">Címke szerkesztése</string>
     <string name="label_exists">A címke már létezik</string>

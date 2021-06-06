@@ -132,18 +132,18 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     }
 
 
-    suspend fun getHTMLFile(baseNote: BaseNote, showDateCreated: Boolean) = withContext(Dispatchers.IO) {
+    suspend fun getTXTFile(baseNote: BaseNote, showDateCreated: Boolean) = withContext(Dispatchers.IO) {
         val fileName = getFileName(baseNote)
-        val file = File(getExportedPath(), "$fileName.html")
-        val content = getHTML(baseNote, showDateCreated)
+        val file = File(getExportedPath(), "$fileName.txt")
+        val content = getTXT(baseNote, showDateCreated)
         file.writeText(content)
         file
     }
 
-    suspend fun getPlainTextFile(baseNote: BaseNote, showDateCreated: Boolean) = withContext(Dispatchers.IO) {
+    suspend fun getHTMLFile(baseNote: BaseNote, showDateCreated: Boolean) = withContext(Dispatchers.IO) {
         val fileName = getFileName(baseNote)
-        val file = File(getExportedPath(), "$fileName.txt")
-        val content = getPlainText(baseNote, showDateCreated)
+        val file = File(getExportedPath(), "$fileName.html")
+        val content = getHTML(baseNote, showDateCreated)
         file.writeText(content)
         file
     }
@@ -173,6 +173,8 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     fun moveBaseNoteToArchive(id: Long) = executeAsync { baseNoteDao.moveBaseNoteToArchive(id) }
 
     fun deleteBaseNoteForever(baseNote: BaseNote) = executeAsync { baseNoteDao.deleteBaseNote(baseNote) }
+
+    fun deleteAllBaseNotes() = executeAsync { baseNoteDao.deleteAllBaseNotesFromFolder(Folder.DELETED.name) }
 
     fun updateBaseNoteLabels(labels: HashSet<String>, id: Long) = executeAsync { baseNoteDao.updateBaseNoteLabels(labels, id) }
 
@@ -211,6 +213,23 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         return fileName.take(64).replace("/", "")
     }
 
+    private fun getTXT(baseNote: BaseNote, showDateCreated: Boolean) = buildString {
+        val date = formatter.format(baseNote.timestamp)
+
+        val body = when (baseNote.type) {
+            Type.NOTE -> baseNote.body
+            Type.LIST -> baseNote.items.getBody()
+        }
+
+        if (baseNote.title.isNotEmpty()) {
+            append("${baseNote.title}\n\n")
+        }
+        if (showDateCreated) {
+            append("$date\n\n")
+        }
+        append(body)
+    }
+
     private fun getHTML(baseNote: BaseNote, showDateCreated: Boolean) = buildString {
         val date = formatter.format(baseNote.timestamp)
 
@@ -235,23 +254,6 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
             }
         }
         append("</body></html>")
-    }
-
-    private fun getPlainText(baseNote: BaseNote, showDateCreated: Boolean) = buildString {
-        val date = formatter.format(baseNote.timestamp)
-
-        val body = when (baseNote.type) {
-            Type.NOTE -> baseNote.body
-            Type.LIST -> baseNote.items.getBody()
-        }
-
-        if (baseNote.title.isNotEmpty()) {
-            append("${baseNote.title}\n\n")
-        }
-        if (showDateCreated) {
-            append("$date\n\n")
-        }
-        append(body)
     }
 
 

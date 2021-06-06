@@ -12,8 +12,8 @@ Add clickable links to notes with support for phone numbers, email addresses and
 <b>Export notes in the following formats</b>
 
 • PDF
+• TXT
 • HTML
-• Plain Text
 
 <b>Convenience</b>
 

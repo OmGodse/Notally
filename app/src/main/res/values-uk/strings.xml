@@ -14,6 +14,7 @@
     <string name="restore">Відновити</string>
     <string name="archive">Архів</string>
     <string name="unarchive">Розархівувати</string>
+    <string name="delete_all">Видалити все</string>
     <string name="delete_forever">Видалити назавжди</string>
 
     <!-- Pinning -->
@@ -33,12 +34,12 @@
     <string name="take_note">Взяти до відома</string>
     <string name="add_label">Додати мітку</string>
     <string name="export">Експорт</string>
-    <string name="plain_text">Звичайний текст</string>
     <string name="save_to_device">Зберегти на пристрої</string>
     <string name="edit_label">Редагувати мітку</string>
     <string name="label_exists">Мітка вже існує</string>
     <string name="delete_label">Видалити мітку?</string>
     <string name="create_new">Мітки відсутні. Створити?</string>
+    <string name="delete_all_notes">Видалити всі нотатки?</string>
     <string name="delete_note_forever">Видалити запис назавжди?</string>
     <string name="your_notes_associated">Ваші нотатки, пов’язані з цією міткою, не будуть видалені</string>
 

@@ -25,6 +25,7 @@ class Notes : NotallyFragment() {
         }
     }
 
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.Search) {
             findNavController().navigate(R.id.NotesFragmentToSearchFragment)

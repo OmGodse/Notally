@@ -15,6 +15,7 @@
     <string name="restore">Restore</string>
     <string name="archive">Archive</string>
     <string name="unarchive">Unarchive</string>
+    <string name="delete_all">Delete all</string>
     <string name="delete_forever">Delete forever</string>
 
     <!-- Pinning -->
@@ -35,13 +36,14 @@
     <string name="add_label">Add label</string>
     <string name="export">Export</string>
     <string name="pdf" translatable="false">PDF</string>
+    <string name="txt" translatable="false">TXT</string>
     <string name="html" translatable="false">HTML</string>
-    <string name="plain_text">Plain Text</string>
     <string name="save_to_device">Save to device</string>
     <string name="edit_label">Edit label</string>
     <string name="label_exists">Label exists</string>
     <string name="delete_label">Delete label?</string>
     <string name="create_new">No labels yet. Create one?</string>
+    <string name="delete_all_notes">Delete all notes?</string>
     <string name="delete_note_forever">Delete note forever?</string>
     <string name="your_notes_associated">Your notes associated with this label will not be deleted</string>
 

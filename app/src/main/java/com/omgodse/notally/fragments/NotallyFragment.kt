@@ -19,7 +19,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.R
 import com.omgodse.notally.activities.MakeList
 import com.omgodse.notally.activities.TakeNote
@@ -173,21 +172,11 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
         }
     }
 
-    internal fun confirmDeletion(baseNote: BaseNote) {
-        MaterialAlertDialogBuilder(mContext)
-            .setMessage(R.string.delete_note_forever)
-            .setPositiveButton(R.string.delete) { dialog, which ->
-                model.deleteBaseNoteForever(baseNote)
-            }
-            .setNegativeButton(R.string.cancel, null)
-            .show()
-    }
-
     internal fun showExportDialog(baseNote: BaseNote) {
         MenuDialog(mContext)
             .addItem(Operation(R.string.pdf, R.drawable.pdf) { exportBaseNoteToPDF(baseNote) })
+            .addItem(Operation(R.string.txt, R.drawable.txt) { exportBaseNoteToTXT(baseNote) })
             .addItem(Operation(R.string.html, R.drawable.html) { exportBaseNoteToHTML(baseNote) })
-            .addItem(Operation(R.string.plain_text, R.drawable.plain_text) { exportBaseNoteToPlainText(baseNote) })
             .show()
     }
 
@@ -212,17 +201,17 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
         })
     }
 
+    private fun exportBaseNoteToTXT(baseNote: BaseNote) {
+        lifecycleScope.launch {
+            val file = model.getTXTFile(baseNote, settingsHelper.getShowDateCreated())
+            showFileOptionsDialog(file, "text/plain")
+        }
+    }
+
     private fun exportBaseNoteToHTML(baseNote: BaseNote) {
         lifecycleScope.launch {
             val file = model.getHTMLFile(baseNote, settingsHelper.getShowDateCreated())
             showFileOptionsDialog(file, "text/html")
-        }
-    }
-
-    private fun exportBaseNoteToPlainText(baseNote: BaseNote) {
-        lifecycleScope.launch {
-            val file = model.getPlainTextFile(baseNote, settingsHelper.getShowDateCreated())
-            showFileOptionsDialog(file, "text/plain")
         }
     }
 

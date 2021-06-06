@@ -14,6 +14,7 @@
     <string name="restore">Pulihkan</string>
     <string name="archive">Arsipkan</string>
     <string name="unarchive">Batal arsip</string>
+    <string name="delete_all">Hapus semua</string>
     <string name="delete_forever">Hapus selamanya</string>
 
     <!-- Chooser dialog hints -->
@@ -33,12 +34,12 @@
     <string name="take_note">Buat catatan</string>
     <string name="add_label">Tambah label</string>
     <string name="export">Ekspor</string>
-    <string name="plain_text">Teks biasa</string>
     <string name="save_to_device">Simpan ke perangkat</string>
     <string name="edit_label">Sunting label</string>
     <string name="label_exists">Label sudah ada</string>
     <string name="delete_label">Hapus label?</string>
     <string name="create_new">Belum ada label. Buat baru?</string>
+    <string name="delete_all_notes">Hapus semua catatan?</string>
     <string name="delete_note_forever">Hapus catatan selamanya?</string>
     <string name="your_notes_associated">Catatan anda yang terkait dengan label ini tidak akan dihapus</string>
 

@@ -33,7 +33,6 @@
     <string name="take_note">Создать заметку</string>
     <string name="add_label">Добавить метку</string>
     <string name="export">Скачать</string>
-    <string name="plain_text">Простой текст</string>
     <string name="save_to_device">Сохранить на устройство</string>
     <string name="edit_label">Изменить метку</string>
     <string name="label_exists">Ярлык существует</string>

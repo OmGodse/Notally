@@ -13,6 +13,7 @@
     <string name="restore">Herstellen</string>
     <string name="archive">Archief</string>
     <string name="unarchive">Unarchief</string>
+    <string name="delete_all">Verwijder alles</string>
     <string name="delete_forever">Voor altijd verwijderen</string>
 
     <!-- Chooser dialog hints -->
@@ -32,12 +33,12 @@
     <string name="take_note">Maak een Notitie</string>
     <string name="add_label">Label toevoegen </string>
     <string name="export">Exporteren</string>
-    <string name="plain_text">Platte tekst</string>
     <string name="save_to_device">Opslaan op apparaat</string>
     <string name="edit_label">Bewerk label</string>
     <string name="label_exists">Label bestaat</string>
     <string name="delete_label">Label verwijderen?</string>
     <string name="create_new">Nog geen labels. Creëer er een?</string>
+    <string name="delete_all_notes">Alle notities verwijderen?</string>
     <string name="delete_note_forever">Notitie definitief verwijderen?</string>
     <string name="your_notes_associated">Uw notities die aan dit label zijn gekoppeld, worden niet verwijderd</string>
 

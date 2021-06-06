@@ -33,7 +33,6 @@
     <string name="take_note">Skapa anteckning</string>
     <string name="add_label">Lägg till etikett</string>
     <string name="export">Exportera</string>
-    <string name="plain_text">Oformatterad text</string>
     <string name="save_to_device">Spara till enhet</string>
     <string name="edit_label">Redigera etikett</string>
     <string name="label_exists">Etiketten finns redan</string>

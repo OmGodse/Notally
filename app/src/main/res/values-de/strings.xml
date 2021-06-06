@@ -33,7 +33,6 @@
     <string name="take_note">Notiz erstellen</string>
     <string name="add_label">Etikett hinzufügen</string>
     <string name="export">Exportieren</string>
-    <string name="plain_text">Klartext</string>
     <string name="save_to_device">Auf Gerät speichern</string>
     <string name="edit_label">Etikett bearbeiten</string>
     <string name="label_exists">Etikett existiert</string>

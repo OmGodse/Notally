@@ -1,7 +1,6 @@
 package com.omgodse.notally.fragments
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -16,13 +15,7 @@ import com.omgodse.notally.viewmodels.BaseNoteModel
 
 class Settings : PreferenceFragmentCompat() {
 
-    private lateinit var mContext: Context
     private val model: BaseNoteModel by activityViewModels()
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        mContext = context
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -51,11 +44,11 @@ class Settings : PreferenceFragmentCompat() {
         bindPreferenceToLink(R.string.rateKey, "https://play.google.com/store/apps/details?id=com.omgodse.notally")
 
         findPreference<Preference>(R.string.librariesKey)?.setOnPreferenceClickListener {
-            MaterialAlertDialogBuilder(mContext)
+            MaterialAlertDialogBuilder(requireContext())
                 .setTitle(R.string.libraries)
                 .setItems(R.array.libraries) { dialog, which ->
                     when (which) {
-                        0 -> openLink("https://mvnrepository.com/artifact/androidx.room")
+                        0 -> openLink("https://developer.android.com/jetpack/androidx/releases/room")
                         1 -> openLink("https://github.com/ocpsoft/prettytime")
                         2 -> openLink("https://github.com/material-components/material-components-android")
                     }
@@ -104,7 +97,7 @@ class Settings : PreferenceFragmentCompat() {
         }
     }
 
-    private fun <T> findPreference(id: Int): T? = findPreference(mContext.getString(id))
+    private fun <T> findPreference(id: Int): T? = findPreference(getString(id))
 
     companion object {
         private const val RequestCodeImportFile = 20

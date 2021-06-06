@@ -14,6 +14,7 @@
     <string name="restore">Restaurer</string>
     <string name="archive">Archiver</string>
     <string name="unarchive">Restaurer</string>
+    <string name="delete_all">Tout supprimer</string>
     <string name="delete_forever">Supprimer définitivement</string>
 
     <!-- Chooser dialog hints -->
@@ -33,12 +34,12 @@
     <string name="take_note">Prendre des notes</string>
     <string name="add_label">Ajouter une étiquette</string>
     <string name="export">Exporter</string>
-    <string name="plain_text">Text brut</string>
     <string name="save_to_device">Sauvegarder sur l\'appareil</string>
     <string name="edit_label">Modifier l\'étiquette</string>
     <string name="label_exists">L\'étiquette existe</string>
     <string name="delete_label">Supprimer l\'étiquette ?</string>
     <string name="create_new">Il n\'existe pas encore d\'étiquettes. En créer une ?</string>
+    <string name="delete_all_notes">Supprimer toutes les notes?</string>
     <string name="delete_note_forever">Supprimer la note définitivement ?</string>
     <string name="your_notes_associated">Vos notes associées à cette étiquette ne seront pas supprimées</string>
 

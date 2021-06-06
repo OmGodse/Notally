@@ -52,8 +52,8 @@
     </style>
 
     <style name="TextAppearance.Toolbar" parent="TextAppearance.MaterialComponents.Headline6">
-        <item name="android:letterSpacing">0.04</item>
-        <item name="fontFamily">@font/nunito_sans_bold</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:letterSpacing">0.02</item>
     </style>
 
     <style name="TextAppearance.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">

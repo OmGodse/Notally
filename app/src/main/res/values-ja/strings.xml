@@ -14,6 +14,7 @@
     <string name="restore">復元</string>
     <string name="archive">アーカイブ</string>
     <string name="unarchive">アーカイブの解除</string>
+    <string name="delete_all">全て削除</string>
     <string name="delete_forever">完全に削除</string>
 
     <!-- Chooser dialog hints -->
@@ -33,12 +34,12 @@
     <string name="take_note">ノートを作成</string>
     <string name="add_label">ラベルを付与</string>
     <string name="export">エクスポート</string>
-    <string name="plain_text">プレーンテキスト</string>
     <string name="save_to_device">端末に保存する</string>
     <string name="edit_label">ラベルを編集</string>
     <string name="label_exists">ラベルの存在</string>
     <string name="delete_label">ラベルを削除しますか？</string>
     <string name="create_new">ラベルが存在しません。クリックして作成</string>
+    <string name="delete_all_notes">全てのノートを削除しますか？</string>
     <string name="delete_note_forever">ノートを完全に削除しますか？</string>
     <string name="your_notes_associated">ラベルに関連付けられたメモは削除されません</string>
 
@@ -91,7 +92,7 @@
     <string name="show_date_created">作成日時を表示</string>
 
     <string name="backup">バックアップ</string>
-    <string name="export_notes_to_a_file">ノートをファイルに出力</string>
+    <string name="export_notes_to_a_file">ノートからバックアップを作成</string>
     <string name="import_notes_from_a_file">バックアップからノートを復元</string>
 
     <string name="about">このアプリについて</string>

@@ -26,6 +26,10 @@ interface BaseNoteDao {
     suspend fun insertBaseNotes(baseNotes: List<BaseNote>)
 
 
+    @Query("DELETE FROM BaseNote WHERE folder = :folderName")
+    suspend fun deleteAllBaseNotesFromFolder(folderName: String)
+
+
     fun getAllBaseNotes() = getAllBaseNotes(Folder.NOTES.name)
 
     fun getAllDeletedNotes() = getAllBaseNotes(Folder.DELETED.name)

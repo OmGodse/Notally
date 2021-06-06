@@ -33,7 +33,6 @@
     <string name="take_note">Fer una nota</string>
     <string name="add_label">Afegir una etiqueta</string>
     <string name="export">Exportar</string>
-    <string name="plain_text">Text pla</string>
     <string name="save_to_device">Desar al dispositiu</string>
     <string name="edit_label">Editar etiqueta</string>
     <string name="label_exists">L\'etiqueta ja existeix</string>

@@ -28,7 +28,6 @@
     <string name="take_note">Ta et notat</string>
     <string name="add_label">Legg til etikett</string>
     <string name="export">Eksporter</string>
-    <string name="plain_text">Ren tekst</string>
     <string name="save_to_device">Lagre til enhet</string>
     <string name="edit_label">Rediger etikett</string>
     <string name="label_exists">Etiketten finnes fra før</string>

@@ -14,6 +14,7 @@
     <string name="restore">Restaurar</string>
     <string name="archive">Arquivas</string>
     <string name="unarchive">Desarquivar</string>
+    <string name="delete_all">Deletar todas</string>
     <string name="delete_forever">Deletar para sempre</string>
 
     <!-- Chooser dialog hints -->
@@ -33,12 +34,12 @@
     <string name="take_note">Fazer anotação</string>
     <string name="add_label">Adicionar etiqueta</string>
     <string name="export">Exportar</string>
-    <string name="plain_text">Texto plano</string>
     <string name="save_to_device">Salvar no dispositivo</string>
     <string name="edit_label">Editar etiqueta</string>
     <string name="label_exists">Essa etiqueta já existe</string>
     <string name="delete_label">Deletar etiqueta?</string>
     <string name="create_new">Nenhuma etiqueta ainda. Criar uma?</string>
+    <string name="delete_all_notes">Deletar todas as notas?</string>
     <string name="delete_note_forever">Deletar nota para sempre?</string>
     <string name="your_notes_associated">As suas notas associadas com essa etiqueta não serão deletadas</string>
 

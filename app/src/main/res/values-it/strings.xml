@@ -14,6 +14,7 @@
     <string name="restore">Ripristina</string>
     <string name="archive">Archivia</string>
     <string name="unarchive">Annulla Archiviazione</string>
+    <string name="delete_all">Elimina tutto</string>
     <string name="delete_forever">Elimina Definitivamente</string>
 
     <!-- Pinning -->
@@ -33,12 +34,12 @@
     <string name="take_note">Scrivere nota</string>
     <string name="add_label">Aggiungi etichetta</string>
     <string name="export">Esporta</string>
-    <string name="plain_text">Documento di testo TXT</string>
     <string name="save_to_device">Salva sul dispositivo</string>
     <string name="edit_label">Modifica etichetta</string>
     <string name="label_exists">Etichetta esiste</string>
     <string name="delete_label">Eliminare etichetta?</string>
     <string name="create_new">Non c\'è un etichetta.Vuoi crearne una?</string>
+    <string name="delete_all_notes">Elimina tutte le note?</string>
     <string name="delete_note_forever">Eliminare nota definitivamente?</string>
     <string name="your_notes_associated">Le note associate a questa etichetta non verranno eliminate</string>
 
