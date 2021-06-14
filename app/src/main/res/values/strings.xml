@@ -103,7 +103,7 @@
     <string name="libraries">Libraries</string>
     <string name="rate">Rate this app</string>
 
-    <string name="github" translatable="false">Github</string>
+    <string name="github" translatable="false">GitHub</string>
     <string name="patreon" translatable="false">Patreon</string>
 
     <string name="viewKey" translatable="false">view</string>
