@@ -67,14 +67,14 @@
     <string name="discarded_empty_note">Leere Notiz verworfen</string>
     <string name="discarded_empty_list">Leere Liste verworfen</string>
     <string name="cant_open_link">Link konnte nicht geöffnet werden</string>
-    <string name="something_went_wrong">Etwas ist schief gelaufen. Bitte versuchen es erneut.</string>
+    <string name="something_went_wrong">Etwas ist schief gelaufen. Bitte erneut versuchen.</string>
 
     <!-- Settings Page -->
     <string name="appearance">Erscheinungsbild</string>
 
     <string name="view">Ansicht</string>
-    <string name="list">Einspaltig</string>
-    <string name="grid">Zweispaltig</string>
+    <string name="list">Listenansicht</string>
+    <string name="grid">Rasteransicht</string>
 
     <string name="theme">Design</string>
     <string name="dark">Dunkel</string>
