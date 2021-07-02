@@ -65,7 +65,7 @@
     <string name="empty_note">Prázdná poznámka</string>
     <string name="empty_list">Prázdný seznam</string>
     <string name="discarded_empty_note">Odstraněná prázdná poznámka</string>
-    <string name="discarded_empty_list">Odstraněný prýzdný seznam</string>
+    <string name="discarded_empty_list">Odstraněný prázdný seznam</string>
     <string name="cant_open_link">Odkaz nelze otevřit</string>
     <string name="something_went_wrong">Něco se pokazilo. Zkuste to znovu.</string>
 
