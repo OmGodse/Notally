@@ -14,6 +14,7 @@
     <string name="restore">Ibalik</string>
     <string name="archive">Archive</string>
     <string name="unarchive">Tanggalin sa archive</string>
+    <string name="delete_all">Tanggalin lahat</string>
     <string name="delete_forever">Tanggalin habambuhay</string>
 
     <!-- Pinning -->
@@ -38,6 +39,7 @@
     <string name="label_exists">Ang tatak ay mayroon na</string>
     <string name="delete_label">Tanggalin ang tatak?</string>
     <string name="create_new">Wala pang mga tatak. Gumawa ng isa?</string>
+    <string name="delete_all_notes">Tanggalin lahat ng tala?</string>
     <string name="delete_note_forever">Tanggalin ang tala habambuhay?</string>
     <string name="your_notes_associated">Ang mga tala na nakaugnay sa tatak na ito ay hindi tatanggalin</string>
 
