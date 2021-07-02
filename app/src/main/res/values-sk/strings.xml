@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fragment Titles -->
+    <string name="notes">Poznámky</string>
+    <string name="labels">Štítky</string>
+    <string name="deleted">Vymazané</string>
+    <string name="archived">Archivované</string>
+    <string name="settings">Nastavenia</string>
+
+    <!-- Menu Options -->
+    <string name="share">Zdieľať</string>
+    <string name="search">Hľadať</string>
+    <string name="delete">Vymazať</string>
+    <string name="restore">Obnoviť</string>
+    <string name="archive">Archivovať</string>
+    <string name="unarchive">Zrušiť archiváciu</string>
+    <string name="delete_all">Vymazať všetko</string>
+    <string name="delete_forever">Vymazať navždy</string>
+
+    <!-- Pinning -->
+    <string name="pin">Pripnúť</string>
+    <string name="unpin">Odopnúť</string>
+    <string name="pinned">Pripnuté</string>
+
+    <!-- Chooser dialog hints -->
+    <string name="view_note">Zobraziť poznámku…</string>
+    <string name="share_note">Zdieľať poznámku…</string>
+
+    <!-- Dialogs -->
+    <string name="save">Uložiť</string>
+    <string name="edit">Upraviť</string>
+    <string name="cancel">Zrušiť</string>
+    <string name="make_list">Vytvoriť zoznam</string>
+    <string name="take_note">Napísať poznámku</string>
+    <string name="add_label">Nový štítok</string>
+    <string name="export">Exportovať</string>
+    <string name="save_to_device">Uložiť do zariadenia</string>
+    <string name="edit_label">Upraviť štítok</string>
+    <string name="label_exists">Štítok už existuje</string>
+    <string name="delete_label">Vymazať štítok?</string>
+    <string name="create_new">Žiadne štítky. Vytvoriť nový?</string>
+    <string name="delete_all_notes">Vymazať všetky poznámky?</string>
+    <string name="delete_note_forever">Vymazať poznámku navždy?</string>
+    <string name="your_notes_associated">Vaše poznámky priradené k tomuto štítku nebudú vymazané</string>
+
+    <!-- Lists and Notes -->
+    <string name="note">Poznámka</string>
+    <string name="item">Položka</string>
+    <string name="date">Dátum</string>
+    <string name="title">Názov</string>
+    <string name="add_item">Pridať položku</string>
+    <string name="one_more_item">1 ďalšia položka</string>
+    <string name="more_items">%1$d ďalších položiek</string>
+    <string name="drag_handle">Rukoväť na uchopenie</string>
+    <string name="bold">Tučné</string>
+    <string name="link">Odkaz</string>
+    <string name="italic">Kurzíva</string>
+    <string name="strikethrough">Prečiarknuté</string>
+    <string name="clear_formatting">Odstrániť formátovanie</string>
+    <string name="monospace">Neproporcionálne</string>
+
+    <!-- Miscellaneous -->
+    <string name="saved_to_device">Uložené do zariadenia</string>
+    <string name="saved_to_notally">Uložené do Notally</string>
+    <string name="empty_note">Prázdna poznámka</string>
+    <string name="empty_list">Prázdny zoznam</string>
+    <string name="discarded_empty_note">Odstránená prázdna poznámka</string>
+    <string name="discarded_empty_list">Odstránený prázdny zoznam</string>
+    <string name="cant_open_link">Odkaz sa nedá otvoriť</string>
+    <string name="something_went_wrong">Niečo sa pokazilo. Skúste to znova.</string>
+
+    <!-- Settings Page -->
+    <string name="appearance">Vzhľad</string>
+
+    <string name="view">Rozloženie</string>
+    <string name="list">Zoznam</string>
+    <string name="grid">Mriežka</string>
+
+    <string name="theme">Téma</string>
+    <string name="dark">Tmavá</string>
+    <string name="light">Svetlá</string>
+    <string name="follow_system">Podľa systému</string>
+
+    <string name="card_type">Štýl poznámky</string>
+    <string name="flat">Plochý</string>
+    <string name="elevated">Vyvýšený</string>
+
+    <string name="content_density">Hustota obsahu</string>
+    <string name="max_items_to_display">Max. počet položiek v zozname</string>
+    <string name="max_lines_to_display">Max. počet riadkov v poznámke</string>
+
+    <string name="show_date_created">Zobraziť dátum vytvorenia</string>
+
+    <string name="backup">Zálohovanie</string>
+    <string name="export_notes_to_a_file">Exportovať poznámky do súboru</string>
+    <string name="import_notes_from_a_file">Importovať poznámky zo súboru</string>
+
+    <string name="about">O aplikácii</string>
+    <string name="libraries">Knižnice</string>
+    <string name="rate">Ohodnotiť túto aplikáciu</string>
+</resources>
