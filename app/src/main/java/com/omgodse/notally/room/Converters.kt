@@ -8,20 +8,6 @@ import org.json.JSONObject
 class Converters {
 
     @TypeConverter
-    fun folderToString(folder: Folder) = folder.name
-
-    @TypeConverter
-    fun stringToFolder(string: String) = Folder.valueOf(string)
-
-
-    @TypeConverter
-    fun typeToString(type: Type) = type.name
-
-    @TypeConverter
-    fun stringToType(string: String) = Type.valueOf(string)
-
-
-    @TypeConverter
     fun labelsToJSON(labels: HashSet<String>) = JSONArray(labels).toString()
 
     @TypeConverter
