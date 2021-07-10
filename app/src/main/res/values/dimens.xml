@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="toolbarHeight">56dp</dimen>
-
     <dimen name="cardMargin">8dp</dimen>
     <dimen name="cardElevation">2dp</dimen>
     <dimen name="cardCornerRadius">4dp</dimen>

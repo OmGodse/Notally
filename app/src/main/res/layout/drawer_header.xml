@@ -7,7 +7,7 @@
 
     <com.google.android.material.appbar.MaterialToolbar
         android:layout_width="match_parent"
-        android:layout_height="@dimen/toolbarHeight"
+        android:layout_height="wrap_content"
         app:title="@string/app_name"
         app:titleTextAppearance="@style/TextAppearance.Toolbar"
         app:titleTextColor="?attr/colorSecondary" />

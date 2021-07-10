@@ -17,7 +17,7 @@
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/Toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/toolbarHeight"
+                android:layout_height="wrap_content"
                 app:contentInsetEnd="16dp"
                 app:titleTextAppearance="@style/TextAppearance.Toolbar">
 
