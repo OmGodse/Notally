@@ -9,7 +9,7 @@
     android:focusable="false"
     android:maxLines="1"
     android:minWidth="0dp"
-    android:textAppearance="@style/TextAppearance.Preview"
+    android:textAppearance="?attr/textAppearanceBody2"
     android:textColor="?attr/colorSecondary"
     app:backgroundTint="?attr/colorSecondary"
     app:strokeColor="?attr/colorSecondary" />
