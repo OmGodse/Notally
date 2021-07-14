@@ -37,6 +37,7 @@
     <string name="export">Export</string>
     <string name="pdf" translatable="false">PDF</string>
     <string name="txt" translatable="false">TXT</string>
+    <string name="xml" translatable="false">XML</string>
     <string name="html" translatable="false">HTML</string>
     <string name="save_to_device">Save to device</string>
     <string name="edit_label">Edit label</string>

@@ -113,6 +113,22 @@ object XMLUtils {
         xmlSerializer.endDocument()
     }
 
+    fun writeBaseNoteToStream(baseNote: BaseNote, stream: OutputStream) {
+        val xmlSerializer = Xml.newSerializer()
+
+        xmlSerializer.setOutput(stream, null)
+        xmlSerializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true)
+        xmlSerializer.startDocument("UTF-8", true)
+
+        when (baseNote.type) {
+            Type.NOTE -> appendNote(baseNote, xmlSerializer)
+            Type.LIST -> appendList(baseNote, xmlSerializer)
+        }
+
+        xmlSerializer.endDocument()
+    }
+
+
     private fun appendNote(note: BaseNote, xmlSerializer: XmlSerializer) {
         xmlSerializer.startTag(null, XMLTags.Note)
 

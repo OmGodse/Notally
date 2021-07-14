@@ -13,6 +13,7 @@ Add clickable links to notes with support for phone numbers, email addresses and
 
 • PDF
 • TXT
+• XML
 • HTML
 
 <b>Convenience</b>

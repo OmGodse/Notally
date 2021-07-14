@@ -132,6 +132,15 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     }
 
 
+    suspend fun getXMLFile(baseNote: BaseNote) = withContext(Dispatchers.IO) {
+        val fileName = getFileName(baseNote)
+        val file = File(getExportedPath(), "$fileName.xml")
+        val outputStream = FileOutputStream(file)
+        XMLUtils.writeBaseNoteToStream(baseNote, outputStream)
+        outputStream.close()
+        file
+    }
+
     suspend fun getTXTFile(baseNote: BaseNote, showDateCreated: Boolean) = withContext(Dispatchers.IO) {
         val fileName = getFileName(baseNote)
         val file = File(getExportedPath(), "$fileName.txt")
@@ -233,6 +242,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     private fun getHTML(baseNote: BaseNote, showDateCreated: Boolean) = buildString {
         val date = formatter.format(baseNote.timestamp)
 
+        append("<!DOCTYPE html>")
         append("<html><head><meta charset=\"UTF-8\"></head><body>")
         append("<h2>${Html.escapeHtml(baseNote.title)}</h2>")
 
@@ -243,7 +253,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         when (baseNote.type) {
             Type.NOTE -> {
                 val body = baseNote.body.applySpans(baseNote.spans).toHtml()
-                append("<p>$body</p>")
+                append(body)
             }
             Type.LIST -> {
                 append("<ol>")

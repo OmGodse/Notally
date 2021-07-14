@@ -1,4 +1,4 @@
-*Please use the issues tab only for bug reports*
+*Please use the pull requests tab only for translations or bug reports*
 
 ### Background
 Although there are many notes apps out there, they're all hideous, glitchy, low quality or all 3 at the same time.
@@ -23,7 +23,7 @@ Well, Notally is none of these things. It's extremely light, minimalistic and el
 * APK size of 1.5 MB (1.9 MB Uncompressed)
 * Add labels to your notes for quick organisation
 * Archive notes to keep them around, but out of your way
-* Export notes as plain text, HTML or PDF files with formatting
+* Export notes as plain text, XML, HTML or PDF files with formatting
 * Create rich text notes with support for bold, italics, mono space and strike-through
 * Add clickable links to notes with support for phone numbers, email addresses and web urls
 

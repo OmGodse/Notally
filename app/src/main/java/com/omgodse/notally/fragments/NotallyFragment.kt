@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.content.FileProvider
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
@@ -140,10 +141,7 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
     private fun setupObserver() {
         getObservable()?.observe(viewLifecycleOwner, { list ->
             adapter?.submitList(list)
-
-            if (list.isNotEmpty()) {
-                binding?.RecyclerView?.visibility = View.VISIBLE
-            } else binding?.RecyclerView?.visibility = View.GONE
+            binding?.RecyclerView?.isVisible = list.isNotEmpty()
         })
     }
 
@@ -176,6 +174,7 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
         MenuDialog(mContext)
             .addItem(Operation(R.string.pdf, R.drawable.pdf) { exportBaseNoteToPDF(baseNote) })
             .addItem(Operation(R.string.txt, R.drawable.txt) { exportBaseNoteToTXT(baseNote) })
+            .addItem(Operation(R.string.xml, R.drawable.xml) { exportBaseNoteToXML(baseNote) })
             .addItem(Operation(R.string.html, R.drawable.html) { exportBaseNoteToHTML(baseNote) })
             .show()
     }
@@ -196,7 +195,7 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
             }
 
             override fun onFailure(message: String?) {
-                Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_SHORT).show()
+                Toast.makeText(mContext, R.string.something_went_wrong, Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -205,6 +204,13 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
         lifecycleScope.launch {
             val file = model.getTXTFile(baseNote, settingsHelper.getShowDateCreated())
             showFileOptionsDialog(file, "text/plain")
+        }
+    }
+
+    private fun exportBaseNoteToXML(baseNote: BaseNote) {
+        lifecycleScope.launch {
+            val file = model.getXMLFile(baseNote)
+            showFileOptionsDialog(file, "text/xml")
         }
     }
 
@@ -227,29 +233,29 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
 
 
     private fun viewFile(uri: Uri, mimeType: String) {
-        val intent = Intent(Intent.ACTION_VIEW).apply {
-            setDataAndType(uri, mimeType)
-            flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-        }
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.setDataAndType(uri, mimeType)
+        intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+
         val chooser = Intent.createChooser(intent, mContext.getString(R.string.view_note))
         startActivity(chooser)
     }
 
     private fun shareFile(uri: Uri, mimeType: String) {
-        val intent = Intent(Intent.ACTION_SEND).apply {
-            type = mimeType
-            putExtra(Intent.EXTRA_STREAM, uri)
-        }
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = mimeType
+        intent.putExtra(Intent.EXTRA_STREAM, uri)
+
         val chooser = Intent.createChooser(intent, mContext.getString(R.string.share_note))
         startActivity(chooser)
     }
 
     private fun saveFileToDevice(file: File, mimeType: String) {
-        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-            type = mimeType
-            addCategory(Intent.CATEGORY_OPENABLE)
-            putExtra(Intent.EXTRA_TITLE, file.nameWithoutExtension)
-        }
+        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
+        intent.type = mimeType
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        intent.putExtra(Intent.EXTRA_TITLE, file.nameWithoutExtension)
+
         model.currentFile = file
         startActivityForResult(intent, Constants.RequestCodeExportFile)
     }
