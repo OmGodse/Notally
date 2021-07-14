@@ -24,6 +24,7 @@ class LabelsAdapter(private val itemListener: ItemListener) : ListAdapter<Label,
 
 
     class DiffCallback : DiffUtil.ItemCallback<Label>() {
+
         override fun areItemsTheSame(oldItem: Label, newItem: Label): Boolean {
             return oldItem == newItem
         }

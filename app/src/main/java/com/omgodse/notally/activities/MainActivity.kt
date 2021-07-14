@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.*
 import androidx.navigation.ui.AppBarConfiguration
@@ -12,7 +13,6 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.ActivityMainBinding
 import com.omgodse.notally.miscellaneous.Constants
-import com.omgodse.notally.miscellaneous.setVisible
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.Toolbar)
         setupNavigation()
     }
+
 
     private fun setupNavigation() {
         navController = findNavController(R.id.NavigationHost)
@@ -79,16 +80,12 @@ class MainActivity : AppCompatActivity() {
     private fun handleDestinationChange(destination: NavDestination, arguments: Bundle?) {
         when (destination.id) {
             R.id.NotesFragment -> binding.TakeNoteFAB.show()
-            R.id.SearchFragment -> {
-                binding.TakeNoteFAB.hide()
-                binding.EnterSearchKeyword.requestFocus()
-            }
             R.id.DisplayLabelFragment -> {
                 binding.TakeNoteFAB.hide()
                 supportActionBar?.setTitle(arguments?.getString(Constants.SelectedLabel))
             }
             else -> binding.TakeNoteFAB.hide()
         }
-        binding.EnterSearchKeyword.setVisible(destination.id == R.id.SearchFragment)
+        binding.EnterSearchKeyword.isVisible = (destination.id == R.id.SearchFragment)
     }
 }
