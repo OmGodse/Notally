@@ -1,5 +1,6 @@
 *Please use the pull requests tab only for translations or bug reports*
-
+## README
+- [🇳🇱 Dutch](README.nl.md)    
 ### Background
 Although there are many notes apps out there, they're all hideous, glitchy, low quality or all 3 at the same time.
 
