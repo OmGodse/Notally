@@ -14,6 +14,7 @@ Add clickable links to notes with support for phone numbers, email addresses and
 • PDF
 • TXT
 • XML
+• JSON
 • HTML
 
 <b>Convenience</b>

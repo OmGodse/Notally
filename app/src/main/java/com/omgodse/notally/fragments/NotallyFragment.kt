@@ -171,6 +171,7 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
             .addItem(Operation(R.string.pdf, R.drawable.pdf) { exportBaseNoteToPDF(baseNote) })
             .addItem(Operation(R.string.txt, R.drawable.txt) { exportBaseNoteToTXT(baseNote) })
             .addItem(Operation(R.string.xml, R.drawable.xml) { exportBaseNoteToXML(baseNote) })
+            .addItem(Operation(R.string.json, R.drawable.json) { exportBaseNoteToJSON(baseNote) })
             .addItem(Operation(R.string.html, R.drawable.html) { exportBaseNoteToHTML(baseNote) })
             .show()
     }
@@ -207,6 +208,13 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
         lifecycleScope.launch {
             val file = model.getXMLFile(baseNote)
             showFileOptionsDialog(file, "text/xml")
+        }
+    }
+
+    private fun exportBaseNoteToJSON(baseNote: BaseNote) {
+        lifecycleScope.launch {
+            val file = model.getJSONFile(baseNote)
+            showFileOptionsDialog(file, "application/json")
         }
     }
 

@@ -19,11 +19,14 @@ import com.omgodse.notally.room.*
 import com.omgodse.notally.room.livedata.Content
 import com.omgodse.notally.room.livedata.SearchResult
 import com.omgodse.notally.xml.Backup
+import com.omgodse.notally.xml.XMLTags
 import com.omgodse.notally.xml.XMLUtils
 import com.omgodse.post.PostPDFGenerator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.json.JSONArray
+import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
@@ -141,6 +144,14 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         file
     }
 
+    suspend fun getJSONFile(baseNote: BaseNote) = withContext(Dispatchers.IO) {
+        val fileName = getFileName(baseNote)
+        val file = File(getExportedPath(), "$fileName.json")
+        val json = getJSON(baseNote)
+        file.writeText(json)
+        file
+    }
+
     suspend fun getTXTFile(baseNote: BaseNote, showDateCreated: Boolean) = withContext(Dispatchers.IO) {
         val fileName = getFileName(baseNote)
         val file = File(getExportedPath(), "$fileName.txt")
@@ -220,6 +231,32 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
             }
         } else title
         return fileName.take(64).replace("/", "")
+    }
+
+
+    private fun getJSON(baseNote: BaseNote): String {
+        val labels = JSONArray(baseNote.labels)
+
+        val jsonObject = JSONObject()
+            .put("type", baseNote.type.name)
+            .put(XMLTags.Title, baseNote.title)
+            .put(XMLTags.Pinned, baseNote.pinned)
+            .put(XMLTags.DateCreated, baseNote.timestamp)
+            .put("labels", labels)
+
+        when (baseNote.type) {
+            Type.NOTE -> {
+                val spans = JSONArray(baseNote.spans.map { representation -> representation.toJSONObject() })
+                jsonObject.put(XMLTags.Body, baseNote.body)
+                jsonObject.put("spans", spans)
+            }
+            Type.LIST -> {
+                val items = JSONArray(baseNote.items.map { item -> item.toJSONObject() })
+                jsonObject.put("items", items)
+            }
+        }
+
+        return jsonObject.toString(2)
     }
 
     private fun getTXT(baseNote: BaseNote, showDateCreated: Boolean) = buildString {
