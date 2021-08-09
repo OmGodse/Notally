@@ -34,13 +34,16 @@
             android:id="@+id/Date"
             style="@style/Preview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="?attr/colorControlNormal" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/Note"
             style="@style/Preview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Preview" />
 
         <LinearLayout
             android:id="@+id/LinearLayout"
@@ -54,7 +57,8 @@
             style="@style/Preview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="4dp" />
+            android:paddingTop="4dp"
+            android:textAppearance="@style/TextAppearance.Preview" />
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/LabelGroup"
