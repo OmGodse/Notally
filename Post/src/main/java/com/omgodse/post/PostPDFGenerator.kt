@@ -54,7 +54,7 @@ class PostPDFGenerator private constructor(
 
         private var onResult: OnResult? = null
 
-        fun setFile(file: File?) = apply { this.file = file }
+        fun setFile(file: File) = apply { this.file = file }
 
         fun setContent(content: String) = apply { this.content = content }
 
