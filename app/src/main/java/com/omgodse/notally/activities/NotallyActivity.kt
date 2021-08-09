@@ -62,10 +62,9 @@ abstract class NotallyActivity : AppCompatActivity(), OperationsParent {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val menuId = when (intent.getIntExtra(Constants.PreviousFragment, R.id.NotesFragment)) {
-            R.id.NotesFragment -> R.menu.notes
-            R.id.ArchivedFragment -> R.menu.archived
-            R.id.DeletedFragment -> R.menu.deleted
+        val menuId = when (intent.getIntExtra(Constants.PreviousFragment, R.id.Notes)) {
+            R.id.Archived -> R.menu.archived
+            R.id.Deleted -> R.menu.deleted
             else -> R.menu.notes
         }
 

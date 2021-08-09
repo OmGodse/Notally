@@ -12,7 +12,6 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.ActivityMainBinding
-import com.omgodse.notally.miscellaneous.Constants
 
 class MainActivity : AppCompatActivity() {
 
@@ -73,19 +72,15 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             fragmentIdToLoad = destination.id
             binding.NavigationView.setCheckedItem(destination.id)
-            handleDestinationChange(destination, arguments)
+            handleDestinationChange(destination)
         }
     }
 
-    private fun handleDestinationChange(destination: NavDestination, arguments: Bundle?) {
-        when (destination.id) {
-            R.id.NotesFragment -> binding.TakeNoteFAB.show()
-            R.id.DisplayLabelFragment -> {
-                binding.TakeNoteFAB.hide()
-                supportActionBar?.setTitle(arguments?.getString(Constants.SelectedLabel))
-            }
-            else -> binding.TakeNoteFAB.hide()
-        }
-        binding.EnterSearchKeyword.isVisible = (destination.id == R.id.SearchFragment)
+    private fun handleDestinationChange(destination: NavDestination) {
+        if (destination.id == R.id.Notes) {
+            binding.TakeNoteFAB.show()
+        } else binding.TakeNoteFAB.hide()
+
+        binding.EnterSearchKeyword.isVisible = (destination.id == R.id.Search)
     }
 }
