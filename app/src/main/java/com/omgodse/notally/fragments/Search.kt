@@ -15,14 +15,14 @@ class Search : NotallyFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        (mContext as MainActivity).binding.EnterSearchKeyword.removeTextChangedListener(textWatcher)
+        (requireContext() as MainActivity).binding.EnterSearchKeyword.removeTextChangedListener(textWatcher)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (mContext as MainActivity).binding.EnterSearchKeyword.setText(model.keyword)
-        textWatcher = (mContext as MainActivity).binding.EnterSearchKeyword.addTextChangedListener(onTextChanged = { text, start, count, after ->
+        (requireContext() as MainActivity).binding.EnterSearchKeyword.setText(model.keyword)
+        textWatcher = (requireContext() as MainActivity).binding.EnterSearchKeyword.addTextChangedListener(onTextChanged = { text, start, count, after ->
             model.keyword = text?.toString()?.trim() ?: String()
         })
     }

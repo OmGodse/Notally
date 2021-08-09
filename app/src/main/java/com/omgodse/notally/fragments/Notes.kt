@@ -20,7 +20,7 @@ class Notes : NotallyFragment() {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
 
-        (mContext as MainActivity).binding.TakeNoteFAB.setOnClickListener {
+        (requireContext() as MainActivity).binding.TakeNoteFAB.setOnClickListener {
             displayNoteTypes()
         }
     }
@@ -28,7 +28,7 @@ class Notes : NotallyFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.Search) {
-            findNavController().navigate(R.id.NotesFragmentToSearchFragment)
+            findNavController().navigate(R.id.NotesToSearch)
         }
         return super.onOptionsItemSelected(item)
     }
@@ -39,7 +39,7 @@ class Notes : NotallyFragment() {
 
 
     private fun displayNoteTypes() {
-        MenuDialog(mContext)
+        MenuDialog(requireContext())
             .addItem(Operation(R.string.make_list, R.drawable.checkbox) { goToActivity(MakeList::class.java) })
             .addItem(Operation(R.string.take_note, R.drawable.edit) { goToActivity(TakeNote::class.java) })
             .show()

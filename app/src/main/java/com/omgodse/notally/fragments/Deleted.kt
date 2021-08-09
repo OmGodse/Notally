@@ -31,7 +31,7 @@ class Deleted : NotallyFragment() {
 
 
     private fun confirmDeletionOfAllNotes() {
-        MaterialAlertDialogBuilder(mContext)
+        MaterialAlertDialogBuilder(requireContext())
             .setMessage(R.string.delete_all_notes)
             .setPositiveButton(R.string.delete) { dialog, which ->
                 model.deleteAllBaseNotes()
@@ -41,7 +41,7 @@ class Deleted : NotallyFragment() {
     }
 
     private fun confirmDeletionOfSingleNote(baseNote: BaseNote) {
-        MaterialAlertDialogBuilder(mContext)
+        MaterialAlertDialogBuilder(requireContext())
             .setMessage(R.string.delete_note_forever)
             .setPositiveButton(R.string.delete) { dialog, which ->
                 model.deleteBaseNoteForever(baseNote)
