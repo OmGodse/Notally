@@ -20,7 +20,7 @@ interface LabelDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertLabels(labels: List<Label>)
 
-    @Query("SELECT value FROM Label")
+    @Query("SELECT value FROM Label ORDER BY value")
     suspend fun getAllLabelsAsList(): List<String>
 
     @Query("SELECT * FROM Label ORDER BY value")
