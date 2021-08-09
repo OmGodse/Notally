@@ -9,7 +9,7 @@ import com.google.android.material.textfield.TextInputEditText
  * in the custom text selection mode causes the mode to end.
  * For more information, see this -> https://issuetracker.google.com/issues/36937508
  */
-class NotallyEditText constructor(context: Context, attrs: AttributeSet) : TextInputEditText(context, attrs) {
+class NotallyEditText(context: Context, attrs: AttributeSet) : TextInputEditText(context, attrs) {
 
     var isActionModeOn = false
 

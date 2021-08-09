@@ -45,13 +45,13 @@ data class BaseNote(
         if (body.contains(keyword, true)) {
             return true
         }
-        labels.forEach { label ->
+        for (label in labels) {
             if (label.contains(keyword, true)) {
                 return true
             }
         }
-        items.forEach { (content) ->
-            if (content.contains(keyword, true)) {
+        for (item in items) {
+            if (item.body.contains(keyword, true)) {
                 return true
             }
         }

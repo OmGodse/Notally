@@ -4,7 +4,7 @@ import com.omgodse.notally.room.BaseNote
 import java.io.InputStream
 import java.io.OutputStream
 
-data class Backup(
+class Backup(
     val baseNotes: List<BaseNote>,
     val deletedNotes: List<BaseNote>,
     val archivedNotes: List<BaseNote>,

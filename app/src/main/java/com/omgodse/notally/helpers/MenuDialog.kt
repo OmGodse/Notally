@@ -27,5 +27,5 @@ class MenuDialog(context: Context) : BottomSheetDialog(context) {
         linearLayout.addView(item)
     }
 
-    data class Operation(val textId: Int, val drawableId: Int, val operation: () -> Unit)
+    class Operation(val textId: Int, val drawableId: Int, val operation: () -> Unit)
 }
