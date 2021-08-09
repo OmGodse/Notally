@@ -6,5 +6,5 @@
 
     <dimen name="recyclerViewPadding">4dp</dimen>
 
-    <integer name="config_navAnimTime">400</integer>
+    <integer name="config_navAnimTime">300</integer>
 </resources>
