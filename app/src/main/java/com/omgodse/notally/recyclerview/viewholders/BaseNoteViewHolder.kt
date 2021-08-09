@@ -19,7 +19,8 @@ import java.util.*
 class BaseNoteViewHolder(
     private val binding: RecyclerBaseNoteBinding,
     private val settingsHelper: SettingsHelper,
-    private val itemListener: ItemListener
+    private val itemListener: ItemListener,
+    private val prettyTime: PrettyTime
 ) : RecyclerView.ViewHolder(binding.root) {
 
     init {
@@ -46,8 +47,13 @@ class BaseNoteViewHolder(
             Type.NOTE -> bindNote(baseNote)
             Type.LIST -> bindList(baseNote)
         }
+
         binding.Pinned.isVisible = baseNote.pinned
         binding.LabelGroup.bindLabels(baseNote.labels)
+
+        val date = Date(baseNote.timestamp)
+        binding.Date.text = prettyTime.format(date)
+
         if (baseNote.isEmpty()) {
             binding.Note.setText(baseNote.getEmptyMessage())
             binding.Note.isVisible = true
@@ -60,7 +66,6 @@ class BaseNoteViewHolder(
 
         binding.Title.text = note.title
         binding.Note.text = note.body.applySpans(note.spans)
-        binding.Date.text = PrettyTime().format(Date(note.timestamp))
 
         binding.Title.isVisible = note.title.isNotEmpty()
         binding.Note.isVisible = note.body.isNotEmpty()
@@ -73,8 +78,6 @@ class BaseNoteViewHolder(
         binding.LinearLayout.isVisible = true
 
         binding.Title.text = list.title
-        binding.Date.text = PrettyTime().format(Date(list.timestamp))
-
         binding.Title.isVisible = list.title.isNotEmpty()
 
         val maxItems = settingsHelper.getMaxItems()
@@ -89,11 +92,11 @@ class BaseNoteViewHolder(
             } else binding.root.context.getString(R.string.more_items, itemsRemaining)
         } else null
 
-        for ((body, checked) in filteredList) {
+        for (item in filteredList) {
             val inflater = LayoutInflater.from(binding.root.context)
             val view = ListItemPreviewBinding.inflate(inflater).root
-            view.text = body
-            view.handleChecked(checked)
+            view.text = item.body
+            view.handleChecked(item.checked)
             binding.LinearLayout.addView(view)
         }
 
@@ -114,9 +117,10 @@ class BaseNoteViewHolder(
     }
 
     private fun MaterialTextView.handleChecked(checked: Boolean) {
-        if (checked) {
-            setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.checkbox_16, 0, 0, 0)
-        } else setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.checkbox_outline_16, 0, 0, 0)
+        val drawable = if (checked) {
+            R.drawable.checkbox_16
+        } else R.drawable.checkbox_outline_16
+        setCompoundDrawablesRelativeWithIntrinsicBounds(drawable, 0, 0, 0)
         paint.isStrikeThruText = checked
     }
 }

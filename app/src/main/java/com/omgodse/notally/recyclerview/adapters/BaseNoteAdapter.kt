@@ -9,9 +9,12 @@ import com.omgodse.notally.helpers.SettingsHelper
 import com.omgodse.notally.recyclerview.ItemListener
 import com.omgodse.notally.recyclerview.viewholders.BaseNoteViewHolder
 import com.omgodse.notally.room.BaseNote
+import org.ocpsoft.prettytime.PrettyTime
 
 class BaseNoteAdapter(private val settingsHelper: SettingsHelper, private val itemListener: ItemListener) :
     ListAdapter<BaseNote, BaseNoteViewHolder>(DiffCallback()) {
+
+    private val prettyTime = PrettyTime()
 
     override fun onBindViewHolder(holder: BaseNoteViewHolder, position: Int) {
         val baseNote = getItem(position)
@@ -21,7 +24,7 @@ class BaseNoteAdapter(private val settingsHelper: SettingsHelper, private val it
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseNoteViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = RecyclerBaseNoteBinding.inflate(inflater, parent, false)
-        return BaseNoteViewHolder(binding, settingsHelper, itemListener)
+        return BaseNoteViewHolder(binding, settingsHelper, itemListener, prettyTime)
     }
 
 
