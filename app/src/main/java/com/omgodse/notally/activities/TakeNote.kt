@@ -16,7 +16,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.omgodse.notally.NotallyLinkMovementMethod
+import com.omgodse.notally.LinkMovementMethod
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.ActivityTakeNoteBinding
 import com.omgodse.notally.miscellaneous.bindLabels
@@ -44,7 +44,7 @@ class TakeNote : NotallyActivity() {
         setupToolbar(binding.Toolbar)
 
         if (model.isNewNote) {
-            binding.EnterTitle.requestFocus()
+            binding.EnterBody.requestFocus()
         }
 
         setStateFromModel()
@@ -147,7 +147,7 @@ class TakeNote : NotallyActivity() {
     }
 
     private fun setupMovementMethod() {
-        val movementMethod = NotallyLinkMovementMethod { span ->
+        val movementMethod = LinkMovementMethod { span ->
             MaterialAlertDialogBuilder(this)
                 .setItems(R.array.linkOptions) { dialog, which ->
                     if (which == 0) {
