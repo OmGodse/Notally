@@ -54,43 +54,39 @@
                 android:layout_height="1dp"
                 android:background="?android:attr/listDivider" />
 
-            <FrameLayout
-                android:id="@+id/FrameLayout"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/RecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:overScrollMode="never"
+                android:paddingTop="4dp" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/AddItem"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:insetLeft="16dp"
-                    android:insetRight="16dp"
-                    android:minHeight="0dp"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:text="@string/add_item"
-                    android:textColor="?android:textColorHint"
-                    app:rippleColor="?attr/colorControlHighlight" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/RecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?attr/colorSurface"
-                    android:clipToPadding="false"
-                    android:overScrollMode="never"
-                    android:paddingTop="4dp"
-                    android:paddingBottom="2dp" />
-
-            </FrameLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/AddItem"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:insetLeft="12dp"
+                android:insetTop="0dp"
+                android:insetRight="12dp"
+                android:insetBottom="0dp"
+                android:minHeight="0dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="@string/add_item"
+                android:textColor="?android:textColorHint"
+                app:icon="@drawable/add"
+                app:iconPadding="12dp"
+                app:iconTint="?android:textColorHint"
+                app:rippleColor="?attr/colorControlHighlight" />
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/LabelGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="16dp"
-                android:paddingTop="8dp"
+                android:paddingTop="4dp"
                 android:paddingEnd="16dp" />
 
         </LinearLayout>

@@ -30,7 +30,7 @@ class MakeListViewHolder(val binding: RecyclerListItemBinding, listItemListener:
 
         binding.DragHandle.setOnTouchListener { v, event ->
             if (event.actionMasked == MotionEvent.ACTION_DOWN) {
-                listItemListener?.onStartDrag(this)
+                listItemListener.onStartDrag(this)
             }
             false
         }

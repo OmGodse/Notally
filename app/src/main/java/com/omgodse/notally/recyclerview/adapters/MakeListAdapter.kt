@@ -9,7 +9,10 @@ import com.omgodse.notally.recyclerview.viewholders.MakeListViewHolder
 import com.omgodse.notally.room.ListItem
 import java.util.*
 
-class MakeListAdapter(var items: ArrayList<ListItem>, private val listItemListener: ListItemListener) : RecyclerView.Adapter<MakeListViewHolder>() {
+class MakeListAdapter(
+    private val items: ArrayList<ListItem>,
+    private val listItemListener: ListItemListener
+) : RecyclerView.Adapter<MakeListViewHolder>() {
 
     override fun getItemCount() = items.size
 
