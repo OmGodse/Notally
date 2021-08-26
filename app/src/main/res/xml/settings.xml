@@ -87,11 +87,6 @@
 
         <Preference
             app:iconSpaceReserved="false"
-            app:key="@string/patreonKey"
-            app:title="@string/patreon" />
-
-        <Preference
-            app:iconSpaceReserved="false"
             app:key="@string/librariesKey"
             app:title="@string/libraries" />
 

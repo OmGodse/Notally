@@ -106,7 +106,6 @@
     <string name="rate">Rate this app</string>
 
     <string name="github" translatable="false">GitHub</string>
-    <string name="patreon" translatable="false">Patreon</string>
 
     <string name="viewKey" translatable="false">view</string>
     <string name="listKey" translatable="false">list</string>
@@ -134,7 +133,6 @@
 
     <string name="rateKey" translatable="false">rate</string>
     <string name="githubKey" translatable="false">github</string>
-    <string name="patreonKey" translatable="false">patreon</string>
     <string name="librariesKey" translatable="false">libraries</string>
 
     <string name="room" translatable="false">Room</string>
