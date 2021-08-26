@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.print.PostPDFGenerator
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,7 +37,6 @@ import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Label
 import com.omgodse.notally.room.Type
 import com.omgodse.notally.viewmodels.BaseNoteModel
-import com.omgodse.post.PostPDFGenerator
 import kotlinx.coroutines.launch
 import java.io.File
 
@@ -80,15 +80,14 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentNotesBinding.inflate(layoutInflater)
+        binding = FragmentNotesBinding.inflate(inflater)
         return binding?.root
     }
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == Constants.RequestCodeExportFile && resultCode == Activity.RESULT_OK) {
-            val uri = data?.data
-            if (uri != null) {
+            data?.data?.let { uri ->
                 model.writeCurrentFileToUri(uri)
             }
         }

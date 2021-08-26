@@ -1,3 +1,2 @@
-include ":Post"
 include ":app"
 rootProject.name = "Notally"

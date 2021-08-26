@@ -3,6 +3,7 @@ package com.omgodse.notally.viewmodels
 import android.app.Application
 import android.content.Context
 import android.net.Uri
+import android.print.PostPDFGenerator
 import android.text.Html
 import android.widget.Toast
 import androidx.core.content.edit
@@ -21,7 +22,6 @@ import com.omgodse.notally.room.livedata.SearchResult
 import com.omgodse.notally.xml.Backup
 import com.omgodse.notally.xml.XMLTags
 import com.omgodse.notally.xml.XMLUtils
-import com.omgodse.post.PostPDFGenerator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -31,6 +31,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
@@ -168,19 +169,13 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         file
     }
 
-    fun getPDFFile(baseNote: BaseNote, showDateCreated: Boolean, result: PostPDFGenerator.OnResult) {
+    fun getPDFFile(baseNote: BaseNote, showDateCreated: Boolean, onResult: PostPDFGenerator.OnResult) {
         val fileName = getFileName(baseNote)
         val pdfFile = File(getExportedPath(), "$fileName.pdf")
 
         val html = getHTML(baseNote, showDateCreated)
 
-        PostPDFGenerator.Builder()
-            .setFile(pdfFile)
-            .setContent(html)
-            .setContext(app)
-            .setOnResult(result)
-            .build()
-            .create()
+        PostPDFGenerator.create(pdfFile, html, app, onResult)
     }
 
 
@@ -305,7 +300,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
 
     private fun getPreviousNotes(): List<BaseNote> {
-        val previousNotes = mutableListOf<BaseNote>()
+        val previousNotes = ArrayList<BaseNote>()
         getNotePath().listFiles()?.mapTo(previousNotes, { file -> XMLUtils.readBaseNoteFromFile(file, Folder.NOTES) })
         getDeletedPath().listFiles()?.mapTo(previousNotes, { file -> XMLUtils.readBaseNoteFromFile(file, Folder.DELETED) })
         getArchivedPath().listFiles()?.mapTo(previousNotes, { file -> XMLUtils.readBaseNoteFromFile(file, Folder.ARCHIVED) })

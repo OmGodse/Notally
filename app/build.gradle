@@ -6,12 +6,12 @@ plugins {
 }
 
 android {
-    compileSdk rootProject.ext.compileSdkVersion
+    compileSdk 30
 
     defaultConfig {
         applicationId "com.omgodse.notally"
-        minSdk rootProject.ext.minSdkVersion
-        targetSdk rootProject.ext.targetSdkVersion
+        minSdk 21
+        targetSdk 30
         versionCode 35
         versionName "4.0"
         resConfigs "en", "ca", "cs", "de", "es", "fr", "hu", "in", "it", "ja", "nb", "nl", "pl", "pt-rBR", "ru", "sk", "sv", "tl", "tr", "uk"
@@ -54,6 +54,4 @@ dependencies {
 
     implementation "org.ocpsoft.prettytime:prettytime:4.0.6.Final"
     implementation "com.google.android.material:material:1.4.0"
-
-    implementation project(":Post")
 }
