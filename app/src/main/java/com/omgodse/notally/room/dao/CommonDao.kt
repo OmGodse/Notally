@@ -3,9 +3,9 @@ package com.omgodse.notally.room.dao
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import androidx.room.*
+import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Folder
 import com.omgodse.notally.room.Label
-import com.omgodse.notally.room.BaseNote
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -24,7 +24,7 @@ interface CommonDao {
 
     @Transaction
     suspend fun deleteLabel(label: Label) {
-        val baseNotesWithLabel = getBaseNotesByLabelAsList(label.value, Folder.NOTES.name)
+        val baseNotesWithLabel = getBaseNotesByLabelAsList(label.value)
         val modified = baseNotesWithLabel.map { baseNote ->
             baseNote.labels.remove(label.value)
             baseNote
@@ -35,7 +35,7 @@ interface CommonDao {
 
     @Transaction
     suspend fun updateLabel(oldValue: String, newValue: String) {
-        val baseNotesWithLabel = getBaseNotesByLabelAsList(oldValue, Folder.NOTES.name)
+        val baseNotesWithLabel = getBaseNotesByLabelAsList(oldValue)
         val modified = baseNotesWithLabel.map { baseNote ->
             baseNote.labels.remove(oldValue)
             baseNote.labels.add(newValue)
@@ -68,6 +68,6 @@ interface CommonDao {
     @Query("SELECT * FROM BaseNote WHERE folder = :folderName AND labels LIKE '%' || :label || '%' ORDER BY pinned DESC, timestamp DESC")
     fun getBaseNotesByLabel(label: String, folderName: String): Flow<List<BaseNote>>
 
-    @Query("SELECT * FROM BaseNote WHERE folder = :folderName AND labels LIKE '%' || :label || '%' ORDER BY pinned DESC, timestamp DESC")
-    suspend fun getBaseNotesByLabelAsList(label: String, folderName: String): List<BaseNote>
+    @Query("SELECT * FROM BaseNote WHERE labels LIKE '%' || :label || '%' ORDER BY pinned DESC, timestamp DESC")
+    suspend fun getBaseNotesByLabelAsList(label: String): List<BaseNote>
 }
