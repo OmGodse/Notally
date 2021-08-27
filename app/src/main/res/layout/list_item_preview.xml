@@ -3,6 +3,6 @@
     style="@style/Preview"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:drawablePadding="16dp"
+    android:drawablePadding="12dp"
     android:paddingBottom="0dp"
     android:textAppearance="@style/TextAppearance.Preview" />
