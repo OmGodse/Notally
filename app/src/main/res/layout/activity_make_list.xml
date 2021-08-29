@@ -70,7 +70,7 @@
                 android:insetLeft="12dp"
                 android:insetTop="0dp"
                 android:insetRight="12dp"
-                android:insetBottom="0dp"
+                android:insetBottom="4dp"
                 android:minHeight="0dp"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"

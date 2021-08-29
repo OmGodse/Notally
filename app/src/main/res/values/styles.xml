@@ -15,6 +15,8 @@
         <item name="android:textAppearanceListItem">?attr/textAppearanceBody1</item>
         <item name="android:textAppearanceListItemSecondary">?attr/textAppearanceBody2</item>
 
+        <item name="chipGroupStyle">@style/ChipGroup</item>
+
         <item name="alertDialogTheme">@style/AlertDialog</item>
         <item name="materialAlertDialogTheme">@style/AlertDialog</item>
         <item name="bottomSheetDialogTheme">@style/BottomSheetDialog</item>
@@ -66,6 +68,12 @@
         <item name="android:paddingBottom">8dp</item>
         <item name="android:maxLines">1</item>
         <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="ChipGroup" parent="Widget.MaterialComponents.ChipGroup">
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="chipSpacingVertical">8dp</item>
     </style>
 
 
