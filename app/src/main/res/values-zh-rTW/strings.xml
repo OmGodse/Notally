@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fragment Titles -->
+    <string name="notes">筆記</string>
+    <string name="labels">標籤</string>
+    <string name="deleted">已刪除</string>
+    <string name="archived">已存檔</string>
+    <string name="settings">設定</string>
+
+    <!-- Menu Options -->
+    <string name="share">分享</string>
+    <string name="search">搜尋</string>
+    <string name="delete">刪除</string>
+    <string name="restore">反刪除</string>
+    <string name="archive">存檔</string>
+    <string name="unarchive">解除存檔</string>
+    <string name="delete_all">刪除全部</string>
+    <string name="delete_forever">永久刪除</string>
+
+    <!-- Pinning -->
+    <string name="pin">置頂</string>
+    <string name="unpin">取消置頂</string>
+    <string name="pinned">已置頂</string>
+
+    <!-- Chooser dialog hints -->
+    <string name="view_note">查看筆記…</string>
+    <string name="share_note">分享筆記…</string>
+
+    <!-- Dialogs -->
+    <string name="save">儲存</string>
+    <string name="edit">編輯</string>
+    <string name="cancel">取消</string>
+    <string name="make_list">制作列表</string>
+    <string name="take_note">記錄筆記</string>
+    <string name="add_label">添加標籤</string>
+    <string name="export">匯出</string>
+    <string name="save_to_device">儲存至裝置</string>
+    <string name="edit_label">編輯標籤</string>
+    <string name="label_exists">標記已存在</string>
+    <string name="delete_label">移除標籤？</string>
+    <string name="create_new">還沒有標籤。是否要建立一個？</string>
+    <string name="delete_all_notes">刪除所有筆記？</string>
+    <string name="delete_note_forever">永久刪除筆記？</string>
+    <string name="your_notes_associated">被關聯至此標籤的筆記將不會被刪除</string>
+
+    <!-- Lists and Notes -->
+    <string name="note">筆記</string>
+    <string name="item">記事</string>
+    <string name="date">日期</string>
+    <string name="title">標題</string>
+    <string name="add_item">建立記事</string>
+    <string name="one_more_item">還有1個記事</string>
+    <string name="more_items">還有%1$d個記事</string>
+    <string name="drag_handle">拖動手柄</string>
+    <string name="bold">粗體</string>
+    <string name="link">連結</string>
+    <string name="italic">斜體</string>
+    <string name="strikethrough">刪除線</string>
+    <string name="clear_formatting">移除所有格式設定</string>
+    <string name="monospace">等寬</string>
+
+    <!-- Miscellaneous -->
+    <string name="saved_to_device">已儲存至裝置</string>
+    <string name="saved_to_notally">已儲存至裝置Notally</string>
+    <string name="empty_note">空筆記</string>
+    <string name="empty_list">空列表</string>
+    <string name="discarded_empty_note">被丟棄的空筆記</string>
+    <string name="discarded_empty_list">被丟棄的空列表</string>
+    <string name="cant_open_link">無法開啓連結</string>
+    <string name="something_went_wrong">碰壁了，請再試一次。</string>
+
+    <!-- Settings Page -->
+    <string name="appearance">外觀</string>
+
+    <string name="view">排版</string>
+    <string name="list">列表</string>
+    <string name="grid">網格</string>
+
+    <string name="theme">主題</string>
+    <string name="dark">暗黑</string>
+    <string name="light">明亮</string>
+    <string name="follow_system">跟從系統設定</string>
+
+    <string name="card_type">卡片顯示方式</string>
+    <string name="flat">平滑</string>
+    <string name="elevated">突出</string>
+
+    <string name="content_density">密度</string>
+    <string name="max_items_to_display">最大顯示列表成員數</string>
+    <string name="max_lines_to_display">最大顯示筆記行數</string>
+
+    <string name="show_date_created">顯示建立日期</string>
+
+    <string name="backup">備份</string>
+    <string name="export_notes_to_a_file">匯出筆記至檔案</string>
+    <string name="import_notes_from_a_file">匯入筆記至檔案</string>
+
+    <string name="about">關於</string>
+    <string name="libraries">程式庫</string>
+    <string name="rate">爲此應用程式評分</string>
+</resources>

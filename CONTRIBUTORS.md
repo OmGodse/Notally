@@ -19,3 +19,5 @@
 * 🇳🇴 Norwegian by Fredrik Magnussen
 * 🇵🇭 Tagalog by Isaiah Collins Abetong
 * 🇩🇪 German by Maximilian Braunschmied
+* 🇿🇭 Chinese
+  * 🇹🇼 Traditional by [Emoji](https://github.com/Emojigit)

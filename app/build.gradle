@@ -8,13 +8,18 @@ plugins {
 android {
     compileSdk rootProject.ext.compileSdkVersion
 
+    lintOptions {
+        abortOnError false
+    }
+
+
     defaultConfig {
         applicationId "com.omgodse.notally"
         minSdk rootProject.ext.minSdkVersion
         targetSdk rootProject.ext.targetSdkVersion
         versionCode 35
-        versionName "4.0"
-        resConfigs "en", "ca", "cs", "de", "es", "fr", "hu", "in", "it", "ja", "nb", "nl", "pl", "pt-rBR", "ru", "sk", "sv", "tl", "tr", "uk"
+        versionName "4.1"
+        resConfigs "en", "ca", "cs", "de", "es", "fr", "hu", "in", "it", "ja", "nb", "nl", "pl", "pt-rBR", "ru", "sk", "sv", "tl", "tr", "uk", "zh-rTW"
         vectorDrawables.generatedDensities = []
     }
 
