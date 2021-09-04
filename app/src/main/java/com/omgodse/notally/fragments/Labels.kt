@@ -96,7 +96,7 @@ class Labels : Fragment(), ItemListener {
 
 
     private fun displayAddLabelDialog() {
-        val dialogBinding = DialogInputBinding.inflate(LayoutInflater.from(requireContext()))
+        val dialogBinding = DialogInputBinding.inflate(layoutInflater)
 
         dialogBinding.edit.inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS
         dialogBinding.edit.filters = arrayOf()
@@ -139,7 +139,7 @@ class Labels : Fragment(), ItemListener {
     }
 
     private fun displayEditLabelDialog(oldLabel: Label) {
-        val dialogBinding = DialogInputBinding.inflate(LayoutInflater.from(requireContext()))
+        val dialogBinding = DialogInputBinding.inflate(layoutInflater)
 
         dialogBinding.edit.inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS
         dialogBinding.edit.filters = arrayOf()

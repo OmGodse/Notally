@@ -117,10 +117,9 @@ class BaseNoteViewHolder(
     }
 
     private fun MaterialTextView.handleChecked(checked: Boolean) {
-        val drawable = if (checked) {
-            R.drawable.checkbox_16
-        } else R.drawable.checkbox_outline_16
-        setCompoundDrawablesRelativeWithIntrinsicBounds(drawable, 0, 0, 0)
+        if (checked) {
+            setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.checkbox_16, 0, 0, 0)
+        } else setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.checkbox_outline_16, 0, 0, 0)
         paint.isStrikeThruText = checked
     }
 }

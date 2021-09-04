@@ -28,7 +28,7 @@ class BaseNoteAdapter(private val settingsHelper: SettingsHelper, private val it
     }
 
 
-    class DiffCallback : DiffUtil.ItemCallback<BaseNote>() {
+    private class DiffCallback : DiffUtil.ItemCallback<BaseNote>() {
 
         override fun areItemsTheSame(oldItem: BaseNote, newItem: BaseNote): Boolean {
             return oldItem.id == newItem.id
