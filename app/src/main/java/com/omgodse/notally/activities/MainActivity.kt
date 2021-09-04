@@ -2,9 +2,11 @@ package com.omgodse.notally.activities
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.*
 import androidx.navigation.ui.AppBarConfiguration
@@ -12,12 +14,15 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.ActivityMainBinding
+import com.omgodse.notally.viewmodels.BaseNoteModel
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
+
+    private val model: BaseNoteModel by viewModels()
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
@@ -30,6 +35,7 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.Toolbar)
         setupNavigation()
+        setupSearch()
     }
 
 
@@ -82,5 +88,13 @@ class MainActivity : AppCompatActivity() {
         } else binding.TakeNoteFAB.hide()
 
         binding.EnterSearchKeyword.isVisible = (destination.id == R.id.Search)
+    }
+
+
+    private fun setupSearch() {
+        binding.EnterSearchKeyword.setText(model.keyword)
+        binding.EnterSearchKeyword.addTextChangedListener(onTextChanged = { text, start, count, after ->
+            model.keyword = text?.trim()?.toString() ?: String()
+        })
     }
 }
