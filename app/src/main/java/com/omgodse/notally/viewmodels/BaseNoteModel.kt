@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.core.content.edit
 import androidx.core.text.toHtml
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.room.withTransaction
 import com.omgodse.notally.R
@@ -47,9 +46,9 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     var currentFile: File? = null
 
     val labels = Content(labelDao.getAllLabels())
-    val baseNotes = Content(baseNoteDao.getAllBaseNotes())
-    val deletedNotes = Content(baseNoteDao.getAllDeletedNotes())
-    val archivedNotes = Content(baseNoteDao.getAllArchivedNotes())
+    val baseNotes = Content(baseNoteDao.getAllBaseNotes(Folder.NOTES))
+    val deletedNotes = Content(baseNoteDao.getAllBaseNotes(Folder.DELETED))
+    val archivedNotes = Content(baseNoteDao.getAllBaseNotes(Folder.ARCHIVED))
 
     var keyword = String()
         set(value) {
@@ -91,15 +90,15 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 val labels = labelDao.getAllLabelsAsList().toHashSet()
-                val baseNotes = baseNoteDao.getAllBaseNotesAsList()
-                val deletedNotes = baseNoteDao.getAllDeletedNotesAsList()
-                val archivedNotes = baseNoteDao.getAllArchivedNotesAsList()
+                val baseNotes = baseNoteDao.getAllBaseNotesAsList(Folder.NOTES)
+                val deletedNotes = baseNoteDao.getAllBaseNotesAsList(Folder.DELETED)
+                val archivedNotes = baseNoteDao.getAllBaseNotesAsList(Folder.ARCHIVED)
 
                 val backup = Backup(baseNotes, deletedNotes, archivedNotes, labels)
 
                 (app.contentResolver.openOutputStream(uri) as? FileOutputStream)?.use { stream ->
                     stream.channel.truncate(0)
-                    backup.writeToStream(stream)
+                    XMLUtils.writeBackupToStream(backup, stream)
                 }
             }
             Toast.makeText(app, R.string.saved_to_device, Toast.LENGTH_LONG).show()
@@ -109,9 +108,9 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     fun importBackup(uri: Uri) {
         executeAsync {
             app.contentResolver.openInputStream(uri)?.use { stream ->
-                val backup = Backup.readFromStream(stream)
+                val backup = XMLUtils.readBackupFromStream(stream)
 
-                val list = backup.baseNotes.toMutableList()
+                val list = ArrayList(backup.baseNotes)
                 list.addAll(backup.deletedNotes)
                 list.addAll(backup.archivedNotes)
 
@@ -179,22 +178,22 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     }
 
 
-    fun deleteLabel(label: Label) = executeAsync { commonDao.deleteLabel(label) }
+    fun restoreBaseNote(id: Long) = executeAsync { baseNoteDao.moveBaseNote(id, Folder.NOTES) }
 
-    fun restoreBaseNote(id: Long) = executeAsync { baseNoteDao.restoreBaseNote(id) }
+    fun moveBaseNoteToDeleted(id: Long) = executeAsync { baseNoteDao.moveBaseNote(id, Folder.DELETED) }
 
-    fun moveBaseNoteToDeleted(id: Long) = executeAsync { baseNoteDao.moveBaseNoteToDeleted(id) }
+    fun moveBaseNoteToArchive(id: Long) = executeAsync { baseNoteDao.moveBaseNote(id, Folder.ARCHIVED) }
 
-    fun moveBaseNoteToArchive(id: Long) = executeAsync { baseNoteDao.moveBaseNoteToArchive(id) }
+    fun deleteAllBaseNotes() = executeAsync { baseNoteDao.deleteAllBaseNotes(Folder.DELETED) }
 
     fun deleteBaseNoteForever(baseNote: BaseNote) = executeAsync { baseNoteDao.deleteBaseNote(baseNote) }
 
-    fun deleteAllBaseNotes() = executeAsync { baseNoteDao.deleteAllBaseNotesFromFolder(Folder.DELETED.name) }
-
-    fun updateBaseNoteLabels(labels: HashSet<String>, id: Long) = executeAsync { baseNoteDao.updateBaseNoteLabels(labels, id) }
+    fun updateBaseNoteLabels(labels: HashSet<String>, id: Long) = executeAsync { baseNoteDao.updateBaseNoteLabels(id, labels) }
 
 
     suspend fun getAllLabelsAsList() = withContext(Dispatchers.IO) { labelDao.getAllLabelsAsList() }
+
+    fun deleteLabel(label: Label) = executeAsync { commonDao.deleteLabel(label) }
 
     fun insertLabel(label: Label, onComplete: (success: Boolean) -> Unit) = executeAsyncWithCallback({ labelDao.insertLabel(label) }, onComplete)
 
@@ -330,7 +329,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     private fun getLabelsPreferences() = app.getSharedPreferences("labelsPreferences", Context.MODE_PRIVATE)
 
 
-    private fun ViewModel.executeAsync(function: suspend () -> Unit) {
+    private fun executeAsync(function: suspend () -> Unit) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) { function() }
         }

@@ -4,10 +4,12 @@ import android.app.Application
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.omgodse.notally.room.dao.BaseNoteDao
 import com.omgodse.notally.room.dao.CommonDao
 import com.omgodse.notally.room.dao.LabelDao
 
+@TypeConverters(Converters::class)
 @Database(entities = [BaseNote::class, Label::class], version = 1)
 abstract class NotallyDatabase : RoomDatabase() {
 

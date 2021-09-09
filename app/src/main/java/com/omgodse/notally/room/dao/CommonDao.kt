@@ -60,13 +60,13 @@ interface CommonDao {
      * filter the result accordingly.
      */
     fun getBaseNotesByLabel(label: String): LiveData<List<BaseNote>> {
-        val result = getBaseNotesByLabel(label, Folder.NOTES.name)
+        val result = getBaseNotesByLabel(label, Folder.NOTES)
         val filtered = result.map { list -> list.filter { baseNote -> baseNote.labels.contains(label) } }
         return filtered.asLiveData()
     }
 
-    @Query("SELECT * FROM BaseNote WHERE folder = :folderName AND labels LIKE '%' || :label || '%' ORDER BY pinned DESC, timestamp DESC")
-    fun getBaseNotesByLabel(label: String, folderName: String): Flow<List<BaseNote>>
+    @Query("SELECT * FROM BaseNote WHERE folder = :folder AND labels LIKE '%' || :label || '%' ORDER BY pinned DESC, timestamp DESC")
+    fun getBaseNotesByLabel(label: String, folder: Folder): Flow<List<BaseNote>>
 
     @Query("SELECT * FROM BaseNote WHERE labels LIKE '%' || :label || '%' ORDER BY pinned DESC, timestamp DESC")
     suspend fun getBaseNotesByLabelAsList(label: String): List<BaseNote>

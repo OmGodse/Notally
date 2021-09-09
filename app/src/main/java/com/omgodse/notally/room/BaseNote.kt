@@ -4,12 +4,10 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
 import com.omgodse.notally.R
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-@TypeConverters(Converters::class)
 @Entity(indices = [Index(value = ["id", "folder", "pinned", "timestamp", "labels"])])
 data class BaseNote(
     @PrimaryKey(autoGenerate = true) val id: Long,
