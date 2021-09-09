@@ -272,10 +272,13 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
     private fun getHTML(baseNote: BaseNote, showDateCreated: Boolean) = buildString {
         val date = formatter.format(baseNote.timestamp)
+        val title = Html.escapeHtml(baseNote.title)
 
         append("<!DOCTYPE html>")
-        append("<html><head><meta charset=\"UTF-8\"></head><body>")
-        append("<h2>${Html.escapeHtml(baseNote.title)}</h2>")
+        append("<html><head>")
+        append("<meta charset=\"UTF-8\"><title>$title</title>")
+        append("</head><body>")
+        append("<h2>$title</h2>")
 
         if (showDateCreated) {
             append("<p>$date</p>")
