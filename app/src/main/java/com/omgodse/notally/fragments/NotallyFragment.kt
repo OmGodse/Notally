@@ -228,8 +228,8 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
         val uri = FileProvider.getUriForFile(requireContext(), "${requireContext().packageName}.provider", file)
 
         MenuDialog(requireContext())
-            .addItem(Operation(R.string.view, R.drawable.view) { viewFile(uri, mimeType) })
             .addItem(Operation(R.string.share, R.drawable.share) { shareFile(uri, mimeType) })
+            .addItem(Operation(R.string.view_file, R.drawable.view) { viewFile(uri, mimeType) })
             .addItem(Operation(R.string.save_to_device, R.drawable.save) { saveFileToDevice(file, mimeType) })
             .show()
     }

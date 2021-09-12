@@ -31,6 +31,7 @@
     <string name="save">Save</string>
     <string name="edit">Edit</string>
     <string name="cancel">Cancel</string>
+    <string name="open_link">Open link</string>
     <string name="make_list">Make list</string>
     <string name="take_note">Take note</string>
     <string name="add_label">Add label</string>
@@ -40,6 +41,7 @@
     <string name="xml" translatable="false">XML</string>
     <string name="html" translatable="false">HTML</string>
     <string name="json" translatable="false">JSON</string>
+    <string name="view_file">View file</string>
     <string name="save_to_device">Save to device</string>
     <string name="edit_label">Edit label</string>
     <string name="label_exists">Label exists</string>

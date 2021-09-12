@@ -150,7 +150,7 @@ class TakeNote : NotallyActivity() {
         val movementMethod = LinkMovementMethod { span ->
             MaterialAlertDialogBuilder(this)
                 .setItems(R.array.linkOptions) { dialog, which ->
-                    if (which == 0) {
+                    if (which == 1) {
                         val spanStart = binding.EnterBody.text?.getSpanStart(span)
                         val spanEnd = binding.EnterBody.text?.getSpanEnd(span)
 
