@@ -11,7 +11,7 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/Toolbar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/toolbarHeight" />
+            android:layout_height="wrap_content" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -59,7 +59,6 @@
                 style="@style/EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:focusableInTouchMode="true"
                 android:hint="@string/note"
                 android:textAppearance="?attr/textAppearanceBody1" />
 

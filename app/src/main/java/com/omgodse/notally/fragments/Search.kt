@@ -1,32 +1,10 @@
 package com.omgodse.notally.fragments
 
-import android.os.Bundle
-import android.text.TextWatcher
-import android.view.View
-import androidx.core.widget.addTextChangedListener
 import com.omgodse.notally.R
-import com.omgodse.notally.activities.MainActivity
 import com.omgodse.notally.helpers.MenuDialog.Operation
 import com.omgodse.notally.room.BaseNote
 
 class Search : NotallyFragment() {
-
-    private var textWatcher: TextWatcher? = null
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        (mContext as MainActivity).binding.EnterSearchKeyword.removeTextChangedListener(textWatcher)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        (mContext as MainActivity).binding.EnterSearchKeyword.setText(model.keyword)
-        textWatcher = (mContext as MainActivity).binding.EnterSearchKeyword.addTextChangedListener(onTextChanged = { text, start, count, after ->
-            model.keyword = text?.toString()?.trim() ?: String()
-        })
-    }
-
 
     override fun getBackground() = R.drawable.search
 

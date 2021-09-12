@@ -1,31 +1,16 @@
 package com.omgodse.notally.room
 
 import androidx.room.TypeConverter
-import com.omgodse.notally.room.json.IterableJSONArray
 import org.json.JSONArray
 import org.json.JSONObject
 
-class Converters {
-
-    @TypeConverter
-    fun folderToString(folder: Folder) = folder.name
-
-    @TypeConverter
-    fun stringToFolder(string: String) = Folder.valueOf(string)
-
-
-    @TypeConverter
-    fun typeToString(type: Type) = type.name
-
-    @TypeConverter
-    fun stringToType(string: String) = Type.valueOf(string)
-
+object Converters {
 
     @TypeConverter
     fun labelsToJSON(labels: HashSet<String>) = JSONArray(labels).toString()
 
     @TypeConverter
-    fun jsonToLabels(json: String) = IterableJSONArray<String>(json).toHashSet()
+    fun jsonToLabels(json: String) = JSONArray(json).iterable<String>().toHashSet()
 
 
     @TypeConverter
@@ -36,8 +21,8 @@ class Converters {
 
     @TypeConverter
     fun jsonToSpans(json: String): List<SpanRepresentation> {
-        val jsonArray = IterableJSONArray<JSONObject>(json)
-        return jsonArray.map { jsonObject -> SpanRepresentation.fromJSONObject(jsonObject) }
+        val iterable = JSONArray(json).iterable<JSONObject>()
+        return iterable.map { jsonObject -> SpanRepresentation.fromJSONObject(jsonObject) }
     }
 
 
@@ -49,7 +34,26 @@ class Converters {
 
     @TypeConverter
     fun jsonToItems(json: String): List<ListItem> {
-        val jsonArray = IterableJSONArray<JSONObject>(json)
-        return jsonArray.map { jsonObject -> ListItem.fromJSONObject(jsonObject) }
+        val iterable = JSONArray(json).iterable<JSONObject>()
+        return iterable.map { jsonObject -> ListItem.fromJSONObject(jsonObject) }
+    }
+
+
+    private fun <T> JSONArray.iterable(): Iterable<T> {
+        return Iterable {
+            object : Iterator<T> {
+                var nextIndex = 0
+
+                override fun next(): T {
+                    val element = get(nextIndex)
+                    nextIndex++
+                    return element as T
+                }
+
+                override fun hasNext(): Boolean {
+                    return nextIndex < length()
+                }
+            }
+        }
     }
 }

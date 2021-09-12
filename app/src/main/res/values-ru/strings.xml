@@ -14,6 +14,7 @@
     <string name="restore">Восстановить</string>
     <string name="archive">Архивировать</string>
     <string name="unarchive">Разархивировать</string>
+    <string name="delete_all">Удалить все</string>
     <string name="delete_forever">Удалить навсегда</string>
 
     <!-- Chooser dialog hints -->
@@ -38,6 +39,7 @@
     <string name="label_exists">Ярлык существует</string>
     <string name="delete_label">Удалить метку?</string>
     <string name="create_new">Еще нет меток, создать?</string>
+    <string name="delete_all_notes">Удалить все заметки?</string>
     <string name="delete_note_forever">Удалить заметку навсегда?</string>
     <string name="your_notes_associated">Все ваши заметки с этим тегом не будут удалены</string>
 

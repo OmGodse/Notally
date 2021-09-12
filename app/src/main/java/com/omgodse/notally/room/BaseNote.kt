@@ -4,12 +4,10 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
 import com.omgodse.notally.R
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-@TypeConverters(Converters::class)
 @Entity(indices = [Index(value = ["id", "folder", "pinned", "timestamp", "labels"])])
 data class BaseNote(
     @PrimaryKey(autoGenerate = true) val id: Long,
@@ -45,13 +43,13 @@ data class BaseNote(
         if (body.contains(keyword, true)) {
             return true
         }
-        labels.forEach { label ->
+        for (label in labels) {
             if (label.contains(keyword, true)) {
                 return true
             }
         }
-        items.forEach { (content) ->
-            if (content.contains(keyword, true)) {
+        for (item in items) {
+            if (item.body.contains(keyword, true)) {
                 return true
             }
         }

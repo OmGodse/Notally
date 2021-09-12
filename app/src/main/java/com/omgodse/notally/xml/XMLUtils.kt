@@ -6,14 +6,16 @@ import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import org.xmlpull.v1.XmlSerializer
 import java.io.File
+import java.io.FileInputStream
 import java.io.InputStream
 import java.io.OutputStream
 
 object XMLUtils {
 
     fun readBaseNoteFromFile(file: File, folder: Folder): BaseNote {
+        val inputStream = FileInputStream(file)
         val parser = XmlPullParserFactory.newInstance().newPullParser()
-        parser.setInput(file.inputStream(), null)
+        parser.setInput(inputStream, null)
         parser.next()
         return parseBaseNote(parser, parser.name, folder)
     }
@@ -112,6 +114,22 @@ object XMLUtils {
 
         xmlSerializer.endDocument()
     }
+
+    fun writeBaseNoteToStream(baseNote: BaseNote, stream: OutputStream) {
+        val xmlSerializer = Xml.newSerializer()
+
+        xmlSerializer.setOutput(stream, null)
+        xmlSerializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true)
+        xmlSerializer.startDocument("UTF-8", true)
+
+        when (baseNote.type) {
+            Type.NOTE -> appendNote(baseNote, xmlSerializer)
+            Type.LIST -> appendList(baseNote, xmlSerializer)
+        }
+
+        xmlSerializer.endDocument()
+    }
+
 
     private fun appendNote(note: BaseNote, xmlSerializer: XmlSerializer) {
         xmlSerializer.startTag(null, XMLTags.Note)

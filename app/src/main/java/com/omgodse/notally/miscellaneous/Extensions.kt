@@ -12,13 +12,13 @@ import android.text.style.StyleSpan
 import android.text.style.TypefaceSpan
 import android.text.style.URLSpan
 import android.view.KeyEvent
+import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.textfield.TextInputEditText
-import com.omgodse.notally.R
 import com.omgodse.notally.activities.TakeNote
+import com.omgodse.notally.databinding.LabelBinding
 import com.omgodse.notally.room.ListItem
 import com.omgodse.notally.room.SpanRepresentation
 import java.util.*
@@ -29,20 +29,19 @@ fun List<ListItem>?.getBody() = buildString {
     }
 }
 
-fun View.setVisible(visible: Boolean) {
-    visibility = if (visible) {
-        View.VISIBLE
-    } else View.GONE
-}
-
 
 fun ChipGroup.bindLabels(labels: HashSet<String>) {
-    removeAllViews()
-    for (label in labels) {
-        val displayLabel = View.inflate(context, R.layout.label, null) as MaterialButton
-        displayLabel.backgroundTintList = displayLabel.backgroundTintList?.withAlpha(25)
-        displayLabel.text = label
-        addView(displayLabel)
+    if (labels.isEmpty()) {
+        visibility = View.GONE
+    } else {
+        visibility = View.VISIBLE
+        removeAllViews()
+        for (label in labels) {
+            val inflater = LayoutInflater.from(context)
+            val displayLabel = LabelBinding.inflate(inflater).root
+            displayLabel.text = label
+            addView(displayLabel)
+        }
     }
 }
 

@@ -3,12 +3,12 @@ package com.omgodse.notally.viewmodels
 import android.app.Application
 import android.content.Context
 import android.net.Uri
+import android.print.PostPDFGenerator
 import android.text.Html
 import android.widget.Toast
 import androidx.core.content.edit
 import androidx.core.text.toHtml
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.room.withTransaction
 import com.omgodse.notally.R
@@ -19,15 +19,18 @@ import com.omgodse.notally.room.*
 import com.omgodse.notally.room.livedata.Content
 import com.omgodse.notally.room.livedata.SearchResult
 import com.omgodse.notally.xml.Backup
+import com.omgodse.notally.xml.XMLTags
 import com.omgodse.notally.xml.XMLUtils
-import com.omgodse.post.PostPDFGenerator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.json.JSONArray
+import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
@@ -43,9 +46,9 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     var currentFile: File? = null
 
     val labels = Content(labelDao.getAllLabels())
-    val baseNotes = Content(baseNoteDao.getAllBaseNotes())
-    val deletedNotes = Content(baseNoteDao.getAllDeletedNotes())
-    val archivedNotes = Content(baseNoteDao.getAllArchivedNotes())
+    val baseNotes = Content(baseNoteDao.getAllBaseNotes(Folder.NOTES))
+    val deletedNotes = Content(baseNoteDao.getAllBaseNotes(Folder.DELETED))
+    val archivedNotes = Content(baseNoteDao.getAllBaseNotes(Folder.ARCHIVED))
 
     var keyword = String()
         set(value) {
@@ -87,15 +90,15 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 val labels = labelDao.getAllLabelsAsList().toHashSet()
-                val baseNotes = baseNoteDao.getAllBaseNotesAsList()
-                val deletedNotes = baseNoteDao.getAllDeletedNotesAsList()
-                val archivedNotes = baseNoteDao.getAllArchivedNotesAsList()
+                val baseNotes = baseNoteDao.getAllBaseNotesAsList(Folder.NOTES)
+                val deletedNotes = baseNoteDao.getAllBaseNotesAsList(Folder.DELETED)
+                val archivedNotes = baseNoteDao.getAllBaseNotesAsList(Folder.ARCHIVED)
 
                 val backup = Backup(baseNotes, deletedNotes, archivedNotes, labels)
 
                 (app.contentResolver.openOutputStream(uri) as? FileOutputStream)?.use { stream ->
                     stream.channel.truncate(0)
-                    backup.writeToStream(stream)
+                    XMLUtils.writeBackupToStream(backup, stream)
                 }
             }
             Toast.makeText(app, R.string.saved_to_device, Toast.LENGTH_LONG).show()
@@ -105,9 +108,9 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     fun importBackup(uri: Uri) {
         executeAsync {
             app.contentResolver.openInputStream(uri)?.use { stream ->
-                val backup = Backup.readFromStream(stream)
+                val backup = XMLUtils.readBackupFromStream(stream)
 
-                val list = backup.baseNotes.toMutableList()
+                val list = ArrayList(backup.baseNotes)
                 list.addAll(backup.deletedNotes)
                 list.addAll(backup.archivedNotes)
 
@@ -132,6 +135,23 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     }
 
 
+    suspend fun getXMLFile(baseNote: BaseNote) = withContext(Dispatchers.IO) {
+        val fileName = getFileName(baseNote)
+        val file = File(getExportedPath(), "$fileName.xml")
+        val outputStream = FileOutputStream(file)
+        XMLUtils.writeBaseNoteToStream(baseNote, outputStream)
+        outputStream.close()
+        file
+    }
+
+    suspend fun getJSONFile(baseNote: BaseNote) = withContext(Dispatchers.IO) {
+        val fileName = getFileName(baseNote)
+        val file = File(getExportedPath(), "$fileName.json")
+        val json = getJSON(baseNote)
+        file.writeText(json)
+        file
+    }
+
     suspend fun getTXTFile(baseNote: BaseNote, showDateCreated: Boolean) = withContext(Dispatchers.IO) {
         val fileName = getFileName(baseNote)
         val file = File(getExportedPath(), "$fileName.txt")
@@ -148,38 +168,32 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         file
     }
 
-    fun getPDFFile(baseNote: BaseNote, showDateCreated: Boolean, result: PostPDFGenerator.OnResult) {
+    fun getPDFFile(baseNote: BaseNote, showDateCreated: Boolean, onResult: PostPDFGenerator.OnResult) {
         val fileName = getFileName(baseNote)
         val pdfFile = File(getExportedPath(), "$fileName.pdf")
 
         val html = getHTML(baseNote, showDateCreated)
 
-        PostPDFGenerator.Builder()
-            .setFile(pdfFile)
-            .setContent(html)
-            .setContext(app)
-            .setOnResult(result)
-            .build()
-            .create()
+        PostPDFGenerator.create(pdfFile, html, app, onResult)
     }
 
 
-    fun deleteLabel(label: Label) = executeAsync { commonDao.deleteLabel(label) }
+    fun restoreBaseNote(id: Long) = executeAsync { baseNoteDao.moveBaseNote(id, Folder.NOTES) }
 
-    fun restoreBaseNote(id: Long) = executeAsync { baseNoteDao.restoreBaseNote(id) }
+    fun moveBaseNoteToDeleted(id: Long) = executeAsync { baseNoteDao.moveBaseNote(id, Folder.DELETED) }
 
-    fun moveBaseNoteToDeleted(id: Long) = executeAsync { baseNoteDao.moveBaseNoteToDeleted(id) }
+    fun moveBaseNoteToArchive(id: Long) = executeAsync { baseNoteDao.moveBaseNote(id, Folder.ARCHIVED) }
 
-    fun moveBaseNoteToArchive(id: Long) = executeAsync { baseNoteDao.moveBaseNoteToArchive(id) }
+    fun deleteAllBaseNotes() = executeAsync { baseNoteDao.deleteAllBaseNotes(Folder.DELETED) }
 
     fun deleteBaseNoteForever(baseNote: BaseNote) = executeAsync { baseNoteDao.deleteBaseNote(baseNote) }
 
-    fun deleteAllBaseNotes() = executeAsync { baseNoteDao.deleteAllBaseNotesFromFolder(Folder.DELETED.name) }
-
-    fun updateBaseNoteLabels(labels: HashSet<String>, id: Long) = executeAsync { baseNoteDao.updateBaseNoteLabels(labels, id) }
+    fun updateBaseNoteLabels(labels: HashSet<String>, id: Long) = executeAsync { baseNoteDao.updateBaseNoteLabels(id, labels) }
 
 
     suspend fun getAllLabelsAsList() = withContext(Dispatchers.IO) { labelDao.getAllLabelsAsList() }
+
+    fun deleteLabel(label: Label) = executeAsync { commonDao.deleteLabel(label) }
 
     fun insertLabel(label: Label, onComplete: (success: Boolean) -> Unit) = executeAsyncWithCallback({ labelDao.insertLabel(label) }, onComplete)
 
@@ -213,6 +227,32 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         return fileName.take(64).replace("/", "")
     }
 
+
+    private fun getJSON(baseNote: BaseNote): String {
+        val labels = JSONArray(baseNote.labels)
+
+        val jsonObject = JSONObject()
+            .put("type", baseNote.type.name)
+            .put(XMLTags.Title, baseNote.title)
+            .put(XMLTags.Pinned, baseNote.pinned)
+            .put(XMLTags.DateCreated, baseNote.timestamp)
+            .put("labels", labels)
+
+        when (baseNote.type) {
+            Type.NOTE -> {
+                val spans = JSONArray(baseNote.spans.map { representation -> representation.toJSONObject() })
+                jsonObject.put(XMLTags.Body, baseNote.body)
+                jsonObject.put("spans", spans)
+            }
+            Type.LIST -> {
+                val items = JSONArray(baseNote.items.map { item -> item.toJSONObject() })
+                jsonObject.put("items", items)
+            }
+        }
+
+        return jsonObject.toString(2)
+    }
+
     private fun getTXT(baseNote: BaseNote, showDateCreated: Boolean) = buildString {
         val date = formatter.format(baseNote.timestamp)
 
@@ -232,9 +272,13 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
     private fun getHTML(baseNote: BaseNote, showDateCreated: Boolean) = buildString {
         val date = formatter.format(baseNote.timestamp)
+        val title = Html.escapeHtml(baseNote.title)
 
-        append("<html><head><meta charset=\"UTF-8\"></head><body>")
-        append("<h2>${Html.escapeHtml(baseNote.title)}</h2>")
+        append("<!DOCTYPE html>")
+        append("<html><head>")
+        append("<meta charset=\"UTF-8\"><title>$title</title>")
+        append("</head><body>")
+        append("<h2>$title</h2>")
 
         if (showDateCreated) {
             append("<p>$date</p>")
@@ -243,7 +287,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         when (baseNote.type) {
             Type.NOTE -> {
                 val body = baseNote.body.applySpans(baseNote.spans).toHtml()
-                append("<p>$body</p>")
+                append(body)
             }
             Type.LIST -> {
                 append("<ol>")
@@ -258,7 +302,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
 
     private fun getPreviousNotes(): List<BaseNote> {
-        val previousNotes = mutableListOf<BaseNote>()
+        val previousNotes = ArrayList<BaseNote>()
         getNotePath().listFiles()?.mapTo(previousNotes, { file -> XMLUtils.readBaseNoteFromFile(file, Folder.NOTES) })
         getDeletedPath().listFiles()?.mapTo(previousNotes, { file -> XMLUtils.readBaseNoteFromFile(file, Folder.DELETED) })
         getArchivedPath().listFiles()?.mapTo(previousNotes, { file -> XMLUtils.readBaseNoteFromFile(file, Folder.ARCHIVED) })
@@ -288,7 +332,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     private fun getLabelsPreferences() = app.getSharedPreferences("labelsPreferences", Context.MODE_PRIVATE)
 
 
-    private fun ViewModel.executeAsync(function: suspend () -> Unit) {
+    private fun executeAsync(function: suspend () -> Unit) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) { function() }
         }

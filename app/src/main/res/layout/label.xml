@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.button.MaterialButton xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.chip.Chip xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:clickable="false"
     android:ellipsize="end"
     android:focusable="false"
     android:maxLines="1"
-    android:minWidth="0dp"
-    android:textAppearance="@style/TextAppearance.Preview"
+    android:stateListAnimator="@null"
     android:textColor="?attr/colorSecondary"
-    app:backgroundTint="?attr/colorSecondary"
-    app:strokeColor="?attr/colorSecondary" />
+    app:chipBackgroundColor="@color/secondary_translucent"
+    app:ensureMinTouchTargetSize="false"
+    app:rippleColor="@null" />

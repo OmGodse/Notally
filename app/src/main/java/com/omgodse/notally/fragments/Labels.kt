@@ -1,11 +1,11 @@
 package com.omgodse.notally.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.text.InputType
 import android.view.*
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -26,28 +26,10 @@ import com.omgodse.notally.viewmodels.BaseNoteModel
 
 class Labels : Fragment(), ItemListener {
 
-    private lateinit var mContext: Context
     private var labelsAdapter: LabelsAdapter? = null
     private var binding: FragmentNotesBinding? = null
 
     private val model: BaseNoteModel by activityViewModels()
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        mContext = context
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.AddLabel) {
-            displayAddLabelDialog()
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.label, menu)
-    }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -60,8 +42,8 @@ class Labels : Fragment(), ItemListener {
 
         binding?.RecyclerView?.setHasFixedSize(true)
         binding?.RecyclerView?.adapter = labelsAdapter
-        binding?.RecyclerView?.layoutManager = LinearLayoutManager(mContext)
-        val itemDecoration = DividerItemDecoration(mContext, RecyclerView.VERTICAL)
+        binding?.RecyclerView?.layoutManager = LinearLayoutManager(requireContext())
+        val itemDecoration = DividerItemDecoration(requireContext(), RecyclerView.VERTICAL)
         binding?.RecyclerView?.addItemDecoration(itemDecoration)
 
         binding?.ImageView?.setImageResource(R.drawable.label)
@@ -76,6 +58,18 @@ class Labels : Fragment(), ItemListener {
     }
 
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.AddLabel) {
+            displayAddLabelDialog()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.label, menu)
+    }
+
+
     override fun onClick(position: Int) {
         labelsAdapter?.currentList?.get(position)?.let { (value) ->
             val bundle = bundleOf(Constants.SelectedLabel to value)
@@ -85,7 +79,7 @@ class Labels : Fragment(), ItemListener {
 
     override fun onLongClick(position: Int) {
         labelsAdapter?.currentList?.get(position)?.let { label ->
-            MenuDialog(mContext)
+            MenuDialog(requireContext())
                 .addItem(Operation(R.string.edit, R.drawable.edit) { displayEditLabelDialog(label) })
                 .addItem(Operation(R.string.delete, R.drawable.delete) { confirmDeletion(label) })
                 .show()
@@ -94,23 +88,20 @@ class Labels : Fragment(), ItemListener {
 
 
     private fun populateRecyclerView() {
-        model.labels.observe(viewLifecycleOwner, {
-            labelsAdapter?.submitList(it)
-
-            if (it.isNotEmpty()) {
-                binding?.RecyclerView?.visibility = View.VISIBLE
-            } else binding?.RecyclerView?.visibility = View.GONE
+        model.labels.observe(viewLifecycleOwner, { labels ->
+            labelsAdapter?.submitList(labels)
+            binding?.RecyclerView?.isVisible = labels.isNotEmpty()
         })
     }
 
 
     private fun displayAddLabelDialog() {
-        val dialogBinding = DialogInputBinding.inflate(LayoutInflater.from(mContext))
+        val dialogBinding = DialogInputBinding.inflate(layoutInflater)
 
         dialogBinding.edit.inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS
         dialogBinding.edit.filters = arrayOf()
 
-        val dialog = MaterialAlertDialogBuilder(mContext)
+        val dialog = MaterialAlertDialogBuilder(requireContext())
             .setView(dialogBinding.root)
             .setTitle(R.string.add_label)
             .setPositiveButton(R.string.save, null)
@@ -127,7 +118,7 @@ class Labels : Fragment(), ItemListener {
                     model.insertLabel(label) { success ->
                         if (success) {
                             dialog.dismiss()
-                        } else dialogBinding.root.error = mContext.getString(R.string.label_exists)
+                        } else dialogBinding.root.error = getString(R.string.label_exists)
                     }
                 } else dialog.dismiss()
             }
@@ -137,7 +128,7 @@ class Labels : Fragment(), ItemListener {
     }
 
     private fun confirmDeletion(label: Label) {
-        MaterialAlertDialogBuilder(mContext)
+        MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.delete_label)
             .setMessage(R.string.your_notes_associated)
             .setPositiveButton(R.string.delete) { dialog, which ->
@@ -148,14 +139,14 @@ class Labels : Fragment(), ItemListener {
     }
 
     private fun displayEditLabelDialog(oldLabel: Label) {
-        val dialogBinding = DialogInputBinding.inflate(LayoutInflater.from(mContext))
+        val dialogBinding = DialogInputBinding.inflate(layoutInflater)
 
         dialogBinding.edit.inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS
         dialogBinding.edit.filters = arrayOf()
 
         dialogBinding.edit.setText(oldLabel.value)
 
-        val dialog = MaterialAlertDialogBuilder(mContext)
+        val dialog = MaterialAlertDialogBuilder(requireContext())
             .setView(dialogBinding.root)
             .setTitle(R.string.edit_label)
             .setPositiveButton(R.string.save, null)
@@ -172,7 +163,7 @@ class Labels : Fragment(), ItemListener {
                     model.updateLabel(oldLabel.value, value) { success ->
                         if (success) {
                             dialog.dismiss()
-                        } else dialogBinding.root.error = mContext.getString(R.string.label_exists)
+                        } else dialogBinding.root.error = getString(R.string.label_exists)
                     }
                 } else dialog.dismiss()
             }

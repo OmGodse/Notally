@@ -6,7 +6,7 @@
         android:checkableBehavior="single">
 
         <item
-            android:id="@+id/NotesFragment"
+            android:id="@+id/Notes"
             android:checked="true"
             android:icon="@drawable/notes"
             android:title="@string/notes" />
@@ -17,7 +17,7 @@
         android:checkableBehavior="single">
 
         <item
-            android:id="@+id/LabelsFragment"
+            android:id="@+id/Labels"
             android:icon="@drawable/label"
             android:title="@string/labels" />
     </group>
@@ -27,12 +27,12 @@
         android:checkableBehavior="single">
 
         <item
-            android:id="@+id/DeletedFragment"
+            android:id="@+id/Deleted"
             android:icon="@drawable/delete"
             android:title="@string/deleted" />
 
         <item
-            android:id="@+id/ArchivedFragment"
+            android:id="@+id/Archived"
             android:icon="@drawable/archive"
             android:title="@string/archived" />
     </group>
@@ -42,7 +42,7 @@
         android:checkableBehavior="single">
 
         <item
-            android:id="@+id/SettingsFragment"
+            android:id="@+id/Settings"
             android:icon="@drawable/settings"
             android:title="@string/settings" />
     </group>

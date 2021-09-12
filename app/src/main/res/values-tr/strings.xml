@@ -12,7 +12,7 @@
     <string name="search">Ara</string>
     <string name="delete">Sil</string>
     <string name="restore">Geri yükle</string>
-    <string name="archive">Arşiv</string>
+    <string name="archive">Arşivle</string>
     <string name="unarchive">Arşivden kaldır</string>
     <string name="delete_all">Hepsini sil</string>
     <string name="delete_forever">Tamamen sil</string>

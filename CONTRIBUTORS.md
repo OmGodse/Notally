@@ -5,6 +5,7 @@
 * 🇯🇵 Japanese by [kato-k](https://github.com/kato-k)
 * 🇦🇩 Catalan by retiolus
 * 🇵🇱 Polish by [ZiomaleQ](https://github.com/ZiomaleQ)
+* 🇸🇰 Slovak by [Juraj Liso](https://github.com/LiJu09)
 * 🇮🇩 Indonesian by [zmni](https://github.com/zmni)
 * 🇮🇹 Italian by Luigi Sforza
 * 🇪🇸 Spanish by Jose Casas

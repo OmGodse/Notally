@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:startDestination="@+id/NotesFragment">
+    app:startDestination="@+id/Notes">
 
     <fragment
-        android:id="@+id/NotesFragment"
+        android:id="@+id/Notes"
         android:name="com.omgodse.notally.fragments.Notes"
         android:label="@string/app_name">
 
         <action
-            android:id="@+id/NotesFragmentToSearchFragment"
-            app:destination="@id/SearchFragment"
+            android:id="@+id/NotesToSearch"
+            app:destination="@id/Search"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
@@ -18,13 +18,13 @@
     </fragment>
 
     <fragment
-        android:id="@+id/LabelsFragment"
+        android:id="@+id/Labels"
         android:name="com.omgodse.notally.fragments.Labels"
         android:label="@string/labels">
 
         <action
             android:id="@+id/LabelsToDisplayLabel"
-            app:destination="@id/DisplayLabelFragment"
+            app:destination="@id/DisplayLabel"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
@@ -33,26 +33,27 @@
     </fragment>
 
     <fragment
-        android:id="@+id/DeletedFragment"
+        android:id="@+id/Deleted"
         android:name="com.omgodse.notally.fragments.Deleted"
         android:label="@string/deleted" />
 
     <fragment
-        android:id="@+id/ArchivedFragment"
+        android:id="@+id/Archived"
         android:name="com.omgodse.notally.fragments.Archived"
         android:label="@string/archived" />
 
     <fragment
-        android:id="@+id/SettingsFragment"
+        android:id="@+id/Settings"
         android:name="com.omgodse.notally.fragments.Settings"
         android:label="@string/settings" />
 
     <fragment
-        android:id="@+id/SearchFragment"
+        android:id="@+id/Search"
         android:name="com.omgodse.notally.fragments.Search" />
 
     <fragment
-        android:id="@+id/DisplayLabelFragment"
-        android:name="com.omgodse.notally.fragments.DisplayLabel" />
+        android:id="@+id/DisplayLabel"
+        android:name="com.omgodse.notally.fragments.DisplayLabel"
+        android:label="{SelectedLabel}" />
 
 </navigation>

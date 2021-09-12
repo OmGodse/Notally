@@ -14,6 +14,7 @@
     <string name="restore">Restaurar</string>
     <string name="archive">Arxivar</string>
     <string name="unarchive">Desarxivar</string>
+    <string name="delete_all">Suprimeix-ho tot</string>
     <string name="delete_forever">Esborrar per sempre</string>
 
     <!-- Chooser dialog hints -->
@@ -38,6 +39,7 @@
     <string name="label_exists">L\'etiqueta ja existeix</string>
     <string name="delete_label">Esborrar etiqueta?</string>
     <string name="create_new">Encara no hi ha etiquetes. Crear-ne una?</string>
+    <string name="delete_all_notes">Suprimir totes les notes?</string>
     <string name="delete_note_forever">Esborrar nota per sempre?</string>
     <string name="your_notes_associated">Les notes associades a aquesta etiqueta no s\'esborraran</string>
 

@@ -2,8 +2,11 @@ package com.omgodse.notally.activities
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.*
 import androidx.navigation.ui.AppBarConfiguration
@@ -11,14 +14,15 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.ActivityMainBinding
-import com.omgodse.notally.miscellaneous.Constants
-import com.omgodse.notally.miscellaneous.setVisible
+import com.omgodse.notally.viewmodels.BaseNoteModel
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
+
+    private val model: BaseNoteModel by viewModels()
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
@@ -31,7 +35,9 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.Toolbar)
         setupNavigation()
+        setupSearch()
     }
+
 
     private fun setupNavigation() {
         navController = findNavController(R.id.NavigationHost)
@@ -72,23 +78,23 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             fragmentIdToLoad = destination.id
             binding.NavigationView.setCheckedItem(destination.id)
-            handleDestinationChange(destination, arguments)
+            handleDestinationChange(destination)
         }
     }
 
-    private fun handleDestinationChange(destination: NavDestination, arguments: Bundle?) {
-        when (destination.id) {
-            R.id.NotesFragment -> binding.TakeNoteFAB.show()
-            R.id.SearchFragment -> {
-                binding.TakeNoteFAB.hide()
-                binding.EnterSearchKeyword.requestFocus()
-            }
-            R.id.DisplayLabelFragment -> {
-                binding.TakeNoteFAB.hide()
-                supportActionBar?.setTitle(arguments?.getString(Constants.SelectedLabel))
-            }
-            else -> binding.TakeNoteFAB.hide()
-        }
-        binding.EnterSearchKeyword.setVisible(destination.id == R.id.SearchFragment)
+    private fun handleDestinationChange(destination: NavDestination) {
+        if (destination.id == R.id.Notes) {
+            binding.TakeNoteFAB.show()
+        } else binding.TakeNoteFAB.hide()
+
+        binding.EnterSearchKeyword.isVisible = (destination.id == R.id.Search)
+    }
+
+
+    private fun setupSearch() {
+        binding.EnterSearchKeyword.setText(model.keyword)
+        binding.EnterSearchKeyword.addTextChangedListener(onTextChanged = { text, start, count, after ->
+            model.keyword = text?.trim()?.toString() ?: String()
+        })
     }
 }

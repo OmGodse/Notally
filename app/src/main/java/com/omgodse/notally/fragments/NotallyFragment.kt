@@ -5,12 +5,14 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.print.PostPDFGenerator
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.content.FileProvider
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
@@ -35,13 +37,11 @@ import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Label
 import com.omgodse.notally.room.Type
 import com.omgodse.notally.viewmodels.BaseNoteModel
-import com.omgodse.post.PostPDFGenerator
 import kotlinx.coroutines.launch
 import java.io.File
 
 abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
 
-    internal lateinit var mContext: Context
     private lateinit var settingsHelper: SettingsHelper
 
     private var adapter: BaseNoteAdapter? = null
@@ -56,7 +56,7 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        settingsHelper = SettingsHelper(mContext)
+        settingsHelper = SettingsHelper(requireContext())
 
         adapter = BaseNoteAdapter(settingsHelper, this)
         adapter?.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
@@ -80,20 +80,14 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentNotesBinding.inflate(layoutInflater)
+        binding = FragmentNotesBinding.inflate(inflater)
         return binding?.root
     }
 
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        mContext = context
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == Constants.RequestCodeExportFile && resultCode == Activity.RESULT_OK) {
-            val uri = data?.data
-            if (uri != null) {
+            data?.data?.let { uri ->
                 model.writeCurrentFileToUri(uri)
             }
         }
@@ -113,8 +107,10 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
         adapter?.currentList?.get(position)?.let { baseNote ->
             val operations = getSupportedOperations(baseNote)
             if (operations.isNotEmpty()) {
-                val menuHelper = MenuDialog(mContext)
-                operations.forEach { menuHelper.addItem(it) }
+                val menuHelper = MenuDialog(requireContext())
+                for (operation in operations) {
+                    menuHelper.addItem(operation)
+                }
                 menuHelper.show()
             }
         }
@@ -122,7 +118,7 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
 
 
     override fun accessContext(): Context {
-        return mContext
+        return requireContext()
     }
 
     override fun insertLabel(label: Label, onComplete: (success: Boolean) -> Unit) {
@@ -131,8 +127,8 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
 
 
     private fun setupPadding() {
-        val padding = mContext.resources.getDimensionPixelSize(R.dimen.recyclerViewPadding)
-        if (settingsHelper.getCardType() == mContext.getString(R.string.elevatedKey)) {
+        val padding = resources.getDimensionPixelSize(R.dimen.recyclerViewPadding)
+        if (settingsHelper.getCardType() == getString(R.string.elevatedKey)) {
             binding?.RecyclerView?.setPaddingRelative(padding, 0, padding, 0)
         }
     }
@@ -140,23 +136,20 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
     private fun setupObserver() {
         getObservable()?.observe(viewLifecycleOwner, { list ->
             adapter?.submitList(list)
-
-            if (list.isNotEmpty()) {
-                binding?.RecyclerView?.visibility = View.VISIBLE
-            } else binding?.RecyclerView?.visibility = View.GONE
+            binding?.RecyclerView?.isVisible = list.isNotEmpty()
         })
     }
 
     private fun setupLayoutManager() {
-        binding?.RecyclerView?.layoutManager = if (settingsHelper.getView() == mContext.getString(R.string.gridKey)) {
+        binding?.RecyclerView?.layoutManager = if (settingsHelper.getView() == getString(R.string.gridKey)) {
             StaggeredGridLayoutManager(2, LinearLayout.VERTICAL)
-        } else LinearLayoutManager(mContext)
+        } else LinearLayoutManager(requireContext())
     }
 
     private fun setupItemDecoration() {
-        val cardMargin = mContext.resources.getDimensionPixelSize(R.dimen.cardMargin)
-        if (settingsHelper.getCardType() == mContext.getString(R.string.elevatedKey)) {
-            if (settingsHelper.getView() == mContext.getString(R.string.gridKey)) {
+        val cardMargin = resources.getDimensionPixelSize(R.dimen.cardMargin)
+        if (settingsHelper.getCardType() == getString(R.string.elevatedKey)) {
+            if (settingsHelper.getView() == getString(R.string.gridKey)) {
                 binding?.RecyclerView?.addItemDecoration(ItemDecoration(cardMargin, 2))
             } else binding?.RecyclerView?.addItemDecoration(ItemDecoration(cardMargin, 1))
         }
@@ -173,15 +166,17 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
     }
 
     internal fun showExportDialog(baseNote: BaseNote) {
-        MenuDialog(mContext)
+        MenuDialog(requireContext())
             .addItem(Operation(R.string.pdf, R.drawable.pdf) { exportBaseNoteToPDF(baseNote) })
             .addItem(Operation(R.string.txt, R.drawable.txt) { exportBaseNoteToTXT(baseNote) })
+            .addItem(Operation(R.string.xml, R.drawable.xml) { exportBaseNoteToXML(baseNote) })
+            .addItem(Operation(R.string.json, R.drawable.json) { exportBaseNoteToJSON(baseNote) })
             .addItem(Operation(R.string.html, R.drawable.html) { exportBaseNoteToHTML(baseNote) })
             .show()
     }
 
     internal fun goToActivity(activity: Class<*>, baseNote: BaseNote? = null) {
-        val intent = Intent(mContext, activity)
+        val intent = Intent(requireContext(), activity)
         intent.putExtra(Constants.SelectedBaseNote, baseNote)
         intent.putExtra(Constants.PreviousFragment, findNavController().currentDestination?.id)
         startActivity(intent)
@@ -196,7 +191,7 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
             }
 
             override fun onFailure(message: String?) {
-                Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), R.string.something_went_wrong, Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -208,6 +203,20 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
         }
     }
 
+    private fun exportBaseNoteToXML(baseNote: BaseNote) {
+        lifecycleScope.launch {
+            val file = model.getXMLFile(baseNote)
+            showFileOptionsDialog(file, "text/xml")
+        }
+    }
+
+    private fun exportBaseNoteToJSON(baseNote: BaseNote) {
+        lifecycleScope.launch {
+            val file = model.getJSONFile(baseNote)
+            showFileOptionsDialog(file, "application/json")
+        }
+    }
+
     private fun exportBaseNoteToHTML(baseNote: BaseNote) {
         lifecycleScope.launch {
             val file = model.getHTMLFile(baseNote, settingsHelper.getShowDateCreated())
@@ -216,40 +225,40 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
     }
 
     private fun showFileOptionsDialog(file: File, mimeType: String) {
-        val uri = FileProvider.getUriForFile(mContext, "${mContext.packageName}.provider", file)
+        val uri = FileProvider.getUriForFile(requireContext(), "${requireContext().packageName}.provider", file)
 
-        MenuDialog(mContext)
-            .addItem(Operation(R.string.view, R.drawable.view) { viewFile(uri, mimeType) })
+        MenuDialog(requireContext())
             .addItem(Operation(R.string.share, R.drawable.share) { shareFile(uri, mimeType) })
+            .addItem(Operation(R.string.view_file, R.drawable.view) { viewFile(uri, mimeType) })
             .addItem(Operation(R.string.save_to_device, R.drawable.save) { saveFileToDevice(file, mimeType) })
             .show()
     }
 
 
     private fun viewFile(uri: Uri, mimeType: String) {
-        val intent = Intent(Intent.ACTION_VIEW).apply {
-            setDataAndType(uri, mimeType)
-            flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-        }
-        val chooser = Intent.createChooser(intent, mContext.getString(R.string.view_note))
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.setDataAndType(uri, mimeType)
+        intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+
+        val chooser = Intent.createChooser(intent, getString(R.string.view_note))
         startActivity(chooser)
     }
 
     private fun shareFile(uri: Uri, mimeType: String) {
-        val intent = Intent(Intent.ACTION_SEND).apply {
-            type = mimeType
-            putExtra(Intent.EXTRA_STREAM, uri)
-        }
-        val chooser = Intent.createChooser(intent, mContext.getString(R.string.share_note))
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = mimeType
+        intent.putExtra(Intent.EXTRA_STREAM, uri)
+
+        val chooser = Intent.createChooser(intent, getString(R.string.share_note))
         startActivity(chooser)
     }
 
     private fun saveFileToDevice(file: File, mimeType: String) {
-        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-            type = mimeType
-            addCategory(Intent.CATEGORY_OPENABLE)
-            putExtra(Intent.EXTRA_TITLE, file.nameWithoutExtension)
-        }
+        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
+        intent.type = mimeType
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        intent.putExtra(Intent.EXTRA_TITLE, file.nameWithoutExtension)
+
         model.currentFile = file
         startActivityForResult(intent, Constants.RequestCodeExportFile)
     }

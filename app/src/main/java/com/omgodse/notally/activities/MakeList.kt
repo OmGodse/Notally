@@ -39,7 +39,6 @@ class MakeList : NotallyActivity() {
         setupToolbar(binding.Toolbar)
 
         if (model.isNewNote) {
-            binding.EnterTitle.requestFocus()
             if (model.items.isEmpty()) {
                 addListItem()
             }
@@ -63,9 +62,9 @@ class MakeList : NotallyActivity() {
 
 
     private fun addListItem() {
-        val position = adapter.items.size
+        val position = model.items.size
         val listItem = ListItem(String(), false)
-        adapter.items.add(listItem)
+        model.items.add(listItem)
         adapter.notifyItemInserted(position)
         binding.RecyclerView.post {
             val viewHolder = binding.RecyclerView.findViewHolderForAdapterPosition(position) as MakeListViewHolder?
@@ -102,6 +101,7 @@ class MakeList : NotallyActivity() {
         })
 
         adapter = MakeListAdapter(model.items, object : ListItemListener {
+
             override fun onMoveToNext(position: Int) {
                 moveToNext(position)
             }
@@ -111,11 +111,11 @@ class MakeList : NotallyActivity() {
             }
 
             override fun onItemTextChange(position: Int, newText: String) {
-                adapter.items[position].body = newText
+                model.items[position].body = newText
             }
 
             override fun onItemCheckedChange(position: Int, checked: Boolean) {
-                adapter.items[position].checked = checked
+                model.items[position].checked = checked
             }
         })
 

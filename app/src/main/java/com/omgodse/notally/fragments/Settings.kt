@@ -39,8 +39,6 @@ class Settings : PreferenceFragmentCompat() {
 
         bindPreferenceToLink(R.string.githubKey, "https://github.com/OmGodse/Notally")
 
-        bindPreferenceToLink(R.string.patreonKey, "https://www.patreon.com/omgodse")
-
         bindPreferenceToLink(R.string.rateKey, "https://play.google.com/store/apps/details?id=com.omgodse.notally")
 
         findPreference<Preference>(R.string.librariesKey)?.setOnPreferenceClickListener {

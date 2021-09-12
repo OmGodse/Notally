@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
@@ -18,7 +19,6 @@ import com.omgodse.notally.R
 import com.omgodse.notally.helpers.OperationsParent
 import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.miscellaneous.bindLabels
-import com.omgodse.notally.miscellaneous.setVisible
 import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Label
 import com.omgodse.notally.viewmodels.NotallyModel
@@ -62,10 +62,9 @@ abstract class NotallyActivity : AppCompatActivity(), OperationsParent {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val menuId = when (intent.getIntExtra(Constants.PreviousFragment, R.id.NotesFragment)) {
-            R.id.NotesFragment -> R.menu.notes
-            R.id.ArchivedFragment -> R.menu.archived
-            R.id.DeletedFragment -> R.menu.deleted
+        val menuId = when (intent.getIntExtra(Constants.PreviousFragment, R.id.Notes)) {
+            R.id.Archived -> R.menu.archived
+            R.id.Deleted -> R.menu.deleted
             else -> R.menu.notes
         }
 
@@ -158,7 +157,7 @@ abstract class NotallyActivity : AppCompatActivity(), OperationsParent {
         if (fromUser) {
             TransitionManager.beginDelayedTransition(getPinnedParent(), AutoTransition())
         }
-        getPinnedIndicator().setVisible(model.pinned)
+        getPinnedIndicator().isVisible = model.pinned
         item?.title = if (model.pinned) {
             getString(R.string.unpin)
         } else {

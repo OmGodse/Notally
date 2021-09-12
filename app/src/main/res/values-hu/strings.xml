@@ -14,6 +14,7 @@
     <string name="restore">Visszaállítás</string>
     <string name="archive">Archiválás</string>
     <string name="unarchive">Archiválás visszavonása</string>
+    <string name="delete_all">Törli mind?</string>
     <string name="delete_forever">Végleges törlés</string>
 
     <!-- Pinning -->
@@ -38,6 +39,7 @@
     <string name="label_exists">A címke már létezik</string>
     <string name="delete_label">Törölni szeretnéd a címkét?</string>
     <string name="create_new">Nincsenek címkék. Szeretnél készíteni egyet?</string>
+    <string name="delete_all_notes">Törli az összes jegyzetet?</string>
     <string name="delete_note_forever">Véglegesen törölni szeretné a jegyzetet?</string>
     <string name="your_notes_associated">A jegyzetek ezzel a címkével nem kerülnek törlésre</string>
 

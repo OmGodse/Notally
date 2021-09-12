@@ -10,8 +10,8 @@ import kotlinx.coroutines.launch
 
 class SearchResult(private val scope: CoroutineScope, private val baseNoteDao: BaseNoteDao) : LiveData<List<BaseNote>>() {
 
-    var job: Job? = null
-    var previousLiveData: LiveData<List<BaseNote>>? = null
+    private var job: Job? = null
+    private var previousLiveData: LiveData<List<BaseNote>>? = null
     private val observer = Observer<List<BaseNote>> { list -> value = list }
 
     init {
