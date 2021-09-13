@@ -30,10 +30,12 @@
     <string name="save">Speichern</string>
     <string name="edit">Bearbeiten</string>
     <string name="cancel">Abbrechen</string>
+    <string name="open_link">Link öffnen</string>
     <string name="make_list">Liste erstellen</string>
     <string name="take_note">Notiz erstellen</string>
     <string name="add_label">Label hinzufügen</string>
     <string name="export">Exportieren</string>
+    <string name="view_file">Datei öffnen</string>
     <string name="save_to_device">Speichern</string>
     <string name="edit_label">Label bearbeiten</string>
     <string name="label_exists">Label existiert bereits</string>
