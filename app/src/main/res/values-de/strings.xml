@@ -2,9 +2,9 @@
 <resources>
     <!-- Fragment Titles -->
     <string name="notes">Notizen</string>
-    <string name="labels">Etiketten</string>
-    <string name="deleted">Gelöscht</string>
-    <string name="archived">Archiviert</string>
+    <string name="labels">Labels</string>
+    <string name="deleted">Papierkorb</string>
+    <string name="archived">Archiv</string>
     <string name="settings">Einstellungen</string>
 
     <!-- Menu Options -->
@@ -13,33 +13,37 @@
     <string name="delete">Löschen</string>
     <string name="restore">Wiederherstellen</string>
     <string name="archive">Archivieren</string>
-    <string name="unarchive">Unarchivieren</string>
-    <string name="delete_forever">Dauerhaft löschen</string>
+    <string name="unarchive">Archivierung aufheben</string>
+    <string name="delete_all">Papierkorb leeren</string>
+    <string name="delete_forever">Endgültig löschen</string>
+
+    <!-- Pinning -->
+    <string name="pin">Anpinnen</string>
+    <string name="unpin">Loslösen</string>
+    <string name="pinned">Angepinnt</string>
 
     <!-- Chooser dialog hints -->
     <string name="view_note">Notiz ansehen…</string>
     <string name="share_note">Notiz teilen…</string>
 
-    <!-- Pinning -->
-    <string name="pin">Anheften</string>
-    <string name="unpin">Losheften</string>
-    <string name="pinned">Angeheftet</string>
-
     <!-- Dialogs -->
     <string name="save">Speichern</string>
     <string name="edit">Bearbeiten</string>
     <string name="cancel">Abbrechen</string>
+    <string name="open_link">Link öffnen</string>
     <string name="make_list">Liste erstellen</string>
     <string name="take_note">Notiz erstellen</string>
-    <string name="add_label">Etikett hinzufügen</string>
+    <string name="add_label">Label hinzufügen</string>
     <string name="export">Exportieren</string>
-    <string name="save_to_device">Auf Gerät speichern</string>
-    <string name="edit_label">Etikett bearbeiten</string>
-    <string name="label_exists">Etikett existiert</string>
-    <string name="delete_label">Etikett löschen?</string>
-    <string name="create_new">Es sind keine Etiketten vorhanden. Möchten Sie eines erstellen?</string>
-    <string name="delete_note_forever">Möchten Sie die Notiz dauerhaft löschen?</string>
-    <string name="your_notes_associated">Ihre mit dem Etikett verbundenen Notizen werden nicht gelöscht</string>
+    <string name="view_file">Datei öffnen</string>
+    <string name="save_to_device">Speichern</string>
+    <string name="edit_label">Label bearbeiten</string>
+    <string name="label_exists">Label existiert bereits</string>
+    <string name="delete_label">Label löschen?</string>
+    <string name="create_new">Keine Label vorhanden. Tippen, um ein neues Label zu erstellen.</string>
+    <string name="delete_all_notes">Alle Notizen im Papierkorb endgültig löschen?</string>
+    <string name="delete_note_forever">Notiz endgültig löschen?</string>
+    <string name="your_notes_associated">Dieses Label wird gelöscht und aus allen Notizen entfernt. Notizen, welche dieses Label verwenden, werden nicht gelöscht.</string>
 
     <!-- Lists and Notes -->
     <string name="note">Notiz</string>
@@ -47,14 +51,14 @@
     <string name="date">Datum</string>
     <string name="title">Titel</string>
     <string name="add_item">Eintrag hinzufügen</string>
-    <string name="one_more_item">1 weiterer eintrag</string>
-    <string name="more_items">%1$d weitere Einträge</string>
-    <string name="drag_handle">Zieh-Handle</string>
+    <string name="one_more_item">und 1 weiterer Eintrag</string>
+    <string name="more_items">und %1$d weitere Einträge</string>
+    <string name="drag_handle">Ziehgriff</string>
     <string name="bold">Fett</string>
-    <string name="link">Link</string>
+    <string name="link">Link erstellen</string>
     <string name="italic">Kursiv</string>
-    <string name="strikethrough">Durchgestrichen</string>
-    <string name="clear_formatting">Formatierung löschen</string>
+    <string name="strikethrough">Durchstreichen</string>
+    <string name="clear_formatting">Normal</string>
     <string name="monospace">Monospace</string>
 
     <!-- Miscellaneous -->
@@ -62,36 +66,36 @@
     <string name="saved_to_notally">In Notally gespeichert</string>
     <string name="empty_note">Leere Notiz</string>
     <string name="empty_list">Leere Liste</string>
-    <string name="discarded_empty_note">Verworfene leere notiz</string>
-    <string name="discarded_empty_list">Verworfene leere liste</string>
+    <string name="discarded_empty_note">Leere Notiz verworfen</string>
+    <string name="discarded_empty_list">Leere Liste verworfen</string>
     <string name="cant_open_link">Link konnte nicht geöffnet werden</string>
-    <string name="something_went_wrong">Etwas ist schief gelaufen. Bitte versuchen Sie es nochmal.</string>
+    <string name="something_went_wrong">Etwas ist schief gelaufen. Bitte erneut versuchen.</string>
 
     <!-- Settings Page -->
-    <string name="appearance">Aussehen</string>
+    <string name="appearance">Erscheinungsbild</string>
 
     <string name="view">Ansicht</string>
-    <string name="list">Liste</string>
-    <string name="grid">Raster</string>
+    <string name="list">Listenansicht</string>
+    <string name="grid">Rasteransicht</string>
 
     <string name="theme">Design</string>
     <string name="dark">Dunkel</string>
     <string name="light">Hell</string>
-    <string name="follow_system">An system anpassen</string>
+    <string name="follow_system">Systemeinstellung folgen</string>
 
-    <string name="card_type">Kartentyp</string>
+    <string name="card_type">Notizdesign</string>
     <string name="flat">Flach</string>
-    <string name="elevated">Erhöht</string>
+    <string name="elevated">Material</string>
 
-    <string name="content_density">Dichte des inhalts</string>
-    <string name="max_items_to_display">Maximale anzahl anzuzeigender elemente in liste</string>
-    <string name="max_lines_to_display">Maximale anzahl anzuzeigender elemente in notiz</string>
+    <string name="content_density">Notizvorschau</string>
+    <string name="max_items_to_display">Maximal angezeigte Listeneinträge</string>
+    <string name="max_lines_to_display">Maximal angezeigte Zeilen</string>
 
     <string name="show_date_created">Erstellungsdatum anzeigen</string>
 
-    <string name="backup">Backup</string>
-    <string name="export_notes_to_a_file">Notizen in Datei exportieren</string>
-    <string name="import_notes_from_a_file">Notizen aus Datei importieren</string>
+    <string name="backup">Sichern und Wiederherstellen</string>
+    <string name="export_notes_to_a_file">Notizen sichern</string>
+    <string name="import_notes_from_a_file">Notizen wiederherstellen</string>
 
     <string name="about">Über</string>
     <string name="libraries">Bibliotheken</string>
