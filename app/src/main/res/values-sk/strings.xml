@@ -92,8 +92,6 @@
     <string name="show_date_created">Zobraziť dátum vytvorenia</string>
 
     <string name="backup">Zálohovanie</string>
-    <string name="export_notes_to_a_file">Exportovať poznámky do súboru</string>
-    <string name="import_notes_from_a_file">Importovať poznámky zo súboru</string>
 
     <string name="about">O aplikácii</string>
     <string name="libraries">Knižnice</string>

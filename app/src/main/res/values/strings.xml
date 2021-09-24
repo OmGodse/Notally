@@ -100,8 +100,8 @@
     <string name="show_date_created">Show date created</string>
 
     <string name="backup">Backup</string>
-    <string name="export_notes_to_a_file">Export notes to a file</string>
-    <string name="import_notes_from_a_file">Import notes from a file</string>
+    <string name="export_backup">Export backup</string>
+    <string name="import_backup">Import backup</string>
 
     <string name="about">About</string>
     <string name="libraries">Libraries</string>
@@ -130,8 +130,8 @@
     <string name="four" translatable="false">4</string>
     <string name="eight" translatable="false">8</string>
 
-    <string name="exportNotesToAFileKey" translatable="false">exportNotesToAFile</string>
-    <string name="importNotesFromAFileKey" translatable="false">importNotesFromAFile</string>
+    <string name="exportBackupKey" translatable="false">exportBackup</string>
+    <string name="importBackupKey" translatable="false">importBackup</string>
 
     <string name="rateKey" translatable="false">rate</string>
     <string name="githubKey" translatable="false">github</string>

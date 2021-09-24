@@ -92,8 +92,6 @@
     <string name="show_date_created">Ipakita ang petsya ng paggawa</string>
 
     <string name="backup">Backup</string>
-    <string name="export_notes_to_a_file">I-export ang mga tala sa isang file</string>
-    <string name="import_notes_from_a_file">I-import ang mga tala mula sa isang file</string>
 
     <string name="about">Tungkol</string>
     <string name="libraries">Mga Library</string>

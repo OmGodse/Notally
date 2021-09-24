@@ -92,8 +92,6 @@
     <string name="show_date_created">Mostra la data de creació</string>
 
     <string name="backup">Còpia de seguretat</string>
-    <string name="export_notes_to_a_file">Exportar les notes a un fitxer</string>
-    <string name="import_notes_from_a_file">Importar les notes des d\’un fitxer</string>
 
     <string name="about">Quant a</string>
     <string name="libraries">Biblioteques</string>

@@ -92,8 +92,6 @@
     <string name="show_date_created">Oluşturulma tarihini göster</string>
 
     <string name="backup">Yedek</string>
-    <string name="export_notes_to_a_file">Notları bir dosyaya aktar</string>
-    <string name="import_notes_from_a_file">Notları bir dosyadan içeri aktar</string>
 
     <string name="about">Hakkında</string>
     <string name="libraries">Kütüphaneler</string>

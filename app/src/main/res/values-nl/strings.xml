@@ -91,8 +91,6 @@
     <string name="show_date_created">Toon aangemaakte datum</string>
 
     <string name="backup">Back-up</string>
-    <string name="export_notes_to_a_file">Exporteer notities naar een bestand</string>
-    <string name="import_notes_from_a_file">Importeer notities uit een bestand</string>
 
     <string name="about">Over</string>
     <string name="libraries">Bibliothek</string>

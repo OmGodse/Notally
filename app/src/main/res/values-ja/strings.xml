@@ -92,8 +92,6 @@
     <string name="show_date_created">作成日時を表示</string>
 
     <string name="backup">バックアップ</string>
-    <string name="export_notes_to_a_file">ノートからバックアップを作成</string>
-    <string name="import_notes_from_a_file">バックアップからノートを復元</string>
 
     <string name="about">このアプリについて</string>
     <string name="libraries">ライブラリ</string>

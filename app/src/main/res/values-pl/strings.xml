@@ -92,8 +92,6 @@
     <string name="show_date_created">Pokaż datę utworzenia</string>
 
     <string name="backup">Kopia</string>
-    <string name="export_notes_to_a_file">Wyeksportuj notatki do pliku</string>
-    <string name="import_notes_from_a_file">Importuj notatki z pliku</string>
 
     <string name="about">O aplikacji</string>
     <string name="libraries">Biblioteki</string>

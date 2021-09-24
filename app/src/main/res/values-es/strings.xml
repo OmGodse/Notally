@@ -92,8 +92,6 @@
     <string name="show_date_created">Mostrar fecha de creación</string>
 
     <string name="backup">Respaldar</string>
-    <string name="export_notes_to_a_file">Exportar notas a un archivo</string>
-    <string name="import_notes_from_a_file">Importar notas desde un archivo</string>
 
     <string name="about">Sobre</string>
     <string name="libraries">Bibliotecas</string>

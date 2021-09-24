@@ -92,8 +92,6 @@
     <string name="show_date_created">Показывать дату создания</string>
 
     <string name="backup">Резервная копия</string>
-    <string name="export_notes_to_a_file">Экспорт заметок в файл</string>
-    <string name="import_notes_from_a_file">Импорт заметок из файла</string>
 
     <string name="about">Про приложение</string>
     <string name="libraries">Библиотеки</string>

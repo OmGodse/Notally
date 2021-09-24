@@ -85,8 +85,6 @@
     <string name="show_date_created">Vis opprettelsesdato</string>
 
     <string name="backup">Sikkerhetskopi</string>
-    <string name="export_notes_to_a_file">Eksporter notater til fil</string>
-    <string name="import_notes_from_a_file">Importer notater fra fil</string>
 
     <string name="about">Om</string>
     <string name="libraries">Tredjepartsbiblioteker</string>

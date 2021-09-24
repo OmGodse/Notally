@@ -20,7 +20,7 @@ class Settings : PreferenceFragmentCompat() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        findPreference<Preference>(R.string.exportNotesToAFileKey)?.setOnPreferenceClickListener {
+        findPreference<Preference>(R.string.exportBackupKey)?.setOnPreferenceClickListener {
             val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
             intent.type = "text/xml"
             intent.addCategory(Intent.CATEGORY_OPENABLE)
@@ -29,7 +29,7 @@ class Settings : PreferenceFragmentCompat() {
             return@setOnPreferenceClickListener true
         }
 
-        findPreference<Preference>(R.string.importNotesFromAFileKey)?.setOnPreferenceClickListener {
+        findPreference<Preference>(R.string.importBackupKey)?.setOnPreferenceClickListener {
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
             intent.type = "text/xml"
             intent.addCategory(Intent.CATEGORY_OPENABLE)

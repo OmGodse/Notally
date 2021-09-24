@@ -92,8 +92,6 @@
     <string name="show_date_created">Létrehozási dátum</string>
 
     <string name="backup">Biztonsági mentés</string>
-    <string name="export_notes_to_a_file">Jegyzetek exportálása fájlba</string>
-    <string name="import_notes_from_a_file">Jegyzetek importálása fájlból</string>
 
     <string name="about">Névjegy</string>
     <string name="libraries">Könyvtárak</string>

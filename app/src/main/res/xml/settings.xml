@@ -66,13 +66,13 @@
 
         <Preference
             app:iconSpaceReserved="false"
-            app:key="@string/exportNotesToAFileKey"
-            app:title="@string/export_notes_to_a_file" />
+            app:key="@string/exportBackupKey"
+            app:title="@string/export_backup" />
 
         <Preference
             app:iconSpaceReserved="false"
-            app:key="@string/importNotesFromAFileKey"
-            app:title="@string/import_notes_from_a_file" />
+            app:key="@string/importBackupKey"
+            app:title="@string/import_backup" />
 
     </PreferenceCategory>
 

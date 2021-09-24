@@ -92,8 +92,6 @@
     <string name="show_date_created">Tampilkan tanggal dibuat</string>
 
     <string name="backup">Cadangan</string>
-    <string name="export_notes_to_a_file">Ekspor catatan ke berkas</string>
-    <string name="import_notes_from_a_file">Impor catatan dari berkas</string>
 
     <string name="about">Tentang</string>
     <string name="libraries">Pustaka</string>

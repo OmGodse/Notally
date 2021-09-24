@@ -92,8 +92,6 @@
     <string name="show_date_created">Показувати дату створення</string>
 
     <string name="backup">Резервне копіювання</string>
-    <string name="export_notes_to_a_file">Експорт нотаток у файл</string>
-    <string name="import_notes_from_a_file">Імпорт нотаток з файлу</string>
 
     <string name="about">Про програму</string>
     <string name="libraries">Бібліотеки</string>
