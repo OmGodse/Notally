@@ -7,7 +7,6 @@ import android.view.MenuItem
 import android.view.View
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.R
-import com.omgodse.notally.helpers.MenuDialog.Operation
 import com.omgodse.notally.room.BaseNote
 
 class Deleted : NotallyFragment() {
@@ -55,10 +54,9 @@ class Deleted : NotallyFragment() {
 
     override fun getObservable() = model.deletedNotes
 
-    override fun getSupportedOperations(baseNote: BaseNote): ArrayList<Operation> {
-        val operations = ArrayList<Operation>()
-        operations.add(Operation(R.string.restore, R.drawable.restore) { model.restoreBaseNote(baseNote.id) })
-        operations.add(Operation(R.string.delete_forever, R.drawable.delete) { confirmDeletionOfSingleNote(baseNote) })
-        return operations
+    override fun showOperations(baseNote: BaseNote) {
+        val restore = Operation(R.string.restore, R.drawable.restore) { model.restoreBaseNote(baseNote.id) }
+        val deleteForever = Operation(R.string.delete_forever, R.drawable.delete) { confirmDeletionOfSingleNote(baseNote) }
+        showMenu(restore, deleteForever)
     }
 }

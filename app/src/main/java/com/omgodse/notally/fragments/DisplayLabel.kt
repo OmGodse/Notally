@@ -1,7 +1,6 @@
 package com.omgodse.notally.fragments
 
 import com.omgodse.notally.R
-import com.omgodse.notally.helpers.MenuDialog.Operation
 import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.room.BaseNote
 
@@ -13,7 +12,5 @@ class DisplayLabel : NotallyFragment() {
 
     override fun getObservable() = model.getNotesByLabel(label)
 
-    override fun getSupportedOperations(baseNote: BaseNote): ArrayList<Operation> {
-        return ArrayList()
-    }
+    override fun showOperations(baseNote: BaseNote) {}
 }

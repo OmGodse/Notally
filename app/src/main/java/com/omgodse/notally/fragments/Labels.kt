@@ -16,8 +16,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.DialogInputBinding
 import com.omgodse.notally.databinding.FragmentNotesBinding
-import com.omgodse.notally.helpers.MenuDialog
-import com.omgodse.notally.helpers.MenuDialog.Operation
 import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.recyclerview.ItemListener
 import com.omgodse.notally.recyclerview.adapters.LabelsAdapter
@@ -34,14 +32,14 @@ class Labels : Fragment(), ItemListener {
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
-        labelsAdapter = null
+        adapter = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         labelsAdapter = LabelsAdapter(this)
 
         binding?.RecyclerView?.setHasFixedSize(true)
-        binding?.RecyclerView?.adapter = labelsAdapter
+        binding?.RecyclerView?.adapter = adapter
         binding?.RecyclerView?.layoutManager = LinearLayoutManager(requireContext())
         val itemDecoration = DividerItemDecoration(requireContext(), RecyclerView.VERTICAL)
         binding?.RecyclerView?.addItemDecoration(itemDecoration)
@@ -71,25 +69,24 @@ class Labels : Fragment(), ItemListener {
 
 
     override fun onClick(position: Int) {
-        labelsAdapter?.currentList?.get(position)?.let { (value) ->
+        adapter?.currentList?.get(position)?.let { (value) ->
             val bundle = bundleOf(Constants.SelectedLabel to value)
             findNavController().navigate(R.id.LabelsToDisplayLabel, bundle)
         }
     }
 
     override fun onLongClick(position: Int) {
-        labelsAdapter?.currentList?.get(position)?.let { label ->
-            MenuDialog(requireContext())
-                .addItem(Operation(R.string.edit, R.drawable.edit) { displayEditLabelDialog(label) })
-                .addItem(Operation(R.string.delete, R.drawable.delete) { confirmDeletion(label) })
-                .show()
+        adapter?.currentList?.get(position)?.let { label ->
+            val edit = Operation(R.string.edit, R.drawable.edit) { displayEditLabelDialog(label) }
+            val delete = Operation(R.string.delete, R.drawable.delete) { confirmDeletion(label) }
+            showMenu(edit, delete)
         }
     }
 
 
     private fun populateRecyclerView() {
         model.labels.observe(viewLifecycleOwner, { labels ->
-            labelsAdapter?.submitList(labels)
+            adapter?.submitList(labels)
             binding?.RecyclerView?.isVisible = labels.isNotEmpty()
         })
     }

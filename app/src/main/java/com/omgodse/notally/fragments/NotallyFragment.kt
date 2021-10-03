@@ -104,16 +104,7 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
     }
 
     override fun onLongClick(position: Int) {
-        adapter?.currentList?.get(position)?.let { baseNote ->
-            val operations = getSupportedOperations(baseNote)
-            if (operations.isNotEmpty()) {
-                val menuHelper = MenuDialog(requireContext())
-                for (operation in operations) {
-                    menuHelper.addItem(operation)
-                }
-                menuHelper.show()
-            }
-        }
+        adapter?.currentList?.get(position)?.let { baseNote -> showOperations(baseNote) }
     }
 
 
@@ -165,14 +156,13 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
         }
     }
 
-    internal fun showExportDialog(baseNote: BaseNote) {
-        MenuDialog(requireContext())
-            .addItem(Operation(R.string.pdf, R.drawable.pdf) { exportBaseNoteToPDF(baseNote) })
-            .addItem(Operation(R.string.txt, R.drawable.txt) { exportBaseNoteToTXT(baseNote) })
-            .addItem(Operation(R.string.xml, R.drawable.xml) { exportBaseNoteToXML(baseNote) })
-            .addItem(Operation(R.string.json, R.drawable.json) { exportBaseNoteToJSON(baseNote) })
-            .addItem(Operation(R.string.html, R.drawable.html) { exportBaseNoteToHTML(baseNote) })
-            .show()
+    internal fun exportBaseNote(baseNote: BaseNote) {
+        val pdf = Operation(R.string.pdf, R.drawable.pdf) { exportBaseNoteToPDF(baseNote) }
+        val txt = Operation(R.string.txt, R.drawable.txt) { exportBaseNoteToTXT(baseNote) }
+        val xml = Operation(R.string.xml, R.drawable.xml) { exportBaseNoteToXML(baseNote) }
+        val json = Operation(R.string.json, R.drawable.json) { exportBaseNoteToJSON(baseNote) }
+        val html = Operation(R.string.html, R.drawable.html) { exportBaseNoteToHTML(baseNote) }
+        showMenu(pdf, txt, xml, json, html)
     }
 
     internal fun goToActivity(activity: Class<*>, baseNote: BaseNote? = null) {
@@ -227,11 +217,10 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
     private fun showFileOptionsDialog(file: File, mimeType: String) {
         val uri = FileProvider.getUriForFile(requireContext(), "${requireContext().packageName}.provider", file)
 
-        MenuDialog(requireContext())
-            .addItem(Operation(R.string.share, R.drawable.share) { shareFile(uri, mimeType) })
-            .addItem(Operation(R.string.view_file, R.drawable.view) { viewFile(uri, mimeType) })
-            .addItem(Operation(R.string.save_to_device, R.drawable.save) { saveFileToDevice(file, mimeType) })
-            .show()
+        val share = Operation(R.string.share, R.drawable.share) { shareFile(uri, mimeType) }
+        val viewFile = Operation(R.string.view_file, R.drawable.view) { viewFile(uri, mimeType) }
+        val saveToDevice = Operation(R.string.save_to_device, R.drawable.save) { saveFileToDevice(file, mimeType) }
+        showMenu(share, viewFile, saveToDevice)
     }
 
 
@@ -268,5 +257,5 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
 
     abstract fun getObservable(): LiveData<List<BaseNote>>?
 
-    abstract fun getSupportedOperations(baseNote: BaseNote): ArrayList<Operation>
+    abstract fun showOperations(baseNote: BaseNote)
 }

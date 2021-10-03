@@ -178,6 +178,11 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     }
 
 
+    fun pinBaseNote(id: Long) = executeAsync { baseNoteDao.updateBaseNotePinned(id, true) }
+
+    fun unpinBaseNote(id: Long) = executeAsync { baseNoteDao.updateBaseNotePinned(id, false) }
+
+
     fun restoreBaseNote(id: Long) = executeAsync { baseNoteDao.moveBaseNote(id, Folder.NOTES) }
 
     fun moveBaseNoteToDeleted(id: Long) = executeAsync { baseNoteDao.moveBaseNote(id, Folder.DELETED) }
@@ -188,16 +193,19 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
     fun deleteBaseNoteForever(baseNote: BaseNote) = executeAsync { baseNoteDao.deleteBaseNote(baseNote) }
 
-    fun updateBaseNoteLabels(labels: HashSet<String>, id: Long) = executeAsync { baseNoteDao.updateBaseNoteLabels(id, labels) }
+    fun updateBaseNoteLabels(labels: HashSet<String>, id: Long) =
+        executeAsync { baseNoteDao.updateBaseNoteLabels(id, labels) }
 
 
     suspend fun getAllLabelsAsList() = withContext(Dispatchers.IO) { labelDao.getAllLabelsAsList() }
 
     fun deleteLabel(label: Label) = executeAsync { commonDao.deleteLabel(label) }
 
-    fun insertLabel(label: Label, onComplete: (success: Boolean) -> Unit) = executeAsyncWithCallback({ labelDao.insertLabel(label) }, onComplete)
+    fun insertLabel(label: Label, onComplete: (success: Boolean) -> Unit) =
+        executeAsyncWithCallback({ labelDao.insertLabel(label) }, onComplete)
 
-    fun updateLabel(oldValue: String, newValue: String, onComplete: (success: Boolean) -> Unit) = executeAsyncWithCallback({ commonDao.updateLabel(oldValue, newValue) }, onComplete)
+    fun updateLabel(oldValue: String, newValue: String, onComplete: (success: Boolean) -> Unit) =
+        executeAsyncWithCallback({ commonDao.updateLabel(oldValue, newValue) }, onComplete)
 
 
     private fun getExportedPath(): File {

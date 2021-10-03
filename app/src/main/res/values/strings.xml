@@ -36,6 +36,7 @@
     <string name="take_note">Take note</string>
     <string name="add_label">Add label</string>
     <string name="export">Export</string>
+    <string name="more_options">More options</string>
     <string name="pdf" translatable="false">PDF</string>
     <string name="txt" translatable="false">TXT</string>
     <string name="xml" translatable="false">XML</string>
