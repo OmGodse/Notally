@@ -12,8 +12,8 @@ android {
         applicationId "com.omgodse.notally"
         minSdk 21
         targetSdk 30
-        versionCode 36
-        versionName "4.1"
+        versionCode 37
+        versionName "4.2"
         resConfigs "en", "ca", "cs", "de", "es", "fr", "hu", "in", "it", "ja", "nb", "nl", "pl", "pt-rBR", "ru", "sk", "sv", "tl", "tr", "uk"
         vectorDrawables.generatedDensities = []
     }
@@ -33,9 +33,11 @@ android {
         }
     }
 
-    kotlinOptions { jvmTarget = JavaVersion.VERSION_1_8 }
+    kotlinOptions { jvmTarget = "1.8" }
 
     buildFeatures { viewBinding true }
+
+    packagingOptions { exclude "DebugProbesKt.bin" }
 }
 
 dependencies {
