@@ -62,24 +62,24 @@
                 android:overScrollMode="never"
                 android:paddingTop="4dp" />
 
-            <com.google.android.material.button.MaterialButton
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/AddItem"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:insetLeft="12dp"
-                android:insetTop="0dp"
-                android:insetRight="12dp"
-                android:insetBottom="4dp"
-                android:minHeight="0dp"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:drawableStart="@drawable/add"
+                android:drawablePadding="12dp"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:paddingStart="20dp"
+                android:paddingTop="12dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="12dp"
                 android:text="@string/add_item"
+                android:textAppearance="?attr/textAppearanceButton"
                 android:textColor="?android:textColorHint"
-                app:icon="@drawable/add"
-                app:iconPadding="12dp"
-                app:iconTint="?android:textColorHint"
-                app:rippleColor="?attr/colorControlHighlight" />
+                app:drawableTint="?android:textColorHint" />
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/LabelGroup"

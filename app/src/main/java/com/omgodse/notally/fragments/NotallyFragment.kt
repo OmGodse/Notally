@@ -9,7 +9,6 @@ import android.print.PostPDFGenerator
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
@@ -18,15 +17,12 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.omgodse.notally.R
 import com.omgodse.notally.activities.MakeList
 import com.omgodse.notally.activities.TakeNote
 import com.omgodse.notally.databinding.FragmentNotesBinding
-import com.omgodse.notally.helpers.MenuDialog
-import com.omgodse.notally.helpers.MenuDialog.Operation
 import com.omgodse.notally.helpers.OperationsParent
 import com.omgodse.notally.helpers.SettingsHelper
 import com.omgodse.notally.miscellaneous.Constants
@@ -132,9 +128,10 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
     }
 
     private fun setupLayoutManager() {
-        binding?.RecyclerView?.layoutManager = if (settingsHelper.getView() == getString(R.string.gridKey)) {
-            StaggeredGridLayoutManager(2, LinearLayout.VERTICAL)
-        } else LinearLayoutManager(requireContext())
+        val columns = if (settingsHelper.getView() == getString(R.string.gridKey)) {
+            2
+        } else 1
+        binding?.RecyclerView?.layoutManager = StaggeredGridLayoutManager(columns, RecyclerView.VERTICAL)
     }
 
     private fun setupItemDecoration() {

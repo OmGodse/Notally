@@ -1,8 +1,8 @@
 package com.omgodse.notally.room
 
 import android.os.Parcelable
-import com.omgodse.notally.room.json.SafeJSONObject
 import kotlinx.parcelize.Parcelize
+import org.json.JSONException
 import org.json.JSONObject
 
 @Parcelize
@@ -45,16 +45,23 @@ data class SpanRepresentation(
         private const val startTag = "start"
         private const val endTag = "end"
 
-        fun fromJSONObject(unsafeObject: JSONObject): SpanRepresentation {
-            val safeObject = SafeJSONObject(unsafeObject.toString())
-            val bold = safeObject.getBoolean(boldTag)
-            val link = safeObject.getBoolean(linkTag)
-            val italic = safeObject.getBoolean(italicTag)
-            val monospace = safeObject.getBoolean(monospaceTag)
-            val strikethrough = safeObject.getBoolean(strikethroughTag)
-            val start = safeObject.getInt(startTag)
-            val end = safeObject.getInt(endTag)
+        fun fromJSONObject(jsonObject: JSONObject): SpanRepresentation {
+            val bold = jsonObject.getSafeBoolean(boldTag)
+            val link = jsonObject.getSafeBoolean(linkTag)
+            val italic = jsonObject.getSafeBoolean(italicTag)
+            val monospace = jsonObject.getSafeBoolean(monospaceTag)
+            val strikethrough = jsonObject.getSafeBoolean(strikethroughTag)
+            val start = jsonObject.getInt(startTag)
+            val end = jsonObject.getInt(endTag)
             return SpanRepresentation(bold, link, italic, monospace, strikethrough, start, end)
+        }
+
+        private fun JSONObject.getSafeBoolean(name: String): Boolean {
+            return try {
+                getBoolean(name)
+            } catch (exception: JSONException) {
+                false
+            }
         }
     }
 }

@@ -10,5 +10,4 @@
     android:gravity="center_vertical"
     android:padding="16dp"
     android:textAppearance="?attr/textAppearanceButton"
-    android:textColor="?attr/colorOnSurface"
     app:drawableTint="?attr/colorOnSurface" />

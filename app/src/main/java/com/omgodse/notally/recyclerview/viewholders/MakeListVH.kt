@@ -9,7 +9,7 @@ import com.omgodse.notally.miscellaneous.setOnNextAction
 import com.omgodse.notally.recyclerview.ListItemListener
 import com.omgodse.notally.room.ListItem
 
-class MakeListViewHolder(val binding: RecyclerListItemBinding, listItemListener: ListItemListener) :
+class MakeListVH(val binding: RecyclerListItemBinding, listItemListener: ListItemListener) :
     RecyclerView.ViewHolder(binding.root) {
 
     init {

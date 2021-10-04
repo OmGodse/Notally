@@ -51,7 +51,7 @@ class Notes : NotallyFragment() {
 
     override fun getObservable() = model.baseNotes
 
-    override fun getBackground() = R.drawable.notebook
+    override fun getBackground() = R.drawable.notes
 
     override fun showOperations(baseNote: BaseNote) {
         val pin = if (baseNote.pinned) {

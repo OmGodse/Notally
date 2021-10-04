@@ -16,7 +16,7 @@ import com.omgodse.notally.room.Type
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 
-class BaseNoteViewHolder(
+class BaseNoteVH(
     private val binding: RecyclerBaseNoteBinding,
     private val settingsHelper: SettingsHelper,
     private val itemListener: ItemListener,

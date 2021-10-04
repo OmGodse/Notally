@@ -7,24 +7,24 @@ import androidx.recyclerview.widget.ListAdapter
 import com.omgodse.notally.databinding.RecyclerBaseNoteBinding
 import com.omgodse.notally.helpers.SettingsHelper
 import com.omgodse.notally.recyclerview.ItemListener
-import com.omgodse.notally.recyclerview.viewholders.BaseNoteViewHolder
+import com.omgodse.notally.recyclerview.viewholders.BaseNoteVH
 import com.omgodse.notally.room.BaseNote
 import org.ocpsoft.prettytime.PrettyTime
 
 class BaseNoteAdapter(private val settingsHelper: SettingsHelper, private val itemListener: ItemListener) :
-    ListAdapter<BaseNote, BaseNoteViewHolder>(DiffCallback()) {
+    ListAdapter<BaseNote, BaseNoteVH>(DiffCallback()) {
 
     private val prettyTime = PrettyTime()
 
-    override fun onBindViewHolder(holder: BaseNoteViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: BaseNoteVH, position: Int) {
         val baseNote = getItem(position)
         holder.bind(baseNote)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseNoteViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseNoteVH {
         val inflater = LayoutInflater.from(parent.context)
         val binding = RecyclerBaseNoteBinding.inflate(inflater, parent, false)
-        return BaseNoteViewHolder(binding, settingsHelper, itemListener, prettyTime)
+        return BaseNoteVH(binding, settingsHelper, itemListener, prettyTime)
     }
 
 

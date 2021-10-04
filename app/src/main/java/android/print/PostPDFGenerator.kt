@@ -59,11 +59,11 @@ object PostPDFGenerator {
 
 
     private fun getPrintAttributes(): PrintAttributes {
-        return PrintAttributes.Builder()
-            .setMediaSize(PrintAttributes.MediaSize.ISO_A4)
-            .setMinMargins(PrintAttributes.Margins.NO_MARGINS)
-            .setResolution(PrintAttributes.Resolution("Standard", "Standard", 100, 100))
-            .build()
+        val builder = PrintAttributes.Builder()
+        builder.setMediaSize(PrintAttributes.MediaSize.ISO_A4)
+        builder.setMinMargins(PrintAttributes.Margins.NO_MARGINS)
+        builder.setResolution(PrintAttributes.Resolution("Standard", "Standard", 100, 100))
+        return builder.build()
     }
 
     private fun getFileDescriptor(file: File): ParcelFileDescriptor {

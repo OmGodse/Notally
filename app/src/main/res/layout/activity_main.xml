@@ -18,8 +18,7 @@
                 android:id="@+id/Toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:contentInsetEnd="16dp"
-                app:titleTextAppearance="@style/TextAppearance.Toolbar">
+                app:contentInsetEnd="16dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/EnterSearchKeyword"

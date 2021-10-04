@@ -5,7 +5,8 @@ import com.omgodse.notally.databinding.RecyclerLabelBinding
 import com.omgodse.notally.recyclerview.ItemListener
 import com.omgodse.notally.room.Label
 
-class LabelsViewHolder(private val binding: RecyclerLabelBinding, itemListener: ItemListener) : RecyclerView.ViewHolder(binding.root) {
+class LabelVH(private val binding: RecyclerLabelBinding, itemListener: ItemListener) :
+    RecyclerView.ViewHolder(binding.root) {
 
     init {
         binding.root.setOnClickListener {

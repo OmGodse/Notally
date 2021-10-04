@@ -12,7 +12,7 @@ import com.omgodse.notally.miscellaneous.getLocale
 import com.omgodse.notally.miscellaneous.setOnNextAction
 import com.omgodse.notally.recyclerview.ListItemListener
 import com.omgodse.notally.recyclerview.adapters.MakeListAdapter
-import com.omgodse.notally.recyclerview.viewholders.MakeListViewHolder
+import com.omgodse.notally.recyclerview.viewholders.MakeListVH
 import com.omgodse.notally.room.ListItem
 import com.omgodse.notally.viewmodels.BaseNoteModel
 import com.omgodse.notally.viewmodels.MakeListModel
@@ -67,7 +67,7 @@ class MakeList : NotallyActivity() {
         model.items.add(listItem)
         adapter.notifyItemInserted(position)
         binding.RecyclerView.post {
-            val viewHolder = binding.RecyclerView.findViewHolderForAdapterPosition(position) as MakeListViewHolder?
+            val viewHolder = binding.RecyclerView.findViewHolderForAdapterPosition(position) as MakeListVH?
             viewHolder?.requestFocus()
         }
     }
@@ -135,7 +135,7 @@ class MakeList : NotallyActivity() {
     }
 
     private fun moveToNext(currentPosition: Int) {
-        val viewHolder = binding.RecyclerView.findViewHolderForAdapterPosition(currentPosition + 1) as MakeListViewHolder?
+        val viewHolder = binding.RecyclerView.findViewHolderForAdapterPosition(currentPosition + 1) as MakeListVH?
         if (viewHolder != null) {
             if (viewHolder.binding.CheckBox.isChecked) {
                 moveToNext(currentPosition + 1)

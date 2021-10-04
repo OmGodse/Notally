@@ -40,6 +40,7 @@
         android:clickable="true"
         android:contentDescription="@string/drag_handle"
         android:focusable="true"
-        android:padding="10dp"
-        app:srcCompat="@drawable/drag_handle" />
+        android:padding="8dp"
+        app:srcCompat="@drawable/drag_handle"
+        app:tint="?attr/colorControlNormal" />
 </RelativeLayout>

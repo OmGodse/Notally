@@ -6,10 +6,9 @@
 
     <ImageView
         android:id="@+id/ImageView"
-        android:layout_width="wrap_content"
+        android:layout_width="96dp"
         android:layout_height="96dp"
         android:layout_gravity="center"
-        android:adjustViewBounds="true"
         app:tint="?attr/colorSecondary" />
 
     <androidx.recyclerview.widget.RecyclerView

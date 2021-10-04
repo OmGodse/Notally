@@ -18,13 +18,13 @@ import com.omgodse.notally.databinding.DialogInputBinding
 import com.omgodse.notally.databinding.FragmentNotesBinding
 import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.recyclerview.ItemListener
-import com.omgodse.notally.recyclerview.adapters.LabelsAdapter
+import com.omgodse.notally.recyclerview.adapters.LabelAdapter
 import com.omgodse.notally.room.Label
 import com.omgodse.notally.viewmodels.BaseNoteModel
 
 class Labels : Fragment(), ItemListener {
 
-    private var labelsAdapter: LabelsAdapter? = null
+    private var adapter: LabelAdapter? = null
     private var binding: FragmentNotesBinding? = null
 
     private val model: BaseNoteModel by activityViewModels()
@@ -36,7 +36,7 @@ class Labels : Fragment(), ItemListener {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        labelsAdapter = LabelsAdapter(this)
+        adapter = LabelAdapter(this)
 
         binding?.RecyclerView?.setHasFixedSize(true)
         binding?.RecyclerView?.adapter = adapter

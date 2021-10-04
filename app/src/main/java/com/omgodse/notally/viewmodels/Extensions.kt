@@ -7,7 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-internal fun ViewModel.executeAsyncWithCallback(function: suspend () -> Unit, callback: (success: Boolean) -> Unit) {
+fun ViewModel.executeAsyncWithCallback(function: suspend () -> Unit, callback: (success: Boolean) -> Unit) {
     viewModelScope.launch {
         val success = try {
             withContext(Dispatchers.IO) { function() }

@@ -15,11 +15,11 @@
         <item name="android:textAppearanceListItem">?attr/textAppearanceBody1</item>
         <item name="android:textAppearanceListItemSecondary">?attr/textAppearanceBody2</item>
 
+        <item name="toolbarStyle">@style/Toolbar</item>
         <item name="chipGroupStyle">@style/ChipGroup</item>
 
         <item name="alertDialogTheme">@style/AlertDialog</item>
         <item name="materialAlertDialogTheme">@style/AlertDialog</item>
-        <item name="bottomSheetDialogTheme">@style/BottomSheetDialog</item>
     </style>
 
     <style name="AppTheme" parent="Base.AppTheme">
@@ -37,12 +37,12 @@
     </style>
 
     <style name="TextAppearance.Title" parent="TextAppearance.MaterialComponents.Body1">
-        <item name="android:letterSpacing">0.05</item>
+        <item name="android:letterSpacing">0.04</item>
         <item name="fontFamily">sans-serif-medium</item>
     </style>
 
     <style name="TextAppearance.Preview" parent="TextAppearance.MaterialComponents.Body2">
-        <item name="android:letterSpacing">0.05</item>
+        <item name="android:letterSpacing">0.04</item>
         <item name="android:textColor">?attr/colorControlNormal</item>
         <item name="fontFamily">@font/nunito_sans</item>
     </style>
@@ -70,6 +70,10 @@
         <item name="android:ellipsize">end</item>
     </style>
 
+    <style name="Toolbar" parent="Widget.MaterialComponents.Toolbar">
+        <item name="titleTextAppearance">@style/TextAppearance.Toolbar</item>
+    </style>
+
     <style name="ChipGroup" parent="Widget.MaterialComponents.ChipGroup">
         <item name="android:paddingTop">4dp</item>
         <item name="android:paddingBottom">4dp</item>
@@ -77,21 +81,16 @@
     </style>
 
 
-    <style name="EditText.Title">
+    <style name="EditText.Title" parent="Widget.AppCompat.EditText">
         <item name="android:paddingTop">8dp</item>
         <item name="android:paddingBottom">0dp</item>
         <item name="android:hint">@string/title</item>
         <item name="android:imeOptions">actionNext</item>
         <item name="android:textColor">?attr/colorSecondary</item>
         <item name="android:textAppearance">?attr/textAppearanceHeadline6</item>
-    </style>
-
-    <style name="EditText" parent="Widget.AppCompat.EditText">
         <item name="android:background">@null</item>
         <item name="android:paddingStart">24dp</item>
         <item name="android:paddingEnd">24dp</item>
-        <item name="android:paddingTop">16dp</item>
-        <item name="android:paddingBottom">16dp</item>
         <item name="android:inputType">textMultiLine|textCapSentences</item>
     </style>
 
@@ -124,10 +123,6 @@
     <style name="AlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
         <item name="colorPrimary">?attr/colorSecondary</item>
         <item name="materialAlertDialogTitleTextStyle">@style/AlertDialog.Title</item>
-    </style>
-
-    <style name="BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.DayNight.BottomSheetDialog">
-        <item name="android:windowIsFloating">false</item>
     </style>
 
 
