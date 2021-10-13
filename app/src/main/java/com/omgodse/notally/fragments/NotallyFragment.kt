@@ -16,7 +16,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.omgodse.notally.R
@@ -165,7 +164,6 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
     internal fun goToActivity(activity: Class<*>, baseNote: BaseNote? = null) {
         val intent = Intent(requireContext(), activity)
         intent.putExtra(Constants.SelectedBaseNote, baseNote)
-        intent.putExtra(Constants.PreviousFragment, findNavController().currentDestination?.id)
         startActivity(intent)
     }
 
