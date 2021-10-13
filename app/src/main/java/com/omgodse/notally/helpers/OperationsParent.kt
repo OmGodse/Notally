@@ -11,12 +11,9 @@ import com.omgodse.notally.R
 import com.omgodse.notally.activities.TakeNote
 import com.omgodse.notally.databinding.AddLabelBinding
 import com.omgodse.notally.databinding.DialogInputBinding
-import com.omgodse.notally.miscellaneous.applySpans
 import com.omgodse.notally.miscellaneous.getBody
-import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Label
 import com.omgodse.notally.room.ListItem
-import com.omgodse.notally.room.Type
 
 interface OperationsParent {
 
@@ -25,20 +22,14 @@ interface OperationsParent {
     fun insertLabel(label: Label, onComplete: (success: Boolean) -> Unit)
 
 
-    fun shareNote(baseNote: BaseNote) {
-        when (baseNote.type) {
-            Type.NOTE -> shareNote(baseNote.title, baseNote.body.applySpans(baseNote.spans))
-            Type.LIST -> shareNote(baseNote.title, baseNote.items)
-        }
-    }
-
     fun shareNote(title: String?, body: CharSequence?) {
-        val shareIntent = Intent(Intent.ACTION_SEND)
-        shareIntent.type = "text/plain"
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT, title)
-        shareIntent.putExtra(TakeNote.EXTRA_SPANNABLE, body)
-        shareIntent.putExtra(Intent.EXTRA_TEXT, body.toString())
-        accessContext().startActivity(Intent.createChooser(shareIntent, accessContext().getString(R.string.share_note)))
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "text/plain"
+        intent.putExtra(Intent.EXTRA_SUBJECT, title)
+        intent.putExtra(TakeNote.EXTRA_SPANNABLE, body)
+        intent.putExtra(Intent.EXTRA_TEXT, body.toString())
+        val chooser = Intent.createChooser(intent, accessContext().getString(R.string.share_note))
+        accessContext().startActivity(chooser)
     }
 
     fun shareNote(title: String?, items: List<ListItem>?) = shareNote(title, items.getBody())

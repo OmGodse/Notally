@@ -25,6 +25,7 @@ import com.omgodse.notally.databinding.FragmentNotesBinding
 import com.omgodse.notally.helpers.OperationsParent
 import com.omgodse.notally.helpers.SettingsHelper
 import com.omgodse.notally.miscellaneous.Constants
+import com.omgodse.notally.miscellaneous.applySpans
 import com.omgodse.notally.recyclerview.ItemDecoration
 import com.omgodse.notally.recyclerview.ItemListener
 import com.omgodse.notally.recyclerview.adapters.BaseNoteAdapter
@@ -142,6 +143,13 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
         }
     }
 
+
+    internal fun shareBaseNote(baseNote: BaseNote) {
+        when (baseNote.type) {
+            Type.NOTE -> shareNote(baseNote.title, baseNote.body.applySpans(baseNote.spans))
+            Type.LIST -> shareNote(baseNote.title, baseNote.items)
+        }
+    }
 
     internal fun labelBaseNote(baseNote: BaseNote) {
         lifecycleScope.launch {
