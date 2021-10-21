@@ -58,7 +58,6 @@ class BaseNoteVH(
 
     private fun bindNote(note: BaseNote) {
         binding.LinearLayout.isVisible = false
-        binding.ItemsRemaining.isVisible = false
 
         binding.Title.text = note.title
         binding.Note.text = note.body.applySpans(note.spans)
@@ -68,8 +67,6 @@ class BaseNoteVH(
     }
 
     private fun bindList(list: BaseNote) {
-        binding.LinearLayout.removeAllViews()
-
         binding.Note.isVisible = false
         binding.LinearLayout.isVisible = true
 
@@ -79,19 +76,21 @@ class BaseNoteVH(
         val maxItems = settingsHelper.getMaxItems()
         val filteredList = list.items.take(maxItems)
 
-        binding.ItemsRemaining.isVisible = list.items.size > maxItems
-
-        binding.ItemsRemaining.text = if (list.items.size > maxItems) {
-            val itemsRemaining = list.items.size - maxItems
-            if (itemsRemaining == 1) {
-                binding.root.context.getString(R.string.one_more_item)
-            } else binding.root.context.getString(R.string.more_items, itemsRemaining)
-        } else null
+        binding.LinearLayout.removeAllViews()
 
         for (item in filteredList) {
             val view = ListItemPreviewBinding.inflate(inflater).root
             view.text = item.body
             view.handleChecked(item.checked)
+            binding.LinearLayout.addView(view)
+        }
+
+        if (list.items.size > maxItems) {
+            val view = ListItemPreviewBinding.inflate(inflater).root
+            val itemsRemaining = list.items.size - maxItems
+            view.text = if (itemsRemaining == 1) {
+                binding.root.context.getString(R.string.one_more_item)
+            } else binding.root.context.getString(R.string.more_items, itemsRemaining)
             binding.LinearLayout.addView(view)
         }
 
