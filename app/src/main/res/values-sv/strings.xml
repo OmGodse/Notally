@@ -79,10 +79,6 @@
     <string name="light">Ljus</string>
     <string name="follow_system">Följ systemet</string>
 
-    <string name="card_type">Kort typ</string>
-    <string name="flat">Platt</string>
-    <string name="elevated">Upphöjd</string>
-
     <string name="content_density">Innehållstäthet</string>
     <string name="max_items_to_display">Max antal objekt att visa i lista</string>
     <string name="max_lines_to_display">Max antal rader att visa i anteckning</string>

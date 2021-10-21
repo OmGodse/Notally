@@ -81,10 +81,6 @@
     <string name="light">Clar</string>
     <string name="follow_system">Segueix el sistema</string>
 
-    <string name="card_type">Tipus de targeta</string>
-    <string name="flat">Pla</string>
-    <string name="elevated">Elevat</string>
-
     <string name="content_density">Densitat del contingut</string>
     <string name="max_items_to_display">Nombre màxim d\'elements a mostrar a la llista</string>
     <string name="max_lines_to_display">Màxim de línies a mostrar a la nota</string>

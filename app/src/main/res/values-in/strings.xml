@@ -81,10 +81,6 @@
     <string name="light">Terang</string>
     <string name="follow_system">Ikuti sistem</string>
 
-    <string name="card_type">Tipe kartu</string>
-    <string name="flat">Datar</string>
-    <string name="elevated">Mengambang</string>
-
     <string name="content_density">Kerapatan konten</string>
     <string name="max_items_to_display">Item maks yang ditampilkan dalam daftar</string>
     <string name="max_lines_to_display">Baris maks yang ditampilkan dalam catatan</string>

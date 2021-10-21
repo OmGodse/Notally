@@ -90,10 +90,6 @@
     <string name="light">Light</string>
     <string name="follow_system">Follow system</string>
 
-    <string name="card_type">Card type</string>
-    <string name="flat">Flat</string>
-    <string name="elevated">Elevated</string>
-
     <string name="content_density">Content density</string>
     <string name="max_items_to_display">Max items to display in list</string>
     <string name="max_lines_to_display">Max lines to display in note</string>
@@ -118,10 +114,6 @@
     <string name="darkKey" translatable="false">dark</string>
     <string name="lightKey" translatable="false">light</string>
     <string name="followSystemKey" translatable="false">followSystem</string>
-
-    <string name="cardTypeKey" translatable="false">cardType</string>
-    <string name="flatKey" translatable="false">flat</string>
-    <string name="elevatedKey" translatable="false">elevated</string>
 
     <string name="maxItemsToDisplayInListKey" translatable="false">maxItemsToDisplayInList</string>
     <string name="maxLinesToDisplayInNoteKey" translatable="false">maxLinesToDisplayInNote</string>

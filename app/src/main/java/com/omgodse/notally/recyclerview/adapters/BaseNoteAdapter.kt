@@ -24,7 +24,7 @@ class BaseNoteAdapter(private val settingsHelper: SettingsHelper, private val it
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseNoteVH {
         val inflater = LayoutInflater.from(parent.context)
         val binding = RecyclerBaseNoteBinding.inflate(inflater, parent, false)
-        return BaseNoteVH(binding, settingsHelper, itemListener, prettyTime)
+        return BaseNoteVH(binding, settingsHelper, itemListener, prettyTime, inflater)
     }
 
 

@@ -81,10 +81,6 @@
     <string name="light">Claro</string>
     <string name="follow_system">Seguir o sistema</string>
 
-    <string name="card_type">Tipo de cartão</string>
-    <string name="flat">Plano</string>
-    <string name="elevated">Elevado</string>
-
     <string name="content_density">Densidade do conteúdo</string>
     <string name="max_items_to_display">Máximo de itens a serem exibidos nas listas</string>
     <string name="max_lines_to_display">Máximo de linhas a serem exibidos nas notas</string>

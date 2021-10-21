@@ -81,10 +81,6 @@
     <string name="light">Светлая</string>
     <string name="follow_system">Как на устройстве</string>
 
-    <string name="card_type">Вид карточек</string>
-    <string name="flat">Плоские</string>
-    <string name="elevated">поднятый</string>
-
     <string name="content_density">Плотность содержимого</string>
     <string name="max_items_to_display">Максимум отображаемых пунктов в списке</string>
     <string name="max_lines_to_display">Максимум отображаемых строк в заметке</string>

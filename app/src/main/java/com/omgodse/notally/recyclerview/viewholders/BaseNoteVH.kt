@@ -20,17 +20,13 @@ class BaseNoteVH(
     private val binding: RecyclerBaseNoteBinding,
     private val settingsHelper: SettingsHelper,
     private val itemListener: ItemListener,
-    private val prettyTime: PrettyTime
+    private val prettyTime: PrettyTime,
+    private val inflater: LayoutInflater
 ) : RecyclerView.ViewHolder(binding.root) {
 
     init {
         binding.Note.maxLines = settingsHelper.getMaxLines()
         binding.Date.isVisible = settingsHelper.getShowDateCreated()
-
-        when (settingsHelper.getCardType()) {
-            binding.root.context.getString(R.string.flatKey) -> setCardFlat()
-            binding.root.context.getString(R.string.elevatedKey) -> setCardElevated()
-        }
 
         binding.root.setOnClickListener {
             itemListener.onClick(adapterPosition)
@@ -93,7 +89,6 @@ class BaseNoteVH(
         } else null
 
         for (item in filteredList) {
-            val inflater = LayoutInflater.from(binding.root.context)
             val view = ListItemPreviewBinding.inflate(inflater).root
             view.text = item.body
             view.handleChecked(item.checked)
@@ -103,18 +98,6 @@ class BaseNoteVH(
         binding.LinearLayout.isVisible = list.items.isNotEmpty()
     }
 
-
-    private fun setCardFlat() {
-        binding.root.cardElevation = 0f
-        binding.root.radius = 0f
-        binding.root.strokeWidth = 1
-    }
-
-    private fun setCardElevated() {
-        binding.root.cardElevation = binding.root.resources.getDimension(R.dimen.cardElevation)
-        binding.root.radius = binding.root.resources.getDimension(R.dimen.cardCornerRadius)
-        binding.root.strokeWidth = 0
-    }
 
     private fun MaterialTextView.handleChecked(checked: Boolean) {
         if (checked) {

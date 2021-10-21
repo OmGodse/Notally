@@ -74,10 +74,6 @@
     <string name="light">Lyst</string>
     <string name="follow_system">Følg systeminnstillinger</string>
 
-    <string name="card_type">Visningstype</string>
-    <string name="flat">Flatt</string>
-    <string name="elevated">Forhøyet</string>
-
     <string name="content_density">Innholdstetthet</string>
     <string name="max_items_to_display">Maks antall elementer fremvist av liste</string>
     <string name="max_lines_to_display">Maks antall linjer vist fra notatene</string>

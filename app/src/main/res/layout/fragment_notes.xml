@@ -17,6 +17,8 @@
         android:layout_height="match_parent"
         android:background="?attr/colorSurface"
         android:clipToPadding="false"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
         android:scrollbarStyle="outsideOverlay"
         android:scrollbars="vertical" />
 </FrameLayout>

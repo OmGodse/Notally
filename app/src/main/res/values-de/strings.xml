@@ -84,10 +84,6 @@
     <string name="light">Hell</string>
     <string name="follow_system">Systemeinstellung folgen</string>
 
-    <string name="card_type">Notizdesign</string>
-    <string name="flat">Flach</string>
-    <string name="elevated">Material</string>
-
     <string name="content_density">Notizvorschau</string>
     <string name="max_items_to_display">Maximal angezeigte Listeneinträge</string>
     <string name="max_lines_to_display">Maximal angezeigte Zeilen</string>

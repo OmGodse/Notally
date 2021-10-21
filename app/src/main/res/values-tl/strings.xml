@@ -81,10 +81,6 @@
     <string name="light">Maliwanag</string>
     <string name="follow_system">Sundin ang System</string>
 
-    <string name="card_type">Tipo ng tarheta</string>
-    <string name="flat">Patag</string>
-    <string name="elevated">Nakataas</string>
-
     <string name="content_density">Siksikan ng laman</string>
     <string name="max_items_to_display">Pinamadaming item na ipapakita sa listahan</string>
     <string name="max_lines_to_display">Pinamadaming linya na ipapakita sa tala</string>

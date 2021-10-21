@@ -81,10 +81,6 @@
     <string name="light">ライト</string>
     <string name="follow_system">システムのテーマを使用</string>
 
-    <string name="card_type">カードの形式</string>
-    <string name="flat">フラット</string>
-    <string name="elevated">シャドウ</string>
-
     <string name="content_density">プレビュー</string>
     <string name="max_items_to_display">プレビューするリストの数</string>
     <string name="max_lines_to_display">プレビューするノートの行数</string>

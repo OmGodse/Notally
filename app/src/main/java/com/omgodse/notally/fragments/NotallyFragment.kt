@@ -68,10 +68,7 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
 
         binding?.ImageView?.setImageResource(getBackground())
 
-        setupPadding()
-        setupLayoutManager()
-        setupItemDecoration()
-
+        setupRecyclerView()
         setupObserver()
     }
 
@@ -113,13 +110,6 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
     }
 
 
-    private fun setupPadding() {
-        val padding = resources.getDimensionPixelSize(R.dimen.recyclerViewPadding)
-        if (settingsHelper.getCardType() == getString(R.string.elevatedKey)) {
-            binding?.RecyclerView?.setPaddingRelative(padding, 0, padding, 0)
-        }
-    }
-
     private fun setupObserver() {
         getObservable()?.observe(viewLifecycleOwner, { list ->
             adapter?.submitList(list)
@@ -127,20 +117,15 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
         })
     }
 
-    private fun setupLayoutManager() {
+    private fun setupRecyclerView() {
         val columns = if (settingsHelper.getView() == getString(R.string.gridKey)) {
             2
         } else 1
-        binding?.RecyclerView?.layoutManager = StaggeredGridLayoutManager(columns, RecyclerView.VERTICAL)
-    }
 
-    private fun setupItemDecoration() {
         val cardMargin = resources.getDimensionPixelSize(R.dimen.cardMargin)
-        if (settingsHelper.getCardType() == getString(R.string.elevatedKey)) {
-            if (settingsHelper.getView() == getString(R.string.gridKey)) {
-                binding?.RecyclerView?.addItemDecoration(ItemDecoration(cardMargin, 2))
-            } else binding?.RecyclerView?.addItemDecoration(ItemDecoration(cardMargin, 1))
-        }
+        val itemDecoration = ItemDecoration(cardMargin, columns)
+        binding?.RecyclerView?.addItemDecoration(itemDecoration)
+        binding?.RecyclerView?.layoutManager = StaggeredGridLayoutManager(columns, RecyclerView.VERTICAL)
     }
 
 

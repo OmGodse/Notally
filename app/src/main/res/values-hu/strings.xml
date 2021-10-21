@@ -81,10 +81,6 @@
     <string name="light">Világos</string>
     <string name="follow_system">Rendszer követése</string>
 
-    <string name="card_type">Kártya típusa</string>
-    <string name="flat">Lapos</string>
-    <string name="elevated">Lebegő</string>
-
     <string name="content_density">Tartalom sűrűsége</string>
     <string name="max_items_to_display">Elemek száma egy listában</string>
     <string name="max_lines_to_display">Sorok száma egy jegyzetben</string>

@@ -22,15 +22,6 @@
             app:title="@string/theme"
             app:useSimpleSummaryProvider="true" />
 
-        <ListPreference
-            app:defaultValue="@string/elevatedKey"
-            app:entries="@array/noteTypeEntries"
-            app:entryValues="@array/noteTypeValues"
-            app:iconSpaceReserved="false"
-            app:key="@string/cardTypeKey"
-            app:title="@string/card_type"
-            app:useSimpleSummaryProvider="true" />
-
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -96,4 +87,5 @@
             app:title="@string/rate" />
 
     </PreferenceCategory>
+
 </PreferenceScreen>

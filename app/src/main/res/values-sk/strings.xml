@@ -81,10 +81,6 @@
     <string name="light">Svetlá</string>
     <string name="follow_system">Podľa systému</string>
 
-    <string name="card_type">Štýl poznámky</string>
-    <string name="flat">Plochý</string>
-    <string name="elevated">Vyvýšený</string>
-
     <string name="content_density">Hustota obsahu</string>
     <string name="max_items_to_display">Max. počet položiek v zozname</string>
     <string name="max_lines_to_display">Max. počet riadkov v poznámke</string>
