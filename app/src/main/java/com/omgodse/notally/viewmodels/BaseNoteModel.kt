@@ -349,7 +349,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     companion object {
 
         fun getDateFormatter(locale: Locale): SimpleDateFormat {
-            val pattern = if (locale.language == Locale.JAPANESE.language) {
+            val pattern = if (locale.language == Locale.JAPANESE.language || locale.language == Locale.CHINESE.language) {
                 "yyyy年 MMM d日 (EEE)"
             } else "EEE d MMM yyyy"
             return SimpleDateFormat(pattern, locale)
