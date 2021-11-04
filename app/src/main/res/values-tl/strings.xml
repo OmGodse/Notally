@@ -85,8 +85,6 @@
     <string name="max_items_to_display">Pinamadaming item na ipapakita sa listahan</string>
     <string name="max_lines_to_display">Pinamadaming linya na ipapakita sa tala</string>
 
-    <string name="show_date_created">Ipakita ang petsya ng paggawa</string>
-
     <string name="backup">Backup</string>
 
     <string name="about">Tungkol</string>

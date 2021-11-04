@@ -85,8 +85,6 @@
     <string name="max_items_to_display">Elemek száma egy listában</string>
     <string name="max_lines_to_display">Sorok száma egy jegyzetben</string>
 
-    <string name="show_date_created">Létrehozási dátum</string>
-
     <string name="backup">Biztonsági mentés</string>
 
     <string name="about">Névjegy</string>

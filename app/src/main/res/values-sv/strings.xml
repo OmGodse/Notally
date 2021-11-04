@@ -83,8 +83,6 @@
     <string name="max_items_to_display">Max antal objekt att visa i lista</string>
     <string name="max_lines_to_display">Max antal rader att visa i anteckning</string>
 
-    <string name="show_date_created">Visa datum när anteckning skapades</string>
-
     <string name="backup">Säkerhetskopiering</string>
 
     <string name="about">Om</string>

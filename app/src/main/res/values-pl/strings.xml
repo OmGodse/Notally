@@ -85,8 +85,6 @@
     <string name="max_items_to_display">Maksymalna ilość elementów w liście do pokazania</string>
     <string name="max_lines_to_display">Maksymalna ilość linii w notatce do pokazania</string>
 
-    <string name="show_date_created">Pokaż datę utworzenia</string>
-
     <string name="backup">Kopia</string>
 
     <string name="about">O aplikacji</string>

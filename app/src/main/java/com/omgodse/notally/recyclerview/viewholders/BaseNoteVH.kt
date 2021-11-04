@@ -1,6 +1,7 @@
 package com.omgodse.notally.recyclerview.viewholders
 
 import android.view.LayoutInflater
+import android.view.View
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textview.MaterialTextView
@@ -14,6 +15,7 @@ import com.omgodse.notally.recyclerview.ItemListener
 import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Type
 import org.ocpsoft.prettytime.PrettyTime
+import java.text.SimpleDateFormat
 import java.util.*
 
 class BaseNoteVH(
@@ -21,12 +23,12 @@ class BaseNoteVH(
     private val settingsHelper: SettingsHelper,
     private val itemListener: ItemListener,
     private val prettyTime: PrettyTime,
-    private val inflater: LayoutInflater
+    private val formatter: SimpleDateFormat,
+    private val inflater: LayoutInflater,
 ) : RecyclerView.ViewHolder(binding.root) {
 
     init {
         binding.Note.maxLines = settingsHelper.getMaxLines()
-        binding.Date.isVisible = settingsHelper.getShowDateCreated()
 
         binding.root.setOnClickListener {
             itemListener.onClick(adapterPosition)
@@ -48,7 +50,17 @@ class BaseNoteVH(
         binding.LabelGroup.bindLabels(baseNote.labels)
 
         val date = Date(baseNote.timestamp)
-        binding.Date.text = prettyTime.format(date)
+        when (settingsHelper.getDateFormat()) {
+            binding.root.context.getString(R.string.relativeKey) -> {
+                binding.Date.visibility = View.VISIBLE
+                binding.Date.text = prettyTime.format(date)
+            }
+            binding.root.context.getString(R.string.absoluteKey) -> {
+                binding.Date.visibility = View.VISIBLE
+                binding.Date.text = formatter.format(date)
+            }
+            else -> binding.Date.visibility = View.GONE
+        }
 
         if (baseNote.isEmpty()) {
             binding.Note.setText(baseNote.getEmptyMessage())

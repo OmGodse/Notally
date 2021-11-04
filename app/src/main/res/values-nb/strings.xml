@@ -78,8 +78,6 @@
     <string name="max_items_to_display">Maks antall elementer fremvist av liste</string>
     <string name="max_lines_to_display">Maks antall linjer vist fra notatene</string>
 
-    <string name="show_date_created">Vis opprettelsesdato</string>
-
     <string name="backup">Sikkerhetskopi</string>
 
     <string name="about">Om</string>

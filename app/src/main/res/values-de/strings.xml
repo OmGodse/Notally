@@ -88,8 +88,6 @@
     <string name="max_items_to_display">Maximal angezeigte Listeneinträge</string>
     <string name="max_lines_to_display">Maximal angezeigte Zeilen</string>
 
-    <string name="show_date_created">Erstellungsdatum anzeigen</string>
-
     <string name="backup">Sichern und Wiederherstellen</string>
     <string name="export_backup">Notizen sichern</string>
     <string name="import_backup">Notizen wiederherstellen</string>

@@ -84,8 +84,6 @@
     <string name="max_items_to_display">Maximum aantal items dat in de lijst kan worden weergegeven</string>
     <string name="max_lines_to_display">Maximum lijnen in de notitie weer te geven</string>
 
-    <string name="show_date_created">Toon aangemaakte datum</string>
-
     <string name="backup">Back-up</string>
 
     <string name="about">Over</string>

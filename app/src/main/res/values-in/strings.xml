@@ -85,8 +85,6 @@
     <string name="max_items_to_display">Item maks yang ditampilkan dalam daftar</string>
     <string name="max_lines_to_display">Baris maks yang ditampilkan dalam catatan</string>
 
-    <string name="show_date_created">Tampilkan tanggal dibuat</string>
-
     <string name="backup">Cadangan</string>
 
     <string name="about">Tentang</string>

@@ -32,4 +32,16 @@
         <item>@string/listKey</item>
         <item>@string/gridKey</item>
     </string-array>
+
+    <string-array name="dateFormatEntries">
+        <item>@string/none</item>
+        <item>@string/relative</item>
+        <item>@string/absolute</item>
+    </string-array>
+
+    <string-array name="dateFormatValues">
+        <item>@string/noneKey</item>
+        <item>@string/relativeKey</item>
+        <item>@string/absoluteKey</item>
+    </string-array>
 </resources>

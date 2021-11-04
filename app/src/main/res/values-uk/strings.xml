@@ -85,8 +85,6 @@
     <string name="max_items_to_display">Максимальна кількількість елементів в списку</string>
     <string name="max_lines_to_display">Максимальна кількість рядків в нотатці</string>
 
-    <string name="show_date_created">Показувати дату створення</string>
-
     <string name="backup">Резервне копіювання</string>
 
     <string name="about">Про програму</string>

@@ -90,11 +90,14 @@
     <string name="light">Light</string>
     <string name="follow_system">Follow system</string>
 
+    <string name="date_format">Date format</string>
+    <string name="none">None</string>
+    <string name="relative">Relative</string>
+    <string name="absolute">Absolute</string>
+
     <string name="content_density">Content density</string>
     <string name="max_items_to_display">Max items to display in list</string>
     <string name="max_lines_to_display">Max lines to display in note</string>
-
-    <string name="show_date_created">Show date created</string>
 
     <string name="backup">Backup</string>
     <string name="export_backup">Export backup</string>
@@ -115,10 +118,13 @@
     <string name="lightKey" translatable="false">light</string>
     <string name="followSystemKey" translatable="false">followSystem</string>
 
+    <string name="dateFormatKey" translatable="false">dateFormat</string>
+    <string name="noneKey" translatable="false">none</string>
+    <string name="relativeKey" translatable="false">relative</string>
+    <string name="absoluteKey" translatable="false">absolute</string>
+
     <string name="maxItemsToDisplayInListKey" translatable="false">maxItemsToDisplayInList</string>
     <string name="maxLinesToDisplayInNoteKey" translatable="false">maxLinesToDisplayInNote</string>
-
-    <string name="showDateCreatedKey" translatable="false">showDateCreated</string>
 
     <string name="four" translatable="false">4</string>
     <string name="eight" translatable="false">8</string>

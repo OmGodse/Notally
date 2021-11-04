@@ -85,8 +85,6 @@
     <string name="max_items_to_display">プレビューするリストの数</string>
     <string name="max_lines_to_display">プレビューするノートの行数</string>
 
-    <string name="show_date_created">作成日時を表示</string>
-
     <string name="backup">バックアップ</string>
 
     <string name="about">このアプリについて</string>

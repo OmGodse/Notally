@@ -85,8 +85,6 @@
     <string name="max_items_to_display">Nombre màxim d\'elements a mostrar a la llista</string>
     <string name="max_lines_to_display">Màxim de línies a mostrar a la nota</string>
 
-    <string name="show_date_created">Mostra la data de creació</string>
-
     <string name="backup">Còpia de seguretat</string>
 
     <string name="about">Quant a</string>

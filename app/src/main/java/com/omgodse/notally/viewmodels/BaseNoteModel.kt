@@ -41,7 +41,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     private val baseNoteDao = database.baseNoteDao
 
     private val labelCache = HashMap<String, Content<BaseNote>>()
-    private val formatter = getDateFormatter(app.getLocale())
+    val formatter = getDateFormatter(app.getLocale())
 
     var currentFile: File? = null
 
@@ -349,9 +349,11 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     companion object {
 
         fun getDateFormatter(locale: Locale): SimpleDateFormat {
-            val pattern = if (locale.language == Locale.JAPANESE.language || locale.language == Locale.CHINESE.language) {
-                "yyyy年 MMM d日 (EEE)"
-            } else "EEE d MMM yyyy"
+            val pattern = when (locale.language) {
+                Locale.CHINESE.language,
+                Locale.JAPANESE.language -> "yyyy年 MMM d日 (EEE)"
+                else -> "EEE d MMM yyyy"
+            }
             return SimpleDateFormat(pattern, locale)
         }
     }

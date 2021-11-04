@@ -85,8 +85,6 @@
     <string name="max_items_to_display">Максимум отображаемых пунктов в списке</string>
     <string name="max_lines_to_display">Максимум отображаемых строк в заметке</string>
 
-    <string name="show_date_created">Показывать дату создания</string>
-
     <string name="backup">Резервная копия</string>
 
     <string name="about">Про приложение</string>

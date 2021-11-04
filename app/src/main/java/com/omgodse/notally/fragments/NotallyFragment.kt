@@ -54,7 +54,7 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         settingsHelper = SettingsHelper(requireContext())
 
-        adapter = BaseNoteAdapter(settingsHelper, this)
+        adapter = BaseNoteAdapter(settingsHelper, model.formatter, this)
         adapter?.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
 
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
@@ -162,7 +162,7 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
 
 
     private fun exportBaseNoteToPDF(baseNote: BaseNote) {
-        model.getPDFFile(baseNote, settingsHelper.getShowDateCreated(), object : PostPDFGenerator.OnResult {
+        model.getPDFFile(baseNote, settingsHelper.showDateCreated(), object : PostPDFGenerator.OnResult {
 
             override fun onSuccess(file: File) {
                 showFileOptionsDialog(file, "application/pdf")
@@ -176,7 +176,7 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
 
     private fun exportBaseNoteToTXT(baseNote: BaseNote) {
         lifecycleScope.launch {
-            val file = model.getTXTFile(baseNote, settingsHelper.getShowDateCreated())
+            val file = model.getTXTFile(baseNote, settingsHelper.showDateCreated())
             showFileOptionsDialog(file, "text/plain")
         }
     }
@@ -197,7 +197,7 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
 
     private fun exportBaseNoteToHTML(baseNote: BaseNote) {
         lifecycleScope.launch {
-            val file = model.getHTMLFile(baseNote, settingsHelper.getShowDateCreated())
+            val file = model.getHTMLFile(baseNote, settingsHelper.showDateCreated())
             showFileOptionsDialog(file, "text/html")
         }
     }
