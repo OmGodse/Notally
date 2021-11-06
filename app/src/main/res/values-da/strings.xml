@@ -81,7 +81,7 @@
     <!-- Settings Page -->
     <string name="appearance">Udseende</string>
 
-    <string name="view">Visning/string>
+    <string name="view">Visning</string>
     <string name="list">Liste</string>
     <string name="grid">Gitter</string>
 
