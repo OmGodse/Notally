@@ -12,10 +12,13 @@
 11. 🇪🇸 Spanish by Jose Casas
 12. 🇹🇷 Turkish by Helpful User
 13. 🇺🇦 Ukrainian by Alex Shpak
-14. 🇸🇪 Swedish by Erik Lindström
-15. 🇷🇺 Russian by Denis Bondarenko
-16. 🇫🇷 French by Arnaud Dieumegard
-17. 🇧🇷 Brazilian Portuguese by [fabianski7](https://github.com/fabianski7)
-18. 🇳🇴 Norwegian by Fredrik Magnussen
-19. 🇵🇭 Tagalog by Isaiah Collins Abetong
-20. 🇩🇪 German by Maximilian Braunschmied, [jonas-haeusler](https://github.com/jonas-haeusler)
+14. 🇩🇰 Danish by [shoddysheep](https://github.com/shoddysheep)
+15. 🇸🇪 Swedish by Erik Lindström
+16. 🇷🇺 Russian by Denis Bondarenko
+17. 🇫🇷 French by Arnaud Dieumegard
+18. 🇧🇷 Brazilian Portuguese by [fabianski7](https://github.com/fabianski7)
+19. 🇳🇴 Norwegian by Fredrik Magnussen
+20. 🇵🇭 Tagalog by Isaiah Collins Abetong
+21. 🇩🇪 German by Maximilian Braunschmied, [jonas-haeusler](https://github.com/jonas-haeusler)
+22. 🇿🇭 Chinese
+    * Simplified by [Austin Huang](https://github.com/austinhuang0131)
