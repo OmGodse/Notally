@@ -46,7 +46,7 @@ class Labels : Fragment(), ItemListener {
 
         binding?.ImageView?.setImageResource(R.drawable.label)
 
-        populateRecyclerView()
+        setupObserver()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -84,7 +84,7 @@ class Labels : Fragment(), ItemListener {
     }
 
 
-    private fun populateRecyclerView() {
+    private fun setupObserver() {
         model.labels.observe(viewLifecycleOwner, { labels ->
             adapter?.submitList(labels)
             binding?.RecyclerView?.isVisible = labels.isNotEmpty()

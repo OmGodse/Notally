@@ -42,12 +42,6 @@ class Notes : NotallyFragment() {
         showMenu(makeList, takeNote)
     }
 
-    private fun moreOperations(baseNote: BaseNote) {
-        val delete = Operation(R.string.delete, R.drawable.delete) { model.moveBaseNoteToDeleted(baseNote.id) }
-        val archive = Operation(R.string.archive, R.drawable.archive) { model.moveBaseNoteToArchive(baseNote.id) }
-        showMenu(delete, archive)
-    }
-
 
     override fun getObservable() = model.baseNotes
 
@@ -60,7 +54,11 @@ class Notes : NotallyFragment() {
         val share = Operation(R.string.share, R.drawable.share) { shareBaseNote(baseNote) }
         val labels = Operation(R.string.labels, R.drawable.label) { labelBaseNote(baseNote) }
         val export = Operation(R.string.export, R.drawable.export) { exportBaseNote(baseNote) }
-        val moreOptions = Operation(R.string.more_options, R.drawable.more_options) { moreOperations(baseNote) }
+
+        val delete = Operation(R.string.delete, R.drawable.delete) { model.moveBaseNoteToDeleted(baseNote.id) }
+        val archive = Operation(R.string.archive, R.drawable.archive) { model.moveBaseNoteToArchive(baseNote.id) }
+        val moreOptions = Operation(R.string.more_options, R.drawable.more_options) { showMenu(delete, archive) }
+
         showMenu(pin, share, labels, export, moreOptions)
     }
 }
