@@ -12,8 +12,8 @@ android {
         applicationId "com.omgodse.notally"
         minSdk 21
         targetSdk 30
-        versionCode 38
-        versionName "4.3"
+        versionCode 39
+        versionName "4.4"
         resConfigs "en", "ca", "cs", "da", "de", "es", "fr", "hu", "in", "it", "ja", "nb", "nl", "pl", "pt-rBR", "ru", "sk", "sv", "tl", "tr", "uk", "zh-rCN"
         vectorDrawables.generatedDensities = []
     }

@@ -53,7 +53,7 @@
     <string name="date">日期</string>
     <string name="title">标题</string>
     <string name="one_more_item">还有 1 件项目</string>
-    <string name="more_items">还有 %1$D 件项目</string>
+    <string name="more_items">还有 %1$d 件项目</string>
     <string name="drag_handle">拖拽微件</string>
     <string name="bold">粗体</string>
     <string name="link">链接</string>
