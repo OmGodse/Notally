@@ -46,9 +46,8 @@ abstract class NotallyActivity : AppCompatActivity(), OperationsParent {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val selectedBaseNote = intent.getParcelableExtra<BaseNote>(Constants.SelectedBaseNote)
-
         if (model.isFirstInstance) {
+            val selectedBaseNote = intent.getParcelableExtra<BaseNote>(Constants.SelectedBaseNote)
             if (selectedBaseNote != null) {
                 model.isNewNote = false
                 model.setStateFromBaseNote(selectedBaseNote)
@@ -161,9 +160,7 @@ abstract class NotallyActivity : AppCompatActivity(), OperationsParent {
         getPinnedIndicator().isVisible = model.pinned
         item?.title = if (model.pinned) {
             getString(R.string.unpin)
-        } else {
-            getString(R.string.pin)
-        }
+        } else getString(R.string.pin)
     }
 
     internal fun setupToolbar(toolbar: MaterialToolbar) {

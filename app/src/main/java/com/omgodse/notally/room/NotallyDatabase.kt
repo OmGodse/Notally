@@ -25,13 +25,9 @@ abstract class NotallyDatabase : RoomDatabase() {
         internal var instance: NotallyDatabase? = null
 
         fun getDatabase(application: Application): NotallyDatabase {
-            val tempInstance = instance
-            if (tempInstance != null) {
-                return tempInstance
-            }
-            synchronized(this) {
+            return instance ?: synchronized(this) {
                 val instance = Room.databaseBuilder(application, NotallyDatabase::class.java, databaseName).build()
-                Companion.instance = instance
+                this.instance = instance
                 return instance
             }
         }

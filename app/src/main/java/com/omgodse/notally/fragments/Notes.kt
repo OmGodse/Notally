@@ -10,7 +10,6 @@ import com.omgodse.notally.R
 import com.omgodse.notally.activities.MainActivity
 import com.omgodse.notally.activities.MakeList
 import com.omgodse.notally.activities.TakeNote
-import com.omgodse.notally.room.BaseNote
 
 class Notes : NotallyFragment() {
 
@@ -46,19 +45,4 @@ class Notes : NotallyFragment() {
     override fun getObservable() = model.baseNotes
 
     override fun getBackground() = R.drawable.notes
-
-    override fun showOperations(baseNote: BaseNote) {
-        val pin = if (baseNote.pinned) {
-            Operation(R.string.unpin, R.drawable.pin) { model.unpinBaseNote(baseNote.id) }
-        } else Operation(R.string.pin, R.drawable.pin) { model.pinBaseNote(baseNote.id) }
-        val share = Operation(R.string.share, R.drawable.share) { shareBaseNote(baseNote) }
-        val labels = Operation(R.string.labels, R.drawable.label) { labelBaseNote(baseNote) }
-        val export = Operation(R.string.export, R.drawable.export) { exportBaseNote(baseNote) }
-
-        val delete = Operation(R.string.delete, R.drawable.delete) { model.moveBaseNoteToDeleted(baseNote.id) }
-        val archive = Operation(R.string.archive, R.drawable.archive) { model.moveBaseNoteToArchive(baseNote.id) }
-        val moreOptions = Operation(R.string.more_options, R.drawable.more_options) { showMenu(delete, archive) }
-
-        showMenu(pin, share, labels, export, moreOptions)
-    }
 }

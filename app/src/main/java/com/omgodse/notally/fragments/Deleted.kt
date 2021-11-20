@@ -7,7 +7,6 @@ import android.view.MenuItem
 import android.view.View
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.R
-import com.omgodse.notally.room.BaseNote
 
 class Deleted : NotallyFragment() {
 
@@ -19,7 +18,7 @@ class Deleted : NotallyFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.DeleteAll) {
-            confirmDeletionOfAllNotes()
+            deleteAllNotes()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -29,7 +28,7 @@ class Deleted : NotallyFragment() {
     }
 
 
-    private fun confirmDeletionOfAllNotes() {
+    private fun deleteAllNotes() {
         MaterialAlertDialogBuilder(requireContext())
             .setMessage(R.string.delete_all_notes)
             .setPositiveButton(R.string.delete) { dialog, which ->
@@ -39,24 +38,8 @@ class Deleted : NotallyFragment() {
             .show()
     }
 
-    private fun confirmDeletionOfSingleNote(baseNote: BaseNote) {
-        MaterialAlertDialogBuilder(requireContext())
-            .setMessage(R.string.delete_note_forever)
-            .setPositiveButton(R.string.delete) { dialog, which ->
-                model.deleteBaseNoteForever(baseNote)
-            }
-            .setNegativeButton(R.string.cancel, null)
-            .show()
-    }
-
 
     override fun getBackground() = R.drawable.delete
 
     override fun getObservable() = model.deletedNotes
-
-    override fun showOperations(baseNote: BaseNote) {
-        val restore = Operation(R.string.restore, R.drawable.restore) { model.restoreBaseNote(baseNote.id) }
-        val deleteForever = Operation(R.string.delete_forever, R.drawable.delete) { confirmDeletionOfSingleNote(baseNote) }
-        showMenu(restore, deleteForever)
-    }
 }

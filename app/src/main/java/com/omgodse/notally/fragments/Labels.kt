@@ -6,6 +6,7 @@ import android.view.*
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
+import androidx.core.view.setPadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -44,6 +45,7 @@ class Labels : Fragment(), ItemListener {
         val itemDecoration = DividerItemDecoration(requireContext(), RecyclerView.VERTICAL)
         binding?.RecyclerView?.addItemDecoration(itemDecoration)
 
+        binding?.RecyclerView?.setPadding(0)
         binding?.ImageView?.setImageResource(R.drawable.label)
 
         setupObserver()
