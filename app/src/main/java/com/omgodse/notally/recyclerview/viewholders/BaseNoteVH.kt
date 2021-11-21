@@ -2,9 +2,9 @@ package com.omgodse.notally.recyclerview.viewholders
 
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.textview.MaterialTextView
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.ListItemPreviewBinding
 import com.omgodse.notally.databinding.RecyclerBaseNoteBinding
@@ -62,8 +62,8 @@ class BaseNoteVH(
             else -> binding.Date.visibility = View.GONE
         }
 
-        if (baseNote.isEmpty()) {
-            binding.Note.setText(baseNote.getEmptyMessage())
+        if (isEmpty(baseNote)) {
+            binding.Note.setText(getEmptyMessage(baseNote))
             binding.Note.isVisible = true
         }
     }
@@ -93,7 +93,7 @@ class BaseNoteVH(
         for (item in filteredList) {
             val view = ListItemPreviewBinding.inflate(inflater).root
             view.text = item.body
-            view.handleChecked(item.checked)
+            handleChecked(view, item.checked)
             binding.LinearLayout.addView(view)
         }
 
@@ -110,10 +110,24 @@ class BaseNoteVH(
     }
 
 
-    private fun MaterialTextView.handleChecked(checked: Boolean) {
+    private fun isEmpty(baseNote: BaseNote): Boolean {
+        return when (baseNote.type) {
+            Type.NOTE -> baseNote.title.isBlank() && baseNote.body.isBlank()
+            Type.LIST -> baseNote.title.isBlank() && baseNote.items.isEmpty()
+        }
+    }
+
+    private fun getEmptyMessage(baseNote: BaseNote): Int {
+        return when (baseNote.type) {
+            Type.NOTE -> R.string.empty_note
+            Type.LIST -> R.string.empty_list
+        }
+    }
+
+    private fun handleChecked(textView: TextView, checked: Boolean) {
         if (checked) {
-            setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.checkbox_16, 0, 0, 0)
-        } else setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.checkbox_outline_16, 0, 0, 0)
-        paint.isStrikeThruText = checked
+            textView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.checkbox_16, 0, 0, 0)
+        } else textView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.checkbox_outline_16, 0, 0, 0)
+        textView.paint.isStrikeThruText = checked
     }
 }

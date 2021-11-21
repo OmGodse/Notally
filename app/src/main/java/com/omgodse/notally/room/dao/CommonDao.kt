@@ -1,13 +1,11 @@
 package com.omgodse.notally.room.dao
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.Transformations
 import androidx.room.*
 import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Folder
 import com.omgodse.notally.room.Label
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 
 /**
  * Class containing operations common to all tables
@@ -56,18 +54,18 @@ interface CommonDao {
      *
      * Take for example, a request for all base notes having the label
      * 'Important' The base notes which instead have the label 'Unimportant'
-     * will also be returned. To prevent this, we use Kotlin's flow and
+     * will also be returned. To prevent this, we use [Transformations.map] and
      * filter the result accordingly.
      */
     fun getBaseNotesByLabel(label: String): LiveData<List<BaseNote>> {
         val result = getBaseNotesByLabel(label, Folder.NOTES)
-        val filtered = result.map { list -> list.filter { baseNote -> baseNote.labels.contains(label) } }
-        return filtered.asLiveData()
+        return Transformations.map(result) { list -> list.filter { baseNote -> baseNote.labels.contains(label) } }
     }
 
     @Query("SELECT * FROM BaseNote WHERE folder = :folder AND labels LIKE '%' || :label || '%' ORDER BY pinned DESC, timestamp DESC")
-    fun getBaseNotesByLabel(label: String, folder: Folder): Flow<List<BaseNote>>
+    fun getBaseNotesByLabel(label: String, folder: Folder): LiveData<List<BaseNote>>
 
-    @Query("SELECT * FROM BaseNote WHERE labels LIKE '%' || :label || '%' ORDER BY pinned DESC, timestamp DESC")
+
+    @Query("SELECT * FROM BaseNote WHERE labels LIKE '%' || :label || '%'")
     suspend fun getBaseNotesByLabelAsList(label: String): List<BaseNote>
 }

@@ -4,7 +4,6 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.omgodse.notally.R
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -21,40 +20,6 @@ data class BaseNote(
     val spans: List<SpanRepresentation>,
     val items: List<ListItem>,
 ) : Parcelable {
-
-    fun isEmpty(): Boolean {
-        return when (type) {
-            Type.NOTE -> title.isBlank() && body.isBlank()
-            Type.LIST -> title.isBlank() && items.isEmpty()
-        }
-    }
-
-    fun getEmptyMessage(): Int {
-        return when (type) {
-            Type.NOTE -> R.string.empty_note
-            Type.LIST -> R.string.empty_list
-        }
-    }
-
-    fun matchesKeyword(keyword: String): Boolean {
-        if (title.contains(keyword, true)) {
-            return true
-        }
-        if (body.contains(keyword, true)) {
-            return true
-        }
-        for (label in labels) {
-            if (label.contains(keyword, true)) {
-                return true
-            }
-        }
-        for (item in items) {
-            if (item.body.contains(keyword, true)) {
-                return true
-            }
-        }
-        return false
-    }
 
     companion object {
 

@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 class SearchResult(private val scope: CoroutineScope, private val baseNoteDao: BaseNoteDao) : LiveData<List<BaseNote>>() {
 
     private var job: Job? = null
-    private var previousLiveData: LiveData<List<BaseNote>>? = null
+    private var liveData: LiveData<List<BaseNote>>? = null
     private val observer = Observer<List<BaseNote>> { list -> value = list }
 
     init {
@@ -20,13 +20,13 @@ class SearchResult(private val scope: CoroutineScope, private val baseNoteDao: B
 
     fun fetch(keyword: String) {
         job?.cancel()
-        previousLiveData?.removeObserver(observer)
+        liveData?.removeObserver(observer)
         job = scope.launch {
             if (keyword.isEmpty()) {
                 value = emptyList()
             } else {
-                previousLiveData = baseNoteDao.getBaseNotesByKeyword(keyword)
-                previousLiveData?.observeForever(observer)
+                liveData = baseNoteDao.getBaseNotesByKeyword(keyword)
+                liveData?.observeForever(observer)
             }
         }
     }
