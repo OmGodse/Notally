@@ -16,7 +16,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.omgodse.notally.R
@@ -26,6 +25,7 @@ import com.omgodse.notally.databinding.FragmentNotesBinding
 import com.omgodse.notally.helpers.OperationsParent
 import com.omgodse.notally.helpers.SettingsHelper
 import com.omgodse.notally.miscellaneous.Constants
+import com.omgodse.notally.miscellaneous.applySpans
 import com.omgodse.notally.recyclerview.ItemDecoration
 import com.omgodse.notally.recyclerview.ItemListener
 import com.omgodse.notally.recyclerview.adapters.BaseNoteAdapter
@@ -54,7 +54,7 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         settingsHelper = SettingsHelper(requireContext())
 
-        adapter = BaseNoteAdapter(settingsHelper, this)
+        adapter = BaseNoteAdapter(settingsHelper, model.formatter, this)
         adapter?.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
 
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
@@ -68,10 +68,7 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
 
         binding?.ImageView?.setImageResource(getBackground())
 
-        setupPadding()
-        setupLayoutManager()
-        setupItemDecoration()
-
+        setupRecyclerView()
         setupObserver()
     }
 
@@ -113,13 +110,6 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
     }
 
 
-    private fun setupPadding() {
-        val padding = resources.getDimensionPixelSize(R.dimen.recyclerViewPadding)
-        if (settingsHelper.getCardType() == getString(R.string.elevatedKey)) {
-            binding?.RecyclerView?.setPaddingRelative(padding, 0, padding, 0)
-        }
-    }
-
     private fun setupObserver() {
         getObservable()?.observe(viewLifecycleOwner, { list ->
             adapter?.submitList(list)
@@ -127,22 +117,24 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
         })
     }
 
-    private fun setupLayoutManager() {
+    private fun setupRecyclerView() {
         val columns = if (settingsHelper.getView() == getString(R.string.gridKey)) {
             2
         } else 1
+
+        val cardMargin = resources.getDimensionPixelSize(R.dimen.cardMargin)
+        val itemDecoration = ItemDecoration(cardMargin, columns)
+        binding?.RecyclerView?.addItemDecoration(itemDecoration)
         binding?.RecyclerView?.layoutManager = StaggeredGridLayoutManager(columns, RecyclerView.VERTICAL)
     }
 
-    private fun setupItemDecoration() {
-        val cardMargin = resources.getDimensionPixelSize(R.dimen.cardMargin)
-        if (settingsHelper.getCardType() == getString(R.string.elevatedKey)) {
-            if (settingsHelper.getView() == getString(R.string.gridKey)) {
-                binding?.RecyclerView?.addItemDecoration(ItemDecoration(cardMargin, 2))
-            } else binding?.RecyclerView?.addItemDecoration(ItemDecoration(cardMargin, 1))
+
+    internal fun shareBaseNote(baseNote: BaseNote) {
+        when (baseNote.type) {
+            Type.NOTE -> shareNote(baseNote.title, baseNote.body.applySpans(baseNote.spans))
+            Type.LIST -> shareNote(baseNote.title, baseNote.items)
         }
     }
-
 
     internal fun labelBaseNote(baseNote: BaseNote) {
         lifecycleScope.launch {
@@ -165,13 +157,12 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
     internal fun goToActivity(activity: Class<*>, baseNote: BaseNote? = null) {
         val intent = Intent(requireContext(), activity)
         intent.putExtra(Constants.SelectedBaseNote, baseNote)
-        intent.putExtra(Constants.PreviousFragment, findNavController().currentDestination?.id)
         startActivity(intent)
     }
 
 
     private fun exportBaseNoteToPDF(baseNote: BaseNote) {
-        model.getPDFFile(baseNote, settingsHelper.getShowDateCreated(), object : PostPDFGenerator.OnResult {
+        model.getPDFFile(baseNote, settingsHelper.showDateCreated(), object : PostPDFGenerator.OnResult {
 
             override fun onSuccess(file: File) {
                 showFileOptionsDialog(file, "application/pdf")
@@ -185,7 +176,7 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
 
     private fun exportBaseNoteToTXT(baseNote: BaseNote) {
         lifecycleScope.launch {
-            val file = model.getTXTFile(baseNote, settingsHelper.getShowDateCreated())
+            val file = model.getTXTFile(baseNote, settingsHelper.showDateCreated())
             showFileOptionsDialog(file, "text/plain")
         }
     }
@@ -206,7 +197,7 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
 
     private fun exportBaseNoteToHTML(baseNote: BaseNote) {
         lifecycleScope.launch {
-            val file = model.getHTMLFile(baseNote, settingsHelper.getShowDateCreated())
+            val file = model.getHTMLFile(baseNote, settingsHelper.showDateCreated())
             showFileOptionsDialog(file, "text/html")
         }
     }

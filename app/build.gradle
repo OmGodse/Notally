@@ -6,15 +6,15 @@ plugins {
 }
 
 android {
-    compileSdk 30
+    compileSdk 31
 
     defaultConfig {
         applicationId "com.omgodse.notally"
         minSdk 21
         targetSdk 30
-        versionCode 37
-        versionName "4.2"
-        resConfigs "en", "ca", "cs", "de", "es", "fr", "hu", "in", "it", "ja", "nb", "nl", "pl", "pt-rBR", "ru", "sk", "sv", "tl", "tr", "uk"
+        versionCode 39
+        versionName "4.4"
+        resConfigs "en", "ca", "cs", "da", "de", "es", "fr", "hu", "in", "it", "ja", "nb", "nl", "pl", "pt-rBR", "ru", "sk", "sv", "tl", "tr", "uk", "zh-rCN"
         vectorDrawables.generatedDensities = []
     }
 
@@ -45,7 +45,7 @@ dependencies {
     final def roomVersion = "2.3.0"
 
     implementation "androidx.preference:preference-ktx:1.1.1"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.0"
 
     kapt "androidx.room:room-compiler:$roomVersion"
     implementation "androidx.room:room-ktx:$roomVersion"

@@ -81,15 +81,9 @@
     <string name="light">Açık</string>
     <string name="follow_system">Sistem varsayılanı</string>
 
-    <string name="card_type">Kart tipi</string>
-    <string name="flat">Düz</string>
-    <string name="elevated">Yüksek</string>
-
     <string name="content_density">Anasayfa içerik detayları</string>
     <string name="max_items_to_display">Listede görüntülenecek en fazla kutucuk sayısı</string>
     <string name="max_lines_to_display">Notta görüntülenecek maksimum satır sayısı</string>
-
-    <string name="show_date_created">Oluşturulma tarihini göster</string>
 
     <string name="backup">Yedek</string>
 

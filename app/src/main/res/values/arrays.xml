@@ -33,13 +33,15 @@
         <item>@string/gridKey</item>
     </string-array>
 
-    <string-array name="noteTypeEntries">
-        <item>@string/flat</item>
-        <item>@string/elevated</item>
+    <string-array name="dateFormatEntries">
+        <item>@string/none</item>
+        <item>@string/relative</item>
+        <item>@string/absolute</item>
     </string-array>
 
-    <string-array name="noteTypeValues">
-        <item>@string/flatKey</item>
-        <item>@string/elevatedKey</item>
+    <string-array name="dateFormatValues">
+        <item>@string/noneKey</item>
+        <item>@string/relativeKey</item>
+        <item>@string/absoluteKey</item>
     </string-array>
 </resources>

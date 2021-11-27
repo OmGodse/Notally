@@ -81,15 +81,9 @@
     <string name="light">Lumineux</string>
     <string name="follow_system">En fonction du système</string>
 
-    <string name="card_type">Modèle des cartes</string>
-    <string name="flat">Plat</string>
-    <string name="elevated">Relief</string>
-
     <string name="content_density">Densité d\'affichage</string>
     <string name="max_items_to_display">Nombre maximum d\'éléments à afficher dans une liste</string>
     <string name="max_lines_to_display">Nombre maximum de lignes à afficher dans une note</string>
-
-    <string name="show_date_created">Afficher la date de création</string>
 
     <string name="backup">Sauvegarde</string>
 

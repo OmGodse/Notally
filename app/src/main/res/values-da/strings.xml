@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fragment Titles -->
+    <string name="notes">Noter</string>
+    <string name="labels">Etiketter</string>
+    <string name="deleted">Slettet</string>
+    <string name="archived">Arkiveret</string>
+    <string name="settings">Indstillinger</string>
+
+    <!-- Menu Options -->
+    <string name="share">Del</string>
+    <string name="search">Søg</string>
+    <string name="delete">Slet</string>
+    <string name="restore">Gendan</string>
+    <string name="archive">Arkivér</string>
+    <string name="unarchive">Fjern fra arkiv</string>
+    <string name="delete_all">Slet alle</string>
+    <string name="delete_forever">Slet for altid</string>
+
+    <!-- Pinning -->
+    <string name="pin">Fastgør</string>
+    <string name="unpin">Frigør</string>
+    <string name="pinned">Fastgjort</string>
+
+    <!-- Chooser dialog hints -->
+    <string name="view_note">Se note…</string>
+    <string name="share_note">Del note…</string>
+
+    <!-- Dialogs -->
+    <string name="save">Gem</string>
+    <string name="edit">Redigér</string>
+    <string name="cancel">Annullér</string>
+    <string name="open_link">Åben link</string>
+    <string name="make_list">Opret liste</string>
+    <string name="take_note">Tag note</string>
+    <string name="add_label">Tilføj etikette</string>
+    <string name="export">Eksportér</string>
+    <string name="more_options">Flere muligheder</string>
+    <string name="view_file">Se fil</string>
+    <string name="save_to_device">Gem på enhed</string>
+    <string name="edit_label">Redigér etikette</string>
+    <string name="label_exists">Etikette eksisterer</string>
+    <string name="delete_label">Slet etikette?</string>
+    <string name="create_new">Ingen etiketter endnu. Opret en?</string>
+    <string name="delete_all_notes">Slet alle noter?</string>
+    <string name="delete_note_forever">Slet note for altid?</string>
+    <string name="your_notes_associated">Dine noter tilknyttet denne etikette vil ikke blive slettet</string>
+
+    <!-- Lists and Notes -->
+    <string name="note">Note</string>
+    <string name="item">Emne</string>
+    <string name="date">Dato</string>
+    <string name="title">Titel</string>
+    <string name="add_item">Tilføj emne</string>
+    <string name="one_more_item">1 emne til</string>
+    <string name="more_items">%1$d emner til</string>
+    <string name="drag_handle">Træk håndtag</string>
+    <string name="bold">Fed</string>
+    <string name="link">Link</string>
+    <string name="italic">Kursiv</string>
+    <string name="strikethrough">Gennemstreget</string>
+    <string name="clear_formatting">Ryd formatering</string>
+    <string name="monospace">Monomellemrum</string>
+
+    <!-- Miscellaneous -->
+    <string name="saved_to_device">Gemt på enheden</string>
+    <string name="saved_to_notally">Gemt i Notally</string>
+    <string name="empty_note">Tom note</string>
+    <string name="empty_list">Tom liste</string>
+    <string name="discarded_empty_note">Kasseret tom note</string>
+    <string name="discarded_empty_list">Kasseret tom liste</string>
+    <string name="cant_open_link">Kan ikke åbne link</string>
+    <string name="something_went_wrong">Noget gik galt. Prøv igen.</string>
+
+    <!-- Settings Page -->
+    <string name="appearance">Udseende</string>
+
+    <string name="view">Visning</string>
+    <string name="list">Liste</string>
+    <string name="grid">Gitter</string>
+
+    <string name="theme">Tema</string>
+    <string name="dark">Mørkt</string>
+    <string name="light">Lyst</string>
+    <string name="follow_system">Systemstandard</string>
+
+    <string name="content_density">Indhold densitet</string>
+    <string name="max_items_to_display">Maks. emner der vises i liste</string>
+    <string name="max_lines_to_display">Maks. linjer der vises i note</string>
+
+    <string name="backup">Backup</string>
+    <string name="export_backup">Eksportér backup</string>
+    <string name="import_backup">Importér backup</string>
+
+    <string name="about">Omkring</string>
+    <string name="libraries">Biblioteker</string>
+    <string name="rate">Vurdér denne app</string>
+</resources>

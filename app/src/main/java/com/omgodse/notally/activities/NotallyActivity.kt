@@ -20,6 +20,7 @@ import com.omgodse.notally.helpers.OperationsParent
 import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.miscellaneous.bindLabels
 import com.omgodse.notally.room.BaseNote
+import com.omgodse.notally.room.Folder
 import com.omgodse.notally.room.Label
 import com.omgodse.notally.viewmodels.NotallyModel
 import kotlinx.coroutines.Dispatchers
@@ -62,10 +63,10 @@ abstract class NotallyActivity : AppCompatActivity(), OperationsParent {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val menuId = when (intent.getIntExtra(Constants.PreviousFragment, R.id.Notes)) {
-            R.id.Archived -> R.menu.archived
-            R.id.Deleted -> R.menu.deleted
-            else -> R.menu.notes
+        val menuId = when (model.folder) {
+            Folder.NOTES -> R.menu.notes
+            Folder.DELETED -> R.menu.deleted
+            Folder.ARCHIVED -> R.menu.archived
         }
 
         menuInflater.inflate(menuId, menu)
