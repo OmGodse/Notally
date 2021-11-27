@@ -10,9 +10,13 @@ import com.omgodse.notally.recyclerview.ItemListener
 import com.omgodse.notally.recyclerview.viewholders.BaseNoteVH
 import com.omgodse.notally.room.BaseNote
 import org.ocpsoft.prettytime.PrettyTime
+import java.text.SimpleDateFormat
 
-class BaseNoteAdapter(private val settingsHelper: SettingsHelper, private val itemListener: ItemListener) :
-    ListAdapter<BaseNote, BaseNoteVH>(DiffCallback()) {
+class BaseNoteAdapter(
+    private val settingsHelper: SettingsHelper,
+    private val formatter: SimpleDateFormat,
+    private val itemListener: ItemListener
+) : ListAdapter<BaseNote, BaseNoteVH>(DiffCallback()) {
 
     private val prettyTime = PrettyTime()
 
@@ -24,7 +28,7 @@ class BaseNoteAdapter(private val settingsHelper: SettingsHelper, private val it
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseNoteVH {
         val inflater = LayoutInflater.from(parent.context)
         val binding = RecyclerBaseNoteBinding.inflate(inflater, parent, false)
-        return BaseNoteVH(binding, settingsHelper, itemListener, prettyTime)
+        return BaseNoteVH(binding, settingsHelper, itemListener, prettyTime, formatter, inflater)
     }
 
 

@@ -80,15 +80,9 @@
     <string name="light">Licht</string>
     <string name="follow_system">Volg de systeem</string>
 
-    <string name="card_type">Kaart type</string>
-    <string name="flat">Vlak</string>
-    <string name="elevated">Verhoogd</string>
-
     <string name="content_density">Inhoudsdichtheid</string>
     <string name="max_items_to_display">Maximum aantal items dat in de lijst kan worden weergegeven</string>
     <string name="max_lines_to_display">Maximum lijnen in de notitie weer te geven</string>
-
-    <string name="show_date_created">Toon aangemaakte datum</string>
 
     <string name="backup">Back-up</string>
 

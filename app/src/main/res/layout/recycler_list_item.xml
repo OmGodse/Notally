@@ -30,16 +30,14 @@
         android:padding="8dp"
         android:textAppearance="?attr/textAppearanceBody1" />
 
-    <ImageView
+    <ImageButton
         android:id="@+id/DragHandle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:background="?attr/selectableItemBackground"
-        android:clickable="true"
         android:contentDescription="@string/drag_handle"
-        android:focusable="true"
         android:padding="8dp"
         app:srcCompat="@drawable/drag_handle"
         app:tint="?attr/colorControlNormal" />

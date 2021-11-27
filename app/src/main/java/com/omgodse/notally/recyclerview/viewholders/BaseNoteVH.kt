@@ -1,6 +1,7 @@
 package com.omgodse.notally.recyclerview.viewholders
 
 import android.view.LayoutInflater
+import android.view.View
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textview.MaterialTextView
@@ -14,23 +15,20 @@ import com.omgodse.notally.recyclerview.ItemListener
 import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Type
 import org.ocpsoft.prettytime.PrettyTime
+import java.text.SimpleDateFormat
 import java.util.*
 
 class BaseNoteVH(
     private val binding: RecyclerBaseNoteBinding,
     private val settingsHelper: SettingsHelper,
     private val itemListener: ItemListener,
-    private val prettyTime: PrettyTime
+    private val prettyTime: PrettyTime,
+    private val formatter: SimpleDateFormat,
+    private val inflater: LayoutInflater,
 ) : RecyclerView.ViewHolder(binding.root) {
 
     init {
         binding.Note.maxLines = settingsHelper.getMaxLines()
-        binding.Date.isVisible = settingsHelper.getShowDateCreated()
-
-        when (settingsHelper.getCardType()) {
-            binding.root.context.getString(R.string.flatKey) -> setCardFlat()
-            binding.root.context.getString(R.string.elevatedKey) -> setCardElevated()
-        }
 
         binding.root.setOnClickListener {
             itemListener.onClick(adapterPosition)
@@ -52,7 +50,17 @@ class BaseNoteVH(
         binding.LabelGroup.bindLabels(baseNote.labels)
 
         val date = Date(baseNote.timestamp)
-        binding.Date.text = prettyTime.format(date)
+        when (settingsHelper.getDateFormat()) {
+            binding.root.context.getString(R.string.relativeKey) -> {
+                binding.Date.visibility = View.VISIBLE
+                binding.Date.text = prettyTime.format(date)
+            }
+            binding.root.context.getString(R.string.absoluteKey) -> {
+                binding.Date.visibility = View.VISIBLE
+                binding.Date.text = formatter.format(date)
+            }
+            else -> binding.Date.visibility = View.GONE
+        }
 
         if (baseNote.isEmpty()) {
             binding.Note.setText(baseNote.getEmptyMessage())
@@ -62,7 +70,6 @@ class BaseNoteVH(
 
     private fun bindNote(note: BaseNote) {
         binding.LinearLayout.isVisible = false
-        binding.ItemsRemaining.isVisible = false
 
         binding.Title.text = note.title
         binding.Note.text = note.body.applySpans(note.spans)
@@ -72,8 +79,6 @@ class BaseNoteVH(
     }
 
     private fun bindList(list: BaseNote) {
-        binding.LinearLayout.removeAllViews()
-
         binding.Note.isVisible = false
         binding.LinearLayout.isVisible = true
 
@@ -83,38 +88,27 @@ class BaseNoteVH(
         val maxItems = settingsHelper.getMaxItems()
         val filteredList = list.items.take(maxItems)
 
-        binding.ItemsRemaining.isVisible = list.items.size > maxItems
-
-        binding.ItemsRemaining.text = if (list.items.size > maxItems) {
-            val itemsRemaining = list.items.size - maxItems
-            if (itemsRemaining == 1) {
-                binding.root.context.getString(R.string.one_more_item)
-            } else binding.root.context.getString(R.string.more_items, itemsRemaining)
-        } else null
+        binding.LinearLayout.removeAllViews()
 
         for (item in filteredList) {
-            val inflater = LayoutInflater.from(binding.root.context)
             val view = ListItemPreviewBinding.inflate(inflater).root
             view.text = item.body
             view.handleChecked(item.checked)
             binding.LinearLayout.addView(view)
         }
 
+        if (list.items.size > maxItems) {
+            val view = ListItemPreviewBinding.inflate(inflater).root
+            val itemsRemaining = list.items.size - maxItems
+            view.text = if (itemsRemaining == 1) {
+                binding.root.context.getString(R.string.one_more_item)
+            } else binding.root.context.getString(R.string.more_items, itemsRemaining)
+            binding.LinearLayout.addView(view)
+        }
+
         binding.LinearLayout.isVisible = list.items.isNotEmpty()
     }
 
-
-    private fun setCardFlat() {
-        binding.root.cardElevation = 0f
-        binding.root.radius = 0f
-        binding.root.strokeWidth = 1
-    }
-
-    private fun setCardElevated() {
-        binding.root.cardElevation = binding.root.resources.getDimension(R.dimen.cardElevation)
-        binding.root.radius = binding.root.resources.getDimension(R.dimen.cardCornerRadius)
-        binding.root.strokeWidth = 0
-    }
 
     private fun MaterialTextView.handleChecked(checked: Boolean) {
         if (checked) {

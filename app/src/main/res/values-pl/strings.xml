@@ -81,15 +81,9 @@
     <string name="light">Jasny</string>
     <string name="follow_system">Systemowy</string>
 
-    <string name="card_type">Typ karty</string>
-    <string name="flat">Płaski</string>
-    <string name="elevated">Podniesiony</string>
-
     <string name="content_density">Gęstość</string>
     <string name="max_items_to_display">Maksymalna ilość elementów w liście do pokazania</string>
     <string name="max_lines_to_display">Maksymalna ilość linii w notatce do pokazania</string>
-
-    <string name="show_date_created">Pokaż datę utworzenia</string>
 
     <string name="backup">Kopia</string>
 
