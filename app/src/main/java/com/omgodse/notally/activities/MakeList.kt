@@ -21,14 +21,12 @@ import java.util.*
 class MakeList : NotallyActivity() {
 
     private lateinit var adapter: MakeListAdapter
-    private lateinit var binding: ActivityMakeListBinding
 
     override val model: MakeListModel by viewModels()
+    override val binding by lazy { ActivityMakeListBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMakeListBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
         binding.EnterTitle.setOnNextAction {
             moveToNext(-1)

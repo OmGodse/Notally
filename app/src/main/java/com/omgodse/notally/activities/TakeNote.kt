@@ -27,13 +27,11 @@ import com.omgodse.notally.viewmodels.TakeNoteModel
 
 class TakeNote : NotallyActivity() {
 
-    private lateinit var binding: ActivityTakeNoteBinding
     override val model: TakeNoteModel by viewModels()
+    override val binding by lazy { ActivityTakeNoteBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityTakeNoteBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
         binding.EnterTitle.setOnNextAction {
             binding.EnterBody.requestFocus()

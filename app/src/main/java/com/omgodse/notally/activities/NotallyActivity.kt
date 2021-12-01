@@ -12,6 +12,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
+import androidx.viewbinding.ViewBinding
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -30,6 +31,7 @@ import kotlinx.coroutines.withContext
 abstract class NotallyActivity : AppCompatActivity(), OperationsParent {
 
     internal abstract val model: NotallyModel
+    internal abstract val binding: ViewBinding
 
     override fun onBackPressed() {
         model.saveNote {
@@ -45,6 +47,9 @@ abstract class NotallyActivity : AppCompatActivity(), OperationsParent {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(binding.root)
+
+        binding.root.isSaveFromParentEnabled = false
 
         if (model.isFirstInstance) {
             val selectedBaseNote = intent.getParcelableExtra<BaseNote>(Constants.SelectedBaseNote)
