@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fragment Titles -->
+    <string name="notes">Notas</string>
+    <string name="labels">Etiquetas</string>
+    <string name="deleted">Apagadas</string>
+    <string name="archived">Arquivadas</string>
+    <string name="settings">Definições</string>
+
+    <!-- Menu Options -->
+    <string name="share">Partilhar</string>
+    <string name="search">Pesquisar</string>
+    <string name="delete">Apagar</string>
+    <string name="restore">Restaurar</string>
+    <string name="archive">Arquivar</string>
+    <string name="unarchive">Desarquivar</string>
+    <string name="delete_all">Apagar todas</string>
+    <string name="delete_forever">Apagar para sempre</string>
+
+    <!-- Chooser dialog hints -->
+    <string name="view_note">Ver nota…</string>
+    <string name="share_note">Partilhar nota…</string>
+
+    <!-- Pinning -->
+    <string name="pin">Afixar</string>
+    <string name="unpin">Desafixar</string>
+    <string name="pinned">Afixado</string>
+
+    <!-- Dialogs -->
+    <string name="save">Guardar</string>
+    <string name="edit">Editar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="open_link">Abrir ligação</string>
+    <string name="make_list">Criar lista</string>
+    <string name="take_note">Criar nota</string>
+    <string name="add_label">Adicionar etiqueta</string>
+    <string name="export">Exportar</string>
+    <string name="more_options">Mais opções</string>
+    <string name="view_file">Ver ficheiro</string>
+    <string name="save_to_device">Guardar no dispositivo</string>
+    <string name="edit_label">Editar etiqueta</string>
+    <string name="label_exists">Essa etiqueta já existe</string>
+    <string name="delete_label">Apagar etiqueta?</string>
+    <string name="create_new">Nenhuma etiqueta ainda. Criar uma?</string>
+    <string name="delete_all_notes">Apagar todas as notas?</string>
+    <string name="delete_note_forever">Apagar nota para sempre?</string>
+    <string name="your_notes_associated">As suas notas associadas a essa etiqueta não serão apagadas</string>
+
+    <!-- Lists and Notes -->
+    <string name="note">Nota</string>
+    <string name="item">Item</string>
+    <string name="date">Data</string>
+    <string name="title">Título</string>
+    <string name="add_item">Adicionar item</string>
+    <string name="one_more_item">Mais 1 item</string>
+    <string name="more_items">Mais %1$d itens</string>
+    <string name="drag_handle">Arrastar e largar</string>
+    <string name="bold">Negrito</string>
+    <string name="link">Link</string>
+    <string name="italic">Itálico</string>
+    <string name="strikethrough">Rasurado</string>
+    <string name="clear_formatting">Limpar formatação</string>
+    <string name="monospace">Monoespaçamento</string>
+
+    <!-- Miscellaneous -->
+    <string name="saved_to_device">Guardado no dispositivo</string>
+    <string name="saved_to_notally">Guardar no Notally</string>
+    <string name="empty_note">Nota vazia</string>
+    <string name="empty_list">Lista vazia</string>
+    <string name="discarded_empty_note">Nota vazia eliminada</string>
+    <string name="discarded_empty_list">Lista vazia eliminada</string>
+    <string name="cant_open_link">Não foi possível abrir o link</string>
+    <string name="something_went_wrong">Algo correu mal. Por favor, tente novamente.</string>
+
+    <!-- Settings Page -->
+    <string name="appearance">Aparência</string>
+
+    <string name="view">Exibir</string>
+    <string name="list">Lista</string>
+    <string name="grid">Grade</string>
+
+    <string name="theme">Tema</string>
+    <string name="dark">Escuro</string>
+    <string name="light">Claro</string>
+    <string name="follow_system">Seguir o sistema</string>
+
+
+    <string name="date_format">Formato da data</string>
+    <string name="none">Nenhum</string>
+    <string name="relative">Relativo</string>
+    <string name="absolute">Absoluto</string>
+
+    <string name="card_type">Tipo de cartão</string>
+    <string name="flat">Plano</string>
+    <string name="elevated">Elevado</string>
+
+    <string name="content_density">Densidade do conteúdo</string>
+    <string name="max_items_to_display">Máximo de itens para serem exibidos nas listas</string>
+    <string name="max_lines_to_display">Máximo de linhas para serem exibidos nas notas</string>
+
+    <string name="show_date_created">Mostrar em que foi criado</string>
+
+    <string name="backup">Backup</string>
+    <string name="export_backup">Exportar backup</string>
+    <string name="import_backup">Importar backup</string>
+
+    <string name="about">Sobre</string>
+    <string name="libraries">Bibliotecas</string>
+    <string name="rate">Avaliar esta aplicação</string>
+</resources>
