@@ -22,6 +22,7 @@
     <string name="pin">Pin</string>
     <string name="unpin">Unpin</string>
     <string name="pinned">Pinned</string>
+    <string name="others">Others</string>
 
     <!-- Chooser dialog hints -->
     <string name="view_note">View note…</string>

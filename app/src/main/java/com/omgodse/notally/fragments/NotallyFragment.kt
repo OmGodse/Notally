@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -27,13 +28,9 @@ import com.omgodse.notally.helpers.OperationsParent
 import com.omgodse.notally.helpers.SettingsHelper
 import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.miscellaneous.applySpans
-import com.omgodse.notally.recyclerview.ItemDecoration
 import com.omgodse.notally.recyclerview.ItemListener
 import com.omgodse.notally.recyclerview.adapters.BaseNoteAdapter
-import com.omgodse.notally.room.BaseNote
-import com.omgodse.notally.room.Folder
-import com.omgodse.notally.room.Label
-import com.omgodse.notally.room.Type
+import com.omgodse.notally.room.*
 import com.omgodse.notally.viewmodels.BaseNoteModel
 import kotlinx.coroutines.launch
 import java.io.File
@@ -90,16 +87,22 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
 
 
     override fun onClick(position: Int) {
-        adapter?.currentList?.get(position)?.let { baseNote ->
-            when (baseNote.type) {
-                Type.NOTE -> goToActivity(TakeNote::class.java, baseNote)
-                Type.LIST -> goToActivity(MakeList::class.java, baseNote)
+        adapter?.currentList?.get(position)?.let { item ->
+            if (item is BaseNote) {
+                when (item.type) {
+                    Type.NOTE -> goToActivity(TakeNote::class.java, item)
+                    Type.LIST -> goToActivity(MakeList::class.java, item)
+                }
             }
         }
     }
 
     override fun onLongClick(position: Int) {
-        adapter?.currentList?.get(position)?.let { baseNote -> showOperations(baseNote) }
+        adapter?.currentList?.get(position)?.let { item ->
+            if (item is BaseNote) {
+                showOperations(item)
+            }
+        }
     }
 
 
@@ -120,14 +123,9 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
     }
 
     private fun setupRecyclerView() {
-        val columns = if (settingsHelper.getView() == getString(R.string.gridKey)) {
-            2
-        } else 1
-
-        val cardMargin = resources.getDimensionPixelSize(R.dimen.cardMargin)
-        val itemDecoration = ItemDecoration(cardMargin, columns)
-        binding?.RecyclerView?.addItemDecoration(itemDecoration)
-        binding?.RecyclerView?.layoutManager = StaggeredGridLayoutManager(columns, RecyclerView.VERTICAL)
+        binding?.RecyclerView?.layoutManager = if (settingsHelper.getView() == getString(R.string.gridKey)) {
+            StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
+        } else LinearLayoutManager(requireContext())
     }
 
 
@@ -284,5 +282,5 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
 
     abstract fun getBackground(): Int
 
-    abstract fun getObservable(): LiveData<List<BaseNote>>
+    abstract fun getObservable(): LiveData<List<Item>>
 }

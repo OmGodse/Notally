@@ -18,6 +18,7 @@
         android:background="?attr/colorSurface"
         android:clipToPadding="false"
         android:paddingStart="4dp"
+        android:paddingTop="8dp"
         android:paddingEnd="4dp"
         android:scrollbarStyle="outsideOverlay"
         android:scrollbars="vertical" />

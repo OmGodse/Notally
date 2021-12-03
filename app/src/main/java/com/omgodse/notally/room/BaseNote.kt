@@ -19,7 +19,7 @@ data class BaseNote(
     val body: String,
     val spans: List<SpanRepresentation>,
     val items: List<ListItem>,
-) : Parcelable {
+) : Item(ViewType.NOTE), Parcelable {
 
     companion object {
 

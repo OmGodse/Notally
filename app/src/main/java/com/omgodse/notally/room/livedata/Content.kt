@@ -1,7 +1,8 @@
 package com.omgodse.notally.room.livedata
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
+import com.omgodse.notally.room.BaseNote
+import com.omgodse.notally.room.Item
 
 /**
  * The instance of LiveData returned by Room only listens for
@@ -21,11 +22,9 @@ import androidx.lifecycle.Observer
  * To stop this, this class acts as a wrapper over the LiveData returned
  * by Room and continuously observes it.
  */
-class Content<T>(liveData: LiveData<List<T>>) : LiveData<List<T>>() {
-
-    private val observer = Observer<List<T>> { list -> value = list }
+class Content(liveData: LiveData<List<BaseNote>>, transform: (List<BaseNote>) -> List<Item>) : LiveData<List<Item>>() {
 
     init {
-        liveData.observeForever(observer)
+        liveData.observeForever { list -> value = transform(list) }
     }
 }

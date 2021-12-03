@@ -30,11 +30,11 @@ class BaseNoteVH(
     init {
         binding.Note.maxLines = settingsHelper.getMaxLines()
 
-        binding.root.setOnClickListener {
+        binding.CardView.setOnClickListener {
             itemListener.onClick(adapterPosition)
         }
 
-        binding.root.setOnLongClickListener {
+        binding.CardView.setOnLongClickListener {
             itemListener.onLongClick(adapterPosition)
             return@setOnLongClickListener true
         }
@@ -46,7 +46,6 @@ class BaseNoteVH(
             Type.LIST -> bindList(baseNote)
         }
 
-        binding.Pinned.isVisible = baseNote.pinned
         binding.LabelGroup.bindLabels(baseNote.labels)
 
         val date = Date(baseNote.timestamp)

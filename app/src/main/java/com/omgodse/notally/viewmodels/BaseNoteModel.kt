@@ -40,15 +40,15 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     private val commonDao = database.commonDao
     private val baseNoteDao = database.baseNoteDao
 
-    private val labelCache = HashMap<String, Content<BaseNote>>()
+    private val labelCache = HashMap<String, Content>()
     val formatter = getDateFormatter(app.getLocale())
 
     var currentFile: File? = null
 
-    val labels = Content(labelDao.getAllLabels())
-    val baseNotes = Content(baseNoteDao.getAllBaseNotes(Folder.NOTES))
-    val deletedNotes = Content(baseNoteDao.getAllBaseNotes(Folder.DELETED))
-    val archivedNotes = Content(baseNoteDao.getAllBaseNotes(Folder.ARCHIVED))
+    val labels = labelDao.getAllLabels()
+    val baseNotes = Content(baseNoteDao.getAllBaseNotes(Folder.NOTES), ::transform)
+    val deletedNotes = Content(baseNoteDao.getAllBaseNotes(Folder.DELETED), ::transform)
+    val archivedNotes = Content(baseNoteDao.getAllBaseNotes(Folder.ARCHIVED), ::transform)
 
     var keyword = String()
         set(value) {
@@ -58,7 +58,10 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
             }
         }
 
-    val searchResults = SearchResult(viewModelScope, baseNoteDao)
+    val searchResults = SearchResult(viewModelScope, baseNoteDao, ::transform)
+
+    private val pinned = Header(app.getString(R.string.pinned))
+    private val others = Header(app.getString(R.string.others))
 
     init {
         viewModelScope.launch {
@@ -78,11 +81,33 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         }
     }
 
-    fun getNotesByLabel(label: String): Content<BaseNote> {
+    fun getNotesByLabel(label: String): Content {
         if (labelCache[label] == null) {
-            labelCache[label] = Content(commonDao.getBaseNotesByLabel(label))
+            labelCache[label] = Content(commonDao.getBaseNotesByLabel(label), ::transform)
         }
         return requireNotNull(labelCache[label])
+    }
+
+
+    private fun transform(list: List<BaseNote>): List<Item> {
+        if (list.isEmpty()) {
+            return list
+        } else {
+            val firstNote = list[0]
+            return if (firstNote.pinned) {
+                val newList = ArrayList<Item>(list.size + 2)
+                newList.add(pinned)
+
+                val indexFirstUnpinnedNote = list.indexOfFirst { baseNote -> !baseNote.pinned }
+                list.forEachIndexed { index, baseNote ->
+                    if (index == indexFirstUnpinnedNote) {
+                        newList.add(others)
+                    }
+                    newList.add(baseNote)
+                }
+                newList
+            } else list
+        }
     }
 
 
