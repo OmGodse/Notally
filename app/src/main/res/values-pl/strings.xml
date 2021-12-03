@@ -30,10 +30,13 @@
     <string name="save">Zapisz</string>
     <string name="edit">Edytuj</string>
     <string name="cancel">Anuluj</string>
+    <string name="open_link">Otwórz link</string>
     <string name="make_list">Stwórz listę</string>
     <string name="take_note">Stwórz notatkę</string>
     <string name="add_label">Dodaj etykietę</string>
     <string name="export">Eksportuj</string>
+    <string name="more_options">Więcej opcji</string>
+    <string name="view_file">Zobacz plik</string>
     <string name="save_to_device">Zapisz w urządzeniu</string>
     <string name="edit_label">Edytuj etykietę</string>
     <string name="label_exists">Etykieta już istnieje</string>
@@ -81,11 +84,18 @@
     <string name="light">Jasny</string>
     <string name="follow_system">Systemowy</string>
 
+    <string name="date_format">Format daty</string>
+    <string name="none">Brak</string>
+    <string name="relative">Względna</string>
+    <string name="absolute">Bezwzględna</string>
+
     <string name="content_density">Gęstość</string>
     <string name="max_items_to_display">Maksymalna ilość elementów w liście do pokazania</string>
     <string name="max_lines_to_display">Maksymalna ilość linii w notatce do pokazania</string>
 
     <string name="backup">Kopia</string>
+    <string name="export_backup">Wykonaj kopię zapasową</string>
+    <string name="import_backup">Przywróć kopię zapasową</string>
 
     <string name="about">O aplikacji</string>
     <string name="libraries">Biblioteki</string>
