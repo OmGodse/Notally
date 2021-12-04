@@ -14,35 +14,66 @@ import com.omgodse.notally.room.Folder
 interface BaseNoteDao {
 
     @Delete
-    suspend fun deleteBaseNote(baseNote: BaseNote)
+    suspend fun delete(baseNote: BaseNote)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertBaseNote(baseNote: BaseNote): Long
+    suspend fun insert(baseNote: BaseNote): Long
 
     @Insert
-    suspend fun insertBaseNotes(baseNotes: List<BaseNote>)
+    suspend fun insert(baseNotes: List<BaseNote>)
+
+    @Update
+    suspend fun update(baseNotes: List<BaseNote>)
 
 
     @Query("DELETE FROM BaseNote WHERE folder = :folder")
-    suspend fun deleteAllBaseNotes(folder: Folder)
+    suspend fun deleteAllFromFolder(folder: Folder)
 
 
     @Query("SELECT * FROM BaseNote WHERE folder = :folder ORDER BY pinned DESC, timestamp DESC")
-    fun getAllBaseNotes(folder: Folder): LiveData<List<BaseNote>>
+    fun getAllFromFolder(folder: Folder): LiveData<List<BaseNote>>
 
     @Query("SELECT * FROM BaseNote WHERE folder = :folder ORDER BY pinned DESC, timestamp DESC")
-    suspend fun getAllBaseNotesAsList(folder: Folder): List<BaseNote>
+    suspend fun getListOfAllFromFolder(folder: Folder): List<BaseNote>
 
 
     @Query("UPDATE BaseNote SET folder = :folder WHERE id = :id")
-    suspend fun moveBaseNote(id: Long, folder: Folder)
+    suspend fun move(id: Long, folder: Folder)
 
 
     @Query("UPDATE BaseNote SET pinned = :pinned WHERE id = :id")
-    suspend fun updateBaseNotePinned(id: Long, pinned: Boolean)
+    suspend fun updatePinned(id: Long, pinned: Boolean)
 
     @Query("UPDATE BaseNote SET labels = :labels WHERE id = :id")
-    suspend fun updateBaseNoteLabels(id: Long, labels: HashSet<String>)
+    suspend fun updateLabels(id: Long, labels: HashSet<String>)
+
+
+    /**
+     * Since we store the labels as a JSON Array, it is not possible
+     * to perform operations on it. Thus, we use the 'Like' query
+     * which can return false positives sometimes.
+     *
+     * Take for example, a request for all base notes having the label
+     * 'Important' The base notes which instead have the label 'Unimportant'
+     * will also be returned. To prevent this, we use [Transformations.map] and
+     * filter the result accordingly.
+     */
+    fun getBaseNotesByLabel(label: String): LiveData<List<BaseNote>> {
+        val result = getBaseNotesByLabel(label, Folder.NOTES)
+        return Transformations.map(result) { list -> list.filter { baseNote -> baseNote.labels.contains(label) } }
+    }
+
+    @Query("SELECT * FROM BaseNote WHERE folder = :folder AND labels LIKE '%' || :label || '%' ORDER BY pinned DESC, timestamp DESC")
+    fun getBaseNotesByLabel(label: String, folder: Folder): LiveData<List<BaseNote>>
+
+
+    suspend fun getListOfBaseNotesByLabel(label: String): List<BaseNote> {
+        val result = getListOfBaseNotesByLabelImpl(label)
+        return result.filter { baseNote -> baseNote.labels.contains(label) }
+    }
+
+    @Query("SELECT * FROM BaseNote WHERE labels LIKE '%' || :label || '%'")
+    suspend fun getListOfBaseNotesByLabelImpl(label: String): List<BaseNote>
 
 
     fun getBaseNotesByKeyword(keyword: String): LiveData<List<BaseNote>> {

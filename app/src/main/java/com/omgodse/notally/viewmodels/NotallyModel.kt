@@ -48,19 +48,19 @@ abstract class NotallyModel(app: Application) : AndroidViewModel(app) {
 
     fun saveNote(onComplete: (() -> Unit)? = null) {
         viewModelScope.launch {
-            id = withContext(Dispatchers.IO) { baseNoteDao.insertBaseNote(getBaseNote()) }
+            id = withContext(Dispatchers.IO) { baseNoteDao.insert(getBaseNote()) }
             onComplete?.invoke()
         }
     }
 
     fun deleteBaseNoteForever(onComplete: () -> Unit) {
         viewModelScope.launch {
-            withContext(Dispatchers.IO) { baseNoteDao.deleteBaseNote(getBaseNote()) }
+            withContext(Dispatchers.IO) { baseNoteDao.delete(getBaseNote()) }
             onComplete()
         }
     }
 
-    fun insertLabel(label: Label, onComplete: (success: Boolean) -> Unit) = executeAsyncWithCallback({ labelDao.insertLabel(label) }, onComplete)
+    fun insertLabel(label: Label, onComplete: (success: Boolean) -> Unit) = executeAsyncWithCallback({ labelDao.insert(label) }, onComplete)
 
 
     fun restoreBaseNote() {
@@ -76,5 +76,5 @@ abstract class NotallyModel(app: Application) : AndroidViewModel(app) {
     }
 
 
-    suspend fun getAllLabelsAsList() = labelDao.getAllLabelsAsList()
+    suspend fun getAllLabelsAsList() = labelDao.getListOfAll()
 }

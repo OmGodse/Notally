@@ -7,9 +7,8 @@ import androidx.recyclerview.widget.ListAdapter
 import com.omgodse.notally.databinding.RecyclerLabelBinding
 import com.omgodse.notally.recyclerview.ItemListener
 import com.omgodse.notally.recyclerview.viewholders.LabelVH
-import com.omgodse.notally.room.Label
 
-class LabelAdapter(private val itemListener: ItemListener) : ListAdapter<Label, LabelVH>(DiffCallback()) {
+class LabelAdapter(private val itemListener: ItemListener) : ListAdapter<String, LabelVH>(DiffCallback()) {
 
     override fun onBindViewHolder(holder: LabelVH, position: Int) {
         val label = getItem(position)
@@ -23,13 +22,13 @@ class LabelAdapter(private val itemListener: ItemListener) : ListAdapter<Label, 
     }
 
 
-    private class DiffCallback : DiffUtil.ItemCallback<Label>() {
+    private class DiffCallback : DiffUtil.ItemCallback<String>() {
 
-        override fun areItemsTheSame(oldItem: Label, newItem: Label): Boolean {
+        override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
             return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: Label, newItem: Label): Boolean {
+        override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
             return oldItem == newItem
         }
     }

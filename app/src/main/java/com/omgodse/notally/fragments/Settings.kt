@@ -41,10 +41,11 @@ class Settings : PreferenceFragmentCompat() {
 
         bindPreferenceToLink(R.string.rateKey, "https://play.google.com/store/apps/details?id=com.omgodse.notally")
 
+        val libraries = arrayOf("Room", "Pretty Time", "Material Components for Android")
         findPreference<Preference>(R.string.librariesKey)?.setOnPreferenceClickListener {
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle(R.string.libraries)
-                .setItems(R.array.libraries) { dialog, which ->
+                .setItems(libraries) { dialog, which ->
                     when (which) {
                         0 -> openLink("https://developer.android.com/jetpack/androidx/releases/room")
                         1 -> openLink("https://github.com/ocpsoft/prettytime")

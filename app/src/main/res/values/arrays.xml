@@ -5,12 +5,6 @@
         <item>@string/open_link</item>
     </string-array>
 
-    <string-array name="libraries">
-        <item>@string/room</item>
-        <item>@string/pretty_time</item>
-        <item>@string/material_components_android</item>
-    </string-array>
-
     <string-array name="themeEntries">
         <item>@string/dark</item>
         <item>@string/light</item>

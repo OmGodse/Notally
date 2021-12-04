@@ -45,10 +45,10 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
     var currentFile: File? = null
 
-    val labels = labelDao.getAllLabels()
-    val baseNotes = Content(baseNoteDao.getAllBaseNotes(Folder.NOTES), ::transform)
-    val deletedNotes = Content(baseNoteDao.getAllBaseNotes(Folder.DELETED), ::transform)
-    val archivedNotes = Content(baseNoteDao.getAllBaseNotes(Folder.ARCHIVED), ::transform)
+    val labels = labelDao.getAll()
+    val baseNotes = Content(baseNoteDao.getAllFromFolder(Folder.NOTES), ::transform)
+    val deletedNotes = Content(baseNoteDao.getAllFromFolder(Folder.DELETED), ::transform)
+    val archivedNotes = Content(baseNoteDao.getAllFromFolder(Folder.ARCHIVED), ::transform)
 
     var keyword = String()
         set(value) {
@@ -70,8 +70,8 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
             val delete: (file: File) -> Unit = { file: File -> file.delete() }
             if (previousNotes.isNotEmpty() || previousLabels.isNotEmpty()) {
                 database.withTransaction {
-                    labelDao.insertLabels(previousLabels)
-                    baseNoteDao.insertBaseNotes(previousNotes)
+                    labelDao.insert(previousLabels)
+                    baseNoteDao.insert(previousNotes)
                     getNotePath().listFiles()?.forEach(delete)
                     getDeletedPath().listFiles()?.forEach(delete)
                     getArchivedPath().listFiles()?.forEach(delete)
@@ -83,7 +83,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
     fun getNotesByLabel(label: String): Content {
         if (labelCache[label] == null) {
-            labelCache[label] = Content(commonDao.getBaseNotesByLabel(label), ::transform)
+            labelCache[label] = Content(baseNoteDao.getBaseNotesByLabel(label), ::transform)
         }
         return requireNotNull(labelCache[label])
     }
@@ -114,10 +114,10 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     fun exportBackup(uri: Uri) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                val labels = labelDao.getAllLabelsAsList().toHashSet()
-                val baseNotes = baseNoteDao.getAllBaseNotesAsList(Folder.NOTES)
-                val deletedNotes = baseNoteDao.getAllBaseNotesAsList(Folder.DELETED)
-                val archivedNotes = baseNoteDao.getAllBaseNotesAsList(Folder.ARCHIVED)
+                val labels = labelDao.getListOfAll().toHashSet()
+                val baseNotes = baseNoteDao.getListOfAllFromFolder(Folder.NOTES)
+                val deletedNotes = baseNoteDao.getListOfAllFromFolder(Folder.DELETED)
+                val archivedNotes = baseNoteDao.getListOfAllFromFolder(Folder.ARCHIVED)
 
                 val backup = Backup(baseNotes, deletedNotes, archivedNotes, labels)
 
@@ -141,8 +141,8 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
                 val labels = backup.labels.map { label -> Label(label) }
 
-                baseNoteDao.insertBaseNotes(list)
-                labelDao.insertLabels(labels)
+                baseNoteDao.insert(list)
+                labelDao.insert(labels)
             }
         }
     }
@@ -203,31 +203,31 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     }
 
 
-    fun pinBaseNote(id: Long) = executeAsync { baseNoteDao.updateBaseNotePinned(id, true) }
+    fun pinBaseNote(id: Long) = executeAsync { baseNoteDao.updatePinned(id, true) }
 
-    fun unpinBaseNote(id: Long) = executeAsync { baseNoteDao.updateBaseNotePinned(id, false) }
+    fun unpinBaseNote(id: Long) = executeAsync { baseNoteDao.updatePinned(id, false) }
 
 
-    fun restoreBaseNote(id: Long) = executeAsync { baseNoteDao.moveBaseNote(id, Folder.NOTES) }
+    fun restoreBaseNote(id: Long) = executeAsync { baseNoteDao.move(id, Folder.NOTES) }
 
-    fun moveBaseNoteToDeleted(id: Long) = executeAsync { baseNoteDao.moveBaseNote(id, Folder.DELETED) }
+    fun moveBaseNoteToDeleted(id: Long) = executeAsync { baseNoteDao.move(id, Folder.DELETED) }
 
-    fun moveBaseNoteToArchive(id: Long) = executeAsync { baseNoteDao.moveBaseNote(id, Folder.ARCHIVED) }
+    fun moveBaseNoteToArchive(id: Long) = executeAsync { baseNoteDao.move(id, Folder.ARCHIVED) }
 
-    fun deleteAllBaseNotes() = executeAsync { baseNoteDao.deleteAllBaseNotes(Folder.DELETED) }
+    fun deleteAllBaseNotes() = executeAsync { baseNoteDao.deleteAllFromFolder(Folder.DELETED) }
 
-    fun deleteBaseNoteForever(baseNote: BaseNote) = executeAsync { baseNoteDao.deleteBaseNote(baseNote) }
+    fun deleteBaseNoteForever(baseNote: BaseNote) = executeAsync { baseNoteDao.delete(baseNote) }
 
     fun updateBaseNoteLabels(labels: HashSet<String>, id: Long) =
-        executeAsync { baseNoteDao.updateBaseNoteLabels(id, labels) }
+        executeAsync { baseNoteDao.updateLabels(id, labels) }
 
 
-    suspend fun getAllLabelsAsList() = withContext(Dispatchers.IO) { labelDao.getAllLabelsAsList() }
+    suspend fun getAllLabelsAsList() = withContext(Dispatchers.IO) { labelDao.getListOfAll() }
 
-    fun deleteLabel(label: Label) = executeAsync { commonDao.deleteLabel(label) }
+    fun deleteLabel(value: String) = executeAsync { commonDao.deleteLabel(value) }
 
     fun insertLabel(label: Label, onComplete: (success: Boolean) -> Unit) =
-        executeAsyncWithCallback({ labelDao.insertLabel(label) }, onComplete)
+        executeAsyncWithCallback({ labelDao.insert(label) }, onComplete)
 
     fun updateLabel(oldValue: String, newValue: String, onComplete: (success: Boolean) -> Unit) =
         executeAsyncWithCallback({ commonDao.updateLabel(oldValue, newValue) }, onComplete)

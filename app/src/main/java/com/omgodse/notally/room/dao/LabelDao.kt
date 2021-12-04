@@ -7,22 +7,25 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.omgodse.notally.room.Label
 
-/**
- * Class containing operations involving only
- * the 'Label' table
- */
 @Dao
 interface LabelDao {
 
     @Insert
-    suspend fun insertLabel(label: Label)
+    suspend fun insert(label: Label)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertLabels(labels: List<Label>)
+    suspend fun insert(labels: List<Label>)
+
+    @Query("DELETE FROM Label WHERE value = :value")
+    suspend fun delete(value: String)
+
+    @Query("UPDATE Label SET value = :newValue WHERE value = :oldValue")
+    suspend fun update(oldValue: String, newValue: String)
+
 
     @Query("SELECT value FROM Label ORDER BY value")
-    suspend fun getAllLabelsAsList(): List<String>
+    fun getAll(): LiveData<List<String>>
 
-    @Query("SELECT * FROM Label ORDER BY value")
-    fun getAllLabels(): LiveData<List<Label>>
+    @Query("SELECT value FROM Label ORDER BY value")
+    suspend fun getListOfAll(): List<String>
 }

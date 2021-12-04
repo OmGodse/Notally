@@ -23,7 +23,7 @@ fun Fragment.showMenu(vararg operations: Operation) {
         item.setText(operation.textId)
         item.setOnClickListener {
             dialog.dismiss()
-            operation.operation.invoke()
+            operation.operation()
         }
         item.setCompoundDrawablesRelativeWithIntrinsicBounds(operation.drawableId, 0, 0, 0)
         linearLayout.addView(item)

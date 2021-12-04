@@ -136,8 +136,4 @@
     <string name="rateKey" translatable="false">rate</string>
     <string name="githubKey" translatable="false">github</string>
     <string name="librariesKey" translatable="false">libraries</string>
-
-    <string name="room" translatable="false">Room</string>
-    <string name="pretty_time" translatable="false">Pretty Time</string>
-    <string name="material_components_android" translatable="false">Material Components for Android</string>
 </resources>

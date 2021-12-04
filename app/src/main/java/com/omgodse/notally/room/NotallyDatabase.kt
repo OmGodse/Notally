@@ -22,7 +22,7 @@ abstract class NotallyDatabase : RoomDatabase() {
         private const val databaseName = "NotallyDatabase"
 
         @Volatile
-        internal var instance: NotallyDatabase? = null
+        private var instance: NotallyDatabase? = null
 
         fun getDatabase(application: Application): NotallyDatabase {
             return instance ?: synchronized(this) {

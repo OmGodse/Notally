@@ -71,16 +71,16 @@ class Labels : Fragment(), ItemListener {
 
 
     override fun onClick(position: Int) {
-        adapter?.currentList?.get(position)?.let { (value) ->
+        adapter?.currentList?.get(position)?.let { value ->
             val bundle = bundleOf(Constants.SelectedLabel to value)
             findNavController().navigate(R.id.LabelsToDisplayLabel, bundle)
         }
     }
 
     override fun onLongClick(position: Int) {
-        adapter?.currentList?.get(position)?.let { label ->
-            val edit = Operation(R.string.edit, R.drawable.edit) { displayEditLabelDialog(label) }
-            val delete = Operation(R.string.delete, R.drawable.delete) { confirmDeletion(label) }
+        adapter?.currentList?.get(position)?.let { value ->
+            val edit = Operation(R.string.edit, R.drawable.edit) { displayEditLabelDialog(value) }
+            val delete = Operation(R.string.delete, R.drawable.delete) { confirmDeletion(value) }
             showMenu(edit, delete)
         }
     }
@@ -126,24 +126,24 @@ class Labels : Fragment(), ItemListener {
         dialog.show()
     }
 
-    private fun confirmDeletion(label: Label) {
+    private fun confirmDeletion(value: String) {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.delete_label)
             .setMessage(R.string.your_notes_associated)
             .setPositiveButton(R.string.delete) { dialog, which ->
-                model.deleteLabel(label)
+                model.deleteLabel(value)
             }
             .setNegativeButton(R.string.cancel, null)
             .show()
     }
 
-    private fun displayEditLabelDialog(oldLabel: Label) {
+    private fun displayEditLabelDialog(oldValue: String) {
         val dialogBinding = DialogInputBinding.inflate(layoutInflater)
 
         dialogBinding.edit.inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS
         dialogBinding.edit.filters = arrayOf()
 
-        dialogBinding.edit.setText(oldLabel.value)
+        dialogBinding.edit.setText(oldValue)
 
         val dialog = MaterialAlertDialogBuilder(requireContext())
             .setView(dialogBinding.root)
@@ -156,10 +156,10 @@ class Labels : Fragment(), ItemListener {
             dialogBinding.edit.requestFocus()
             val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
             positiveButton.setOnClickListener {
-                val value = dialogBinding.edit.text.toString().trim()
+                val newValue = dialogBinding.edit.text.toString().trim()
 
-                if (value.isNotEmpty()) {
-                    model.updateLabel(oldLabel.value, value) { success ->
+                if (newValue.isNotEmpty()) {
+                    model.updateLabel(oldValue, newValue) { success ->
                         if (success) {
                             dialog.dismiss()
                         } else dialogBinding.root.error = getString(R.string.label_exists)
