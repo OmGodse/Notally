@@ -1,4 +1,5 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
         app:iconSpaceReserved="false"
@@ -77,8 +78,13 @@
 
         <Preference
             app:iconSpaceReserved="false"
-            app:key="@string/githubKey"
-            app:title="@string/github" />
+            app:title="@string/github">
+
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://github.com/OmGodse/Notally" />
+
+        </Preference>
 
         <Preference
             app:iconSpaceReserved="false"
@@ -87,8 +93,13 @@
 
         <Preference
             app:iconSpaceReserved="false"
-            app:key="@string/rateKey"
-            app:title="@string/rate" />
+            app:title="@string/rate">
+
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://play.google.com/store/apps/details?id=com.omgodse.notally" />
+
+        </Preference>
 
     </PreferenceCategory>
 

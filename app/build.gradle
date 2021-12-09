@@ -12,9 +12,9 @@ android {
         applicationId "com.omgodse.notally"
         minSdk 21
         targetSdk 30
-        versionCode 39
-        versionName "4.4"
-        resConfigs "en", "ca", "cs", "da", "de", "es", "fr", "hu", "in", "it", "ja", "nb", "nl", "pl", "pt-rBR", "ru", "sk", "sv", "tl", "tr", "uk", "zh-rCN"
+        versionCode 40
+        versionName "4.5"
+        resConfigs "en", "ca", "cs", "da", "de", "es", "fr", "hu", "in", "it", "ja", "nb", "nl", "pl", "pt-rBR", "pt-rPT", "ru", "sk", "sv", "tl", "tr", "uk", "zh-rCN"
         vectorDrawables.generatedDensities = []
     }
 
@@ -37,7 +37,11 @@ android {
 
     buildFeatures { viewBinding true }
 
-    packagingOptions { exclude "DebugProbesKt.bin" }
+    packagingOptions {
+        exclude "DebugProbesKt.bin"
+        exclude "META-INF/**.version"
+        exclude "kotlin/**.kotlin_builtins"
+    }
 }
 
 dependencies {
@@ -45,7 +49,6 @@ dependencies {
     final def roomVersion = "2.3.0"
 
     implementation "androidx.preference:preference-ktx:1.1.1"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.0"
 
     kapt "androidx.room:room-compiler:$roomVersion"
     implementation "androidx.room:room-ktx:$roomVersion"

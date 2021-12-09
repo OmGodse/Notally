@@ -5,11 +5,6 @@ Maybe the developer views developing a beautiful user interface as the realm of 
 
 Well, Notally is none of these things. It's extremely light, minimalistic and elegant. There are minimal dependencies and lines of code. (All without compromising on readability)
 
-### Components
-* Room
-* Navigation Component
-* Architecture Components (LiveData and ViewModel)
-
 ### Features
 * Auto save
 * Dark mode
@@ -18,7 +13,7 @@ Well, Notally is none of these things. It's extremely light, minimalistic and el
 * Create lists to stay on track
 * Support for Lollipop devices and up
 * Pin notes to always keep them at the top
-* APK size of 1.3 MB (1.7 MB Uncompressed)
+* APK size of 1.3 MB (1.7 MB uncompressed)
 * Add labels to your notes for quick organisation
 * Archive notes to keep them around, but out of your way
 * Export notes as plain text, XML, JSON, HTML or PDF files with formatting
@@ -29,9 +24,6 @@ Well, Notally is none of these things. It's extremely light, minimalistic and el
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="70"/>](https://f-droid.org/packages/com.omgodse.notally/)
 
 ### Translations
-The list of supported languages is present in [CONTRIBUTORS.md](CONTRIBUTORS.md)
+All [translations](CONTRIBUTORS.md) are crowd sourced. To contribute or point out any errors, please contact me via [email](mailto:omgodseapps@gmail.com) or open a pull request.
 
-If you would like to help translate the app further, please contact me via [email](mailto:omgodseapps@gmail.com) or open a pull request.
-
-### Screenshots
 <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width="250"/><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width="250"/><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width="250"/>

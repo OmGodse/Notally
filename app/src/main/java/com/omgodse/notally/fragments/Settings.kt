@@ -4,8 +4,12 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.View
+import android.text.InputFilter
+import android.text.method.DigitsKeyListener
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import androidx.fragment.app.activityViewModels
+import androidx.preference.EditTextPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -17,8 +21,8 @@ class Settings : PreferenceFragmentCompat() {
 
     private val model: BaseNoteModel by activityViewModels()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        setPreferencesFromResource(R.xml.settings, rootKey)
 
         findPreference<Preference>(R.string.exportBackupKey)?.setOnPreferenceClickListener {
             val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
@@ -37,10 +41,6 @@ class Settings : PreferenceFragmentCompat() {
             return@setOnPreferenceClickListener true
         }
 
-        bindPreferenceToLink(R.string.githubKey, "https://github.com/OmGodse/Notally")
-
-        bindPreferenceToLink(R.string.rateKey, "https://play.google.com/store/apps/details?id=com.omgodse.notally")
-
         val libraries = arrayOf("Room", "Pretty Time", "Material Components for Android")
         findPreference<Preference>(R.string.librariesKey)?.setOnPreferenceClickListener {
             MaterialAlertDialogBuilder(requireContext())
@@ -57,17 +57,23 @@ class Settings : PreferenceFragmentCompat() {
             return@setOnPreferenceClickListener true
         }
 
-        findPreference<Preference>(R.string.maxItemsToDisplayInListKey)?.setOnPreferenceChangeListener { preference, newValue ->
-            return@setOnPreferenceChangeListener newValue.toString().isNotEmpty()
+        val bind = { editText: EditText ->
+            val maxLength = InputFilter.LengthFilter(1)
+            editText.filters = arrayOf(maxLength)
+            editText.inputType = EditorInfo.TYPE_CLASS_NUMBER
+            editText.keyListener = DigitsKeyListener.getInstance("123456789")
         }
 
-        findPreference<Preference>(R.string.maxLinesToDisplayInNoteKey)?.setOnPreferenceChangeListener { preference, newValue ->
-            return@setOnPreferenceChangeListener newValue.toString().isNotEmpty()
-        }
-    }
+        val maxItems = findPreference<EditTextPreference>(R.string.maxItemsToDisplayInListKey)
+        val maxLines = findPreference<EditTextPreference>(R.string.maxLinesToDisplayInNoteKey)
 
-    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        setPreferencesFromResource(R.xml.settings, rootKey)
+        maxItems?.setOnBindEditTextListener(bind)
+        maxLines?.setOnBindEditTextListener(bind)
+
+        val onChange = Preference.OnPreferenceChangeListener { preference, newValue -> newValue.toString().isNotEmpty() }
+
+        maxItems?.onPreferenceChangeListener = onChange
+        maxLines?.onPreferenceChangeListener = onChange
     }
 
 
@@ -87,13 +93,6 @@ class Settings : PreferenceFragmentCompat() {
         val uri = Uri.parse(link)
         val intent = Intent(Intent.ACTION_VIEW, uri)
         startActivity(intent)
-    }
-
-    private fun bindPreferenceToLink(keyId: Int, link: String) {
-        findPreference<Preference>(keyId)?.setOnPreferenceClickListener {
-            openLink(link)
-            return@setOnPreferenceClickListener true
-        }
     }
 
     private fun <T> findPreference(id: Int): T? = findPreference(getString(id))

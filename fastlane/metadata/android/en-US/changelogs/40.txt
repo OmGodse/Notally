@@ -1,0 +1,4 @@
+Updated Polish translation
+Added Portuguese (Portugal) translation
+Changed the way pinned notes are displayed
+Fixed bug where editing a label caused notes having similar labels to be also modified

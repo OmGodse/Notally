@@ -17,14 +17,14 @@
     <string name="delete_all">Apagar todas</string>
     <string name="delete_forever">Apagar para sempre</string>
 
-    <!-- Chooser dialog hints -->
-    <string name="view_note">Ver nota…</string>
-    <string name="share_note">Partilhar nota…</string>
-
     <!-- Pinning -->
     <string name="pin">Afixar</string>
     <string name="unpin">Desafixar</string>
     <string name="pinned">Afixado</string>
+
+    <!-- Chooser dialog hints -->
+    <string name="view_note">Ver nota…</string>
+    <string name="share_note">Partilhar nota…</string>
 
     <!-- Dialogs -->
     <string name="save">Guardar</string>
@@ -84,21 +84,14 @@
     <string name="light">Claro</string>
     <string name="follow_system">Seguir o sistema</string>
 
-
     <string name="date_format">Formato da data</string>
     <string name="none">Nenhum</string>
     <string name="relative">Relativo</string>
     <string name="absolute">Absoluto</string>
 
-    <string name="card_type">Tipo de cartão</string>
-    <string name="flat">Plano</string>
-    <string name="elevated">Elevado</string>
-
     <string name="content_density">Densidade do conteúdo</string>
     <string name="max_items_to_display">Máximo de itens para serem exibidos nas listas</string>
     <string name="max_lines_to_display">Máximo de linhas para serem exibidos nas notas</string>
-
-    <string name="show_date_created">Mostrar em que foi criado</string>
 
     <string name="backup">Backup</string>
     <string name="export_backup">Exportar backup</string>

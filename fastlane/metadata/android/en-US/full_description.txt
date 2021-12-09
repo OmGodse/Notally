@@ -23,7 +23,7 @@ Add clickable links to notes with support for phone numbers, email addresses and
 • Dark mode
 • Completely free
 • No permissions required
-• APK size of 1.4 MB (1.9 MB Uncompressed)
+• APK size of 1.3 MB (1.7 MB uncompressed)
 
 <b>Privacy</b>
 

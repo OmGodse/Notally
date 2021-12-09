@@ -133,7 +133,5 @@
     <string name="exportBackupKey" translatable="false">exportBackup</string>
     <string name="importBackupKey" translatable="false">importBackup</string>
 
-    <string name="rateKey" translatable="false">rate</string>
-    <string name="githubKey" translatable="false">github</string>
     <string name="librariesKey" translatable="false">libraries</string>
 </resources>

@@ -97,9 +97,6 @@ class Labels : Fragment(), ItemListener {
     private fun displayAddLabelDialog() {
         val dialogBinding = DialogInputBinding.inflate(layoutInflater)
 
-        dialogBinding.edit.inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS
-        dialogBinding.edit.filters = arrayOf()
-
         val dialog = MaterialAlertDialogBuilder(requireContext())
             .setView(dialogBinding.root)
             .setTitle(R.string.add_label)
