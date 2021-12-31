@@ -21,6 +21,7 @@
     <string name="pin">Anpinnen</string>
     <string name="unpin">Loslösen</string>
     <string name="pinned">Angepinnt</string>
+    <string name="others">Andere</string>
 
     <!-- Chooser dialog hints -->
     <string name="view_note">Notiz ansehen…</string>
@@ -83,6 +84,11 @@
     <string name="dark">Dunkel</string>
     <string name="light">Hell</string>
     <string name="follow_system">Systemeinstellung folgen</string>
+
+    <string name="date_format">Datumsformat</string>
+    <string name="none">Keines</string>
+    <string name="relative">Relativ</string>
+    <string name="absolute">Absolut</string>
 
     <string name="content_density">Notizvorschau</string>
     <string name="max_items_to_display">Maximal angezeigte Listeneinträge</string>
