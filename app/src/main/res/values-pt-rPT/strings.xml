@@ -5,7 +5,7 @@
     <string name="labels">Etiquetas</string>
     <string name="deleted">Apagadas</string>
     <string name="archived">Arquivadas</string>
-    <string name="settings">Definições</string>
+    <string name="settings">Configurações</string>
 
     <!-- Menu Options -->
     <string name="share">Partilhar</string>
@@ -20,7 +20,7 @@
     <!-- Pinning -->
     <string name="pin">Afixar</string>
     <string name="unpin">Desafixar</string>
-    <string name="pinned">Afixado</string>
+    <string name="pinned">Afixada</string>
 
     <!-- Chooser dialog hints -->
     <string name="view_note">Ver nota…</string>
@@ -39,12 +39,12 @@
     <string name="view_file">Ver ficheiro</string>
     <string name="save_to_device">Guardar no dispositivo</string>
     <string name="edit_label">Editar etiqueta</string>
-    <string name="label_exists">Essa etiqueta já existe</string>
+    <string name="label_exists">Etiqueta já existente</string>
     <string name="delete_label">Apagar etiqueta?</string>
-    <string name="create_new">Nenhuma etiqueta ainda. Criar uma?</string>
+    <string name="create_new">Nenhuma etiqueta existe ainda. Criar uma?</string>
     <string name="delete_all_notes">Apagar todas as notas?</string>
     <string name="delete_note_forever">Apagar nota para sempre?</string>
-    <string name="your_notes_associated">As suas notas associadas a essa etiqueta não serão apagadas</string>
+    <string name="your_notes_associated">As suas notas associadas a esta etiqueta não serão apagadas</string>
 
     <!-- Lists and Notes -->
     <string name="note">Nota</string>
@@ -56,28 +56,28 @@
     <string name="more_items">Mais %1$d itens</string>
     <string name="drag_handle">Arrastar e largar</string>
     <string name="bold">Negrito</string>
-    <string name="link">Link</string>
+    <string name="link">Ligação</string>
     <string name="italic">Itálico</string>
     <string name="strikethrough">Rasurado</string>
     <string name="clear_formatting">Limpar formatação</string>
-    <string name="monospace">Monoespaçamento</string>
+    <string name="monospace">Monoespaçado</string>
 
     <!-- Miscellaneous -->
-    <string name="saved_to_device">Guardado no dispositivo</string>
-    <string name="saved_to_notally">Guardar no Notally</string>
+    <string name="saved_to_device">Guardada no dispositivo</string>
+    <string name="saved_to_notally">Guardada no Notally</string>
     <string name="empty_note">Nota vazia</string>
     <string name="empty_list">Lista vazia</string>
-    <string name="discarded_empty_note">Nota vazia eliminada</string>
-    <string name="discarded_empty_list">Lista vazia eliminada</string>
-    <string name="cant_open_link">Não foi possível abrir o link</string>
+    <string name="discarded_empty_note">Nota vazia descartada</string>
+    <string name="discarded_empty_list">Lista vazia descartada</string>
+    <string name="cant_open_link">Não foi possível abrir a ligação</string>
     <string name="something_went_wrong">Algo correu mal. Por favor, tente novamente.</string>
 
     <!-- Settings Page -->
     <string name="appearance">Aparência</string>
 
-    <string name="view">Exibir</string>
+    <string name="view">Exibição</string>
     <string name="list">Lista</string>
-    <string name="grid">Grade</string>
+    <string name="grid">Grelha</string>
 
     <string name="theme">Tema</string>
     <string name="dark">Escuro</string>
@@ -90,14 +90,14 @@
     <string name="absolute">Absoluto</string>
 
     <string name="content_density">Densidade do conteúdo</string>
-    <string name="max_items_to_display">Máximo de itens para serem exibidos nas listas</string>
-    <string name="max_lines_to_display">Máximo de linhas para serem exibidos nas notas</string>
+    <string name="max_items_to_display">Máximo de itens a serem exibidos nas listas</string>
+    <string name="max_lines_to_display">Máximo de linhas a serem exibidos nas notas</string>
 
-    <string name="backup">Backup</string>
-    <string name="export_backup">Exportar backup</string>
-    <string name="import_backup">Importar backup</string>
+    <string name="backup">Cópia de segurança</string>
+    <string name="export_backup">Exportar cópia de segurança</string>
+    <string name="import_backup">Importar cópia de segurança</string>
 
-    <string name="about">Sobre</string>
+    <string name="about">Acerca de</string>
     <string name="libraries">Bibliotecas</string>
     <string name="rate">Avaliar esta aplicação</string>
 </resources>
