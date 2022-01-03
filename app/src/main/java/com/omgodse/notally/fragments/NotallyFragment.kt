@@ -123,7 +123,7 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
     }
 
     private fun setupRecyclerView() {
-        binding?.RecyclerView?.layoutManager = if (settingsHelper.getView() == getString(R.string.gridKey)) {
+        binding?.RecyclerView?.layoutManager = if (settingsHelper.getView() == SettingsHelper.View.grid) {
             StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
         } else LinearLayoutManager(requireContext())
     }

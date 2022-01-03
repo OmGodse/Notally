@@ -4,38 +4,4 @@
         <item>@string/edit</item>
         <item>@string/open_link</item>
     </string-array>
-
-    <string-array name="themeEntries">
-        <item>@string/dark</item>
-        <item>@string/light</item>
-        <item>@string/follow_system</item>
-    </string-array>
-
-    <string-array name="themeValues">
-        <item>@string/darkKey</item>
-        <item>@string/lightKey</item>
-        <item>@string/followSystemKey</item>
-    </string-array>
-
-    <string-array name="viewEntries">
-        <item>@string/list</item>
-        <item>@string/grid</item>
-    </string-array>
-
-    <string-array name="viewValues">
-        <item>@string/listKey</item>
-        <item>@string/gridKey</item>
-    </string-array>
-
-    <string-array name="dateFormatEntries">
-        <item>@string/none</item>
-        <item>@string/relative</item>
-        <item>@string/absolute</item>
-    </string-array>
-
-    <string-array name="dateFormatValues">
-        <item>@string/noneKey</item>
-        <item>@string/relativeKey</item>
-        <item>@string/absoluteKey</item>
-    </string-array>
 </resources>

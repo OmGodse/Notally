@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
+import com.omgodse.notally.helpers.SettingsHelper.Theme
 
 class NotallyApplication : Application(), SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -24,14 +25,14 @@ class NotallyApplication : Application(), SharedPreferences.OnSharedPreferenceCh
 
 
     private fun setTheme(preferences: SharedPreferences) {
-        val themeKey = getThemeKey()
-        val default = getString(R.string.followSystemKey)
-        when (preferences.getString(themeKey, default)) {
-            getString(R.string.darkKey) -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            getString(R.string.lightKey) -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            getString(R.string.followSystemKey) -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        val key = getThemeKey()
+        val default = Theme.defaultValue
+        when (preferences.getString(key, default)) {
+            Theme.dark -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            Theme.light -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            Theme.followSystem -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         }
     }
 
-    private fun getThemeKey() = getString(R.string.themeKey)
+    private fun getThemeKey() = Theme.key
 }

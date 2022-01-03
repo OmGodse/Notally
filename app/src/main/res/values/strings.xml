@@ -109,29 +109,4 @@
     <string name="rate">Rate this app</string>
 
     <string name="github" translatable="false">GitHub</string>
-
-    <string name="viewKey" translatable="false">view</string>
-    <string name="listKey" translatable="false">list</string>
-    <string name="gridKey" translatable="false">grid</string>
-
-    <string name="themeKey" translatable="false">theme</string>
-    <string name="darkKey" translatable="false">dark</string>
-    <string name="lightKey" translatable="false">light</string>
-    <string name="followSystemKey" translatable="false">followSystem</string>
-
-    <string name="dateFormatKey" translatable="false">dateFormat</string>
-    <string name="noneKey" translatable="false">none</string>
-    <string name="relativeKey" translatable="false">relative</string>
-    <string name="absoluteKey" translatable="false">absolute</string>
-
-    <string name="maxItemsToDisplayInListKey" translatable="false">maxItemsToDisplayInList</string>
-    <string name="maxLinesToDisplayInNoteKey" translatable="false">maxLinesToDisplayInNote</string>
-
-    <string name="four" translatable="false">4</string>
-    <string name="eight" translatable="false">8</string>
-
-    <string name="exportBackupKey" translatable="false">exportBackup</string>
-    <string name="importBackupKey" translatable="false">importBackup</string>
-
-    <string name="librariesKey" translatable="false">libraries</string>
 </resources>

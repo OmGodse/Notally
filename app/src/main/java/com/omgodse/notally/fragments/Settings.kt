@@ -1,19 +1,15 @@
 package com.omgodse.notally.fragments
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.text.InputFilter
-import android.text.method.DigitsKeyListener
-import android.view.inputmethod.EditorInfo
-import android.widget.EditText
 import androidx.fragment.app.activityViewModels
-import androidx.preference.EditTextPreference
-import androidx.preference.Preference
-import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.R
+import com.omgodse.notally.helpers.SettingsHelper
 import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.viewmodels.BaseNoteModel
 
@@ -22,58 +18,73 @@ class Settings : PreferenceFragmentCompat() {
     private val model: BaseNoteModel by activityViewModels()
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        setPreferencesFromResource(R.xml.settings, rootKey)
+        val context = preferenceManager.context
+        val screen = preferenceManager.createPreferenceScreen(context)
 
-        findPreference<Preference>(R.string.exportBackupKey)?.setOnPreferenceClickListener {
-            val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
-            intent.type = "text/xml"
-            intent.addCategory(Intent.CATEGORY_OPENABLE)
-            intent.putExtra(Intent.EXTRA_TITLE, "Notally Backup")
-            startActivityForResult(intent, Constants.RequestCodeExportFile)
+        val appearance = getPreferenceCategory(context, R.string.appearance)
+        val contentDensity = getPreferenceCategory(context, R.string.content_density)
+        val backup = getPreferenceCategory(context, R.string.backup)
+        val about = getPreferenceCategory(context, R.string.about)
+
+        screen.addPreference(appearance)
+        screen.addPreference(contentDensity)
+        screen.addPreference(backup)
+        screen.addPreference(about)
+
+        appearance.addPreference(getListPreference(context, SettingsHelper.View))
+        appearance.addPreference(getListPreference(context, SettingsHelper.Theme))
+        appearance.addPreference(getListPreference(context, SettingsHelper.DateFormat))
+
+        contentDensity.addPreference(getSeekbarPreference(context, SettingsHelper.MaxItems))
+        contentDensity.addPreference(getSeekbarPreference(context, SettingsHelper.MaxLines))
+
+        val importBackup = getPreference(context, R.string.import_backup)
+        val exportBackup = getPreference(context, R.string.export_backup)
+
+        backup.addPreference(importBackup)
+        backup.addPreference(exportBackup)
+
+        val libraries = getPreference(context, R.string.libraries)
+        val rate = getPreference(context, R.string.rate)
+        val github = getPreference(context, R.string.github)
+
+        about.addPreference(github)
+        about.addPreference(libraries)
+        about.addPreference(rate)
+
+        screen.forEach { preference ->
+            preference.isIconSpaceReserved = false
+            if (preference is PreferenceGroup) {
+                preference.forEach { child -> child.isIconSpaceReserved = false }
+            }
+        }
+
+        preferenceScreen = screen
+
+        exportBackup.setOnPreferenceClickListener {
+            exportBackup()
             return@setOnPreferenceClickListener true
         }
 
-        findPreference<Preference>(R.string.importBackupKey)?.setOnPreferenceClickListener {
-            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-            intent.type = "text/xml"
-            intent.addCategory(Intent.CATEGORY_OPENABLE)
-            startActivityForResult(intent, RequestCodeImportFile)
+        importBackup.setOnPreferenceClickListener {
+            importBackup()
             return@setOnPreferenceClickListener true
         }
 
-        val libraries = arrayOf("Room", "Pretty Time", "Material Components for Android")
-        findPreference<Preference>(R.string.librariesKey)?.setOnPreferenceClickListener {
-            MaterialAlertDialogBuilder(requireContext())
-                .setTitle(R.string.libraries)
-                .setItems(libraries) { dialog, which ->
-                    when (which) {
-                        0 -> openLink("https://developer.android.com/jetpack/androidx/releases/room")
-                        1 -> openLink("https://github.com/ocpsoft/prettytime")
-                        2 -> openLink("https://github.com/material-components/material-components-android")
-                    }
-                }
-                .setNegativeButton(R.string.cancel, null)
-                .show()
+        github.setOnPreferenceClickListener {
+            openLink("https://github.com/OmGodse/Notally")
             return@setOnPreferenceClickListener true
         }
 
-        val bind = { editText: EditText ->
-            val maxLength = InputFilter.LengthFilter(1)
-            editText.filters = arrayOf(maxLength)
-            editText.inputType = EditorInfo.TYPE_CLASS_NUMBER
-            editText.keyListener = DigitsKeyListener.getInstance("123456789")
+        libraries.setOnPreferenceClickListener {
+            displayLibraries()
+            return@setOnPreferenceClickListener true
         }
 
-        val maxItems = findPreference<EditTextPreference>(R.string.maxItemsToDisplayInListKey)
-        val maxLines = findPreference<EditTextPreference>(R.string.maxLinesToDisplayInNoteKey)
-
-        maxItems?.setOnBindEditTextListener(bind)
-        maxLines?.setOnBindEditTextListener(bind)
-
-        val onChange = Preference.OnPreferenceChangeListener { preference, newValue -> newValue.toString().isNotEmpty() }
-
-        maxItems?.onPreferenceChangeListener = onChange
-        maxLines?.onPreferenceChangeListener = onChange
+        rate.setOnPreferenceClickListener {
+            openLink("https://play.google.com/store/apps/details?id=com.omgodse.notally")
+            return@setOnPreferenceClickListener true
+        }
     }
 
 
@@ -89,15 +100,86 @@ class Settings : PreferenceFragmentCompat() {
     }
 
 
+    private fun exportBackup() {
+        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
+        intent.type = "text/xml"
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        intent.putExtra(Intent.EXTRA_TITLE, "Notally Backup")
+        startActivityForResult(intent, Constants.RequestCodeExportFile)
+    }
+
+    private fun importBackup() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+        intent.type = "text/xml"
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        startActivityForResult(intent, RequestCodeImportFile)
+    }
+
+    private fun displayLibraries() {
+        val libraries = arrayOf("Room", "Pretty Time", "Material Components for Android")
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.libraries)
+            .setItems(libraries) { dialog, which ->
+                when (which) {
+                    0 -> openLink("https://developer.android.com/jetpack/androidx/releases/room")
+                    1 -> openLink("https://github.com/ocpsoft/prettytime")
+                    2 -> openLink("https://github.com/material-components/material-components-android")
+                }
+            }
+            .setNegativeButton(R.string.cancel, null)
+            .show()
+    }
+
+
     private fun openLink(link: String) {
         val uri = Uri.parse(link)
         val intent = Intent(Intent.ACTION_VIEW, uri)
         startActivity(intent)
     }
 
-    private fun <T> findPreference(id: Int): T? = findPreference(getString(id))
-
     companion object {
+
         private const val RequestCodeImportFile = 20
+
+        private fun getPreference(context: Context, title: Int): Preference {
+            val preference = Preference(context)
+            preference.setTitle(title)
+            return preference
+        }
+
+        private fun getPreferenceCategory(context: Context, title: Int): PreferenceCategory {
+            val category = PreferenceCategory(context)
+            category.setTitle(title)
+            return category
+        }
+
+
+        private fun getListPreference(context: Context, info: SettingsHelper.ListInfo): ListPreference {
+            val preference = ListPreference(context)
+            preference.setTitle(info.title)
+            preference.setDialogTitle(info.title)
+
+            preference.key = info.key
+            preference.entries = info.getEntries(context)
+            preference.entryValues = info.getEntryValues()
+            preference.setDefaultValue(info.defaultValue)
+            preference.summaryProvider = ListPreference.SimpleSummaryProvider.getInstance()
+
+            return preference
+        }
+
+        private fun getSeekbarPreference(context: Context, info: SettingsHelper.SeekbarInfo): SeekBarPreference {
+            val preference = SeekBarPreference(context)
+            preference.setTitle(info.title)
+
+            preference.key = info.key
+            preference.setDefaultValue(info.defaultValue)
+
+            preference.min = info.min
+            preference.max = info.max
+            preference.showSeekBarValue = true
+
+            return preference
+        }
     }
 }
