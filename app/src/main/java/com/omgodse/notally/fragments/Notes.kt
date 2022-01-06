@@ -5,7 +5,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import com.omgodse.notally.R
 import com.omgodse.notally.activities.MainActivity
 import com.omgodse.notally.activities.MakeList
@@ -25,7 +25,7 @@ class Notes : NotallyFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.Search) {
-            findNavController().navigate(R.id.NotesToSearch)
+            NavHostFragment.findNavController(this).navigate(R.id.NotesToSearch)
         }
         return super.onOptionsItemSelected(item)
     }
