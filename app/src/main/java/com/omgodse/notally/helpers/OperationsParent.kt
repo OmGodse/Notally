@@ -1,10 +1,8 @@
 package com.omgodse.notally.helpers
 
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.view.LayoutInflater
-import androidx.core.util.forEach
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.R
 import com.omgodse.notally.activities.TakeNote
@@ -34,8 +32,11 @@ interface OperationsParent {
     fun shareNote(title: String?, items: List<ListItem>?) = shareNote(title, items.getBody())
 
 
-    fun labelNote(labels: List<String>, previousLabels: HashSet<String>, onUpdated: (labels: HashSet<String>) -> Unit) {
-        val checkedLabels = labels.map { label -> previousLabels.contains(label) }.toBooleanArray()
+    fun labelNote(labels: List<String>, currentLabels: HashSet<String>, onUpdated: (labels: HashSet<String>) -> Unit) {
+        val checkedPositions = BooleanArray(labels.size) { index ->
+            val label = labels[index]
+            currentLabels.contains(label)
+        }
 
         val inflater = LayoutInflater.from(accessContext())
         val addLabel = AddLabelBinding.inflate(inflater).root
@@ -45,61 +46,55 @@ interface OperationsParent {
             .setNegativeButton(R.string.cancel, null)
 
         if (labels.isNotEmpty()) {
-            builder.setMultiChoiceItems(labels.toTypedArray(), checkedLabels, null)
-            builder.setPositiveButton(R.string.save, null)
+            builder.setMultiChoiceItems(labels.toTypedArray(), checkedPositions) { dialog, which, isChecked ->
+                checkedPositions[which] = isChecked
+            }
+            builder.setPositiveButton(R.string.save) { dialog, which ->
+                val selectedLabels = HashSet<String>()
+                checkedPositions.forEachIndexed { index, checked ->
+                    if (checked) {
+                        val label = labels[index]
+                        selectedLabels.add(label)
+                    }
+                }
+                onUpdated(selectedLabels)
+            }
         } else builder.setView(addLabel)
 
         val dialog = builder.create()
 
         addLabel.setOnClickListener {
             dialog.dismiss()
-            displayAddLabelDialog(previousLabels, onUpdated)
-        }
-
-        dialog.setOnShowListener {
-            dialog.getButton(DialogInterface.BUTTON_POSITIVE)?.setOnClickListener {
-                val selectedLabels = HashSet<String>()
-                dialog.listView.checkedItemPositions.forEach { key, value ->
-                    if (value) {
-                        val label = labels[key]
-                        selectedLabels.add(label)
-                    }
-                }
-                dialog.dismiss()
-                onUpdated(selectedLabels)
-            }
+            displayAddLabelDialog(currentLabels, onUpdated)
         }
 
         dialog.show()
     }
 
-    private fun displayAddLabelDialog(previousLabels: HashSet<String>, onUpdated: (labels: HashSet<String>) -> Unit) {
+    private fun displayAddLabelDialog(currentLabels: HashSet<String>, onUpdated: (labels: HashSet<String>) -> Unit) {
         val inflater = LayoutInflater.from(accessContext())
         val binding = DialogInputBinding.inflate(inflater)
 
-        val dialog = MaterialAlertDialogBuilder(accessContext())
+        MaterialAlertDialogBuilder(accessContext())
             .setTitle(R.string.add_label)
             .setView(binding.root)
             .setNegativeButton(R.string.cancel, null)
-            .setPositiveButton(R.string.save, null)
-            .create()
-
-        dialog.setOnShowListener {
-            binding.edit.requestFocus()
-            dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener {
-                val value = binding.edit.text.toString().trim()
-                if (value.isNotEmpty()) {
+            .setPositiveButton(R.string.save) { dialog, which ->
+                val value = binding.EditText.text.toString().trim()
+                if (value.isEmpty()) {
+                    dialog.dismiss()
+                } else {
                     val label = Label(value)
                     insertLabel(label) { success ->
                         if (success) {
                             dialog.dismiss()
-                            labelNote(listOf(value), previousLabels, onUpdated)
+                            labelNote(listOf(value), currentLabels, onUpdated)
                         } else binding.root.error = accessContext().getString(R.string.label_exists)
                     }
-                } else dialog.dismiss()
+                }
             }
-        }
+            .show()
 
-        dialog.show()
+        binding.EditText.requestFocus()
     }
 }

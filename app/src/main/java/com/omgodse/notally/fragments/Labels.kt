@@ -1,9 +1,7 @@
 package com.omgodse.notally.fragments
 
 import android.os.Bundle
-import android.text.InputType
 import android.view.*
-import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.view.setPadding
@@ -97,18 +95,12 @@ class Labels : Fragment(), ItemListener {
     private fun displayAddLabelDialog() {
         val dialogBinding = DialogInputBinding.inflate(layoutInflater)
 
-        val dialog = MaterialAlertDialogBuilder(requireContext())
+        MaterialAlertDialogBuilder(requireContext())
             .setView(dialogBinding.root)
             .setTitle(R.string.add_label)
-            .setPositiveButton(R.string.save, null)
             .setNegativeButton(R.string.cancel, null)
-            .create()
-
-        dialog.setOnShowListener {
-            dialogBinding.edit.requestFocus()
-            val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
-            positiveButton.setOnClickListener {
-                val value = dialogBinding.edit.text.toString().trim()
+            .setPositiveButton(R.string.save) { dialog, which ->
+                val value = dialogBinding.EditText.text.toString().trim()
                 if (value.isNotEmpty()) {
                     val label = Label(value)
                     model.insertLabel(label) { success ->
@@ -118,9 +110,9 @@ class Labels : Fragment(), ItemListener {
                     }
                 } else dialog.dismiss()
             }
-        }
+            .show()
 
-        dialog.show()
+        dialogBinding.EditText.requestFocus()
     }
 
     private fun confirmDeletion(value: String) {
@@ -137,34 +129,24 @@ class Labels : Fragment(), ItemListener {
     private fun displayEditLabelDialog(oldValue: String) {
         val dialogBinding = DialogInputBinding.inflate(layoutInflater)
 
-        dialogBinding.edit.inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS
-        dialogBinding.edit.filters = arrayOf()
+        dialogBinding.EditText.setText(oldValue)
 
-        dialogBinding.edit.setText(oldValue)
-
-        val dialog = MaterialAlertDialogBuilder(requireContext())
+        MaterialAlertDialogBuilder(requireContext())
             .setView(dialogBinding.root)
             .setTitle(R.string.edit_label)
-            .setPositiveButton(R.string.save, null)
             .setNegativeButton(R.string.cancel, null)
-            .create()
-
-        dialog.setOnShowListener {
-            dialogBinding.edit.requestFocus()
-            val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
-            positiveButton.setOnClickListener {
-                val newValue = dialogBinding.edit.text.toString().trim()
-
-                if (newValue.isNotEmpty()) {
-                    model.updateLabel(oldValue, newValue) { success ->
+            .setPositiveButton(R.string.save) { dialog, which ->
+                val value = dialogBinding.EditText.text.toString().trim()
+                if (value.isNotEmpty()) {
+                    model.updateLabel(oldValue, value) { success ->
                         if (success) {
                             dialog.dismiss()
                         } else dialogBinding.root.error = getString(R.string.label_exists)
                     }
                 } else dialog.dismiss()
             }
-        }
+            .show()
 
-        dialog.show()
+        dialogBinding.EditText.requestFocus()
     }
 }
