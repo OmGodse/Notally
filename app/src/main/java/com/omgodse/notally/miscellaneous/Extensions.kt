@@ -15,8 +15,8 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import com.google.android.material.chip.ChipGroup
-import com.google.android.material.textfield.TextInputEditText
 import com.omgodse.notally.activities.TakeNote
 import com.omgodse.notally.databinding.LabelBinding
 import com.omgodse.notally.room.ListItem
@@ -98,7 +98,7 @@ fun Context.getLocale(): Locale {
     } else resources.configuration.locale
 }
 
-fun TextInputEditText.setOnNextAction(onNext: () -> Unit) {
+fun EditText.setOnNextAction(onNext: () -> Unit) {
     setRawInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES)
 
     setOnKeyListener { v, keyCode, event ->

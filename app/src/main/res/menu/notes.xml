@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/Pin"
+        android:icon="@drawable/pin"
+        android:title="@string/pin"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/Share"
         android:icon="@drawable/share"
         android:title="@string/share"
@@ -12,12 +18,6 @@
         android:id="@+id/Labels"
         android:icon="@drawable/label"
         android:title="@string/labels"
-        app:showAsAction="ifRoom" />
-
-    <item
-        android:id="@+id/Pin"
-        android:icon="@drawable/pin"
-        android:title="@string/pin"
         app:showAsAction="ifRoom" />
 
     <item

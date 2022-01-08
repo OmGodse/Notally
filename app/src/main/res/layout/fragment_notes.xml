@@ -22,4 +22,5 @@
         android:paddingEnd="4dp"
         android:scrollbarStyle="outsideOverlay"
         android:scrollbars="vertical" />
+
 </FrameLayout>

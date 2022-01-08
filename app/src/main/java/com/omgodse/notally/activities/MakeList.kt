@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.omgodse.notally.databinding.ActivityMakeListBinding
 import com.omgodse.notally.miscellaneous.bindLabels
+import com.omgodse.notally.miscellaneous.getBody
 import com.omgodse.notally.miscellaneous.getLocale
 import com.omgodse.notally.miscellaneous.setOnNextAction
 import com.omgodse.notally.recyclerview.ListItemListener
@@ -52,11 +53,7 @@ class MakeList : NotallyActivity() {
 
     override fun getLabelGroup() = binding.LabelGroup
 
-    override fun getPinnedIndicator() = binding.Pinned
-
-    override fun getPinnedParent() = binding.LinearLayout
-
-    override fun shareNote() = shareNote(model.title, model.items)
+    override fun shareNote() = shareNote(model.title, model.items.getBody())
 
 
     private fun addListItem() {

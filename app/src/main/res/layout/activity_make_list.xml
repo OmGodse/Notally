@@ -1,49 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/Toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/Toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </com.google.android.material.appbar.AppBarLayout>
+        android:layout_height="wrap_content" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+        android:layout_below="@id/Toolbar"
+        android:fillViewport="true">
 
         <LinearLayout
-            android:id="@+id/LinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipToPadding="false"
             android:focusableInTouchMode="true"
             android:orientation="vertical"
-            android:paddingTop="8dp"
             android:paddingBottom="16dp">
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/Pinned"
-                style="@style/Pinned"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <com.google.android.material.textfield.TextInputEditText
+            <EditText
                 android:id="@+id/EnterTitle"
                 style="@style/EditText.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <com.google.android.material.textview.MaterialTextView
+            <TextView
                 android:id="@+id/DateCreated"
                 style="@style/DateCreated"
                 android:layout_width="match_parent"
@@ -62,15 +48,12 @@
                 android:overScrollMode="never"
                 android:paddingTop="4dp" />
 
-            <com.google.android.material.textview.MaterialTextView
+            <TextView
                 android:id="@+id/AddItem"
+                style="@style/TextView.Clickable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:drawableStart="@drawable/add"
                 android:drawablePadding="12dp"
-                android:focusable="true"
                 android:gravity="center_vertical"
                 android:paddingStart="20dp"
                 android:paddingTop="12dp"
@@ -79,6 +62,7 @@
                 android:text="@string/add_item"
                 android:textAppearance="?attr/textAppearanceButton"
                 android:textColor="?android:textColorHint"
+                app:drawableStartCompat="@drawable/add"
                 app:drawableTint="?android:textColorHint" />
 
             <com.google.android.material.chip.ChipGroup
@@ -93,4 +77,4 @@
 
     </androidx.core.widget.NestedScrollView>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</RelativeLayout>

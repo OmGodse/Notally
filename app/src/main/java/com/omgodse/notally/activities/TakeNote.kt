@@ -69,10 +69,6 @@ class TakeNote : NotallyActivity() {
 
     override fun getLabelGroup() = binding.LabelGroup
 
-    override fun getPinnedIndicator() = binding.Pinned
-
-    override fun getPinnedParent() = binding.LinearLayout
-
     override fun shareNote() = shareNote(model.title, model.body)
 
 

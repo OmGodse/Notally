@@ -6,58 +6,53 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.appbar.AppBarLayout
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/Toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:contentInsetEnd="16dp">
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/Toolbar"
+            <EditText
+                android:id="@+id/EnterSearchKeyword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:contentInsetEnd="16dp">
+                android:background="@null"
+                android:hint="@string/search"
+                android:imeOptions="actionDone"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:singleLine="true"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:visibility="gone" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/EnterSearchKeyword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:hint="@string/search"
-                    android:imeOptions="actionDone"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:singleLine="true"
-                    android:textAppearance="?attr/textAppearanceBody1"
-                    android:visibility="gone" />
+        </com.google.android.material.appbar.MaterialToolbar>
 
-            </com.google.android.material.appbar.MaterialToolbar>
-
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <fragment
-            android:id="@+id/NavigationHost"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/NavHostFragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@id/Toolbar"
             app:defaultNavHost="true"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             app:navGraph="@navigation/navigation" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/TakeNoteFAB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             app:rippleColor="@color/FABRipple"
             app:srcCompat="@drawable/add"
             app:tint="?attr/colorSurface" />
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/NavigationView"

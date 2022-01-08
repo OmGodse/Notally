@@ -5,13 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
-import androidx.transition.AutoTransition
-import androidx.transition.TransitionManager
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.chip.ChipGroup
@@ -74,7 +69,10 @@ abstract class NotallyActivity : AppCompatActivity(), OperationsParent {
         }
 
         menuInflater.inflate(menuId, menu)
-        bindPinned(menu?.findItem(R.id.Pin))
+        val pin = menu?.findItem(R.id.Pin)
+        if (pin != null) {
+            bindPinned(pin)
+        }
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -82,13 +80,13 @@ abstract class NotallyActivity : AppCompatActivity(), OperationsParent {
         when (item.itemId) {
             android.R.id.home -> onBackPressed()
             R.id.Share -> shareNote()
-            R.id.Labels -> labelNote()
-            R.id.Pin -> pinNote(item)
-            R.id.Delete -> deleteNote()
-            R.id.Archive -> archiveNote()
-            R.id.Restore -> restoreNote()
-            R.id.Unarchive -> restoreNote()
-            R.id.DeleteForever -> deleteNoteForever()
+            R.id.Labels -> label()
+            R.id.Pin -> pin(item)
+            R.id.Delete -> delete()
+            R.id.Archive -> archive()
+            R.id.Restore -> restore()
+            R.id.Unarchive -> restore()
+            R.id.DeleteForever -> deleteForever()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -107,15 +105,11 @@ abstract class NotallyActivity : AppCompatActivity(), OperationsParent {
 
     abstract fun getLabelGroup(): ChipGroup
 
-    abstract fun getPinnedIndicator(): TextView
-
-    abstract fun getPinnedParent(): LinearLayout
-
 
     open fun receiveSharedNote() {}
 
 
-    private fun labelNote() {
+    private fun label() {
         lifecycleScope.launch {
             val labels = withContext(Dispatchers.IO) { model.getAllLabelsAsList() }
             labelNote(labels, model.labels) { updatedLabels ->
@@ -125,22 +119,22 @@ abstract class NotallyActivity : AppCompatActivity(), OperationsParent {
         }
     }
 
-    private fun deleteNote() {
+    private fun delete() {
         model.moveBaseNoteToDeleted()
         onBackPressed()
     }
 
-    private fun restoreNote() {
+    private fun restore() {
         model.restoreBaseNote()
         onBackPressed()
     }
 
-    private fun archiveNote() {
+    private fun archive() {
         model.moveBaseNoteToArchive()
         onBackPressed()
     }
 
-    private fun deleteNoteForever() {
+    private fun deleteForever() {
         MaterialAlertDialogBuilder(this)
             .setMessage(R.string.delete_note_forever)
             .setPositiveButton(R.string.delete) { dialog, which ->
@@ -152,20 +146,24 @@ abstract class NotallyActivity : AppCompatActivity(), OperationsParent {
             .show()
     }
 
-    private fun pinNote(item: MenuItem) {
+    private fun pin(item: MenuItem) {
         model.pinned = !model.pinned
-        bindPinned(item, true)
+        bindPinned(item)
     }
 
 
-    private fun bindPinned(item: MenuItem?, fromUser: Boolean = false) {
-        if (fromUser) {
-            TransitionManager.beginDelayedTransition(getPinnedParent(), AutoTransition())
+    private fun bindPinned(item: MenuItem) {
+        val icon: Int
+        val title: Int
+        if (model.pinned) {
+            icon = R.drawable.unpin
+            title = R.string.unpin
+        } else {
+            icon = R.drawable.pin
+            title = R.string.pin
         }
-        getPinnedIndicator().isVisible = model.pinned
-        item?.title = if (model.pinned) {
-            getString(R.string.unpin)
-        } else getString(R.string.pin)
+        item.setTitle(title)
+        item.setIcon(icon)
     }
 
     internal fun setupToolbar(toolbar: MaterialToolbar) {

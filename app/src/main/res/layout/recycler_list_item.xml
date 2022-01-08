@@ -7,7 +7,7 @@
     android:paddingStart="16dp"
     android:paddingEnd="0dp">
 
-    <com.google.android.material.checkbox.MaterialCheckBox
+    <CheckBox
         android:id="@+id/CheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,7 +16,7 @@
         android:minWidth="0dp"
         android:minHeight="0dp" />
 
-    <com.google.android.material.textfield.TextInputEditText
+    <EditText
         android:id="@+id/ListItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,4 +41,5 @@
         android:padding="8dp"
         app:srcCompat="@drawable/drag_handle"
         app:tint="?attr/colorControlNormal" />
+
 </RelativeLayout>

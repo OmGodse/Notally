@@ -11,8 +11,8 @@
         android:id="@+id/CardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="4dp"
         app:cardElevation="0dp"
+        app:shapeAppearance="?shapeAppearanceMediumComponent"
         app:strokeColor="@color/on_surface_translucent"
         app:strokeWidth="1dp">
 
@@ -24,30 +24,30 @@
             android:paddingTop="16dp"
             android:paddingEnd="16dp">
 
-            <com.google.android.material.textview.MaterialTextView
+            <TextView
                 android:id="@+id/Title"
                 style="@style/Preview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
-                android:textAppearance="?attr/textAppearanceBody1" />
+                android:textAppearance="?textAppearanceBody1" />
 
-            <com.google.android.material.textview.MaterialTextView
+            <TextView
                 android:id="@+id/Date"
                 style="@style/Preview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?attr/textAppearanceBody2"
-                android:textColor="?attr/colorControlNormal" />
+                android:textAppearance="?textAppearanceBody2"
+                android:textColor="?colorControlNormal" />
 
-            <com.google.android.material.textview.MaterialTextView
+            <TextView
                 android:id="@+id/Note"
                 style="@style/Preview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:lineSpacingMultiplier="1.1"
-                android:textAppearance="?attr/textAppearanceBody2"
-                android:textColor="?attr/colorControlNormal" />
+                android:textAppearance="?textAppearanceBody2"
+                android:textColor="?colorControlNormal" />
 
             <LinearLayout
                 android:id="@+id/LinearLayout"
