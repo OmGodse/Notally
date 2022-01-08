@@ -29,7 +29,7 @@ object PostPDFGenerator {
         val onLayoutResult = object : PrintDocumentAdapter.LayoutResultCallback() {
 
             override fun onLayoutFailed(error: CharSequence?) {
-                onResult.onFailure(error?.toString())
+                onResult.onFailure(error)
             }
 
             override fun onLayoutFinished(info: PrintDocumentInfo?, changed: Boolean) {
@@ -44,7 +44,7 @@ object PostPDFGenerator {
         val onWriteResult = object : PrintDocumentAdapter.WriteResultCallback() {
 
             override fun onWriteFailed(error: CharSequence?) {
-                onResult.onFailure(error?.toString())
+                onResult.onFailure(error)
             }
 
             override fun onWriteFinished(pages: Array<out PageRange>?) {
@@ -77,6 +77,6 @@ object PostPDFGenerator {
 
         fun onSuccess(file: File)
 
-        fun onFailure(message: String?)
+        fun onFailure(message: CharSequence?)
     }
 }

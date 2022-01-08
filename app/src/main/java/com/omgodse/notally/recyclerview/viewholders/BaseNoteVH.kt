@@ -46,20 +46,17 @@ class BaseNoteVH(
             Type.LIST -> bindList(baseNote)
         }
 
-        binding.LabelGroup.bindLabels(baseNote.labels)
+        binding.Title.text = baseNote.title
+        binding.Title.isVisible = baseNote.title.isNotEmpty()
 
         val date = Date(baseNote.timestamp)
+        binding.Date.isVisible = settingsHelper.showDateCreated()
         when (settingsHelper.getDateFormat()) {
-            binding.root.context.getString(R.string.relativeKey) -> {
-                binding.Date.visibility = View.VISIBLE
-                binding.Date.text = prettyTime.format(date)
-            }
-            binding.root.context.getString(R.string.absoluteKey) -> {
-                binding.Date.visibility = View.VISIBLE
-                binding.Date.text = formatter.format(date)
-            }
-            else -> binding.Date.visibility = View.GONE
+            SettingsHelper.DateFormat.relative -> binding.Date.text = prettyTime.format(date)
+            SettingsHelper.DateFormat.absolute -> binding.Date.text = formatter.format(date)
         }
+
+        binding.LabelGroup.bindLabels(baseNote.labels)
 
         if (isEmpty(baseNote)) {
             binding.Note.setText(getEmptyMessage(baseNote))
@@ -70,42 +67,37 @@ class BaseNoteVH(
     private fun bindNote(note: BaseNote) {
         binding.LinearLayout.isVisible = false
 
-        binding.Title.text = note.title
         binding.Note.text = note.body.applySpans(note.spans)
-
-        binding.Title.isVisible = note.title.isNotEmpty()
         binding.Note.isVisible = note.body.isNotEmpty()
     }
 
     private fun bindList(list: BaseNote) {
         binding.Note.isVisible = false
-        binding.LinearLayout.isVisible = true
 
-        binding.Title.text = list.title
-        binding.Title.isVisible = list.title.isNotEmpty()
+        if (list.items.isEmpty()) {
+            binding.LinearLayout.visibility = View.GONE
+        } else {
+            binding.LinearLayout.visibility = View.VISIBLE
+            binding.LinearLayout.removeAllViews()
 
-        val maxItems = settingsHelper.getMaxItems()
-        val filteredList = list.items.take(maxItems)
+            val max = settingsHelper.getMaxItems()
 
-        binding.LinearLayout.removeAllViews()
+            list.items.take(max).forEach { item ->
+                val view = ListItemPreviewBinding.inflate(inflater).root
+                view.text = item.body
+                handleChecked(view, item.checked)
+                binding.LinearLayout.addView(view)
+            }
 
-        for (item in filteredList) {
-            val view = ListItemPreviewBinding.inflate(inflater).root
-            view.text = item.body
-            handleChecked(view, item.checked)
-            binding.LinearLayout.addView(view)
+            if (list.items.size > max) {
+                val view = ListItemPreviewBinding.inflate(inflater).root
+                val itemsRemaining = list.items.size - max
+                view.text = if (itemsRemaining == 1) {
+                    binding.root.context.getString(R.string.one_more_item)
+                } else binding.root.context.getString(R.string.more_items, itemsRemaining)
+                binding.LinearLayout.addView(view)
+            }
         }
-
-        if (list.items.size > maxItems) {
-            val view = ListItemPreviewBinding.inflate(inflater).root
-            val itemsRemaining = list.items.size - maxItems
-            view.text = if (itemsRemaining == 1) {
-                binding.root.context.getString(R.string.one_more_item)
-            } else binding.root.context.getString(R.string.more_items, itemsRemaining)
-            binding.LinearLayout.addView(view)
-        }
-
-        binding.LinearLayout.isVisible = list.items.isNotEmpty()
     }
 
 

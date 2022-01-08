@@ -8,9 +8,7 @@ import com.omgodse.notally.R
 import com.omgodse.notally.activities.TakeNote
 import com.omgodse.notally.databinding.AddLabelBinding
 import com.omgodse.notally.databinding.DialogInputBinding
-import com.omgodse.notally.miscellaneous.getBody
 import com.omgodse.notally.room.Label
-import com.omgodse.notally.room.ListItem
 
 interface OperationsParent {
 
@@ -28,8 +26,6 @@ interface OperationsParent {
         val chooser = Intent.createChooser(intent, accessContext().getString(R.string.share_note))
         accessContext().startActivity(chooser)
     }
-
-    fun shareNote(title: String?, items: List<ListItem>?) = shareNote(title, items.getBody())
 
 
     fun labelNote(labels: List<String>, currentLabels: HashSet<String>, onUpdated: (labels: HashSet<String>) -> Unit) {

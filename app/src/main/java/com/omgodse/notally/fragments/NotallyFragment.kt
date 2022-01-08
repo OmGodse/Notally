@@ -28,6 +28,7 @@ import com.omgodse.notally.helpers.OperationsParent
 import com.omgodse.notally.helpers.SettingsHelper
 import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.miscellaneous.applySpans
+import com.omgodse.notally.miscellaneous.getBody
 import com.omgodse.notally.recyclerview.ItemListener
 import com.omgodse.notally.recyclerview.adapters.BaseNoteAdapter
 import com.omgodse.notally.room.*
@@ -167,7 +168,7 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
     private fun shareBaseNote(baseNote: BaseNote) {
         when (baseNote.type) {
             Type.NOTE -> shareNote(baseNote.title, baseNote.body.applySpans(baseNote.spans))
-            Type.LIST -> shareNote(baseNote.title, baseNote.items)
+            Type.LIST -> shareNote(baseNote.title, baseNote.items.getBody())
         }
     }
 
@@ -207,7 +208,7 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
                 showFileOptionsDialog(file, "application/pdf")
             }
 
-            override fun onFailure(message: String?) {
+            override fun onFailure(message: CharSequence?) {
                 Toast.makeText(requireContext(), R.string.something_went_wrong, Toast.LENGTH_SHORT).show()
             }
         })
