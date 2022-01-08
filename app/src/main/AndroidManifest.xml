@@ -20,12 +20,13 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
+
         </provider>
 
         <activity
             android:name=".activities.MainActivity"
-            android:theme="@style/MainActivity"
-            android:windowSoftInputMode="adjustPan">
+            android:exported="true"
+            android:theme="@style/MainActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,6 +36,7 @@
             <meta-data
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
+
         </activity>
 
         <activity
@@ -43,6 +45,7 @@
 
         <activity
             android:name=".activities.TakeNote"
+            android:exported="true"
             android:windowSoftInputMode="adjustResize">
 
             <intent-filter>
@@ -50,6 +53,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="text/plain" />
             </intent-filter>
+
         </activity>
 
     </application>
