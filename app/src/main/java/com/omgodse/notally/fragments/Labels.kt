@@ -16,6 +16,7 @@ import com.omgodse.notally.R
 import com.omgodse.notally.databinding.DialogInputBinding
 import com.omgodse.notally.databinding.FragmentNotesBinding
 import com.omgodse.notally.miscellaneous.Constants
+import com.omgodse.notally.miscellaneous.add
 import com.omgodse.notally.recyclerview.ItemListener
 import com.omgodse.notally.recyclerview.adapters.LabelAdapter
 import com.omgodse.notally.room.Label
@@ -56,15 +57,8 @@ class Labels : Fragment(), ItemListener {
     }
 
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.AddLabel) {
-            displayAddLabelDialog()
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.label, menu)
+        menu.add(R.string.add_label, R.drawable.add) { displayAddLabelDialog() }
     }
 
 

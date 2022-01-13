@@ -14,6 +14,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.R
 import com.omgodse.notally.helpers.OperationsParent
 import com.omgodse.notally.miscellaneous.Constants
+import com.omgodse.notally.miscellaneous.add
 import com.omgodse.notally.miscellaneous.bindLabels
 import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Folder
@@ -29,9 +30,7 @@ abstract class NotallyActivity : AppCompatActivity(), OperationsParent {
     internal abstract val binding: ViewBinding
 
     override fun onBackPressed() {
-        model.saveNote {
-            super.onBackPressed()
-        }
+        model.saveNote { super.onBackPressed() }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -61,32 +60,35 @@ abstract class NotallyActivity : AppCompatActivity(), OperationsParent {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val menuId = when (model.folder) {
-            Folder.NOTES -> R.menu.notes
-            Folder.DELETED -> R.menu.deleted
-            Folder.ARCHIVED -> R.menu.archived
-        }
 
-        menuInflater.inflate(menuId, menu)
-        val pin = menu?.findItem(R.id.Pin)
-        if (pin != null) {
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        if (menu != null) {
+            val pin = menu.add(R.string.pin, R.drawable.pin) { item -> pin(item) }
             bindPinned(pin)
+
+            menu.add(R.string.share, R.drawable.share) { shareNote() }
+            menu.add(R.string.labels, R.drawable.label) { label() }
+
+            when (model.folder) {
+                Folder.NOTES -> {
+                    menu.add(R.string.delete, R.drawable.delete) { delete() }
+                    menu.add(R.string.archive, R.drawable.archive) { archive() }
+                }
+                Folder.DELETED -> {
+                    menu.add(R.string.restore, R.drawable.restore) { restore() }
+                    menu.add(R.string.delete_forever, R.drawable.delete) { deleteForever() }
+                }
+                Folder.ARCHIVED -> {
+                    menu.add(R.string.unarchive, R.drawable.unarchive) { restore() }
+                }
+            }
         }
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> onBackPressed()
-            R.id.Share -> shareNote()
-            R.id.Labels -> label()
-            R.id.Pin -> pin(item)
-            R.id.Delete -> delete()
-            R.id.Archive -> archive()
-            R.id.Restore -> restore()
-            R.id.Unarchive -> restore()
-            R.id.DeleteForever -> deleteForever()
+        if (item.itemId == android.R.id.home) {
+            onBackPressed()
         }
         return super.onOptionsItemSelected(item)
     }

@@ -3,10 +3,10 @@ package com.omgodse.notally.fragments
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.R
+import com.omgodse.notally.miscellaneous.add
 
 class Deleted : NotallyFragment() {
 
@@ -15,16 +15,8 @@ class Deleted : NotallyFragment() {
         setHasOptionsMenu(true)
     }
 
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.DeleteAll) {
-            deleteAllNotes()
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.delete_all, menu)
+        menu.add(R.string.delete_all, R.drawable.delete_all) { deleteAllNotes() }
     }
 
 

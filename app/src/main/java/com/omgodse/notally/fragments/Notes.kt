@@ -3,13 +3,13 @@ package com.omgodse.notally.fragments
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import androidx.navigation.fragment.NavHostFragment
 import com.omgodse.notally.R
 import com.omgodse.notally.activities.MainActivity
 import com.omgodse.notally.activities.MakeList
 import com.omgodse.notally.activities.TakeNote
+import com.omgodse.notally.miscellaneous.add
 
 class Notes : NotallyFragment() {
 
@@ -22,16 +22,10 @@ class Notes : NotallyFragment() {
         }
     }
 
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.Search) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.add(R.string.search, R.drawable.search) {
             NavHostFragment.findNavController(this).navigate(R.id.NotesToSearch)
         }
-        return super.onOptionsItemSelected(item)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.search, menu)
     }
 
 

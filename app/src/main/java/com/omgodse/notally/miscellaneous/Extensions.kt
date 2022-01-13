@@ -11,9 +11,7 @@ import android.text.style.StrikethroughSpan
 import android.text.style.StyleSpan
 import android.text.style.TypefaceSpan
 import android.text.style.URLSpan
-import android.view.KeyEvent
-import android.view.LayoutInflater
-import android.view.View
+import android.view.*
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import com.google.android.material.chip.ChipGroup
@@ -114,4 +112,16 @@ fun EditText.setOnNextAction(onNext: () -> Unit) {
             return@setOnEditorActionListener true
         } else return@setOnEditorActionListener false
     }
+}
+
+
+fun Menu.add(title: Int, drawable: Int, onClick: (item: MenuItem) -> Unit): MenuItem {
+    val menuItem = add(title)
+    menuItem.setIcon(drawable)
+    menuItem.setOnMenuItemClickListener { item ->
+        onClick(item)
+        return@setOnMenuItemClickListener false
+    }
+    menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
+    return menuItem
 }
