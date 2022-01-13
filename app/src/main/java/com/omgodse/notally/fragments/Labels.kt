@@ -71,8 +71,8 @@ class Labels : Fragment(), ItemListener {
 
     override fun onLongClick(position: Int) {
         adapter?.currentList?.get(position)?.let { value ->
-            val edit = Operation(R.string.edit, R.drawable.edit) { displayEditLabelDialog(value) }
-            val delete = Operation(R.string.delete, R.drawable.delete) { confirmDeletion(value) }
+            val edit = Operation(R.string.edit) { displayEditLabelDialog(value) }
+            val delete = Operation(R.string.delete) { confirmDeletion(value) }
             showMenu(edit, delete)
         }
     }

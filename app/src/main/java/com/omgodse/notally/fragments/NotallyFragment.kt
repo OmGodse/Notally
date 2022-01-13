@@ -134,24 +134,22 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
         val operations = when (baseNote.folder) {
             Folder.NOTES -> {
                 val pin = if (baseNote.pinned) {
-                    Operation(R.string.unpin, R.drawable.pin) { model.unpinBaseNote(baseNote.id) }
-                } else Operation(R.string.pin, R.drawable.pin) { model.pinBaseNote(baseNote.id) }
-                val share = Operation(R.string.share, R.drawable.share) { shareBaseNote(baseNote) }
-                val labels = Operation(R.string.labels, R.drawable.label) { labelBaseNote(baseNote) }
-                val export = Operation(R.string.export, R.drawable.export) { exportBaseNote(baseNote) }
-
-                val delete = Operation(R.string.delete, R.drawable.delete) { model.moveBaseNoteToDeleted(baseNote.id) }
-                val archive = Operation(R.string.archive, R.drawable.archive) { model.moveBaseNoteToArchive(baseNote.id) }
-                val moreOptions = Operation(R.string.more_options, R.drawable.more_options) { showMenu(delete, archive) }
-                arrayOf(pin, share, labels, export, moreOptions)
+                    Operation(R.string.unpin) { model.unpinBaseNote(baseNote.id) }
+                } else Operation(R.string.pin) { model.pinBaseNote(baseNote.id) }
+                val share = Operation(R.string.share) { share(baseNote) }
+                val labels = Operation(R.string.labels) { label(baseNote) }
+                val export = Operation(R.string.export) { export(baseNote) }
+                val delete = Operation(R.string.delete) { model.moveBaseNoteToDeleted(baseNote.id) }
+                val archive = Operation(R.string.archive) { model.moveBaseNoteToArchive(baseNote.id) }
+                arrayOf(pin, share, labels, export, delete, archive)
             }
             Folder.DELETED -> {
-                val restore = Operation(R.string.restore, R.drawable.restore) { model.restoreBaseNote(baseNote.id) }
-                val deleteForever = Operation(R.string.delete_forever, R.drawable.delete) { deleteBaseNote(baseNote) }
+                val restore = Operation(R.string.restore) { model.restoreBaseNote(baseNote.id) }
+                val deleteForever = Operation(R.string.delete_forever) { delete(baseNote) }
                 arrayOf(restore, deleteForever)
             }
             Folder.ARCHIVED -> {
-                val unarchive = Operation(R.string.unarchive, R.drawable.unarchive) { model.restoreBaseNote(baseNote.id) }
+                val unarchive = Operation(R.string.unarchive) { model.restoreBaseNote(baseNote.id) }
                 arrayOf(unarchive)
             }
         }
@@ -165,14 +163,14 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
     }
 
 
-    private fun shareBaseNote(baseNote: BaseNote) {
+    private fun share(baseNote: BaseNote) {
         when (baseNote.type) {
             Type.NOTE -> shareNote(baseNote.title, baseNote.body.applySpans(baseNote.spans))
             Type.LIST -> shareNote(baseNote.title, baseNote.items.getBody())
         }
     }
 
-    private fun labelBaseNote(baseNote: BaseNote) {
+    private fun label(baseNote: BaseNote) {
         lifecycleScope.launch {
             val labels = model.getAllLabelsAsList()
             labelNote(labels, baseNote.labels) { updatedLabels ->
@@ -181,16 +179,16 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
         }
     }
 
-    private fun exportBaseNote(baseNote: BaseNote) {
-        val pdf = Operation(R.string.pdf, R.drawable.pdf) { exportBaseNoteToPDF(baseNote) }
-        val txt = Operation(R.string.txt, R.drawable.txt) { exportBaseNoteToTXT(baseNote) }
-        val xml = Operation(R.string.xml, R.drawable.xml) { exportBaseNoteToXML(baseNote) }
-        val json = Operation(R.string.json, R.drawable.json) { exportBaseNoteToJSON(baseNote) }
-        val html = Operation(R.string.html, R.drawable.html) { exportBaseNoteToHTML(baseNote) }
+    private fun export(baseNote: BaseNote) {
+        val pdf = Operation(R.string.pdf) { exportBaseNoteToPDF(baseNote) }
+        val txt = Operation(R.string.txt) { exportBaseNoteToTXT(baseNote) }
+        val xml = Operation(R.string.xml) { exportBaseNoteToXML(baseNote) }
+        val json = Operation(R.string.json) { exportBaseNoteToJSON(baseNote) }
+        val html = Operation(R.string.html) { exportBaseNoteToHTML(baseNote) }
         showMenu(pdf, txt, xml, json, html)
     }
 
-    private fun deleteBaseNote(baseNote: BaseNote) {
+    private fun delete(baseNote: BaseNote) {
         MaterialAlertDialogBuilder(requireContext())
             .setMessage(R.string.delete_note_forever)
             .setPositiveButton(R.string.delete) { dialog, which ->
@@ -245,9 +243,9 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
     private fun showFileOptionsDialog(file: File, mimeType: String) {
         val uri = FileProvider.getUriForFile(requireContext(), "${requireContext().packageName}.provider", file)
 
-        val share = Operation(R.string.share, R.drawable.share) { shareFile(uri, mimeType) }
-        val viewFile = Operation(R.string.view_file, R.drawable.view) { viewFile(uri, mimeType) }
-        val saveToDevice = Operation(R.string.save_to_device, R.drawable.save) { saveFileToDevice(file, mimeType) }
+        val share = Operation(R.string.share) { shareFile(uri, mimeType) }
+        val viewFile = Operation(R.string.view_file) { viewFile(uri, mimeType) }
+        val saveToDevice = Operation(R.string.save_to_device) { saveFileToDevice(file, mimeType) }
         showMenu(share, viewFile, saveToDevice)
     }
 
