@@ -14,7 +14,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.core.widget.addTextChangedListener
+import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.LinkMovementMethod
 import com.omgodse.notally.R
@@ -121,13 +121,12 @@ class TakeNote : NotallyActivity() {
     }
 
     private fun setupListeners() {
-        binding.EnterTitle.addTextChangedListener(onTextChanged = { text, start, count, after ->
+        binding.EnterTitle.doAfterTextChanged { text ->
             model.title = text.toString().trim()
-        })
-
-        binding.EnterBody.addTextChangedListener(afterTextChanged = { editable ->
-            model.body = editable
-        })
+        }
+        binding.EnterBody.doAfterTextChanged { text ->
+            model.body = text
+        }
     }
 
     private fun setStateFromModel() {

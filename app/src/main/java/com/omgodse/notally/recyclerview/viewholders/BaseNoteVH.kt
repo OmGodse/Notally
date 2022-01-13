@@ -21,7 +21,7 @@ import java.util.*
 class BaseNoteVH(
     private val binding: RecyclerBaseNoteBinding,
     private val settingsHelper: SettingsHelper,
-    private val itemListener: ItemListener,
+    listener: ItemListener,
     private val prettyTime: PrettyTime,
     private val formatter: SimpleDateFormat,
     private val inflater: LayoutInflater,
@@ -31,11 +31,11 @@ class BaseNoteVH(
         binding.Note.maxLines = settingsHelper.getMaxLines()
 
         binding.CardView.setOnClickListener {
-            itemListener.onClick(adapterPosition)
+            listener.onClick(adapterPosition)
         }
 
         binding.CardView.setOnLongClickListener {
-            itemListener.onLongClick(adapterPosition)
+            listener.onLongClick(adapterPosition)
             return@setOnLongClickListener true
         }
     }

@@ -21,8 +21,8 @@ import java.text.SimpleDateFormat
 class BaseNoteAdapter(
     private val settingsHelper: SettingsHelper,
     private val formatter: SimpleDateFormat,
-    private val itemListener: ItemListener
-) : ListAdapter<Item, RecyclerView.ViewHolder>(DiffCallback()) {
+    private val listener: ItemListener
+) : ListAdapter<Item, RecyclerView.ViewHolder>(DiffCallback) {
 
     private val prettyTime = PrettyTime()
 
@@ -42,7 +42,7 @@ class BaseNoteAdapter(
         return when (ViewType.values()[viewType]) {
             ViewType.NOTE -> {
                 val binding = RecyclerBaseNoteBinding.inflate(inflater, parent, false)
-                BaseNoteVH(binding, settingsHelper, itemListener, prettyTime, formatter, inflater)
+                BaseNoteVH(binding, settingsHelper, listener, prettyTime, formatter, inflater)
             }
             ViewType.HEADER -> {
                 val binding = RecyclerHeaderBinding.inflate(inflater, parent, false)
@@ -52,7 +52,7 @@ class BaseNoteAdapter(
     }
 
 
-    private class DiffCallback : DiffUtil.ItemCallback<Item>() {
+    private object DiffCallback : DiffUtil.ItemCallback<Item>() {
 
         override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
             return when (oldItem) {

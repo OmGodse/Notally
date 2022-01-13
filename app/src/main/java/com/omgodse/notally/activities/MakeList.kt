@@ -2,7 +2,7 @@ package com.omgodse.notally.activities
 
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.core.widget.addTextChangedListener
+import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -63,14 +63,12 @@ class MakeList : NotallyActivity() {
         adapter.notifyItemInserted(position)
         binding.RecyclerView.post {
             val viewHolder = binding.RecyclerView.findViewHolderForAdapterPosition(position) as MakeListVH?
-            viewHolder?.requestFocus()
+            viewHolder?.binding?.ListItem?.requestFocus()
         }
     }
 
     private fun setupListeners() {
-        binding.EnterTitle.addTextChangedListener(onTextChanged = { text, start, count, after ->
-            model.title = text.toString().trim()
-        })
+        binding.EnterTitle.doAfterTextChanged { text -> model.title = text.toString().trim() }
     }
 
 
@@ -105,11 +103,11 @@ class MakeList : NotallyActivity() {
                 itemTouchHelper.startDrag(viewHolder)
             }
 
-            override fun onItemTextChange(position: Int, newText: String) {
-                model.items[position].body = newText
+            override fun afterTextChange(position: Int, text: String) {
+                model.items[position].body = text
             }
 
-            override fun onItemCheckedChange(position: Int, checked: Boolean) {
+            override fun onCheckedChange(position: Int, checked: Boolean) {
                 model.items[position].checked = checked
             }
         })
@@ -134,7 +132,7 @@ class MakeList : NotallyActivity() {
         if (viewHolder != null) {
             if (viewHolder.binding.CheckBox.isChecked) {
                 moveToNext(currentPosition + 1)
-            } else viewHolder.requestFocus()
+            } else viewHolder.binding.ListItem.requestFocus()
         } else addListItem()
     }
 }
