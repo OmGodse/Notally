@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fragment Titles -->
+    <string name="notes">Notat</string>
+    <string name="labels">Etikettar</string>
+    <string name="deleted">Papirkorg</string>
+    <string name="archived">Arkiv</string>
+    <string name="settings">Innstillingar</string>
+
+    <!-- Menu Options -->
+    <string name="share">Del</string>
+    <string name="search">Søk</string>
+    <string name="delete">Slett</string>
+    <string name="restore">Oppatrett</string>
+    <string name="archive">Arkiver</string>
+    <string name="unarchive">Dearkiver</string>
+    <string name="delete_all">Slett alle</string>
+    <string name="delete_forever">Slett for alltid</string>
+
+    <!-- Pinning -->
+    <string name="pin">Fest</string>
+    <string name="unpin">Lausne</string>
+    <string name="pinned">Festa</string>
+    <string name="others">Annan</string>
+
+    <!-- Chooser dialog hints -->
+    <string name="view_note">Sjå notat…</string>
+    <string name="share_note">Del notat…</string>
+
+    <!-- Dialogs -->
+    <string name="save">Lagre</string>
+    <string name="edit">Rediger</string>
+    <string name="cancel">Avbryt</string>
+    <string name="open_link">Opna lenkje</string>
+    <string name="make_list">Lag ei liste</string>
+    <string name="take_note">Ta eit notat</string>
+    <string name="add_label">Legg til etikett</string>
+    <string name="export">Eksporter</string>
+    <string name="more_options">Fleire val</string>
+    <string name="view_file">Sjå fil</string>
+    <string name="save_to_device">Lagre til eining</string>
+    <string name="edit_label">Rediger etikett</string>
+    <string name="label_exists">Etiketten finst frå før</string>
+    <string name="delete_label">Sletta etiketten?</string>
+    <string name="create_new">Ingen etikettar. Opprette ein?</string>
+    <string name="delete_all_notes">Slett alle notat?</string>
+    <string name="delete_note_forever">Slett notatet for alltid?</string>
+    <string name="your_notes_associated">Notata assosiert med etikketten vil ikkje bli sletta.</string>
+
+    <!-- Lists and Notes -->
+    <string name="note">Notat</string>
+    <string name="item">Element</string>
+    <string name="date">Dato</string>
+    <string name="title">Tittel</string>
+    <string name="add_item">Legg til element</string>
+    <string name="one_more_item">Eitt element til</string>
+    <string name="more_items">%1$d fleire element</string>
+    <string name="drag_handle">Drahandtak</string>
+    <string name="bold">Feit</string>
+    <string name="link">Lenkje</string>
+    <string name="italic">Kursiv</string>
+    <string name="strikethrough">Gjennomstreka</string>
+    <string name="clear_formatting">Fjern formatering</string>
+    <string name="monospace">Fastbreddeskrift</string>
+
+    <!-- Miscellaneous -->
+    <string name="saved_to_device">Lagra til eininga</string>
+    <string name="saved_to_notally">Lagra i Notally</string>
+    <string name="empty_note">Tomt notat</string>
+    <string name="empty_list">Tom liste</string>
+    <string name="discarded_empty_note">Forkasta tomt notat</string>
+    <string name="discarded_empty_list">Forkasta tom liste</string>
+    <string name="cant_open_link">Kan ikkje opna lenkje</string>
+    <string name="something_went_wrong">Noko gjekk gale. Prøv igjen.</string>
+
+    <!-- Settings Page -->
+    <string name="appearance">Utsjåande</string>
+
+    <string name="view">Format</string>
+    <string name="list">Liste</string>
+    <string name="grid">Rutenett</string>
+
+    <string name="theme">Tema</string>
+    <string name="dark">Mørkt</string>
+    <string name="light">Lyst</string>
+    <string name="follow_system">Følg systeminnstillingar</string>
+
+    <string name="date_format">Tidsformat</string>
+    <string name="none">Ikkje vis</string>
+    <string name="relative">Relativ</string>
+    <string name="absolute">Absolutt</string>
+
+    <string name="content_density">Innhaldstettleik</string>
+    <string name="max_items_to_display">Maks mengd element framvist av liste</string>
+    <string name="max_lines_to_display">Maks mengd linjer vist frå notata</string>
+
+    <string name="backup">Sikringskopi</string>
+    <string name="export_backup">Eksporter sikringskopi</string>
+    <string name="import_backup">Importer sikringskopi</string>
+
+    <string name="about">Om</string>
+    <string name="libraries">Tredjepartsbiblioteker</string>
+    <string name="rate">Bedøm denne appen</string>
+</resources>
