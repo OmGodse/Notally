@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import androidx.navigation.fragment.NavHostFragment
+import com.omgodse.notally.MenuDialog
 import com.omgodse.notally.R
 import com.omgodse.notally.activities.MainActivity
 import com.omgodse.notally.activities.MakeList
@@ -30,9 +31,10 @@ class Notes : NotallyFragment() {
 
 
     private fun displayNoteTypes() {
-        val makeList = Operation(R.string.make_list, R.drawable.checkbox) { goToActivity(MakeList::class.java) }
-        val takeNote = Operation(R.string.take_note, R.drawable.edit) { goToActivity(TakeNote::class.java) }
-        showMenu(makeList, takeNote)
+        MenuDialog(requireContext())
+            .add(R.string.make_list, R.drawable.checkbox) { goToActivity(MakeList::class.java) }
+            .add(R.string.take_note, R.drawable.edit) { goToActivity(TakeNote::class.java) }
+            .show()
     }
 
 

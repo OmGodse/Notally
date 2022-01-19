@@ -5,11 +5,11 @@ import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
 
 /**
- * Custom implementation that fixes a bug in Lollipop where clicking on the overflow icon
- * in the custom text selection mode causes the mode to end.
+ * Implementation that fixes a bug in Lollipop where clicking on the overflow icon
+ * in the custom text selection mode causes it to end.
  * For more information, see this -> https://issuetracker.google.com/issues/36937508
  */
-class NotallyEditText(context: Context, attrs: AttributeSet) : AppCompatEditText(context, attrs) {
+class OverflowEditText(context: Context, attrs: AttributeSet) : AppCompatEditText(context, attrs) {
 
     var isActionModeOn = false
 

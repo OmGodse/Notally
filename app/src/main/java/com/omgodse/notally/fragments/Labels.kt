@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.*
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
-import androidx.core.view.setPadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.NavHostFragment
@@ -12,6 +11,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.omgodse.notally.MenuDialog
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.DialogInputBinding
 import com.omgodse.notally.databinding.FragmentNotesBinding
@@ -44,7 +44,7 @@ class Labels : Fragment(), ItemListener {
         val itemDecoration = DividerItemDecoration(requireContext(), RecyclerView.VERTICAL)
         binding?.RecyclerView?.addItemDecoration(itemDecoration)
 
-        binding?.RecyclerView?.setPadding(0)
+        binding?.RecyclerView?.setPadding(0, 0, 0, 0)
         binding?.ImageView?.setImageResource(R.drawable.label)
 
         setupObserver()
@@ -71,9 +71,10 @@ class Labels : Fragment(), ItemListener {
 
     override fun onLongClick(position: Int) {
         adapter?.currentList?.get(position)?.let { value ->
-            val edit = Operation(R.string.edit) { displayEditLabelDialog(value) }
-            val delete = Operation(R.string.delete) { confirmDeletion(value) }
-            showMenu(edit, delete)
+            MenuDialog(requireContext())
+                .add(R.string.edit) { displayEditLabelDialog(value) }
+                .add(R.string.delete) { confirmDeletion(value) }
+                .show()
         }
     }
 

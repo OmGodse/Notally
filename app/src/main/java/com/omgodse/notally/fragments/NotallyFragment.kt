@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.omgodse.notally.MenuDialog
 import com.omgodse.notally.R
 import com.omgodse.notally.activities.MakeList
 import com.omgodse.notally.activities.TakeNote
@@ -131,29 +132,27 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
 
 
     private fun showOperations(baseNote: BaseNote) {
-        val operations = when (baseNote.folder) {
+        val dialog = MenuDialog(requireContext())
+        when (baseNote.folder) {
             Folder.NOTES -> {
-                val pin = if (baseNote.pinned) {
-                    Operation(R.string.unpin) { model.unpinBaseNote(baseNote.id) }
-                } else Operation(R.string.pin) { model.pinBaseNote(baseNote.id) }
-                val share = Operation(R.string.share) { share(baseNote) }
-                val labels = Operation(R.string.labels) { label(baseNote) }
-                val export = Operation(R.string.export) { export(baseNote) }
-                val delete = Operation(R.string.delete) { model.moveBaseNoteToDeleted(baseNote.id) }
-                val archive = Operation(R.string.archive) { model.moveBaseNoteToArchive(baseNote.id) }
-                arrayOf(pin, share, labels, export, delete, archive)
+                if (baseNote.pinned) {
+                    dialog.add(R.string.unpin) { model.unpinBaseNote(baseNote.id) }
+                } else dialog.add(R.string.pin) { model.pinBaseNote(baseNote.id) }
+                dialog.add(R.string.share) { share(baseNote) }
+                dialog.add(R.string.labels) { label(baseNote) }
+                dialog.add(R.string.export) { export(baseNote) }
+                dialog.add(R.string.delete) { model.moveBaseNoteToDeleted(baseNote.id) }
+                dialog.add(R.string.archive) { model.moveBaseNoteToArchive(baseNote.id) }
             }
             Folder.DELETED -> {
-                val restore = Operation(R.string.restore) { model.restoreBaseNote(baseNote.id) }
-                val deleteForever = Operation(R.string.delete_forever) { delete(baseNote) }
-                arrayOf(restore, deleteForever)
+                dialog.add(R.string.restore) { model.restoreBaseNote(baseNote.id) }
+                dialog.add(R.string.delete_forever) { delete(baseNote) }
             }
             Folder.ARCHIVED -> {
-                val unarchive = Operation(R.string.unarchive) { model.restoreBaseNote(baseNote.id) }
-                arrayOf(unarchive)
+                dialog.add(R.string.unarchive) { model.restoreBaseNote(baseNote.id) }
             }
         }
-        showMenu(*operations)
+        dialog.show()
     }
 
     internal fun goToActivity(activity: Class<*>, baseNote: BaseNote? = null) {
@@ -180,12 +179,13 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
     }
 
     private fun export(baseNote: BaseNote) {
-        val pdf = Operation(R.string.pdf) { exportBaseNoteToPDF(baseNote) }
-        val txt = Operation(R.string.txt) { exportBaseNoteToTXT(baseNote) }
-        val xml = Operation(R.string.xml) { exportBaseNoteToXML(baseNote) }
-        val json = Operation(R.string.json) { exportBaseNoteToJSON(baseNote) }
-        val html = Operation(R.string.html) { exportBaseNoteToHTML(baseNote) }
-        showMenu(pdf, txt, xml, json, html)
+        MenuDialog(requireContext())
+            .add(R.string.pdf) { exportToPDF(baseNote) }
+            .add(R.string.txt) { exportToTXT(baseNote) }
+            .add(R.string.xml) { exportToXML(baseNote) }
+            .add(R.string.json) { exportToJSON(baseNote) }
+            .add(R.string.html) { exportToHTML(baseNote) }
+            .show()
     }
 
     private fun delete(baseNote: BaseNote) {
@@ -199,7 +199,7 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
     }
 
 
-    private fun exportBaseNoteToPDF(baseNote: BaseNote) {
+    private fun exportToPDF(baseNote: BaseNote) {
         model.getPDFFile(baseNote, settingsHelper.showDateCreated(), object : PostPDFGenerator.OnResult {
 
             override fun onSuccess(file: File) {
@@ -212,28 +212,28 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
         })
     }
 
-    private fun exportBaseNoteToTXT(baseNote: BaseNote) {
+    private fun exportToTXT(baseNote: BaseNote) {
         lifecycleScope.launch {
             val file = model.getTXTFile(baseNote, settingsHelper.showDateCreated())
             showFileOptionsDialog(file, "text/plain")
         }
     }
 
-    private fun exportBaseNoteToXML(baseNote: BaseNote) {
+    private fun exportToXML(baseNote: BaseNote) {
         lifecycleScope.launch {
             val file = model.getXMLFile(baseNote)
             showFileOptionsDialog(file, "text/xml")
         }
     }
 
-    private fun exportBaseNoteToJSON(baseNote: BaseNote) {
+    private fun exportToJSON(baseNote: BaseNote) {
         lifecycleScope.launch {
             val file = model.getJSONFile(baseNote)
             showFileOptionsDialog(file, "application/json")
         }
     }
 
-    private fun exportBaseNoteToHTML(baseNote: BaseNote) {
+    private fun exportToHTML(baseNote: BaseNote) {
         lifecycleScope.launch {
             val file = model.getHTMLFile(baseNote, settingsHelper.showDateCreated())
             showFileOptionsDialog(file, "text/html")
@@ -243,10 +243,11 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
     private fun showFileOptionsDialog(file: File, mimeType: String) {
         val uri = FileProvider.getUriForFile(requireContext(), "${requireContext().packageName}.provider", file)
 
-        val share = Operation(R.string.share) { shareFile(uri, mimeType) }
-        val viewFile = Operation(R.string.view_file) { viewFile(uri, mimeType) }
-        val saveToDevice = Operation(R.string.save_to_device) { saveFileToDevice(file, mimeType) }
-        showMenu(share, viewFile, saveToDevice)
+        MenuDialog(requireContext())
+            .add(R.string.share) { shareFile(uri, mimeType) }
+            .add(R.string.view_file) { viewFile(uri, mimeType) }
+            .add(R.string.save_to_device) { saveFileToDevice(file, mimeType) }
+            .show()
     }
 
 

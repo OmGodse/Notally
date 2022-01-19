@@ -6,10 +6,6 @@ import androidx.room.*
 import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Folder
 
-/**
- * Class containing operations involving only
- * the [BaseNote] table
- */
 @Dao
 interface BaseNoteDao {
 
@@ -27,14 +23,14 @@ interface BaseNoteDao {
 
 
     @Query("DELETE FROM BaseNote WHERE folder = :folder")
-    suspend fun deleteAllFromFolder(folder: Folder)
+    suspend fun deleteFrom(folder: Folder)
 
 
     @Query("SELECT * FROM BaseNote WHERE folder = :folder ORDER BY pinned DESC, timestamp DESC")
-    fun getAllFromFolder(folder: Folder): LiveData<List<BaseNote>>
+    fun getFrom(folder: Folder): LiveData<List<BaseNote>>
 
     @Query("SELECT * FROM BaseNote WHERE folder = :folder ORDER BY pinned DESC, timestamp DESC")
-    suspend fun getListOfAllFromFolder(folder: Folder): List<BaseNote>
+    suspend fun getListFrom(folder: Folder): List<BaseNote>
 
 
     @Query("UPDATE BaseNote SET folder = :folder WHERE id = :id")

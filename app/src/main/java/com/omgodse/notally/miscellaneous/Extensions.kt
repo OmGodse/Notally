@@ -34,11 +34,10 @@ fun ChipGroup.bindLabels(labels: HashSet<String>) {
     } else {
         visibility = View.VISIBLE
         removeAllViews()
+        val inflater = LayoutInflater.from(context)
         for (label in labels) {
-            val inflater = LayoutInflater.from(context)
-            val displayLabel = LabelBinding.inflate(inflater).root
-            displayLabel.text = label
-            addView(displayLabel)
+            val view = LabelBinding.inflate(inflater, this, true).root
+            view.text = label
         }
     }
 }

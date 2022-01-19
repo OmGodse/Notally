@@ -12,6 +12,7 @@
         <item name="textAppearanceSubtitle1">@style/TextAppearance.Subtitle1</item>
 
         <!-- Required for the Settings page to look good -->
+        <item name="preferenceCategoryTitleTextAppearance">?attr/textAppearanceButton</item>
         <item name="android:textAppearanceListItem">?attr/textAppearanceBody1</item>
         <item name="android:textAppearanceListItemSecondary">?attr/textAppearanceBody2</item>
 

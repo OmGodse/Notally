@@ -46,9 +46,9 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     var currentFile: File? = null
 
     val labels = labelDao.getAll()
-    val baseNotes = Content(baseNoteDao.getAllFromFolder(Folder.NOTES), ::transform)
-    val deletedNotes = Content(baseNoteDao.getAllFromFolder(Folder.DELETED), ::transform)
-    val archivedNotes = Content(baseNoteDao.getAllFromFolder(Folder.ARCHIVED), ::transform)
+    val baseNotes = Content(baseNoteDao.getFrom(Folder.NOTES), ::transform)
+    val deletedNotes = Content(baseNoteDao.getFrom(Folder.DELETED), ::transform)
+    val archivedNotes = Content(baseNoteDao.getFrom(Folder.ARCHIVED), ::transform)
 
     var keyword = String()
         set(value) {
@@ -115,9 +115,9 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 val labels = labelDao.getListOfAll().toHashSet()
-                val baseNotes = baseNoteDao.getListOfAllFromFolder(Folder.NOTES)
-                val deletedNotes = baseNoteDao.getListOfAllFromFolder(Folder.DELETED)
-                val archivedNotes = baseNoteDao.getListOfAllFromFolder(Folder.ARCHIVED)
+                val baseNotes = baseNoteDao.getListFrom(Folder.NOTES)
+                val deletedNotes = baseNoteDao.getListFrom(Folder.DELETED)
+                val archivedNotes = baseNoteDao.getListFrom(Folder.ARCHIVED)
 
                 val backup = Backup(baseNotes, deletedNotes, archivedNotes, labels)
 
@@ -161,8 +161,8 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
 
     suspend fun getXMLFile(baseNote: BaseNote) = withContext(Dispatchers.IO) {
-        val fileName = getFileName(baseNote)
-        val file = File(getExportedPath(), "$fileName.xml")
+        val name = getFileName(baseNote)
+        val file = File(getExportedPath(), "$name.xml")
         val outputStream = FileOutputStream(file)
         XMLUtils.writeBaseNoteToStream(baseNote, outputStream)
         outputStream.close()
@@ -170,36 +170,34 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     }
 
     suspend fun getJSONFile(baseNote: BaseNote) = withContext(Dispatchers.IO) {
-        val fileName = getFileName(baseNote)
-        val file = File(getExportedPath(), "$fileName.json")
+        val name = getFileName(baseNote)
+        val file = File(getExportedPath(), "$name.json")
         val json = getJSON(baseNote)
         file.writeText(json)
         file
     }
 
     suspend fun getTXTFile(baseNote: BaseNote, showDateCreated: Boolean) = withContext(Dispatchers.IO) {
-        val fileName = getFileName(baseNote)
-        val file = File(getExportedPath(), "$fileName.txt")
-        val content = getTXT(baseNote, showDateCreated)
-        file.writeText(content)
+        val name = getFileName(baseNote)
+        val file = File(getExportedPath(), "$name.txt")
+        val text = getTXT(baseNote, showDateCreated)
+        file.writeText(text)
         file
     }
 
     suspend fun getHTMLFile(baseNote: BaseNote, showDateCreated: Boolean) = withContext(Dispatchers.IO) {
-        val fileName = getFileName(baseNote)
-        val file = File(getExportedPath(), "$fileName.html")
-        val content = getHTML(baseNote, showDateCreated)
-        file.writeText(content)
+        val name = getFileName(baseNote)
+        val file = File(getExportedPath(), "$name.html")
+        val html = getHTML(baseNote, showDateCreated)
+        file.writeText(html)
         file
     }
 
     fun getPDFFile(baseNote: BaseNote, showDateCreated: Boolean, onResult: PostPDFGenerator.OnResult) {
-        val fileName = getFileName(baseNote)
-        val pdfFile = File(getExportedPath(), "$fileName.pdf")
-
+        val name = getFileName(baseNote)
+        val file = File(getExportedPath(), "$name.pdf")
         val html = getHTML(baseNote, showDateCreated)
-
-        PostPDFGenerator.create(pdfFile, html, app, onResult)
+        PostPDFGenerator.create(file, html, app, onResult)
     }
 
 
@@ -208,13 +206,13 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     fun unpinBaseNote(id: Long) = executeAsync { baseNoteDao.updatePinned(id, false) }
 
 
+    fun deleteAllBaseNotes() = executeAsync { baseNoteDao.deleteFrom(Folder.DELETED) }
+
     fun restoreBaseNote(id: Long) = executeAsync { baseNoteDao.move(id, Folder.NOTES) }
 
     fun moveBaseNoteToDeleted(id: Long) = executeAsync { baseNoteDao.move(id, Folder.DELETED) }
 
     fun moveBaseNoteToArchive(id: Long) = executeAsync { baseNoteDao.move(id, Folder.ARCHIVED) }
-
-    fun deleteAllBaseNotes() = executeAsync { baseNoteDao.deleteAllFromFolder(Folder.DELETED) }
 
     fun deleteBaseNoteForever(baseNote: BaseNote) = executeAsync { baseNoteDao.delete(baseNote) }
 

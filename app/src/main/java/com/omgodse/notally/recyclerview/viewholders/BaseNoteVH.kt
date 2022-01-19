@@ -83,19 +83,17 @@ class BaseNoteVH(
             val max = settingsHelper.getMaxItems()
 
             list.items.take(max).forEach { item ->
-                val view = ListItemPreviewBinding.inflate(inflater).root
+                val view = ListItemPreviewBinding.inflate(inflater, binding.LinearLayout, true).root
                 view.text = item.body
                 handleChecked(view, item.checked)
-                binding.LinearLayout.addView(view)
             }
 
             if (list.items.size > max) {
-                val view = ListItemPreviewBinding.inflate(inflater).root
+                val view = ListItemPreviewBinding.inflate(inflater, binding.LinearLayout, true).root
                 val itemsRemaining = list.items.size - max
                 view.text = if (itemsRemaining == 1) {
                     binding.root.context.getString(R.string.one_more_item)
                 } else binding.root.context.getString(R.string.more_items, itemsRemaining)
-                binding.LinearLayout.addView(view)
             }
         }
     }

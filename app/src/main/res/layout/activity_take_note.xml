@@ -39,7 +39,7 @@
                 android:layout_height="1dp"
                 android:background="?android:attr/listDivider" />
 
-            <com.omgodse.notally.NotallyEditText
+            <com.omgodse.notally.OverflowEditText
                 android:id="@+id/EnterBody"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

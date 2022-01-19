@@ -14,8 +14,7 @@ import android.widget.TextView
  * Intercepts touch events on links and dispatches them accordingly
  * (while updating the URL)
  */
-class LinkMovementMethod(private var onURLClick: (span: URLSpan) -> Unit) :
-    ArrowKeyMovementMethod() {
+class LinkMovementMethod(private val onClick: (span: URLSpan) -> Unit) : ArrowKeyMovementMethod() {
 
     private val touchedLineBounds = RectF()
     private var isUrlHighlighted = false
@@ -110,7 +109,7 @@ class LinkMovementMethod(private var onURLClick: (span: URLSpan) -> Unit) :
 
     private fun dispatchUrlClick(urlSpan: URLSpan?) {
         if (urlSpan != null) {
-            onURLClick.invoke(urlSpan)
+            onClick.invoke(urlSpan)
         }
     }
 }
