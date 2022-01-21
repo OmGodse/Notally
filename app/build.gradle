@@ -14,7 +14,7 @@ android {
         targetSdk 30
         versionCode 40
         versionName "4.5"
-        resConfigs "en", "ca", "cs", "da", "de", "es", "fr", "hu", "in", "it", "ja", "nb", "nl", "nn", "pl", "pt-rBR", "pt-rPT", "ru", "sk", "sv", "tl", "tr", "uk", "zh-rCN"
+        resConfigs "en", "ca", "cs", "da", "de", "es", "fr", "hu", "in", "it", "ja", "nb", "nl", "pl", "pt-rBR", "pt-rPT", "ru", "sk", "sv", "tl", "tr", "uk", "zh-rCN"
         vectorDrawables.generatedDensities = []
     }
 
