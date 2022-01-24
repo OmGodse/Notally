@@ -1,29 +1,27 @@
 package com.omgodse.notally.activities
 
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.omgodse.notally.databinding.ActivityMakeListBinding
 import com.omgodse.notally.miscellaneous.bindLabels
-import com.omgodse.notally.miscellaneous.getBody
 import com.omgodse.notally.miscellaneous.getLocale
 import com.omgodse.notally.miscellaneous.setOnNextAction
 import com.omgodse.notally.recyclerview.ListItemListener
 import com.omgodse.notally.recyclerview.adapters.MakeListAdapter
 import com.omgodse.notally.recyclerview.viewholders.MakeListVH
 import com.omgodse.notally.room.ListItem
+import com.omgodse.notally.room.Type
 import com.omgodse.notally.viewmodels.BaseNoteModel
-import com.omgodse.notally.viewmodels.MakeListModel
 import java.util.*
 
 class MakeList : NotallyActivity() {
 
     private lateinit var adapter: MakeListAdapter
 
-    override val model: MakeListModel by viewModels()
+    override val type = Type.LIST
     override val binding by lazy { ActivityMakeListBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,8 +50,6 @@ class MakeList : NotallyActivity() {
 
 
     override fun getLabelGroup() = binding.LabelGroup
-
-    override fun shareNote() = shareNote(model.title, model.items.getBody())
 
 
     private fun addListItem() {

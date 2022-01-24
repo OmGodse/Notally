@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
@@ -13,29 +14,26 @@ import com.google.android.material.chip.ChipGroup
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.R
 import com.omgodse.notally.helpers.OperationsParent
-import com.omgodse.notally.miscellaneous.Constants
-import com.omgodse.notally.miscellaneous.add
-import com.omgodse.notally.miscellaneous.bindLabels
+import com.omgodse.notally.miscellaneous.*
 import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Folder
 import com.omgodse.notally.room.Label
+import com.omgodse.notally.room.Type
 import com.omgodse.notally.viewmodels.NotallyModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 abstract class NotallyActivity : AppCompatActivity(), OperationsParent {
 
-    internal abstract val model: NotallyModel
+    internal abstract val type: Type
     internal abstract val binding: ViewBinding
+    internal val model: NotallyModel by viewModels { NotallyModel.Factory(application, type) }
 
     override fun onBackPressed() {
         model.saveNote { super.onBackPressed() }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        model.saveNote()
+        model.saveNote { super.onSaveInstanceState(outState) }
     }
 
 
@@ -66,7 +64,7 @@ abstract class NotallyActivity : AppCompatActivity(), OperationsParent {
             val pin = menu.add(R.string.pin, R.drawable.pin) { item -> pin(item) }
             bindPinned(pin)
 
-            menu.add(R.string.share, R.drawable.share) { shareNote() }
+            menu.add(R.string.share, R.drawable.share) { share() }
             menu.add(R.string.labels, R.drawable.label) { label() }
 
             when (model.folder) {
@@ -103,17 +101,23 @@ abstract class NotallyActivity : AppCompatActivity(), OperationsParent {
     }
 
 
-    abstract fun shareNote()
-
     abstract fun getLabelGroup(): ChipGroup
 
 
     open fun receiveSharedNote() {}
 
 
+    private fun share() {
+        val body = when (type) {
+            Type.NOTE -> model.body
+            Type.LIST -> model.items.getBody()
+        }
+        Operations.shareNote(this, model.title, body)
+    }
+
     private fun label() {
         lifecycleScope.launch {
-            val labels = withContext(Dispatchers.IO) { model.getAllLabelsAsList() }
+            val labels = model.getAllLabelsAsList()
             labelNote(labels, model.labels) { updatedLabels ->
                 model.labels = updatedLabels
                 getLabelGroup().bindLabels(updatedLabels)

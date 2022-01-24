@@ -5,7 +5,6 @@ import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
-import android.text.Spannable
 import android.text.Spanned
 import android.text.style.*
 import android.util.Patterns
@@ -13,21 +12,21 @@ import android.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.LinkMovementMethod
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.ActivityTakeNoteBinding
+import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.miscellaneous.bindLabels
 import com.omgodse.notally.miscellaneous.getLocale
 import com.omgodse.notally.miscellaneous.setOnNextAction
+import com.omgodse.notally.room.Type
 import com.omgodse.notally.viewmodels.BaseNoteModel
-import com.omgodse.notally.viewmodels.TakeNoteModel
 
 class TakeNote : NotallyActivity() {
 
-    override val model: TakeNoteModel by viewModels()
+    override val type = Type.NOTE
     override val binding by lazy { ActivityTakeNoteBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,9 +51,9 @@ class TakeNote : NotallyActivity() {
     override fun receiveSharedNote() {
         val title = intent.getStringExtra(Intent.EXTRA_SUBJECT)
 
-        val plainTextBody = intent.getStringExtra(Intent.EXTRA_TEXT)
-        val spannableBody = intent.getCharSequenceExtra(EXTRA_SPANNABLE) as? Spannable?
-        val body = spannableBody ?: plainTextBody
+        val string = intent.getStringExtra(Intent.EXTRA_TEXT)
+        val charSequence = intent.getCharSequenceExtra(Operations.extraCharSequence)
+        val body = charSequence ?: string
 
         if (body != null) {
             model.body = Editable.Factory.getInstance().newEditable(body)
@@ -68,8 +67,6 @@ class TakeNote : NotallyActivity() {
 
 
     override fun getLabelGroup() = binding.LabelGroup
-
-    override fun shareNote() = shareNote(model.title, model.body)
 
 
     private fun setupEditor() {
@@ -196,7 +193,6 @@ class TakeNote : NotallyActivity() {
 
 
     companion object {
-        const val EXTRA_SPANNABLE = "com.omgodse.notally.EXTRA_SPANNABLE"
 
         fun getURLFrom(text: String): String {
             return when {
