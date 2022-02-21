@@ -2,11 +2,10 @@ package com.omgodse.notally.fragments
 
 import android.os.Bundle
 import android.view.*
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -64,8 +63,9 @@ class Labels : Fragment(), ItemListener {
 
     override fun onClick(position: Int) {
         adapter?.currentList?.get(position)?.let { value ->
-            val bundle = bundleOf(Constants.SelectedLabel to value)
-            NavHostFragment.findNavController(this).navigate(R.id.LabelsToDisplayLabel, bundle)
+            val bundle = Bundle()
+            bundle.putString(Constants.SelectedLabel, value)
+            findNavController().navigate(R.id.LabelsToDisplayLabel, bundle)
         }
     }
 
@@ -80,10 +80,10 @@ class Labels : Fragment(), ItemListener {
 
 
     private fun setupObserver() {
-        model.labels.observe(viewLifecycleOwner, { labels ->
+        model.labels.observe(viewLifecycleOwner) { labels ->
             adapter?.submitList(labels)
             binding?.RecyclerView?.isVisible = labels.isNotEmpty()
-        })
+        }
     }
 
 

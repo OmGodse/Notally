@@ -12,9 +12,9 @@ android {
         applicationId "com.omgodse.notally"
         minSdk 21
         targetSdk 30
-        versionCode 40
-        versionName "4.5"
-        resConfigs "en", "ca", "cs", "da", "de", "es", "fr", "hu", "in", "it", "ja", "nb", "nl", "pl", "pt-rBR", "pt-rPT", "ru", "sk", "sv", "tl", "tr", "uk", "zh-rCN"
+        versionCode 41
+        versionName "4.6"
+        resConfigs "en", "ca", "cs", "da", "de", "es", "fr", "hu", "in", "it", "ja", "nb", "nl", "nn", "pl", "pt-rBR", "pt-rPT", "ru", "sk", "sv", "tl", "tr", "uk", "zh-rCN"
         vectorDrawables.generatedDensities = []
     }
 
@@ -37,16 +37,14 @@ android {
 
     buildFeatures { viewBinding true }
 
-    packagingOptions {
-        exclude "DebugProbesKt.bin"
-        exclude "META-INF/**.version"
-        exclude "kotlin/**.kotlin_builtins"
+    packagingOptions.resources {
+        excludes += ["DebugProbesKt.bin", "META-INF/**.version", "kotlin/**.kotlin_builtins", "kotlin-tooling-metadata.json"]
     }
 }
 
 dependencies {
     final def navVersion = "2.3.5"
-    final def roomVersion = "2.3.0"
+    final def roomVersion = "2.4.1"
 
     implementation "androidx.preference:preference-ktx:1.1.1"
 
@@ -54,8 +52,8 @@ dependencies {
     implementation "androidx.room:room-ktx:$roomVersion"
     implementation "androidx.room:room-runtime:$roomVersion"
 
-    implementation "androidx.navigation:navigation-ui:$navVersion"
-    implementation "androidx.navigation:navigation-fragment:$navVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
 
     implementation "org.ocpsoft.prettytime:prettytime:4.0.6.Final"
     implementation "com.google.android.material:material:1.4.0"

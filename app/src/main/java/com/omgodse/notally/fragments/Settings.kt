@@ -52,12 +52,7 @@ class Settings : PreferenceFragmentCompat() {
         about.addPreference(libraries)
         about.addPreference(rate)
 
-        screen.forEach { preference ->
-            preference.isIconSpaceReserved = false
-            if (preference is PreferenceGroup) {
-                preference.forEach { child -> child.isIconSpaceReserved = false }
-            }
-        }
+        disableIconSpace(screen)
 
         preferenceScreen = screen
 
@@ -95,6 +90,17 @@ class Settings : PreferenceFragmentCompat() {
                     RequestCodeImportFile -> model.importBackup(uri)
                     Constants.RequestCodeExportFile -> model.exportBackup(uri)
                 }
+            }
+        }
+    }
+
+
+    private fun disableIconSpace(group: PreferenceGroup) {
+        for (index in 0 until group.preferenceCount) {
+            val preference = group.getPreference(index)
+            preference.isIconSpaceReserved = false
+            if (preference is PreferenceGroup) {
+                disableIconSpace(preference)
             }
         }
     }

@@ -60,7 +60,7 @@
                 android:paddingEnd="20dp"
                 android:paddingBottom="12dp"
                 android:text="@string/add_item"
-                android:textAppearance="?attr/textAppearanceButton"
+                android:textAppearance="?textAppearanceSubtitle2"
                 android:textColor="?android:textColorHint"
                 app:drawableStartCompat="@drawable/add"
                 app:drawableTint="?android:textColorHint" />

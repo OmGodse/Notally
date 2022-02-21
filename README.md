@@ -1,22 +1,15 @@
 ### Background
-Although there are many notes apps out there, they're all hideous, glitchy, low quality or all 3 at the same time.
-
-Maybe the developer views developing a beautiful user interface as the realm of _lowly_ designers. Maybe he just doesn't care.
-
-Well, Notally is none of these things. It's extremely light, minimalistic and elegant. There are minimal dependencies and lines of code. (All without compromising on readability)
+Notally was created because I wanted to make something that was beautiful and at the same time, useful. It's extremely light, there are minimal dependencies and lines of code. (All without compromising on readability)
 
 ### Features
 * Auto save
-* Dark mode
-* Material design
 * No permissions required
-* Create lists to stay on track
 * Support for Lollipop devices and up
+* Label your notes for quick organisation
 * Pin notes to always keep them at the top
 * APK size of 1.3 MB (1.7 MB uncompressed)
-* Add labels to your notes for quick organisation
 * Archive notes to keep them around, but out of your way
-* Export notes as plain text, XML, JSON, HTML or PDF files with formatting
+* Export notes as TXT, XML, JSON, HTML or PDF files with formatting
 * Create rich text notes with support for bold, italics, mono space and strike-through
 * Add clickable links to notes with support for phone numbers, email addresses and web urls
 
@@ -24,6 +17,6 @@ Well, Notally is none of these things. It's extremely light, minimalistic and el
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="70"/>](https://f-droid.org/packages/com.omgodse.notally/)
 
 ### Translations
-All [translations](CONTRIBUTORS.md) are crowd sourced. To contribute or point out any errors, please contact me via [email](mailto:omgodseapps@gmail.com) or open a pull request.
+All translations are crowd sourced. To contribute or point out any errors, please email me or open a pull request.
 
 <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width="250"/><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width="250"/><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width="250"/>

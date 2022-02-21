@@ -33,7 +33,8 @@ abstract class NotallyActivity : AppCompatActivity(), OperationsParent {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        model.saveNote { super.onSaveInstanceState(outState) }
+        super.onSaveInstanceState(outState)
+        model.saveNote {}
     }
 
 

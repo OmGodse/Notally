@@ -119,10 +119,10 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
 
 
     private fun setupObserver() {
-        getObservable().observe(viewLifecycleOwner, { list ->
+        getObservable().observe(viewLifecycleOwner) { list ->
             adapter?.submitList(list)
             binding?.RecyclerView?.isVisible = list.isNotEmpty()
-        })
+        }
     }
 
     private fun setupRecyclerView() {

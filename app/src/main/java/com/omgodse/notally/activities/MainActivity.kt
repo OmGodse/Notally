@@ -6,12 +6,15 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
-import androidx.core.widget.addTextChangedListener
+import androidx.core.widget.doAfterTextChanged
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.navigation.*
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.navOptions
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.ActivityMainBinding
 import com.omgodse.notally.viewmodels.BaseNoteModel
@@ -25,7 +28,7 @@ class MainActivity : AppCompatActivity() {
     private val model: BaseNoteModel by viewModels()
 
     override fun onSupportNavigateUp(): Boolean {
-        return NavigationUI.navigateUp(navController, configuration)
+        return navController.navigateUp(configuration)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,10 +45,8 @@ class MainActivity : AppCompatActivity() {
     private fun setupNavigation() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.NavHostFragment) as NavHostFragment
         navController = navHostFragment.navController
-        configuration = AppBarConfiguration.Builder(binding.NavigationView.menu)
-            .setOpenableLayout(binding.DrawerLayout)
-            .build()
-        NavigationUI.setupActionBarWithNavController(this, navController, configuration)
+        configuration = AppBarConfiguration(binding.NavigationView.menu, binding.DrawerLayout)
+        setupActionBarWithNavController(navController, configuration)
 
         var fragmentIdToLoad: Int? = null
         binding.NavigationView.setNavigationItemSelectedListener { item ->
@@ -54,26 +55,23 @@ class MainActivity : AppCompatActivity() {
             return@setNavigationItemSelectedListener true
         }
 
-        binding.DrawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener {
-            override fun onDrawerOpened(drawerView: View) {}
+        binding.DrawerLayout.addDrawerListener(object : DrawerLayout.SimpleDrawerListener() {
 
             override fun onDrawerClosed(drawerView: View) {
                 if (fragmentIdToLoad != null && navController.currentDestination?.id != fragmentIdToLoad) {
-                    val options = NavOptions.Builder()
-                        .setLaunchSingleTop(true)
-                        .setExitAnim(R.anim.nav_default_exit_anim)
-                        .setEnterAnim(R.anim.nav_default_enter_anim)
-                        .setPopExitAnim(R.anim.nav_default_pop_exit_anim)
-                        .setPopEnterAnim(R.anim.nav_default_pop_enter_anim)
-                        .setPopUpTo(navController.graph.startDestination, false)
-                        .build()
+                    val options = navOptions {
+                        launchSingleTop = true
+                        anim {
+                            exit = R.anim.nav_default_exit_anim
+                            enter = R.anim.nav_default_enter_anim
+                            popExit = R.anim.nav_default_pop_exit_anim
+                            popEnter = R.anim.nav_default_pop_enter_anim
+                        }
+                        popUpTo(navController.graph.startDestination) { inclusive = false }
+                    }
                     navController.navigate(requireNotNull(fragmentIdToLoad), null, options)
                 }
             }
-
-            override fun onDrawerStateChanged(newState: Int) {}
-
-            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {}
         })
 
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
@@ -91,11 +89,10 @@ class MainActivity : AppCompatActivity() {
         binding.EnterSearchKeyword.isVisible = (destination.id == R.id.Search)
     }
 
-
     private fun setupSearch() {
         binding.EnterSearchKeyword.setText(model.keyword)
-        binding.EnterSearchKeyword.addTextChangedListener(onTextChanged = { text, start, count, after ->
+        binding.EnterSearchKeyword.doAfterTextChanged { text ->
             model.keyword = text?.trim()?.toString() ?: String()
-        })
+        }
     }
 }

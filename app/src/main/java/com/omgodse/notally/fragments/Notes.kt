@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
-import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.omgodse.notally.MenuDialog
 import com.omgodse.notally.R
 import com.omgodse.notally.activities.MainActivity
@@ -24,9 +24,7 @@ class Notes : NotallyFragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        menu.add(R.string.search, R.drawable.search) {
-            NavHostFragment.findNavController(this).navigate(R.id.NotesToSearch)
-        }
+        menu.add(R.string.search, R.drawable.search) { findNavController().navigate(R.id.NotesToSearch) }
     }
 
 

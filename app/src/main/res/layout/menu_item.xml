@@ -7,5 +7,5 @@
     android:drawablePadding="24dp"
     android:gravity="center_vertical"
     android:padding="16dp"
-    android:textAppearance="?attr/textAppearanceButton"
-    app:drawableTint="?attr/colorOnSurface" />
+    android:textAppearance="?textAppearanceSubtitle2"
+    app:drawableTint="?colorOnSurface" />

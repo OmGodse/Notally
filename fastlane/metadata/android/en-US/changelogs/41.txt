@@ -1,0 +1,3 @@
+Updated German and Norwegian (Bokmål) translations
+Added Norwegian (Nynorsk) translation
+Fixed bug where notes having a large number of labels couldn't be edited properly

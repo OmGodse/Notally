@@ -18,7 +18,8 @@
 17. 🇫🇷 French by Arnaud Dieumegard
 18. 🇧🇷 Portuguese (Brazil) by [fabianski7](https://github.com/fabianski7)
 19. 🇵🇹 Portuguese (Portugal) by [joaopmatos](https://github.com/joaopmatos)
-20. 🇳🇴 Norwegian by Fredrik Magnussen
-21. 🇵🇭 Tagalog by Isaiah Collins Abetong
-22. 🇨🇳 Chinese (Simplified) by [Austin Huang](https://github.com/austinhuang0131)
-23. 🇩🇪 German by Maximilian Braunschmied, [jonas-haeusler](https://github.com/jonas-haeusler)
+20. 🇳🇴 Norwegian (Bokmål) by Fredrik Magnussen, [Erik Thom](https://github.com/erikthm)
+21. 🇳🇴 Norwegian (Nynorsk) by [Erik Thom](https://github.com/erikthm)
+22. 🇵🇭 Tagalog by Isaiah Collins Abetong
+23. 🇨🇳 Chinese (Simplified) by [Austin Huang](https://github.com/austinhuang0131)
+24. 🇩🇪 German by Maximilian Braunschmied, [jonas-haeusler](https://github.com/jonas-haeusler), [samuel141](https://github.com/samuel141)
