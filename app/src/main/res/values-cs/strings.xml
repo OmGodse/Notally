@@ -21,6 +21,7 @@
     <string name="pin">Připnout</string>
     <string name="unpin">Odepnout</string>
     <string name="pinned">Připnuté</string>
+    <string name="others">Jiné</string>
 
     <!-- Chooser dialog hints -->
     <string name="view_note">Zobrazit poznámku…</string>
@@ -30,10 +31,13 @@
     <string name="save">Uložit</string>
     <string name="edit">Upravit</string>
     <string name="cancel">Zrušit</string>
+    <string name="open_link">Otevřít odkaz</string>
     <string name="make_list">Vytvořit seznam</string>
     <string name="take_note">Napsat poznámku</string>
     <string name="add_label">Nový štítek</string>
     <string name="export">Exportovat</string>
+    <string name="more_options">Více možností</string>
+    <string name="view_file">Zobrazit soubor</string>
     <string name="save_to_device">Uložit do zařízení</string>
     <string name="edit_label">Upravit štítek</string>
     <string name="label_exists">Štítek již existuje</string>
@@ -80,14 +84,22 @@
     <string name="dark">Tmavé</string>
     <string name="light">Světlé</string>
     <string name="follow_system">Podle systému</string>
+    
+    <string name="date_format">Formát data</string>
+    <string name="none">Žádné</string>
+    <string name="relative">Relativní</string>
+    <string name="absolute">Absolutní</string>
 
     <string name="content_density">Kompaktnost obsahu</string>
     <string name="max_items_to_display">Max. počet položek v seznamu</string>
     <string name="max_lines_to_display">Max. počet položek v poznámce</string>
 
     <string name="backup">Zálohování</string>
+    <string name="export_backup">Exportovat zálohu</string>
+    <string name="import_backup">Importovat zálohu</string>
 
     <string name="about">O aplikaci</string>
     <string name="libraries">Knihovny</string>
     <string name="rate">Ohodnotit aplikaci</string>
+    
 </resources>
