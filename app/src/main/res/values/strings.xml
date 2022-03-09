@@ -109,4 +109,5 @@
     <string name="rate">Rate this app</string>
 
     <string name="github" translatable="false">GitHub</string>
+    <string name="delete_permanently">Delete Permanently</string>
 </resources>

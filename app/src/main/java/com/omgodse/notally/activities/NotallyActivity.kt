@@ -71,6 +71,7 @@ abstract class NotallyActivity : AppCompatActivity(), OperationsParent {
             when (model.folder) {
                 Folder.NOTES -> {
                     menu.add(R.string.delete, R.drawable.delete) { delete() }
+                    menu.add(R.string.delete_permanently, R.drawable.delete) { deleteForever() }
                     menu.add(R.string.archive, R.drawable.archive) { archive() }
                 }
                 Folder.DELETED -> {

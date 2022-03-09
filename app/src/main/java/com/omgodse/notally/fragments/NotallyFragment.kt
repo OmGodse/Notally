@@ -143,6 +143,7 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
                 dialog.add(R.string.labels) { label(baseNote) }
                 dialog.add(R.string.export) { export(baseNote) }
                 dialog.add(R.string.delete) { model.moveBaseNoteToDeleted(baseNote.id) }
+                // To Add Permanent Delete Option dialog.add(R.string.delete_permanently) { delete(baseNote) }
                 dialog.add(R.string.archive) { model.moveBaseNoteToArchive(baseNote.id) }
             }
             Folder.DELETED -> {
