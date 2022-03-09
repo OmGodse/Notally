@@ -3,6 +3,7 @@ package com.omgodse.notally.activities
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
@@ -72,13 +73,17 @@ abstract class NotallyActivity : AppCompatActivity(), OperationsParent {
                 Folder.NOTES -> {
                     menu.add(R.string.delete, R.drawable.delete) { delete() }
                     menu.add(R.string.archive, R.drawable.archive) { archive() }
+                    // TODO Step 1
+                    menu.add(R.string.delete_forever, R.drawable.delete) { deleteForever() }
                 }
                 Folder.DELETED -> {
                     menu.add(R.string.restore, R.drawable.restore) { restore() }
                     menu.add(R.string.delete_forever, R.drawable.delete) { deleteForever() }
+
                 }
                 Folder.ARCHIVED -> {
                     menu.add(R.string.unarchive, R.drawable.unarchive) { restore() }
+                    // TODO STEP 2
                 }
             }
         }
@@ -133,12 +138,12 @@ abstract class NotallyActivity : AppCompatActivity(), OperationsParent {
 
     private fun restore() {
         model.restoreBaseNote()
-        onBackPressed()
+        super.onBackPressed()
     }
 
     private fun archive() {
         model.moveBaseNoteToArchive()
-        onBackPressed()
+        super.onBackPressed()
     }
 
     private fun deleteForever() {

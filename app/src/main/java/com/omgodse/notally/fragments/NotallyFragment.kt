@@ -44,8 +44,13 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
 
     private var adapter: BaseNoteAdapter? = null
     private var binding: FragmentNotesBinding? = null
-
     internal val model: BaseNoteModel by activityViewModels()
+
+    private fun navigateToHome(){
+        this.onDestroyView()
+        this.activity?.onBackPressed()
+        this.parentFragmentManager.popBackStack()
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -55,7 +60,6 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         settingsHelper = SettingsHelper(requireContext())
-
         adapter = BaseNoteAdapter(settingsHelper, model.formatter, this)
         adapter?.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
 
@@ -146,11 +150,19 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
                 dialog.add(R.string.archive) { model.moveBaseNoteToArchive(baseNote.id) }
             }
             Folder.DELETED -> {
-                dialog.add(R.string.restore) { model.restoreBaseNote(baseNote.id) }
-                dialog.add(R.string.delete_forever) { delete(baseNote) }
+                dialog.add(R.string.restore) { model.restoreBaseNote(baseNote.id)
+                    navigateToHome()
+                // TODO Step 2
+
+                }
+                dialog.add(R.string.delete_forever) { delete(baseNote)
+                }
             }
             Folder.ARCHIVED -> {
-                dialog.add(R.string.unarchive) { model.restoreBaseNote(baseNote.id) }
+                dialog.add(R.string.unarchive) { model.restoreBaseNote(baseNote.id)
+                    navigateToHome()
+
+                }
             }
         }
         dialog.show()
@@ -195,6 +207,7 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
             .setMessage(R.string.delete_note_forever)
             .setPositiveButton(R.string.delete) { dialog, which ->
                 model.deleteBaseNoteForever(baseNote)
+                navigateToHome()
             }
             .setNegativeButton(R.string.cancel, null)
             .show()

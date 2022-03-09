@@ -33,6 +33,8 @@ class Notes : NotallyFragment() {
             .add(R.string.make_list, R.drawable.checkbox) { goToActivity(MakeList::class.java) }
             .add(R.string.take_note, R.drawable.edit) { goToActivity(TakeNote::class.java) }
             .show()
+
+        //TODO - Step 3 ...
     }
 
 
