@@ -41,6 +41,8 @@ class NotallyModel(app: Application, private val type: Type) : AndroidViewModel(
 
     var body = Editable.Factory.getInstance().newEditable(String())
     val items = ArrayList<ListItem>()
+    val phoneItems = ArrayList<PhoneItem>()
+
 
     fun setStateFromBaseNote(baseNote: BaseNote) {
         id = baseNote.id
@@ -55,6 +57,9 @@ class NotallyModel(app: Application, private val type: Type) : AndroidViewModel(
 
         items.clear()
         items.addAll(baseNote.items)
+
+        phoneItems.clear()
+        phoneItems.addAll(baseNote.phoneItems)
     }
 
 
@@ -96,7 +101,9 @@ class NotallyModel(app: Application, private val type: Type) : AndroidViewModel(
         val spans = getFilteredSpans(body)
         val trimmedBody = body.toString().trimEnd()
         val filteredItems = items.filter { (body) -> body.isNotBlank() }
-        return BaseNote(id, type, folder, title, pinned, timestamp, labels, trimmedBody, spans, filteredItems)
+        val filteredPhoneItems = phoneItems.filter{ (contactName,contactNo) -> contactName.isNotBlank() && contactNo.isNotBlank()
+        }
+        return BaseNote(id, type, folder, title, pinned, timestamp, labels, trimmedBody, spans, filteredItems,filteredPhoneItems)
     }
 
     private fun getFilteredSpans(spannable: Spannable): ArrayList<SpanRepresentation> {

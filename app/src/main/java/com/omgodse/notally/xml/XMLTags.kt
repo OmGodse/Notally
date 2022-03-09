@@ -2,6 +2,7 @@ package com.omgodse.notally.xml
 
 object XMLTags {
     const val Note = "note"
+    const val Phone = "phone"
     const val List = "list"
     const val Title = "title"
     const val Body = "body"
@@ -11,6 +12,9 @@ object XMLTags {
     const val ListItem = "item"
     const val ListItemText = "text"
     const val ListItemChecked = "checked"
+    const val PhoneItem = "phone-item"
+    const val PhoneItemContact = "contact"
+    const val PhoneItemNumber = "phone-number"
 
     const val Span = "span"
     const val Start = "start"

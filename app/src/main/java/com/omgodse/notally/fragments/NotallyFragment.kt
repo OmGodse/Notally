@@ -22,15 +22,13 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.MenuDialog
 import com.omgodse.notally.R
+import com.omgodse.notally.activities.AddPhone
 import com.omgodse.notally.activities.MakeList
 import com.omgodse.notally.activities.TakeNote
 import com.omgodse.notally.databinding.FragmentNotesBinding
 import com.omgodse.notally.helpers.OperationsParent
 import com.omgodse.notally.helpers.SettingsHelper
-import com.omgodse.notally.miscellaneous.Constants
-import com.omgodse.notally.miscellaneous.Operations
-import com.omgodse.notally.miscellaneous.applySpans
-import com.omgodse.notally.miscellaneous.getBody
+import com.omgodse.notally.miscellaneous.*
 import com.omgodse.notally.recyclerview.ItemListener
 import com.omgodse.notally.recyclerview.adapters.BaseNoteAdapter
 import com.omgodse.notally.room.*
@@ -95,6 +93,7 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
                 when (item.type) {
                     Type.NOTE -> goToActivity(TakeNote::class.java, item)
                     Type.LIST -> goToActivity(MakeList::class.java, item)
+                    Type.PHONE -> goToActivity(AddPhone::class.java, item)
                 }
             }
         }
@@ -175,6 +174,7 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
         val body = when (baseNote.type) {
             Type.NOTE -> baseNote.body.applySpans(baseNote.spans)
             Type.LIST -> baseNote.items.getBody()
+            Type.PHONE -> baseNote.phoneItems.getList()
         }
         Operations.shareNote(requireContext(), baseNote.title, body)
     }

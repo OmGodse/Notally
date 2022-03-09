@@ -14,6 +14,7 @@ import androidx.room.withTransaction
 import com.omgodse.notally.R
 import com.omgodse.notally.miscellaneous.applySpans
 import com.omgodse.notally.miscellaneous.getBody
+import com.omgodse.notally.miscellaneous.getList
 import com.omgodse.notally.miscellaneous.getLocale
 import com.omgodse.notally.room.*
 import com.omgodse.notally.room.livedata.Content
@@ -245,6 +246,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         val body = when (baseNote.type) {
             Type.NOTE -> baseNote.body
             Type.LIST -> baseNote.items.getBody()
+            Type.PHONE -> baseNote.phoneItems.getList()
         }
         val fileName = if (title.isEmpty()) {
             val words = body.split(" ").take(2)
@@ -279,6 +281,10 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
                 val items = JSONArray(baseNote.items.map { item -> item.toJSONObject() })
                 jsonObject.put("items", items)
             }
+            Type.PHONE -> {
+                val items = JSONArray(baseNote.phoneItems.map { item -> item.toJSONObject() })
+                jsonObject.put("phoneItems", items)
+            }
         }
 
         return jsonObject.toString(2)
@@ -290,6 +296,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         val body = when (baseNote.type) {
             Type.NOTE -> baseNote.body
             Type.LIST -> baseNote.items.getBody()
+            Type.PHONE -> baseNote.phoneItems.getList()
         }
 
         if (baseNote.title.isNotEmpty()) {
@@ -324,6 +331,13 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
                 append("<ol>")
                 baseNote.items.forEach { (body) ->
                     append("<li>${Html.escapeHtml(body)}</li>")
+                }
+                append("</ol>")
+            }
+            Type.PHONE -> {
+                append("<ol>")
+                baseNote.phoneItems.forEach { (contactName,contactNo) ->
+                    append("<li>${Html.escapeHtml(contactName)} - ${Html.escapeHtml(contactNo)}</li>")
                 }
                 append("</ol>")
             }

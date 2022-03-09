@@ -113,6 +113,7 @@ abstract class NotallyActivity : AppCompatActivity(), OperationsParent {
         val body = when (type) {
             Type.NOTE -> model.body
             Type.LIST -> model.items.getBody()
+            Type.PHONE -> model.phoneItems.getList()
         }
         Operations.shareNote(this, model.title, body)
     }

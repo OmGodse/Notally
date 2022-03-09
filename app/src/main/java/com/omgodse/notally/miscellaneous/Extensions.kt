@@ -18,6 +18,7 @@ import com.google.android.material.chip.ChipGroup
 import com.omgodse.notally.activities.TakeNote
 import com.omgodse.notally.databinding.LabelBinding
 import com.omgodse.notally.room.ListItem
+import com.omgodse.notally.room.PhoneItem
 import com.omgodse.notally.room.SpanRepresentation
 import java.util.*
 
@@ -27,6 +28,11 @@ fun List<ListItem>?.getBody() = buildString {
     }
 }
 
+fun List<PhoneItem>?.getList() = buildString {
+    this@getList?.forEachIndexed { index, (contactName,contactNo) ->
+        appendLine("${(index + 1)}) $contactName - $contactNo")
+    }
+}
 
 fun ChipGroup.bindLabels(labels: HashSet<String>) {
     if (labels.isEmpty()) {

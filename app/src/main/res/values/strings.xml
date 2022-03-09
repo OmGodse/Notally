@@ -109,5 +109,13 @@
     <string name="rate">Rate this app</string>
 
     <string name="github" translatable="false">GitHub</string>
+
     <string name="delete_permanently">Delete Permanently</string>
+
+    <string name="add_phone_numbers">Add Contacts</string>
+    <string name="add_phone_number">Add Contact</string>
+    <string name="contact_name">Contact Name</string>
+    <string name="phone">Phone Number</string>
+    <string name="empty_phone_list">Empty Phone List</string>
+    <string name="phone_contacts_saved">%1$d Contacts saved</string>
 </resources>

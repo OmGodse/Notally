@@ -44,6 +44,7 @@ class BaseNoteVH(
         when (baseNote.type) {
             Type.NOTE -> bindNote(baseNote)
             Type.LIST -> bindList(baseNote)
+            Type.PHONE -> bindPhone(baseNote)
         }
 
         binding.Title.text = baseNote.title
@@ -61,6 +62,20 @@ class BaseNoteVH(
         if (isEmpty(baseNote)) {
             binding.Note.setText(getEmptyMessage(baseNote))
             binding.Note.isVisible = true
+        }
+    }
+
+    private fun bindPhone(list: BaseNote) {
+        binding.Note.isVisible = false
+
+        if (list.phoneItems.isEmpty()) {
+            binding.LinearLayout.visibility = View.GONE
+        } else {
+            binding.LinearLayout.visibility = View.VISIBLE
+            binding.LinearLayout.removeAllViews()
+            val view = ListItemPreviewBinding.inflate(inflater, binding.LinearLayout, true).root
+            val itemsCount = list.phoneItems.size
+            view.text = binding.root.context.getString(R.string.phone_contacts_saved, itemsCount)
         }
     }
 
@@ -103,6 +118,7 @@ class BaseNoteVH(
         return when (baseNote.type) {
             Type.NOTE -> baseNote.title.isBlank() && baseNote.body.isBlank()
             Type.LIST -> baseNote.title.isBlank() && baseNote.items.isEmpty()
+            Type.PHONE -> baseNote.title.isBlank() && baseNote.phoneItems.isEmpty()
         }
     }
 
@@ -110,6 +126,7 @@ class BaseNoteVH(
         return when (baseNote.type) {
             Type.NOTE -> R.string.empty_note
             Type.LIST -> R.string.empty_list
+            Type.PHONE -> R.string.empty_phone_list
         }
     }
 

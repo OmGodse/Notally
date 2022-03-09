@@ -38,6 +38,22 @@ object Converters {
         return iterable.map { jsonObject -> ListItem.fromJSONObject(jsonObject) }
     }
 
+    @TypeConverter
+    fun phoneItemsToJson(items: List<PhoneItem>): String {
+        val objects = items.map { phoneItem -> phoneItem.toJSONObject() }
+        return JSONArray(objects).toString()
+    }
+
+    @TypeConverter
+    fun jsonToPhoneItems(json: String): List<PhoneItem> {
+        return if (json.isEmpty()) {
+            emptyList()
+        } else {
+            val iterable = JSONArray(json).iterable<JSONObject>()
+            iterable.map { jsonObject -> PhoneItem.fromJSONObject(jsonObject) }
+        }
+    }
+
 
     private fun <T> JSONArray.iterable(): Iterable<T> {
         return Iterable {

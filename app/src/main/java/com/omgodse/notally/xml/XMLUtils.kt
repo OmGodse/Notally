@@ -67,6 +67,8 @@ object XMLUtils {
         var timestamp = 0L
         var pinned = false
         val items = ArrayList<ListItem>()
+        val phoneItems = ArrayList<PhoneItem>()
+
 
         val labels = HashSet<String>()
         val spans = ArrayList<SpanRepresentation>()
@@ -80,6 +82,7 @@ object XMLUtils {
                     XMLTags.Pinned -> pinned = parser.nextText().toBoolean()
                     XMLTags.Label -> labels.add(parser.nextText())
                     XMLTags.ListItem -> items.add(parseItem(parser))
+                    XMLTags.PhoneItem -> phoneItems.add(parsePhoneItem(parser))
                     XMLTags.Span -> spans.add(parseSpan(parser))
                 }
             } else if (parser.eventType == XmlPullParser.END_TAG) {
@@ -89,9 +92,17 @@ object XMLUtils {
             }
         }
 
-        return if (rootTag == XMLTags.Note) {
-            BaseNote.createNote(0, folder, title, pinned, timestamp, labels, body, spans)
-        } else BaseNote.createList(0, folder, title, pinned, timestamp, labels, items)
+        return when (rootTag) {
+            XMLTags.Note -> {
+                BaseNote.createNote(0, folder, title, pinned, timestamp, labels, body, spans)
+            }
+            XMLTags.List -> {
+                BaseNote.createList(0, folder, title, pinned, timestamp, labels, items)
+            }
+            else -> {
+                BaseNote.createPhoneNoList(0, folder, title, pinned, timestamp, labels, phoneItems)
+            }
+        }
     }
 
 
@@ -125,6 +136,7 @@ object XMLUtils {
         when (baseNote.type) {
             Type.NOTE -> appendNote(baseNote, xmlSerializer)
             Type.LIST -> appendList(baseNote, xmlSerializer)
+            Type.PHONE -> appendPhoneList(baseNote, xmlSerializer)
         }
 
         xmlSerializer.endDocument()
@@ -190,6 +202,28 @@ object XMLUtils {
         xmlSerializer.endTag(null, XMLTags.List)
     }
 
+    private fun appendPhoneList(list: BaseNote, xmlSerializer: XmlSerializer) {
+        xmlSerializer.startTag(null, XMLTags.Phone)
+
+        xmlSerializer.writeTagContent(XMLTags.DateCreated, list.timestamp.toString())
+        xmlSerializer.writeTagContent(XMLTags.Pinned, list.pinned.toString())
+        xmlSerializer.writeTagContent(XMLTags.Title, list.title)
+
+        list.phoneItems.forEach { (contactName, contactNo) ->
+            xmlSerializer.startTag(null, XMLTags.PhoneItem)
+
+            xmlSerializer.writeTagContent(XMLTags.PhoneItemContact, contactName)
+            xmlSerializer.writeTagContent(XMLTags.PhoneItemNumber, contactNo)
+
+            xmlSerializer.endTag(null, XMLTags.PhoneItem)
+        }
+
+        list.labels.forEach { label -> xmlSerializer.writeTagContent(XMLTags.Label, label) }
+
+        xmlSerializer.endTag(null, XMLTags.Phone)
+    }
+
+
     private fun appendBackupList(rootTag: String, xmlSerializer: XmlSerializer, list: List<BaseNote>) {
         if (list.isNotEmpty()) {
             xmlSerializer.startTag(null, rootTag)
@@ -198,6 +232,7 @@ object XMLUtils {
                 when (baseNote.type) {
                     Type.NOTE -> appendNote(baseNote, xmlSerializer)
                     Type.LIST -> appendList(baseNote, xmlSerializer)
+                    Type.PHONE -> appendPhoneList(baseNote, xmlSerializer)
                 }
             }
 
@@ -223,6 +258,25 @@ object XMLUtils {
         }
 
         return listItem
+    }
+
+    private fun parsePhoneItem(parser: XmlPullParser): PhoneItem {
+        val phoneItem = PhoneItem()
+
+        while (parser.next() != XmlPullParser.END_DOCUMENT) {
+            if (parser.eventType == XmlPullParser.START_TAG) {
+                when (parser.name) {
+                    XMLTags.PhoneItemContact -> phoneItem.contactName = parser.nextText()
+                    XMLTags.PhoneItemNumber -> phoneItem.contactNo = parser.nextText()
+                }
+            } else if (parser.eventType == XmlPullParser.END_TAG) {
+                if (parser.name == XMLTags.PhoneItem) {
+                    break
+                }
+            }
+        }
+
+        return phoneItem
     }
 
     private fun parseSpan(parser: XmlPullParser): SpanRepresentation {

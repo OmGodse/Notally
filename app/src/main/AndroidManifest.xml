@@ -44,6 +44,10 @@
             android:windowSoftInputMode="adjustResize" />
 
         <activity
+            android:name=".activities.AddPhone"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
             android:name=".activities.TakeNote"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
