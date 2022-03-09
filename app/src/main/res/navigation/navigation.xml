@@ -35,12 +35,28 @@
     <fragment
         android:id="@+id/Deleted"
         android:name="com.omgodse.notally.fragments.Deleted"
-        android:label="@string/deleted" />
+        android:label="@string/deleted">
+        <action
+            android:id="@+id/DeletedToNotes"
+            app:destination="@id/Notes"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
 
     <fragment
         android:id="@+id/Archived"
         android:name="com.omgodse.notally.fragments.Archived"
-        android:label="@string/archived" />
+        android:label="@string/archived">
+        <action
+            android:id="@+id/ArchivedToNotes"
+            app:destination="@id/Notes"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
 
     <fragment
         android:id="@+id/Settings"

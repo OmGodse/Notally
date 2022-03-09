@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.R
 import com.omgodse.notally.miscellaneous.add
@@ -34,4 +35,8 @@ class Deleted : NotallyFragment() {
     override fun getBackground() = R.drawable.delete
 
     override fun getObservable() = model.deletedNotes
+
+    override fun navigateToNotes() {
+        findNavController().navigate(R.id.DeletedToNotes)
+    }
 }

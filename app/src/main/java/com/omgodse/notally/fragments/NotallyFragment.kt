@@ -147,15 +147,22 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
                 dialog.add(R.string.archive) { model.moveBaseNoteToArchive(baseNote.id) }
             }
             Folder.DELETED -> {
-                dialog.add(R.string.restore) { model.restoreBaseNote(baseNote.id) }
+                dialog.add(R.string.restore) { restoreAndNavigateToNotes(baseNote.id) }
                 dialog.add(R.string.delete_forever) { delete(baseNote) }
             }
             Folder.ARCHIVED -> {
-                dialog.add(R.string.unarchive) { model.restoreBaseNote(baseNote.id) }
+                dialog.add(R.string.unarchive) { restoreAndNavigateToNotes(baseNote.id) }
             }
         }
         dialog.show()
     }
+
+    private fun restoreAndNavigateToNotes(baseNoteId: Long) {
+        model.restoreBaseNote(baseNoteId)
+        navigateToNotes()
+    }
+
+    open fun navigateToNotes() = Unit
 
     internal fun goToActivity(activity: Class<*>, baseNote: BaseNote? = null) {
         val intent = Intent(requireContext(), activity)
