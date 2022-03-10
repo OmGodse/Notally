@@ -38,7 +38,6 @@ abstract class NotallyActivity : AppCompatActivity(), OperationsParent {
         model.saveNote {}
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -83,7 +82,7 @@ abstract class NotallyActivity : AppCompatActivity(), OperationsParent {
                 }
                 Folder.ARCHIVED -> {
                     menu.add(R.string.unarchive, R.drawable.unarchive) { restore() }
-                    // TODO STEP 2
+
                 }
             }
         }
@@ -114,9 +113,13 @@ abstract class NotallyActivity : AppCompatActivity(), OperationsParent {
 
 
     private fun share() {
+
+        // system converts the title and body to plain text when sharing notes ..
         val body = when (type) {
-            Type.NOTE -> model.body
+            //TODO Step 3
+            Type.NOTE, Type.PHONENUMBER -> model.body
             Type.LIST -> model.items.getBody()
+
         }
         Operations.shareNote(this, model.title, body)
     }

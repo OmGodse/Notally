@@ -90,4 +90,9 @@
     <string name="about">Sobre</string>
     <string name="libraries">Bibliotecas</string>
     <string name="rate">Calificar esta app</string>
+    <string name="phone_number">Add Phone Number</string>
+    <string name="empty_phone_number">Empty Phone Number</string>
+    <string name="call">Call</string>
+    <string name="open_link">Enlace abierto</string>
+    <string name="view_file">Ver archivo</string>
 </resources>

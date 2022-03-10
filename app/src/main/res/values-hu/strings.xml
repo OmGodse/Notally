@@ -90,4 +90,8 @@
     <string name="about">Névjegy</string>
     <string name="libraries">Könyvtárak</string>
     <string name="rate">Értékeld ezt az alkalmazást</string>
+    <string name="phone_number">Add Phone Number</string>
+    <string name="empty_phone_number">Empty Phone Number</string>
+    <string name="call">Call</string>
+    <string name="view_file">Fájl megtekintése</string>
 </resources>

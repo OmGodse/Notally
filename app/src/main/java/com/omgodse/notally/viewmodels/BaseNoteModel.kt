@@ -243,8 +243,10 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     private fun getFileName(baseNote: BaseNote): String {
         val title = baseNote.title
         val body = when (baseNote.type) {
-            Type.NOTE -> baseNote.body
+            //TODO: Step 3
+            Type.NOTE, Type.PHONENUMBER -> baseNote.body
             Type.LIST -> baseNote.items.getBody()
+
         }
         val fileName = if (title.isEmpty()) {
             val words = body.split(" ").take(2)
@@ -270,7 +272,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
             .put("labels", labels)
 
         when (baseNote.type) {
-            Type.NOTE -> {
+            Type.NOTE, Type.PHONENUMBER -> {
                 val spans = JSONArray(baseNote.spans.map { representation -> representation.toJSONObject() })
                 jsonObject.put(XMLTags.Body, baseNote.body)
                 jsonObject.put("spans", spans)
@@ -288,8 +290,10 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         val date = formatter.format(baseNote.timestamp)
 
         val body = when (baseNote.type) {
-            Type.NOTE -> baseNote.body
+            //TODO: Step 3
+            Type.NOTE, Type.PHONENUMBER -> baseNote.body
             Type.LIST -> baseNote.items.getBody()
+
         }
 
         if (baseNote.title.isNotEmpty()) {
@@ -316,7 +320,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         }
 
         when (baseNote.type) {
-            Type.NOTE -> {
+            Type.NOTE, Type.PHONENUMBER -> {
                 val body = baseNote.body.applySpans(baseNote.spans).toHtml()
                 append(body)
             }

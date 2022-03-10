@@ -44,6 +44,8 @@ class BaseNoteVH(
         when (baseNote.type) {
             Type.NOTE -> bindNote(baseNote)
             Type.LIST -> bindList(baseNote)
+            //TODO Step 3
+            Type.PHONENUMBER -> bindPhoneNumber(baseNote)
         }
 
         binding.Title.text = baseNote.title
@@ -98,11 +100,20 @@ class BaseNoteVH(
         }
     }
 
+    private fun bindPhoneNumber(note: BaseNote) {
+        binding.LinearLayout.isVisible = false
+
+        binding.Note.text = note.body
+        binding.Note.isVisible = note.body.isNotEmpty()
+    }
+
 
     private fun isEmpty(baseNote: BaseNote): Boolean {
         return when (baseNote.type) {
-            Type.NOTE -> baseNote.title.isBlank() && baseNote.body.isBlank()
+            //TODO: Step 3
+            Type.NOTE, Type.PHONENUMBER -> baseNote.title.isBlank() && baseNote.body.isBlank()
             Type.LIST -> baseNote.title.isBlank() && baseNote.items.isEmpty()
+
         }
     }
 
@@ -110,6 +121,9 @@ class BaseNoteVH(
         return when (baseNote.type) {
             Type.NOTE -> R.string.empty_note
             Type.LIST -> R.string.empty_list
+            //TODO: Step 3
+            Type.PHONENUMBER -> R.string.empty_phone_number
+
         }
     }
 

@@ -101,4 +101,7 @@
     <string name="about">Om</string>
     <string name="libraries">Tredjepartsbiblioteker</string>
     <string name="rate">Bedøm denne appen</string>
+    <string name="phone_number">Add Phone Number</string>
+    <string name="empty_phone_number">Empty Phone Number</string>
+    <string name="call">Call</string>
 </resources>

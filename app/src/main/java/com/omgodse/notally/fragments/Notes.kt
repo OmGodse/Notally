@@ -6,6 +6,7 @@ import android.view.MenuInflater
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.omgodse.notally.MenuDialog
+import com.omgodse.notally.activities.PhoneNumberActivity
 import com.omgodse.notally.R
 import com.omgodse.notally.activities.MainActivity
 import com.omgodse.notally.activities.MakeList
@@ -29,12 +30,13 @@ class Notes : NotallyFragment() {
 
 
     private fun displayNoteTypes() {
+        //TODO - Step 3 ...
         MenuDialog(requireContext())
             .add(R.string.make_list, R.drawable.checkbox) { goToActivity(MakeList::class.java) }
             .add(R.string.take_note, R.drawable.edit) { goToActivity(TakeNote::class.java) }
+            .add(R.string.phone_number, R.drawable.phone) { goToActivity(PhoneNumberActivity::class.java) }
             .show()
 
-        //TODO - Step 3 ...
     }
 
 

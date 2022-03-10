@@ -90,4 +90,9 @@
     <string name="about">Hakkında</string>
     <string name="libraries">Kütüphaneler</string>
     <string name="rate">Uygulamayı değerlendir</string>
+    <string name="phone_number">Add Phone Number</string>
+    <string name="empty_phone_number">Empty Phone Number</string>
+    <string name="call">Call</string>
+    <string name="open_link">Linki aç</string>
+    <string name="view_file">Dosyayı görüntüle</string>
 </resources>

@@ -95,4 +95,7 @@
     <string name="about">Omkring</string>
     <string name="libraries">Biblioteker</string>
     <string name="rate">Vurdér denne app</string>
+    <string name="phone_number">Add Phone Number</string>
+    <string name="empty_phone_number">Empty Phone Number</string>
+    <string name="call">Call</string>
 </resources>

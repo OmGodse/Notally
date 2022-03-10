@@ -4,9 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.33645833333333336" />
+        <entry key="app/src/main/res/drawable/checkbox.xml" value="0.2085" />
         <entry key="app/src/main/res/drawable/delete_all.xml" value="0.2085" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/activity_make_list.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/activity_phone_number.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/activity_take_note.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/dialog_input.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/fragment_notes.xml" value="0.19610507246376813" />

@@ -35,6 +35,7 @@
     <string name="open_link">Open link</string>
     <string name="make_list">Make list</string>
     <string name="take_note">Take note</string>
+    <string name="phone_number">Phone Number</string>
     <string name="add_label">Add label</string>
     <string name="export">Export</string>
     <string name="more_options">More options</string>
@@ -109,4 +110,7 @@
     <string name="rate">Rate this app</string>
 
     <string name="github" translatable="false">GitHub</string>
+    <string name="empty_phone_number">Empty Phone Number</string>
+    <string name="call">Call</string>
+
 </resources>

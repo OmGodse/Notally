@@ -90,4 +90,9 @@
     <string name="about">Quant a</string>
     <string name="libraries">Biblioteques</string>
     <string name="rate">Valora aquesta aplicació</string>
+    <string name="phone_number">Add Phone Number</string>
+    <string name="empty_phone_number">Empty Phone Number</string>
+    <string name="call">Call</string>
+    <string name="open_link">Enllaç obert</string>
+    <string name="view_file">Переглянути файл</string>
 </resources>

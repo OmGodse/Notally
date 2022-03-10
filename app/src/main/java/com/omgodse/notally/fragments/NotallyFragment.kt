@@ -23,6 +23,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.MenuDialog
 import com.omgodse.notally.R
 import com.omgodse.notally.activities.MakeList
+import com.omgodse.notally.activities.PhoneNumberActivity
 import com.omgodse.notally.activities.TakeNote
 import com.omgodse.notally.databinding.FragmentNotesBinding
 import com.omgodse.notally.helpers.OperationsParent
@@ -99,6 +100,7 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
                 when (item.type) {
                     Type.NOTE -> goToActivity(TakeNote::class.java, item)
                     Type.LIST -> goToActivity(MakeList::class.java, item)
+                    Type.PHONENUMBER -> goToActivity(PhoneNumberActivity::class.java, item)
                 }
             }
         }
@@ -138,11 +140,16 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
 
     private fun showOperations(baseNote: BaseNote) {
         val dialog = MenuDialog(requireContext())
+
         when (baseNote.folder) {
             Folder.NOTES -> {
                 if (baseNote.pinned) {
                     dialog.add(R.string.unpin) { model.unpinBaseNote(baseNote.id) }
                 } else dialog.add(R.string.pin) { model.pinBaseNote(baseNote.id) }
+
+                if(baseNote.type == Type.PHONENUMBER) {
+                    dialog.add(R.string.call) { initiateCall(baseNote) }
+                }
                 dialog.add(R.string.share) { share(baseNote) }
                 dialog.add(R.string.labels) { label(baseNote) }
                 dialog.add(R.string.export) { export(baseNote) }
@@ -153,7 +160,6 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
                 dialog.add(R.string.restore) { model.restoreBaseNote(baseNote.id)
                     navigateToHome()
                 // TODO Step 2
-
                 }
                 dialog.add(R.string.delete_forever) { delete(baseNote)
                 }
@@ -179,6 +185,7 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
         val body = when (baseNote.type) {
             Type.NOTE -> baseNote.body.applySpans(baseNote.spans)
             Type.LIST -> baseNote.items.getBody()
+            Type.PHONENUMBER -> return
         }
         Operations.shareNote(requireContext(), baseNote.title, body)
     }
@@ -189,6 +196,17 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
             labelNote(labels, baseNote.labels) { updatedLabels ->
                 model.updateBaseNoteLabels(updatedLabels, baseNote.id)
             }
+        }
+    }
+
+    private fun initiateCall(basenote: BaseNote) {
+
+        if(basenote.body.isNotEmpty()){
+            val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel: ${basenote.body}"))
+            startActivity(intent)
+        }
+        else{
+            Toast.makeText(context, "Cannot make call as there is no phone number", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -207,7 +225,6 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
             .setMessage(R.string.delete_note_forever)
             .setPositiveButton(R.string.delete) { dialog, which ->
                 model.deleteBaseNoteForever(baseNote)
-                navigateToHome()
             }
             .setNegativeButton(R.string.cancel, null)
             .show()

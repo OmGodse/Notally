@@ -90,4 +90,8 @@
     <string name="about">Tentang</string>
     <string name="libraries">Pustaka</string>
     <string name="rate">Nilai apl ini</string>
+    <string name="phone_number">Add Phone Number</string>
+    <string name="empty_phone_number">Empty Phone Number</string>
+    <string name="call">Call</string>
+    <string name="view_file">Lihat file</string>
 </resources>

@@ -90,4 +90,9 @@
     <string name="about">Tungkol</string>
     <string name="libraries">Mga Library</string>
     <string name="rate">Markahan ang app na ito</string>
+    <string name="phone_number">Add Phone Number</string>
+    <string name="empty_phone_number">Empty Phone Number</string>
+    <string name="call">Call</string>
+    <string name="open_link">Open link</string>
+    <string name="view_file">VIEW FILE</string>
 </resources>

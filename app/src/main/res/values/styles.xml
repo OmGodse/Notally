@@ -84,6 +84,32 @@
         <item name="android:inputType">textMultiLine|textCapSentences</item>
     </style>
 
+    <style name="EditName.Title" parent="Widget.AppCompat.EditText">
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingEnd">24dp</item>
+        <item name="android:paddingStart">24dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:hint">"Contact Name"</item>
+        <item name="android:imeOptions">actionNext</item>
+        <item name="android:textColor">?attr/colorSecondary</item>
+        <item name="android:textAppearance">?attr/textAppearanceHeadline6</item>
+        <item name="android:background">@null</item>
+        <item name="android:inputType">textMultiLine|textCapSentences</item>
+    </style>
+
+    <style name="EditPhoneNumber.Title" parent="Widget.AppCompat.EditText">
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingEnd">24dp</item>
+        <item name="android:paddingStart">24dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:hint">"Contact Phone Number"</item>
+        <item name="android:imeOptions">actionNext</item>
+        <item name="android:textColor">?attr/colorSecondary</item>
+        <item name="android:textAppearance">?attr/textAppearanceHeadline6</item>
+        <item name="android:background">@null</item>
+        <item name="android:inputType">phone</item>
+    </style>
+
     <style name="DateCreated" parent="Widget.MaterialComponents.TextView">
         <item name="android:paddingStart">24dp</item>
         <item name="android:paddingEnd">24dp</item>
