@@ -54,6 +54,13 @@
         <item name="android:ellipsize">end</item>
     </style>
 
+    <style name="Preview.ListItem">
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:drawablePadding">12dp</item>
+        <item name="android:textColor">?attr/colorControlNormal</item>
+        <item name="android:textAppearance">?attr/textAppearanceBody2</item>
+    </style>
+
     <style name="TextView.Clickable" parent="Widget.AppCompat.TextView">
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>

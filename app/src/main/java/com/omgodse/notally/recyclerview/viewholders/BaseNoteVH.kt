@@ -1,12 +1,11 @@
 package com.omgodse.notally.recyclerview.viewholders
 
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
+import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.omgodse.notally.R
-import com.omgodse.notally.databinding.ListItemPreviewBinding
 import com.omgodse.notally.databinding.RecyclerBaseNoteBinding
 import com.omgodse.notally.helpers.SettingsHelper
 import com.omgodse.notally.miscellaneous.applySpans
@@ -24,7 +23,6 @@ class BaseNoteVH(
     listener: ItemListener,
     private val prettyTime: PrettyTime,
     private val formatter: SimpleDateFormat,
-    private val inflater: LayoutInflater,
 ) : RecyclerView.ViewHolder(binding.root) {
 
     init {
@@ -50,11 +48,13 @@ class BaseNoteVH(
         binding.Title.isVisible = baseNote.title.isNotEmpty()
 
         val date = Date(baseNote.timestamp)
-        binding.Date.isVisible = settingsHelper.showDateCreated()
-        when (settingsHelper.getDateFormat()) {
-            SettingsHelper.DateFormat.relative -> binding.Date.text = prettyTime.format(date)
-            SettingsHelper.DateFormat.absolute -> binding.Date.text = formatter.format(date)
-        }
+        if (settingsHelper.showDateCreated()) {
+            when (settingsHelper.getDateFormat()) {
+                SettingsHelper.DateFormat.relative -> binding.Date.text = prettyTime.format(date)
+                SettingsHelper.DateFormat.absolute -> binding.Date.text = formatter.format(date)
+            }
+            binding.Date.visibility = View.VISIBLE
+        } else binding.Date.visibility = View.GONE
 
         binding.LabelGroup.bindLabels(baseNote.labels)
 
@@ -78,23 +78,28 @@ class BaseNoteVH(
             binding.LinearLayout.visibility = View.GONE
         } else {
             binding.LinearLayout.visibility = View.VISIBLE
-            binding.LinearLayout.removeAllViews()
 
             val max = settingsHelper.getMaxItems()
-
-            list.items.take(max).forEach { item ->
-                val view = ListItemPreviewBinding.inflate(inflater, binding.LinearLayout, true).root
-                view.text = item.body
-                handleChecked(view, item.checked)
+            val filteredList = list.items.take(max)
+            binding.LinearLayout.children.forEachIndexed { index, view ->
+                if (view.id != R.id.ItemsRemaining) {
+                    if (index < filteredList.size) {
+                        val item = filteredList[index]
+                        view as TextView
+                        view.text = item.body
+                        handleChecked(view, item.checked)
+                        view.visibility = View.VISIBLE
+                    } else view.visibility = View.GONE
+                }
             }
 
             if (list.items.size > max) {
-                val view = ListItemPreviewBinding.inflate(inflater, binding.LinearLayout, true).root
+                binding.ItemsRemaining.visibility = View.VISIBLE
                 val itemsRemaining = list.items.size - max
-                view.text = if (itemsRemaining == 1) {
+                binding.ItemsRemaining.text = if (itemsRemaining == 1) {
                     binding.root.context.getString(R.string.one_more_item)
                 } else binding.root.context.getString(R.string.more_items, itemsRemaining)
-            }
+            } else binding.ItemsRemaining.visibility = View.GONE
         }
     }
 

@@ -42,7 +42,7 @@ class BaseNoteAdapter(
         return when (ViewType.values()[viewType]) {
             ViewType.NOTE -> {
                 val binding = RecyclerBaseNoteBinding.inflate(inflater, parent, false)
-                BaseNoteVH(binding, settingsHelper, listener, prettyTime, formatter, inflater)
+                BaseNoteVH(binding, settingsHelper, listener, prettyTime, formatter)
             }
             ViewType.HEADER -> {
                 val binding = RecyclerHeaderBinding.inflate(inflater, parent, false)
