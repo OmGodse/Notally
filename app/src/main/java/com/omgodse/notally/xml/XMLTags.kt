@@ -3,6 +3,7 @@ package com.omgodse.notally.xml
 object XMLTags {
     const val Note = "note"
     const val List = "list"
+    const val Color = "color"
     const val Title = "title"
     const val Body = "body"
     const val DateCreated = "date-created"

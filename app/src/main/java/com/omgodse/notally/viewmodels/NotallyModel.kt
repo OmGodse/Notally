@@ -18,7 +18,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
-import kotlin.collections.HashSet
 
 class NotallyModel(app: Application, private val type: Type) : AndroidViewModel(app) {
 
@@ -32,6 +31,7 @@ class NotallyModel(app: Application, private val type: Type) : AndroidViewModel(
     var isFirstInstance = true
 
     var folder = Folder.NOTES
+    var color = Color.DEFAULT
 
     var title = String()
     var pinned = false
@@ -45,6 +45,7 @@ class NotallyModel(app: Application, private val type: Type) : AndroidViewModel(
     fun setStateFromBaseNote(baseNote: BaseNote) {
         id = baseNote.id
         folder = baseNote.folder
+        color = baseNote.color
 
         title = baseNote.title
         pinned = baseNote.pinned
@@ -96,7 +97,7 @@ class NotallyModel(app: Application, private val type: Type) : AndroidViewModel(
         val spans = getFilteredSpans(body)
         val trimmedBody = body.toString().trimEnd()
         val filteredItems = items.filter { (body) -> body.isNotBlank() }
-        return BaseNote(id, type, folder, title, pinned, timestamp, labels, trimmedBody, spans, filteredItems)
+        return BaseNote(id, type, folder, color, title, pinned, timestamp, labels, trimmedBody, spans, filteredItems)
     }
 
     private fun getFilteredSpans(spannable: Spannable): ArrayList<SpanRepresentation> {
