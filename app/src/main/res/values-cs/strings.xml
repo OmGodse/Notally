@@ -84,7 +84,7 @@
     <string name="dark">Tmavé</string>
     <string name="light">Světlé</string>
     <string name="follow_system">Podle systému</string>
-    
+
     <string name="date_format">Formát data</string>
     <string name="none">Žádné</string>
     <string name="relative">Relativní</string>
@@ -101,5 +101,4 @@
     <string name="about">O aplikaci</string>
     <string name="libraries">Knihovny</string>
     <string name="rate">Ohodnotit aplikaci</string>
-    
 </resources>

@@ -15,7 +15,7 @@
 14. 🇩🇰 Danish by [shoddysheep](https://github.com/shoddysheep)
 15. 🇸🇪 Swedish by Erik Lindström
 16. 🇷🇺 Russian by Denis Bondarenko
-17. 🇫🇷 French by Arnaud Dieumegard
+17. 🇫🇷 French by Arnaud Dieumegard, [Co-7](https://github.com/Co-7)
 18. 🇧🇷 Portuguese (Brazil) by [fabianski7](https://github.com/fabianski7)
 19. 🇵🇹 Portuguese (Portugal) by [joaopmatos](https://github.com/joaopmatos)
 20. 🇳🇴 Norwegian (Bokmål) by Fredrik Magnussen, [Erik Thom](https://github.com/erikthm)
