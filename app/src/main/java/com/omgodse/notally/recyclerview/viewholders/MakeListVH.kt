@@ -1,6 +1,5 @@
 package com.omgodse.notally.recyclerview.viewholders
 
-import android.text.InputType
 import android.view.MotionEvent
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.RecyclerView
@@ -22,10 +21,8 @@ class MakeListVH(val binding: RecyclerListItemBinding, listener: ListItemListene
         }
 
         binding.CheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
-            binding.ListItem.paint.isStrikeThruText = isChecked
             binding.ListItem.isEnabled = !isChecked
-
-            listener.onCheckedChange(adapterPosition, isChecked)
+            listener.checkedChanged(adapterPosition, isChecked)
         }
 
         binding.DragHandle.setOnTouchListener { v, event ->
@@ -39,6 +36,5 @@ class MakeListVH(val binding: RecyclerListItemBinding, listener: ListItemListene
     fun bind(item: ListItem) {
         binding.ListItem.setText(item.body)
         binding.CheckBox.isChecked = item.checked
-        binding.ListItem.setRawInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES)
     }
 }
