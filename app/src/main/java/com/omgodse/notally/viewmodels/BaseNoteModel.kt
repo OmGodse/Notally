@@ -111,7 +111,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     fun exportBackup(uri: Uri) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                val labels = labelDao.getListOfAll().toHashSet()
+                val labels = labelDao.getListOfAll()
                 val baseNotes = baseNoteDao.getListFrom(Folder.NOTES)
                 val deletedNotes = baseNoteDao.getListFrom(Folder.DELETED)
                 val archivedNotes = baseNoteDao.getListFrom(Folder.ARCHIVED)
@@ -158,8 +158,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
 
     suspend fun getXMLFile(baseNote: BaseNote) = withContext(Dispatchers.IO) {
-        val name = getFileName(baseNote)
-        val file = File(getExportedPath(), "$name.xml")
+        val file = File(getExportedPath(), "Untitled.xml")
         val outputStream = FileOutputStream(file)
         XMLUtils.writeBaseNoteToStream(baseNote, outputStream)
         outputStream.close()
@@ -167,32 +166,28 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     }
 
     suspend fun getJSONFile(baseNote: BaseNote) = withContext(Dispatchers.IO) {
-        val name = getFileName(baseNote)
-        val file = File(getExportedPath(), "$name.json")
+        val file = File(getExportedPath(), "Untitled.json")
         val json = getJSON(baseNote)
         file.writeText(json)
         file
     }
 
     suspend fun getTXTFile(baseNote: BaseNote, showDateCreated: Boolean) = withContext(Dispatchers.IO) {
-        val name = getFileName(baseNote)
-        val file = File(getExportedPath(), "$name.txt")
+        val file = File(getExportedPath(), "Untitled.txt")
         val text = getTXT(baseNote, showDateCreated)
         file.writeText(text)
         file
     }
 
     suspend fun getHTMLFile(baseNote: BaseNote, showDateCreated: Boolean) = withContext(Dispatchers.IO) {
-        val name = getFileName(baseNote)
-        val file = File(getExportedPath(), "$name.html")
+        val file = File(getExportedPath(), "Untitled.html")
         val html = getHTML(baseNote, showDateCreated)
         file.writeText(html)
         file
     }
 
     fun getPDFFile(baseNote: BaseNote, showDateCreated: Boolean, onResult: PostPDFGenerator.OnResult) {
-        val name = getFileName(baseNote)
-        val file = File(getExportedPath(), "$name.pdf")
+        val file = File(getExportedPath(), "Untitled.pdf")
         val html = getHTML(baseNote, showDateCreated)
         PostPDFGenerator.create(file, html, app, onResult)
     }
@@ -246,6 +241,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
         val jsonObject = JSONObject()
             .put("type", baseNote.type.name)
+            .put("color", baseNote.color.name)
             .put(XMLTags.Title, baseNote.title)
             .put(XMLTags.Pinned, baseNote.pinned)
             .put(XMLTags.DateCreated, baseNote.timestamp)

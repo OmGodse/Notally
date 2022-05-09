@@ -28,7 +28,7 @@ object XMLUtils {
         var baseNotes = listOf<BaseNote>()
         var deletedNotes = listOf<BaseNote>()
         var archivedNotes = listOf<BaseNote>()
-        val labels = HashSet<String>()
+        val labels = ArrayList<String>()
 
         while (parser.next() != XmlPullParser.END_DOCUMENT) {
             if (parser.eventType == XmlPullParser.START_TAG) {
