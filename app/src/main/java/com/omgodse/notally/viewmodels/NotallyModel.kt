@@ -3,11 +3,9 @@ package com.omgodse.notally.viewmodels
 import android.app.Application
 import android.graphics.Typeface
 import android.text.Editable
-import android.text.Spannable
-import android.text.style.StrikethroughSpan
-import android.text.style.StyleSpan
-import android.text.style.TypefaceSpan
-import android.text.style.URLSpan
+import android.text.Spanned
+import android.text.style.*
+import androidx.core.text.getSpans
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -100,12 +98,11 @@ class NotallyModel(app: Application, private val type: Type) : AndroidViewModel(
         return BaseNote(id, type, folder, color, title, pinned, timestamp, labels, trimmedBody, spans, filteredItems)
     }
 
-    private fun getFilteredSpans(spannable: Spannable): ArrayList<SpanRepresentation> {
+    private fun getFilteredSpans(spanned: Spanned): ArrayList<SpanRepresentation> {
         val representations = LinkedHashSet<SpanRepresentation>()
-        val spans = spannable.getSpans(0, spannable.length, Any::class.java)
-        spans.forEach { span ->
-            val end = spannable.getSpanEnd(span)
-            val start = spannable.getSpanStart(span)
+        spanned.getSpans<CharacterStyle>().forEach { span ->
+            val end = spanned.getSpanEnd(span)
+            val start = spanned.getSpanStart(span)
             val representation = SpanRepresentation(false, false, false, false, false, start, end)
 
             when (span) {

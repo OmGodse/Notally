@@ -8,10 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.RecyclerBaseNoteBinding
 import com.omgodse.notally.helpers.SettingsHelper
+import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.miscellaneous.applySpans
-import com.omgodse.notally.miscellaneous.bindLabels
 import com.omgodse.notally.recyclerview.ItemListener
 import com.omgodse.notally.room.BaseNote
+import com.omgodse.notally.room.Color
 import com.omgodse.notally.room.Type
 import org.ocpsoft.prettytime.PrettyTime
 import java.text.SimpleDateFormat
@@ -44,35 +45,29 @@ class BaseNoteVH(
             Type.LIST -> bindList(baseNote)
         }
 
+        setDate(baseNote)
+        setColor(baseNote)
+
         binding.Title.text = baseNote.title
         binding.Title.isVisible = baseNote.title.isNotEmpty()
 
-        val date = Date(baseNote.timestamp)
-        if (settingsHelper.showDateCreated()) {
-            when (settingsHelper.getDateFormat()) {
-                SettingsHelper.DateFormat.relative -> binding.Date.text = prettyTime.format(date)
-                SettingsHelper.DateFormat.absolute -> binding.Date.text = formatter.format(date)
-            }
-            binding.Date.visibility = View.VISIBLE
-        } else binding.Date.visibility = View.GONE
-
-        binding.LabelGroup.bindLabels(baseNote.labels)
+        Operations.bindLabels(binding.LabelGroup, baseNote.labels)
 
         if (isEmpty(baseNote)) {
-            binding.Note.setText(getEmptyMessage(baseNote))
-            binding.Note.isVisible = true
+            binding.Title.setText(getEmptyMessage(baseNote))
+            binding.Title.visibility = View.VISIBLE
         }
     }
 
     private fun bindNote(note: BaseNote) {
-        binding.LinearLayout.isVisible = false
+        binding.LinearLayout.visibility = View.GONE
 
         binding.Note.text = note.body.applySpans(note.spans)
         binding.Note.isVisible = note.body.isNotEmpty()
     }
 
     private fun bindList(list: BaseNote) {
-        binding.Note.isVisible = false
+        binding.Note.visibility = View.GONE
 
         if (list.items.isEmpty()) {
             binding.LinearLayout.visibility = View.GONE
@@ -104,6 +99,28 @@ class BaseNoteVH(
     }
 
 
+    private fun setDate(baseNote: BaseNote) {
+        val date = Date(baseNote.timestamp)
+        if (settingsHelper.showDateCreated()) {
+            when (settingsHelper.getDateFormat()) {
+                SettingsHelper.DateFormat.relative -> binding.Date.text = prettyTime.format(date)
+                SettingsHelper.DateFormat.absolute -> binding.Date.text = formatter.format(date)
+            }
+            binding.Date.visibility = View.VISIBLE
+        } else binding.Date.visibility = View.GONE
+    }
+
+    private fun setColor(baseNote: BaseNote) {
+        val context = binding.root.context
+        val color = Operations.extractColor(baseNote.color, context)
+        binding.CardView.setCardBackgroundColor(color)
+
+        if (baseNote.color == Color.DEFAULT) {
+            binding.CardView.strokeWidth = context.resources.getDimensionPixelSize(R.dimen.unit)
+        } else binding.CardView.strokeWidth = 0
+    }
+
+
     private fun isEmpty(baseNote: BaseNote): Boolean {
         return when (baseNote.type) {
             Type.NOTE -> baseNote.title.isBlank() && baseNote.body.isBlank()
@@ -122,6 +139,5 @@ class BaseNoteVH(
         if (checked) {
             textView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.checkbox_16, 0, 0, 0)
         } else textView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.checkbox_outline_16, 0, 0, 0)
-        textView.paint.isStrikeThruText = checked
     }
 }

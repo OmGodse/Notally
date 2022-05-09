@@ -2,26 +2,35 @@ package com.omgodse.notally.recyclerview.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.omgodse.notally.databinding.RecyclerListItemBinding
+import com.omgodse.notally.recyclerview.DragSwipeCallback
 import com.omgodse.notally.recyclerview.ListItemListener
 import com.omgodse.notally.recyclerview.viewholders.MakeListVH
 import com.omgodse.notally.room.ListItem
-import java.util.*
 
-class MakeListAdapter(private val items: ArrayList<ListItem>, private val listener: ListItemListener) :
+class MakeListAdapter(elevation: Float, val list: ArrayList<ListItem>, private val listener: ListItemListener) :
     RecyclerView.Adapter<MakeListVH>() {
 
-    override fun getItemCount() = items.size
+    private val callback = DragSwipeCallback(elevation, this)
+    private val touchHelper = ItemTouchHelper(callback)
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        touchHelper.attachToRecyclerView(recyclerView)
+    }
+
+
+    override fun getItemCount() = list.size
 
     override fun onBindViewHolder(holder: MakeListVH, position: Int) {
-        val item = items[position]
+        val item = list[position]
         holder.bind(item)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MakeListVH {
         val inflater = LayoutInflater.from(parent.context)
         val binding = RecyclerListItemBinding.inflate(inflater, parent, false)
-        return MakeListVH(binding, listener)
+        return MakeListVH(binding, listener, touchHelper)
     }
 }

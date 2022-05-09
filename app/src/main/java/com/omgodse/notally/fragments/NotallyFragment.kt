@@ -24,15 +24,16 @@ import com.omgodse.notally.MenuDialog
 import com.omgodse.notally.R
 import com.omgodse.notally.activities.MakeList
 import com.omgodse.notally.activities.TakeNote
+import com.omgodse.notally.databinding.DialogColorBinding
 import com.omgodse.notally.databinding.FragmentNotesBinding
 import com.omgodse.notally.helpers.OperationsParent
 import com.omgodse.notally.helpers.SettingsHelper
 import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.miscellaneous.applySpans
-import com.omgodse.notally.miscellaneous.getBody
 import com.omgodse.notally.recyclerview.ItemListener
 import com.omgodse.notally.recyclerview.adapters.BaseNoteAdapter
+import com.omgodse.notally.recyclerview.adapters.ColorAdapter
 import com.omgodse.notally.room.*
 import com.omgodse.notally.viewmodels.BaseNoteModel
 import kotlinx.coroutines.launch
@@ -80,9 +81,9 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
     }
 
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
         if (requestCode == Constants.RequestCodeExportFile && resultCode == Activity.RESULT_OK) {
-            data?.data?.let { uri ->
+            intent?.data?.let { uri ->
                 model.writeCurrentFileToUri(uri)
             }
         }
@@ -144,6 +145,7 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
                 dialog.add(R.string.export) { export(baseNote) }
                 dialog.add(R.string.delete) { model.moveBaseNoteToDeleted(baseNote.id) }
                 dialog.add(R.string.archive) { model.moveBaseNoteToArchive(baseNote.id) }
+                dialog.add(R.string.change_color) { color(baseNote) }
             }
             Folder.DELETED -> {
                 dialog.add(R.string.restore) { model.restoreBaseNote(baseNote.id) }
@@ -166,7 +168,7 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
     private fun share(baseNote: BaseNote) {
         val body = when (baseNote.type) {
             Type.NOTE -> baseNote.body.applySpans(baseNote.spans)
-            Type.LIST -> baseNote.items.getBody()
+            Type.LIST -> Operations.getBody(baseNote.items)
         }
         Operations.shareNote(requireContext(), baseNote.title, body)
     }
@@ -198,6 +200,28 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
             }
             .setNegativeButton(R.string.cancel, null)
             .show()
+    }
+
+    private fun color(baseNote: BaseNote) {
+        val dialog = MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.change_color)
+            .create()
+
+        val colorAdapter = ColorAdapter(object : ItemListener {
+            override fun onClick(position: Int) {
+                dialog.dismiss()
+                val color = Color.values()[position]
+                model.colorBaseNote(baseNote.id, color)
+            }
+
+            override fun onLongClick(position: Int) {}
+        })
+
+        val dialogBinding = DialogColorBinding.inflate(layoutInflater)
+        dialogBinding.RecyclerView.adapter = colorAdapter
+
+        dialog.setView(dialogBinding.root)
+        dialog.show()
     }
 
 

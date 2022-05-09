@@ -12,22 +12,16 @@ import android.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.core.text.getSpans
 import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.LinkMovementMethod
 import com.omgodse.notally.R
-import com.omgodse.notally.databinding.ActivityTakeNoteBinding
 import com.omgodse.notally.miscellaneous.Operations
-import com.omgodse.notally.miscellaneous.bindLabels
-import com.omgodse.notally.miscellaneous.getLocale
 import com.omgodse.notally.miscellaneous.setOnNextAction
 import com.omgodse.notally.room.Type
-import com.omgodse.notally.viewmodels.BaseNoteModel
 
-class TakeNote : NotallyActivity() {
-
-    override val type = Type.NOTE
-    override val binding by lazy { ActivityTakeNoteBinding.inflate(layoutInflater) }
+class TakeNote : NotallyActivity(Type.NOTE) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,14 +31,10 @@ class TakeNote : NotallyActivity() {
         }
 
         setupEditor()
-        setupListeners()
-        setupToolbar(binding.Toolbar)
 
         if (model.isNewNote) {
             binding.EnterBody.requestFocus()
         }
-
-        setStateFromModel()
     }
 
 
@@ -66,7 +56,17 @@ class TakeNote : NotallyActivity() {
     }
 
 
-    override fun getLabelGroup() = binding.LabelGroup
+    override fun setupListeners() {
+        super.setupListeners()
+        binding.EnterBody.doAfterTextChanged { text ->
+            model.body = text
+        }
+    }
+
+    override fun setStateFromModel() {
+        super.setStateFromModel()
+        binding.EnterBody.text = model.body
+    }
 
 
     private fun setupEditor() {
@@ -117,25 +117,6 @@ class TakeNote : NotallyActivity() {
         }
     }
 
-    private fun setupListeners() {
-        binding.EnterTitle.doAfterTextChanged { text ->
-            model.title = text.toString().trim()
-        }
-        binding.EnterBody.doAfterTextChanged { text ->
-            model.body = text
-        }
-    }
-
-    private fun setStateFromModel() {
-        val formatter = BaseNoteModel.getDateFormatter(getLocale())
-
-        binding.EnterTitle.setText(model.title)
-        binding.EnterBody.text = model.body
-        binding.DateCreated.text = formatter.format(model.timestamp)
-
-        binding.LabelGroup.bindLabels(model.labels)
-    }
-
     private fun setupMovementMethod() {
         val movementMethod = LinkMovementMethod { span ->
             MaterialAlertDialogBuilder(this)
@@ -170,18 +151,18 @@ class TakeNote : NotallyActivity() {
         val selectionStart = binding.EnterBody.selectionStart
 
         ifBothNotNullAndInvalid(selectionStart, selectionEnd) { start, end ->
-            binding.EnterBody.text?.getSpans(start, end, CharacterStyle::class.java)?.forEach { span ->
+            binding.EnterBody.text?.getSpans<CharacterStyle>(start, end)?.forEach { span ->
                 binding.EnterBody.text?.removeSpan(span)
             }
         }
     }
 
-    private fun applySpan(spanToApply: Any) {
+    private fun applySpan(span: Any) {
         val selectionEnd = binding.EnterBody.selectionEnd
         val selectionStart = binding.EnterBody.selectionStart
 
         ifBothNotNullAndInvalid(selectionStart, selectionEnd) { start, end ->
-            binding.EnterBody.text?.setSpan(spanToApply, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            binding.EnterBody.text?.setSpan(span, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
     }
 

@@ -12,9 +12,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.room.withTransaction
 import com.omgodse.notally.R
+import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.miscellaneous.applySpans
-import com.omgodse.notally.miscellaneous.getBody
-import com.omgodse.notally.miscellaneous.getLocale
 import com.omgodse.notally.room.*
 import com.omgodse.notally.room.livedata.Content
 import com.omgodse.notally.room.livedata.SearchResult
@@ -30,8 +29,6 @@ import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
@@ -41,7 +38,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     private val baseNoteDao = database.baseNoteDao
 
     private val labelCache = HashMap<String, Content>()
-    val formatter = getDateFormatter(app.getLocale())
+    val formatter = getDateFormatter(app)
 
     var currentFile: File? = null
 
@@ -201,6 +198,9 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     }
 
 
+    fun colorBaseNote(id: Long, color: Color) = executeAsync { baseNoteDao.updateColor(id, color) }
+
+
     fun pinBaseNote(id: Long) = executeAsync { baseNoteDao.updatePinned(id, true) }
 
     fun unpinBaseNote(id: Long) = executeAsync { baseNoteDao.updatePinned(id, false) }
@@ -240,24 +240,6 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         return filePath
     }
 
-    private fun getFileName(baseNote: BaseNote): String {
-        val title = baseNote.title
-        val body = when (baseNote.type) {
-            Type.NOTE -> baseNote.body
-            Type.LIST -> baseNote.items.getBody()
-        }
-        val fileName = if (title.isEmpty()) {
-            val words = body.split(" ").take(2)
-            buildString {
-                words.forEach {
-                    append(it)
-                    append(" ")
-                }
-            }
-        } else title
-        return fileName.take(64).replace("/", "")
-    }
-
 
     private fun getJSON(baseNote: BaseNote): String {
         val labels = JSONArray(baseNote.labels)
@@ -289,7 +271,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
         val body = when (baseNote.type) {
             Type.NOTE -> baseNote.body
-            Type.LIST -> baseNote.items.getBody()
+            Type.LIST -> Operations.getBody(baseNote.items)
         }
 
         if (baseNote.title.isNotEmpty()) {
@@ -334,9 +316,9 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
     private fun getPreviousNotes(): List<BaseNote> {
         val previousNotes = ArrayList<BaseNote>()
-        getNotePath().listFiles()?.mapTo(previousNotes, { file -> XMLUtils.readBaseNoteFromFile(file, Folder.NOTES) })
-        getDeletedPath().listFiles()?.mapTo(previousNotes, { file -> XMLUtils.readBaseNoteFromFile(file, Folder.DELETED) })
-        getArchivedPath().listFiles()?.mapTo(previousNotes, { file -> XMLUtils.readBaseNoteFromFile(file, Folder.ARCHIVED) })
+        getNotePath().listFiles()?.mapTo(previousNotes) { file -> XMLUtils.readBaseNoteFromFile(file, Folder.NOTES) }
+        getDeletedPath().listFiles()?.mapTo(previousNotes) { file -> XMLUtils.readBaseNoteFromFile(file, Folder.DELETED) }
+        getArchivedPath().listFiles()?.mapTo(previousNotes) { file -> XMLUtils.readBaseNoteFromFile(file, Folder.ARCHIVED) }
         return previousNotes
     }
 
@@ -371,7 +353,8 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
     companion object {
 
-        fun getDateFormatter(locale: Locale): SimpleDateFormat {
+        fun getDateFormatter(context: Context): SimpleDateFormat {
+            val locale = context.resources.configuration.locale
             val pattern = when (locale.language) {
                 Locale.CHINESE.language,
                 Locale.JAPANESE.language -> "yyyy年 MMM d日 (EEE)"
