@@ -15,6 +15,7 @@
     <string name="archive">Archiver</string>
     <string name="unarchive">Restaurer</string>
     <string name="delete_all">Tout supprimer</string>
+    <string name="change_color">Changer la couleur</string>
     <string name="delete_forever">Supprimer définitivement</string>
 
     <!-- Chooser dialog hints -->
