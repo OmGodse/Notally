@@ -3,6 +3,8 @@
     <style name="Base.AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">?attr/colorSurface</item>
         <item name="colorPrimaryDark">?attr/colorSurface</item>
+
+        <item name="android:navigationBarColor">@color/Black</item>
         <item name="android:colorEdgeEffect">?attr/colorSecondary</item>
 
         <item name="windowActionModeOverlay">true</item>
@@ -25,12 +27,12 @@
     </style>
 
     <style name="AppTheme" parent="Base.AppTheme">
-        <item name="colorPrimaryDark">@android:color/black</item>
+        <item name="colorPrimaryDark">@color/Black</item>
         <item name="colorSecondary">@color/LightBlue500</item>
     </style>
 
     <style name="MainActivity" parent="AppTheme">
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@color/Transparent</item>
     </style>
 
 
@@ -52,6 +54,13 @@
         <item name="android:paddingBottom">16dp</item>
         <item name="android:maxLines">1</item>
         <item name="android:ellipsize">end</item>
+        <item name="android:textColor">?attr/colorControlNormal</item>
+        <item name="android:textAppearance">?attr/textAppearanceBody2</item>
+    </style>
+
+    <style name="Preview.ListItem">
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:drawablePadding">12dp</item>
     </style>
 
     <style name="TextView.Clickable" parent="Widget.AppCompat.TextView">
@@ -71,30 +80,6 @@
     </style>
 
 
-    <style name="EditText.Title" parent="Widget.AppCompat.EditText">
-        <item name="android:paddingTop">16dp</item>
-        <item name="android:paddingEnd">24dp</item>
-        <item name="android:paddingStart">24dp</item>
-        <item name="android:paddingBottom">0dp</item>
-        <item name="android:hint">@string/title</item>
-        <item name="android:imeOptions">actionNext</item>
-        <item name="android:textColor">?attr/colorSecondary</item>
-        <item name="android:textAppearance">?attr/textAppearanceHeadline6</item>
-        <item name="android:background">@null</item>
-        <item name="android:inputType">textMultiLine|textCapSentences</item>
-    </style>
-
-    <style name="DateCreated" parent="Widget.MaterialComponents.TextView">
-        <item name="android:paddingStart">24dp</item>
-        <item name="android:paddingEnd">24dp</item>
-        <item name="android:paddingTop">16dp</item>
-        <item name="android:paddingBottom">16dp</item>
-        <item name="android:text">@string/date</item>
-        <item name="android:textColor">?android:textColorHint</item>
-        <item name="android:textAppearance">?attr/textAppearanceBody2</item>
-    </style>
-
-
     <style name="AlertDialog.Title" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
@@ -109,4 +94,9 @@
     <style name="PrimarySecondarySwap" parent="ThemeOverlay.MaterialComponents">
         <item name="colorPrimary">?attr/colorSecondary</item>
     </style>
+
+    <style name="Colorless" parent="ThemeOverlay.MaterialComponents">
+        <item name="colorSecondary">?attr/colorOnSurface</item>
+    </style>
+
 </resources>

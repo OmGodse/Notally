@@ -13,46 +13,72 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/Toolbar"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:theme="@style/Colorless">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clipToPadding="false"
             android:focusableInTouchMode="true"
             android:orientation="vertical"
             android:paddingBottom="16dp">
 
             <EditText
                 android:id="@+id/EnterTitle"
-                style="@style/EditText.Title"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="@string/title"
+                android:imeOptions="actionNext"
+                android:inputType="textMultiLine|textCapSentences"
+                android:paddingStart="24dp"
+                android:paddingTop="16dp"
+                android:paddingEnd="24dp"
+                android:textAppearance="?attr/textAppearanceHeadline6" />
 
             <TextView
                 android:id="@+id/DateCreated"
-                style="@style/DateCreated"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:paddingStart="24dp"
+                android:paddingTop="16dp"
+                android:paddingEnd="24dp"
+                android:paddingBottom="16dp"
+                android:text="@string/date"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="?android:textColorHint" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="?android:attr/listDivider" />
 
+            <com.omgodse.notally.OverflowEditText
+                android:id="@+id/EnterBody"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="@string/note"
+                android:inputType="textMultiLine|textCapSentences"
+                android:paddingStart="24dp"
+                android:paddingTop="16dp"
+                android:paddingEnd="24dp"
+                android:paddingBottom="16dp"
+                android:textAppearance="?attr/textAppearanceBody1" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/RecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clipToPadding="false"
                 android:overScrollMode="never"
-                android:paddingTop="4dp" />
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             <TextView
                 android:id="@+id/AddItem"
                 style="@style/TextView.Clickable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:drawablePadding="12dp"
                 android:gravity="center_vertical"
                 android:paddingStart="20dp"
@@ -60,7 +86,7 @@
                 android:paddingEnd="20dp"
                 android:paddingBottom="12dp"
                 android:text="@string/add_item"
-                android:textAppearance="?textAppearanceSubtitle2"
+                android:textAppearance="?attr/textAppearanceSubtitle2"
                 android:textColor="?android:textColorHint"
                 app:drawableStartCompat="@drawable/add"
                 app:drawableTint="?android:textColorHint" />
@@ -69,9 +95,8 @@
                 android:id="@+id/LabelGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="16dp"
-                android:paddingTop="8dp"
-                android:paddingEnd="16dp" />
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp" />
 
         </LinearLayout>
 

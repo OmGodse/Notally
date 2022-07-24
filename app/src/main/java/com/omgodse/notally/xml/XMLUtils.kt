@@ -28,7 +28,7 @@ object XMLUtils {
         var baseNotes = listOf<BaseNote>()
         var deletedNotes = listOf<BaseNote>()
         var archivedNotes = listOf<BaseNote>()
-        val labels = HashSet<String>()
+        val labels = ArrayList<String>()
 
         while (parser.next() != XmlPullParser.END_DOCUMENT) {
             if (parser.eventType == XmlPullParser.START_TAG) {
@@ -62,6 +62,8 @@ object XMLUtils {
     }
 
     private fun parseBaseNote(parser: XmlPullParser, rootTag: String, folder: Folder): BaseNote {
+        var color = Color.DEFAULT
+
         var body = String()
         var title = String()
         var timestamp = 0L
@@ -74,6 +76,7 @@ object XMLUtils {
         while (parser.next() != XmlPullParser.END_DOCUMENT) {
             if (parser.eventType == XmlPullParser.START_TAG) {
                 when (parser.name) {
+                    XMLTags.Color -> color = Color.valueOf(parser.nextText())
                     XMLTags.Title -> title = parser.nextText()
                     XMLTags.Body -> body = parser.nextText()
                     XMLTags.DateCreated -> timestamp = parser.nextText().toLong()
@@ -89,9 +92,10 @@ object XMLUtils {
             }
         }
 
-        return if (rootTag == XMLTags.Note) {
-            BaseNote.createNote(0, folder, title, pinned, timestamp, labels, body, spans)
-        } else BaseNote.createList(0, folder, title, pinned, timestamp, labels, items)
+        val type = if (rootTag == XMLTags.Note) {
+            Type.NOTE
+        } else Type.LIST
+        return BaseNote(0, type, folder, color, title, pinned, timestamp, labels, body, spans, items)
     }
 
 
@@ -134,6 +138,7 @@ object XMLUtils {
     private fun appendNote(note: BaseNote, xmlSerializer: XmlSerializer) {
         xmlSerializer.startTag(null, XMLTags.Note)
 
+        xmlSerializer.writeTagContent(XMLTags.Color, note.color.name)
         xmlSerializer.writeTagContent(XMLTags.DateCreated, note.timestamp.toString())
         xmlSerializer.writeTagContent(XMLTags.Pinned, note.pinned.toString())
         xmlSerializer.writeTagContent(XMLTags.Title, note.title)
@@ -172,6 +177,7 @@ object XMLUtils {
     private fun appendList(list: BaseNote, xmlSerializer: XmlSerializer) {
         xmlSerializer.startTag(null, XMLTags.List)
 
+        xmlSerializer.writeTagContent(XMLTags.Color, list.color.name)
         xmlSerializer.writeTagContent(XMLTags.DateCreated, list.timestamp.toString())
         xmlSerializer.writeTagContent(XMLTags.Pinned, list.pinned.toString())
         xmlSerializer.writeTagContent(XMLTags.Title, list.title)

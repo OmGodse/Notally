@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="Default">#121212</color>
+    <color name="Coral">#76172D</color>
+    <color name="Orange">#692A18</color>
+    <color name="Sand">#7C4A03</color>
+    <color name="Storm">#274255</color>
+    <color name="Fog">#256476</color>
+    <color name="Sage">#0C635D</color>
+    <color name="Mint">#264D3B</color>
+    <color name="Dusk">#482E5B</color>
+    <color name="Flower">#880E4F</color>
+    <color name="Blossom">#6D394F</color>
+    <color name="Clay">#4B443A</color>
+</resources>

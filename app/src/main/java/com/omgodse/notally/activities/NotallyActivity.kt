@@ -2,30 +2,34 @@ package com.omgodse.notally.activities
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
-import androidx.viewbinding.ViewBinding
-import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.chip.ChipGroup
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.R
+import com.omgodse.notally.databinding.ActivityNotallyBinding
 import com.omgodse.notally.helpers.OperationsParent
-import com.omgodse.notally.miscellaneous.*
+import com.omgodse.notally.miscellaneous.Constants
+import com.omgodse.notally.miscellaneous.Operations
+import com.omgodse.notally.miscellaneous.add
 import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Folder
 import com.omgodse.notally.room.Label
 import com.omgodse.notally.room.Type
+import com.omgodse.notally.viewmodels.BaseNoteModel
 import com.omgodse.notally.viewmodels.NotallyModel
 import kotlinx.coroutines.launch
 
-abstract class NotallyActivity : AppCompatActivity(), OperationsParent {
+abstract class NotallyActivity(private val type: Type) : AppCompatActivity(), OperationsParent {
 
-    internal abstract val type: Type
-    internal abstract val binding: ViewBinding
+    internal lateinit var binding: ActivityNotallyBinding
     internal val model: NotallyModel by viewModels { NotallyModel.Factory(application, type) }
 
     override fun onBackPressed() {
@@ -40,9 +44,9 @@ abstract class NotallyActivity : AppCompatActivity(), OperationsParent {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initialiseBinding()
         setContentView(binding.root)
-
-        binding.root.isSaveFromParentEnabled = false
+        setupToolbar()
 
         if (model.isFirstInstance) {
             val selectedBaseNote = intent.getParcelableExtra<BaseNote>(Constants.SelectedBaseNote)
@@ -57,6 +61,9 @@ abstract class NotallyActivity : AppCompatActivity(), OperationsParent {
 
             model.isFirstInstance = false
         }
+
+        setupListeners()
+        setStateFromModel()
     }
 
 
@@ -102,16 +109,35 @@ abstract class NotallyActivity : AppCompatActivity(), OperationsParent {
     }
 
 
-    abstract fun getLabelGroup(): ChipGroup
-
-
     open fun receiveSharedNote() {}
+
+    open fun setupListeners() {
+        binding.EnterTitle.doAfterTextChanged { text ->
+            model.title = requireNotNull(text).toString().trim()
+        }
+    }
+
+    open fun setStateFromModel() {
+        val formatter = BaseNoteModel.getDateFormatter(this)
+        binding.DateCreated.text = formatter.format(model.timestamp)
+
+        val color = Operations.extractColor(model.color, this)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            window.statusBarColor = color
+        }
+        binding.root.setBackgroundColor(color)
+        binding.RecyclerView.setBackgroundColor(color)
+        binding.Toolbar.backgroundTintList = ColorStateList.valueOf(color)
+
+        binding.EnterTitle.setText(model.title)
+        Operations.bindLabels(binding.LabelGroup, model.labels)
+    }
 
 
     private fun share() {
         val body = when (type) {
             Type.NOTE -> model.body
-            Type.LIST -> model.items.getBody()
+            Type.LIST -> Operations.getBody(model.items)
         }
         Operations.shareNote(this, model.title, body)
     }
@@ -121,7 +147,7 @@ abstract class NotallyActivity : AppCompatActivity(), OperationsParent {
             val labels = model.getAllLabelsAsList()
             labelNote(labels, model.labels) { updatedLabels ->
                 model.labels = updatedLabels
-                getLabelGroup().bindLabels(updatedLabels)
+                Operations.bindLabels(binding.LabelGroup, updatedLabels)
             }
         }
     }
@@ -159,6 +185,26 @@ abstract class NotallyActivity : AppCompatActivity(), OperationsParent {
     }
 
 
+    private fun setupToolbar() {
+        setSupportActionBar(binding.Toolbar)
+        supportActionBar?.title = null
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    private fun initialiseBinding() {
+        binding = ActivityNotallyBinding.inflate(layoutInflater)
+        when (type) {
+            Type.NOTE -> {
+                binding.AddItem.visibility = View.GONE
+                binding.RecyclerView.visibility = View.GONE
+            }
+            Type.LIST -> {
+                binding.EnterBody.visibility = View.GONE
+            }
+        }
+        binding.root.isSaveFromParentEnabled = false
+    }
+
     private fun bindPinned(item: MenuItem) {
         val icon: Int
         val title: Int
@@ -171,11 +217,5 @@ abstract class NotallyActivity : AppCompatActivity(), OperationsParent {
         }
         item.setTitle(title)
         item.setIcon(icon)
-    }
-
-    internal fun setupToolbar(toolbar: MaterialToolbar) {
-        setSupportActionBar(toolbar)
-        supportActionBar?.title = null
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 }

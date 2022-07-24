@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.room.*
 import com.omgodse.notally.room.BaseNote
+import com.omgodse.notally.room.Color
 import com.omgodse.notally.room.Folder
 
 @Dao
@@ -36,6 +37,9 @@ interface BaseNoteDao {
     @Query("UPDATE BaseNote SET folder = :folder WHERE id = :id")
     suspend fun move(id: Long, folder: Folder)
 
+
+    @Query("UPDATE BaseNote SET color = :color WHERE id = :id")
+    suspend fun updateColor(id: Long, color: Color)
 
     @Query("UPDATE BaseNote SET pinned = :pinned WHERE id = :id")
     suspend fun updatePinned(id: Long, pinned: Boolean)

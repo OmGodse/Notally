@@ -12,9 +12,10 @@
     <string name="search">Pesquisar</string>
     <string name="delete">Deletar</string>
     <string name="restore">Restaurar</string>
-    <string name="archive">Arquivas</string>
+    <string name="archive">Arquivar</string>
     <string name="unarchive">Desarquivar</string>
     <string name="delete_all">Deletar todas</string>
+    <string name="change_color">Mudar cor</string>
     <string name="delete_forever">Deletar para sempre</string>
 
     <!-- Chooser dialog hints -->

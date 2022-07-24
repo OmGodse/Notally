@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Fragment Titles -->
-    <string name="notes">Note</string>
+    <string name="notes">Notes</string>
     <string name="labels">Étiquettes</string>
     <string name="deleted">Éléments supprimés</string>
     <string name="archived">Éléments archivés</string>
@@ -15,6 +15,7 @@
     <string name="archive">Archiver</string>
     <string name="unarchive">Restaurer</string>
     <string name="delete_all">Tout supprimer</string>
+    <string name="change_color">Changer la couleur</string>
     <string name="delete_forever">Supprimer définitivement</string>
 
     <!-- Chooser dialog hints -->
@@ -25,16 +26,20 @@
     <string name="pin">Épingler</string>
     <string name="unpin">Détacher</string>
     <string name="pinned">Épinglé</string>
+    <string name="others">Autres</string>
 
     <!-- Dialogs -->
     <string name="save">Sauvegarder</string>
     <string name="edit">Modifier</string>
     <string name="cancel">Annuler</string>
+    <string name="open_link">Ouvrir le lien</string>
     <string name="make_list">Créer une liste</string>
     <string name="take_note">Prendre des notes</string>
     <string name="add_label">Ajouter une étiquette</string>
     <string name="export">Exporter</string>
+    <string name="more_options">Options supplémentaires</string>
     <string name="save_to_device">Sauvegarder sur l\'appareil</string>
+    <string name="view_file">Voir le fichier</string>
     <string name="edit_label">Modifier l\'étiquette</string>
     <string name="label_exists">L\'étiquette existe</string>
     <string name="delete_label">Supprimer l\'étiquette ?</string>
@@ -86,6 +91,8 @@
     <string name="max_lines_to_display">Nombre maximum de lignes à afficher dans une note</string>
 
     <string name="backup">Sauvegarde</string>
+    <string name="export_backup">Exporter la sauvegarde</string>
+    <string name="import_backup">Importer une sauvegarde</string>
 
     <string name="about">A propos</string>
     <string name="libraries">Librairies</string>

@@ -76,6 +76,11 @@
     <string name="list">Lista</string>
     <string name="grid">Cuadrícula</string>
 
+    <string name="date_format">Formato de fecha</string>
+    <string name="none">Ninguno</string>
+    <string name="relative">Relativo</string>
+    <string name="absolute">Absoluto</string>
+
     <string name="theme">Tema</string>
     <string name="dark">Oscuro</string>
     <string name="light">Claro</string>
@@ -86,8 +91,10 @@
     <string name="max_lines_to_display">Elementos máximos para mostrar en nota</string>
 
     <string name="backup">Respaldar</string>
+    <string name="export_backup">Exportar copia de seguridad</string>
+    <string name="import_backup">Importar copia de seguridad</string>
 
-    <string name="about">Sobre</string>
+    <string name="about">Acerca de</string>
     <string name="libraries">Bibliotecas</string>
     <string name="rate">Calificar esta app</string>
 </resources>

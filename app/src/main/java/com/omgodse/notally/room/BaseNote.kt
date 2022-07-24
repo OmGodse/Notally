@@ -12,6 +12,7 @@ data class BaseNote(
     @PrimaryKey(autoGenerate = true) val id: Long,
     val type: Type,
     val folder: Folder,
+    val color: Color,
     val title: String,
     val pinned: Boolean,
     val timestamp: Long,
@@ -19,16 +20,4 @@ data class BaseNote(
     val body: String,
     val spans: List<SpanRepresentation>,
     val items: List<ListItem>,
-) : Item(ViewType.NOTE), Parcelable {
-
-    companion object {
-
-        fun createNote(id: Long, folder: Folder, title: String, pinned: Boolean, timestamp: Long, labels: HashSet<String>, body: String, spans: List<SpanRepresentation>): BaseNote {
-            return BaseNote(id, Type.NOTE, folder, title, pinned, timestamp, labels, body, spans, emptyList())
-        }
-
-        fun createList(id: Long, folder: Folder, title: String, pinned: Boolean, timestamp: Long, labels: HashSet<String>, items: List<ListItem>): BaseNote {
-            return BaseNote(id, Type.LIST, folder, title, pinned, timestamp, labels, String(), emptyList(), items)
-        }
-    }
-}
+) : Item(ViewType.NOTE), Parcelable

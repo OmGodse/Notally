@@ -3,7 +3,23 @@
     <color name="LightBlue500">#03A9F4</color>
     <color name="LightBlue100">#B3E5fC</color>
 
+    <color name="Black">#000000</color>
+    <color name="Transparent">#00000000</color>
+
     <color name="FABRipple">#80FFFFFF</color>
 
     <color name="Grey100">#F5F5F5</color>
+
+    <color name="Default">#FFFFFF</color>
+    <color name="Coral">#FAAFA9</color>
+    <color name="Orange">#FFCC80</color>
+    <color name="Sand">#FFF8B9</color>
+    <color name="Storm">#AFCCDC</color>
+    <color name="Fog">#D3E4EC</color>
+    <color name="Sage">#B4DED4</color>
+    <color name="Mint">#E2F6D3</color>
+    <color name="Dusk">#D3BFDB</color>
+    <color name="Flower">#F8BBD0</color>
+    <color name="Blossom">#F5E2DC</color>
+    <color name="Clay">#E9E3D3</color>
 </resources>

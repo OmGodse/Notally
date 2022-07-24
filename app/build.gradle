@@ -12,8 +12,8 @@ android {
         applicationId "com.omgodse.notally"
         minSdk 21
         targetSdk 30
-        versionCode 41
-        versionName "4.6"
+        versionCode 42
+        versionName "4.7"
         resConfigs "en", "ca", "cs", "da", "de", "es", "fr", "hu", "in", "it", "ja", "nb", "nl", "nn", "pl", "pt-rBR", "pt-rPT", "ru", "sk", "sv", "tl", "tr", "uk", "zh-rCN"
         vectorDrawables.generatedDensities = []
     }
@@ -44,7 +44,7 @@ android {
 
 dependencies {
     final def navVersion = "2.3.5"
-    final def roomVersion = "2.4.1"
+    final def roomVersion = "2.4.2"
 
     implementation "androidx.preference:preference-ktx:1.1.1"
 

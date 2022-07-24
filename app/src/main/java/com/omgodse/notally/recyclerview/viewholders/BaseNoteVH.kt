@@ -1,18 +1,18 @@
 package com.omgodse.notally.recyclerview.viewholders
 
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
+import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.omgodse.notally.R
-import com.omgodse.notally.databinding.ListItemPreviewBinding
 import com.omgodse.notally.databinding.RecyclerBaseNoteBinding
 import com.omgodse.notally.helpers.SettingsHelper
+import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.miscellaneous.applySpans
-import com.omgodse.notally.miscellaneous.bindLabels
 import com.omgodse.notally.recyclerview.ItemListener
 import com.omgodse.notally.room.BaseNote
+import com.omgodse.notally.room.Color
 import com.omgodse.notally.room.Type
 import org.ocpsoft.prettytime.PrettyTime
 import java.text.SimpleDateFormat
@@ -24,7 +24,6 @@ class BaseNoteVH(
     listener: ItemListener,
     private val prettyTime: PrettyTime,
     private val formatter: SimpleDateFormat,
-    private val inflater: LayoutInflater,
 ) : RecyclerView.ViewHolder(binding.root) {
 
     init {
@@ -46,56 +45,79 @@ class BaseNoteVH(
             Type.LIST -> bindList(baseNote)
         }
 
+        setDate(baseNote)
+        setColor(baseNote)
+
         binding.Title.text = baseNote.title
         binding.Title.isVisible = baseNote.title.isNotEmpty()
 
-        val date = Date(baseNote.timestamp)
-        binding.Date.isVisible = settingsHelper.showDateCreated()
-        when (settingsHelper.getDateFormat()) {
-            SettingsHelper.DateFormat.relative -> binding.Date.text = prettyTime.format(date)
-            SettingsHelper.DateFormat.absolute -> binding.Date.text = formatter.format(date)
-        }
-
-        binding.LabelGroup.bindLabels(baseNote.labels)
+        Operations.bindLabels(binding.LabelGroup, baseNote.labels)
 
         if (isEmpty(baseNote)) {
-            binding.Note.setText(getEmptyMessage(baseNote))
-            binding.Note.isVisible = true
+            binding.Title.setText(getEmptyMessage(baseNote))
+            binding.Title.visibility = View.VISIBLE
         }
     }
 
     private fun bindNote(note: BaseNote) {
-        binding.LinearLayout.isVisible = false
+        binding.LinearLayout.visibility = View.GONE
 
         binding.Note.text = note.body.applySpans(note.spans)
         binding.Note.isVisible = note.body.isNotEmpty()
     }
 
     private fun bindList(list: BaseNote) {
-        binding.Note.isVisible = false
+        binding.Note.visibility = View.GONE
 
         if (list.items.isEmpty()) {
             binding.LinearLayout.visibility = View.GONE
         } else {
             binding.LinearLayout.visibility = View.VISIBLE
-            binding.LinearLayout.removeAllViews()
 
             val max = settingsHelper.getMaxItems()
-
-            list.items.take(max).forEach { item ->
-                val view = ListItemPreviewBinding.inflate(inflater, binding.LinearLayout, true).root
-                view.text = item.body
-                handleChecked(view, item.checked)
+            val filteredList = list.items.take(max)
+            binding.LinearLayout.children.forEachIndexed { index, view ->
+                if (view.id != R.id.ItemsRemaining) {
+                    if (index < filteredList.size) {
+                        val item = filteredList[index]
+                        view as TextView
+                        view.text = item.body
+                        handleChecked(view, item.checked)
+                        view.visibility = View.VISIBLE
+                    } else view.visibility = View.GONE
+                }
             }
 
             if (list.items.size > max) {
-                val view = ListItemPreviewBinding.inflate(inflater, binding.LinearLayout, true).root
+                binding.ItemsRemaining.visibility = View.VISIBLE
                 val itemsRemaining = list.items.size - max
-                view.text = if (itemsRemaining == 1) {
+                binding.ItemsRemaining.text = if (itemsRemaining == 1) {
                     binding.root.context.getString(R.string.one_more_item)
                 } else binding.root.context.getString(R.string.more_items, itemsRemaining)
-            }
+            } else binding.ItemsRemaining.visibility = View.GONE
         }
+    }
+
+
+    private fun setDate(baseNote: BaseNote) {
+        val date = Date(baseNote.timestamp)
+        if (settingsHelper.showDateCreated()) {
+            when (settingsHelper.getDateFormat()) {
+                SettingsHelper.DateFormat.relative -> binding.Date.text = prettyTime.format(date)
+                SettingsHelper.DateFormat.absolute -> binding.Date.text = formatter.format(date)
+            }
+            binding.Date.visibility = View.VISIBLE
+        } else binding.Date.visibility = View.GONE
+    }
+
+    private fun setColor(baseNote: BaseNote) {
+        val context = binding.root.context
+        val color = Operations.extractColor(baseNote.color, context)
+        binding.CardView.setCardBackgroundColor(color)
+
+        if (baseNote.color == Color.DEFAULT) {
+            binding.CardView.strokeWidth = context.resources.getDimensionPixelSize(R.dimen.unit)
+        } else binding.CardView.strokeWidth = 0
     }
 
 
@@ -117,6 +139,5 @@ class BaseNoteVH(
         if (checked) {
             textView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.checkbox_16, 0, 0, 0)
         } else textView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.checkbox_outline_16, 0, 0, 0)
-        textView.paint.isStrikeThruText = checked
     }
 }
