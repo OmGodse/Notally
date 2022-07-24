@@ -16,7 +16,7 @@
     <string name="archive">Archivovat</string>
     <string name="unarchive">Zrušit archivaci</string>
     <string name="delete_all">Smazat vše</string>
-    <string name="change_color">Změnit barv</string>
+    <string name="change_color">Změnit barvu</string>
     <string name="delete_forever">Smazat navždy</string>
 
     <!-- Pinning -->
