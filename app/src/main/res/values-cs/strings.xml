@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    
     <!-- Fragment Titles -->
     <string name="notes">Poznámky</string>
     <string name="labels">Štítky</string>
@@ -15,6 +16,7 @@
     <string name="archive">Archivovat</string>
     <string name="unarchive">Zrušit archivaci</string>
     <string name="delete_all">Smazat vše</string>
+    <string name="change_color">Změnit barvu</string>
     <string name="delete_forever">Smazat navždy</string>
 
     <!-- Pinning -->
@@ -84,6 +86,11 @@
     <string name="dark">Tmavé</string>
     <string name="light">Světlé</string>
     <string name="follow_system">Podle systému</string>
+    
+    <string name="date_format">Formát data</string>
+    <string name="none">Žádné</string>
+    <string name="relative">Relativní</string>
+    <string name="absolute">Absolutní</string>
 
     <string name="date_format">Formát data</string>
     <string name="none">Žádné</string>
@@ -101,4 +108,5 @@
     <string name="about">O aplikaci</string>
     <string name="libraries">Knihovny</string>
     <string name="rate">Ohodnotit aplikaci</string>
+    
 </resources>
