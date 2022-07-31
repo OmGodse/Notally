@@ -1,0 +1,113 @@
+<resources>
+    <string name="app_name" translatable="false">Notally</string>
+
+    <!-- Fragment Titles -->
+    <string name="notes">Ghi chú</string>
+    <string name="labels">Nhãn</string>
+    <string name="deleted">Thùng rác</string>
+    <string name="archived">Lưu trữ</string>
+    <string name="settings">Cài đặt</string>
+
+    <!-- Menu Options -->
+    <string name="share">Chia sẻ</string>
+    <string name="search">Tìm kiếm</string>
+    <string name="delete">Xóa</string>
+    <string name="restore">Khôi phục</string>
+    <string name="archive">Lưu trữ</string>
+    <string name="unarchive">Bỏ lưu trữ</string>
+    <string name="delete_all">Xóa toàn bộ</string>
+    <string name="change_color">Đổi màu</string>
+    <string name="delete_forever">Xóa vĩnh viễn</string>
+
+    <!-- Pinning -->
+    <string name="pin">Ghim</string>
+    <string name="unpin">Bỏ ghim</string>
+    <string name="pinned">Đã ghim</string>
+    <string name="others">Còn lại</string>
+
+    <!-- Chooser dialog hints -->
+    <string name="view_note">Xem ghi chú…</string>
+    <string name="share_note">Chia sẻ ghi chú…</string>
+
+    <!-- Dialogs -->
+    <string name="save">Lưu</string>
+    <string name="edit">Sửa</string>
+    <string name="cancel">Hủy</string>
+    <string name="open_link">Mở liên kết</string>
+    <string name="make_list">Liệt kê</string>
+    <string name="take_note">Ghi chú</string>
+    <string name="add_label">Thêm nhãn</string>
+    <string name="export">Xuất</string>
+    <string name="more_options">Tùy chọn khác</string>
+    <string name="pdf" translatable="false">PDF</string>
+    <string name="txt" translatable="false">TXT</string>
+    <string name="xml" translatable="false">XML</string>
+    <string name="html" translatable="false">HTML</string>
+    <string name="json" translatable="false">JSON</string>
+    <string name="view_file">Xem tập tin</string>
+    <string name="save_to_device">Lưu vào thiết bị</string>
+    <string name="edit_label">Đổi nhãn</string>
+    <string name="label_exists">Danh sách nhãn sử dụng</string>
+    <string name="delete_label">Xóa nhãn?</string>
+    <string name="create_new">Chưa có nhãn nào. Thử tạo mới?</string>
+    <string name="delete_all_notes">Xóa toàn bộ ghi chú?</string>
+    <string name="delete_note_forever">Xóa vĩnh viễn ghi chú?</string>
+    <string name="your_notes_associated">Những ghi chú đi kèm nhãn này sẽ không bị xóa</string>
+
+    <!-- Lists and Notes -->
+    <string name="note">Ghi chú</string>
+    <string name="item">Liệt kê</string>
+    <string name="date">Ngày</string>
+    <string name="title">Tựa đề</string>
+    <string name="add_item">Thêm nội dung</string>
+    <string name="one_more_item">1 nội dung còn lại</string>
+    <string name="more_items">Còn %1$d nội dung</string>
+    <string name="drag_handle">Kéo thả</string>
+    <string name="bold">Đậm</string>
+    <string name="link">Liên kết</string>
+    <string name="italic">Nghiêng</string>
+    <string name="strikethrough">Gạch giữa</string>
+    <string name="clear_formatting">Xóa định dạng</string>
+    <string name="monospace">Monospace</string>
+
+    <!-- Miscellaneous -->
+    <string name="saved_to_device">Đã lưu vào thiết bị</string>
+    <string name="saved_to_notally">Đã lưu trong Notally</string>
+    <string name="empty_note">Nội dung ghi chú trống</string>
+    <string name="empty_list">Nội dung liệt kê trống</string>
+    <string name="discarded_empty_note">Bỏ qua ghi chú trống</string>
+    <string name="discarded_empty_list">Bỏ qua liệt kê trống</string>
+    <string name="cant_open_link">Không thể mở liên kết</string>
+    <string name="something_went_wrong">Có lỗi xảy ra. Vui lòng thử lại.</string>
+
+    <!-- Settings Page -->
+    <string name="appearance">Giao diện</string>
+
+    <string name="view">Kiểu xem</string>
+    <string name="list">Danh sách</string>
+    <string name="grid">Lưới</string>
+
+    <string name="theme">Chủ đề</string>
+    <string name="dark">Tối</string>
+    <string name="light">Sáng</string>
+    <string name="follow_system">Mặc định hệ thống</string>
+
+    <string name="date_format">Định dạng ngày tháng</string>
+    <string name="none">Không</string>
+    <string name="relative">Theo thời điểm mở</string>
+    <string name="absolute">Theo thời điểm tạo</string>
+
+    <string name="content_density">Mức độ hiển thị nội dung</string>
+    <string name="max_items_to_display">Mục liệt kê tối đa</string>
+    <string name="max_lines_to_display">Dòng ghi chú tối đa</string>
+
+    <string name="backup">Sao lưu</string>
+    <string name="export_backup">Xuất sao lưu</string>
+    <string name="import_backup">Nhập sao lưu</string>
+
+    <string name="about">Giới thiệu</string>
+    <string name="libraries">Thư viện sử dụng</string>
+    <string name="rate">Đánh giá app</string>
+
+    <string name="github" translatable="false">GitHub</string>
+</resources>
