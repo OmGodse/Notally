@@ -14,25 +14,35 @@
     <string name="archive">Archief</string>
     <string name="unarchive">Unarchief</string>
     <string name="delete_all">Verwijder alles</string>
+	<string name="change_color">Verander kleur</string>
     <string name="delete_forever">Voor altijd verwijderen</string>
-
-    <!-- Chooser dialog hints -->
-    <string name="view_note">Notitie bekijken…</string>
-    <string name="share_note">Notitie delen…</string>
 
     <!-- Pinning -->
     <string name="pin">Vastmaken</string>
     <string name="unpin">Losmaken</string>
     <string name="pinned">Vastgemaakt</string>
+    <string name="others">Anderen</string>
+	
+    <!-- Chooser dialog hints -->
+    <string name="view_note">Notitie bekijken…</string>
+    <string name="share_note">Notitie delen…</string>
 
     <!-- Dialogs -->
     <string name="save">Opgeslagen</string>
     <string name="edit">Bewerk</string>
     <string name="cancel">Annuleren</string>
+    <string name="open_link">Open link</string>
     <string name="make_list">Maak een lijst</string>
     <string name="take_note">Maak een Notitie</string>
     <string name="add_label">Label toevoegen </string>
-    <string name="export">Exporteren</string>
+    <string name="export">Exporter</string>
+    <string name="more_options">Meer opties</string>
+    <string name="pdf" translatable="false">PDF</string>
+    <string name="txt" translatable="false">TXT</string>
+    <string name="xml" translatable="false">XML</string>
+    <string name="html" translatable="false">HTML</string>
+    <string name="json" translatable="false">JSON</string>
+	<string name="view_file">Bekijk bestand</string>
     <string name="save_to_device">Opslaan op apparaat</string>
     <string name="edit_label">Bewerk label</string>
     <string name="label_exists">Label bestaat</string>
@@ -80,11 +90,18 @@
     <string name="light">Licht</string>
     <string name="follow_system">Volg de systeem</string>
 
+	<string name="date_format">Datum formaat</string>
+    <string name="none">Geen</string>
+    <string name="relative">Relatief</string>
+    <string name="absolute">Absolute</string>
+	
     <string name="content_density">Inhoudsdichtheid</string>
     <string name="max_items_to_display">Maximum aantal items dat in de lijst kan worden weergegeven</string>
     <string name="max_lines_to_display">Maximum lijnen in de notitie weer te geven</string>
 
     <string name="backup">Back-up</string>
+    <string name="export_backup">Back-up exporteren</string>
+    <string name="import_backup">Back-up importeren</string>
 
     <string name="about">Over</string>
     <string name="libraries">Bibliothek</string>
