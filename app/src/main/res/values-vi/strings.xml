@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name" translatable="false">Notally</string>
 
     <!-- Fragment Titles -->
     <string name="notes">Ghi chú</string>
@@ -39,11 +38,6 @@
     <string name="add_label">Thêm nhãn</string>
     <string name="export">Xuất</string>
     <string name="more_options">Tùy chọn khác</string>
-    <string name="pdf" translatable="false">PDF</string>
-    <string name="txt" translatable="false">TXT</string>
-    <string name="xml" translatable="false">XML</string>
-    <string name="html" translatable="false">HTML</string>
-    <string name="json" translatable="false">JSON</string>
     <string name="view_file">Xem tập tin</string>
     <string name="save_to_device">Lưu vào thiết bị</string>
     <string name="edit_label">Đổi nhãn</string>
@@ -109,5 +103,4 @@
     <string name="libraries">Thư viện sử dụng</string>
     <string name="rate">Đánh giá app</string>
 
-    <string name="github" translatable="false">GitHub</string>
 </resources>
