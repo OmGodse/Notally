@@ -85,8 +85,6 @@
 
     <string name="date_format">Formát data</string>
     <string name="none">Žádné</string>
-    <string name="relative">Relativní</string>
-    <string name="absolute">Absolutní</string>
 
     <string name="content_density">Kompaktnost obsahu</string>
     <string name="max_items_to_display">Max. počet položek v seznamu</string>

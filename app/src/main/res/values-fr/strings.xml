@@ -85,8 +85,6 @@
 
     <string name="date_format">Format de la date</string>
     <string name="none">Aucun</string>
-    <string name="relative">Relatif</string>
-    <string name="absolute">Absolu</string>
 
     <string name="content_density">Densité d\'affichage</string>
     <string name="max_items_to_display">Nombre maximum d\'éléments à afficher dans une liste</string>

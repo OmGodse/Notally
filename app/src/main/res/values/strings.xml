@@ -91,8 +91,6 @@
 
     <string name="date_format">Date format</string>
     <string name="none">None</string>
-    <string name="relative">Relative</string>
-    <string name="absolute">Absolute</string>
 
     <string name="content_density">Content density</string>
     <string name="max_items_to_display">Max items to display in list</string>

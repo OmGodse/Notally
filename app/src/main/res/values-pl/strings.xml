@@ -83,8 +83,6 @@
 
     <string name="date_format">Format daty</string>
     <string name="none">Brak</string>
-    <string name="relative">Względna</string>
-    <string name="absolute">Bezwzględna</string>
 
     <string name="content_density">Gęstość</string>
     <string name="max_items_to_display">Maksymalna ilość elementów w liście do pokazania</string>

@@ -85,8 +85,6 @@
 
     <string name="date_format">Datum formaat</string>
     <string name="none">Geen</string>
-    <string name="relative">Relatief</string>
-    <string name="absolute">Absolute</string>
 
     <string name="content_density">Inhoudsdichtheid</string>
     <string name="max_items_to_display">Maximum aantal items dat in de lijst kan worden weergegeven</string>

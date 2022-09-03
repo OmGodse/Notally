@@ -84,8 +84,6 @@
 
     <string name="date_format">Tidsformat</string>
     <string name="none">Ikkje vis</string>
-    <string name="relative">Relativ</string>
-    <string name="absolute">Absolutt</string>
 
     <string name="content_density">Innhaldstettleik</string>
     <string name="max_items_to_display">Maks mengd element framvist av liste</string>

@@ -85,8 +85,6 @@
 
     <string name="date_format">日付の表示</string>
     <string name="none">表示しない</string>
-    <string name="relative">相対表示</string>
-    <string name="absolute">絶対表示</string>
 
     <string name="content_density">プレビュー</string>
     <string name="max_items_to_display">プレビューするリストの数</string>

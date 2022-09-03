@@ -3,6 +3,9 @@ package com.omgodse.notally.helpers
 import android.content.Context
 import androidx.preference.PreferenceManager
 import com.omgodse.notally.R
+import com.omgodse.notally.viewmodels.BaseNoteModel
+import org.ocpsoft.prettytime.PrettyTime
+import java.util.*
 
 class SettingsHelper(context: Context) {
 
@@ -26,7 +29,7 @@ class SettingsHelper(context: Context) {
         val key: String
         val defaultValue: String
 
-        fun getRawEntries(): Array<Int>
+        fun getRawEntries(): IntArray
 
         fun getEntryValues(): Array<String>
 
@@ -59,7 +62,7 @@ class SettingsHelper(context: Context) {
         override val key = "view"
         override val defaultValue = list
 
-        override fun getRawEntries() = arrayOf(R.string.list, R.string.grid)
+        override fun getRawEntries() = intArrayOf(R.string.list, R.string.grid)
 
         override fun getEntryValues() = arrayOf(list, grid)
     }
@@ -73,7 +76,7 @@ class SettingsHelper(context: Context) {
         override val key = "theme"
         override val defaultValue = followSystem
 
-        override fun getRawEntries() = arrayOf(R.string.dark, R.string.light, R.string.follow_system)
+        override fun getRawEntries() = intArrayOf(R.string.dark, R.string.light, R.string.follow_system)
 
         override fun getEntryValues() = arrayOf(dark, light, followSystem)
     }
@@ -87,9 +90,18 @@ class SettingsHelper(context: Context) {
         override val key = "dateFormat"
         override val defaultValue = relative
 
-        override fun getRawEntries() = arrayOf(R.string.none, R.string.relative, R.string.absolute)
+        override fun getRawEntries() = intArrayOf()
 
         override fun getEntryValues() = arrayOf(none, relative, absolute)
+
+        override fun getEntries(context: Context): Array<String> {
+            val yesterday = System.currentTimeMillis() - 86400000
+            val date = Date(yesterday)
+            val none = context.getString(R.string.none)
+            val relative = PrettyTime().format(date)
+            val absolute = BaseNoteModel.getDateFormatter(context).format(date)
+            return arrayOf(none, relative, absolute)
+        }
     }
 
 

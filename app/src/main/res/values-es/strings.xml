@@ -76,8 +76,6 @@
 
     <string name="date_format">Formato de fecha</string>
     <string name="none">Ninguno</string>
-    <string name="relative">Relativo</string>
-    <string name="absolute">Absoluto</string>
 
     <string name="theme">Tema</string>
     <string name="dark">Oscuro</string>

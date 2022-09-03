@@ -84,8 +84,6 @@
 
     <string name="date_format">Datumsformat</string>
     <string name="none">Keines</string>
-    <string name="relative">Relativ</string>
-    <string name="absolute">Absolut</string>
 
     <string name="content_density">Notizvorschau</string>
     <string name="max_items_to_display">Maximal angezeigte Listeneinträge</string>
