@@ -2,7 +2,7 @@
 <resources>
 
     <style name="AppTheme" parent="Base.AppTheme">
-        <item name="colorSecondary">@color/LightBlue500</item>
+        <item name="colorPrimary">@color/LightBlue500</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>
 

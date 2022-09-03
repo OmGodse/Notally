@@ -1,11 +1,10 @@
 <resources>
 
     <style name="Base.AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">?attr/colorSurface</item>
+        <item name="colorSecondary">?attr/colorPrimary</item>
         <item name="colorPrimaryDark">?attr/colorSurface</item>
 
         <item name="android:navigationBarColor">@color/Black</item>
-        <item name="android:colorEdgeEffect">?attr/colorSecondary</item>
 
         <item name="windowActionModeOverlay">true</item>
 
@@ -28,7 +27,7 @@
 
     <style name="AppTheme" parent="Base.AppTheme">
         <item name="colorPrimaryDark">@color/Black</item>
-        <item name="colorSecondary">@color/LightBlue500</item>
+        <item name="colorPrimary">@color/LightBlue500</item>
     </style>
 
     <style name="MainActivity" parent="AppTheme">
@@ -86,13 +85,7 @@
 
 
     <style name="AlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
-        <item name="colorPrimary">?attr/colorSecondary</item>
         <item name="materialAlertDialogTitleTextStyle">@style/AlertDialog.Title</item>
-    </style>
-
-
-    <style name="PrimarySecondarySwap" parent="ThemeOverlay.MaterialComponents">
-        <item name="colorPrimary">?attr/colorSecondary</item>
     </style>
 
     <style name="Colorless" parent="ThemeOverlay.MaterialComponents">

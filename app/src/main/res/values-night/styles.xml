@@ -2,7 +2,7 @@
 <resources>
 
     <style name="AppTheme" parent="Base.AppTheme">
-        <item name="colorSecondary">@color/LightBlue100</item>
+        <item name="colorPrimary">@color/LightBlue100</item>
     </style>
 
 </resources>

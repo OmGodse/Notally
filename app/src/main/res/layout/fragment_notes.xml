@@ -9,7 +9,7 @@
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:layout_gravity="center"
-        app:tint="?attr/colorSecondary" />
+        app:tint="?attr/colorPrimary" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/RecyclerView"
