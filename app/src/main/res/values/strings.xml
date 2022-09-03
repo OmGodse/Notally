@@ -38,7 +38,6 @@
     <string name="take_note">Take note</string>
     <string name="add_label">Add label</string>
     <string name="export">Export</string>
-    <string name="more_options">More options</string>
     <string name="pdf" translatable="false">PDF</string>
     <string name="txt" translatable="false">TXT</string>
     <string name="xml" translatable="false">XML</string>
@@ -75,8 +74,6 @@
     <string name="saved_to_notally">Saved to Notally</string>
     <string name="empty_note">Empty note</string>
     <string name="empty_list">Empty list</string>
-    <string name="discarded_empty_note">Discarded empty note</string>
-    <string name="discarded_empty_list">Discarded empty list</string>
     <string name="cant_open_link">Can\'t open link</string>
     <string name="something_went_wrong">Something went wrong. Please try again.</string>
 

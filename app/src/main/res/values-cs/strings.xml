@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
     <!-- Fragment Titles -->
     <string name="notes">Poznámky</string>
     <string name="labels">Štítky</string>
@@ -38,7 +37,6 @@
     <string name="take_note">Napsat poznámku</string>
     <string name="add_label">Nový štítek</string>
     <string name="export">Exportovat</string>
-    <string name="more_options">Více možností</string>
     <string name="view_file">Zobrazit soubor</string>
     <string name="save_to_device">Uložit do zařízení</string>
     <string name="edit_label">Upravit štítek</string>
@@ -70,8 +68,6 @@
     <string name="saved_to_notally">Uloženo do Notally</string>
     <string name="empty_note">Prázdná poznámka</string>
     <string name="empty_list">Prázdný seznam</string>
-    <string name="discarded_empty_note">Odstraněná prázdná poznámka</string>
-    <string name="discarded_empty_list">Odstraněný prázdný seznam</string>
     <string name="cant_open_link">Odkaz nelze otevřit</string>
     <string name="something_went_wrong">Něco se pokazilo. Zkuste to znovu.</string>
 
@@ -86,11 +82,6 @@
     <string name="dark">Tmavé</string>
     <string name="light">Světlé</string>
     <string name="follow_system">Podle systému</string>
-    
-    <string name="date_format">Formát data</string>
-    <string name="none">Žádné</string>
-    <string name="relative">Relativní</string>
-    <string name="absolute">Absolutní</string>
 
     <string name="date_format">Formát data</string>
     <string name="none">Žádné</string>
@@ -108,5 +99,4 @@
     <string name="about">O aplikaci</string>
     <string name="libraries">Knihovny</string>
     <string name="rate">Ohodnotit aplikaci</string>
-    
 </resources>

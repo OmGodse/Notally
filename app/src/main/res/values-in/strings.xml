@@ -64,8 +64,6 @@
     <string name="saved_to_notally">Disimpan ke Notally</string>
     <string name="empty_note">Catatan kosong</string>
     <string name="empty_list">Daftar kosong</string>
-    <string name="discarded_empty_note">Catatan kosong dibuang</string>
-    <string name="discarded_empty_list">Daftar kosong dibuang</string>
     <string name="cant_open_link">Tidak bisa membuka tautan</string>
     <string name="something_went_wrong">Telah terjadi kesalahan. Silakan coba lagi.</string>
 

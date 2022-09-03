@@ -64,8 +64,6 @@
     <string name="saved_to_notally">Сохранено в Notally</string>
     <string name="empty_note">Пустая заметка</string>
     <string name="empty_list">Пустой список</string>
-    <string name="discarded_empty_note">Удалить пустую заметку</string>
-    <string name="discarded_empty_list">Удалить пустой список</string>
     <string name="cant_open_link">Ссылку открыть невозможно</string>
     <string name="something_went_wrong">Что-то пошло не так. Пожалуйста, попробуйте еще раз.</string>
 

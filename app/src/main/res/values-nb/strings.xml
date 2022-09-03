@@ -36,7 +36,6 @@
     <string name="take_note">Ta et notat</string>
     <string name="add_label">Legg til etikett</string>
     <string name="export">Eksporter</string>
-    <string name="more_options">Flere valg</string>
     <string name="view_file">Se fil</string>
     <string name="save_to_device">Lagre til enhet</string>
     <string name="edit_label">Rediger etikett</string>
@@ -68,8 +67,6 @@
     <string name="saved_to_notally">Lagret i Notally</string>
     <string name="empty_note">Tomt notat</string>
     <string name="empty_list">Tom liste</string>
-    <string name="discarded_empty_note">Forkastet tomt notat</string>
-    <string name="discarded_empty_list">Forkastet tom liste</string>
     <string name="cant_open_link">Kan ikke åpne lenken</string>
     <string name="something_went_wrong">Noe gikk galt. Prøv igjen.</string>
 

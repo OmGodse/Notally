@@ -37,7 +37,6 @@
     <string name="take_note">Prendre des notes</string>
     <string name="add_label">Ajouter une étiquette</string>
     <string name="export">Exporter</string>
-    <string name="more_options">Options supplémentaires</string>
     <string name="save_to_device">Sauvegarder sur l\'appareil</string>
     <string name="view_file">Voir le fichier</string>
     <string name="edit_label">Modifier l\'étiquette</string>
@@ -69,8 +68,6 @@
     <string name="saved_to_notally">Sauvegardé sur Notally</string>
     <string name="empty_note">Note vide</string>
     <string name="empty_list">Liste vide</string>
-    <string name="discarded_empty_note">Note vide supprimée</string>
-    <string name="discarded_empty_list">Liste vide supprimée</string>
     <string name="cant_open_link">Ouverture du lien impossible</string>
     <string name="something_went_wrong">Quelque chose a mal tourné. Veuillez réessayer.</string>
 
@@ -85,6 +82,11 @@
     <string name="dark">Sombre</string>
     <string name="light">Lumineux</string>
     <string name="follow_system">En fonction du système</string>
+
+    <string name="date_format">Format de la date</string>
+    <string name="none">Aucun</string>
+    <string name="relative">Relatif</string>
+    <string name="absolute">Absolu</string>
 
     <string name="content_density">Densité d\'affichage</string>
     <string name="max_items_to_display">Nombre maximum d\'éléments à afficher dans une liste</string>

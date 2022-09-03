@@ -35,7 +35,6 @@
     <string name="take_note">写笔记</string>
     <string name="add_label">新建标签</string>
     <string name="export">导出</string>
-    <string name="more_options">其他选择</string>
     <string name="view_file">查看文件</string>
     <string name="save_to_device">保存至设备</string>
     <string name="edit_label">编辑标签</string>
@@ -68,8 +67,6 @@
     <string name="empty_note">笔记无内容</string>
     <string name="empty_list">清单无内容</string>
     <string name="cant_open_link">无法打开链接</string>
-    <string name="discarded_empty_note">已丢弃的无内容笔记</string>
-    <string name="discarded_empty_list">已丢弃的无内容清单</string>
     <string name="something_went_wrong">发生了错误。请重试。</string>
 
     <!-- Settings Page -->

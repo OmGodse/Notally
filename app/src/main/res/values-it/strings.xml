@@ -64,8 +64,6 @@
     <string name="saved_to_notally">Salvata su Notally</string>
     <string name="empty_note">Nota vuota</string>
     <string name="empty_list">Lista vuota</string>
-    <string name="discarded_empty_note">Nota vuota non salvata</string>
-    <string name="discarded_empty_list">Elenco vuoto non salvato</string>
     <string name="cant_open_link">Impossibile aprire il link</string>
     <string name="something_went_wrong">Qualcosa è andato storto. Per favore riprova.</string>
 

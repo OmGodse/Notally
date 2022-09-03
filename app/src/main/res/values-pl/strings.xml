@@ -35,7 +35,6 @@
     <string name="take_note">Stwórz notatkę</string>
     <string name="add_label">Dodaj etykietę</string>
     <string name="export">Eksportuj</string>
-    <string name="more_options">Więcej opcji</string>
     <string name="view_file">Zobacz plik</string>
     <string name="save_to_device">Zapisz w urządzeniu</string>
     <string name="edit_label">Edytuj etykietę</string>
@@ -67,8 +66,6 @@
     <string name="saved_to_notally">Zapisano w Notally</string>
     <string name="empty_note">Pusta notatka</string>
     <string name="empty_list">Pusta lista</string>
-    <string name="discarded_empty_note">Usunięto pustą notatkę</string>
-    <string name="discarded_empty_list">Usunięto pustą listę</string>
     <string name="cant_open_link">Nie można otworzyć linku</string>
     <string name="something_went_wrong">Coś poszło nie tak. Spróbuj ponownie.</string>
 

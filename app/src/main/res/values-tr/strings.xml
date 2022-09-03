@@ -64,8 +64,6 @@
     <string name="saved_to_notally">Notally’ye kaydedildi</string>
     <string name="empty_note">Boş not</string>
     <string name="empty_list">Boş liste</string>
-    <string name="discarded_empty_note">Boş not ıskarta edildi</string>
-    <string name="discarded_empty_list">Boş liste ıskarta edildi</string>
     <string name="cant_open_link">Bağlantı açılmadı</string>
     <string name="something_went_wrong">Bir terslik oldu. Lütfen tekrar deneyin.</string>
 

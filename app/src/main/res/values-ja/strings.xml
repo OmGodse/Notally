@@ -37,7 +37,6 @@
     <string name="take_note">ノート</string>
     <string name="add_label">新規ラベル</string>
     <string name="export">ファイルに出力</string>
-    <string name="more_options">その他のオプション</string>
     <string name="view_file">ファイルを参照</string>
     <string name="save_to_device">端末に保存</string>
     <string name="edit_label">ラベルを編集</string>
@@ -69,8 +68,6 @@
     <string name="saved_to_notally">Notallyに保存されました</string>
     <string name="empty_note">空のノート</string>
     <string name="empty_list">空のリスト</string>
-    <string name="discarded_empty_note">破棄された空のノート</string>
-    <string name="discarded_empty_list">破棄された空のリスト</string>
     <string name="cant_open_link">リンクを開けません</string>
     <string name="something_went_wrong">不具合が発生しました やり直してください</string>
 

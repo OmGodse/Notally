@@ -62,8 +62,6 @@
     <string name="saved_to_notally">Sparad till Notally</string>
     <string name="empty_note">Tom anteckning</string>
     <string name="empty_list">Tom lista</string>
-    <string name="discarded_empty_note">Kasserad tom anteckning</string>
-    <string name="discarded_empty_list">Kasserad tom lista</string>
     <string name="cant_open_link">Kan inte öppna länken</string>
     <string name="something_went_wrong">Ett fel uppstod. Var vänligt försök igen.</string>
 

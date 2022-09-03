@@ -64,8 +64,6 @@
     <string name="saved_to_notally">Desat a Notally</string>
     <string name="empty_note">Nota buida</string>
     <string name="empty_list">Llista buida</string>
-    <string name="discarded_empty_note">Nota buida descartada</string>
-    <string name="discarded_empty_list">Llista buida descartada</string>
     <string name="cant_open_link">No es pot obrir l\'enllaç</string>
     <string name="something_went_wrong">Alguna cosa ha anat malament. Torna-ho a provar.</string>
 

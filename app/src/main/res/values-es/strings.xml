@@ -64,8 +64,6 @@
     <string name="saved_to_notally">Guardadas a Notally</string>
     <string name="empty_note">Vaciar nota</string>
     <string name="empty_list">Vaciar lista</string>
-    <string name="discarded_empty_note">Nota vacía descartada</string>
-    <string name="discarded_empty_list">Lista vacía descartada</string>
     <string name="cant_open_link">No se puede abrir el enlace</string>
     <string name="something_went_wrong">Algo salió mal. Inténtalo de nuevo.</string>
 

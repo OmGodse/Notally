@@ -64,8 +64,6 @@
     <string name="saved_to_notally">Uložené do Notally</string>
     <string name="empty_note">Prázdna poznámka</string>
     <string name="empty_list">Prázdny zoznam</string>
-    <string name="discarded_empty_note">Odstránená prázdna poznámka</string>
-    <string name="discarded_empty_list">Odstránený prázdny zoznam</string>
     <string name="cant_open_link">Odkaz sa nedá otvoriť</string>
     <string name="something_went_wrong">Niečo sa pokazilo. Skúste to znova.</string>
 

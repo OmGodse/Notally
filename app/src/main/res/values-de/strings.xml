@@ -36,7 +36,6 @@
     <string name="take_note">Notiz erstellen</string>
     <string name="add_label">Label hinzufügen</string>
     <string name="export">Exportieren</string>
-    <string name="more_options">Mehr Optionen</string>
     <string name="view_file">Datei öffnen</string>
     <string name="save_to_device">Speichern</string>
     <string name="edit_label">Label bearbeiten</string>
@@ -68,8 +67,6 @@
     <string name="saved_to_notally">In Notally gespeichert</string>
     <string name="empty_note">Leere Notiz</string>
     <string name="empty_list">Leere Liste</string>
-    <string name="discarded_empty_note">Leere Notiz verworfen</string>
-    <string name="discarded_empty_list">Leere Liste verworfen</string>
     <string name="cant_open_link">Link konnte nicht geöffnet werden</string>
     <string name="something_went_wrong">Etwas ist schief gelaufen. Bitte erneut versuchen.</string>
 

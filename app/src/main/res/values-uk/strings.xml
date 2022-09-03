@@ -64,8 +64,6 @@
     <string name="saved_to_notally">Збережено в Notally</string>
     <string name="empty_note">Пустий запис</string>
     <string name="empty_list">Пустий список</string>
-    <string name="discarded_empty_note">Відхилено порожній запис</string>
-    <string name="discarded_empty_list">Відхилено порожній список</string>
     <string name="cant_open_link">Неможливо відкрити посилання</string>
     <string name="something_went_wrong">Щось пішло не так. Будь ласка спробуйте ще раз.</string>
 

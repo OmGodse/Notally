@@ -64,8 +64,6 @@
     <string name="saved_to_notally">Nakasalba sa Notally</string>
     <string name="empty_note">Walang laman na tala</string>
     <string name="empty_list">Walang laman na listahan</string>
-    <string name="discarded_empty_note">Tinapon na walang laman na tala</string>
-    <string name="discarded_empty_list">Tinapon na walang laman na listahan</string>
     <string name="cant_open_link">Hindi mabuksan ang link</string>
     <string name="something_went_wrong">May nangyari na mali. Pakiulit muli.</string>
 
