@@ -13,24 +13,25 @@
     <string name="delete">Usuń</string>
     <string name="restore">Przywróć</string>
     <string name="archive">Zarchwizuj</string>
-    <string name="unarchive">Cofnij archiwizacje</string>
+    <string name="unarchive">Cofnij archiwizację</string>
     <string name="delete_all">Usuń wszystkie</string>
-    <string name="delete_forever">Usuń na zawsze?</string>
-
-    <!-- Chooser dialog hints -->
-    <string name="view_note">Podgląd…</string>
-    <string name="share_note">Udostępnij…</string>
+    <string name="change_color">Zmień kolor</string>
+    <string name="delete_forever">Usunąć na zawsze?</string>
 
     <!-- Pinning -->
     <string name="pin">Przypnij</string>
     <string name="unpin">Odepnij</string>
     <string name="pinned">Przypięte</string>
+    <string name="others">Pozostałe</string>
+
+    <!-- Chooser dialog hints -->
+    <string name="view_note">Podgląd…</string>
 
     <!-- Dialogs -->
     <string name="save">Zapisz</string>
     <string name="edit">Edytuj</string>
     <string name="cancel">Anuluj</string>
-    <string name="open_link">Otwórz link</string>
+    <string name="open_link">Otwórz odnośnik</string>
     <string name="make_list">Stwórz listę</string>
     <string name="take_note">Stwórz notatkę</string>
     <string name="add_label">Dodaj etykietę</string>
@@ -40,7 +41,7 @@
     <string name="edit_label">Edytuj etykietę</string>
     <string name="label_exists">Etykieta już istnieje</string>
     <string name="delete_label">Usunąć etykietę?</string>
-    <string name="create_new">Nie masz jeszcze etykiet? Stworzymy jedną?</string>
+    <string name="create_new">Nie masz jeszcze etykiet? Stworzyć jedną?</string>
     <string name="delete_all_notes">Usunąć wszystkie notatki?</string>
     <string name="delete_note_forever">Usunąć notatkę na zawsze?</string>
     <string name="your_notes_associated">Notatki z tą etykietą nie zostaną usunięte</string>
@@ -52,12 +53,12 @@
     <string name="title">Tytuł</string>
     <string name="add_item">Dodaj element</string>
     <string name="one_more_item">Jeszcze jeden element</string>
-    <string name="more_items">%1$d więcej</string>
+    <string name="more_items">%1$d więcej elementów</string>
     <string name="drag_handle">Punkt zaczepienia</string>
     <string name="bold">Pogrubione</string>
-    <string name="link">Link</string>
-    <string name="italic">Przechylone</string>
-    <string name="strikethrough">Przekreślone</string>
+    <string name="link">Odnośnik</string>
+    <string name="italic">Kursywa</string>
+    <string name="strikethrough">Przekreślenie</string>
     <string name="clear_formatting">Usuń formatowanie</string>
     <string name="monospace">Monospace</string>
 
@@ -66,7 +67,7 @@
     <string name="saved_to_notally">Zapisano w Notally</string>
     <string name="empty_note">Pusta notatka</string>
     <string name="empty_list">Pusta lista</string>
-    <string name="cant_open_link">Nie można otworzyć linku</string>
+    <string name="cant_open_link">Nie można otworzyć odnośnika</string>
     <string name="something_went_wrong">Coś poszło nie tak. Spróbuj ponownie.</string>
 
     <!-- Settings Page -->
@@ -84,7 +85,7 @@
     <string name="date_format">Format daty</string>
     <string name="none">Brak</string>
 
-    <string name="content_density">Gęstość</string>
+    <string name="content_density">Zagęszczenie treści</string>
     <string name="max_items_to_display">Maksymalna ilość elementów w liście do pokazania</string>
     <string name="max_lines_to_display">Maksymalna ilość linii w notatce do pokazania</string>
 

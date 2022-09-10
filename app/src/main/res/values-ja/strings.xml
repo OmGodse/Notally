@@ -20,7 +20,6 @@
 
     <!-- Chooser dialog hints -->
     <string name="view_note">ノートを見る…</string>
-    <string name="share_note">ノートを共有する…</string>
 
     <!-- Pinning -->
     <string name="pin">ピン</string>

@@ -25,7 +25,6 @@
 
     <!-- Chooser dialog hints -->
     <string name="view_note">Sjå notat…</string>
-    <string name="share_note">Del notat…</string>
 
     <!-- Dialogs -->
     <string name="save">Lagre</string>

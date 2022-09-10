@@ -19,7 +19,6 @@
 
     <!-- Chooser dialog hints -->
     <string name="view_note">Посмотреть заметку…</string>
-    <string name="share_note">Поделиться заметкой…</string>
 
     <!-- Pinning -->
     <string name="pin">Закрепить</string>

@@ -25,7 +25,6 @@
 
     <!-- Chooser dialog hints -->
     <string name="view_note">Notiz ansehen…</string>
-    <string name="share_note">Notiz teilen…</string>
 
     <!-- Dialogs -->
     <string name="save">Speichern</string>

@@ -19,7 +19,6 @@
 
     <!-- Chooser dialog hints -->
     <string name="view_note">Lihat catatan…</string>
-    <string name="share_note">Bagikan catatan…</string>
 
     <!-- Pinning -->
     <string name="pin">Semat</string>

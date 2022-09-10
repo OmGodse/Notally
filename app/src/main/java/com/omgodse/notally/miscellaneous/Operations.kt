@@ -41,8 +41,7 @@ object Operations {
         intent.putExtra(extraCharSequence, body)
         intent.putExtra(Intent.EXTRA_TEXT, text)
         intent.putExtra(Intent.EXTRA_SUBJECT, title)
-        val label = context.getString(R.string.share_note)
-        val chooser = Intent.createChooser(intent, label)
+        val chooser = Intent.createChooser(intent, null)
         context.startActivity(chooser)
     }
 

@@ -20,7 +20,6 @@
 
     <!-- Chooser dialog hints -->
     <string name="view_note">Ver nota…</string>
-    <string name="share_note">Compartilhar nota…</string>
 
     <!-- Pinning -->
     <string name="pin">Fixar</string>

@@ -27,7 +27,6 @@
 
     <!-- Chooser dialog hints -->
     <string name="view_note">View note…</string>
-    <string name="share_note">Share note…</string>
 
     <!-- Dialogs -->
     <string name="save">Save</string>

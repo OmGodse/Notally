@@ -19,7 +19,6 @@
 
     <!-- Chooser dialog hints -->
     <string name="view_note">Ver nota…</string>
-    <string name="share_note">Compartir nota…</string>
 
     <!-- Pinning -->
     <string name="pin">Fijar</string>

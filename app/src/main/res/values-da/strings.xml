@@ -24,7 +24,6 @@
 
     <!-- Chooser dialog hints -->
     <string name="view_note">Se note…</string>
-    <string name="share_note">Del note…</string>
 
     <!-- Dialogs -->
     <string name="save">Gem</string>

@@ -291,7 +291,7 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
         intent.type = mimeType
         intent.putExtra(Intent.EXTRA_STREAM, uri)
 
-        val chooser = Intent.createChooser(intent, getString(R.string.share_note))
+        val chooser = Intent.createChooser(intent, null)
         startActivity(chooser)
     }
 

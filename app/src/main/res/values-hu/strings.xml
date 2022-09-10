@@ -24,7 +24,6 @@
 
     <!-- Chooser dialog hints -->
     <string name="view_note">Megtekintés…</string>
-    <string name="share_note">Megosztás…</string>
 
     <!-- Dialogs -->
     <string name="save">Mentés</string>

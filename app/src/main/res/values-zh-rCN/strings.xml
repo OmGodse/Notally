@@ -24,7 +24,6 @@
     <!-- Chooser dialog hints -->
     <string name="pinned">已置顶</string>
     <string name="view_note">查看笔记…</string>
-    <string name="share_note">分享笔记…</string>
 
     <!-- Dialogs -->
     <string name="save">保存</string>

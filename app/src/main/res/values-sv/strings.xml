@@ -18,7 +18,6 @@
 
     <!-- Chooser dialog hints -->
     <string name="view_note">Se anteckning…</string>
-    <string name="share_note">Dela anteckning…</string>
 
     <!-- Pinning -->
     <string name="pin">Fäst</string>

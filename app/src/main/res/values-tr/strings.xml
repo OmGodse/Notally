@@ -19,7 +19,6 @@
 
     <!-- Chooser dialog hints -->
     <string name="view_note">Notu önizle…</string>
-    <string name="share_note">Notu paylaş…</string>
 
     <!-- Pinning -->
     <string name="pin">Sabitle</string>

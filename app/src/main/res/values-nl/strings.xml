@@ -26,7 +26,6 @@
 
     <!-- Chooser dialog hints -->
     <string name="view_note">Notitie bekijken…</string>
-    <string name="share_note">Notitie delen…</string>
 
     <!-- Dialogs -->
     <string name="save">Opgeslagen</string>
