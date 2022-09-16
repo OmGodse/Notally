@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fragment Titles -->
+    <string name="notes">Σημειώσεις</string>
+    <string name="labels">Ετικέτες</string>
+    <string name="deleted">Διαγραμμένα</string>
+    <string name="archived">Αρχείο</string>
+    <string name="settings">Ρυθμίσεις</string>
+
+    <!-- Menu Options -->
+    <string name="share">Κοινοποίηση</string>
+    <string name="search">Αναζήτηση</string>
+    <string name="delete">Διαγραφή</string>
+    <string name="restore">Επαναφορά</string>
+    <string name="archive">Αρχειοθέτηση</string>
+    <string name="unarchive"><![CDATA[Μεταφορά στις <<Σημειώσεις>>]]></string>
+    <string name="delete_all">Διαγραφή όλων</string>
+    <string name="change_color">Αλλαγή χρώματος</string>
+    <string name="delete_forever">Οριστική διαγραφή</string>
+
+    <!-- Pinning -->
+    <string name="pin">Καρφίτσωμα</string>
+    <string name="unpin">Ξεκαρφίτσωμα</string>
+    <string name="pinned">Καρφιτσωμένα</string>
+    <string name="others">Επιπλέον</string>
+
+    <!-- Chooser dialog hints -->
+    <string name="view_note">Προβολή σημείωσης</string>
+
+    <!-- Dialogs -->
+    <string name="save">Αποθήκευση</string>
+    <string name="edit">Επεξεργασία</string>
+    <string name="cancel">Ακύρωση</string>
+    <string name="open_link">Άνοιγμα συνδέσμου</string>
+    <string name="make_list">Δημιουργία λίστας</string>
+    <string name="take_note">Δημιουργία σημείωσης</string>
+    <string name="add_label">Προσθήκη ετικέτας</string>
+    <string name="export">Εξαγωγή</string>
+    <string name="view_file">Εμφάνιση αρχείου</string>
+    <string name="save_to_device">Αποθήκευση στην συσκευή</string>
+    <string name="edit_label">Επεξεργασία ετικέτας</string>
+    <string name="label_exists">Η ετικέτα υπάρχει</string>
+    <string name="delete_label">Διαγραφή ετικέτας;</string>
+    <string name="create_new">Καμία ετικέτα. Δημιουργία μίας;</string>
+    <string name="delete_all_notes">Διαγραφή όλων των σημειώσεων;</string>
+    <string name="delete_note_forever">Οριστική διαγραφή σημείωσης;</string>
+    <string name="your_notes_associated">Οι συσχετισμένες σημειώσεις με αυτή την ετικέτα δεν θα διαγραφούν</string>
+
+    <!-- Lists and Notes -->
+    <string name="note">Σημείωση</string>
+    <string name="item">Αντικείμενο</string>
+    <string name="date">Ημερομηνία</string>
+    <string name="title">Τίτλος</string>
+    <string name="add_item">Προσθήκη αντικειμένου</string>
+    <string name="one_more_item">1 ακόμα αντικείμενο</string>
+    <string name="more_items">%1$d ακόμα αντικείμενα</string>
+    <string name="drag_handle">Λαβή Σύρσης</string>
+    <string name="bold">Έντονα</string>
+    <string name="link">Σύνδεση</string>
+    <string name="italic">Πλάγια</string>
+    <string name="strikethrough">Διακριτή Διαγραφή</string>
+    <string name="clear_formatting">Απαλοιφή μορφοποίησης</string>
+
+    <!-- Miscellaneous -->
+    <string name="saved_to_device">Αποθηκεύτηκε στην συσκευή</string>
+    <string name="saved_to_notally">Αποθηκεύτηκε στο Notally</string>
+    <string name="empty_note">Κενή σημείωση</string>
+    <string name="empty_list">Κενή λίστα</string>
+    <string name="cant_open_link">Αδύνατο το άνοιγμα συνδέσμου</string>
+    <string name="something_went_wrong">Κάτι πήγε στραβά. Παρακαλώ προσπαθήστε ξανά.</string>
+
+    <!-- Settings Page -->
+    <string name="appearance">Εμφάνιση</string>
+
+    <string name="view">Προβολή</string>
+    <string name="list">Λίστα</string>
+    <string name="grid">Πλέγμα</string>
+
+    <string name="theme">Θέμα</string>
+    <string name="dark">Μαύρο</string>
+    <string name="light">Φωτεινό</string>
+    <string name="follow_system">Ακολούθηση συστήματος</string>
+
+    <string name="date_format">Μορφή ημερομηνίας</string>
+    <string name="none">Καμία</string>
+
+    <string name="content_density">Πυκνότητα περιεχομένου</string>
+    <string name="max_items_to_display">Μέγιστος αριθμός αντικειμένων που θα εμφανίζονται στην λίστα</string>
+    <string name="max_lines_to_display">Μέγιστος αριθμός σειρών που θα εμφανίζονται στις σημειώσεις</string>
+
+    <string name="backup">Αντίγραφο Ασφαλείας</string>
+    <string name="export_backup">Εξαγωγή Αντιγράφου Ασφαλείας</string>
+    <string name="import_backup">Εισαγωγή Αντιγράφου Ασφαλείας</string>
+
+    <string name="about">Σχετικά με</string>
+    <string name="libraries">Βιβλιοθήκες</string>
+    <string name="rate">Βαθμολογήστε την εφαρμογή</string>
+</resources>
