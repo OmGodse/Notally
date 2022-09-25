@@ -2,6 +2,8 @@
 
     <style name="Base.AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorSecondary">?attr/colorPrimary</item>
+        <item name="colorOnSecondary">?attr/colorOnPrimary</item>
+
         <item name="colorPrimaryDark">?attr/colorSurface</item>
 
         <item name="android:navigationBarColor">@color/Black</item>

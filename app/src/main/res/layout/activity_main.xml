@@ -48,9 +48,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            app:rippleColor="@color/FABRipple"
-            app:srcCompat="@drawable/add"
-            app:tint="?attr/colorSurface" />
+            app:srcCompat="@drawable/add" />
 
     </RelativeLayout>
 

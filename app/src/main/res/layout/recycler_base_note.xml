@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardElevation="0dp"
-        app:shapeAppearance="?attr/shapeAppearanceMediumComponent"
         app:strokeColor="@color/on_surface_light">
 
         <LinearLayout
