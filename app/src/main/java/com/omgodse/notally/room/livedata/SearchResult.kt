@@ -3,6 +3,7 @@ package com.omgodse.notally.room.livedata
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import com.omgodse.notally.room.BaseNote
+import com.omgodse.notally.room.Folder
 import com.omgodse.notally.room.Item
 import com.omgodse.notally.room.dao.BaseNoteDao
 import kotlinx.coroutines.CoroutineScope
@@ -23,12 +24,12 @@ class SearchResult(
         value = emptyList()
     }
 
-    fun fetch(keyword: String) {
+    fun fetch(keyword: String, folder: Folder) {
         job?.cancel()
         liveData?.removeObserver(observer)
         job = scope.launch {
             if (keyword.isNotEmpty()) {
-                liveData = baseNoteDao.getBaseNotesByKeyword(keyword)
+                liveData = baseNoteDao.getBaseNotesByKeyword(keyword, folder)
                 liveData?.observeForever(observer)
             } else value = emptyList()
         }

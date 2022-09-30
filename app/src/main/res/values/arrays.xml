@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string-array name="linkOptions">
-        <item>@string/edit</item>
-        <item>@string/open_link</item>
-    </string-array>
-</resources>

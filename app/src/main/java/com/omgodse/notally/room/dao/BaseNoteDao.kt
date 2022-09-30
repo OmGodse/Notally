@@ -76,13 +76,13 @@ interface BaseNoteDao {
     suspend fun getListOfBaseNotesByLabelImpl(label: String): List<BaseNote>
 
 
-    fun getBaseNotesByKeyword(keyword: String): LiveData<List<BaseNote>> {
-        val result = getBaseNotesByKeyword(keyword, Folder.NOTES)
+    fun getBaseNotesByKeyword(keyword: String, folder: Folder): LiveData<List<BaseNote>> {
+        val result = getBaseNotesByKeywordImpl(keyword, folder)
         return Transformations.map(result) { list -> list.filter { baseNote -> matchesKeyword(baseNote, keyword) } }
     }
 
     @Query("SELECT * FROM BaseNote WHERE folder = :folder AND (title LIKE '%' || :keyword || '%' OR body LIKE '%' || :keyword || '%' OR items LIKE '%' || :keyword || '%' OR labels LIKE '%' || :keyword || '%') ORDER BY pinned DESC, timestamp DESC")
-    fun getBaseNotesByKeyword(keyword: String, folder: Folder): LiveData<List<BaseNote>>
+    fun getBaseNotesByKeywordImpl(keyword: String, folder: Folder): LiveData<List<BaseNote>>
 
 
     private fun matchesKeyword(baseNote: BaseNote, keyword: String): Boolean {

@@ -15,6 +15,12 @@ object Operations {
 
     const val extraCharSequence = "com.omgodse.notally.extra.charSequence"
 
+
+    fun createArray(context: Context, vararg ids: Int): Array<String> {
+        return Array(ids.size) { index -> context.getString(ids[index]) }
+    }
+
+
     fun extractColor(color: Color, context: Context): Int {
         val id = when (color) {
             Color.DEFAULT -> R.color.Default

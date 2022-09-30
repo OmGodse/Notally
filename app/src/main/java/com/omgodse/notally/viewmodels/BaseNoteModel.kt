@@ -47,11 +47,18 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     val deletedNotes = Content(baseNoteDao.getFrom(Folder.DELETED), ::transform)
     val archivedNotes = Content(baseNoteDao.getFrom(Folder.ARCHIVED), ::transform)
 
+    var folder = Folder.NOTES
+        set(value) {
+            if (field != value) {
+                field = value
+                searchResults.fetch(keyword, folder)
+            }
+        }
     var keyword = String()
         set(value) {
             if (field != value) {
                 field = value
-                searchResults.fetch(value)
+                searchResults.fetch(keyword, folder)
             }
         }
 
@@ -64,14 +71,13 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         viewModelScope.launch {
             val previousNotes = getPreviousNotes()
             val previousLabels = getPreviousLabels()
-            val delete: (file: File) -> Unit = { file: File -> file.delete() }
             if (previousNotes.isNotEmpty() || previousLabels.isNotEmpty()) {
                 database.withTransaction {
                     labelDao.insert(previousLabels)
                     baseNoteDao.insert(previousNotes)
-                    getNotePath().listFiles()?.forEach(delete)
-                    getDeletedPath().listFiles()?.forEach(delete)
-                    getArchivedPath().listFiles()?.forEach(delete)
+                    getNotePath().listFiles()?.forEach { file -> file.delete() }
+                    getDeletedPath().listFiles()?.forEach { file -> file.delete() }
+                    getArchivedPath().listFiles()?.forEach { file -> file.delete() }
                     getLabelsPreferences().edit(true) { clear() }
                 }
             }

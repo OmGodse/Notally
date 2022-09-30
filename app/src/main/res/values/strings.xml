@@ -10,6 +10,7 @@
 
     <!-- Menu Options -->
     <string name="share">Share</string>
+    <string name="filter">Filter</string>
     <string name="search">Search</string>
     <string name="delete">Delete</string>
     <string name="restore">Restore</string>
