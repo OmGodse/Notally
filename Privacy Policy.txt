@@ -1,0 +1,1 @@
+No user data is collected
