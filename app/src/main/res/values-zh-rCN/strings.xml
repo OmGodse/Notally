@@ -1,28 +1,32 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name" translatable="false">Notally</string>
+
     <!-- Fragment Titles -->
     <string name="notes">笔记</string>
     <string name="labels">标签</string>
-    <string name="deleted">回收站</string>
-    <string name="archived">已归档</string>
+    <string name="deleted">已删除</string>
+    <string name="archived">已存档</string>
     <string name="settings">设置</string>
 
     <!-- Menu Options -->
     <string name="share">分享</string>
+    <string name="filter">筛选</string>
     <string name="search">搜索</string>
     <string name="delete">删除</string>
     <string name="restore">恢复</string>
-    <string name="archive">归档</string>
-    <string name="unarchive">取消归档</string>
-    <string name="delete_all">全部删除</string>
+    <string name="archive">存档</string>
+    <string name="unarchive">取消存档</string>
+    <string name="delete_all">删除全部</string>
+    <string name="change_color">更改颜色</string>
     <string name="delete_forever">永久删除</string>
 
     <!-- Pinning -->
     <string name="pin">置顶</string>
     <string name="unpin">取消置顶</string>
+    <string name="pinned">已置顶</string>
+    <string name="others">其他</string>
 
     <!-- Chooser dialog hints -->
-    <string name="pinned">已置顶</string>
     <string name="view_note">查看笔记…</string>
 
     <!-- Dialogs -->
@@ -30,29 +34,34 @@
     <string name="edit">编辑</string>
     <string name="cancel">取消</string>
     <string name="open_link">打开链接</string>
-    <string name="make_list">写清单</string>
-    <string name="take_note">写笔记</string>
-    <string name="add_label">新建标签</string>
+    <string name="make_list">制作列表</string>
+    <string name="take_note">记笔记</string>
+    <string name="add_label">添加标签</string>
     <string name="export">导出</string>
+    <string name="pdf" translatable="false">PDF</string>
+    <string name="txt" translatable="false">TXT</string>
+    <string name="xml" translatable="false">XML</string>
+    <string name="html" translatable="false">HTML</string>
+    <string name="json" translatable="false">JSON</string>
     <string name="view_file">查看文件</string>
-    <string name="save_to_device">保存至设备</string>
+    <string name="save_to_device">保存到设备</string>
     <string name="edit_label">编辑标签</string>
-    <string name="label_exists">该标签已存在</string>
+    <string name="label_exists">标签已存在</string>
     <string name="delete_label">删除标签？</string>
-    <string name="create_new">您还没有标签。要新建标签吗？</string>
+    <string name="create_new">还没有标签。创建一个？</string>
     <string name="delete_all_notes">删除所有笔记？</string>
-    <string name="delete_note_forever">永久删除笔记？</string>
-    <string name="your_notes_associated">本标签下的所有笔记将不会被删除</string>
+    <string name="delete_note_forever">永久性删除笔记？</string>
+    <string name="your_notes_associated">将删除与此标签相关联的笔记</string>
 
     <!-- Lists and Notes -->
     <string name="note">笔记</string>
-    <string name="item">清单项目</string>
-    <string name="add_item">添加项目</string>
+    <string name="item">项目</string>
     <string name="date">日期</string>
     <string name="title">标题</string>
-    <string name="one_more_item">还有 1 件项目</string>
-    <string name="more_items">还有 %1$d 件项目</string>
-    <string name="drag_handle">拖拽微件</string>
+    <string name="add_item">添加项目</string>
+    <string name="one_more_item">额外1个项目</string>
+    <string name="more_items">额外 %1$d 个项目</string>
+    <string name="drag_handle">拖动处理</string>
     <string name="bold">粗体</string>
     <string name="link">链接</string>
     <string name="italic">斜体</string>
@@ -61,12 +70,12 @@
     <string name="monospace">等宽</string>
 
     <!-- Miscellaneous -->
-    <string name="saved_to_device">已保存至设备</string>
-    <string name="saved_to_notally">已保存至 Notally</string>
-    <string name="empty_note">笔记无内容</string>
-    <string name="empty_list">清单无内容</string>
-    <string name="cant_open_link">无法打开链接</string>
-    <string name="something_went_wrong">发生了错误。请重试。</string>
+    <string name="saved_to_device">已保存到设备</string>
+    <string name="saved_to_notally">已保存到 Notally</string>
+    <string name="empty_note">空白笔记</string>
+    <string name="empty_list">空白列表</string>
+    <string name="cant_open_link">打不开链接</string>
+    <string name="something_went_wrong">出错了。请再试。</string>
 
     <!-- Settings Page -->
     <string name="appearance">外观</string>
@@ -76,19 +85,24 @@
     <string name="grid">网格</string>
 
     <string name="theme">主题</string>
-    <string name="dark">深色</string>
-    <string name="light">浅色</string>
+    <string name="dark">黑</string>
+    <string name="light">白</string>
     <string name="follow_system">跟随系统</string>
 
-    <string name="content_density">显示密度</string>
-    <string name="max_items_to_display">清单项目数上限</string>
-    <string name="max_lines_to_display">笔记行数上限</string>
+    <string name="date_format">日期格式</string>
+    <string name="none">无</string>
 
-    <string name="backup">备份</string>
+    <string name="content_density">内容密度</string>
+    <string name="max_items_to_display">列表中最多显示的项目数</string>
+    <string name="max_lines_to_display">笔记中最多显示的行数</string>
+
+    <string name="backup">Backup</string>
     <string name="export_backup">导出备份</string>
     <string name="import_backup">导入备份</string>
 
     <string name="about">关于</string>
-    <string name="libraries">代码库</string>
-    <string name="rate">评价本应用</string>
+    <string name="libraries">库</string>
+    <string name="rate">评价此应用</string>
+
+    <string name="github" translatable="false">GitHub</string>
 </resources>
