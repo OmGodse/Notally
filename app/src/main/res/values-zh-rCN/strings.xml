@@ -96,7 +96,7 @@
     <string name="max_items_to_display">列表中最多显示的项目数</string>
     <string name="max_lines_to_display">笔记中最多显示的行数</string>
 
-    <string name="backup">Backup</string>
+    <string name="backup">备份</string>
     <string name="export_backup">导出备份</string>
     <string name="import_backup">导入备份</string>
 
