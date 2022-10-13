@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Notally</string>
+    
 
     <!-- Fragment Titles -->
     <string name="notes">笔记</string>
@@ -38,11 +38,11 @@
     <string name="take_note">记笔记</string>
     <string name="add_label">添加标签</string>
     <string name="export">导出</string>
-    <string name="pdf" translatable="false">PDF</string>
-    <string name="txt" translatable="false">TXT</string>
-    <string name="xml" translatable="false">XML</string>
-    <string name="html" translatable="false">HTML</string>
-    <string name="json" translatable="false">JSON</string>
+    
+    
+    
+    
+    
     <string name="view_file">查看文件</string>
     <string name="save_to_device">保存到设备</string>
     <string name="edit_label">编辑标签</string>
@@ -104,5 +104,5 @@
     <string name="libraries">库</string>
     <string name="rate">评价此应用</string>
 
-    <string name="github" translatable="false">GitHub</string>
+    
 </resources>
