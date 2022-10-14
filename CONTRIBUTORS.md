@@ -24,3 +24,4 @@
 23. 🇵🇭 Tagalog by Isaiah Collins Abetong
 24. 🇨🇳 Chinese (Simplified) by [Austin Huang](https://github.com/austinhuang0131)
 25. 🇩🇪 German by Maximilian Braunschmied, [jonas-haeusler](https://github.com/jonas-haeusler), [samuel141](https://github.com/samuel141)
+26. 🇻🇳 Vietnamese by [mastoduy](https://github.com/mastoduy)
