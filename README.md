@@ -5,7 +5,7 @@ Notally was created because I wanted to make something that was beautiful and at
 * Auto save
 * No permissions required
 * Support for Lollipop devices and up
-* APK size of 1.2 MB (1.7 MB uncompressed)
+* APK size of 1.2 MB (1.6 MB uncompressed)
 * Color, pin and label your notes for quick organisation
 * Archive notes to keep them around, but out of your way
 * Export notes as TXT, XML, JSON, HTML or PDF files with formatting

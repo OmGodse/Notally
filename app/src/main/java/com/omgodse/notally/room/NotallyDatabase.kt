@@ -26,9 +26,9 @@ abstract class NotallyDatabase : RoomDatabase() {
         @Volatile
         private var instance: NotallyDatabase? = null
 
-        fun getDatabase(application: Application): NotallyDatabase {
+        fun getDatabase(app: Application): NotallyDatabase {
             return instance ?: synchronized(this) {
-                val instance = Room.databaseBuilder(application, NotallyDatabase::class.java, databaseName)
+                val instance = Room.databaseBuilder(app, NotallyDatabase::class.java, databaseName)
                     .addMigrations(Migration2)
                     .build()
                 this.instance = instance
