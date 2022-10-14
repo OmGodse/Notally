@@ -15,7 +15,7 @@
 14. 🇺🇦 Ukrainian by Alex Shpak
 15. 🇩🇰 Danish by [shoddysheep](https://github.com/shoddysheep)
 16. 🇸🇪 Swedish by Erik Lindström
-17. 🇷🇺 Russian by Denis Bondarenko
+17. 🇷🇺 Russian by Denis Bondarenko, Lyyako
 18. 🇫🇷 French by Arnaud Dieumegard, [Co-7](https://github.com/Co-7)
 19. 🇧🇷 Portuguese (Brazil) by [fabianski7](https://github.com/fabianski7)
 20. 🇵🇹 Portuguese (Portugal) by [joaopmatos](https://github.com/joaopmatos)

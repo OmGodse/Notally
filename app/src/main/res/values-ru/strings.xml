@@ -3,44 +3,49 @@
     <!-- Fragment Titles -->
     <string name="notes">Заметки</string>
     <string name="labels">Метки</string>
-    <string name="deleted">Удаленные</string>
-    <string name="archived">Архивированные</string>
+    <string name="deleted">Удалённые</string>
+    <string name="archived">Архив</string>
     <string name="settings">Настройки</string>
 
     <!-- Menu Options -->
     <string name="share">Поделиться</string>
+    <string name="filter">Фильтры</string>
     <string name="search">Поиск</string>
     <string name="delete">Удалить</string>
     <string name="restore">Восстановить</string>
     <string name="archive">Архивировать</string>
     <string name="unarchive">Разархивировать</string>
-    <string name="delete_all">Удалить все</string>
+    <string name="delete_all">Удалить всё</string>
+    <string name="change_color">Изменить цвет</string>
     <string name="delete_forever">Удалить навсегда</string>
-
-    <!-- Chooser dialog hints -->
-    <string name="view_note">Посмотреть заметку…</string>
 
     <!-- Pinning -->
     <string name="pin">Закрепить</string>
     <string name="unpin">Открепить</string>
-    <string name="pinned">Закреплено</string>
+    <string name="pinned">Закреплённые</string>
+    <string name="others">Другие</string>
+
+    <!-- Chooser dialog hints -->
+    <string name="view_note">Посмотреть заметку…</string>
 
     <!-- Dialogs -->
     <string name="save">Сохранить</string>
     <string name="edit">Редактировать</string>
     <string name="cancel">Отменить</string>
-    <string name="make_list">Сделать список</string>
+    <string name="open_link">Открыть ссылку</string>
+    <string name="make_list">Создать список</string>
     <string name="take_note">Создать заметку</string>
     <string name="add_label">Добавить метку</string>
-    <string name="export">Скачать</string>
+    <string name="export">Экспортировать</string>
+    <string name="view_file">Посмотреть файл</string>
     <string name="save_to_device">Сохранить на устройство</string>
     <string name="edit_label">Изменить метку</string>
-    <string name="label_exists">Ярлык существует</string>
+    <string name="label_exists">Метка уже существует</string>
     <string name="delete_label">Удалить метку?</string>
     <string name="create_new">Еще нет меток, создать?</string>
     <string name="delete_all_notes">Удалить все заметки?</string>
     <string name="delete_note_forever">Удалить заметку навсегда?</string>
-    <string name="your_notes_associated">Все ваши заметки с этим тегом не будут удалены</string>
+    <string name="your_notes_associated">Ваши заметки, связанные с этой меткой, не будут удалены</string>
 
     <!-- Lists and Notes -->
     <string name="note">Заметка</string>
@@ -48,23 +53,23 @@
     <string name="date">Дата</string>
     <string name="title">Заголовок</string>
     <string name="add_item">Добавить пункт</string>
-    <string name="one_more_item">Еще 1 пунктов</string>
-    <string name="more_items">Еще %1$d пунктов</string>
-    <string name="drag_handle">Перетащить ручку</string>
+    <string name="one_more_item">Ещё 1 пункт</string>
+    <string name="more_items">Ещё %1$d пункта(ов)</string>
+    <string name="drag_handle">Перетащить</string>
     <string name="bold">Жирный</string>
-    <string name="link">Ссылка</string>
+    <string name="link">Сслыка</string>
     <string name="italic">Курсив</string>
-    <string name="strikethrough">Перечеркнутый</string>
+    <string name="strikethrough">Перечёркнутый</string>
     <string name="clear_formatting">Стандартный стиль</string>
-    <string name="monospace">Пространство между символами</string>
+    <string name="monospace">Моноширинный шрифт</string>
 
     <!-- Miscellaneous -->
-    <string name="saved_to_device">Сохранено на телефоне</string>
+    <string name="saved_to_device">Сохранено на устройтсве</string>
     <string name="saved_to_notally">Сохранено в Notally</string>
     <string name="empty_note">Пустая заметка</string>
     <string name="empty_list">Пустой список</string>
-    <string name="cant_open_link">Ссылку открыть невозможно</string>
-    <string name="something_went_wrong">Что-то пошло не так. Пожалуйста, попробуйте еще раз.</string>
+    <string name="cant_open_link">Невозможно открыть ссылку</string>
+    <string name="something_went_wrong">Что-то пошло не так. Пожалуйста, повторите попытку</string>
 
     <!-- Settings Page -->
     <string name="appearance">Внешний вид</string>
@@ -74,17 +79,22 @@
     <string name="grid">Сетка</string>
 
     <string name="theme">Тема</string>
-    <string name="dark">Темная</string>
+    <string name="dark">Тёмная</string>
     <string name="light">Светлая</string>
-    <string name="follow_system">Как на устройстве</string>
+    <string name="follow_system">Как в системе</string>
 
-    <string name="content_density">Плотность содержимого</string>
+    <string name="date_format">Формат даты</string>
+    <string name="none">Отсутствует</string>
+
+    <string name="content_density">Плотность контента</string>
     <string name="max_items_to_display">Максимум отображаемых пунктов в списке</string>
     <string name="max_lines_to_display">Максимум отображаемых строк в заметке</string>
 
     <string name="backup">Резервная копия</string>
+    <string name="export_backup">Экспортировать</string>
+    <string name="import_backup">Импортировать</string>
 
-    <string name="about">Про приложение</string>
+    <string name="about">О приложении</string>
     <string name="libraries">Библиотеки</string>
     <string name="rate">Оценить приложение</string>
 </resources>
