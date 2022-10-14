@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.omgodse.notally.databinding.RecyclerBaseNoteBinding
 import com.omgodse.notally.databinding.RecyclerHeaderBinding
-import com.omgodse.notally.helpers.SettingsHelper
 import com.omgodse.notally.recyclerview.ItemListener
 import com.omgodse.notally.recyclerview.viewholders.BaseNoteVH
 import com.omgodse.notally.recyclerview.viewholders.HeaderVH
@@ -19,7 +18,9 @@ import org.ocpsoft.prettytime.PrettyTime
 import java.text.SimpleDateFormat
 
 class BaseNoteAdapter(
-    private val settingsHelper: SettingsHelper,
+    private val dateFormat: String,
+    private val maxItems: Int,
+    private val maxLines: Int,
     private val formatter: SimpleDateFormat,
     private val listener: ItemListener
 ) : ListAdapter<Item, RecyclerView.ViewHolder>(DiffCallback) {
@@ -42,7 +43,7 @@ class BaseNoteAdapter(
         return when (ViewType.values()[viewType]) {
             ViewType.NOTE -> {
                 val binding = RecyclerBaseNoteBinding.inflate(inflater, parent, false)
-                BaseNoteVH(binding, settingsHelper, listener, prettyTime, formatter)
+                BaseNoteVH(binding, dateFormat, maxItems, maxLines, listener, prettyTime, formatter)
             }
             ViewType.HEADER -> {
                 val binding = RecyclerHeaderBinding.inflate(inflater, parent, false)

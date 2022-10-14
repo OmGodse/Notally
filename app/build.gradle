@@ -47,8 +47,6 @@ dependencies {
     final def navVersion = "2.3.5"
     final def roomVersion = "2.4.3"
 
-    implementation "androidx.preference:preference-ktx:1.1.1"
-
     kapt "androidx.room:room-compiler:$roomVersion"
     implementation "androidx.room:room-ktx:$roomVersion"
     implementation "androidx.room:room-runtime:$roomVersion"

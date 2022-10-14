@@ -7,9 +7,9 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.RecyclerBaseNoteBinding
-import com.omgodse.notally.helpers.SettingsHelper
 import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.miscellaneous.applySpans
+import com.omgodse.notally.preferences.DateFormat
 import com.omgodse.notally.recyclerview.ItemListener
 import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Color
@@ -20,14 +20,16 @@ import java.util.*
 
 class BaseNoteVH(
     private val binding: RecyclerBaseNoteBinding,
-    private val settingsHelper: SettingsHelper,
+    private val dateFormat: String,
+    private val maxItems: Int,
+    maxLines: Int,
     listener: ItemListener,
     private val prettyTime: PrettyTime,
     private val formatter: SimpleDateFormat,
 ) : RecyclerView.ViewHolder(binding.root) {
 
     init {
-        binding.Note.maxLines = settingsHelper.getMaxLines()
+        binding.Note.maxLines = maxLines
 
         binding.CardView.setOnClickListener {
             listener.onClick(adapterPosition)
@@ -74,8 +76,7 @@ class BaseNoteVH(
         } else {
             binding.LinearLayout.visibility = View.VISIBLE
 
-            val max = settingsHelper.getMaxItems()
-            val filteredList = list.items.take(max)
+            val filteredList = list.items.take(maxItems)
             binding.LinearLayout.children.forEachIndexed { index, view ->
                 if (view.id != R.id.ItemsRemaining) {
                     if (index < filteredList.size) {
@@ -88,9 +89,9 @@ class BaseNoteVH(
                 }
             }
 
-            if (list.items.size > max) {
+            if (list.items.size > maxItems) {
                 binding.ItemsRemaining.visibility = View.VISIBLE
-                val itemsRemaining = list.items.size - max
+                val itemsRemaining = list.items.size - maxItems
                 binding.ItemsRemaining.text = if (itemsRemaining == 1) {
                     binding.root.context.getString(R.string.one_more_item)
                 } else binding.root.context.getString(R.string.more_items, itemsRemaining)
@@ -101,12 +102,12 @@ class BaseNoteVH(
 
     private fun setDate(baseNote: BaseNote) {
         val date = Date(baseNote.timestamp)
-        if (settingsHelper.showDateCreated()) {
-            when (settingsHelper.getDateFormat()) {
-                SettingsHelper.DateFormat.relative -> binding.Date.text = prettyTime.format(date)
-                SettingsHelper.DateFormat.absolute -> binding.Date.text = formatter.format(date)
-            }
+        if (dateFormat != DateFormat.none) {
             binding.Date.visibility = View.VISIBLE
+            when (dateFormat) {
+                DateFormat.relative -> binding.Date.text = prettyTime.format(date)
+                DateFormat.absolute -> binding.Date.text = formatter.format(date)
+            }
         } else binding.Date.visibility = View.GONE
     }
 

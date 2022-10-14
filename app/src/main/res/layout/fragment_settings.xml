@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/PreferenceHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/appearance" />
+
+        <include
+            android:id="@+id/View"
+            layout="@layout/preference_list" />
+
+        <include
+            android:id="@+id/Theme"
+            layout="@layout/preference_list" />
+
+        <include
+            android:id="@+id/DateFormat"
+            layout="@layout/preference_list" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
+
+        <TextView
+            style="@style/PreferenceHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/content_density" />
+
+        <include
+            android:id="@+id/MaxItems"
+            layout="@layout/preference_seekbar" />
+
+        <include
+            android:id="@+id/MaxLines"
+            layout="@layout/preference_seekbar" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
+
+        <TextView
+            style="@style/PreferenceHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/backup" />
+
+        <TextView
+            android:id="@+id/ImportBackup"
+            style="@style/Preference"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/import_backup" />
+
+        <TextView
+            android:id="@+id/ExportBackup"
+            style="@style/Preference"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/export_backup" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
+
+        <TextView
+            style="@style/PreferenceHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about" />
+
+        <TextView
+            android:id="@+id/GitHub"
+            style="@style/Preference"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/github" />
+
+        <TextView
+            android:id="@+id/Libraries"
+            style="@style/Preference"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/libraries" />
+
+        <TextView
+            android:id="@+id/Rate"
+            style="@style/Preference"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/rate" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

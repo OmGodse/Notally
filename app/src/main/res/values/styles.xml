@@ -15,15 +15,9 @@
         <!-- Menu Items, EditTexts, Dialog Titles -->
         <item name="textAppearanceSubtitle1">@style/TextAppearance.Subtitle1</item>
 
-        <!-- Required for the Settings page to look good -->
-        <item name="preferenceCategoryTitleTextAppearance">?attr/textAppearanceSubtitle2</item>
-        <item name="android:textAppearanceListItem">?attr/textAppearanceBody1</item>
-        <item name="android:textAppearanceListItemSecondary">?attr/textAppearanceBody2</item>
-
         <item name="toolbarStyle">@style/Toolbar</item>
         <item name="chipGroupStyle">@style/ChipGroup</item>
 
-        <item name="alertDialogTheme">@style/AlertDialog</item>
         <item name="materialAlertDialogTheme">@style/AlertDialog</item>
     </style>
 
@@ -92,6 +86,21 @@
 
     <style name="Colorless" parent="ThemeOverlay.MaterialComponents">
         <item name="colorSecondary">?attr/colorOnSurface</item>
+    </style>
+
+
+    <style name="Preference" parent="TextView.Clickable">
+        <item name="android:padding">16dp</item>
+        <item name="android:textAppearance">?attr/textAppearanceBody1</item>
+    </style>
+
+    <style name="PreferenceHeader" parent="Widget.AppCompat.TextView">
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:textAppearance">?attr/textAppearanceSubtitle2</item>
     </style>
 
 </resources>

@@ -27,7 +27,6 @@ import com.omgodse.notally.activities.TakeNote
 import com.omgodse.notally.databinding.DialogColorBinding
 import com.omgodse.notally.databinding.FragmentNotesBinding
 import com.omgodse.notally.helpers.OperationsParent
-import com.omgodse.notally.helpers.SettingsHelper
 import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.miscellaneous.applySpans
@@ -38,10 +37,9 @@ import com.omgodse.notally.room.*
 import com.omgodse.notally.viewmodels.BaseNoteModel
 import kotlinx.coroutines.launch
 import java.io.File
+import com.omgodse.notally.preferences.View as ViewPref
 
 abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
-
-    private lateinit var settingsHelper: SettingsHelper
 
     private var adapter: BaseNoteAdapter? = null
     private var binding: FragmentNotesBinding? = null
@@ -55,22 +53,9 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        settingsHelper = SettingsHelper(requireContext())
-
-        adapter = BaseNoteAdapter(settingsHelper, model.formatter, this)
-        adapter?.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-
-            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-                if (itemCount > 0) {
-                    binding?.RecyclerView?.scrollToPosition(positionStart)
-                }
-            }
-        })
-        binding?.RecyclerView?.adapter = adapter
-        binding?.RecyclerView?.setHasFixedSize(true)
-
         binding?.ImageView?.setImageResource(getBackground())
 
+        setupAdapter()
         setupRecyclerView()
         setupObserver()
     }
@@ -119,6 +104,24 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
     }
 
 
+    private fun setupAdapter() {
+        val maxItems = model.preferences.maxItems.value
+        val maxLines = model.preferences.maxLines.value
+        val dateFormat = model.preferences.dateFormat.value
+
+        adapter = BaseNoteAdapter(dateFormat, maxItems, maxLines, model.formatter, this)
+        adapter?.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                if (itemCount > 0) {
+                    binding?.RecyclerView?.scrollToPosition(positionStart)
+                }
+            }
+        })
+        binding?.RecyclerView?.adapter = adapter
+        binding?.RecyclerView?.setHasFixedSize(true)
+    }
+
     private fun setupObserver() {
         getObservable().observe(viewLifecycleOwner) { list ->
             adapter?.submitList(list)
@@ -127,7 +130,7 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
     }
 
     private fun setupRecyclerView() {
-        binding?.RecyclerView?.layoutManager = if (settingsHelper.getView() == SettingsHelper.View.grid) {
+        binding?.RecyclerView?.layoutManager = if (model.preferences.view.value == ViewPref.grid) {
             StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
         } else LinearLayoutManager(requireContext())
     }
@@ -226,7 +229,7 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
 
 
     private fun exportToPDF(baseNote: BaseNote) {
-        model.getPDFFile(baseNote, settingsHelper.showDateCreated(), object : PostPDFGenerator.OnResult {
+        model.getPDFFile(baseNote, model.preferences.showDateCreated(), object : PostPDFGenerator.OnResult {
 
             override fun onSuccess(file: File) {
                 showFileOptionsDialog(file, "application/pdf")
@@ -240,7 +243,7 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
 
     private fun exportToTXT(baseNote: BaseNote) {
         lifecycleScope.launch {
-            val file = model.getTXTFile(baseNote, settingsHelper.showDateCreated())
+            val file = model.getTXTFile(baseNote, model.preferences.showDateCreated())
             showFileOptionsDialog(file, "text/plain")
         }
     }
@@ -261,7 +264,7 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
 
     private fun exportToHTML(baseNote: BaseNote) {
         lifecycleScope.launch {
-            val file = model.getHTMLFile(baseNote, settingsHelper.showDateCreated())
+            val file = model.getHTMLFile(baseNote, model.preferences.showDateCreated())
             showFileOptionsDialog(file, "text/html")
         }
     }
