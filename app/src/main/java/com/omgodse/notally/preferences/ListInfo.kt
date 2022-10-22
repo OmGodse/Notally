@@ -6,7 +6,7 @@ import com.omgodse.notally.viewmodels.BaseNoteModel
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 
-interface ListInfo {
+sealed interface ListInfo {
 
     val title: Int
 

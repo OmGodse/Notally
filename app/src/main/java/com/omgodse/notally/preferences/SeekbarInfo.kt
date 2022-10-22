@@ -2,7 +2,7 @@ package com.omgodse.notally.preferences
 
 import com.omgodse.notally.R
 
-interface SeekbarInfo {
+sealed interface SeekbarInfo {
 
     val title: Int
 
