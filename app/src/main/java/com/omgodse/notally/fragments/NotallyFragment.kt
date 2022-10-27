@@ -75,21 +75,26 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
     }
 
 
+    // See [RecyclerView.ViewHolder.getAdapterPosition]
     override fun onClick(position: Int) {
-        adapter?.currentList?.get(position)?.let { item ->
-            if (item is BaseNote) {
-                when (item.type) {
-                    Type.NOTE -> goToActivity(TakeNote::class.java, item)
-                    Type.LIST -> goToActivity(MakeList::class.java, item)
+        if (position != -1) {
+            adapter?.currentList?.get(position)?.let { item ->
+                if (item is BaseNote) {
+                    when (item.type) {
+                        Type.NOTE -> goToActivity(TakeNote::class.java, item)
+                        Type.LIST -> goToActivity(MakeList::class.java, item)
+                    }
                 }
             }
         }
     }
 
     override fun onLongClick(position: Int) {
-        adapter?.currentList?.get(position)?.let { item ->
-            if (item is BaseNote) {
-                showOperations(item)
+        if (position != -1) {
+            adapter?.currentList?.get(position)?.let { item ->
+                if (item is BaseNote) {
+                    showOperations(item)
+                }
             }
         }
     }
