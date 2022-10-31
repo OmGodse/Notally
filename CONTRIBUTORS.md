@@ -23,5 +23,6 @@
 22. 🇳🇴 Norwegian (Nynorsk) by [Erik Thom](https://github.com/erikthm)
 23. 🇵🇭 Tagalog by Isaiah Collins Abetong
 24. 🇨🇳 Chinese (Simplified) by [Austin Huang](https://github.com/austinhuang0131)
-25. 🇩🇪 German by Maximilian Braunschmied, [jonas-haeusler](https://github.com/jonas-haeusler), [samuel141](https://github.com/samuel141)
+25. 🇩🇪 German by Maximilian Braunschmied, [jonas-haeusler](https://github.com/jonas-haeusler),
+[samuel141](https://github.com/samuel141), [nautilusx](https://github.com/nautilusx)
 26. 🇻🇳 Vietnamese by [mastoduy](https://github.com/mastoduy)

@@ -1,6 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">Notally</string>
-    
     <!-- Fragment Titles -->
     <string name="notes">Notizen</string>
     <string name="labels">Labels</string>
@@ -38,11 +37,6 @@
     <string name="take_note">Notiz erstellen</string>
     <string name="add_label">Label hinzufügen</string>
     <string name="export">Exportieren</string>
-    <string name="pdf" translatable="false">PDF</string>
-    <string name="txt" translatable="false">TXT</string>
-    <string name="xml" translatable="false">XML</string>
-    <string name="html" translatable="false">HTML</string>
-    <string name="json" translatable="false">JSON</string>
     <string name="view_file">Datei öffnen</string>
     <string name="save_to_device">Speichern</string>
     <string name="edit_label">Label bearbeiten</string>
@@ -101,6 +95,4 @@
     <string name="about">Über</string>
     <string name="libraries">Bibliotheken</string>
     <string name="rate">App bewerten</string>
-    
-     <string name="github" translatable="false">GitHub</string>
 </resources>
