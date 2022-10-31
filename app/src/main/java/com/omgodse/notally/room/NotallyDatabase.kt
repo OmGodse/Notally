@@ -1,10 +1,7 @@
 package com.omgodse.notally.room
 
 import android.app.Application
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
+import androidx.room.*
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.omgodse.notally.room.dao.BaseNoteDao
@@ -21,14 +18,14 @@ abstract class NotallyDatabase : RoomDatabase() {
 
     companion object {
 
-        private const val databaseName = "NotallyDatabase"
+        const val DatabaseName = "NotallyDatabase"
 
         @Volatile
         private var instance: NotallyDatabase? = null
 
         fun getDatabase(app: Application): NotallyDatabase {
             return instance ?: synchronized(this) {
-                val instance = Room.databaseBuilder(app, NotallyDatabase::class.java, databaseName)
+                val instance = Room.databaseBuilder(app, NotallyDatabase::class.java, DatabaseName)
                     .addMigrations(Migration2)
                     .build()
                 this.instance = instance

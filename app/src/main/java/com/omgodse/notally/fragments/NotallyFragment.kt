@@ -26,9 +26,9 @@ import com.omgodse.notally.activities.MakeList
 import com.omgodse.notally.activities.TakeNote
 import com.omgodse.notally.databinding.DialogColorBinding
 import com.omgodse.notally.databinding.FragmentNotesBinding
-import com.omgodse.notally.helpers.OperationsParent
 import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.miscellaneous.Operations
+import com.omgodse.notally.miscellaneous.OperationsParent
 import com.omgodse.notally.miscellaneous.applySpans
 import com.omgodse.notally.recyclerview.ItemListener
 import com.omgodse.notally.recyclerview.adapters.BaseNoteAdapter
@@ -194,7 +194,6 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
         MenuDialog(requireContext())
             .add(R.string.pdf) { exportToPDF(baseNote) }
             .add(R.string.txt) { exportToTXT(baseNote) }
-            .add(R.string.xml) { exportToXML(baseNote) }
             .add(R.string.json) { exportToJSON(baseNote) }
             .add(R.string.html) { exportToHTML(baseNote) }
             .show()
@@ -250,13 +249,6 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
         lifecycleScope.launch {
             val file = model.getTXTFile(baseNote, model.preferences.showDateCreated())
             showFileOptionsDialog(file, "text/plain")
-        }
-    }
-
-    private fun exportToXML(baseNote: BaseNote) {
-        lifecycleScope.launch {
-            val file = model.getXMLFile(baseNote)
-            showFileOptionsDialog(file, "text/xml")
         }
     }
 

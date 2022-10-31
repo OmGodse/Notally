@@ -2,6 +2,8 @@ package com.omgodse.notally.room.dao
 
 import androidx.room.Dao
 import androidx.room.Transaction
+import com.omgodse.notally.room.BaseNote
+import com.omgodse.notally.room.Label
 import com.omgodse.notally.room.NotallyDatabase
 
 @Dao
@@ -28,5 +30,11 @@ abstract class CommonDao(private val database: NotallyDatabase) {
         }
         database.baseNoteDao.update(modified)
         database.labelDao.update(oldValue, newValue)
+    }
+
+    @Transaction
+    open suspend fun importBackup(baseNotes: List<BaseNote>, labels: List<Label>) {
+        database.baseNoteDao.insert(baseNotes)
+        database.labelDao.insert(labels)
     }
 }

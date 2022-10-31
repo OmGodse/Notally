@@ -15,9 +15,9 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.ActivityNotallyBinding
-import com.omgodse.notally.helpers.OperationsParent
 import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.miscellaneous.Operations
+import com.omgodse.notally.miscellaneous.OperationsParent
 import com.omgodse.notally.miscellaneous.add
 import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Folder

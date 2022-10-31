@@ -2,16 +2,20 @@ package com.omgodse.notally.viewmodels
 
 import android.app.Application
 import android.content.Context
+import android.database.Cursor
+import android.database.sqlite.SQLiteDatabase
 import android.net.Uri
 import android.print.PostPDFGenerator
 import android.text.Html
 import android.widget.Toast
-import androidx.core.content.edit
 import androidx.core.text.toHtml
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.room.withTransaction
+import androidx.sqlite.db.SimpleSQLiteQuery
 import com.omgodse.notally.R
+import com.omgodse.notally.legacy.Migrations
+import com.omgodse.notally.legacy.XMLUtils
 import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.miscellaneous.applySpans
 import com.omgodse.notally.preferences.ListInfo
@@ -20,18 +24,20 @@ import com.omgodse.notally.preferences.SeekbarInfo
 import com.omgodse.notally.room.*
 import com.omgodse.notally.room.livedata.Content
 import com.omgodse.notally.room.livedata.SearchResult
-import com.omgodse.notally.xml.Backup
-import com.omgodse.notally.xml.XMLTags
-import com.omgodse.notally.xml.XMLUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
+import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.zip.ZipEntry
+import java.util.zip.ZipFile
+import java.util.zip.ZipOutputStream
 
 class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
@@ -74,16 +80,14 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
     init {
         viewModelScope.launch {
-            val previousNotes = getPreviousNotes()
-            val previousLabels = getPreviousLabels()
+            val previousNotes = Migrations.getPreviousNotes(app)
+            val previousLabels = Migrations.getPreviousLabels(app)
             if (previousNotes.isNotEmpty() || previousLabels.isNotEmpty()) {
                 database.withTransaction {
                     labelDao.insert(previousLabels)
                     baseNoteDao.insert(previousNotes)
-                    getNotePath().listFiles()?.forEach { file -> file.delete() }
-                    getDeletedPath().listFiles()?.forEach { file -> file.delete() }
-                    getArchivedPath().listFiles()?.forEach { file -> file.delete() }
-                    getLabelsPreferences().edit(true) { clear() }
+                    Migrations.clearAllLabels(app)
+                    Migrations.clearAllFolders(app)
                 }
             }
         }
@@ -106,9 +110,9 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
                 val newList = ArrayList<Item>(list.size + 2)
                 newList.add(pinned)
 
-                val indexFirstUnpinnedNote = list.indexOfFirst { baseNote -> !baseNote.pinned }
+                val firstUnpinnedNote = list.indexOfFirst { baseNote -> !baseNote.pinned }
                 list.forEachIndexed { index, baseNote ->
-                    if (index == indexFirstUnpinnedNote) {
+                    if (index == firstUnpinnedNote) {
                         newList.add(others)
                     }
                     newList.add(baseNote)
@@ -131,38 +135,137 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     fun exportBackup(uri: Uri) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                val labels = labelDao.getListOfAll()
-                val baseNotes = baseNoteDao.getListFrom(Folder.NOTES)
-                val deletedNotes = baseNoteDao.getListFrom(Folder.DELETED)
-                val archivedNotes = baseNoteDao.getListFrom(Folder.ARCHIVED)
+                baseNoteDao.checkpoint(SimpleSQLiteQuery("pragma wal_checkpoint(FULL)"))
 
-                val backup = Backup(baseNotes, deletedNotes, archivedNotes, labels)
+                val source = app.getDatabasePath(NotallyDatabase.DatabaseName)
 
                 (app.contentResolver.openOutputStream(uri) as? FileOutputStream)?.use { stream ->
                     stream.channel.truncate(0)
-                    XMLUtils.writeBackupToStream(backup, stream)
+
+                    val zipStream = ZipOutputStream(stream)
+                    val entry = ZipEntry(source.name)
+                    zipStream.putNextEntry(entry)
+
+                    val inputStream = FileInputStream(source)
+                    inputStream.copyTo(zipStream)
+                    inputStream.close()
+
+                    zipStream.closeEntry()
+                    zipStream.close()
                 }
             }
             Toast.makeText(app, R.string.saved_to_device, Toast.LENGTH_LONG).show()
         }
     }
 
-    fun importBackup(uri: Uri) {
-        executeAsync {
-            app.contentResolver.openInputStream(uri)?.use { stream ->
-                val backup = XMLUtils.readBackupFromStream(stream)
 
-                val list = ArrayList(backup.baseNotes)
-                list.addAll(backup.deletedNotes)
-                list.addAll(backup.archivedNotes)
+    fun importZipBackup(uri: Uri) {
+        viewModelScope.launch {
+            val stream = app.contentResolver.openInputStream(uri)
+            if (stream != null) {
+                val backupDir = getBackupPath()
+                val message = withContext(Dispatchers.IO) {
+                    val destination = File(backupDir, "TEMP.zip")
+                    copyStreamToFile(stream, destination)
 
-                val labels = backup.labels.map { label -> Label(label) }
+                    val zipFile = ZipFile(destination)
+                    val databaseEntry = zipFile.getEntry(NotallyDatabase.DatabaseName)
 
-                baseNoteDao.insert(list)
-                labelDao.insert(labels)
+                    if (databaseEntry != null) {
+                        val databaseFile = File(backupDir, NotallyDatabase.DatabaseName)
+                        val inputStream = zipFile.getInputStream(databaseEntry)
+                        copyStreamToFile(inputStream, databaseFile)
+
+                        try {
+                            val database = SQLiteDatabase.openDatabase(databaseFile.path, null, SQLiteDatabase.OPEN_READONLY)
+
+                            val labelCursor = database.query("Label", null, null, null, null, null, null)
+                            val baseNoteCursor = database.query("BaseNote", null, null, null, null, null, null)
+
+                            val labels = convertCursorToList(labelCursor, ::convertCursorToLabel)
+                            val baseNotes = convertCursorToList(baseNoteCursor, ::convertCursorToBaseNote)
+
+                            commonDao.importBackup(baseNotes, labels)
+                            return@withContext R.string.imported_backup
+                        } catch (exception: Exception) {
+                            exception.printStackTrace()
+                            return@withContext R.string.invalid_backup
+                        }
+
+                    } else return@withContext R.string.invalid_backup
+                }
+                Toast.makeText(app, message, Toast.LENGTH_LONG).show()
             }
         }
     }
+
+    private fun convertCursorToLabel(cursor: Cursor): Label {
+        val value = cursor.getString(cursor.getColumnIndexOrThrow("value"))
+        return Label(value)
+    }
+
+    private fun convertCursorToBaseNote(cursor: Cursor): BaseNote {
+        val typeTmp = cursor.getString(cursor.getColumnIndexOrThrow("type"))
+        val folderTmp = cursor.getString(cursor.getColumnIndexOrThrow("folder"))
+        val colorTmp = cursor.getString(cursor.getColumnIndexOrThrow("color"))
+        val title = cursor.getString(cursor.getColumnIndexOrThrow("title"))
+        val pinnedTmp = cursor.getInt(cursor.getColumnIndexOrThrow("pinned"))
+        val timestamp = cursor.getLong(cursor.getColumnIndexOrThrow("timestamp"))
+        val labelsTmp = cursor.getString(cursor.getColumnIndexOrThrow("labels"))
+        val body = cursor.getString(cursor.getColumnIndexOrThrow("body"))
+        val spansTmp = cursor.getString(cursor.getColumnIndexOrThrow("spans"))
+        val itemsTmp = cursor.getString(cursor.getColumnIndexOrThrow("items"))
+
+        val pinned = when (pinnedTmp) {
+            0 -> false
+            1 -> true
+            else -> throw IllegalArgumentException("pinned must be 0 or 1")
+        }
+
+        val type = Type.valueOf(typeTmp)
+        val folder = Folder.valueOf(folderTmp)
+        val color = Color.valueOf(colorTmp)
+
+        val labels = Converters.jsonToLabels(labelsTmp)
+        val spans = Converters.jsonToSpans(spansTmp)
+        val items = Converters.jsonToItems(itemsTmp)
+
+        return BaseNote(0, type, folder, color, title, pinned, timestamp, labels, body, spans, items)
+    }
+
+    private fun <T> convertCursorToList(cursor: Cursor, convert: (cursor: Cursor) -> T): ArrayList<T> {
+        val list = ArrayList<T>(cursor.count)
+        while (cursor.moveToNext()) {
+            val item = convert(cursor)
+            list.add(item)
+        }
+        cursor.close()
+        return list
+    }
+
+
+    private fun copyStreamToFile(inputStream: InputStream, destination: File) {
+        val outputStream = FileOutputStream(destination)
+        inputStream.copyTo(outputStream)
+        inputStream.close()
+        outputStream.close()
+    }
+
+
+    fun importXmlBackup(uri: Uri) {
+        viewModelScope.launch {
+            val stream = app.contentResolver.openInputStream(uri)
+            if (stream != null) {
+                withContext(Dispatchers.IO) {
+                    val backup = XMLUtils.readBackupFromStream(stream)
+                    commonDao.importBackup(backup.first, backup.second)
+                    stream.close()
+                }
+                Toast.makeText(app, R.string.imported_backup, Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
 
     fun writeCurrentFileToUri(uri: Uri) {
         viewModelScope.launch {
@@ -176,14 +279,6 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         }
     }
 
-
-    suspend fun getXMLFile(baseNote: BaseNote) = withContext(Dispatchers.IO) {
-        val file = File(getExportedPath(), "Untitled.xml")
-        val outputStream = FileOutputStream(file)
-        XMLUtils.writeBaseNoteToStream(baseNote, outputStream)
-        outputStream.close()
-        file
-    }
 
     suspend fun getJSONFile(baseNote: BaseNote) = withContext(Dispatchers.IO) {
         val file = File(getExportedPath(), "Untitled.json")
@@ -231,8 +326,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
     fun deleteBaseNoteForever(baseNote: BaseNote) = executeAsync { baseNoteDao.delete(baseNote) }
 
-    fun updateBaseNoteLabels(labels: HashSet<String>, id: Long) =
-        executeAsync { baseNoteDao.updateLabels(id, labels) }
+    fun updateBaseNoteLabels(labels: HashSet<String>, id: Long) = executeAsync { baseNoteDao.updateLabels(id, labels) }
 
 
     suspend fun getAllLabelsAsList() = withContext(Dispatchers.IO) { labelDao.getListOfAll() }
@@ -246,14 +340,17 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         executeAsyncWithCallback({ commonDao.updateLabel(oldValue, newValue) }, onComplete)
 
 
-    private fun getExportedPath(): File {
-        val filePath = File(app.cacheDir, "exported")
-        if (!filePath.exists()) {
-            filePath.mkdir()
-        }
-        filePath.listFiles()?.forEach { file -> file.delete() }
-        return filePath
+    private fun getEmptyFolder(name: String): File {
+        val folder = File(app.cacheDir, name)
+        if (folder.exists()) {
+            folder.listFiles()?.forEach { file -> file.delete() }
+        } else folder.mkdir()
+        return folder
     }
+
+    private fun getBackupPath() = getEmptyFolder("backup")
+
+    private fun getExportedPath() = getEmptyFolder("exported")
 
 
     private fun getJSON(baseNote: BaseNote): String {
@@ -262,15 +359,15 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         val jsonObject = JSONObject()
             .put("type", baseNote.type.name)
             .put("color", baseNote.color.name)
-            .put(XMLTags.Title, baseNote.title)
-            .put(XMLTags.Pinned, baseNote.pinned)
-            .put(XMLTags.DateCreated, baseNote.timestamp)
+            .put("title", baseNote.title)
+            .put("pinned", baseNote.pinned)
+            .put("date-created", baseNote.timestamp)
             .put("labels", labels)
 
         when (baseNote.type) {
             Type.NOTE -> {
                 val spans = JSONArray(baseNote.spans.map { representation -> representation.toJSONObject() })
-                jsonObject.put(XMLTags.Body, baseNote.body)
+                jsonObject.put("body", baseNote.body)
                 jsonObject.put("spans", spans)
             }
             Type.LIST -> {
@@ -330,41 +427,8 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     }
 
 
-    private fun getPreviousNotes(): List<BaseNote> {
-        val previousNotes = ArrayList<BaseNote>()
-        getNotePath().listFiles()?.mapTo(previousNotes) { file -> XMLUtils.readBaseNoteFromFile(file, Folder.NOTES) }
-        getDeletedPath().listFiles()?.mapTo(previousNotes) { file -> XMLUtils.readBaseNoteFromFile(file, Folder.DELETED) }
-        getArchivedPath().listFiles()?.mapTo(previousNotes) { file -> XMLUtils.readBaseNoteFromFile(file, Folder.ARCHIVED) }
-        return previousNotes
-    }
-
-    private fun getPreviousLabels(): List<Label> {
-        val labels = getLabelsPreferences().getStringSet("labelItems", emptySet()) ?: emptySet()
-        return labels.map { value -> Label(value) }
-    }
-
-
-    private fun getNotePath() = getFolder("notes")
-
-    private fun getDeletedPath() = getFolder("deleted")
-
-    private fun getArchivedPath() = getFolder("archived")
-
-    private fun getFolder(name: String): File {
-        val folder = File(app.filesDir, name)
-        if (!folder.exists()) {
-            folder.mkdir()
-        }
-        return folder
-    }
-
-    private fun getLabelsPreferences() = app.getSharedPreferences("labelsPreferences", Context.MODE_PRIVATE)
-
-
     private fun executeAsync(function: suspend () -> Unit) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) { function() }
-        }
+        viewModelScope.launch(Dispatchers.IO) { function() }
     }
 
     companion object {

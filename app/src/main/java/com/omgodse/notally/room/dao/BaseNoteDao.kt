@@ -3,12 +3,17 @@ package com.omgodse.notally.room.dao
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.room.*
+import androidx.sqlite.db.SupportSQLiteQuery
 import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Color
 import com.omgodse.notally.room.Folder
 
 @Dao
 interface BaseNoteDao {
+
+    @RawQuery
+    suspend fun checkpoint(query: SupportSQLiteQuery): Int
+
 
     @Delete
     suspend fun delete(baseNote: BaseNote)
@@ -26,12 +31,8 @@ interface BaseNoteDao {
     @Query("DELETE FROM BaseNote WHERE folder = :folder")
     suspend fun deleteFrom(folder: Folder)
 
-
     @Query("SELECT * FROM BaseNote WHERE folder = :folder ORDER BY pinned DESC, timestamp DESC")
     fun getFrom(folder: Folder): LiveData<List<BaseNote>>
-
-    @Query("SELECT * FROM BaseNote WHERE folder = :folder ORDER BY pinned DESC, timestamp DESC")
-    suspend fun getListFrom(folder: Folder): List<BaseNote>
 
 
     @Query("UPDATE BaseNote SET folder = :folder WHERE id = :id")

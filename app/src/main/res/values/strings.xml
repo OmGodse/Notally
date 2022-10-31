@@ -40,9 +40,10 @@
     <string name="export">Export</string>
     <string name="pdf" translatable="false">PDF</string>
     <string name="txt" translatable="false">TXT</string>
-    <string name="xml" translatable="false">XML</string>
+    <string name="zip" translatable="false">ZIP</string>
     <string name="html" translatable="false">HTML</string>
     <string name="json" translatable="false">JSON</string>
+    <string name="xml" translatable="false">XML (Legacy)</string>
     <string name="view_file">View file</string>
     <string name="save_to_device">Save to device</string>
     <string name="edit_label">Edit label</string>
@@ -51,7 +52,7 @@
     <string name="create_new">No labels yet. Create one?</string>
     <string name="delete_all_notes">Delete all notes?</string>
     <string name="delete_note_forever">Delete note forever?</string>
-    <string name="your_notes_associated">Your notes associated with this label will not be deleted</string>
+    <string name="your_notes_associated">Your notes attached to this label will not be deleted</string>
 
     <!-- Lists and Notes -->
     <string name="note">Note</string>
@@ -59,8 +60,6 @@
     <string name="date">Date</string>
     <string name="title">Title</string>
     <string name="add_item">Add Item</string>
-    <string name="one_more_item">1 more item</string>
-    <string name="more_items">%1$d more items</string>
     <string name="drag_handle">Drag Handle</string>
     <string name="bold">Bold</string>
     <string name="link">Link</string>
@@ -75,6 +74,8 @@
     <string name="empty_note">Empty note</string>
     <string name="empty_list">Empty list</string>
     <string name="cant_open_link">Can\'t open link</string>
+    <string name="invalid_backup">Invalid backup</string>
+    <string name="imported_backup">Imported backup</string>
     <string name="something_went_wrong">Something went wrong. Please try again.</string>
 
     <!-- Settings Page -->

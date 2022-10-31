@@ -8,7 +8,7 @@ Notally was created because I wanted to make something that was beautiful and at
 * APK size of 1.2 MB (1.6 MB uncompressed)
 * Color, pin and label your notes for quick organisation
 * Archive notes to keep them around, but out of your way
-* Export notes as TXT, XML, JSON, HTML or PDF files with formatting
+* Export notes as TXT, JSON, HTML or PDF files with formatting
 * Create rich text notes with support for bold, italics, mono space and strike-through
 * Add clickable links to notes with support for phone numbers, email addresses and web urls
 
@@ -19,3 +19,9 @@ Notally was created because I wanted to make something that was beautiful and at
 All translations are crowd sourced. To contribute or point out any errors, email me or open a pull request.
 
 <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width="250"/><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width="250"/><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width="250"/>
+
+### Hall of fame
+[Top 20 Android Apps 2021!](https://www.youtube.com/watch?v=bwz13aM0qJk)\
+[De-Googling Any Android Phone! (Google Apps Alternatives)](https://www.youtube.com/watch?v=RQUEgwgV99I)\
+[The BEST Private Notetaking Apps Explained](https://www.youtube.com/watch?v=BJw5tKPP1PY)\
+[Notally](https://www.noteapps.ca/notally/)

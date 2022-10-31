@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.omgodse.notally.MenuDialog
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.FragmentSettingsBinding
 import com.omgodse.notally.databinding.PreferenceListBinding
@@ -79,7 +80,8 @@ class Settings : Fragment() {
         if (resultCode == Activity.RESULT_OK) {
             intent?.data?.let { uri ->
                 when (requestCode) {
-                    RequestCodeImportFile -> model.importBackup(uri)
+                    RequestCodeImportXml -> model.importXmlBackup(uri)
+                    RequestCodeImportZip -> model.importZipBackup(uri)
                     Constants.RequestCodeExportFile -> model.exportBackup(uri)
                 }
             }
@@ -89,18 +91,26 @@ class Settings : Fragment() {
 
     private fun exportBackup() {
         val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
-        intent.type = "text/xml"
+        intent.type = "application/zip"
         intent.addCategory(Intent.CATEGORY_OPENABLE)
         intent.putExtra(Intent.EXTRA_TITLE, "Notally Backup")
         startActivityForResult(intent, Constants.RequestCodeExportFile)
     }
 
     private fun importBackup() {
-        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-        intent.type = "text/xml"
-        intent.addCategory(Intent.CATEGORY_OPENABLE)
-        startActivityForResult(intent, RequestCodeImportFile)
+        MenuDialog(requireContext())
+            .add(R.string.zip) { launchImportActivity("application/zip", RequestCodeImportZip) }
+            .add(R.string.xml) { launchImportActivity("text/xml", RequestCodeImportXml) }
+            .show()
     }
+
+    private fun launchImportActivity(type: String, requestCode: Int) {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+        intent.type = type
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        startActivityForResult(intent, requestCode)
+    }
+
 
     private fun displayLibraries() {
         val libraries = arrayOf("Room", "Pretty Time", "Material Components for Android")
@@ -163,6 +173,7 @@ class Settings : Fragment() {
     }
 
     companion object {
-        private const val RequestCodeImportFile = 20
+        private const val RequestCodeImportXml = 20
+        private const val RequestCodeImportZip = 21
     }
 }

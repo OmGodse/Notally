@@ -1,4 +1,4 @@
-package com.omgodse.notally.helpers
+package com.omgodse.notally.miscellaneous
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import com.omgodse.notally.databinding.AddLabelBinding
 import com.omgodse.notally.databinding.DialogInputBinding
 import com.omgodse.notally.room.Label
 
+// TODO: Clean this up, too messy
 interface OperationsParent {
 
     fun accessContext(): Context
