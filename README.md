@@ -21,7 +21,7 @@ All translations are crowd sourced. To contribute or point out any errors, email
 <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width="250"/><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width="250"/><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width="250"/>
 
 ### Hall of fame
-[Top 20 Android Apps 2021!](https://www.youtube.com/watch?v=bwz13aM0qJk)\
-[De-Googling Any Android Phone! (Google Apps Alternatives)](https://www.youtube.com/watch?v=RQUEgwgV99I)\
-[The BEST Private Notetaking Apps Explained](https://www.youtube.com/watch?v=BJw5tKPP1PY)\
-[Notally](https://www.noteapps.ca/notally/)
+* [Top 20 Android Apps 2021!](https://www.youtube.com/watch?v=bwz13aM0qJk)
+* [De-Googling Any Android Phone! (Google Apps Alternatives)](https://www.youtube.com/watch?v=RQUEgwgV99I)
+* [The BEST Private Notetaking Apps Explained](https://www.youtube.com/watch?v=BJw5tKPP1PY)
+* [Notally](https://www.noteapps.ca/notally/)
