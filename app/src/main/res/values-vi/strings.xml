@@ -52,8 +52,6 @@
     <string name="date">Ngày</string>
     <string name="title">Tựa đề</string>
     <string name="add_item">Thêm nội dung</string>
-    <string name="one_more_item">1 nội dung còn lại</string>
-    <string name="more_items">Còn %1$d nội dung</string>
     <string name="drag_handle">Kéo thả</string>
     <string name="bold">Đậm</string>
     <string name="link">Liên kết</string>

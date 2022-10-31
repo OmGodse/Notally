@@ -48,8 +48,6 @@
     <string name="date">Dátum</string>
     <string name="title">Názov</string>
     <string name="add_item">Pridať položku</string>
-    <string name="one_more_item">1 ďalšia položka</string>
-    <string name="more_items">%1$d ďalších položiek</string>
     <string name="drag_handle">Rukoväť na uchopenie</string>
     <string name="bold">Tučné</string>
     <string name="link">Odkaz</string>

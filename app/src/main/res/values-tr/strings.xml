@@ -48,8 +48,6 @@
     <string name="date">Tarih</string>
     <string name="title">Başlık</string>
     <string name="add_item">Öge ekle</string>
-    <string name="one_more_item">1 öge daha</string>
-    <string name="more_items">%1$d öge daha</string>
     <string name="drag_handle">Sürükleme Tutamacı</string>
     <string name="bold">Kalın</string>
     <string name="link">Bağlantı</string>

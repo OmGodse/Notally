@@ -48,8 +48,6 @@
     <string name="date">Petsa</string>
     <string name="title">Pamagat</string>
     <string name="add_item">Magdagdag ng item</string>
-    <string name="one_more_item">1 pang item</string>
-    <string name="more_items">%1$d madami pang mga item</string>
     <string name="drag_handle">Hawakan sa pag-drag</string>
     <string name="bold">Bold</string>
     <string name="link">Link</string>

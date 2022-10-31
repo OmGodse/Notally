@@ -51,8 +51,6 @@
     <string name="date">Dato</string>
     <string name="title">Tittel</string>
     <string name="add_item">Legg til element</string>
-    <string name="one_more_item">Eitt element til</string>
-    <string name="more_items">%1$d fleire element</string>
     <string name="drag_handle">Drahandtak</string>
     <string name="bold">Feit</string>
     <string name="link">Lenkje</string>

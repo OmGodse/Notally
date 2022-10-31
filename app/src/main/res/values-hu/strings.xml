@@ -48,8 +48,6 @@
     <string name="date">Dátum</string>
     <string name="title">Cím</string>
     <string name="add_item">Elem hozzáadása</string>
-    <string name="one_more_item">még 1 elem</string>
-    <string name="more_items">%1$d több elem</string>
     <string name="drag_handle">Megfogó nyél</string>
     <string name="bold">Félkövér</string>
     <string name="link">Hivatkozás</string>

@@ -92,9 +92,7 @@ class BaseNoteVH(
             if (list.items.size > maxItems) {
                 binding.ItemsRemaining.visibility = View.VISIBLE
                 val itemsRemaining = list.items.size - maxItems
-                binding.ItemsRemaining.text = if (itemsRemaining == 1) {
-                    binding.root.context.getString(R.string.one_more_item)
-                } else binding.root.context.getString(R.string.more_items, itemsRemaining)
+                binding.ItemsRemaining.text = itemsRemaining.toString()
             } else binding.ItemsRemaining.visibility = View.GONE
         }
     }

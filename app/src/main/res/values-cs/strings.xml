@@ -52,8 +52,6 @@
     <string name="date">Datum</string>
     <string name="title">Název</string>
     <string name="add_item">Přidat položku</string>
-    <string name="one_more_item">1 další položka</string>
-    <string name="more_items">%1$d dalších položek</string>
     <string name="drag_handle">Chytni a přetáhni</string>
     <string name="bold">Tučně</string>
     <string name="link">Odkaz</string>

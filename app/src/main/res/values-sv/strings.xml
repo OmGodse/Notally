@@ -46,8 +46,6 @@
     <string name="date">Datum</string>
     <string name="title">Titel</string>
     <string name="add_item">Lägg till objekt</string>
-    <string name="one_more_item">1 till objekt</string>
-    <string name="more_items">%1$d fler objekt</string>
     <string name="drag_handle">Grepphandtag</string>
     <string name="bold">Fet</string>
     <string name="link">Länk</string>

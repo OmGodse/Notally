@@ -55,7 +55,7 @@
 
     <style name="Preview.ListItem">
         <item name="android:paddingBottom">8dp</item>
-        <item name="android:drawablePadding">12dp</item>
+        <item name="android:drawablePadding">8dp</item>
     </style>
 
     <style name="TextView.Clickable" parent="Widget.AppCompat.TextView">

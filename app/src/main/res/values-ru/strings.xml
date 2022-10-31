@@ -53,8 +53,6 @@
     <string name="date">Дата</string>
     <string name="title">Заголовок</string>
     <string name="add_item">Добавить пункт</string>
-    <string name="one_more_item">Ещё 1 пункт</string>
-    <string name="more_items">Ещё %1$d пункта(ов)</string>
     <string name="drag_handle">Перетащить</string>
     <string name="bold">Жирный</string>
     <string name="link">Сслыка</string>

@@ -59,8 +59,6 @@
     <string name="date">Datum</string>
     <string name="title">Titel</string>
     <string name="add_item">Eintrag hinzufügen</string>
-    <string name="one_more_item">und 1 weiterer Eintrag</string>
-    <string name="more_items">und %1$d weitere Einträge</string>
     <string name="drag_handle">Ziehgriff</string>
     <string name="bold">Fett</string>
     <string name="link">Link erstellen</string>

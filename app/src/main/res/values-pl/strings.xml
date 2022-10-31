@@ -52,8 +52,6 @@
     <string name="date">Data</string>
     <string name="title">Tytuł</string>
     <string name="add_item">Dodaj element</string>
-    <string name="one_more_item">Jeszcze jeden element</string>
-    <string name="more_items">%1$d więcej elementów</string>
     <string name="drag_handle">Punkt zaczepienia</string>
     <string name="bold">Pogrubione</string>
     <string name="link">Odnośnik</string>

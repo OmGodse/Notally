@@ -50,8 +50,6 @@
     <string name="date">Data</string>
     <string name="title">Título</string>
     <string name="add_item">Adicionar item</string>
-    <string name="one_more_item">Mais 1 item</string>
-    <string name="more_items">Mais %1$d itens</string>
     <string name="drag_handle">Arrastar e largar</string>
     <string name="bold">Negrito</string>
     <string name="link">Link</string>

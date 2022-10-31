@@ -48,8 +48,6 @@
     <string name="date">Fecha</string>
     <string name="title">Título</string>
     <string name="add_item">Añadir elemento</string>
-    <string name="one_more_item">1 elemento más</string>
-    <string name="more_items">%1$d más elementos</string>
     <string name="drag_handle">Arrastra la asa</string>
     <string name="bold">Negritas</string>
     <string name="link">Enlace</string>

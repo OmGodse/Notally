@@ -50,8 +50,6 @@
     <string name="date">Dato</string>
     <string name="title">Titel</string>
     <string name="add_item">Tilføj emne</string>
-    <string name="one_more_item">1 emne til</string>
-    <string name="more_items">%1$d emner til</string>
     <string name="drag_handle">Træk håndtag</string>
     <string name="bold">Fed</string>
     <string name="link">Link</string>

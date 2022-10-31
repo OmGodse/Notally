@@ -52,8 +52,6 @@
     <string name="date">Ημερομηνία</string>
     <string name="title">Τίτλος</string>
     <string name="add_item">Προσθήκη αντικειμένου</string>
-    <string name="one_more_item">1 ακόμα αντικείμενο</string>
-    <string name="more_items">%1$d ακόμα αντικείμενα</string>
     <string name="drag_handle">Λαβή Σύρσης</string>
     <string name="bold">Έντονα</string>
     <string name="link">Σύνδεση</string>

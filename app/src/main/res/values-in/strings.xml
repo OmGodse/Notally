@@ -48,8 +48,6 @@
     <string name="date">Tanggal</string>
     <string name="title">Judul</string>
     <string name="add_item">Tambah Item</string>
-    <string name="one_more_item">1 item lagi</string>
-    <string name="more_items">%1$d item lagi</string>
     <string name="drag_handle">Handel Seret</string>
     <string name="bold">Tebal</string>
     <string name="link">Tautan</string>

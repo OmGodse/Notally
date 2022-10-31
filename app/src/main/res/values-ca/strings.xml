@@ -48,8 +48,6 @@
     <string name="date">Data</string>
     <string name="title">Títol</string>
     <string name="add_item">Afegir element</string>
-    <string name="one_more_item">1 nou element</string>
-    <string name="more_items">%1$d nous elements</string>
     <string name="drag_handle">Arrossega la nansa</string>
     <string name="bold">Negreta</string>
     <string name="link">Enllaç</string>

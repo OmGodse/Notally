@@ -52,8 +52,6 @@
     <string name="date">Datum</string>
     <string name="title">Titel</string>
     <string name="add_item">Voeg item toe</string>
-    <string name="one_more_item">Nog een item</string>
-    <string name="more_items">%1$d meer items</string>
     <string name="drag_handle">Sleephandvat</string>
     <string name="bold">Vetgedrukt</string>
     <string name="link">Link</string>

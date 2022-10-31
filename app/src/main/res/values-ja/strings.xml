@@ -52,8 +52,6 @@
     <string name="date">日時</string>
     <string name="title">タイトル</string>
     <string name="add_item">アイテムを追加</string>
-    <string name="one_more_item">もう一つのアイテム</string>
-    <string name="more_items">%1$d個のアイテム</string>
     <string name="drag_handle">ドラッグハンドル</string>
     <string name="bold">太字</string>
     <string name="link">リンク</string>
