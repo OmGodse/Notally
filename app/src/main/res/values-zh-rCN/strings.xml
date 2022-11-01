@@ -51,7 +51,7 @@
     <string name="create_new">还没有标签。创建一个？</string>
     <string name="delete_all_notes">删除所有笔记？</string>
     <string name="delete_note_forever">永久性删除笔记？</string>
-    <string name="your_notes_associated">将删除与此标签相关联的笔记</string>
+    <string name="your_notes_associated">不会删除与此标签相关联的笔记</string>
 
     <!-- Lists and Notes -->
     <string name="note">笔记</string>
