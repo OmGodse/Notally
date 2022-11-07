@@ -1,12 +1,14 @@
 package com.omgodse.notally.fragments
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -169,7 +171,11 @@ class Settings : Fragment() {
     private fun openLink(link: String) {
         val uri = Uri.parse(link)
         val intent = Intent(Intent.ACTION_VIEW, uri)
-        startActivity(intent)
+        try {
+            startActivity(intent)
+        } catch (exception: ActivityNotFoundException) {
+            Toast.makeText(requireContext(), R.string.install_a_browser, Toast.LENGTH_LONG).show()
+        }
     }
 
     companion object {

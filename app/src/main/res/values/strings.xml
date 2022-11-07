@@ -77,6 +77,7 @@
     <string name="invalid_backup">Invalid backup</string>
     <string name="imported_backup">Imported backup</string>
     <string name="something_went_wrong">Something went wrong. Please try again.</string>
+    <string name="install_a_browser">Install a browser to open this link</string>
 
     <!-- Settings Page -->
     <string name="appearance">Appearance</string>
