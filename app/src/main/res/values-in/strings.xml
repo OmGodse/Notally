@@ -9,30 +9,35 @@
 
     <!-- Menu Options -->
     <string name="share">Bagikan</string>
+    <string name="filter">Filter</string>
     <string name="search">Cari</string>
     <string name="delete">Hapus</string>
     <string name="restore">Pulihkan</string>
     <string name="archive">Arsipkan</string>
     <string name="unarchive">Batal arsip</string>
     <string name="delete_all">Hapus semua</string>
+    <string name="change_color">Ubah warna</string>
     <string name="delete_forever">Hapus selamanya</string>
-
-    <!-- Chooser dialog hints -->
-    <string name="view_note">Lihat catatan…</string>
 
     <!-- Pinning -->
     <string name="pin">Semat</string>
     <string name="unpin">Buang semat</string>
     <string name="pinned">Tersemat</string>
+    <string name="others">Lainnya</string>
+
+    <!-- Chooser dialog hints -->
+    <string name="view_note">Lihat catatan…</string>
 
     <!-- Dialogs -->
     <string name="save">Simpan</string>
     <string name="edit">Sunting</string>
     <string name="cancel">Batal</string>
+    <string name="open_link">Buka tautan</string>
     <string name="make_list">Buat daftar</string>
     <string name="take_note">Buat catatan</string>
     <string name="add_label">Tambah label</string>
     <string name="export">Ekspor</string>
+    <string name="view_file">Lihat berkas</string>
     <string name="save_to_device">Simpan ke perangkat</string>
     <string name="edit_label">Sunting label</string>
     <string name="label_exists">Label sudah ada</string>
@@ -62,7 +67,10 @@
     <string name="empty_note">Catatan kosong</string>
     <string name="empty_list">Daftar kosong</string>
     <string name="cant_open_link">Tidak bisa membuka tautan</string>
+    <string name="invalid_backup">Cadangan tidak valid</string>
+    <string name="imported_backup">Cadangan yang diimpor</string>
     <string name="something_went_wrong">Telah terjadi kesalahan. Silakan coba lagi.</string>
+    <string name="install_a_browser">Pasang peramban untuk membuka tautan ini</string>
 
     <!-- Settings Page -->
     <string name="appearance">Penampilan</string>
@@ -76,11 +84,16 @@
     <string name="light">Terang</string>
     <string name="follow_system">Ikuti sistem</string>
 
+    <string name="date_format">Format tanggal</string>
+    <string name="none">Tidak ada</string>
+
     <string name="content_density">Kerapatan konten</string>
     <string name="max_items_to_display">Item maks yang ditampilkan dalam daftar</string>
     <string name="max_lines_to_display">Baris maks yang ditampilkan dalam catatan</string>
 
     <string name="backup">Cadangan</string>
+    <string name="export_backup">Ekspor cadangan</string>
+    <string name="import_backup">Impor cadangan</string>
 
     <string name="about">Tentang</string>
     <string name="libraries">Pustaka</string>
