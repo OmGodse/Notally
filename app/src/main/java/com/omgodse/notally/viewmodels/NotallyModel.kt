@@ -88,7 +88,7 @@ class NotallyModel(app: Application, private val type: Type) : AndroidViewModel(
     }
 
 
-    suspend fun getAllLabelsAsList() = withContext(Dispatchers.IO) { labelDao.getListOfAll() }
+    suspend fun getAllLabels() = withContext(Dispatchers.IO) { labelDao.getArrayOfAll() }
 
 
     private fun getBaseNote(): BaseNote {

@@ -27,5 +27,5 @@ interface LabelDao {
     fun getAll(): LiveData<List<String>>
 
     @Query("SELECT value FROM Label ORDER BY value")
-    suspend fun getListOfAll(): List<String>
+    suspend fun getArrayOfAll(): Array<String>
 }

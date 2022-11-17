@@ -1,6 +1,5 @@
 package com.omgodse.notally.activities
 
-import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Build
@@ -17,17 +16,15 @@ import com.omgodse.notally.R
 import com.omgodse.notally.databinding.ActivityNotallyBinding
 import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.miscellaneous.Operations
-import com.omgodse.notally.miscellaneous.OperationsParent
 import com.omgodse.notally.miscellaneous.add
 import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Folder
-import com.omgodse.notally.room.Label
 import com.omgodse.notally.room.Type
 import com.omgodse.notally.viewmodels.BaseNoteModel
 import com.omgodse.notally.viewmodels.NotallyModel
 import kotlinx.coroutines.launch
 
-abstract class NotallyActivity(private val type: Type) : AppCompatActivity(), OperationsParent {
+abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
     internal lateinit var binding: ActivityNotallyBinding
     internal val model: NotallyModel by viewModels { NotallyModel.Factory(application, type) }
@@ -100,15 +97,6 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity(), Op
     }
 
 
-    override fun accessContext(): Context {
-        return this
-    }
-
-    override fun insertLabel(label: Label, onComplete: (success: Boolean) -> Unit) {
-        model.insertLabel(label, onComplete)
-    }
-
-
     open fun receiveSharedNote() {}
 
     open fun setupListeners() {
@@ -144,11 +132,13 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity(), Op
 
     private fun label() {
         lifecycleScope.launch {
-            val labels = model.getAllLabelsAsList()
-            labelNote(labels, model.labels) { updatedLabels ->
-                model.labels = updatedLabels
-                Operations.bindLabels(binding.LabelGroup, updatedLabels)
+            val labels = model.getAllLabels()
+            val onUpdated = { newLabels: HashSet<String> ->
+                model.labels = newLabels
+                Operations.bindLabels(binding.LabelGroup, newLabels)
             }
+            val addLabel = { Operations.displayAddLabelDialog(this@NotallyActivity, model::insertLabel) { label() } }
+            Operations.labelNote(this@NotallyActivity, labels, model.labels, onUpdated, addLabel)
         }
     }
 

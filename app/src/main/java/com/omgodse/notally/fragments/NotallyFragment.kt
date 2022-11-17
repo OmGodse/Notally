@@ -1,7 +1,6 @@
 package com.omgodse.notally.fragments
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -28,7 +27,6 @@ import com.omgodse.notally.databinding.DialogColorBinding
 import com.omgodse.notally.databinding.FragmentNotesBinding
 import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.miscellaneous.Operations
-import com.omgodse.notally.miscellaneous.OperationsParent
 import com.omgodse.notally.miscellaneous.applySpans
 import com.omgodse.notally.recyclerview.ItemListener
 import com.omgodse.notally.recyclerview.adapters.BaseNoteAdapter
@@ -39,7 +37,7 @@ import kotlinx.coroutines.launch
 import java.io.File
 import com.omgodse.notally.preferences.View as ViewPref
 
-abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
+abstract class NotallyFragment : Fragment(), ItemListener {
 
     private var adapter: BaseNoteAdapter? = null
     private var binding: FragmentNotesBinding? = null
@@ -97,15 +95,6 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
                 }
             }
         }
-    }
-
-
-    override fun accessContext(): Context {
-        return requireContext()
-    }
-
-    override fun insertLabel(label: Label, onComplete: (success: Boolean) -> Unit) {
-        model.insertLabel(label, onComplete)
     }
 
 
@@ -183,10 +172,10 @@ abstract class NotallyFragment : Fragment(), OperationsParent, ItemListener {
 
     private fun label(baseNote: BaseNote) {
         lifecycleScope.launch {
-            val labels = model.getAllLabelsAsList()
-            labelNote(labels, baseNote.labels) { updatedLabels ->
-                model.updateBaseNoteLabels(updatedLabels, baseNote.id)
-            }
+            val labels = model.getAllLabels()
+            val onUpdated = { newLabels: HashSet<String> -> model.updateBaseNoteLabels(newLabels, baseNote.id) }
+            val addLabel = { Operations.displayAddLabelDialog(requireContext(), model::insertLabel) { label(baseNote) } }
+            Operations.labelNote(requireContext(), labels, baseNote.labels, onUpdated, addLabel)
         }
     }
 

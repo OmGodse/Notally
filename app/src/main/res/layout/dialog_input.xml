@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.textfield.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingStart="16dp"
-    android:paddingTop="16dp"
-    android:paddingEnd="16dp"
-    app:errorEnabled="true"
-    app:errorIconDrawable="@null">
+    android:padding="16dp">
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/EditText"

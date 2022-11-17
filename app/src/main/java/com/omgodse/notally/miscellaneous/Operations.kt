@@ -4,11 +4,15 @@ import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.google.android.material.chip.ChipGroup
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.R
+import com.omgodse.notally.databinding.DialogInputBinding
 import com.omgodse.notally.databinding.LabelBinding
 import com.omgodse.notally.room.Color
+import com.omgodse.notally.room.Label
 import com.omgodse.notally.room.ListItem
 
 object Operations {
@@ -70,5 +74,70 @@ object Operations {
                 view.text = label
             }
         }
+    }
+
+
+    fun labelNote(
+        context: Context,
+        labels: Array<String>,
+        oldLabels: HashSet<String>,
+        onUpdated: (newLabels: HashSet<String>) -> Unit,
+        addLabel: () -> Unit
+    ) {
+        val checkedPositions = labels.map { label -> oldLabels.contains(label) }.toBooleanArray()
+
+        val builder = MaterialAlertDialogBuilder(context)
+
+        if (labels.isNotEmpty()) {
+            builder.setTitle(R.string.labels)
+            builder.setNegativeButton(R.string.cancel, null)
+            builder.setMultiChoiceItems(labels, checkedPositions) { dialog, which, isChecked ->
+                checkedPositions[which] = isChecked
+            }
+            builder.setPositiveButton(R.string.save) { dialog, which ->
+                val newLabels = HashSet<String>()
+                checkedPositions.forEachIndexed { index, checked ->
+                    if (checked) {
+                        val label = labels[index]
+                        newLabels.add(label)
+                    }
+                }
+                onUpdated(newLabels)
+            }
+        } else {
+            builder.setMessage(R.string.create_new)
+            builder.setPositiveButton(R.string.add_label) { dialog, which -> addLabel() }
+        }
+
+        builder.show()
+    }
+
+    fun displayAddLabelDialog(
+        context: Context,
+        insertLabel: (label: Label, onComplete: (success: Boolean) -> Unit) -> Unit,
+        onSuccess: () -> Unit
+    ) {
+        val inflater = LayoutInflater.from(context)
+        val binding = DialogInputBinding.inflate(inflater)
+
+        MaterialAlertDialogBuilder(context)
+            .setTitle(R.string.add_label)
+            .setView(binding.root)
+            .setNegativeButton(R.string.cancel, null)
+            .setPositiveButton(R.string.save) { dialog, which ->
+                val value = binding.EditText.text.toString().trim()
+                if (value.isNotEmpty()) {
+                    val label = Label(value)
+                    insertLabel(label) { success ->
+                        if (success) {
+                            dialog.dismiss()
+                            onSuccess()
+                        } else Toast.makeText(context, R.string.label_exists, Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+            .show()
+
+        binding.EditText.requestFocus()
     }
 }
