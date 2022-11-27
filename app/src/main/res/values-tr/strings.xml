@@ -9,12 +9,14 @@
 
     <!-- Menu Options -->
     <string name="share">Paylaş</string>
+    <string name="filter">Süzgeç</string>
     <string name="search">Ara</string>
     <string name="delete">Sil</string>
     <string name="restore">Geri yükle</string>
     <string name="archive">Arşivle</string>
     <string name="unarchive">Arşivden kaldır</string>
     <string name="delete_all">Hepsini sil</string>
+    <string name="change_color">Rengi değiştir</string>
     <string name="delete_forever">Tamamen sil</string>
 
     <!-- Chooser dialog hints -->
@@ -24,6 +26,7 @@
     <string name="pin">Sabitle</string>
     <string name="unpin">Sabitlemeyi kaldır</string>
     <string name="pinned">Sabitlendi</string>
+    <string name="others">Diğerleri</string>
 
     <!-- Dialogs -->
     <string name="save">Kaydet</string>
@@ -33,6 +36,7 @@
     <string name="take_note">Not al</string>
     <string name="add_label">Etiket ekle</string>
     <string name="export">Dışa aktar</string>
+    <string name="view_file">Dosyayı görüntüle</string>
     <string name="save_to_device">Cihaza kaydet</string>
     <string name="edit_label">Etiketi düzenle</string>
     <string name="label_exists">Etiket var</string>
@@ -67,7 +71,7 @@
     <!-- Settings Page -->
     <string name="appearance">Görünüm</string>
 
-    <string name="view">Önizlemesi</string>
+    <string name="view">Ön izleme</string>
     <string name="list">Liste</string>
     <string name="grid">Izgara</string>
 
@@ -76,11 +80,16 @@
     <string name="light">Açık</string>
     <string name="follow_system">Sistem varsayılanı</string>
 
-    <string name="content_density">Anasayfa içerik detayları</string>
-    <string name="max_items_to_display">Listede görüntülenecek en fazla kutucuk sayısı</string>
-    <string name="max_lines_to_display">Notta görüntülenecek maksimum satır sayısı</string>
+    <string name="date_format">Zaman biçimi</string>
+    <string name="none">Hiçbiri</string>
+
+    <string name="content_density">İçerik yoğunluğu</string>
+    <string name="max_items_to_display">Listede görüntülenecek azami öge sayısı</string>
+    <string name="max_lines_to_display">Notta görüntülenecek azami satır sayısı</string>
 
     <string name="backup">Yedek</string>
+    <string name="export_backup">Dışarı aktar</string>
+    <string name="import_backup">İçeri aktar</string>
 
     <string name="about">Hakkında</string>
     <string name="libraries">Kütüphaneler</string>
