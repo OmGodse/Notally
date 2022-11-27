@@ -9,7 +9,6 @@
 
     <!-- Menu Options -->
     <string name="share">Bagikan</string>
-    <string name="filter">Filter</string>
     <string name="search">Cari</string>
     <string name="delete">Hapus</string>
     <string name="restore">Pulihkan</string>

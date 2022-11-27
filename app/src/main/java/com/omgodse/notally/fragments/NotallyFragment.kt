@@ -222,7 +222,7 @@ abstract class NotallyFragment : Fragment(), ItemListener {
 
 
     private fun exportToPDF(baseNote: BaseNote) {
-        model.getPDFFile(baseNote, model.preferences.showDateCreated(), object : PostPDFGenerator.OnResult {
+        model.getPDFFile(baseNote, object : PostPDFGenerator.OnResult {
 
             override fun onSuccess(file: File) {
                 showFileOptionsDialog(file, "application/pdf")
@@ -236,7 +236,7 @@ abstract class NotallyFragment : Fragment(), ItemListener {
 
     private fun exportToTXT(baseNote: BaseNote) {
         lifecycleScope.launch {
-            val file = model.getTXTFile(baseNote, model.preferences.showDateCreated())
+            val file = model.getTXTFile(baseNote)
             showFileOptionsDialog(file, "text/plain")
         }
     }
@@ -250,7 +250,7 @@ abstract class NotallyFragment : Fragment(), ItemListener {
 
     private fun exportToHTML(baseNote: BaseNote) {
         lifecycleScope.launch {
-            val file = model.getHTMLFile(baseNote, model.preferences.showDateCreated())
+            val file = model.getHTMLFile(baseNote)
             showFileOptionsDialog(file, "text/html")
         }
     }

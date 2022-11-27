@@ -38,7 +38,7 @@
     <string name="add_label">Добавить метку</string>
     <string name="export">Экспортировать</string>
     <string name="view_file">Посмотреть файл</string>
-    <string name="save_to_device">Сохранить на устройство</string>
+    <string name="save_to_device">Сохранить на устройстве</string>
     <string name="edit_label">Изменить метку</string>
     <string name="label_exists">Метка уже существует</string>
     <string name="delete_label">Удалить метку?</string>
@@ -55,14 +55,14 @@
     <string name="add_item">Добавить пункт</string>
     <string name="drag_handle">Перетащить</string>
     <string name="bold">Жирный</string>
-    <string name="link">Сслыка</string>
+    <string name="link">Ссылка</string>
     <string name="italic">Курсив</string>
     <string name="strikethrough">Перечёркнутый</string>
     <string name="clear_formatting">Стандартный стиль</string>
-    <string name="monospace">Моноширинный шрифт</string>
+    <string name="monospace">Моноширинный</string>
 
     <!-- Miscellaneous -->
-    <string name="saved_to_device">Сохранено на устройтсве</string>
+    <string name="saved_to_device">Сохранено на устройстве</string>
     <string name="saved_to_notally">Сохранено в Notally</string>
     <string name="empty_note">Пустая заметка</string>
     <string name="empty_list">Пустой список</string>

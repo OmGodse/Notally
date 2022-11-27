@@ -287,23 +287,23 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         file
     }
 
-    suspend fun getTXTFile(baseNote: BaseNote, showDateCreated: Boolean) = withContext(Dispatchers.IO) {
+    suspend fun getTXTFile(baseNote: BaseNote) = withContext(Dispatchers.IO) {
         val file = File(getExportedPath(), "Untitled.txt")
-        val text = getTXT(baseNote, showDateCreated)
+        val text = getTXT(baseNote, preferences.showDateCreated())
         file.writeText(text)
         file
     }
 
-    suspend fun getHTMLFile(baseNote: BaseNote, showDateCreated: Boolean) = withContext(Dispatchers.IO) {
+    suspend fun getHTMLFile(baseNote: BaseNote) = withContext(Dispatchers.IO) {
         val file = File(getExportedPath(), "Untitled.html")
-        val html = getHTML(baseNote, showDateCreated)
+        val html = getHTML(baseNote, preferences.showDateCreated())
         file.writeText(html)
         file
     }
 
-    fun getPDFFile(baseNote: BaseNote, showDateCreated: Boolean, onResult: PostPDFGenerator.OnResult) {
+    fun getPDFFile(baseNote: BaseNote, onResult: PostPDFGenerator.OnResult) {
         val file = File(getExportedPath(), "Untitled.pdf")
-        val html = getHTML(baseNote, showDateCreated)
+        val html = getHTML(baseNote, preferences.showDateCreated())
         PostPDFGenerator.create(file, html, app, onResult)
     }
 

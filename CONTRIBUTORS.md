@@ -9,7 +9,7 @@
 8. 🇵🇱 Polish by [ZiomaleQ](https://github.com/ZiomaleQ)
 9. 🇸🇰 Slovak by [Juraj Liso](https://github.com/LiJu09)
 10. 🇮🇩 Indonesian by [zmni](https://github.com/zmni)
-11. 🇮🇹 Italian by Luigi Sforza
+11. 🇮🇹 Italian by Luigi Sforza, [IlmastroStefanuzzo](https://github.com/IlmastroStefanuzzo)
 12. 🇪🇸 Spanish by Jose Casas
 13. 🇹🇷 Turkish by Helpful User
 14. 🇺🇦 Ukrainian by Alex Shpak
@@ -22,7 +22,7 @@
 21. 🇳🇴 Norwegian (Bokmål) by Fredrik Magnussen, [Erik Thom](https://github.com/erikthm)
 22. 🇳🇴 Norwegian (Nynorsk) by [Erik Thom](https://github.com/erikthm)
 23. 🇵🇭 Tagalog by Isaiah Collins Abetong
-24. 🇨🇳 Chinese (Simplified) by [Austin Huang](https://github.com/austinhuang0131)
+24. 🇨🇳 Chinese (Simplified) by [Austin Huang](https://github.com/austinhuang0131), [sr093906](https://github.com/sr093906)
 25. 🇩🇪 German by Maximilian Braunschmied, [jonas-haeusler](https://github.com/jonas-haeusler),
 [samuel141](https://github.com/samuel141), [nautilusx](https://github.com/nautilusx)
 26. 🇻🇳 Vietnamese by [mastoduy](https://github.com/mastoduy)
