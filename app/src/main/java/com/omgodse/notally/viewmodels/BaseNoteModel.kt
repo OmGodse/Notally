@@ -416,9 +416,11 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
                 append(body)
             }
             Type.LIST -> {
-                append("<ol>")
-                baseNote.items.forEach { (body) ->
-                    append("<li>${Html.escapeHtml(body)}</li>")
+                append("<ol style=\"list-style: none; padding: 0;\">")
+                baseNote.items.forEach { item ->
+                    val body = Html.escapeHtml(item.body)
+                    val checked = if (item.checked) "checked" else ""
+                    append("<li><input type=\"checkbox\" $checked>$body</li>")
                 }
                 append("</ol>")
             }

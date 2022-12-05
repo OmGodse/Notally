@@ -57,8 +57,9 @@ object Operations {
 
 
     fun getBody(list: List<ListItem>) = buildString {
-        list.forEachIndexed { index, item ->
-            appendLine("${index + 1}) ${item.body}")
+        list.forEach { item ->
+            val check = if (item.checked) "[✓]" else "[ ]"
+            appendLine("$check ${item.body}")
         }
     }
 
