@@ -18,6 +18,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.LinkMovementMethod
 import com.omgodse.notally.R
 import com.omgodse.notally.miscellaneous.Operations
+import com.omgodse.notally.miscellaneous.add
 import com.omgodse.notally.miscellaneous.setOnNextAction
 import com.omgodse.notally.room.Type
 
@@ -73,43 +74,40 @@ class TakeNote : NotallyActivity(Type.NOTE) {
         setupMovementMethod()
 
         binding.EnterBody.customSelectionActionModeCallback = object : ActionMode.Callback {
-            override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
-                when (item?.itemId) {
-                    R.id.Bold -> {
+            override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?) = false
+
+            override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?) = false
+
+            override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+                binding.EnterBody.isActionModeOn = true
+                if (menu != null) {
+                    menu.add(R.string.bold, 0) {
                         applySpan(StyleSpan(Typeface.BOLD))
                         mode?.finish()
                     }
-                    R.id.Link -> {
+                    menu.add(R.string.link, 0) {
                         applySpan(URLSpan(null))
                         mode?.finish()
                     }
-                    R.id.Italic -> {
+                    menu.add(R.string.italic, 0) {
                         applySpan(StyleSpan(Typeface.ITALIC))
                         mode?.finish()
                     }
-                    R.id.Monospace -> {
+                    menu.add(R.string.monospace, 0) {
                         applySpan(TypefaceSpan("monospace"))
                         mode?.finish()
                     }
-                    R.id.Strikethrough -> {
+                    menu.add(R.string.strikethrough, 0) {
                         applySpan(StrikethroughSpan())
                         mode?.finish()
                     }
-                    R.id.ClearFormatting -> {
+                    menu.add(R.string.clear_formatting, 0) {
                         removeSpans()
                         mode?.finish()
                     }
                 }
-                return false
-            }
-
-            override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
-                binding.EnterBody.isActionModeOn = true
-                mode?.menuInflater?.inflate(R.menu.formatting, menu)
                 return true
             }
-
-            override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?) = false
 
             override fun onDestroyActionMode(mode: ActionMode?) {
                 binding.EnterBody.isActionModeOn = false
