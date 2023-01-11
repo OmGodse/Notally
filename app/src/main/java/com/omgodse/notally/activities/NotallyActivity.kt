@@ -115,7 +115,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         }
         binding.root.setBackgroundColor(color)
         binding.RecyclerView.setBackgroundColor(color)
-        binding.Toolbar.backgroundTintList = ColorStateList.valueOf(color)
+        binding.AppBarLayout.backgroundTintList = ColorStateList.valueOf(color)
 
         binding.EnterTitle.setText(model.title)
         Operations.bindLabels(binding.LabelGroup, model.labels)

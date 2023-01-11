@@ -115,14 +115,15 @@ class Settings : Fragment() {
 
 
     private fun displayLibraries() {
-        val libraries = arrayOf("Room", "Pretty Time", "Material Components for Android")
+        val libraries = arrayOf("Room", "Event Bus", "Pretty Time", "Material Components for Android")
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.libraries)
             .setItems(libraries) { dialog, which ->
                 when (which) {
                     0 -> openLink("https://developer.android.com/jetpack/androidx/releases/room")
-                    1 -> openLink("https://github.com/ocpsoft/prettytime")
-                    2 -> openLink("https://github.com/material-components/material-components-android")
+                    1 -> openLink("https://github.com/greenrobot/EventBus")
+                    2 -> openLink("https://github.com/ocpsoft/prettytime")
+                    3 -> openLink("https://github.com/material-components/material-components-android")
                 }
             }
             .setNegativeButton(R.string.cancel, null)

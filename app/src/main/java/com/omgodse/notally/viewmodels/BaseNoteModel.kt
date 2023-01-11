@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.net.Uri
+import android.os.Build
 import android.print.PostPDFGenerator
 import android.text.Html
 import android.widget.Toast
@@ -13,6 +14,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.room.withTransaction
 import androidx.sqlite.db.SimpleSQLiteQuery
+import com.omgodse.notally.BuildConfig
+import com.omgodse.notally.ImportBackupEvent
 import com.omgodse.notally.R
 import com.omgodse.notally.legacy.Migrations
 import com.omgodse.notally.legacy.XMLUtils
@@ -24,9 +27,11 @@ import com.omgodse.notally.preferences.SeekbarInfo
 import com.omgodse.notally.room.*
 import com.omgodse.notally.room.livedata.Content
 import com.omgodse.notally.room.livedata.SearchResult
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.greenrobot.eventbus.EventBus
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
@@ -158,44 +163,44 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         }
     }
 
-
+    /**
+     * Lots of things can go wrong, instead of trying to account for all of them,
+     * display a generic message and allow the user to send a report
+     */
     fun importZipBackup(uri: Uri) {
-        viewModelScope.launch {
+        val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+            val files = getCrashFiles(throwable)
+            val event = ImportBackupEvent(false, files)
+            EventBus.getDefault().post(event)
+        }
+        viewModelScope.launch(exceptionHandler) {
             val stream = app.contentResolver.openInputStream(uri)
-            if (stream != null) {
+            requireNotNull(stream) { "inputStream opened by contentResolver is null" }
+
+            withContext(Dispatchers.IO) {
                 val backupDir = getBackupPath()
-                val message = withContext(Dispatchers.IO) {
-                    val destination = File(backupDir, "TEMP.zip")
-                    copyStreamToFile(stream, destination)
+                val destination = File(backupDir, "TEMP.zip")
+                copyStreamToFile(stream, destination)
 
-                    val zipFile = ZipFile(destination)
-                    val databaseEntry = zipFile.getEntry(NotallyDatabase.DatabaseName)
+                val zipFile = ZipFile(destination)
+                val databaseEntry = zipFile.getEntry(NotallyDatabase.DatabaseName)
 
-                    if (databaseEntry != null) {
-                        val databaseFile = File(backupDir, NotallyDatabase.DatabaseName)
-                        val inputStream = zipFile.getInputStream(databaseEntry)
-                        copyStreamToFile(inputStream, databaseFile)
+                val databaseFile = File(backupDir, NotallyDatabase.DatabaseName)
+                val inputStream = zipFile.getInputStream(databaseEntry)
+                copyStreamToFile(inputStream, databaseFile)
 
-                        try {
-                            val database = SQLiteDatabase.openDatabase(databaseFile.path, null, SQLiteDatabase.OPEN_READONLY)
+                val database = SQLiteDatabase.openDatabase(databaseFile.path, null, SQLiteDatabase.OPEN_READONLY)
 
-                            val labelCursor = database.query("Label", null, null, null, null, null, null)
-                            val baseNoteCursor = database.query("BaseNote", null, null, null, null, null, null)
+                val labelCursor = database.query("Label", null, null, null, null, null, null)
+                val baseNoteCursor = database.query("BaseNote", null, null, null, null, null, null)
 
-                            val labels = convertCursorToList(labelCursor, ::convertCursorToLabel)
-                            val baseNotes = convertCursorToList(baseNoteCursor, ::convertCursorToBaseNote)
+                val labels = convertCursorToList(labelCursor, ::convertCursorToLabel)
+                val baseNotes = convertCursorToList(baseNoteCursor, ::convertCursorToBaseNote)
 
-                            commonDao.importBackup(baseNotes, labels)
-                            return@withContext R.string.imported_backup
-                        } catch (exception: Exception) {
-                            exception.printStackTrace()
-                            return@withContext R.string.invalid_backup
-                        }
-
-                    } else return@withContext R.string.invalid_backup
-                }
-                Toast.makeText(app, message, Toast.LENGTH_LONG).show()
+                commonDao.importBackup(baseNotes, labels)
             }
+            val event = ImportBackupEvent(true, emptyArray())
+            EventBus.getDefault().post(event)
         }
     }
 
@@ -348,6 +353,8 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         return folder
     }
 
+    private fun getCrashPath() = getEmptyFolder("crash")
+
     private fun getBackupPath() = getEmptyFolder("backup")
 
     private fun getExportedPath() = getEmptyFolder("exported")
@@ -426,6 +433,34 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
             }
         }
         append("</body></html>")
+    }
+
+
+    private fun getCrashFiles(throwable: Throwable): Array<File> {
+        val folder = getCrashPath()
+        val stackTrace = File(folder, "Stacktrace.txt")
+        val systemInfo = File(folder, "System Info.txt")
+
+        val trace = throwable.stackTraceToString()
+        val info = buildString {
+            appendLine("App\n")
+
+            appendLine("Version code : " + BuildConfig.VERSION_CODE)
+            appendLine("Version name : " + BuildConfig.VERSION_NAME)
+
+            appendLine("\nDevice\n")
+
+            appendLine("Model : " + Build.MODEL)
+            appendLine("Device : " + Build.DEVICE)
+            appendLine("Brand : " + Build.BRAND)
+            appendLine("Manufacturer : " + Build.MANUFACTURER)
+            appendLine("Android : " + Build.VERSION.SDK_INT)
+        }
+
+        stackTrace.writeText(trace)
+        systemInfo.writeText(info)
+
+        return arrayOf(stackTrace, systemInfo)
     }
 
 

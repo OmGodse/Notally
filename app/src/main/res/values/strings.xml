@@ -106,5 +106,7 @@
     <string name="libraries">Libraries</string>
     <string name="rate">Rate this app</string>
 
+    <string name="report">Report</string>
+
     <string name="github" translatable="false">GitHub</string>
 </resources>

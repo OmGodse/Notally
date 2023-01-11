@@ -5,4 +5,10 @@
         <item name="colorPrimary">@color/LightBlue100</item>
     </style>
 
+    <style name="Snackbar.Button" parent="Widget.MaterialComponents.Button.TextButton.Snackbar">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.MaterialComponents.Light</item>
+        <item name="android:textColor">@color/Black</item>
+        <item name="rippleColor">?attr/colorControlHighlight</item>
+    </style>
+
 </resources>
