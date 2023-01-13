@@ -27,7 +27,6 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:hint="@string/search"
-                    android:imeOptions="actionDone"
                     android:inputType="textFilter"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"

@@ -72,6 +72,16 @@
         <item name="chipSpacingVertical">8dp</item>
     </style>
 
+
+    <style name="Chip" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:textColor">@color/navigation_view_item</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="chipStrokeColor">@color/chip_stroke</item>
+        <item name="chipBackgroundColor">@color/chip_background</item>
+        <item name="ensureMinTouchTargetSize">false</item>
+    </style>
+
     <style name="Snackbar.Button" parent="Widget.MaterialComponents.Button.TextButton.Snackbar">
         <item name="materialThemeOverlay">@style/ThemeOverlay.MaterialComponents.Dark</item>
         <item name="rippleColor">?attr/colorControlHighlight</item>

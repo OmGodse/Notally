@@ -101,7 +101,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
     open fun setupListeners() {
         binding.EnterTitle.doAfterTextChanged { text ->
-            model.title = requireNotNull(text).toString().trim()
+            model.title = requireNotNull(text).trim().toString()
         }
     }
 

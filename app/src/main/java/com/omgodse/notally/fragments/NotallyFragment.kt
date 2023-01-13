@@ -40,7 +40,7 @@ import com.omgodse.notally.preferences.View as ViewPref
 abstract class NotallyFragment : Fragment(), ItemListener {
 
     private var adapter: BaseNoteAdapter? = null
-    private var binding: FragmentNotesBinding? = null
+    internal var binding: FragmentNotesBinding? = null
 
     internal val model: BaseNoteModel by activityViewModels()
 

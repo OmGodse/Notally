@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -8,13 +8,49 @@
         android:id="@+id/ImageView"
         android:layout_width="96dp"
         android:layout_height="96dp"
-        android:layout_gravity="center"
+        android:layout_centerInParent="true"
         app:tint="?attr/colorPrimary" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/ChipGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="16dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="12dp"
+        android:visibility="gone"
+        app:selectionRequired="true"
+        app:singleSelection="true">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/Notes"
+            style="@style/Chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/notes" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/Deleted"
+            style="@style/Chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/deleted" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/Archived"
+            style="@style/Chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/archived" />
+
+    </com.google.android.material.chip.ChipGroup>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/RecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/ChipGroup"
         android:background="?attr/colorSurface"
         android:clipToPadding="false"
         android:paddingStart="4dp"
@@ -23,4 +59,4 @@
         android:scrollbarStyle="outsideOverlay"
         android:scrollbars="vertical" />
 
-</FrameLayout>
+</RelativeLayout>
