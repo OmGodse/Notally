@@ -59,6 +59,7 @@ abstract class NotallyFragment : Fragment(), ItemListener {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        setHasOptionsMenu(true)
         binding = FragmentNotesBinding.inflate(inflater)
         return binding?.root
     }
@@ -155,7 +156,7 @@ abstract class NotallyFragment : Fragment(), ItemListener {
         dialog.show()
     }
 
-    internal fun goToActivity(activity: Class<*>, baseNote: BaseNote? = null) {
+    private fun goToActivity(activity: Class<*>, baseNote: BaseNote) {
         val intent = Intent(requireContext(), activity)
         intent.putExtra(Constants.SelectedBaseNote, baseNote)
         startActivity(intent)

@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardElevation="0dp"
-        app:strokeColor="@color/on_surface_light">
+        app:strokeColor="@color/chip_stroke">
 
         <LinearLayout
             android:layout_width="match_parent"

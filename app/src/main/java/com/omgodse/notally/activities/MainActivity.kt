@@ -20,6 +20,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.snackbar.Snackbar
 import com.omgodse.notally.ImportBackupEvent
+import com.omgodse.notally.MenuDialog
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.ActivityMainBinding
 import com.omgodse.notally.viewmodels.BaseNoteModel
@@ -29,7 +30,7 @@ import java.io.File
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
     private lateinit var configuration: AppBarConfiguration
 
@@ -56,11 +57,27 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setSupportActionBar(binding.Toolbar)
+        setupFAB()
         setupMenu()
         setupNavigation()
         setupSearch()
     }
 
+
+    private fun setupFAB() {
+        binding.TakeNoteFAB.setOnClickListener {
+            MenuDialog(this)
+                .add(R.string.make_list, R.drawable.checkbox) {
+                    val intent = Intent(this, MakeList::class.java)
+                    startActivity(intent)
+                }
+                .add(R.string.take_note, R.drawable.edit) {
+                    val intent = Intent(this, TakeNote::class.java)
+                    startActivity(intent)
+                }
+                .show()
+        }
+    }
 
     private fun setupMenu() {
         val menu = binding.NavigationView.menu
