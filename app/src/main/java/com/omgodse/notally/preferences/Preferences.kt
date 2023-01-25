@@ -16,12 +16,18 @@ class Preferences private constructor(app: Application) {
     val maxItems = BetterLiveData(getSeekbarPreferenceValue(MaxItems))
     val maxLines = BetterLiveData(getSeekbarPreferenceValue(MaxLines))
 
+    val autoBackup = BetterLiveData(getSwitchPreferenceValue(AutoBackup))
+
     private fun getListPreferenceValue(info: ListInfo): String {
         return requireNotNull(preferences.getString(info.key, info.defaultValue))
     }
 
     private fun getSeekbarPreferenceValue(info: SeekbarInfo): Int {
         return requireNotNull(preferences.getInt(info.key, info.defaultValue))
+    }
+
+    private fun getSwitchPreferenceValue(info: SwitchInfo): Boolean {
+        return requireNotNull(preferences.getBoolean(info.key, info.defaultValue))
     }
 
 
@@ -38,9 +44,17 @@ class Preferences private constructor(app: Application) {
         editor.putString(info.key, value)
         editor.commit()
         when (info) {
-            View -> view.postValue(getListPreferenceValue(View))
-            Theme -> theme.postValue(getListPreferenceValue(Theme))
-            DateFormat -> dateFormat.postValue(getListPreferenceValue(DateFormat))
+            View -> view.postValue(getListPreferenceValue(info))
+            Theme -> theme.postValue(getListPreferenceValue(info))
+            DateFormat -> dateFormat.postValue(getListPreferenceValue(info))
+        }
+    }
+
+    fun savePreference(info: SwitchInfo, value: Boolean) {
+        editor.putBoolean(info.key, value)
+        editor.commit()
+        when (info) {
+            AutoBackup -> autoBackup.postValue(getSwitchPreferenceValue(info))
         }
     }
 

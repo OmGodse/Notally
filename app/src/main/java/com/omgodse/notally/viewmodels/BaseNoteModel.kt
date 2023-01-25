@@ -24,6 +24,7 @@ import com.omgodse.notally.miscellaneous.applySpans
 import com.omgodse.notally.preferences.ListInfo
 import com.omgodse.notally.preferences.Preferences
 import com.omgodse.notally.preferences.SeekbarInfo
+import com.omgodse.notally.preferences.SwitchInfo
 import com.omgodse.notally.room.*
 import com.omgodse.notally.room.livedata.Content
 import com.omgodse.notally.room.livedata.SearchResult
@@ -133,6 +134,10 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     }
 
     fun savePreference(info: ListInfo, value: String) {
+        executeAsync { preferences.savePreference(info, value) }
+    }
+
+    fun savePreference(info: SwitchInfo, value: Boolean) {
         executeAsync { preferences.savePreference(info, value) }
     }
 

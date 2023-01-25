@@ -17,6 +17,7 @@ import com.omgodse.notally.R
 import com.omgodse.notally.databinding.FragmentSettingsBinding
 import com.omgodse.notally.databinding.PreferenceListBinding
 import com.omgodse.notally.databinding.PreferenceSeekbarBinding
+import com.omgodse.notally.databinding.PreferenceSwitchBinding
 import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.preferences.*
 import com.omgodse.notally.viewmodels.BaseNoteModel
@@ -50,6 +51,8 @@ class Settings : Fragment() {
 
         binding?.MaxLines?.setup(MaxLines, model.preferences.maxLines.value)
 
+
+        binding?.AutoBackup?.setup(AutoBackup, model.preferences.autoBackup.value)
 
         binding?.ImportBackup?.setOnClickListener {
             importBackup()
@@ -118,7 +121,7 @@ class Settings : Fragment() {
         val libraries = arrayOf("Room", "Event Bus", "Pretty Time", "Material Components for Android")
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.libraries)
-            .setItems(libraries) { dialog, which ->
+            .setItems(libraries) { _, which ->
                 when (which) {
                     0 -> openLink("https://developer.android.com/jetpack/androidx/releases/room")
                     1 -> openLink("https://github.com/greenrobot/EventBus")
@@ -163,8 +166,18 @@ class Settings : Fragment() {
 
         Slider.value = initialValue.toFloat()
 
-        Slider.addOnChangeListener { slider, value, fromUser ->
+        Slider.addOnChangeListener { _, value, _ ->
             model.savePreference(info, value.toInt())
+        }
+    }
+
+    private fun PreferenceSwitchBinding.setup(info: SwitchInfo, initialValue: Boolean) {
+        Switch.setText(info.title)
+        Subtitle.setText(info.subtitle)
+
+        Switch.isChecked = initialValue
+        Switch.setOnCheckedChangeListener { _, isChecked ->
+            model.savePreference(info, isChecked)
         }
     }
 

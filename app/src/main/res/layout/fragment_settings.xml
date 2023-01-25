@@ -56,6 +56,10 @@
             android:layout_height="wrap_content"
             android:text="@string/backup" />
 
+        <include
+            android:id="@+id/AutoBackup"
+            layout="@layout/preference_switch" />
+
         <TextView
             android:id="@+id/ImportBackup"
             style="@style/Preference"
