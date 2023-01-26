@@ -7,4 +7,5 @@
     android:clickable="false"
     android:ellipsize="end"
     android:focusable="false"
+    app:chipSurfaceColor="@color/Transparent"
     app:rippleColor="@null" />

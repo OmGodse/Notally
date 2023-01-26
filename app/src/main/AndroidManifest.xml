@@ -5,6 +5,7 @@
     <application
         android:name=".NotallyApplication"
         android:allowBackup="true"
+        android:appCategory="productivity"
         android:icon="@mipmap/notally"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/notally_round"

@@ -1,0 +1,11 @@
+Added Vietnamese translation
+Updated German, Russian, Italian, Indonesian, Turkish and Chinese translations
+
+Fixed bug that caused app to crash when clicking on a note or link.
+
+Changed the backup format. This fixes a bug where exporting a backup caused the app to crash. Older backups can still be imported.
+
+Changed the way lists are shared. Instead
+of numbers, the items are prefixed with checkboxes.
+
+Improved search. Instead of the filters being buried under a dialog, they're now front and center.
