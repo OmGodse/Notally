@@ -17,7 +17,6 @@ import com.omgodse.notally.R
 import com.omgodse.notally.databinding.FragmentSettingsBinding
 import com.omgodse.notally.databinding.PreferenceListBinding
 import com.omgodse.notally.databinding.PreferenceSeekbarBinding
-import com.omgodse.notally.databinding.PreferenceSwitchBinding
 import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.preferences.*
 import com.omgodse.notally.viewmodels.BaseNoteModel
@@ -51,8 +50,6 @@ class Settings : Fragment() {
 
         binding?.MaxLines?.setup(MaxLines, model.preferences.maxLines.value)
 
-
-        binding?.AutoBackup?.setup(AutoBackup, model.preferences.autoBackup.value)
 
         binding?.ImportBackup?.setOnClickListener {
             importBackup()
@@ -168,16 +165,6 @@ class Settings : Fragment() {
 
         Slider.addOnChangeListener { _, value, _ ->
             model.savePreference(info, value.toInt())
-        }
-    }
-
-    private fun PreferenceSwitchBinding.setup(info: SwitchInfo, initialValue: Boolean) {
-        Switch.setText(info.title)
-        Subtitle.setText(info.subtitle)
-
-        Switch.isChecked = initialValue
-        Switch.setOnCheckedChangeListener { _, isChecked ->
-            model.savePreference(info, isChecked)
         }
     }
 

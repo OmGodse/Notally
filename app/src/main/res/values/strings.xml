@@ -100,7 +100,7 @@
 
     <string name="backup">Backup</string>
     <string name="auto_backup">Auto backup</string>
-    <string name="notes_will_be_backed">Notes will be backed up to your phone\'s internal storage every night\n\n<b>Location</b>\n\nAndroid > data > com.omgodse.notally > Backups</string>
+    <string name="notes_will_be_backed">Notes will be backed up to your phone\'s internal storage every night\n\n<b>Location</b>\n\nAndroid > media > com.omgodse.notally > Backups</string>
     <string name="export_backup">Export backup</string>
     <string name="import_backup">Import backup</string>
 
