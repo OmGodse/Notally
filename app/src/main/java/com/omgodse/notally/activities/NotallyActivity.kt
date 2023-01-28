@@ -82,6 +82,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
                     menu.add(R.string.delete_forever, R.drawable.delete) { deleteForever() }
                 }
                 Folder.ARCHIVED -> {
+                    menu.add(R.string.delete, R.drawable.delete) { delete() }
                     menu.add(R.string.unarchive, R.drawable.unarchive) { restore() }
                 }
             }

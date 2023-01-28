@@ -150,6 +150,7 @@ abstract class NotallyFragment : Fragment(), ItemListener {
                 dialog.add(R.string.delete_forever) { delete(baseNote) }
             }
             Folder.ARCHIVED -> {
+                dialog.add(R.string.delete) { model.moveBaseNoteToDeleted(baseNote.id) }
                 dialog.add(R.string.unarchive) { model.restoreBaseNote(baseNote.id) }
             }
         }
