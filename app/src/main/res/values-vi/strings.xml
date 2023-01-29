@@ -44,7 +44,7 @@
     <string name="create_new">Chưa có nhãn nào. Thử tạo mới?</string>
     <string name="delete_all_notes">Xóa toàn bộ ghi chú?</string>
     <string name="delete_note_forever">Xóa vĩnh viễn ghi chú?</string>
-    <string name="your_notes_associated">Những ghi chú đi kèm nhãn này sẽ không bị xóa</string>
+    <string name="your_notes_associated">Những ghi chú có sử dụng nhãn này sẽ không bị xóa.</string>
 
     <!-- Lists and Notes -->
     <string name="note">Ghi chú</string>
@@ -82,13 +82,13 @@
     <string name="date_format">Định dạng ngày tháng</string>
     <string name="none">Không</string>
 
-    <string name="content_density">Mức độ hiển thị nội dung</string>
-    <string name="max_items_to_display">Mục liệt kê tối đa</string>
-    <string name="max_lines_to_display">Dòng ghi chú tối đa</string>
+    <string name="content_density">Mật độ hiển thị nội dung</string>
+    <string name="max_items_to_display">Số lượng mục liệt kê tối đa</string>
+    <string name="max_lines_to_display">Số lượng dòng ghi chú tối đa</string>
 
     <string name="backup">Sao lưu</string>
-    <string name="export_backup">Xuất sao lưu</string>
-    <string name="import_backup">Nhập sao lưu</string>
+    <string name="export_backup">Xuất dữ liệu</string>
+    <string name="import_backup">Nhập dữ liệu</string>
 
     <string name="about">Giới thiệu</string>
     <string name="libraries">Thư viện sử dụng</string>
