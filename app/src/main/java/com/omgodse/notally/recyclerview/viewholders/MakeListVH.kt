@@ -13,11 +13,11 @@ class MakeListVH(val binding: RecyclerListItemBinding, listener: ListItemListene
     RecyclerView.ViewHolder(binding.root) {
 
     init {
-        binding.ListItem.setOnNextAction {
+        binding.EditText.setOnNextAction {
             listener.moveToNext(adapterPosition)
         }
 
-        binding.ListItem.doAfterTextChanged { text ->
+        binding.EditText.doAfterTextChanged { text ->
             listener.textChanged(adapterPosition, requireNotNull(text).trim().toString())
         }
 
@@ -25,12 +25,12 @@ class MakeListVH(val binding: RecyclerListItemBinding, listener: ListItemListene
             listener.delete(adapterPosition)
         }
 
-        binding.CheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
-            binding.ListItem.isEnabled = !isChecked
+        binding.CheckBox.setOnCheckedChangeListener { _, isChecked ->
+            binding.EditText.isEnabled = !isChecked
             listener.checkedChanged(adapterPosition, isChecked)
         }
 
-        binding.DragHandle.setOnTouchListener { v, event ->
+        binding.DragHandle.setOnTouchListener { _, event ->
             if (event.actionMasked == MotionEvent.ACTION_DOWN) {
                 touchHelper.startDrag(this)
             }
@@ -39,7 +39,8 @@ class MakeListVH(val binding: RecyclerListItemBinding, listener: ListItemListene
     }
 
     fun bind(item: ListItem) {
-        binding.ListItem.setText(item.body)
+        binding.root.reset()
+        binding.EditText.setText(item.body)
         binding.CheckBox.isChecked = item.checked
     }
 }

@@ -37,7 +37,7 @@
             android:minHeight="0dp" />
 
         <EditText
-            android:id="@+id/ListItem"
+            android:id="@+id/EditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"

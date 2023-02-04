@@ -45,7 +45,7 @@ class MakeList : NotallyActivity(Type.LIST) {
         adapter.notifyItemInserted(position)
         binding.RecyclerView.post {
             val viewHolder = binding.RecyclerView.findViewHolderForAdapterPosition(position) as MakeListVH?
-            viewHolder?.binding?.ListItem?.requestFocus()
+            viewHolder?.binding?.EditText?.requestFocus()
         }
     }
 
@@ -82,7 +82,7 @@ class MakeList : NotallyActivity(Type.LIST) {
         if (viewHolder != null) {
             if (viewHolder.binding.CheckBox.isChecked) {
                 moveToNext(currentPosition + 1)
-            } else viewHolder.binding.ListItem.requestFocus()
+            } else viewHolder.binding.EditText.requestFocus()
         } else addListItem()
     }
 }
