@@ -56,6 +56,11 @@ class MakeList : NotallyActivity(Type.LIST) {
 
         adapter = MakeListAdapter(elevation, model.items, object : ListItemListener {
 
+            override fun delete(position: Int) {
+                model.items.removeAt(position)
+                adapter.notifyItemRemoved(position)
+            }
+
             override fun moveToNext(position: Int) {
                 this@MakeList.moveToNext(position)
             }

@@ -115,14 +115,14 @@ class Settings : Fragment() {
 
 
     private fun displayLibraries() {
-        val libraries = arrayOf("Room", "Event Bus", "Pretty Time", "Material Components for Android")
+        val libraries = arrayOf("Event Bus", "Pretty Time", "Swipe Layout", "Material Components for Android")
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.libraries)
             .setItems(libraries) { _, which ->
                 when (which) {
-                    0 -> openLink("https://developer.android.com/jetpack/androidx/releases/room")
-                    1 -> openLink("https://github.com/greenrobot/EventBus")
-                    2 -> openLink("https://github.com/ocpsoft/prettytime")
+                    0 -> openLink("https://github.com/greenrobot/EventBus")
+                    1 -> openLink("https://github.com/ocpsoft/prettytime")
+                    2 -> openLink("https://github.com/rambler-digital-solutions/swipe-layout-android")
                     3 -> openLink("https://github.com/material-components/material-components-android")
                 }
             }

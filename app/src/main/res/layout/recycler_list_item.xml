@@ -1,44 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ru.rambler.libs.swipe_layout.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingStart="16dp"
-    android:paddingEnd="0dp">
+    app:right_swipe_enabled="true">
 
-    <CheckBox
-        android:id="@+id/CheckBox"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/Delete"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:minWidth="0dp"
-        android:minHeight="0dp" />
+        android:layout_height="match_parent"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:minHeight="0dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:text="@string/delete"
+        android:textColor="@color/White"
+        app:backgroundTint="@color/Red"
+        app:cornerRadius="0dp"
+        app:gravity="left" />
 
-    <EditText
-        android:id="@+id/ListItem"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toStartOf="@id/DragHandle"
-        android:layout_toEndOf="@id/CheckBox"
-        android:background="@null"
-        android:hint="@string/item"
-        android:imeOptions="actionNext"
-        android:inputType="textMultiLine"
-        android:padding="8dp"
-        android:textAppearance="?attr/textAppearanceBody1" />
+        android:paddingStart="16dp"
+        android:paddingEnd="0dp">
 
-    <ImageButton
-        android:id="@+id/DragHandle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:background="?attr/selectableItemBackground"
-        android:contentDescription="@string/drag_handle"
-        android:padding="8dp"
-        app:srcCompat="@drawable/drag_handle"
-        app:tint="?attr/colorControlNormal" />
+        <CheckBox
+            android:id="@+id/CheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:minWidth="0dp"
+            android:minHeight="0dp" />
 
-</RelativeLayout>
+        <EditText
+            android:id="@+id/ListItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/DragHandle"
+            android:layout_toEndOf="@id/CheckBox"
+            android:background="@null"
+            android:hint="@string/item"
+            android:imeOptions="actionNext"
+            android:inputType="textMultiLine"
+            android:padding="8dp"
+            android:textAppearance="?attr/textAppearanceBody1" />
+
+        <ImageButton
+            android:id="@+id/DragHandle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="@string/drag_handle"
+            android:padding="8dp"
+            app:srcCompat="@drawable/drag_handle"
+            app:tint="?attr/colorControlNormal" />
+
+    </RelativeLayout>
+
+</ru.rambler.libs.swipe_layout.SwipeLayout>

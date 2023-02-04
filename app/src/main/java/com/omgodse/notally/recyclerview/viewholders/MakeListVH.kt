@@ -18,7 +18,11 @@ class MakeListVH(val binding: RecyclerListItemBinding, listener: ListItemListene
         }
 
         binding.ListItem.doAfterTextChanged { text ->
-            listener.textChanged(adapterPosition, text.toString().trim())
+            listener.textChanged(adapterPosition, requireNotNull(text).trim().toString())
+        }
+
+        binding.Delete.setOnClickListener {
+            listener.delete(adapterPosition)
         }
 
         binding.CheckBox.setOnCheckedChangeListener { buttonView, isChecked ->

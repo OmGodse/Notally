@@ -3,7 +3,9 @@
     <color name="LightBlue500">#03A9F4</color>
     <color name="LightBlue100">#B3E5fC</color>
 
+    <color name="Red">#C93C32</color>
     <color name="Black">#000000</color>
+    <color name="White">#FFFFFF</color>
     <color name="Transparent">#00000000</color>
 
     <color name="Grey100">#F5F5F5</color>
