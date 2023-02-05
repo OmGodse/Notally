@@ -82,7 +82,7 @@ class Labels : Fragment(), ItemListener {
     private fun setupObserver() {
         model.labels.observe(viewLifecycleOwner) { labels ->
             adapter?.submitList(labels)
-            binding?.RecyclerView?.isVisible = labels.isNotEmpty()
+            binding?.ImageView?.isVisible = labels.isEmpty()
         }
     }
 

@@ -120,7 +120,7 @@ abstract class NotallyFragment : Fragment(), ItemListener {
     private fun setupObserver() {
         getObservable().observe(viewLifecycleOwner) { list ->
             adapter?.submitList(list)
-            binding?.RecyclerView?.isVisible = list.isNotEmpty()
+            binding?.ImageView?.isVisible = list.isEmpty()
         }
     }
 

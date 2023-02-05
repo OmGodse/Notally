@@ -51,7 +51,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/ChipGroup"
-        android:background="?attr/colorSurface"
         android:clipToPadding="false"
         android:paddingStart="4dp"
         android:paddingTop="8dp"
