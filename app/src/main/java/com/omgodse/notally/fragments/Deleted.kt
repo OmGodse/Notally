@@ -16,7 +16,7 @@ class Deleted : NotallyFragment() {
     private fun deleteAllNotes() {
         MaterialAlertDialogBuilder(requireContext())
             .setMessage(R.string.delete_all_notes)
-            .setPositiveButton(R.string.delete) { dialog, which ->
+            .setPositiveButton(R.string.delete) { _, _ ->
                 model.deleteAllBaseNotes()
             }
             .setNegativeButton(R.string.cancel, null)

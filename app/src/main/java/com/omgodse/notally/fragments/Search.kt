@@ -23,7 +23,7 @@ class Search : NotallyFragment() {
 
         binding?.ChipGroup?.check(checked)
 
-        binding?.ChipGroup?.setOnCheckedChangeListener { group, checkedId ->
+        binding?.ChipGroup?.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.Notes -> model.folder = Folder.NOTES
                 R.id.Deleted -> model.folder = Folder.DELETED
