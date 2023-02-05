@@ -80,31 +80,36 @@ class TakeNote : NotallyActivity(Type.NOTE) {
 
             override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
                 binding.EnterBody.isActionModeOn = true
-                if (menu != null) {
-                    menu.add(R.string.bold, 0) {
-                        applySpan(StyleSpan(Typeface.BOLD))
-                        mode?.finish()
+                // Try block is there because this will crash on MiUI as Xiaomi has a broken ActionMode implementation
+                try {
+                    if (menu != null) {
+                        menu.add(R.string.bold, 0) {
+                            applySpan(StyleSpan(Typeface.BOLD))
+                            mode?.finish()
+                        }
+                        menu.add(R.string.link, 0) {
+                            applySpan(URLSpan(null))
+                            mode?.finish()
+                        }
+                        menu.add(R.string.italic, 0) {
+                            applySpan(StyleSpan(Typeface.ITALIC))
+                            mode?.finish()
+                        }
+                        menu.add(R.string.monospace, 0) {
+                            applySpan(TypefaceSpan("monospace"))
+                            mode?.finish()
+                        }
+                        menu.add(R.string.strikethrough, 0) {
+                            applySpan(StrikethroughSpan())
+                            mode?.finish()
+                        }
+                        menu.add(R.string.clear_formatting, 0) {
+                            removeSpans()
+                            mode?.finish()
+                        }
                     }
-                    menu.add(R.string.link, 0) {
-                        applySpan(URLSpan(null))
-                        mode?.finish()
-                    }
-                    menu.add(R.string.italic, 0) {
-                        applySpan(StyleSpan(Typeface.ITALIC))
-                        mode?.finish()
-                    }
-                    menu.add(R.string.monospace, 0) {
-                        applySpan(TypefaceSpan("monospace"))
-                        mode?.finish()
-                    }
-                    menu.add(R.string.strikethrough, 0) {
-                        applySpan(StrikethroughSpan())
-                        mode?.finish()
-                    }
-                    menu.add(R.string.clear_formatting, 0) {
-                        removeSpans()
-                        mode?.finish()
-                    }
+                } catch (exception: Exception) {
+                    exception.printStackTrace()
                 }
                 return true
             }
