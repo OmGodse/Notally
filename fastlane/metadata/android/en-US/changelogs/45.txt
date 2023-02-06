@@ -1,0 +1,7 @@
+Added option to directly move archived notes to deleted.
+
+Updated Vietnamese translation.
+
+Changed the way list items are deleted. It is now impossible to accidentally swipe away a list item.
+
+Fixed bug where selecting text on Xiaomi devices caused the app to crash.
