@@ -2,13 +2,20 @@ package com.omgodse.notally.miscellaneous
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.shape.MaterialShapeDrawable
+import com.google.android.material.shape.RelativeCornerSize
+import com.google.android.material.shape.RoundedCornerTreatment
+import com.google.android.material.shape.ShapeAppearanceModel
 import com.omgodse.notally.R
+import com.omgodse.notally.TextSizeEngine
 import com.omgodse.notally.databinding.DialogInputBinding
 import com.omgodse.notally.databinding.LabelBinding
 import com.omgodse.notally.room.Color
@@ -58,18 +65,38 @@ object Operations {
         }
     }
 
-    fun bindLabels(group: ChipGroup, labels: HashSet<String>) {
+
+    fun bindLabels(group: ChipGroup, labels: HashSet<String>, textSize: String) {
         if (labels.isEmpty()) {
             group.visibility = View.GONE
         } else {
             group.visibility = View.VISIBLE
             group.removeAllViews()
+
             val inflater = LayoutInflater.from(group.context)
+            val labelSize = TextSizeEngine.getDisplayBodySize(textSize)
+
             for (label in labels) {
                 val view = LabelBinding.inflate(inflater, group, true).root
+                view.background = getOutlinedDrawable(group.context)
+                view.setTextSize(TypedValue.COMPLEX_UNIT_SP, labelSize)
                 view.text = label
             }
         }
+    }
+
+    private fun getOutlinedDrawable(context: Context): MaterialShapeDrawable {
+        val model = ShapeAppearanceModel.builder()
+            .setAllCorners(RoundedCornerTreatment())
+            .setAllCornerSizes(RelativeCornerSize(0.5f))
+            .build()
+
+        val drawable = MaterialShapeDrawable(model)
+        drawable.fillColor = ColorStateList.valueOf(0)
+        drawable.strokeWidth = context.resources.getDimension(R.dimen.unit)
+        drawable.strokeColor = ContextCompat.getColorStateList(context, R.color.chip_stroke)
+
+        return drawable
     }
 
 

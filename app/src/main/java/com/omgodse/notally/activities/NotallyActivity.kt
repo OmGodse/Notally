@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -13,6 +14,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.R
+import com.omgodse.notally.TextSizeEngine
 import com.omgodse.notally.databinding.ActivityNotallyBinding
 import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.miscellaneous.Operations
@@ -119,7 +121,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         binding.AppBarLayout.backgroundTintList = ColorStateList.valueOf(color)
 
         binding.EnterTitle.setText(model.title)
-        Operations.bindLabels(binding.LabelGroup, model.labels)
+        Operations.bindLabels(binding.LabelGroup, model.labels, model.textSize)
     }
 
 
@@ -136,7 +138,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
             val labels = model.getAllLabels()
             val onUpdated = { newLabels: HashSet<String> ->
                 model.labels = newLabels
-                Operations.bindLabels(binding.LabelGroup, newLabels)
+                Operations.bindLabels(binding.LabelGroup, newLabels, model.textSize)
             }
             val addLabel = { Operations.displayAddLabelDialog(this@NotallyActivity, model::insertLabel) { label() } }
             Operations.labelNote(this@NotallyActivity, labels, model.labels, onUpdated, addLabel)
@@ -193,6 +195,15 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
                 binding.EnterBody.visibility = View.GONE
             }
         }
+
+        val title = TextSizeEngine.getEditTitleSize(model.textSize)
+        val date = TextSizeEngine.getDisplayBodySize(model.textSize)
+        val body = TextSizeEngine.getEditBodySize(model.textSize)
+
+        binding.EnterTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, title)
+        binding.DateCreated.setTextSize(TypedValue.COMPLEX_UNIT_SP, date)
+        binding.EnterBody.setTextSize(TypedValue.COMPLEX_UNIT_SP, body)
+
         binding.root.isSaveFromParentEnabled = false
     }
 

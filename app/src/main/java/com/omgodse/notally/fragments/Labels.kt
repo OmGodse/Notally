@@ -95,9 +95,7 @@ class Labels : Fragment(), ItemListener {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.delete_label)
             .setMessage(R.string.your_notes_associated)
-            .setPositiveButton(R.string.delete) { dialog, which ->
-                model.deleteLabel(value)
-            }
+            .setPositiveButton(R.string.delete) { _, _ -> model.deleteLabel(value) }
             .setNegativeButton(R.string.cancel, null)
             .show()
     }

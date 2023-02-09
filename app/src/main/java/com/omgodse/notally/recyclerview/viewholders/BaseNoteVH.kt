@@ -1,11 +1,13 @@
 package com.omgodse.notally.recyclerview.viewholders
 
+import android.util.TypedValue
 import android.view.View
 import android.widget.TextView
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.omgodse.notally.R
+import com.omgodse.notally.TextSizeEngine
 import com.omgodse.notally.databinding.RecyclerBaseNoteBinding
 import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.miscellaneous.applySpans
@@ -21,6 +23,7 @@ import java.util.*
 class BaseNoteVH(
     private val binding: RecyclerBaseNoteBinding,
     private val dateFormat: String,
+    private val textSize: String,
     private val maxItems: Int,
     maxLines: Int,
     listener: ItemListener,
@@ -29,6 +32,18 @@ class BaseNoteVH(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     init {
+        val title = TextSizeEngine.getDisplayTitleSize(textSize)
+        val body = TextSizeEngine.getDisplayBodySize(textSize)
+
+        binding.Title.setTextSize(TypedValue.COMPLEX_UNIT_SP, title)
+        binding.Date.setTextSize(TypedValue.COMPLEX_UNIT_SP, body)
+        binding.Note.setTextSize(TypedValue.COMPLEX_UNIT_SP, body)
+
+        binding.LinearLayout.children.forEach { view ->
+            view as TextView
+            view.setTextSize(TypedValue.COMPLEX_UNIT_SP, body)
+        }
+
         binding.Note.maxLines = maxLines
 
         binding.CardView.setOnClickListener {
@@ -53,7 +68,7 @@ class BaseNoteVH(
         binding.Title.text = baseNote.title
         binding.Title.isVisible = baseNote.title.isNotEmpty()
 
-        Operations.bindLabels(binding.LabelGroup, baseNote.labels)
+        Operations.bindLabels(binding.LabelGroup, baseNote.labels, textSize)
 
         if (isEmpty(baseNote)) {
             binding.Title.setText(getEmptyMessage(baseNote))

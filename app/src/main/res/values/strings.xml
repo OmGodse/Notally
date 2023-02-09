@@ -94,6 +94,11 @@
     <string name="date_format">Date format</string>
     <string name="none">None</string>
 
+    <string name="text_size">Text size</string>
+    <string name="small">Small</string>
+    <string name="medium">Medium</string>
+    <string name="large">Large</string>
+
     <string name="content_density">Content density</string>
     <string name="max_items_to_display">Max items to display in list</string>
     <string name="max_lines_to_display">Max lines to display in note</string>

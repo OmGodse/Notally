@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat
 
 class BaseNoteAdapter(
     private val dateFormat: String,
+    private val textSize: String,
     private val maxItems: Int,
     private val maxLines: Int,
     private val formatter: SimpleDateFormat,
@@ -43,7 +44,7 @@ class BaseNoteAdapter(
         return when (ViewType.values()[viewType]) {
             ViewType.NOTE -> {
                 val binding = RecyclerBaseNoteBinding.inflate(inflater, parent, false)
-                BaseNoteVH(binding, dateFormat, maxItems, maxLines, listener, prettyTime, formatter)
+                BaseNoteVH(binding, dateFormat, textSize, maxItems, maxLines, listener, prettyTime, formatter)
             }
             ViewType.HEADER -> {
                 val binding = RecyclerHeaderBinding.inflate(inflater, parent, false)

@@ -45,6 +45,10 @@ class Settings : Fragment() {
             binding?.DateFormat?.setup(DateFormat, value)
         }
 
+        model.preferences.textSize.observe(viewLifecycleOwner) { value ->
+            binding?.TextSize?.setup(TextSize, value)
+        }
+
 
         binding?.MaxItems?.setup(MaxItems, model.preferences.maxItems.value)
 

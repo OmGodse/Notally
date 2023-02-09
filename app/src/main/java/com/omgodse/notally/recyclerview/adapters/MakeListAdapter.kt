@@ -10,8 +10,12 @@ import com.omgodse.notally.recyclerview.ListItemListener
 import com.omgodse.notally.recyclerview.viewholders.MakeListVH
 import com.omgodse.notally.room.ListItem
 
-class MakeListAdapter(elevation: Float, val list: ArrayList<ListItem>, private val listener: ListItemListener) :
-    RecyclerView.Adapter<MakeListVH>() {
+class MakeListAdapter(
+    private val textSize: String,
+    elevation: Float,
+    val list: ArrayList<ListItem>,
+    private val listener: ListItemListener
+) : RecyclerView.Adapter<MakeListVH>() {
 
     private val callback = DragCallback(elevation, this)
     private val touchHelper = ItemTouchHelper(callback)
@@ -32,6 +36,6 @@ class MakeListAdapter(elevation: Float, val list: ArrayList<ListItem>, private v
         val inflater = LayoutInflater.from(parent.context)
         val binding = RecyclerListItemBinding.inflate(inflater, parent, false)
         binding.root.background = parent.background
-        return MakeListVH(binding, listener, touchHelper)
+        return MakeListVH(binding, listener, touchHelper, textSize)
     }
 }

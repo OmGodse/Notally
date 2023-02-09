@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.omgodse.notally.miscellaneous.applySpans
+import com.omgodse.notally.preferences.Preferences
 import com.omgodse.notally.room.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -22,6 +23,8 @@ class NotallyModel(app: Application, private val type: Type) : AndroidViewModel(
     private val database = NotallyDatabase.getDatabase(app)
     private val labelDao = database.labelDao
     private val baseNoteDao = database.baseNoteDao
+
+    val textSize = Preferences.getInstance(app).textSize.value
 
     var id = 0L
 
@@ -155,7 +158,7 @@ class NotallyModel(app: Application, private val type: Type) : AndroidViewModel(
 
     class Factory(private val app: Application, private val type: Type) : ViewModelProvider.AndroidViewModelFactory(app) {
 
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return NotallyModel(app, type) as T
         }
     }

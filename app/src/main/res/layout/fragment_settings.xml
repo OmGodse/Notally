@@ -26,6 +26,10 @@
             android:id="@+id/DateFormat"
             layout="@layout/preference_list" />
 
+        <include
+            android:id="@+id/TextSize"
+            layout="@layout/preference_list" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"

@@ -2,7 +2,7 @@
 Notally was created because I wanted to make something that was beautiful and at the same time, useful. It's extremely light, there are minimal dependencies and lines of code. (Without compromising on readability)
 
 ### Features
-* Auto save
+* Adjustable text size
 * No permissions required
 * Support for Lollipop devices and up
 * APK size of 1.2 MB (1.6 MB uncompressed)
@@ -25,3 +25,9 @@ All translations are crowd sourced. To contribute or point out any errors, email
 * [De-Googling Any Android Phone! (Google Apps Alternatives)](https://www.youtube.com/watch?v=RQUEgwgV99I)
 * [The BEST Private Notetaking Apps Explained](https://www.youtube.com/watch?v=BJw5tKPP1PY)
 * [Notally](https://www.noteapps.ca/notally/)
+
+### Roadmap
+These are in works but they'll take time as this is a side project.
+- [ ] Images
+- [ ] Auto backup
+- [ ] Batch selection

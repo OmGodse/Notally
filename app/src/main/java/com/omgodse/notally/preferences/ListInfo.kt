@@ -77,3 +77,20 @@ object DateFormat : ListInfo {
         return arrayOf(none, relative, absolute)
     }
 }
+
+object TextSize : ListInfo {
+    const val small = "small"
+    const val medium = "medium"
+    const val large = "large"
+
+    override val title = R.string.text_size
+    override val key = "textSize"
+    override val defaultValue = medium
+
+    override fun getEntryValues() = arrayOf(small, medium, large)
+
+    override fun getEntries(context: Context): Array<String> {
+        val ids = arrayOf(R.string.small, R.string.medium, R.string.large)
+        return convertToValues(ids, context)
+    }
+}

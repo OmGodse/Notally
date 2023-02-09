@@ -54,7 +54,7 @@ class MakeList : NotallyActivity(Type.LIST) {
         val unit = resources.getDimension(R.dimen.unit)
         val elevation = unit * 2
 
-        adapter = MakeListAdapter(elevation, model.items, object : ListItemListener {
+        adapter = MakeListAdapter(model.textSize, elevation, model.items, object : ListItemListener {
 
             override fun delete(position: Int) {
                 model.items.removeAt(position)

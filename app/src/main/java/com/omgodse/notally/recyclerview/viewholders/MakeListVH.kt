@@ -1,18 +1,27 @@
 package com.omgodse.notally.recyclerview.viewholders
 
+import android.util.TypedValue
 import android.view.MotionEvent
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.omgodse.notally.TextSizeEngine
 import com.omgodse.notally.databinding.RecyclerListItemBinding
 import com.omgodse.notally.miscellaneous.setOnNextAction
 import com.omgodse.notally.recyclerview.ListItemListener
 import com.omgodse.notally.room.ListItem
 
-class MakeListVH(val binding: RecyclerListItemBinding, listener: ListItemListener, touchHelper: ItemTouchHelper) :
-    RecyclerView.ViewHolder(binding.root) {
+class MakeListVH(
+    val binding: RecyclerListItemBinding,
+    listener: ListItemListener,
+    touchHelper: ItemTouchHelper,
+    textSize: String
+) : RecyclerView.ViewHolder(binding.root) {
 
     init {
+        val body = TextSizeEngine.getEditBodySize(textSize)
+        binding.EditText.setTextSize(TypedValue.COMPLEX_UNIT_SP, body)
+
         binding.EditText.setOnNextAction {
             listener.moveToNext(adapterPosition)
         }
