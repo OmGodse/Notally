@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Notally</string>
-
+    
     <!-- Fragment Titles -->
     <string name="notes">笔记</string>
     <string name="labels">标签</string>
@@ -38,12 +37,6 @@
     <string name="take_note">记笔记</string>
     <string name="add_label">添加标签</string>
     <string name="export">导出</string>
-    <string name="pdf" translatable="false">PDF</string>
-    <string name="txt" translatable="false">TXT</string>
-    <string name="xml" translatable="false">XML</string>
-    <string name="html" translatable="false">HTML</string>
-    <string name="json" translatable="false">JSON</string>
-    <string name="xml" translatable="false">XML (Legacy)</string>
     <string name="view_file">查看文件</string>
     <string name="save_to_device">保存到设备</string>
     <string name="edit_label">编辑标签</string>
@@ -59,8 +52,6 @@
     <string name="item">项目</string>
     <string name="date">日期</string>
     <string name="title">标题</string>
-    <string name="add_item">添加项目</string>
-    <string name="one_more_item">额外1个项目</string>
     <string name="more_items">额外 %1$d 个项目</string>
     <string name="drag_handle">拖动处理</string>
     <string name="bold">粗体</string>
@@ -76,6 +67,8 @@
     <string name="empty_note">空白笔记</string>
     <string name="empty_list">空白列表</string>
     <string name="cant_open_link">打不开链接</string>
+    <string name="invalid_backup">无效的备份</string>
+    <string name="imported_backup">已导入备份</string>
     <string name="something_went_wrong">出错了。请重试。</string>
     <string name="install_a_browser">安装浏览器打开此链接</string>
 
@@ -100,7 +93,7 @@
 
     <string name="backup">备份</string>
     <string name="auto_backup">自动备份</string>
-    <string name="notes_will_be_backed">每晚会备份笔记你手机的内部存储中\n\n<b>位置</b>\n\nAndroid > media > com.omgodse.notally > Backups</string>
+    <string name="notes_will_be_backed">每晚会备份笔记到你手机的内部存储中\n\n<b>位置</b>\n\nAndroid > media > com.omgodse.notally > Backups</string>
     <string name="export_backup">导出备份</string>
     <string name="import_backup">导入备份</string>
 
@@ -108,7 +101,7 @@
     <string name="libraries">库</string>
     <string name="rate">给应用打分</string>
 
-   <string name="report">报告</string>
+    <string name="report">报告</string>
    
     <string name="github" translatable="false">GitHub</string>
 </resources>
