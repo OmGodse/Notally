@@ -127,11 +127,14 @@ class BaseNoteVH(
     private fun setColor(baseNote: BaseNote) {
         val context = binding.root.context
         val color = Operations.extractColor(baseNote.color, context)
-        binding.CardView.setCardBackgroundColor(color)
 
         if (baseNote.color == Color.DEFAULT) {
             binding.CardView.strokeWidth = context.resources.getDimensionPixelSize(R.dimen.unit)
-        } else binding.CardView.strokeWidth = 0
+            binding.CardView.setCardBackgroundColor(0)
+        } else {
+            binding.CardView.strokeWidth = 0
+            binding.CardView.setCardBackgroundColor(color)
+        }
     }
 
 
