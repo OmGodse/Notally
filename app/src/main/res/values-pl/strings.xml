@@ -9,6 +9,7 @@
 
     <!-- Menu Options -->
     <string name="share">Udostępnij</string>
+    <string name="filter">Filtruj</string>
     <string name="search">Szukaj</string>
     <string name="delete">Usuń</string>
     <string name="restore">Przywróć</string>
@@ -66,6 +67,8 @@
     <string name="empty_note">Pusta notatka</string>
     <string name="empty_list">Pusta lista</string>
     <string name="cant_open_link">Nie można otworzyć odnośnika</string>
+    <string name="invalid_backup">Niewłaściwy plik kopii zapasowej</string>
+    <string name="imported_backup">Kopia zapasowa została przywrócona</string>
     <string name="something_went_wrong">Coś poszło nie tak. Spróbuj ponownie.</string>
 
     <!-- Settings Page -->
@@ -88,10 +91,14 @@
     <string name="max_lines_to_display">Maksymalna ilość linii w notatce do pokazania</string>
 
     <string name="backup">Kopia</string>
+    <string name="auto_backup">Automatyczna kopia zapasowa</string>
+    <string name="notes_will_be_backed">Notatki będą co noc zapisywane w pamięci wewnętrznej telefonu\n\n<b>Ścieżka</b>\n\nAndroid > media > com.omgodse.notally > Backups</string>
     <string name="export_backup">Wykonaj kopię zapasową</string>
     <string name="import_backup">Przywróć kopię zapasową</string>
 
     <string name="about">O aplikacji</string>
     <string name="libraries">Biblioteki</string>
     <string name="rate">Oceń aplikację</string>
+    
+    <string name="report">Zgłoś</string>
 </resources>
