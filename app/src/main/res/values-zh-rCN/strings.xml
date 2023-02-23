@@ -1,5 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
     <!-- Fragment Titles -->
     <string name="notes">笔记</string>
     <string name="labels">标签</string>
@@ -93,7 +93,6 @@
 
     <string name="backup">备份</string>
     <string name="auto_backup">自动备份</string>
-    <string name="notes_will_be_backed">每晚会备份笔记到你手机的内部存储中\n\n<b>位置</b>\n\nAndroid > media > com.omgodse.notally > Backups</string>
     <string name="export_backup">导出备份</string>
     <string name="import_backup">导入备份</string>
 
@@ -102,6 +101,4 @@
     <string name="rate">给应用打分</string>
 
     <string name="report">报告</string>
-   
-    
 </resources>

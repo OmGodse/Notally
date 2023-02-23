@@ -9,13 +9,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.documentfile.provider.DocumentFile
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.MenuDialog
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.FragmentSettingsBinding
-import com.omgodse.notally.databinding.PreferenceListBinding
+import com.omgodse.notally.databinding.PreferenceBinding
 import com.omgodse.notally.databinding.PreferenceSeekbarBinding
 import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.preferences.*
@@ -55,6 +56,10 @@ class Settings : Fragment() {
         binding?.MaxLines?.setup(MaxLines, model.preferences.maxLines.value)
 
 
+        model.preferences.autoBackup.observe(viewLifecycleOwner) { value ->
+            binding?.AutoBackup?.setup(AutoBackup, value)
+        }
+
         binding?.ImportBackup?.setOnClickListener {
             importBackup()
         }
@@ -62,6 +67,7 @@ class Settings : Fragment() {
         binding?.ExportBackup?.setOnClickListener {
             exportBackup()
         }
+
 
         binding?.GitHub?.setOnClickListener {
             openLink("https://github.com/OmGodse/Notally")
@@ -88,6 +94,7 @@ class Settings : Fragment() {
                 when (requestCode) {
                     RequestCodeImportXml -> model.importXmlBackup(uri)
                     RequestCodeImportZip -> model.importZipBackup(uri)
+                    RequestCodeChooseFolder -> model.setAutoBackupPath(uri)
                     Constants.RequestCodeExportFile -> model.exportBackup(uri)
                 }
             }
@@ -134,8 +141,18 @@ class Settings : Fragment() {
             .show()
     }
 
+    private fun displayChooseFolderDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setMessage(R.string.notes_will_be)
+            .setPositiveButton(R.string.choose_folder) { _, _ ->
+                val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
+                startActivityForResult(intent, RequestCodeChooseFolder)
+            }
+            .show()
+    }
 
-    private fun PreferenceListBinding.setup(info: ListInfo, value: String) {
+
+    private fun PreferenceBinding.setup(info: ListInfo, value: String) {
         Title.setText(info.title)
 
         val entries = info.getEntries(requireContext())
@@ -156,6 +173,29 @@ class Settings : Fragment() {
                 }
                 .setNegativeButton(R.string.cancel, null)
                 .show()
+        }
+    }
+
+    private fun PreferenceBinding.setup(info: AutoBackup, value: String) {
+        Title.setText(info.title)
+
+        if (value == info.emptyPath) {
+            Value.setText(R.string.tap_to_set_up)
+
+            root.setOnClickListener { displayChooseFolderDialog() }
+        } else {
+            val uri = Uri.parse(value)
+            val folder = requireNotNull(DocumentFile.fromTreeUri(requireContext(), uri))
+            if (folder.exists()) {
+                Value.text = folder.name
+            } else Value.setText(R.string.cant_find_folder)
+
+            root.setOnClickListener {
+                MenuDialog(requireContext())
+                    .add(R.string.disable_auto_backup) { model.disableAutoBackup() }
+                    .add(R.string.choose_another_folder) { displayChooseFolderDialog() }
+                    .show()
+            }
         }
     }
 
@@ -186,5 +226,6 @@ class Settings : Fragment() {
     companion object {
         private const val RequestCodeImportXml = 20
         private const val RequestCodeImportZip = 21
+        private const val RequestCodeChooseFolder = 22
     }
 }

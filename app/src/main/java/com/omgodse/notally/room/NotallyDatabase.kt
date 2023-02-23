@@ -3,6 +3,7 @@ package com.omgodse.notally.room
 import android.app.Application
 import androidx.room.*
 import androidx.room.migration.Migration
+import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.omgodse.notally.room.dao.BaseNoteDao
 import com.omgodse.notally.room.dao.CommonDao
@@ -15,6 +16,10 @@ abstract class NotallyDatabase : RoomDatabase() {
     abstract val labelDao: LabelDao
     abstract val commonDao: CommonDao
     abstract val baseNoteDao: BaseNoteDao
+
+    fun checkpoint() {
+        baseNoteDao.query(SimpleSQLiteQuery("pragma wal_checkpoint(FULL)"))
+    }
 
     companion object {
 

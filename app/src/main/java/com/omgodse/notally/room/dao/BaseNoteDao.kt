@@ -12,7 +12,7 @@ import com.omgodse.notally.room.Folder
 interface BaseNoteDao {
 
     @RawQuery
-    suspend fun checkpoint(query: SupportSQLiteQuery): Int
+    fun query(query: SupportSQLiteQuery): Int
 
 
     @Delete

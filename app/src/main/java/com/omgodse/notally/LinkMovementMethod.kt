@@ -12,7 +12,6 @@ import android.widget.TextView
 /**
  * Inspired by https://github.com/saket/Better-Link-Movement-Method
  * Intercepts touch events on links and dispatches them accordingly
- * (while updating the URL)
  */
 class LinkMovementMethod(private val onClick: (span: URLSpan) -> Unit) : ArrowKeyMovementMethod() {
 

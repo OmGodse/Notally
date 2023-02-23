@@ -104,8 +104,16 @@
     <string name="max_lines_to_display">Max lines to display in note</string>
 
     <string name="backup">Backup</string>
+
+    <!-- Auto backup -->
     <string name="auto_backup">Auto backup</string>
-    <string name="notes_will_be_backed">Notes will be backed up to your phone\'s internal storage every night\n\n<b>Location</b>\n\nAndroid > media > com.omgodse.notally > Backups</string>
+    <string name="tap_to_set_up">Tap to set up</string>
+    <string name="notes_will_be">Notes will be backed up to your phone\'s internal storage everyday.\n\nThis may not work if you have power saving mode enabled</string>
+    <string name="choose_folder">Choose folder</string>
+    <string name="disable_auto_backup">Disable auto backup</string>
+    <string name="choose_another_folder">Choose another folder</string>
+    <string name="cant_find_folder">Can\'t find folder. It may have been moved or deleted</string>
+
     <string name="export_backup">Export backup</string>
     <string name="import_backup">Import backup</string>
 

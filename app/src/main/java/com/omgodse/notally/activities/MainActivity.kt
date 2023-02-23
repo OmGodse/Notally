@@ -19,7 +19,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.snackbar.Snackbar
-import com.omgodse.notally.ImportBackupEvent
+import com.omgodse.notally.ImportBackupFailure
 import com.omgodse.notally.MenuDialog
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.ActivityMainBinding
@@ -121,7 +121,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+        navController.addOnDestinationChangedListener { _, destination, _ ->
             fragmentIdToLoad = destination.id
             binding.NavigationView.setCheckedItem(destination.id)
             handleDestinationChange(destination)
@@ -145,14 +145,10 @@ class MainActivity : AppCompatActivity() {
 
 
     @Subscribe
-    fun onImportBackup(event: ImportBackupEvent) {
-        if (event.success) {
-            Snackbar.make(binding.CoordinatorLayout, R.string.imported_backup, Snackbar.LENGTH_LONG).show()
-        } else {
-            Snackbar.make(binding.CoordinatorLayout, R.string.invalid_backup, Snackbar.LENGTH_LONG)
-                .setAction(R.string.report) { reportCrash(event.files) }
-                .show()
-        }
+    fun onImportBackupFailure(event: ImportBackupFailure) {
+        Snackbar.make(binding.CoordinatorLayout, R.string.invalid_backup, Snackbar.LENGTH_LONG)
+            .setAction(R.string.report) { reportCrash(event.files) }
+            .show()
     }
 
     private fun reportCrash(files: Array<File>) {

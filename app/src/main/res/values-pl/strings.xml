@@ -92,13 +92,12 @@
 
     <string name="backup">Kopia</string>
     <string name="auto_backup">Automatyczna kopia zapasowa</string>
-    <string name="notes_will_be_backed">Notatki będą co noc zapisywane w pamięci wewnętrznej telefonu\n\n<b>Ścieżka</b>\n\nAndroid > media > com.omgodse.notally > Backups</string>
     <string name="export_backup">Wykonaj kopię zapasową</string>
     <string name="import_backup">Przywróć kopię zapasową</string>
 
     <string name="about">O aplikacji</string>
     <string name="libraries">Biblioteki</string>
     <string name="rate">Oceń aplikację</string>
-    
+
     <string name="report">Zgłoś</string>
 </resources>

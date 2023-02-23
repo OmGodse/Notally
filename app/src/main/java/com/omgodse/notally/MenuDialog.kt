@@ -26,14 +26,13 @@ class MenuDialog(context: Context) : BottomSheetDialog(context) {
     }
 
     fun add(title: Int, drawable: Int = 0, onClick: () -> Unit): MenuDialog {
-        val item = MenuItemBinding.inflate(layoutInflater).root
+        val item = MenuItemBinding.inflate(layoutInflater, linearLayout, true).root
         item.setText(title)
         item.setOnClickListener {
             dismiss()
             onClick()
         }
         item.setCompoundDrawablesRelativeWithIntrinsicBounds(drawable, 0, 0, 0)
-        linearLayout.addView(item)
         return this
     }
 }

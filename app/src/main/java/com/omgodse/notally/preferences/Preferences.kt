@@ -3,35 +3,42 @@ package com.omgodse.notally.preferences
 import android.app.Application
 import android.preference.PreferenceManager
 
+/**
+ * Custom implementation of androidx.preference library
+ * Way faster, simpler and smaller, logic of storing preferences has been decoupled
+ * from their UI.
+ * It is backed by SharedPreferences but it should be trivial to shift to another
+ * source if needed.
+ */
 class Preferences private constructor(app: Application) {
 
     private val preferences = PreferenceManager.getDefaultSharedPreferences(app)
     private val editor = preferences.edit()
 
     // Main thread (unfortunately)
-    val view = BetterLiveData(getListPreferenceValue(View))
-    val theme = BetterLiveData(getListPreferenceValue(Theme))
-    val dateFormat = BetterLiveData(getListPreferenceValue(DateFormat))
+    val view = BetterLiveData(getListPref(View))
+    val theme = BetterLiveData(getListPref(Theme))
+    val dateFormat = BetterLiveData(getListPref(DateFormat))
 
-    val textSize = BetterLiveData(getListPreferenceValue(TextSize))
-    val maxItems = BetterLiveData(getSeekbarPreferenceValue(MaxItems))
-    val maxLines = BetterLiveData(getSeekbarPreferenceValue(MaxLines))
+    val textSize = BetterLiveData(getListPref(TextSize))
+    val maxItems = BetterLiveData(getSeekbarPref(MaxItems))
+    val maxLines = BetterLiveData(getSeekbarPref(MaxLines))
 
-    private fun getListPreferenceValue(info: ListInfo): String {
-        return requireNotNull(preferences.getString(info.key, info.defaultValue))
-    }
+    val autoBackup = BetterLiveData(getTextPref(AutoBackup))
 
-    private fun getSeekbarPreferenceValue(info: SeekbarInfo): Int {
-        return requireNotNull(preferences.getInt(info.key, info.defaultValue))
-    }
+    private fun getListPref(info: ListInfo) = requireNotNull(preferences.getString(info.key, info.defaultValue))
+
+    private fun getTextPref(info: TextInfo) = requireNotNull(preferences.getString(info.key, info.defaultValue))
+
+    private fun getSeekbarPref(info: SeekbarInfo) = requireNotNull(preferences.getInt(info.key, info.defaultValue))
 
 
     fun savePreference(info: SeekbarInfo, value: Int) {
         editor.putInt(info.key, value)
         editor.commit()
         when (info) {
-            MaxItems -> maxItems.postValue(getSeekbarPreferenceValue(MaxItems))
-            MaxLines -> maxLines.postValue(getSeekbarPreferenceValue(MaxLines))
+            MaxItems -> maxItems.postValue(getSeekbarPref(MaxItems))
+            MaxLines -> maxLines.postValue(getSeekbarPref(MaxLines))
         }
     }
 
@@ -39,10 +46,18 @@ class Preferences private constructor(app: Application) {
         editor.putString(info.key, value)
         editor.commit()
         when (info) {
-            View -> view.postValue(getListPreferenceValue(info))
-            Theme -> theme.postValue(getListPreferenceValue(info))
-            DateFormat -> dateFormat.postValue(getListPreferenceValue(info))
-            TextSize -> textSize.postValue(getListPreferenceValue(info))
+            View -> view.postValue(getListPref(info))
+            Theme -> theme.postValue(getListPref(info))
+            DateFormat -> dateFormat.postValue(getListPref(info))
+            TextSize -> textSize.postValue(getListPref(info))
+        }
+    }
+
+    fun savePreference(info: TextInfo, value: String) {
+        editor.putString(info.key, value)
+        editor.commit()
+        when (info) {
+            AutoBackup -> autoBackup.postValue(getTextPref(info))
         }
     }
 

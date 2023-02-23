@@ -16,19 +16,19 @@
 
         <include
             android:id="@+id/View"
-            layout="@layout/preference_list" />
+            layout="@layout/preference" />
 
         <include
             android:id="@+id/Theme"
-            layout="@layout/preference_list" />
+            layout="@layout/preference" />
 
         <include
             android:id="@+id/DateFormat"
-            layout="@layout/preference_list" />
+            layout="@layout/preference" />
 
         <include
             android:id="@+id/TextSize"
-            layout="@layout/preference_list" />
+            layout="@layout/preference" />
 
         <View
             android:layout_width="match_parent"
@@ -59,6 +59,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/backup" />
+
+        <include
+            android:id="@+id/AutoBackup"
+            layout="@layout/preference" />
 
         <TextView
             android:id="@+id/ImportBackup"

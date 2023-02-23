@@ -2,6 +2,7 @@ package com.omgodse.notally.viewmodels
 
 import android.app.Application
 import android.content.Context
+import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.net.Uri
@@ -13,14 +14,15 @@ import androidx.core.text.toHtml
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.room.withTransaction
-import androidx.sqlite.db.SimpleSQLiteQuery
 import com.omgodse.notally.BuildConfig
-import com.omgodse.notally.ImportBackupEvent
+import com.omgodse.notally.ImportBackupFailure
 import com.omgodse.notally.R
 import com.omgodse.notally.legacy.Migrations
 import com.omgodse.notally.legacy.XMLUtils
+import com.omgodse.notally.miscellaneous.Export
 import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.miscellaneous.applySpans
+import com.omgodse.notally.preferences.AutoBackup
 import com.omgodse.notally.preferences.ListInfo
 import com.omgodse.notally.preferences.Preferences
 import com.omgodse.notally.preferences.SeekbarInfo
@@ -35,14 +37,11 @@ import org.greenrobot.eventbus.EventBus
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
-import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.zip.ZipEntry
 import java.util.zip.ZipFile
-import java.util.zip.ZipOutputStream
 
 class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
@@ -128,35 +127,42 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     }
 
 
-    fun savePreference(info: SeekbarInfo, value: Int) {
-        executeAsync { preferences.savePreference(info, value) }
+    fun savePreference(info: SeekbarInfo, value: Int) = executeAsync { preferences.savePreference(info, value) }
+
+    fun savePreference(info: ListInfo, value: String) = executeAsync { preferences.savePreference(info, value) }
+
+
+    fun disableAutoBackup() {
+        clearPersistedUriPermissions()
+        executeAsync { preferences.savePreference(AutoBackup, AutoBackup.emptyPath) }
     }
 
-    fun savePreference(info: ListInfo, value: String) {
-        executeAsync { preferences.savePreference(info, value) }
+    fun setAutoBackupPath(uri: Uri) {
+        clearPersistedUriPermissions()
+        val flags = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+        app.contentResolver.takePersistableUriPermission(uri, flags)
+        executeAsync { preferences.savePreference(AutoBackup, uri.toString()) }
+    }
+
+    /**
+     * Release previously persisted permissions, if any
+     * There is a hard limit of 128 before Android 11, 512 after
+     * Check -> https://commonsware.com/blog/2020/06/13/count-your-saf-uri-permission-grants.html
+     */
+    private fun clearPersistedUriPermissions() {
+        val flags = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+        app.contentResolver.persistedUriPermissions.forEach { permission ->
+            app.contentResolver.releasePersistableUriPermission(permission.uri, flags)
+        }
     }
 
 
     fun exportBackup(uri: Uri) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                baseNoteDao.checkpoint(SimpleSQLiteQuery("pragma wal_checkpoint(FULL)"))
-
-                val source = app.getDatabasePath(NotallyDatabase.DatabaseName)
-
                 (app.contentResolver.openOutputStream(uri) as? FileOutputStream)?.use { stream ->
                     stream.channel.truncate(0)
-
-                    val zipStream = ZipOutputStream(stream)
-                    val entry = ZipEntry(source.name)
-                    zipStream.putNextEntry(entry)
-
-                    val inputStream = FileInputStream(source)
-                    inputStream.copyTo(zipStream)
-                    inputStream.close()
-
-                    zipStream.closeEntry()
-                    zipStream.close()
+                    Export.backupToZip(app, stream)
                 }
             }
             Toast.makeText(app, R.string.saved_to_device, Toast.LENGTH_LONG).show()
@@ -170,7 +176,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     fun importZipBackup(uri: Uri) {
         val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
             val files = getCrashFiles(throwable)
-            val event = ImportBackupEvent(false, files)
+            val event = ImportBackupFailure(files)
             EventBus.getDefault().post(event)
         }
         viewModelScope.launch(exceptionHandler) {
@@ -199,8 +205,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
                 commonDao.importBackup(baseNotes, labels)
             }
-            val event = ImportBackupEvent(true, emptyArray())
-            EventBus.getDefault().post(event)
+            Toast.makeText(app, R.string.imported_backup, Toast.LENGTH_LONG).show()
         }
     }
 
@@ -294,8 +299,24 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
     suspend fun getTXTFile(baseNote: BaseNote) = withContext(Dispatchers.IO) {
         val file = File(getExportedPath(), "Untitled.txt")
-        val text = getTXT(baseNote, preferences.showDateCreated())
-        file.writeText(text)
+        val writer = file.bufferedWriter()
+
+        val date = formatter.format(baseNote.timestamp)
+
+        val body = when (baseNote.type) {
+            Type.NOTE -> baseNote.body
+            Type.LIST -> Operations.getBody(baseNote.items)
+        }
+
+        if (baseNote.title.isNotEmpty()) {
+            writer.append("${baseNote.title}\n\n")
+        }
+        if (preferences.showDateCreated()) {
+            writer.append("$date\n\n")
+        }
+        writer.append(body)
+        writer.close()
+
         file
     }
 
@@ -384,23 +405,6 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         }
 
         return jsonObject.toString(2)
-    }
-
-    private fun getTXT(baseNote: BaseNote, showDateCreated: Boolean) = buildString {
-        val date = formatter.format(baseNote.timestamp)
-
-        val body = when (baseNote.type) {
-            Type.NOTE -> baseNote.body
-            Type.LIST -> Operations.getBody(baseNote.items)
-        }
-
-        if (baseNote.title.isNotEmpty()) {
-            append("${baseNote.title}\n\n")
-        }
-        if (showDateCreated) {
-            append("$date\n\n")
-        }
-        append(body)
     }
 
     private fun getHTML(baseNote: BaseNote, showDateCreated: Boolean) = buildString {
