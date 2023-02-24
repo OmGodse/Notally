@@ -1,6 +1,7 @@
 package com.omgodse.notally.fragments
 
 import android.app.Activity
+import android.app.Application
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
@@ -9,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.FileProvider
 import androidx.documentfile.provider.DocumentFile
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -19,6 +21,7 @@ import com.omgodse.notally.databinding.FragmentSettingsBinding
 import com.omgodse.notally.databinding.PreferenceBinding
 import com.omgodse.notally.databinding.PreferenceSeekbarBinding
 import com.omgodse.notally.miscellaneous.Constants
+import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.preferences.*
 import com.omgodse.notally.viewmodels.BaseNoteModel
 
@@ -80,6 +83,10 @@ class Settings : Fragment() {
         binding?.Rate?.setOnClickListener {
             openLink("https://play.google.com/store/apps/details?id=com.omgodse.notally")
         }
+
+        binding?.SendFeedback?.setOnClickListener {
+            sendEmailWithLog()
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -125,15 +132,32 @@ class Settings : Fragment() {
     }
 
 
+    private fun sendEmailWithLog() {
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.selector = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"))
+
+        intent.putExtra(Intent.EXTRA_EMAIL, arrayOf("omgodseapps@gmail.com"))
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Notally [Feedback]")
+
+        val app = requireContext().applicationContext as Application
+        val log = Operations.getLog(app)
+        if (log.exists()) {
+            val uri = FileProvider.getUriForFile(app, "${app.packageName}.provider", log)
+            intent.putExtra(Intent.EXTRA_STREAM, uri)
+        }
+
+        startActivity(intent)
+    }
+
     private fun displayLibraries() {
-        val libraries = arrayOf("Event Bus", "Pretty Time", "Swipe Layout", "Material Components for Android")
+        val libraries = arrayOf("Pretty Time", "Swipe Layout", "Work Manager", "Material Components for Android")
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.libraries)
             .setItems(libraries) { _, which ->
                 when (which) {
-                    0 -> openLink("https://github.com/greenrobot/EventBus")
-                    1 -> openLink("https://github.com/ocpsoft/prettytime")
-                    2 -> openLink("https://github.com/rambler-digital-solutions/swipe-layout-android")
+                    0 -> openLink("https://github.com/ocpsoft/prettytime")
+                    1 -> openLink("https://github.com/rambler-digital-solutions/swipe-layout-android")
+                    2 -> openLink("https://developer.android.com/jetpack/androidx/releases/work")
                     3 -> openLink("https://github.com/material-components/material-components-android")
                 }
             }
