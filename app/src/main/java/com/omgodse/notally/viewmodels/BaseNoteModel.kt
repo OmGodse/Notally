@@ -6,7 +6,6 @@ import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.net.Uri
-import android.os.Build
 import android.print.PostPDFGenerator
 import android.text.Html
 import android.widget.Toast
@@ -14,8 +13,6 @@ import androidx.core.text.toHtml
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.room.withTransaction
-import com.omgodse.notally.BuildConfig
-import com.omgodse.notally.ImportBackupFailure
 import com.omgodse.notally.R
 import com.omgodse.notally.legacy.Migrations
 import com.omgodse.notally.legacy.XMLUtils
@@ -33,7 +30,6 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.greenrobot.eventbus.EventBus
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
@@ -175,9 +171,8 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
      */
     fun importZipBackup(uri: Uri) {
         val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-            val files = getCrashFiles(throwable)
-            val event = ImportBackupFailure(files)
-            EventBus.getDefault().post(event)
+            Operations.log(app, throwable)
+            Toast.makeText(app, R.string.invalid_backup, Toast.LENGTH_LONG).show()
         }
         viewModelScope.launch(exceptionHandler) {
             val stream = app.contentResolver.openInputStream(uri)
@@ -374,8 +369,6 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         return folder
     }
 
-    private fun getCrashPath() = getEmptyFolder("crash")
-
     private fun getBackupPath() = getEmptyFolder("backup")
 
     private fun getExportedPath() = getEmptyFolder("exported")
@@ -437,34 +430,6 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
             }
         }
         append("</body></html>")
-    }
-
-
-    private fun getCrashFiles(throwable: Throwable): Array<File> {
-        val folder = getCrashPath()
-        val stackTrace = File(folder, "Stacktrace.txt")
-        val systemInfo = File(folder, "System Info.txt")
-
-        val trace = throwable.stackTraceToString()
-        val info = buildString {
-            appendLine("App\n")
-
-            appendLine("Version code : " + BuildConfig.VERSION_CODE)
-            appendLine("Version name : " + BuildConfig.VERSION_NAME)
-
-            appendLine("\nDevice\n")
-
-            appendLine("Model : " + Build.MODEL)
-            appendLine("Device : " + Build.DEVICE)
-            appendLine("Brand : " + Build.BRAND)
-            appendLine("Manufacturer : " + Build.MANUFACTURER)
-            appendLine("Android : " + Build.VERSION.SDK_INT)
-        }
-
-        stackTrace.writeText(trace)
-        systemInfo.writeText(info)
-
-        return arrayOf(stackTrace, systemInfo)
     }
 
 

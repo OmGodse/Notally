@@ -3,7 +3,7 @@
     <cache-path
         name="exported"
         path="/exported" />
-    <cache-path
-        name="crash"
-        path="/crash" />
+    <files-path
+        name="logs"
+        path="/logs" />
 </paths>

@@ -1,8 +1,10 @@
 package com.omgodse.notally.miscellaneous
 
+import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.os.Build
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +16,7 @@ import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.RelativeCornerSize
 import com.google.android.material.shape.RoundedCornerTreatment
 import com.google.android.material.shape.ShapeAppearanceModel
+import com.omgodse.notally.BuildConfig
 import com.omgodse.notally.R
 import com.omgodse.notally.TextSizeEngine
 import com.omgodse.notally.databinding.DialogInputBinding
@@ -21,10 +24,44 @@ import com.omgodse.notally.databinding.LabelBinding
 import com.omgodse.notally.room.Color
 import com.omgodse.notally.room.Label
 import com.omgodse.notally.room.ListItem
+import java.io.File
+import java.io.FileOutputStream
+import java.io.OutputStreamWriter
+import java.io.PrintWriter
+import java.text.DateFormat
 
 object Operations {
 
     const val extraCharSequence = "com.omgodse.notally.extra.charSequence"
+
+    fun getLog(app: Application): File {
+        val folder = File(app.filesDir, "logs")
+        folder.mkdir()
+        return File(folder, "Log.v1.txt")
+    }
+
+    fun log(app: Application, throwable: Throwable) {
+        val file = getLog(app)
+        val output = FileOutputStream(file, true)
+        val writer = PrintWriter(OutputStreamWriter(output, Charsets.UTF_8))
+
+        val formatter = DateFormat.getDateTimeInstance()
+        val time = formatter.format(System.currentTimeMillis())
+
+        writer.println("[Start]")
+        throwable.printStackTrace(writer)
+        writer.println("Version code : " + BuildConfig.VERSION_CODE)
+        writer.println("Version name : " + BuildConfig.VERSION_NAME)
+        writer.println("Model : " + Build.MODEL)
+        writer.println("Device : " + Build.DEVICE)
+        writer.println("Brand : " + Build.BRAND)
+        writer.println("Manufacturer : " + Build.MANUFACTURER)
+        writer.println("Android : " + Build.VERSION.SDK_INT)
+        writer.println("Time : $time")
+        writer.println("[End]")
+
+        writer.close()
+    }
 
 
     fun extractColor(color: Color, context: Context): Int {
