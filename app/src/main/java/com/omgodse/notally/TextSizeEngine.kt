@@ -9,7 +9,7 @@ object TextSizeEngine {
             TextSize.small -> 12f
             TextSize.medium -> 14f
             TextSize.large -> 16f
-            else -> throw IllegalArgumentException("Invalid value for textSize : $textSize")
+            else -> throw IllegalArgumentException("Invalid value : $textSize")
         }
     }
 
@@ -18,7 +18,7 @@ object TextSizeEngine {
             TextSize.small -> 14f
             TextSize.medium -> 16f
             TextSize.large -> 18f
-            else -> throw IllegalArgumentException("Invalid value for textSize : $textSize")
+            else -> throw IllegalArgumentException("Invalid value : $textSize")
         }
     }
 
@@ -27,7 +27,7 @@ object TextSizeEngine {
             TextSize.small -> 14f
             TextSize.medium -> 16f
             TextSize.large -> 18f
-            else -> throw IllegalArgumentException("Invalid value for textSize : $textSize")
+            else -> throw IllegalArgumentException("Invalid value : $textSize")
         }
     }
 
@@ -36,7 +36,7 @@ object TextSizeEngine {
             TextSize.small -> 18f
             TextSize.medium -> 20f
             TextSize.large -> 22f
-            else -> throw IllegalArgumentException("Invalid value for textSize : $textSize")
+            else -> throw IllegalArgumentException("Invalid value : $textSize")
         }
     }
 }

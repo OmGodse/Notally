@@ -16,12 +16,10 @@
         <item name="textAppearanceSubtitle1">@style/TextAppearance.Subtitle1</item>
         <item name="textAppearanceHeadline6">@style/TextAppearance.Headline6</item>
 
+        <item name="toolbarStyle">@style/Toolbar</item>
         <item name="chipGroupStyle">@style/ChipGroup</item>
-        <item name="appBarLayoutStyle">@style/Widget.MaterialComponents.AppBarLayout.Surface</item>
 
         <item name="materialAlertDialogTheme">@style/AlertDialog</item>
-
-        <item name="snackbarButtonStyle">@style/Snackbar.Button</item>
     </style>
 
     <style name="AppTheme" parent="Base.AppTheme">
@@ -45,6 +43,11 @@
 
     <style name="TextAppearance.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
         <item name="android:letterSpacing">0.02</item>
+    </style>
+
+
+    <style name="Toolbar" parent="Widget.MaterialComponents.Toolbar.Surface">
+        <item name="android:elevation">4dp</item>
     </style>
 
 
@@ -80,11 +83,6 @@
         <item name="chipStrokeColor">@color/chip_stroke</item>
         <item name="chipBackgroundColor">@color/chip_background</item>
         <item name="ensureMinTouchTargetSize">false</item>
-    </style>
-
-    <style name="Snackbar.Button" parent="Widget.MaterialComponents.Button.TextButton.Snackbar">
-        <item name="materialThemeOverlay">@style/ThemeOverlay.MaterialComponents.Dark</item>
-        <item name="rippleColor">?attr/colorControlHighlight</item>
     </style>
 
 
