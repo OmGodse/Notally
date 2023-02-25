@@ -6,7 +6,7 @@
 5. 🇨🇿 Czech by [tomo90](https://github.com/tomo90)
 6. 🇯🇵 Japanese by [kato-k](https://github.com/kato-k)
 7. 🇦🇩 Catalan by retiolus
-8. 🇵🇱 Polish by [ZiomaleQ](https://github.com/ZiomaleQ)
+8. 🇵🇱 Polish by [ZiomaleQ](https://github.com/ZiomaleQ), [rehork](https://github.com/rehork)
 9. 🇸🇰 Slovak by [Juraj Liso](https://github.com/LiJu09)
 10. 🇮🇩 Indonesian by [zmni](https://github.com/zmni)
 11. 🇮🇹 Italian by Luigi Sforza, [IlmastroStefanuzzo](https://github.com/IlmastroStefanuzzo)

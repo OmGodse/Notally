@@ -97,7 +97,7 @@ class NotallyModel(app: Application, private val type: Type) : AndroidViewModel(
     private fun getBaseNote(): BaseNote {
         val spans = getFilteredSpans(body)
         val trimmedBody = body.toString().trimEnd()
-        val filteredItems = items.filter { (body) -> body.isNotBlank() }
+        val filteredItems = items.filter { item -> item.body.isNotEmpty() }
         return BaseNote(id, type, folder, color, title, pinned, timestamp, labels, trimmedBody, spans, filteredItems)
     }
 

@@ -29,5 +29,5 @@ All translations are crowd sourced. To contribute or point out any errors, email
 ### Roadmap
 These are in works but they'll take time as this is a side project.
 - [ ] Images
-- [ ] Auto backup
+- [X] Auto backup
 - [ ] Batch selection
