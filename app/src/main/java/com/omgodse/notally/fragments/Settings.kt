@@ -99,9 +99,9 @@ class Settings : Fragment() {
         if (resultCode == Activity.RESULT_OK) {
             intent?.data?.let { uri ->
                 when (requestCode) {
-                    RequestCodeImportXml -> model.importXmlBackup(uri)
-                    RequestCodeImportZip -> model.importZipBackup(uri)
-                    RequestCodeChooseFolder -> model.setAutoBackupPath(uri)
+                    REQUEST_IMPORT_XML -> model.importXmlBackup(uri)
+                    REQUEST_IMPORT_ZIP -> model.importZipBackup(uri)
+                    REQUEST_CHOOSE_FOLDER -> model.setAutoBackupPath(uri)
                     Constants.RequestCodeExportFile -> model.exportBackup(uri)
                 }
             }
@@ -119,8 +119,8 @@ class Settings : Fragment() {
 
     private fun importBackup() {
         MenuDialog(requireContext())
-            .add(R.string.zip) { launchImportActivity("application/zip", RequestCodeImportZip) }
-            .add(R.string.xml) { launchImportActivity("text/xml", RequestCodeImportXml) }
+            .add("ZIP") { launchImportActivity("application/zip", REQUEST_IMPORT_ZIP) }
+            .add("XML (Legacy)") { launchImportActivity("text/xml", REQUEST_IMPORT_XML) }
             .show()
     }
 
@@ -146,7 +146,11 @@ class Settings : Fragment() {
             intent.putExtra(Intent.EXTRA_STREAM, uri)
         }
 
-        startActivity(intent)
+        try {
+            startActivity(intent)
+        } catch (exception: ActivityNotFoundException) {
+            Toast.makeText(requireContext(), R.string.install_an_email, Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun displayLibraries() {
@@ -170,7 +174,7 @@ class Settings : Fragment() {
             .setMessage(R.string.notes_will_be)
             .setPositiveButton(R.string.choose_folder) { _, _ ->
                 val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
-                startActivityForResult(intent, RequestCodeChooseFolder)
+                startActivityForResult(intent, REQUEST_CHOOSE_FOLDER)
             }
             .show()
     }
@@ -246,10 +250,8 @@ class Settings : Fragment() {
             Toast.makeText(requireContext(), R.string.install_a_browser, Toast.LENGTH_LONG).show()
         }
     }
-
-    companion object {
-        private const val RequestCodeImportXml = 20
-        private const val RequestCodeImportZip = 21
-        private const val RequestCodeChooseFolder = 22
-    }
 }
+
+private const val REQUEST_IMPORT_XML = 20
+private const val REQUEST_IMPORT_ZIP = 21
+private const val REQUEST_CHOOSE_FOLDER = 22

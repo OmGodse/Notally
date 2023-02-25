@@ -184,10 +184,10 @@ abstract class NotallyFragment : Fragment(), ItemListener {
 
     private fun export(baseNote: BaseNote) {
         MenuDialog(requireContext())
-            .add(R.string.pdf) { exportToPDF(baseNote) }
-            .add(R.string.txt) { exportToTXT(baseNote) }
-            .add(R.string.json) { exportToJSON(baseNote) }
-            .add(R.string.html) { exportToHTML(baseNote) }
+            .add("PDF") { exportToPDF(baseNote) }
+            .add("TXT") { exportToTXT(baseNote) }
+            .add("JSON") { exportToJSON(baseNote) }
+            .add("HTML") { exportToHTML(baseNote) }
             .show()
     }
 

@@ -38,12 +38,6 @@
     <string name="take_note">Take note</string>
     <string name="add_label">Add label</string>
     <string name="export">Export</string>
-    <string name="pdf" translatable="false">PDF</string>
-    <string name="txt" translatable="false">TXT</string>
-    <string name="zip" translatable="false">ZIP</string>
-    <string name="html" translatable="false">HTML</string>
-    <string name="json" translatable="false">JSON</string>
-    <string name="xml" translatable="false">XML (Legacy)</string>
     <string name="view_file">View file</string>
     <string name="save_to_device">Save to device</string>
     <string name="edit_label">Edit label</string>
@@ -77,6 +71,7 @@
     <string name="invalid_backup">Invalid backup</string>
     <string name="imported_backup">Imported backup</string>
     <string name="something_went_wrong">Something went wrong. Please try again.</string>
+    <string name="install_an_email">Install an email app to send feedback</string>
     <string name="install_a_browser">Install a browser to open this link</string>
 
     <!-- Settings Page -->
