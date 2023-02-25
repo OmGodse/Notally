@@ -10,7 +10,7 @@
 
     <!-- Menu Options -->
     <string name="share">Sdílet</string>
-    <string name="filter">Filter</string>
+    <string name="filter">Filtrovat</string>
     <string name="search">Hledat</string>
     <string name="delete">Smazat</string>
     <string name="restore">Obnovit</string>
@@ -71,7 +71,7 @@
     <string name="invalid_backup">Neplatný soubor zálohy</string>
     <string name="imported_backup">Záloha importována</string>
     <string name="something_went_wrong">Něco se pokazilo. Zkuste to znovu.</string>
-    <string name="install_an_email">Pro odeslání zpětné vazby nainstalujte e-mailového klienta </string>
+    <string name="install_an_email">Pro odeslání zpětné vazby nainstalujte e-mailového klienta</string>
     <string name="install_a_browser">Pro otevření odkazu nainstalujte webový prohlížeč</string>
 
     <!-- Settings Page -->
