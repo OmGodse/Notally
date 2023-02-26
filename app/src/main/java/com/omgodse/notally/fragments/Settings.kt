@@ -20,7 +20,6 @@ import com.omgodse.notally.R
 import com.omgodse.notally.databinding.FragmentSettingsBinding
 import com.omgodse.notally.databinding.PreferenceBinding
 import com.omgodse.notally.databinding.PreferenceSeekbarBinding
-import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.preferences.*
 import com.omgodse.notally.viewmodels.BaseNoteModel
@@ -99,10 +98,9 @@ class Settings : Fragment() {
         if (resultCode == Activity.RESULT_OK) {
             intent?.data?.let { uri ->
                 when (requestCode) {
-                    REQUEST_IMPORT_XML -> model.importXmlBackup(uri)
-                    REQUEST_IMPORT_ZIP -> model.importZipBackup(uri)
+                    REQUEST_IMPORT_BACKUP -> model.importBackup(uri)
+                    REQUEST_EXPORT_BACKUP -> model.exportBackup(uri)
                     REQUEST_CHOOSE_FOLDER -> model.setAutoBackupPath(uri)
-                    Constants.RequestCodeExportFile -> model.exportBackup(uri)
                 }
             }
         }
@@ -114,21 +112,15 @@ class Settings : Fragment() {
         intent.type = "application/zip"
         intent.addCategory(Intent.CATEGORY_OPENABLE)
         intent.putExtra(Intent.EXTRA_TITLE, "Notally Backup")
-        startActivityForResult(intent, Constants.RequestCodeExportFile)
+        startActivityForResult(intent, REQUEST_EXPORT_BACKUP)
     }
 
     private fun importBackup() {
-        MenuDialog(requireContext())
-            .add("ZIP") { launchImportActivity("application/zip", REQUEST_IMPORT_ZIP) }
-            .add("XML (Legacy)") { launchImportActivity("text/xml", REQUEST_IMPORT_XML) }
-            .show()
-    }
-
-    private fun launchImportActivity(type: String, requestCode: Int) {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-        intent.type = type
+        intent.type = "*/*"
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("application/zip", "text/xml"))
         intent.addCategory(Intent.CATEGORY_OPENABLE)
-        startActivityForResult(intent, requestCode)
+        startActivityForResult(intent, REQUEST_IMPORT_BACKUP)
     }
 
 
@@ -252,6 +244,6 @@ class Settings : Fragment() {
     }
 }
 
-private const val REQUEST_IMPORT_XML = 20
-private const val REQUEST_IMPORT_ZIP = 21
+private const val REQUEST_IMPORT_BACKUP = 20
+private const val REQUEST_EXPORT_BACKUP = 21
 private const val REQUEST_CHOOSE_FOLDER = 22

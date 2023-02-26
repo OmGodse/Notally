@@ -66,7 +66,7 @@ abstract class NotallyFragment : Fragment(), ItemListener {
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
-        if (requestCode == Constants.RequestCodeExportFile && resultCode == Activity.RESULT_OK) {
+        if (requestCode == REQUEST_EXPORT_FILE && resultCode == Activity.RESULT_OK) {
             intent?.data?.let { uri ->
                 model.writeCurrentFileToUri(uri)
             }
@@ -194,7 +194,7 @@ abstract class NotallyFragment : Fragment(), ItemListener {
     private fun delete(baseNote: BaseNote) {
         MaterialAlertDialogBuilder(requireContext())
             .setMessage(R.string.delete_note_forever)
-            .setPositiveButton(R.string.delete) { dialog, which ->
+            .setPositiveButton(R.string.delete) { _, _ ->
                 model.deleteBaseNoteForever(baseNote)
             }
             .setNegativeButton(R.string.cancel, null)
@@ -294,7 +294,7 @@ abstract class NotallyFragment : Fragment(), ItemListener {
         intent.putExtra(Intent.EXTRA_TITLE, file.nameWithoutExtension)
 
         model.currentFile = file
-        startActivityForResult(intent, Constants.RequestCodeExportFile)
+        startActivityForResult(intent, REQUEST_EXPORT_FILE)
     }
 
 
@@ -302,3 +302,5 @@ abstract class NotallyFragment : Fragment(), ItemListener {
 
     abstract fun getObservable(): LiveData<List<Item>>
 }
+
+private const val REQUEST_EXPORT_FILE = 10

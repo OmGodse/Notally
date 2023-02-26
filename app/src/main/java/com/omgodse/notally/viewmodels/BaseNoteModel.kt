@@ -78,6 +78,11 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
     val preferences = Preferences.getInstance(app)
 
+    private val backupExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        Operations.log(app, throwable)
+        Toast.makeText(app, R.string.invalid_backup, Toast.LENGTH_LONG).show()
+    }
+
     init {
         viewModelScope.launch {
             val previousNotes = Migrations.getPreviousNotes(app)
@@ -165,16 +170,20 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         }
     }
 
+    fun importBackup(uri: Uri) {
+        when (app.contentResolver.getType(uri)) {
+            "text/xml" -> importXmlBackup(uri)
+            "application/zip" -> importZipBackup(uri)
+        }
+    }
+
+
     /**
      * Lots of things can go wrong, instead of trying to account for all of them,
      * display a generic message and allow the user to send a report
      */
-    fun importZipBackup(uri: Uri) {
-        val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-            Operations.log(app, throwable)
-            Toast.makeText(app, R.string.invalid_backup, Toast.LENGTH_LONG).show()
-        }
-        viewModelScope.launch(exceptionHandler) {
+    private fun importZipBackup(uri: Uri) {
+        viewModelScope.launch(backupExceptionHandler) {
             val stream = app.contentResolver.openInputStream(uri)
             requireNotNull(stream) { "inputStream opened by contentResolver is null" }
 
@@ -257,8 +266,8 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     }
 
 
-    fun importXmlBackup(uri: Uri) {
-        viewModelScope.launch {
+    private fun importXmlBackup(uri: Uri) {
+        viewModelScope.launch(backupExceptionHandler) {
             val stream = app.contentResolver.openInputStream(uri)
             if (stream != null) {
                 withContext(Dispatchers.IO) {
