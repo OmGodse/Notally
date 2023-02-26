@@ -5,9 +5,9 @@ import android.view.MotionEvent
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.omgodse.notally.TextSizeEngine
 import com.omgodse.notally.databinding.RecyclerListItemBinding
 import com.omgodse.notally.miscellaneous.setOnNextAction
+import com.omgodse.notally.preferences.TextSize
 import com.omgodse.notally.recyclerview.ListItemListener
 import com.omgodse.notally.room.ListItem
 
@@ -19,7 +19,7 @@ class MakeListVH(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     init {
-        val body = TextSizeEngine.getEditBodySize(textSize)
+        val body = TextSize.getEditBodySize(textSize)
         binding.EditText.setTextSize(TypedValue.COMPLEX_UNIT_SP, body)
 
         binding.EditText.setOnNextAction {

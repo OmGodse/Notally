@@ -14,11 +14,11 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.R
-import com.omgodse.notally.TextSizeEngine
 import com.omgodse.notally.databinding.ActivityNotallyBinding
 import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.miscellaneous.add
+import com.omgodse.notally.preferences.TextSize
 import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Folder
 import com.omgodse.notally.room.Type
@@ -196,9 +196,9 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
             }
         }
 
-        val title = TextSizeEngine.getEditTitleSize(model.textSize)
-        val date = TextSizeEngine.getDisplayBodySize(model.textSize)
-        val body = TextSizeEngine.getEditBodySize(model.textSize)
+        val title = TextSize.getEditTitleSize(model.textSize)
+        val date = TextSize.getDisplayBodySize(model.textSize)
+        val body = TextSize.getEditBodySize(model.textSize)
 
         binding.EnterTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, title)
         binding.DateCreated.setTextSize(TypedValue.COMPLEX_UNIT_SP, date)

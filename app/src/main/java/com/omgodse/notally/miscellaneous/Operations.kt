@@ -18,9 +18,9 @@ import com.google.android.material.shape.RoundedCornerTreatment
 import com.google.android.material.shape.ShapeAppearanceModel
 import com.omgodse.notally.BuildConfig
 import com.omgodse.notally.R
-import com.omgodse.notally.TextSizeEngine
 import com.omgodse.notally.databinding.DialogInputBinding
 import com.omgodse.notally.databinding.LabelBinding
+import com.omgodse.notally.preferences.TextSize
 import com.omgodse.notally.room.Color
 import com.omgodse.notally.room.Label
 import com.omgodse.notally.room.ListItem
@@ -111,7 +111,7 @@ object Operations {
             group.removeAllViews()
 
             val inflater = LayoutInflater.from(group.context)
-            val labelSize = TextSizeEngine.getDisplayBodySize(textSize)
+            val labelSize = TextSize.getDisplayBodySize(textSize)
 
             for (label in labels) {
                 val view = LabelBinding.inflate(inflater, group, true).root

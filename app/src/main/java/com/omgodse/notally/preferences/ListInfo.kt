@@ -93,4 +93,41 @@ object TextSize : ListInfo {
         val ids = arrayOf(R.string.small, R.string.medium, R.string.large)
         return convertToValues(ids, context)
     }
+
+
+    fun getEditBodySize(textSize: String): Float {
+        return when (textSize) {
+            small -> 14f
+            medium -> 16f
+            large -> 18f
+            else -> throw IllegalArgumentException("Invalid : $textSize")
+        }
+    }
+
+    fun getEditTitleSize(textSize: String): Float {
+        return when (textSize) {
+            small -> 18f
+            medium -> 20f
+            large -> 22f
+            else -> throw IllegalArgumentException("Invalid : $textSize")
+        }
+    }
+
+    fun getDisplayBodySize(textSize: String): Float {
+        return when (textSize) {
+            small -> 12f
+            medium -> 14f
+            large -> 16f
+            else -> throw IllegalArgumentException("Invalid : $textSize")
+        }
+    }
+
+    fun getDisplayTitleSize(textSize: String): Float {
+        return when (textSize) {
+            small -> 14f
+            medium -> 16f
+            large -> 18f
+            else -> throw IllegalArgumentException("Invalid : $textSize")
+        }
+    }
 }

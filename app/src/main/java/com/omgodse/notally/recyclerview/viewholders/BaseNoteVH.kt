@@ -7,11 +7,11 @@ import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.omgodse.notally.R
-import com.omgodse.notally.TextSizeEngine
 import com.omgodse.notally.databinding.RecyclerBaseNoteBinding
 import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.miscellaneous.applySpans
 import com.omgodse.notally.preferences.DateFormat
+import com.omgodse.notally.preferences.TextSize
 import com.omgodse.notally.recyclerview.ItemListener
 import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Color
@@ -32,8 +32,8 @@ class BaseNoteVH(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     init {
-        val title = TextSizeEngine.getDisplayTitleSize(textSize)
-        val body = TextSizeEngine.getDisplayBodySize(textSize)
+        val title = TextSize.getDisplayTitleSize(textSize)
+        val body = TextSize.getDisplayBodySize(textSize)
 
         binding.Title.setTextSize(TypedValue.COMPLEX_UNIT_SP, title)
         binding.Date.setTextSize(TypedValue.COMPLEX_UNIT_SP, body)
