@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Notally</string>
+    
     
     <!-- Fragment Titles -->
     <string name="notes">笔记</string>
@@ -117,5 +117,5 @@
     <string name="rate">给应用打分</string>
     <string name="send_feedback">发送反馈</string>
    
-    <string name="github" translatable="false">GitHub</string>
+    
 </resources>
