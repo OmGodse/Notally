@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name" translatable="false">Notally</string>
+    
     <!-- Fragment Titles -->
     <string name="notes">笔记</string>
     <string name="labels">标签</string>
@@ -70,6 +71,7 @@
     <string name="invalid_backup">无效的备份</string>
     <string name="imported_backup">已导入备份</string>
     <string name="something_went_wrong">出错了。请重试。</string>
+    <string name="install_an_email">安装电子邮件应用来发送反馈</string>
     <string name="install_a_browser">安装浏览器打开此链接</string>
 
     <!-- Settings Page -->
@@ -86,17 +88,34 @@
 
     <string name="date_format">日期格式</string>
     <string name="none">无</string>
-
+    
+    <string name="text_size">文本大小</string>
+    <string name="small">小</string>
+    <string name="medium">中</string>
+    <string name="large">大</string>
+    		
     <string name="content_density">内容密度</string>
     <string name="max_items_to_display">列表最多显示多少条目</string>
     <string name="max_lines_to_display">笔记最多显示几行</string>
 
     <string name="backup">备份</string>
+    
+    <!-- Auto backup -->
     <string name="auto_backup">自动备份</string>
+    <string name="tap_to_set_up">轻按进行设置</string>
+    <string name="notes_will_be">笔记每天将备份到你手机的内部存储中。\n\n如果你启用了节电模式，此功能可能无法正常工作。</string>
+    <string name="choose_folder">选择文件夹</string>
+    <string name="disable_auto_backup">禁用自动备份</string>
+    <string name="choose_another_folder">选择另一个文件夹</string>
+    <string name="cant_find_folder">找不到该文件夹。可能被移动或删除了。</string>
+    
     <string name="export_backup">导出备份</string>
     <string name="import_backup">导入备份</string>
 
     <string name="about">关于</string>
     <string name="libraries">库</string>
     <string name="rate">给应用打分</string>
+    <string name="send_feedback">发送反馈</string>
+   
+    <string name="github" translatable="false">GitHub</string>
 </resources>
