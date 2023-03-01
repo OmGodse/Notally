@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    
     <!-- Fragment Titles -->
     <string name="notes">Poznámky</string>
     <string name="labels">Štítky</string>
@@ -9,6 +10,7 @@
 
     <!-- Menu Options -->
     <string name="share">Sdílet</string>
+    <string name="filter">Filtrovat</string>
     <string name="search">Hledat</string>
     <string name="delete">Smazat</string>
     <string name="restore">Obnovit</string>
@@ -66,7 +68,11 @@
     <string name="empty_note">Prázdná poznámka</string>
     <string name="empty_list">Prázdný seznam</string>
     <string name="cant_open_link">Odkaz nelze otevřit</string>
+    <string name="invalid_backup">Neplatný soubor zálohy</string>
+    <string name="imported_backup">Záloha importována</string>
     <string name="something_went_wrong">Něco se pokazilo. Zkuste to znovu.</string>
+    <string name="install_an_email">Pro odeslání zpětné vazby nainstalujte e-mailového klienta</string>
+    <string name="install_a_browser">Pro otevření odkazu nainstalujte webový prohlížeč</string>
 
     <!-- Settings Page -->
     <string name="appearance">Vzhled</string>
@@ -82,16 +88,32 @@
 
     <string name="date_format">Formát data</string>
     <string name="none">Žádné</string>
+    
+    <string name="text_size">Velikost písma</string>
+    <string name="small">Malé</string>
+    <string name="medium">Střední</string>
+    <string name="large">Velké</string>
 
     <string name="content_density">Kompaktnost obsahu</string>
     <string name="max_items_to_display">Max. počet položek v seznamu</string>
     <string name="max_lines_to_display">Max. počet položek v poznámce</string>
 
     <string name="backup">Zálohování</string>
+    
+     <!-- Auto backup -->
+    <string name="auto_backup">Automatická záloha</string>
+    <string name="tap_to_set_up">Nastavit klepnutím sem</string>
+    <string name="notes_will_be">Poznámky budou každý den zálohovány do interního uložiště telefonu.\n\nPokud máte zapnutý úsporný režim, nemusí to fungovat.</string>
+    <string name="choose_folder">Vybrat složku</string>
+    <string name="disable_auto_backup">Zakázat automatickou zálohu</string>
+    <string name="choose_another_folder">Vybrat jinou složku</string>
+    <string name="cant_find_folder">Složka nebyla nalezena. Možná byla přesunuta nebo smazána.</string>
+    
     <string name="export_backup">Exportovat zálohu</string>
     <string name="import_backup">Importovat zálohu</string>
 
     <string name="about">O aplikaci</string>
     <string name="libraries">Knihovny</string>
     <string name="rate">Ohodnotit aplikaci</string>
+    <string name="send_feedback">Odeslat zpětnou vazbu</string>
 </resources>
