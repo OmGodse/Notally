@@ -9,12 +9,14 @@
 
     <!-- Menu Options -->
     <string name="share">Del</string>
+    <string name="filter">Filtrér</string>
     <string name="search">Søk</string>
     <string name="delete">Slett</string>
     <string name="restore">Gjenopprett</string>
-    <string name="archive">Arkiver</string>
-    <string name="unarchive">Dearkiver</string>
+    <string name="archive">Arkivér</string>
+    <string name="unarchive">Fjern fra arkivet</string>
     <string name="delete_all">Slett alle</string>
+    <string name="change_color">Endre farge</string>
     <string name="delete_forever">Slett for alltid</string>
 
     <!-- Pinning -->
@@ -24,7 +26,7 @@
     <string name="others">Annet</string>
 
     <!-- Chooser dialog hints -->
-    <string name="view_note">Se notat…</string>
+    <string name="view_note">Se notat …</string>
 
     <!-- Dialogs -->
     <string name="save">Lagre</string>
@@ -36,13 +38,13 @@
     <string name="add_label">Legg til etikett</string>
     <string name="export">Eksporter</string>
     <string name="view_file">Se fil</string>
-    <string name="save_to_device">Lagre til enhet</string>
+    <string name="save_to_device">Lagre til enheten</string>
     <string name="edit_label">Rediger etikett</string>
-    <string name="label_exists">Etiketten finnes fra før</string>
-    <string name="delete_label">Slette etiketten?</string>
-    <string name="create_new">Ingen etiketter. Opprette en?</string>
-    <string name="delete_all_notes">Slett alle notater?</string>
-    <string name="delete_note_forever">Slett notatet for alltid?</string>
+    <string name="label_exists">Etiketten finnes allerede</string>
+    <string name="delete_label">Vil du slette etiketten?</string>
+    <string name="create_new">Ingen etiketter. Vil du opprette en?</string>
+    <string name="delete_all_notes">Vil du slette alle notatene?</string>
+    <string name="delete_note_forever">Vil du slette notatet for alltid?</string>
     <string name="your_notes_associated">Notatene assosiert med etikketten vil ikke bli slettet.</string>
 
     <!-- Lists and Notes -->
@@ -65,32 +67,52 @@
     <string name="empty_note">Tomt notat</string>
     <string name="empty_list">Tom liste</string>
     <string name="cant_open_link">Kan ikke åpne lenken</string>
+    <string name="invalid_backup">Ugyldig sikkerhetskopi</string>
+    <string name="imported_backup">Importert sikkerhetskopi</string>
     <string name="something_went_wrong">Noe gikk galt. Prøv igjen.</string>
+    <string name="install_an_email">Installer en e-postapp for å sende en tilbakemelding</string>
+    <string name="install_a_browser">Installer en nettleser for å åpne lenken</string>
 
     <!-- Settings Page -->
     <string name="appearance">Utseende</string>
 
-    <string name="view">Format</string>
+    <string name="view">Visning</string>
     <string name="list">Liste</string>
     <string name="grid">Rutenett</string>
 
     <string name="theme">Tema</string>
     <string name="dark">Mørkt</string>
     <string name="light">Lyst</string>
-    <string name="follow_system">Følg systeminnstillinger</string>
+    <string name="follow_system">Følg systemet</string>
 
-    <string name="date_format">Tidsformat</string>
+    <string name="date_format">Datoformat</string>
     <string name="none">Ikke vis</string>
+
+    <string name="text_size">Skriftstørrelse</string>
+    <string name="small">Liten</string>
+    <string name="medium">Middels</string>
+    <string name="large">Stor</string>
 
     <string name="content_density">Innholdstetthet</string>
     <string name="max_items_to_display">Maks antall elementer fremvist av liste</string>
     <string name="max_lines_to_display">Maks antall linjer vist fra notatene</string>
 
-    <string name="backup">Sikkerhetskopi</string>
+    <string name="backup">Sikkerhetskopiering</string>
+
+    <!-- Auto backup -->
+    <string name="auto_backup">Sikkerhetskopier automatisk</string>
+    <string name="tap_to_set_up">Trykk for å konfigurere</string>
+    <string name="notes_will_be">Notatene vil bli sikkerhetskopiert til den interne lagringen hver dag.\n\nDette fungerer muligens ikke hvis strømsparingsmodus er aktivert</string>
+    <string name="choose_folder">Velg mappe</string>
+    <string name="disable_auto_backup">Slå av automatisk sikkerhetskopiering</string>
+    <string name="choose_another_folder">Velg en annen mappe</string>
+    <string name="cant_find_folder">Finner ikke mappen. Den kan ha blitt flyttet eller slettet</string>
+
     <string name="export_backup">Eksporter sikkerhetskopi</string>
     <string name="import_backup">Importer sikkerhetskopi</string>
 
     <string name="about">Om</string>
     <string name="libraries">Tredjepartsbiblioteker</string>
-    <string name="rate">Bedøm denne appen</string>
+    <string name="rate">Vurder denne appen</string>
+    <string name="send_feedback">Send tilbakemelding</string>
 </resources>
