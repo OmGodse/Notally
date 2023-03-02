@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:clipChildren="false">
 
     <ImageView
         android:id="@+id/ImageView"
@@ -57,5 +58,40 @@
         android:paddingEnd="4dp"
         android:scrollbarStyle="outsideOverlay"
         android:scrollbars="vertical" />
+
+    <RelativeLayout
+        android:id="@+id/EditContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:elevation="8dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/TakeNote"
+            style="@style/TextView.Clickable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/MakeList"
+            android:padding="16dp"
+            android:text="@string/take_note"
+            android:textAppearance="?attr/textAppearanceBody2" />
+
+        <ImageButton
+            android:id="@+id/MakeList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/TakeNote"
+            android:layout_alignBottom="@id/TakeNote"
+            android:layout_alignParentEnd="true"
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="@string/make_list"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:src="@drawable/checkbox"
+            android:tooltipText="@string/make_list"
+            app:tint="?attr/colorControlNormal" />
+
+    </RelativeLayout>
 
 </RelativeLayout>

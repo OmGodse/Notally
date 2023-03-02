@@ -158,7 +158,7 @@ abstract class NotallyFragment : Fragment(), ItemListener {
         dialog.show()
     }
 
-    private fun goToActivity(activity: Class<*>, baseNote: BaseNote) {
+    internal fun goToActivity(activity: Class<*>, baseNote: BaseNote? = null) {
         val intent = Intent(requireContext(), activity)
         intent.putExtra(Constants.SelectedBaseNote, baseNote)
         startActivity(intent)
@@ -177,8 +177,8 @@ abstract class NotallyFragment : Fragment(), ItemListener {
         lifecycleScope.launch {
             val labels = model.getAllLabels()
             val onUpdated = { newLabels: HashSet<String> -> model.updateBaseNoteLabels(newLabels, baseNote.id) }
-            val addLabel = { Operations.displayAddLabelDialog(requireContext(), model::insertLabel) { label(baseNote) } }
-            Operations.labelNote(requireContext(), labels, baseNote.labels, onUpdated, addLabel)
+            val add = { Operations.displayAddLabelDialog(requireContext(), model::insertLabel) { label(baseNote) } }
+            Operations.labelNote(requireContext(), labels, baseNote.labels, onUpdated, add)
         }
     }
 
