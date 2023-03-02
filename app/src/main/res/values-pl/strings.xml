@@ -26,7 +26,7 @@
     <string name="others">Pozostałe</string>
 
     <!-- Chooser dialog hints -->
-    <string name="view_note">Podgląd…</string>
+    <string name="view_note">Zobacz notatkę…</string>
 
     <!-- Dialogs -->
     <string name="save">Zapisz</string>
@@ -70,6 +70,8 @@
     <string name="invalid_backup">Niewłaściwy plik kopii zapasowej</string>
     <string name="imported_backup">Kopia zapasowa została przywrócona</string>
     <string name="something_went_wrong">Coś poszło nie tak. Spróbuj ponownie.</string>
+    <string name="install_an_email">Zainstaluj aplikację do obsługi e-maili, aby móc wysłać opinię</string>
+    <string name="install_a_browser">Zainstaluj przeglądarkę, aby móc otworzyć ten odnośnik</string>
 
     <!-- Settings Page -->
     <string name="appearance">Wygląd</string>
@@ -85,17 +87,32 @@
 
     <string name="date_format">Format daty</string>
     <string name="none">Brak</string>
+    
+    <string name="text_size">Rozmiar tekstu</string>
+    <string name="small">Mały</string>
+    <string name="medium">Średni</string>
+    <string name="large">Duży</string>
 
     <string name="content_density">Zagęszczenie treści</string>
     <string name="max_items_to_display">Maksymalna ilość elementów w liście do pokazania</string>
     <string name="max_lines_to_display">Maksymalna ilość linii w notatce do pokazania</string>
 
     <string name="backup">Kopia</string>
+    
+    <!-- Auto backup -->
     <string name="auto_backup">Automatyczna kopia zapasowa</string>
+    <string name="tap_to_set_up">Dotknij, aby ustawić/string>
+    <string name="notes_will_be">Notatki będą codziennie zapisywane w wewnętrznej pamięci telefonu.\n\nTo może nie działać, jeśli masz włączony tryb oszczędzania energii.</string>
+    <string name="choose_folder">Wybierz katalog</string>
+    <string name="disable_auto_backup">Wyłącz automatyczną kopię zapasową</string>
+    <string name="choose_another_folder">Wybierz inny katalog</string>
+    <string name="cant_find_folder">Nie mogę odnaleźć katalogu. Być może został przeniesiony lub usunięty</string>
+
     <string name="export_backup">Wykonaj kopię zapasową</string>
     <string name="import_backup">Przywróć kopię zapasową</string>
 
     <string name="about">O aplikacji</string>
     <string name="libraries">Biblioteki</string>
     <string name="rate">Oceń aplikację</string>
+    <string name="send_feedback">Wyślij opinię</string>
 </resources>
