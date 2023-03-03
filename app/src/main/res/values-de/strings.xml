@@ -67,7 +67,11 @@
     <string name="empty_note">Leere Notiz</string>
     <string name="empty_list">Leere Liste</string>
     <string name="cant_open_link">Link konnte nicht geöffnet werden</string>
+    <string name="invalid_backup">Ungültige Sicherung</string>
+    <string name="imported_backup">Importierte Sicherung</string>
     <string name="something_went_wrong">Etwas ist schief gelaufen. Bitte erneut versuchen.</string>
+    <string name="install_an_email">Installiere eine E-Mail-App zum Senden von Feedback</string>
+    <string name="install_a_browser">Installiere einen Browser, um diesen Link zu öffnen</string>
 
     <!-- Settings Page -->
     <string name="appearance">Erscheinungsbild</string>
@@ -83,16 +87,32 @@
 
     <string name="date_format">Datumsformat</string>
     <string name="none">Keines</string>
+    
+    <string name="text_size">Textgröße</string>
+    <string name="small">Klein</string>
+    <string name="medium">Mittel</string>
+    <string name="large">Groß</string>
 
     <string name="content_density">Notizvorschau</string>
     <string name="max_items_to_display">Maximal angezeigte Listeneinträge</string>
     <string name="max_lines_to_display">Maximal angezeigte Zeilen</string>
 
     <string name="backup">Sichern und Wiederherstellen</string>
+    
+    <!-- Auto backup -->
+    <string name="auto_backup">Automatische Sicherung</string>
+    <string name="tap_to_set_up">Zum Einrichten antippen</string>
+    <string name="notes_will_be">Notizen werden täglich auf dem internen Speicher deines Telefons gesichert.\n\nDies funktioniert möglicherweise nicht, wenn du den Energiesparmodus aktiviert hast.</string>
+    <string name="choose_folder">Ordner wählen</string>
+    <string name="disable_auto_backup">Automatische Sicherung deaktivieren</string>
+    <string name="choose_another_folder">Anderen Ordner wählen</string>
+    <string name="cant_find_folder">Kann den Ordner nicht finden. Er kann verschoben oder gelöscht worden sein</string>
+    
     <string name="export_backup">Notizen sichern</string>
     <string name="import_backup">Notizen wiederherstellen</string>
 
     <string name="about">Über</string>
     <string name="libraries">Bibliotheken</string>
     <string name="rate">App bewerten</string>
+    <string name="send_feedback">Feedback senden</string>
 </resources>
