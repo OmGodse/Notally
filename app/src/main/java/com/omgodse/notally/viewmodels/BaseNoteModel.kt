@@ -354,7 +354,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
     fun moveBaseNoteToArchive(id: Long) = executeAsync { baseNoteDao.move(id, Folder.ARCHIVED) }
 
-    fun deleteBaseNoteForever(baseNote: BaseNote) = executeAsync { baseNoteDao.delete(baseNote) }
+    fun deleteBaseNoteForever(id: Long) = executeAsync { baseNoteDao.delete(id) }
 
     fun updateBaseNoteLabels(labels: HashSet<String>, id: Long) = executeAsync { baseNoteDao.updateLabels(id, labels) }
 

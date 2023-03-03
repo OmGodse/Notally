@@ -111,25 +111,25 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     }
 
     private fun delete() {
-        model.moveBaseNoteToDeleted()
+        model.delete()
         onBackPressed()
     }
 
     private fun restore() {
-        model.restoreBaseNote()
+        model.restore()
         onBackPressed()
     }
 
     private fun archive() {
-        model.moveBaseNoteToArchive()
+        model.archive()
         onBackPressed()
     }
 
     private fun deleteForever() {
         MaterialAlertDialogBuilder(this)
             .setMessage(R.string.delete_note_forever)
-            .setPositiveButton(R.string.delete) { dialog, which ->
-                model.deleteBaseNoteForever {
+            .setPositiveButton(R.string.delete) { _, _ ->
+                model.deleteForever {
                     super.onBackPressed()
                 }
             }

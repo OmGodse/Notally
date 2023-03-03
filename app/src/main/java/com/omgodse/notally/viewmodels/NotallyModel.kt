@@ -26,11 +26,10 @@ class NotallyModel(app: Application, private val type: Type) : AndroidViewModel(
 
     val textSize = Preferences.getInstance(app).textSize.value
 
-    var id = 0L
-
     var isNewNote = true
     var isFirstInstance = true
 
+    var id = 0L
     var folder = Folder.NOTES
     var color = Color.DEFAULT
 
@@ -67,27 +66,27 @@ class NotallyModel(app: Application, private val type: Type) : AndroidViewModel(
         }
     }
 
-    fun deleteBaseNoteForever(onComplete: () -> Unit) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) { baseNoteDao.delete(getBaseNote()) }
-            onComplete()
-        }
-    }
-
     fun insertLabel(label: Label, onComplete: (success: Boolean) -> Unit) =
         executeAsyncWithCallback({ labelDao.insert(label) }, onComplete)
 
 
-    fun restoreBaseNote() {
+    fun restore() {
         folder = Folder.NOTES
     }
 
-    fun moveBaseNoteToArchive() {
+    fun archive() {
         folder = Folder.ARCHIVED
     }
 
-    fun moveBaseNoteToDeleted() {
+    fun delete() {
         folder = Folder.DELETED
+    }
+
+    fun deleteForever(onComplete: () -> Unit) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) { baseNoteDao.delete(id) }
+            onComplete()
+        }
     }
 
 
@@ -156,7 +155,8 @@ class NotallyModel(app: Application, private val type: Type) : AndroidViewModel(
     }
 
 
-    class Factory(private val app: Application, private val type: Type) : ViewModelProvider.AndroidViewModelFactory(app) {
+    class Factory(private val app: Application, private val type: Type) :
+        ViewModelProvider.AndroidViewModelFactory(app) {
 
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return NotallyModel(app, type) as T

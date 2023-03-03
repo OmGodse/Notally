@@ -144,11 +144,11 @@ abstract class NotallyFragment : Fragment(), ItemListener {
                 dialog.add(R.string.export) { export(baseNote) }
                 dialog.add(R.string.delete) { model.moveBaseNoteToDeleted(baseNote.id) }
                 dialog.add(R.string.archive) { model.moveBaseNoteToArchive(baseNote.id) }
-                dialog.add(R.string.change_color) { color(baseNote) }
+                dialog.add(R.string.change_color) { color(baseNote.id) }
             }
             Folder.DELETED -> {
                 dialog.add(R.string.restore) { model.restoreBaseNote(baseNote.id) }
-                dialog.add(R.string.delete_forever) { delete(baseNote) }
+                dialog.add(R.string.delete_forever) { delete(baseNote.id) }
             }
             Folder.ARCHIVED -> {
                 dialog.add(R.string.delete) { model.moveBaseNoteToDeleted(baseNote.id) }
@@ -191,17 +191,17 @@ abstract class NotallyFragment : Fragment(), ItemListener {
             .show()
     }
 
-    private fun delete(baseNote: BaseNote) {
+    private fun delete(id: Long) {
         MaterialAlertDialogBuilder(requireContext())
             .setMessage(R.string.delete_note_forever)
             .setPositiveButton(R.string.delete) { _, _ ->
-                model.deleteBaseNoteForever(baseNote)
+                model.deleteBaseNoteForever(id)
             }
             .setNegativeButton(R.string.cancel, null)
             .show()
     }
 
-    private fun color(baseNote: BaseNote) {
+    private fun color(id: Long) {
         val dialog = MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.change_color)
             .create()
@@ -210,7 +210,7 @@ abstract class NotallyFragment : Fragment(), ItemListener {
             override fun onClick(position: Int) {
                 dialog.dismiss()
                 val color = Color.values()[position]
-                model.colorBaseNote(baseNote.id, color)
+                model.colorBaseNote(id, color)
             }
 
             override fun onLongClick(position: Int) {}

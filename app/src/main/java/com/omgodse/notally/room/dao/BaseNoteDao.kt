@@ -15,9 +15,6 @@ interface BaseNoteDao {
     fun query(query: SupportSQLiteQuery): Int
 
 
-    @Delete
-    suspend fun delete(baseNote: BaseNote)
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(baseNote: BaseNote): Long
 
@@ -27,6 +24,9 @@ interface BaseNoteDao {
     @Update
     suspend fun update(baseNotes: List<BaseNote>)
 
+
+    @Query("DELETE FROM BaseNote WHERE id = :id")
+    suspend fun delete(id: Long)
 
     @Query("DELETE FROM BaseNote WHERE folder = :folder")
     suspend fun deleteFrom(folder: Folder)
