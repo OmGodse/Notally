@@ -5,7 +5,6 @@ import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
 import android.util.TypedValue
-import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
@@ -45,7 +44,6 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         initialiseBinding()
         setContentView(binding.root)
-        setupToolbar()
 
         if (model.isFirstInstance) {
             val selectedBaseNote = intent.getParcelableExtra<BaseNote>(Constants.SelectedBaseNote)
@@ -61,42 +59,9 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
             model.isFirstInstance = false
         }
 
+        setupToolbar()
         setupListeners()
         setStateFromModel()
-    }
-
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        if (menu != null) {
-            val pin = menu.add(R.string.pin, R.drawable.pin) { item -> pin(item) }
-            bindPinned(pin)
-
-            menu.add(R.string.share, R.drawable.share) { share() }
-            menu.add(R.string.labels, R.drawable.label) { label() }
-
-            when (model.folder) {
-                Folder.NOTES -> {
-                    menu.add(R.string.delete, R.drawable.delete) { delete() }
-                    menu.add(R.string.archive, R.drawable.archive) { archive() }
-                }
-                Folder.DELETED -> {
-                    menu.add(R.string.restore, R.drawable.restore) { restore() }
-                    menu.add(R.string.delete_forever, R.drawable.delete) { deleteForever() }
-                }
-                Folder.ARCHIVED -> {
-                    menu.add(R.string.delete, R.drawable.delete) { delete() }
-                    menu.add(R.string.unarchive, R.drawable.unarchive) { restore() }
-                }
-            }
-        }
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            onBackPressed()
-        }
-        return super.onOptionsItemSelected(item)
     }
 
 
@@ -179,9 +144,29 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
 
     private fun setupToolbar() {
-        setSupportActionBar(binding.Toolbar)
-        supportActionBar?.title = null
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        binding.Toolbar.setNavigationOnClickListener { onBackPressed() }
+
+        val menu = binding.Toolbar.menu
+        val pin = menu.add(R.string.pin, R.drawable.pin) { item -> pin(item) }
+        bindPinned(pin)
+
+        menu.add(R.string.share, R.drawable.share) { share() }
+        menu.add(R.string.labels, R.drawable.label) { label() }
+
+        when (model.folder) {
+            Folder.NOTES -> {
+                menu.add(R.string.delete, R.drawable.delete) { delete() }
+                menu.add(R.string.archive, R.drawable.archive) { archive() }
+            }
+            Folder.DELETED -> {
+                menu.add(R.string.restore, R.drawable.restore) { restore() }
+                menu.add(R.string.delete_forever, R.drawable.delete) { deleteForever() }
+            }
+            Folder.ARCHIVED -> {
+                menu.add(R.string.delete, R.drawable.delete) { delete() }
+                menu.add(R.string.unarchive, R.drawable.unarchive) { restore() }
+            }
+        }
     }
 
     private fun initialiseBinding() {

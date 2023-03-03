@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
     <!-- Fragment Titles -->
     <string name="notes">Poznámky</string>
     <string name="labels">Štítky</string>
@@ -88,7 +87,7 @@
 
     <string name="date_format">Formát data</string>
     <string name="none">Žádné</string>
-    
+
     <string name="text_size">Velikost písma</string>
     <string name="small">Malé</string>
     <string name="medium">Střední</string>
@@ -99,8 +98,8 @@
     <string name="max_lines_to_display">Max. počet položek v poznámce</string>
 
     <string name="backup">Zálohování</string>
-    
-     <!-- Auto backup -->
+
+    <!-- Auto backup -->
     <string name="auto_backup">Automatická záloha</string>
     <string name="tap_to_set_up">Nastavit klepnutím sem</string>
     <string name="notes_will_be">Poznámky budou každý den zálohovány do interního uložiště telefonu.\n\nPokud máte zapnutý úsporný režim, nemusí to fungovat.</string>
@@ -108,7 +107,7 @@
     <string name="disable_auto_backup">Zakázat automatickou zálohu</string>
     <string name="choose_another_folder">Vybrat jinou složku</string>
     <string name="cant_find_folder">Složka nebyla nalezena. Možná byla přesunuta nebo smazána.</string>
-    
+
     <string name="export_backup">Exportovat zálohu</string>
     <string name="import_backup">Importovat zálohu</string>
 

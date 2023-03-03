@@ -20,9 +20,8 @@ Add clickable links to notes with support for phone numbers, email addresses and
 
 • Dark mode
 • Completely free
-• Auto save and backup
 • Adjustable text size
-• No permissions required
+• Auto save and backup
 • APK size of 1.2 MB (1.6 MB uncompressed)
 
 <b>Privacy</b>

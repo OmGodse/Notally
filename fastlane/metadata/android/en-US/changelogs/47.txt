@@ -1,0 +1,5 @@
+Updated Czech, Polish, Chinese (Simplified) and German translations
+
+Removed the ACCESS NETWORK STATE permission which had been added automatically by the auto backup library. No user data was being collected.
+
+Instead of going through a dialog, notes can now be directly created from the home page.

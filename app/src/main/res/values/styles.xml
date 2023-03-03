@@ -32,8 +32,11 @@
     </style>
 
 
-    <style name="TextAppearance.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
+    <style name="TextAppearance.Headline6.Toolbar">
         <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="TextAppearance.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
         <item name="android:letterSpacing">0.02</item>
     </style>
 
@@ -48,6 +51,7 @@
 
     <style name="Toolbar" parent="Widget.MaterialComponents.Toolbar.Surface">
         <item name="android:elevation">4dp</item>
+        <item name="titleTextAppearance">@style/TextAppearance.Headline6.Toolbar</item>
     </style>
 
 

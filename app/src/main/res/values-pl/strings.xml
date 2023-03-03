@@ -87,7 +87,7 @@
 
     <string name="date_format">Format daty</string>
     <string name="none">Brak</string>
-    
+
     <string name="text_size">Rozmiar tekstu</string>
     <string name="small">Mały</string>
     <string name="medium">Średni</string>
@@ -98,10 +98,10 @@
     <string name="max_lines_to_display">Maksymalna ilość linii w notatce do pokazania</string>
 
     <string name="backup">Kopia</string>
-    
+
     <!-- Auto backup -->
     <string name="auto_backup">Automatyczna kopia zapasowa</string>
-    <string name="tap_to_set_up">Dotknij, aby ustawić/string>
+    <string name="tap_to_set_up">Dotknij, aby ustawić</string>
     <string name="notes_will_be">Notatki będą codziennie zapisywane w wewnętrznej pamięci telefonu.\n\nTo może nie działać, jeśli masz włączony tryb oszczędzania energii.</string>
     <string name="choose_folder">Wybierz katalog</string>
     <string name="disable_auto_backup">Wyłącz automatyczną kopię zapasową</string>
