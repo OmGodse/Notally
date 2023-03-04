@@ -7,10 +7,10 @@ import org.json.JSONObject
 object Converters {
 
     @TypeConverter
-    fun labelsToJSON(labels: HashSet<String>) = JSONArray(labels).toString()
+    fun labelsToJSON(labels: List<String>) = JSONArray(labels).toString()
 
     @TypeConverter
-    fun jsonToLabels(json: String) = JSONArray(json).iterable<String>().toHashSet()
+    fun jsonToLabels(json: String) = JSONArray(json).iterable<String>().toList()
 
 
     @TypeConverter

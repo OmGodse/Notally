@@ -96,14 +96,14 @@ object Operations {
 
 
     fun getBody(list: List<ListItem>) = buildString {
-        list.forEach { item ->
+        for (item in list) {
             val check = if (item.checked) "[✓]" else "[ ]"
             appendLine("$check ${item.body}")
         }
     }
 
 
-    fun bindLabels(group: ChipGroup, labels: HashSet<String>, textSize: String) {
+    fun bindLabels(group: ChipGroup, labels: List<String>, textSize: String) {
         if (labels.isEmpty()) {
             group.visibility = View.GONE
         } else {
@@ -140,8 +140,8 @@ object Operations {
     fun labelNote(
         context: Context,
         labels: Array<String>,
-        oldLabels: HashSet<String>,
-        onUpdated: (newLabels: HashSet<String>) -> Unit,
+        oldLabels: List<String>,
+        onUpdated: (newLabels: List<String>) -> Unit,
         addLabel: () -> Unit
     ) {
         val checkedPositions = labels.map { label -> oldLabels.contains(label) }.toBooleanArray()
@@ -155,7 +155,7 @@ object Operations {
                 checkedPositions[which] = isChecked
             }
             builder.setPositiveButton(R.string.save) { dialog, which ->
-                val newLabels = HashSet<String>()
+                val newLabels = ArrayList<String>()
                 checkedPositions.forEachIndexed { index, checked ->
                     if (checked) {
                         val label = labels[index]

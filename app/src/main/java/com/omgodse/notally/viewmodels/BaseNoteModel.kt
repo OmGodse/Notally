@@ -356,7 +356,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
     fun deleteBaseNoteForever(id: Long) = executeAsync { baseNoteDao.delete(id) }
 
-    fun updateBaseNoteLabels(labels: HashSet<String>, id: Long) = executeAsync { baseNoteDao.updateLabels(id, labels) }
+    fun updateBaseNoteLabels(labels: List<String>, id: Long) = executeAsync { baseNoteDao.updateLabels(id, labels) }
 
 
     suspend fun getAllLabels() = withContext(Dispatchers.IO) { labelDao.getArrayOfAll() }

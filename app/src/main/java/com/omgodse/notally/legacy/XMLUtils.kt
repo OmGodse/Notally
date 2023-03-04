@@ -61,7 +61,7 @@ object XMLUtils {
         var pinned = false
         val items = ArrayList<ListItem>()
 
-        val labels = HashSet<String>()
+        val labels = ArrayList<String>()
         val spans = ArrayList<SpanRepresentation>()
 
         while (parser.next() != XmlPullParser.END_DOCUMENT) {

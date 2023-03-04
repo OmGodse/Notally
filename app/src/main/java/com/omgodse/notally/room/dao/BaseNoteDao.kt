@@ -7,6 +7,7 @@ import androidx.sqlite.db.SupportSQLiteQuery
 import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Color
 import com.omgodse.notally.room.Folder
+import com.omgodse.notally.room.LabelsInBaseNote
 
 @Dao
 interface BaseNoteDao {
@@ -21,8 +22,8 @@ interface BaseNoteDao {
     @Insert
     suspend fun insert(baseNotes: List<BaseNote>)
 
-    @Update
-    suspend fun update(baseNotes: List<BaseNote>)
+    @Update(entity = BaseNote::class)
+    suspend fun update(labelsInBaseNotes: List<LabelsInBaseNote>)
 
 
     @Query("DELETE FROM BaseNote WHERE id = :id")
@@ -46,7 +47,7 @@ interface BaseNoteDao {
     suspend fun updatePinned(id: Long, pinned: Boolean)
 
     @Query("UPDATE BaseNote SET labels = :labels WHERE id = :id")
-    suspend fun updateLabels(id: Long, labels: HashSet<String>)
+    suspend fun updateLabels(id: Long, labels: List<String>)
 
 
     /**
