@@ -17,6 +17,7 @@ Notally was created because I wanted to make something that was beautiful and at
 
 ### Translations
 All translations are crowd sourced. To contribute or point out any errors, email me or open a pull request.
+Follow these [guidelines](https://m2.material.io/design/communication/writing.html).
 
 <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width="250"/><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width="250"/><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width="250"/>
 

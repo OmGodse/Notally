@@ -12,9 +12,22 @@
         android:layout_centerInParent="true"
         app:tint="?attr/colorPrimary" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/RecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/ChipGroup"
+        android:clipToPadding="false"
+        android:paddingStart="4dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="4dp"
+        android:scrollbarStyle="outsideOverlay"
+        android:scrollbars="vertical" />
+
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/ChipGroup"
         android:layout_width="match_parent"
+        android:background="?attr/colorSurface"
         android:layout_height="wrap_content"
         android:paddingStart="16dp"
         android:paddingTop="12dp"
@@ -46,18 +59,6 @@
             android:text="@string/archived" />
 
     </com.google.android.material.chip.ChipGroup>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/RecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/ChipGroup"
-        android:clipToPadding="false"
-        android:paddingStart="4dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="4dp"
-        android:scrollbarStyle="outsideOverlay"
-        android:scrollbars="vertical" />
 
     <RelativeLayout
         android:id="@+id/EditContainer"

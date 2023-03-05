@@ -17,6 +17,7 @@ import com.omgodse.notally.R
 import com.omgodse.notally.legacy.Migrations
 import com.omgodse.notally.legacy.XMLUtils
 import com.omgodse.notally.miscellaneous.Export
+import com.omgodse.notally.miscellaneous.IO
 import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.miscellaneous.applySpans
 import com.omgodse.notally.preferences.AutoBackup
@@ -34,7 +35,6 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
-import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.zip.ZipFile
@@ -190,14 +190,14 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
             withContext(Dispatchers.IO) {
                 val backupDir = getBackupPath()
                 val destination = File(backupDir, "TEMP.zip")
-                copyStreamToFile(stream, destination)
+                IO.copyStreamToFile(stream, destination)
 
                 val zipFile = ZipFile(destination)
                 val databaseEntry = zipFile.getEntry(NotallyDatabase.DatabaseName)
 
                 val databaseFile = File(backupDir, NotallyDatabase.DatabaseName)
                 val inputStream = zipFile.getInputStream(databaseEntry)
-                copyStreamToFile(inputStream, databaseFile)
+                IO.copyStreamToFile(inputStream, databaseFile)
 
                 val database = SQLiteDatabase.openDatabase(databaseFile.path, null, SQLiteDatabase.OPEN_READONLY)
 
@@ -258,25 +258,15 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     }
 
 
-    private fun copyStreamToFile(inputStream: InputStream, destination: File) {
-        val outputStream = FileOutputStream(destination)
-        inputStream.copyTo(outputStream)
-        inputStream.close()
-        outputStream.close()
-    }
-
-
     private fun importXmlBackup(uri: Uri) {
         viewModelScope.launch(backupExceptionHandler) {
-            val stream = app.contentResolver.openInputStream(uri)
-            if (stream != null) {
-                withContext(Dispatchers.IO) {
-                    val backup = XMLUtils.readBackupFromStream(stream)
-                    commonDao.importBackup(backup.first, backup.second)
-                    stream.close()
-                }
-                Toast.makeText(app, R.string.imported_backup, Toast.LENGTH_LONG).show()
+            withContext(Dispatchers.IO) {
+                val stream = app.contentResolver.openInputStream(uri)
+                requireNotNull(stream) { "inputStream opened by contentResolver is null" }
+                val backup = XMLUtils.readBackupFromStream(stream)
+                commonDao.importBackup(backup.first, backup.second)
             }
+            Toast.makeText(app, R.string.imported_backup, Toast.LENGTH_LONG).show()
         }
     }
 
@@ -373,7 +363,12 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     private fun getEmptyFolder(name: String): File {
         val folder = File(app.cacheDir, name)
         if (folder.exists()) {
-            folder.listFiles()?.forEach { file -> file.delete() }
+            val files = folder.listFiles()
+            if (files != null) {
+                for (file in files) {
+                    file.delete()
+                }
+            }
         } else folder.mkdir()
         return folder
     }

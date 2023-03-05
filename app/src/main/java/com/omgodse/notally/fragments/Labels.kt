@@ -2,6 +2,7 @@ package com.omgodse.notally.fragments
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -109,15 +110,15 @@ class Labels : Fragment(), ItemListener {
             .setView(dialogBinding.root)
             .setTitle(R.string.edit_label)
             .setNegativeButton(R.string.cancel, null)
-            .setPositiveButton(R.string.save) { dialog, which ->
+            .setPositiveButton(R.string.save) { dialog, _ ->
                 val value = dialogBinding.EditText.text.toString().trim()
                 if (value.isNotEmpty()) {
                     model.updateLabel(oldValue, value) { success ->
                         if (success) {
                             dialog.dismiss()
-                        } else dialogBinding.root.error = getString(R.string.label_exists)
+                        } else Toast.makeText(requireContext(), R.string.label_exists, Toast.LENGTH_LONG).show()
                     }
-                } else dialog.dismiss()
+                }
             }
             .show()
 
