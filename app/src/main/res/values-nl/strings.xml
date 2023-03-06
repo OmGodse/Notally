@@ -12,39 +12,39 @@
     <string name="search">Zoeken</string>
     <string name="delete">Verwijderen</string>
     <string name="restore">Herstellen</string>
-    <string name="archive">Archief</string>
-    <string name="unarchive">Unarchief</string>
-    <string name="delete_all">Verwijder alles</string>
-    <string name="change_color">Verander kleur</string>
-    <string name="delete_forever">Voor altijd verwijderen</string>
+    <string name="archive">Archiveren</string>
+    <string name="unarchive">Acutaliseren</string>
+    <string name="delete_all">Alles verwijderen</string>
+    <string name="change_color">Wijzig kleur</string>
+    <string name="delete_forever">Definitief verwijderen</string>
 
     <!-- Pinning -->
     <string name="pin">Vastmaken</string>
     <string name="unpin">Losmaken</string>
     <string name="pinned">Vastgemaakt</string>
-    <string name="others">Anderen</string>
+    <string name="others">Anders</string>
 
     <!-- Chooser dialog hints -->
     <string name="view_note">Notitie bekijken…</string>
 
     <!-- Dialogs -->
-    <string name="save">Opgeslagen</string>
-    <string name="edit">Bewerk</string>
+    <string name="save">Opslaan</string>
+    <string name="edit">Bewerken</string>
     <string name="cancel">Annuleren</string>
     <string name="open_link">Open link</string>
     <string name="make_list">Maak een lijst</string>
     <string name="take_note">Maak een Notitie</string>
-    <string name="add_label">Label toevoegen </string>
-    <string name="export">Exporter</string>
+    <string name="add_label">Label toevoegen</string>
+    <string name="export">Exporteren</string>
     <string name="view_file">Bekijk bestand</string>
     <string name="save_to_device">Opslaan op apparaat</string>
     <string name="edit_label">Bewerk label</string>
     <string name="label_exists">Label bestaat</string>
     <string name="delete_label">Label verwijderen?</string>
-    <string name="create_new">Nog geen labels. Creëer er een?</string>
+    <string name="create_new">Er zijn nog geen labels. Nieuw label toevoegen?</string>
     <string name="delete_all_notes">Alle notities verwijderen?</string>
     <string name="delete_note_forever">Notitie definitief verwijderen?</string>
-    <string name="your_notes_associated">Uw notities die aan dit label zijn gekoppeld, worden niet verwijderd</string>
+    <string name="your_notes_associated">Notities die aan dit label zijn gekoppeld, worden niet verwijderd</string>
 
     <!-- Lists and Notes -->
     <string name="note">Notitie</string>
@@ -52,12 +52,12 @@
     <string name="date">Datum</string>
     <string name="title">Titel</string>
     <string name="add_item">Voeg item toe</string>
-    <string name="drag_handle">Sleephandvat</string>
+    <string name="drag_handle">Handvat</string>
     <string name="bold">Vetgedrukt</string>
     <string name="link">Link</string>
-    <string name="italic">Cursieve</string>
-    <string name="strikethrough">Doorgestreepte</string>
-    <string name="clear_formatting">Heldere opmaak</string>
+    <string name="italic">Cursief</string>
+    <string name="strikethrough">Doorgestreept</string>
+    <string name="clear_formatting">Opmaak verwijderen</string>
     <string name="monospace">Monospace</string>
 
     <!-- Miscellaneous -->
@@ -69,29 +69,29 @@
     <string name="something_went_wrong">Er is iets fout gegaan. Probeer het opnieuw.</string>
 
     <!-- Settings Page -->
-    <string name="appearance">Verschijning</string>
+    <string name="appearance">Uiterlijk</string>
 
-    <string name="view">Bekijk</string>
+    <string name="view">Weergave</string>
     <string name="list">Lijst</string>
     <string name="grid">Raster</string>
 
     <string name="theme">Thema</string>
     <string name="dark">Donker</string>
     <string name="light">Licht</string>
-    <string name="follow_system">Volg de systeem</string>
+    <string name="follow_system">Systeem</string>
 
-    <string name="date_format">Datum formaat</string>
+    <string name="date_format">Datum weergave</string>
     <string name="none">Geen</string>
 
     <string name="content_density">Inhoudsdichtheid</string>
     <string name="max_items_to_display">Maximum aantal items dat in de lijst kan worden weergegeven</string>
-    <string name="max_lines_to_display">Maximum lijnen in de notitie weer te geven</string>
+    <string name="max_lines_to_display">Maximum aantal regels in de notitie weer geven</string>
 
     <string name="backup">Back-up</string>
     <string name="export_backup">Back-up exporteren</string>
     <string name="import_backup">Back-up importeren</string>
 
     <string name="about">Over</string>
-    <string name="libraries">Bibliothek</string>
+    <string name="libraries">Bibliotheken</string>
     <string name="rate">Beoordeel deze app</string>
 </resources>
