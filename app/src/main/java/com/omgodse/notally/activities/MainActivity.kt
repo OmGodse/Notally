@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var configuration: AppBarConfiguration
 
-    private val model: BaseNoteModel by viewModels()
+    private val baseNoteViewModel: BaseNoteModel by viewModels()
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(configuration)
@@ -99,7 +99,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupSearch() {
         binding.EnterSearchKeyword.setText(model.keyword)
         binding.EnterSearchKeyword.doAfterTextChanged { text ->
-            model.keyword = requireNotNull(text).trim().toString()
+            baseNoteViewModel.keyword = requireNotNull(text).trim().toString()
         }
     }
 }
