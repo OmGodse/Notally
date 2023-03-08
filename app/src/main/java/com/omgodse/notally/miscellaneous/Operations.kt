@@ -89,6 +89,7 @@ object Operations {
         intent.type = "text/plain"
         intent.putExtra(extraCharSequence, body)
         intent.putExtra(Intent.EXTRA_TEXT, text)
+        intent.putExtra(Intent.EXTRA_TITLE, title)
         intent.putExtra(Intent.EXTRA_SUBJECT, title)
         val chooser = Intent.createChooser(intent, null)
         context.startActivity(chooser)
