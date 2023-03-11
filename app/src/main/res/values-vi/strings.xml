@@ -59,7 +59,6 @@
     <string name="italic">Nghiêng</string>
     <string name="strikethrough">Gạch giữa</string>
     <string name="clear_formatting">Xóa định dạng</string>
-    <string name="monospace">Monospace</string>
 
     <!-- Miscellaneous -->
     <string name="saved_to_device">Đã lưu vào thiết bị</string>
