@@ -244,7 +244,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         val spans = Converters.jsonToSpans(spansTmp)
         val items = Converters.jsonToItems(itemsTmp)
 
-        return BaseNote(0, type, folder, color, title, pinned, timestamp, labels, body, spans, items)
+        return BaseNote(0, type, folder, color, title, pinned, timestamp, labels, body, spans, items, emptyList())
     }
 
     private fun <T> convertCursorToList(cursor: Cursor, convert: (cursor: Cursor) -> T): ArrayList<T> {
@@ -391,13 +391,11 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
         when (baseNote.type) {
             Type.NOTE -> {
-                val spans = JSONArray(baseNote.spans.map { representation -> representation.toJSONObject() })
                 jsonObject.put("body", baseNote.body)
-                jsonObject.put("spans", spans)
+                jsonObject.put("spans", Converters.spansToJson(baseNote.spans))
             }
             Type.LIST -> {
-                val items = JSONArray(baseNote.items.map { item -> item.toJSONObject() })
-                jsonObject.put("items", items)
+                jsonObject.put("items", Converters.itemsToJson(baseNote.items))
             }
         }
 

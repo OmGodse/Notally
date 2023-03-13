@@ -20,4 +20,5 @@ data class BaseNote(
     val body: String,
     val spans: List<SpanRepresentation>,
     val items: List<ListItem>,
-) : Item(ViewType.NOTE), Parcelable
+    val images: List<Image>
+) : Item, Parcelable
