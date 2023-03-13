@@ -16,6 +16,7 @@
     <string name="restore">Restore</string>
     <string name="archive">Archive</string>
     <string name="unarchive">Unarchive</string>
+    <string name="add_images">Add images</string>
     <string name="delete_all">Delete all</string>
     <string name="change_color">Change color</string>
     <string name="delete_forever">Delete forever</string>
