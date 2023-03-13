@@ -13,7 +13,6 @@ import com.omgodse.notally.recyclerview.viewholders.HeaderVH
 import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Header
 import com.omgodse.notally.room.Item
-import com.omgodse.notally.room.ViewType
 import org.ocpsoft.prettytime.PrettyTime
 import java.text.SimpleDateFormat
 
@@ -29,7 +28,10 @@ class BaseNoteAdapter(
     private val prettyTime = PrettyTime()
 
     override fun getItemViewType(position: Int): Int {
-        return getItem(position).viewType.ordinal
+        return when (getItem(position)) {
+            is Header -> 0
+            is BaseNote -> 1
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -41,14 +43,14 @@ class BaseNoteAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return when (ViewType.values()[viewType]) {
-            ViewType.NOTE -> {
-                val binding = RecyclerBaseNoteBinding.inflate(inflater, parent, false)
-                BaseNoteVH(binding, dateFormat, textSize, maxItems, maxLines, listener, prettyTime, formatter)
-            }
-            ViewType.HEADER -> {
+        return when (viewType) {
+            0 -> {
                 val binding = RecyclerHeaderBinding.inflate(inflater, parent, false)
                 HeaderVH(binding)
+            }
+            else -> {
+                val binding = RecyclerBaseNoteBinding.inflate(inflater, parent, false)
+                BaseNoteVH(binding, dateFormat, textSize, maxItems, maxLines, listener, prettyTime, formatter)
             }
         }
     }

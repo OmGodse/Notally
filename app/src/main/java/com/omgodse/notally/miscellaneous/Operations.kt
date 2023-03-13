@@ -141,11 +141,11 @@ object Operations {
     fun labelNote(
         context: Context,
         labels: Array<String>,
-        oldLabels: List<String>,
-        onUpdated: (newLabels: List<String>) -> Unit,
+        old: List<String>,
+        onUpdated: (new: List<String>) -> Unit,
         addLabel: () -> Unit
     ) {
-        val checkedPositions = labels.map { label -> oldLabels.contains(label) }.toBooleanArray()
+        val checkedPositions = labels.map { label -> old.contains(label) }.toBooleanArray()
 
         val builder = MaterialAlertDialogBuilder(context)
 

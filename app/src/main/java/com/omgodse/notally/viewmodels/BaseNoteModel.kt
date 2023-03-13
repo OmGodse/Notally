@@ -379,23 +379,21 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
 
     private fun getJSON(baseNote: BaseNote): String {
-        val labels = JSONArray(baseNote.labels)
-
         val jsonObject = JSONObject()
             .put("type", baseNote.type.name)
             .put("color", baseNote.color.name)
             .put("title", baseNote.title)
             .put("pinned", baseNote.pinned)
             .put("date-created", baseNote.timestamp)
-            .put("labels", labels)
+            .put("labels", JSONArray(baseNote.labels))
 
         when (baseNote.type) {
             Type.NOTE -> {
                 jsonObject.put("body", baseNote.body)
-                jsonObject.put("spans", Converters.spansToJson(baseNote.spans))
+                jsonObject.put("spans", Converters.spansToJSONArray(baseNote.spans))
             }
             Type.LIST -> {
-                jsonObject.put("items", Converters.itemsToJson(baseNote.items))
+                jsonObject.put("items", Converters.itemsToJSONArray(baseNote.items))
             }
         }
 

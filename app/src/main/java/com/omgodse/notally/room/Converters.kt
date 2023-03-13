@@ -38,21 +38,6 @@ object Converters {
 
 
     @TypeConverter
-    fun spansToJson(spans: List<SpanRepresentation>): String {
-        val objects = spans.map { spanRepresentation ->
-            val jsonObject = JSONObject()
-            jsonObject.put("bold", spanRepresentation.bold)
-            jsonObject.put("link", spanRepresentation.link)
-            jsonObject.put("italic", spanRepresentation.italic)
-            jsonObject.put("monospace", spanRepresentation.monospace)
-            jsonObject.put("strikethrough", spanRepresentation.strikethrough)
-            jsonObject.put("start", spanRepresentation.start)
-            jsonObject.put("end", spanRepresentation.end)
-        }
-        return JSONArray(objects).toString()
-    }
-
-    @TypeConverter
     fun jsonToSpans(json: String): List<SpanRepresentation> {
         val iterable = JSONArray(json).iterable<JSONObject>()
         return iterable.map { jsonObject ->
@@ -67,16 +52,9 @@ object Converters {
         }
     }
 
-
     @TypeConverter
-    fun itemsToJson(items: List<ListItem>): String {
-        val objects = items.map { item ->
-            val jsonObject = JSONObject()
-            jsonObject.put("body", item.body)
-            jsonObject.put("checked", item.checked)
-        }
-        return JSONArray(objects).toString()
-    }
+    fun spansToJson(list: List<SpanRepresentation>) = spansToJSONArray(list).toString()
+
 
     @TypeConverter
     fun jsonToItems(json: String): List<ListItem> {
@@ -88,6 +66,32 @@ object Converters {
         }
     }
 
+    @TypeConverter
+    fun itemsToJson(list: List<ListItem>) = itemsToJSONArray(list).toString()
+
+
+    fun itemsToJSONArray(list: List<ListItem>): JSONArray {
+        val objects = list.map { item ->
+            val jsonObject = JSONObject()
+            jsonObject.put("body", item.body)
+            jsonObject.put("checked", item.checked)
+        }
+        return JSONArray(objects)
+    }
+
+    fun spansToJSONArray(list: List<SpanRepresentation>): JSONArray {
+        val objects = list.map { representation ->
+            val jsonObject = JSONObject()
+            jsonObject.put("bold", representation.bold)
+            jsonObject.put("link", representation.link)
+            jsonObject.put("italic", representation.italic)
+            jsonObject.put("monospace", representation.monospace)
+            jsonObject.put("strikethrough", representation.strikethrough)
+            jsonObject.put("start", representation.start)
+            jsonObject.put("end", representation.end)
+        }
+        return JSONArray(objects)
+    }
 
     private fun JSONObject.getSafeBoolean(name: String): Boolean {
         return try {

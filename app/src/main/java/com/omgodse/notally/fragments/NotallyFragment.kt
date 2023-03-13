@@ -176,7 +176,7 @@ abstract class NotallyFragment : Fragment(), ItemListener {
     private fun label(baseNote: BaseNote) {
         lifecycleScope.launch {
             val labels = model.getAllLabels()
-            val onUpdated = { newLabels: List<String> -> model.updateBaseNoteLabels(newLabels, baseNote.id) }
+            val onUpdated = { new: List<String> -> model.updateBaseNoteLabels(new, baseNote.id) }
             val add = { Operations.displayAddLabelDialog(requireContext(), model::insertLabel) { label(baseNote) } }
             Operations.labelNote(requireContext(), labels, baseNote.labels, onUpdated, add)
         }
