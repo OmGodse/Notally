@@ -1,5 +1,5 @@
 ### Background
-Notally was created because I wanted to make something that was beautiful and at the same time, useful. It's extremely light, there are minimal dependencies and lines of code. (Without compromising on readability)
+Notally was created because I wanted to make something that was beautiful and at the same time, useful. It's extremely light, there are minimal dependencies and lines of code.
 
 ### Features
 * Auto backup
@@ -16,8 +16,7 @@ Notally was created because I wanted to make something that was beautiful and at
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="70"/>](https://f-droid.org/packages/com.omgodse.notally/)
 
 ### Translations
-All translations are crowd sourced. To contribute or point out any errors, email me or open a pull request.
-Follow these [guidelines](https://m2.material.io/design/communication/writing.html).
+All translations are crowd sourced. To contribute, follow these [guidelines](https://m2.material.io/design/communication/writing.html) and email me or open a pull request.
 
 <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width="250"/><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width="250"/><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width="250"/>
 
@@ -30,5 +29,11 @@ Follow these [guidelines](https://m2.material.io/design/communication/writing.ht
 ### Roadmap
 These are in works but they'll take time as this is a side project.
 - [ ] Images
-- [X] Auto backup
+- [ ] Widgets
 - [ ] Batch selection
+
+### Frequently Asked Questions
+
+*When will Material 3 be supported?*
+
+It won't be. Material 1 and 2 are far better design systems.
