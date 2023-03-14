@@ -26,71 +26,65 @@ import com.omgodse.notally.viewmodels.BaseNoteModel
 
 class Settings : Fragment() {
 
-    private var binding: FragmentSettingsBinding? = null
-
     private val model: BaseNoteModel by activityViewModels()
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    private fun setupBinding(binding: FragmentSettingsBinding) {
         model.preferences.view.observe(viewLifecycleOwner) { value ->
-            binding?.View?.setup(View, value)
+            binding.View.setup(View, value)
         }
 
         model.preferences.theme.observe(viewLifecycleOwner) { value ->
-            binding?.Theme?.setup(Theme, value)
+            binding.Theme.setup(Theme, value)
         }
 
         model.preferences.dateFormat.observe(viewLifecycleOwner) { value ->
-            binding?.DateFormat?.setup(DateFormat, value)
+            binding.DateFormat.setup(DateFormat, value)
         }
 
         model.preferences.textSize.observe(viewLifecycleOwner) { value ->
-            binding?.TextSize?.setup(TextSize, value)
+            binding.TextSize.setup(TextSize, value)
         }
 
 
-        binding?.MaxItems?.setup(MaxItems, model.preferences.maxItems.value)
+        binding.MaxItems.setup(MaxItems, model.preferences.maxItems.value)
 
-        binding?.MaxLines?.setup(MaxLines, model.preferences.maxLines.value)
+        binding.MaxLines.setup(MaxLines, model.preferences.maxLines.value)
 
 
         model.preferences.autoBackup.observe(viewLifecycleOwner) { value ->
-            binding?.AutoBackup?.setup(AutoBackup, value)
+            binding.AutoBackup.setup(AutoBackup, value)
         }
 
-        binding?.ImportBackup?.setOnClickListener {
+        binding.ImportBackup.setOnClickListener {
             importBackup()
         }
 
-        binding?.ExportBackup?.setOnClickListener {
+        binding.ExportBackup.setOnClickListener {
             exportBackup()
         }
 
 
-        binding?.GitHub?.setOnClickListener {
+        binding.GitHub.setOnClickListener {
             openLink("https://github.com/OmGodse/Notally")
         }
 
-        binding?.Libraries?.setOnClickListener {
+        binding.Libraries.setOnClickListener {
             displayLibraries()
         }
 
-        binding?.Rate?.setOnClickListener {
+        binding.Rate.setOnClickListener {
             openLink("https://play.google.com/store/apps/details?id=com.omgodse.notally")
         }
 
-        binding?.SendFeedback?.setOnClickListener {
+        binding.SendFeedback.setOnClickListener {
             sendEmailWithLog()
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentSettingsBinding.inflate(inflater)
-        return binding?.root
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        val binding = FragmentSettingsBinding.inflate(inflater)
+        setupBinding(binding)
+        return binding.root
     }
 
 
