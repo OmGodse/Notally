@@ -34,6 +34,7 @@ import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
+import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
@@ -274,10 +275,12 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     fun writeCurrentFileToUri(uri: Uri) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                (app.contentResolver.openOutputStream(uri) as? FileOutputStream)?.use { stream ->
-                    stream.channel.truncate(0)
-                    stream.write(requireNotNull(currentFile).readBytes())
-                }
+                val output = app.contentResolver.openOutputStream(uri) as FileOutputStream
+                output.channel.truncate(0)
+                val input = FileInputStream(requireNotNull(currentFile))
+                input.copyTo(output)
+                input.close()
+                output.close()
             }
             Toast.makeText(app, R.string.saved_to_device, Toast.LENGTH_LONG).show()
         }
