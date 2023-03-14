@@ -1,6 +1,5 @@
 package com.omgodse.notally.recyclerview.viewholders
 
-import android.graphics.drawable.ColorDrawable
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -19,12 +18,10 @@ class PreviewImageVH(private val view: ImageView, onClick: ((position: Int) -> U
 
     fun bind(root: File, image: Image) {
         val file = File(root, image.name)
-        val drawable = ColorDrawable(image.color)
 
         Glide.with(view)
             .load(file)
             .centerCrop()
-            .placeholder(drawable)
             .transition(DrawableTransitionOptions.withCrossFade())
             .diskCacheStrategy(DiskCacheStrategy.NONE)
             .into(view)

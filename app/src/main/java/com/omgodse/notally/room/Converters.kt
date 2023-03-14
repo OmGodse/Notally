@@ -19,7 +19,6 @@ object Converters {
         val objects = images.map { image ->
             val jsonObject = JSONObject()
             jsonObject.put("name", image.name)
-            jsonObject.put("color", image.color)
             jsonObject.put("mimeType", image.mimeType)
         }
         return JSONArray(objects).toString()
@@ -30,9 +29,8 @@ object Converters {
         val iterable = JSONArray(json).iterable<JSONObject>()
         return iterable.map { jsonObject ->
             val name = jsonObject.getString("name")
-            val color = jsonObject.getInt("color")
             val mimeType = jsonObject.getString("mimeType")
-            Image(name, color, mimeType)
+            Image(name, mimeType)
         }
     }
 
