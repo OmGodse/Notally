@@ -26,6 +26,12 @@ All translations are crowd sourced. To contribute, follow these [guidelines](htt
 * [The BEST Private Notetaking Apps Explained](https://www.youtube.com/watch?v=BJw5tKPP1PY)
 * [Notally](https://www.noteapps.ca/notally/)
 
+### Copycats
+Clones of Notally keep popping up on the Play Store. They are not licensed under GPL3 and usually change a few colors, include ads, etc. Please [report them](https://support.google.com/googleplay/android-developer/contact/takedown) and [inform me](mailto:omgodseapps@gmail.com) if you find a new one.
+
+* https://play.google.com/store/apps/details?id=com.sladjan.notes
+* https://play.google.com/store/apps/details?id=com.sladjan.notespro
+
 ### Roadmap
 These are in works but they'll take time as this is a side project.
 - [ ] Images
