@@ -37,9 +37,3 @@ These are in works but they'll take time as this is a side project.
 - [ ] Images
 - [ ] Widgets
 - [ ] Batch selection
-
-### Frequently Asked Questions
-
-*When will Material 3 be supported?*
-
-It won't be. Material 1 and 2 are far better design systems.

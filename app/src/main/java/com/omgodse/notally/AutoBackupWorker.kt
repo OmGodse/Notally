@@ -24,9 +24,9 @@ class AutoBackupWorker(private val context: Context, params: WorkerParameters) :
             val folder = requireNotNull(DocumentFile.fromTreeUri(app, uri))
 
             if (folder.exists()) {
-                val formatter = SimpleDateFormat("yyyyMMdd HHmmss", Locale.ENGLISH)
-                val date = formatter.format(System.currentTimeMillis())
-                val file = requireNotNull(folder.createFile("application/zip", date))
+                val formatter = SimpleDateFormat("yyyyMMdd HHmmss '(Notally Backup)'", Locale.ENGLISH)
+                val name = formatter.format(System.currentTimeMillis())
+                val file = requireNotNull(folder.createFile("application/zip", name))
                 val outputStream = requireNotNull(app.contentResolver.openOutputStream(file.uri))
                 Export.backupToZip(app, outputStream)
             }
