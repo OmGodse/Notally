@@ -36,7 +36,7 @@
     <string name="make_list">Lag en liste</string>
     <string name="take_note">Ta et notat</string>
     <string name="add_label">Legg til etikett</string>
-    <string name="export">Eksporter</string>
+    <string name="export">Eksportér</string>
     <string name="view_file">Se fil</string>
     <string name="save_to_device">Lagre til enheten</string>
     <string name="edit_label">Rediger etikett</string>
@@ -100,7 +100,7 @@
     <string name="backup">Sikkerhetskopiering</string>
 
     <!-- Auto backup -->
-    <string name="auto_backup">Sikkerhetskopier automatisk</string>
+    <string name="auto_backup">Sikkerhetskopiér automatisk</string>
     <string name="tap_to_set_up">Trykk for å konfigurere</string>
     <string name="notes_will_be">Notatene vil bli sikkerhetskopiert til den interne lagringen hver dag.\n\nDette fungerer muligens ikke hvis strømsparingsmodus er aktivert</string>
     <string name="choose_folder">Velg mappe</string>
@@ -108,8 +108,8 @@
     <string name="choose_another_folder">Velg en annen mappe</string>
     <string name="cant_find_folder">Finner ikke mappen. Den kan ha blitt flyttet eller slettet</string>
 
-    <string name="export_backup">Eksporter sikkerhetskopi</string>
-    <string name="import_backup">Importer sikkerhetskopi</string>
+    <string name="export_backup">Eksportér sikkerhetskopi</string>
+    <string name="import_backup">Importér sikkerhetskopi</string>
 
     <string name="about">Om</string>
     <string name="libraries">Tredjepartsbiblioteker</string>
