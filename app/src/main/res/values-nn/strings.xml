@@ -9,40 +9,42 @@
 
     <!-- Menu Options -->
     <string name="share">Del</string>
+    <string name="filter">Filtrér</string>
     <string name="search">Søk</string>
     <string name="delete">Slett</string>
-    <string name="restore">Oppatrett</string>
-    <string name="archive">Arkiver</string>
-    <string name="unarchive">Dearkiver</string>
+    <string name="restore">Gjenopprett</string>
+    <string name="archive">Arkivér</string>
+    <string name="unarchive">Fjern frå arkivet</string>
     <string name="delete_all">Slett alle</string>
+    <string name="change_color">Endra farge</string>
     <string name="delete_forever">Slett for alltid</string>
 
     <!-- Pinning -->
     <string name="pin">Fest</string>
-    <string name="unpin">Lausne</string>
+    <string name="unpin">Løys</string>
     <string name="pinned">Festa</string>
-    <string name="others">Annan</string>
+    <string name="others">Anna</string>
 
     <!-- Chooser dialog hints -->
-    <string name="view_note">Sjå notat…</string>
+    <string name="view_note">Sjå notat …</string>
 
     <!-- Dialogs -->
-    <string name="save">Lagre</string>
+    <string name="save">Lagra</string>
     <string name="edit">Rediger</string>
     <string name="cancel">Avbryt</string>
     <string name="open_link">Opna lenkje</string>
     <string name="make_list">Lag ei liste</string>
     <string name="take_note">Ta eit notat</string>
     <string name="add_label">Legg til etikett</string>
-    <string name="export">Eksporter</string>
+    <string name="export">Eksportér</string>
     <string name="view_file">Sjå fil</string>
-    <string name="save_to_device">Lagre til eining</string>
+    <string name="save_to_device">Lagra til eininga</string>
     <string name="edit_label">Rediger etikett</string>
-    <string name="label_exists">Etiketten finst frå før</string>
-    <string name="delete_label">Sletta etiketten?</string>
-    <string name="create_new">Ingen etikettar. Opprette ein?</string>
-    <string name="delete_all_notes">Slett alle notat?</string>
-    <string name="delete_note_forever">Slett notatet for alltid?</string>
+    <string name="label_exists">Etiketten finst allereie</string>
+    <string name="delete_label">Vil du sletta etiketten?</string>
+    <string name="create_new">Ingen etikettar. Vil du oppretta ein?</string>
+    <string name="delete_all_notes">Vil du sletta alle notata?</string>
+    <string name="delete_note_forever">Vil du sletta notatet for alltid?</string>
     <string name="your_notes_associated">Notata assosiert med etikketten vil ikkje bli sletta.</string>
 
     <!-- Lists and Notes -->
@@ -57,40 +59,60 @@
     <string name="italic">Kursiv</string>
     <string name="strikethrough">Gjennomstreka</string>
     <string name="clear_formatting">Fjern formatering</string>
-    <string name="monospace">Fastbreddeskrift</string>
+    <string name="monospace">Fastbreiddskrift</string>
 
     <!-- Miscellaneous -->
     <string name="saved_to_device">Lagra til eininga</string>
     <string name="saved_to_notally">Lagra i Notally</string>
     <string name="empty_note">Tomt notat</string>
     <string name="empty_list">Tom liste</string>
-    <string name="cant_open_link">Kan ikkje opna lenkje</string>
+    <string name="cant_open_link">Kan ikkje opna lenkja</string>
+    <string name="invalid_backup">Ugyldig sikkerheitskopi</string>
+    <string name="imported_backup">Importert sikkerheitskopi</string>
     <string name="something_went_wrong">Noko gjekk gale. Prøv igjen.</string>
+    <string name="install_an_email">Installer ein e-postapp for å senda ein tilbakemelding</string>
+    <string name="install_a_browser">Installer ein nettlesar for å opna lenkja</string>
 
     <!-- Settings Page -->
-    <string name="appearance">Utsjåande</string>
+    <string name="appearance">Utsjånad</string>
 
-    <string name="view">Format</string>
+    <string name="view">Visning</string>
     <string name="list">Liste</string>
     <string name="grid">Rutenett</string>
 
     <string name="theme">Tema</string>
     <string name="dark">Mørkt</string>
     <string name="light">Lyst</string>
-    <string name="follow_system">Følg systeminnstillingar</string>
+    <string name="follow_system">Følg systemet</string>
 
-    <string name="date_format">Tidsformat</string>
+    <string name="date_format">Datoformat</string>
     <string name="none">Ikkje vis</string>
+
+    <string name="text_size">Skriftstorleik</string>
+    <string name="small">Liten</string>
+    <string name="medium">Middels</string>
+    <string name="large">Stor</string>
 
     <string name="content_density">Innhaldstettleik</string>
     <string name="max_items_to_display">Maks mengd element framvist av liste</string>
     <string name="max_lines_to_display">Maks mengd linjer vist frå notata</string>
 
-    <string name="backup">Sikringskopi</string>
-    <string name="export_backup">Eksporter sikringskopi</string>
-    <string name="import_backup">Importer sikringskopi</string>
+    <string name="backup">Sikkerheitskopiering</string>
+
+    <!-- Auto backup -->
+    <string name="auto_backup">Sikkerheitskopiér automatisk</string>
+    <string name="tap_to_set_up">Trykk for å konfigurera</string>
+    <string name="notes_will_be">Notata vil bli sikringsskopiert til den interne lagringa kvar dag.\n\nDette fungerer muligens ikkje viss strømsparingsmodus er aktivert</string>
+    <string name="choose_folder">Vel mappe</string>
+    <string name="disable_auto_backup">Slå av automatisk sikkerheitskopiering</string>
+    <string name="choose_another_folder">Vel ei anna mappe</string>
+    <string name="cant_find_folder">Finn ikkje mappa. Den kan ha blitt flytta eller sletta</string>
+
+    <string name="export_backup">Eksportér sikkerheitskopi</string>
+    <string name="import_backup">Importér sikkerheitskopi</string>
 
     <string name="about">Om</string>
-    <string name="libraries">Tredjepartsbiblioteker</string>
-    <string name="rate">Bedøm denne appen</string>
+    <string name="libraries">Tredjepartsbibliotek</string>
+    <string name="rate">Vurder denne appen</string>
+    <string name="send_feedback">Send tilbakemelding</string>
 </resources>
