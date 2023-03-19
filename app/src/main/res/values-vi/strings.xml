@@ -15,6 +15,7 @@
     <string name="restore">Khôi phục</string>
     <string name="archive">Lưu trữ</string>
     <string name="unarchive">Bỏ lưu trữ</string>
+    <string name="add_images">Thêm ảnh</string>
     <string name="delete_all">Xóa toàn bộ</string>
     <string name="change_color">Đổi màu</string>
     <string name="delete_forever">Xóa vĩnh viễn</string>
