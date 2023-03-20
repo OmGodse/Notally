@@ -56,18 +56,17 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
     val imageDir = IO.getImagesDirectory(app)
 
     fun addImageFromUri(uri: Uri) {
-        val temp = File(imageDir, "TEMP")
-
         viewModelScope.launch {
-            val input = app.contentResolver.openInputStream(uri)
-            requireNotNull(input) { "inputStream opened by contentResolver is null" }
+            val temp = File(imageDir, "TEMP")
 
             val mimeType = withContext(Dispatchers.IO) {
+                val input = requireNotNull(app.contentResolver.openInputStream(uri))
                 IO.copyStreamToFile(input, temp)
 
                 val options = BitmapFactory.Options()
                 options.inJustDecodeBounds = true
                 BitmapFactory.decodeFile(temp.path, options)
+
                 options.outMimeType
             }
 
@@ -75,12 +74,17 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
                 val extension = getExtensionForMimeType(mimeType)
                 if (extension != null) {
                     val name = "${UUID.randomUUID()}.$extension"
-                    val target = File(imageDir, name)
-                    temp.renameTo(target)
-                    val image = Image(name, mimeType)
-                    val list = ArrayList(images.value)
-                    list.add(image)
-                    images.value = list
+
+                    if (IO.renameFile(temp, name)) {
+                        val image = Image(name, mimeType)
+                        val list = ArrayList(images.value)
+                        list.add(image)
+                        images.value = list
+                    } else {
+                        // Unfortunately, File.renameTo() doesn't tell us anything about what went wrong
+                        temp.delete()
+                        Toast.makeText(app, R.string.something_went_wrong, Toast.LENGTH_LONG).show()
+                    }
                 } else {
                     temp.delete()
                     Toast.makeText(app, R.string.image_format_not_supported, Toast.LENGTH_LONG).show()
