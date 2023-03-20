@@ -20,7 +20,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.ActivityNotallyBinding
 import com.omgodse.notally.miscellaneous.Constants
-import com.omgodse.notally.miscellaneous.IO
 import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.miscellaneous.add
 import com.omgodse.notally.preferences.TextSize
@@ -126,18 +125,19 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         }
     }
 
+
     private fun delete() {
-        model.delete()
+        model.folder = Folder.DELETED
         finish()
     }
 
     private fun restore() {
-        model.restore()
+        model.folder = Folder.NOTES
         finish()
     }
 
     private fun archive() {
-        model.archive()
+        model.folder = Folder.ARCHIVED
         finish()
     }
 
@@ -180,9 +180,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     }
 
     private fun setupImages() {
-        val root = IO.getImagesDirectory(application)
-
-        val adapter = PreviewImageAdapter(root)
+        val adapter = PreviewImageAdapter(model.imageDir)
         adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
 
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
