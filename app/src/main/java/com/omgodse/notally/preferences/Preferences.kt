@@ -21,8 +21,8 @@ class Preferences private constructor(app: Application) {
     val dateFormat = BetterLiveData(getListPref(DateFormat))
 
     val textSize = BetterLiveData(getListPref(TextSize))
-    val maxItems = BetterLiveData(getSeekbarPref(MaxItems))
-    val maxLines = BetterLiveData(getSeekbarPref(MaxLines))
+    var maxItems = getSeekbarPref(MaxItems)
+    var maxLines = getSeekbarPref(MaxLines)
 
     val autoBackup = BetterLiveData(getTextPref(AutoBackup))
 
@@ -37,8 +37,8 @@ class Preferences private constructor(app: Application) {
         editor.putInt(info.key, value)
         editor.commit()
         when (info) {
-            MaxItems -> maxItems.postValue(getSeekbarPref(MaxItems))
-            MaxLines -> maxLines.postValue(getSeekbarPref(MaxLines))
+            MaxItems -> maxItems = getSeekbarPref(MaxItems)
+            MaxLines -> maxLines = getSeekbarPref(MaxLines)
         }
     }
 

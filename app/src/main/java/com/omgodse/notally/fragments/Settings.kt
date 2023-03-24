@@ -46,9 +46,9 @@ class Settings : Fragment() {
         }
 
 
-        binding.MaxItems.setup(MaxItems, model.preferences.maxItems.value)
+        binding.MaxItems.setup(MaxItems, model.preferences.maxItems)
 
-        binding.MaxLines.setup(MaxLines, model.preferences.maxLines.value)
+        binding.MaxLines.setup(MaxLines, model.preferences.maxLines)
 
 
         model.preferences.autoBackup.observe(viewLifecycleOwner) { value ->

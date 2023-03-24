@@ -101,8 +101,8 @@ abstract class NotallyFragment : Fragment(), ItemListener {
 
     private fun setupAdapter() {
         val textSize = model.preferences.textSize.value
-        val maxItems = model.preferences.maxItems.value
-        val maxLines = model.preferences.maxLines.value
+        val maxItems = model.preferences.maxItems
+        val maxLines = model.preferences.maxLines
         val dateFormat = model.preferences.dateFormat.value
 
         adapter = BaseNoteAdapter(dateFormat, textSize, maxItems, maxLines, model.formatter, this)
