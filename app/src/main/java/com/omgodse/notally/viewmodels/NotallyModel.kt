@@ -80,8 +80,9 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
                         val list = ArrayList(images.value)
                         list.add(image)
                         images.value = list
+                        saveNote()
                     } else {
-                        // Unfortunately, File.renameTo() doesn't tell us anything about what went wrong
+                        // Unfortunately, File.renameTo() doesn't tell us what went wrong
                         temp.delete()
                         Toast.makeText(app, R.string.something_went_wrong, Toast.LENGTH_LONG).show()
                     }
@@ -128,25 +129,18 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
     }
 
 
-    fun saveNote(onComplete: () -> Unit) {
-        viewModelScope.launch {
-            id = withContext(Dispatchers.IO) { baseNoteDao.insert(getBaseNote()) }
-            onComplete()
+    suspend fun delete() = withContext(Dispatchers.IO) {
+        baseNoteDao.delete(id)
+        for (image in images.value) {
+            val file = File(imageDir, image.name)
+            file.delete()
         }
     }
 
-    fun deleteForever(onComplete: () -> Unit) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                baseNoteDao.delete(id)
-                for (image in images.value) {
-                    val file = File(imageDir, image.name)
-                    file.delete()
-                }
-            }
-            onComplete()
-        }
+    suspend fun saveNote() = withContext(Dispatchers.IO) {
+        id = baseNoteDao.insert(getBaseNote())
     }
+
 
     fun insertLabel(label: Label, onComplete: (success: Boolean) -> Unit) {
         viewModelScope.launch {

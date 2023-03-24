@@ -37,12 +37,17 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     internal val model: NotallyModel by viewModels()
 
     override fun finish() {
-        model.saveNote { super.finish() }
+        lifecycleScope.launch {
+            model.saveNote()
+            super.finish()
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
+        lifecycleScope.launch {
+            model.saveNote()
+        }
         super.onSaveInstanceState(outState)
-        model.saveNote {}
     }
 
 
@@ -145,7 +150,8 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         MaterialAlertDialogBuilder(this)
             .setMessage(R.string.delete_note_forever)
             .setPositiveButton(R.string.delete) { _, _ ->
-                model.deleteForever {
+                lifecycleScope.launch {
+                    model.delete()
                     super.finish()
                 }
             }
