@@ -186,7 +186,10 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     }
 
     private fun setupImages() {
-        val adapter = PreviewImageAdapter(model.imageDir)
+        val adapter = PreviewImageAdapter(model.imageDir) { position ->
+            val intent = Intent(this, ViewImage::class.java)
+            startActivity(intent)
+        }
         adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
 
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {

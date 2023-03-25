@@ -1,17 +1,16 @@
 package com.omgodse.notally.recyclerview.adapters
 
+import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.view.ViewGroup.LayoutParams
-import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import com.omgodse.notally.databinding.RecyclerPreviewImageBinding
 import com.omgodse.notally.recyclerview.viewholders.PreviewImageVH
 import com.omgodse.notally.room.Image
 import java.io.File
 
-class PreviewImageAdapter(private val root: File) : ListAdapter<Image, PreviewImageVH>(DiffCallback) {
-
-    var onClick: ((position: Int) -> Unit)? = null
+class PreviewImageAdapter(private val root: File, private val onClick: (position: Int) -> Unit) :
+    ListAdapter<Image, PreviewImageVH>(DiffCallback) {
 
     override fun onBindViewHolder(holder: PreviewImageVH, position: Int) {
         val image = getItem(position)
@@ -19,9 +18,9 @@ class PreviewImageAdapter(private val root: File) : ListAdapter<Image, PreviewIm
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PreviewImageVH {
-        val view = ImageView(parent.context)
-        view.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
-        return PreviewImageVH(view, onClick)
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = RecyclerPreviewImageBinding.inflate(inflater, parent, false)
+        return PreviewImageVH(binding, onClick)
     }
 
     private object DiffCallback : DiffUtil.ItemCallback<Image>() {
