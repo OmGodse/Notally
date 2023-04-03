@@ -10,8 +10,7 @@ import java.nio.file.Files
 object IO {
 
     fun getImagesDirectory(app: Application): File {
-        val media = app.externalMediaDirs[0]
-        val images = File(media, "Notally Images")
+        val images = File(app.filesDir, "Notally Images")
         images.mkdir()
         return images
     }
