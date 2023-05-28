@@ -37,7 +37,7 @@ class Notes : NotallyFragment() {
 
         val drawable = MaterialShapeDrawable()
         val surface = TypedValue()
-        requireContext().theme.resolveAttribute(R.attr.colorSurface, surface, true)
+        requireContext().theme.resolveAttribute(com.google.android.material.R.attr.colorSurface, surface, true)
 
         drawable.elevation = container.elevation
         drawable.initializeElevationOverlay(requireContext())

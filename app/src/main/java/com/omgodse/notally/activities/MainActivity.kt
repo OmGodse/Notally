@@ -73,10 +73,10 @@ class MainActivity : AppCompatActivity() {
                     val options = navOptions {
                         launchSingleTop = true
                         anim {
-                            exit = R.anim.nav_default_exit_anim
-                            enter = R.anim.nav_default_enter_anim
-                            popExit = R.anim.nav_default_pop_exit_anim
-                            popEnter = R.anim.nav_default_pop_enter_anim
+                            exit = androidx.navigation.ui.R.anim.nav_default_exit_anim
+                            enter = androidx.navigation.ui.R.anim.nav_default_enter_anim
+                            popExit = androidx.navigation.ui.R.anim.nav_default_pop_exit_anim
+                            popEnter = androidx.navigation.ui.R.anim.nav_default_pop_enter_anim
                         }
                         popUpTo(navController.graph.startDestination) { inclusive = false }
                     }

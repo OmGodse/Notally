@@ -46,15 +46,19 @@ android {
     }
 }
 
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
 dependencies {
     final def navVersion = "2.3.5"
-    final def roomVersion = "2.5.0"
+    final def roomVersion = "2.5.1"
 
     kapt "androidx.room:room-compiler:$roomVersion"
     implementation "androidx.room:room-ktx:$roomVersion"
     implementation "androidx.room:room-runtime:$roomVersion"
 
-    implementation "androidx.work:work-runtime:2.8.0"
+    implementation "androidx.work:work-runtime:2.8.1"
 
     implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
     implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
