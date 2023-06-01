@@ -17,32 +17,32 @@ import android.widget.EditText
 import com.omgodse.notally.activities.TakeNote
 import com.omgodse.notally.room.SpanRepresentation
 
-/**
- * For some reason, this method crashes sometimes with an
- * IndexOutOfBoundsException that I've not been able to replicate.
- * When this happens, to prevent the entire app from crashing and becoming
- * unusable, the exception is suppressed.
- */
 fun String.applySpans(representations: List<SpanRepresentation>): Editable {
     val editable = Editable.Factory.getInstance().newEditable(this)
     representations.forEach { (bold, link, italic, monospace, strikethrough, start, end) ->
         try {
-            if (bold) {
-                editable.setSpan(StyleSpan(Typeface.BOLD), start, end)
+            if (start >= 0 && end <= editable.length) { // Added block to avoid IndexOutOfBoundsException
+                if (bold) {
+                    editable.setSpan(StyleSpan(Typeface.BOLD), start, end)
+                }
+                if (italic) {
+                    editable.setSpan(StyleSpan(Typeface.ITALIC), start, end)
+                }
+                if (link) {
+                    val url = getURL(start, end)
+                    editable.setSpan(URLSpan(url), start, end)
+                }
+                if (monospace) {
+                    editable.setSpan(TypefaceSpan("monospace"), start, end)
+                }
+                if (strikethrough) {
+                    editable.setSpan(StrikethroughSpan(), start, end)
+                }
+            } else {
+                println("Invalid range: start = $start, end = $end, length = ${editable.length}")
             }
-            if (italic) {
-                editable.setSpan(StyleSpan(Typeface.ITALIC), start, end)
-            }
-            if (link) {
-                val url = getURL(start, end)
-                editable.setSpan(URLSpan(url), start, end)
-            }
-            if (monospace) {
-                editable.setSpan(TypefaceSpan("monospace"), start, end)
-            }
-            if (strikethrough) {
-                editable.setSpan(StrikethroughSpan(), start, end)
-            }
+
+
         } catch (exception: Exception) {
             exception.printStackTrace()
         }
