@@ -1,6 +1,5 @@
 package com.omgodse.notally.activities
 
-import android.app.Activity
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Build
@@ -10,12 +9,8 @@ import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.PagerSnapHelper
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.ActivityNotallyBinding
@@ -23,7 +18,6 @@ import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.miscellaneous.add
 import com.omgodse.notally.preferences.TextSize
-import com.omgodse.notally.recyclerview.adapters.PreviewImageAdapter
 import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Folder
 import com.omgodse.notally.room.Type
@@ -76,19 +70,6 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         setStateFromModel()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_ADD_IMAGE && resultCode == Activity.RESULT_OK) {
-            val uri = data?.data
-            val clipData = data?.clipData
-            if (uri != null) {
-                model.addImageFromUri(uri)
-            } else if (clipData != null) {
-                model.addImagesFromClipData(clipData)
-            }
-        }
-    }
-
 
     open fun receiveSharedNote() {}
 
@@ -103,13 +84,9 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         binding.DateCreated.text = formatter.format(model.timestamp)
 
         binding.EnterTitle.setText(model.title)
-
-        model.labels.observe(this) { list ->
-            Operations.bindLabels(binding.LabelGroup, list, model.textSize)
-        }
+        Operations.bindLabels(binding.LabelGroup, model.labels, model.textSize)
 
         setupColor()
-        setupImages()
     }
 
 
@@ -124,9 +101,12 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     private fun label() {
         lifecycleScope.launch {
             val labels = model.getAllLabels()
-            val onUpdated = { new: List<String> -> model.labels.value = new }
+            val onUpdated = { new: List<String> ->
+                model.setLabels(new)
+                Operations.bindLabels(binding.LabelGroup, model.labels, model.textSize)
+            }
             val add = { Operations.displayAddLabelDialog(this@NotallyActivity, model::insertLabel) { label() } }
-            Operations.labelNote(this@NotallyActivity, labels, model.labels.value, onUpdated, add)
+            Operations.labelNote(this@NotallyActivity, labels, model.labels, onUpdated, add)
         }
     }
 
@@ -165,16 +145,6 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     }
 
 
-    private fun addImages() {
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.type = "image/*"
-        intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true)
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-        intent.addCategory(Intent.CATEGORY_OPENABLE)
-        startActivityForResult(intent, REQUEST_ADD_IMAGE)
-    }
-
-
     private fun setupColor() {
         val color = Operations.extractColor(model.color, this)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -183,29 +153,6 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         binding.root.setBackgroundColor(color)
         binding.RecyclerView.setBackgroundColor(color)
         binding.Toolbar.backgroundTintList = ColorStateList.valueOf(color)
-    }
-
-    private fun setupImages() {
-        val adapter = PreviewImageAdapter(model.imageDir) { position ->
-            val intent = Intent(this, ViewImage::class.java)
-            startActivity(intent)
-        }
-        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-
-            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-                binding.ImagePreview.scrollToPosition(positionStart)
-            }
-        })
-
-        binding.ImagePreview.setHasFixedSize(true)
-        binding.ImagePreview.adapter = adapter
-        binding.ImagePreview.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
-        PagerSnapHelper().attachToRecyclerView(binding.ImagePreview)
-
-        model.images.observe(this) { list ->
-            binding.ImagePreview.isVisible = list.isNotEmpty()
-            adapter.submitList(list)
-        }
     }
 
     private fun setupToolbar() {
@@ -217,17 +164,18 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
         menu.add(R.string.share, R.drawable.share) { share() }
         menu.add(R.string.labels, R.drawable.label) { label() }
-        menu.add(R.string.add_images, R.drawable.add_images) { addImages() }
 
         when (model.folder) {
             Folder.NOTES -> {
                 menu.add(R.string.delete, R.drawable.delete) { delete() }
                 menu.add(R.string.archive, R.drawable.archive) { archive() }
             }
+
             Folder.DELETED -> {
                 menu.add(R.string.restore, R.drawable.restore) { restore() }
                 menu.add(R.string.delete_forever, R.drawable.delete) { deleteForever() }
             }
+
             Folder.ARCHIVED -> {
                 menu.add(R.string.delete, R.drawable.delete) { delete() }
                 menu.add(R.string.unarchive, R.drawable.unarchive) { restore() }
@@ -242,6 +190,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
                 binding.AddItem.visibility = View.GONE
                 binding.RecyclerView.visibility = View.GONE
             }
+
             Type.LIST -> {
                 binding.EnterBody.visibility = View.GONE
             }
@@ -272,5 +221,3 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         item.setIcon(icon)
     }
 }
-
-private const val REQUEST_ADD_IMAGE = 30

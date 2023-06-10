@@ -1,31 +1,33 @@
 package com.omgodse.notally.viewmodels
 
 import android.app.Application
-import android.content.ClipData
 import android.database.sqlite.SQLiteConstraintException
-import android.graphics.BitmapFactory
 import android.graphics.Typeface
-import android.net.Uri
 import android.text.Editable
 import android.text.Spanned
-import android.text.style.*
-import android.widget.Toast
+import android.text.style.CharacterStyle
+import android.text.style.StrikethroughSpan
+import android.text.style.StyleSpan
+import android.text.style.TypefaceSpan
+import android.text.style.URLSpan
 import androidx.core.text.getSpans
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.omgodse.notally.R
-import com.omgodse.notally.miscellaneous.IO
 import com.omgodse.notally.miscellaneous.applySpans
-import com.omgodse.notally.preferences.BetterLiveData
 import com.omgodse.notally.preferences.Preferences
-import com.omgodse.notally.room.*
+import com.omgodse.notally.room.BaseNote
+import com.omgodse.notally.room.Color
+import com.omgodse.notally.room.Folder
+import com.omgodse.notally.room.Label
+import com.omgodse.notally.room.ListItem
+import com.omgodse.notally.room.NotallyDatabase
+import com.omgodse.notally.room.SpanRepresentation
+import com.omgodse.notally.room.Type
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.File
-import java.util.*
 
-class NotallyModel(private val app: Application) : AndroidViewModel(app) {
+class NotallyModel(app: Application) : AndroidViewModel(app) {
 
     private val database = NotallyDatabase.getDatabase(app)
     private val labelDao = database.labelDao
@@ -46,68 +48,16 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
     var pinned = false
     var timestamp = System.currentTimeMillis()
 
+    val labels = ArrayList<String>()
+
     var body = Editable.Factory.getInstance().newEditable(String())
 
     val items = ArrayList<ListItem>()
 
-    val images = BetterLiveData<List<Image>>(emptyList())
-    val labels = BetterLiveData<List<String>>(emptyList())
-
-    val imageDir = IO.getImagesDirectory(app)
-
-    fun addImageFromUri(uri: Uri) {
-        viewModelScope.launch {
-            val temp = File(imageDir, "TEMP")
-
-            val mimeType = withContext(Dispatchers.IO) {
-                val input = requireNotNull(app.contentResolver.openInputStream(uri))
-                IO.copyStreamToFile(input, temp)
-
-                val options = BitmapFactory.Options()
-                options.inJustDecodeBounds = true
-                BitmapFactory.decodeFile(temp.path, options)
-
-                options.outMimeType
-            }
-
-            if (mimeType != null) {
-                val extension = getExtensionForMimeType(mimeType)
-                if (extension != null) {
-                    val name = "${UUID.randomUUID()}.$extension"
-
-                    if (IO.renameFile(temp, name)) {
-                        val image = Image(name, mimeType)
-                        val list = ArrayList(images.value)
-                        list.add(image)
-                        images.value = list
-                        saveNote()
-                    } else {
-                        // Unfortunately, File.renameTo() doesn't tell us what went wrong
-                        temp.delete()
-                        Toast.makeText(app, R.string.something_went_wrong, Toast.LENGTH_LONG).show()
-                    }
-                } else {
-                    temp.delete()
-                    Toast.makeText(app, R.string.image_format_not_supported, Toast.LENGTH_LONG).show()
-                }
-            } else {
-                temp.delete()
-                Toast.makeText(app, R.string.invalid_image, Toast.LENGTH_LONG).show()
-            }
-        }
+    fun setLabels(list: List<String>) {
+        labels.clear()
+        labels.addAll(list)
     }
-
-    fun addImagesFromClipData(data: ClipData) {}
-
-    private fun getExtensionForMimeType(type: String): String? {
-        return when (type) {
-            "image/png" -> "png"
-            "image/jpeg" -> "jpg"
-            "image/webp" -> "webp"
-            else -> null
-        }
-    }
-
 
     fun setStateFromBaseNote(baseNote: BaseNote) {
         id = baseNote.id
@@ -118,23 +68,17 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
         pinned = baseNote.pinned
         timestamp = baseNote.timestamp
 
-        labels.value = baseNote.labels
+        setLabels(baseNote.labels)
 
         body = baseNote.body.applySpans(baseNote.spans)
 
         items.clear()
         items.addAll(baseNote.items)
-
-        images.value = baseNote.images
     }
 
 
     suspend fun delete() = withContext(Dispatchers.IO) {
         baseNoteDao.delete(id)
-        for (image in images.value) {
-            val file = File(imageDir, image.name)
-            file.delete()
-        }
     }
 
     suspend fun saveNote() = withContext(Dispatchers.IO) {
@@ -162,9 +106,7 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
         val spans = getFilteredSpans(body)
         val body = this.body.trimEnd().toString()
         val items = this.items.filter { item -> item.body.isNotEmpty() }
-        return BaseNote(
-            id, type, folder, color, title, pinned, timestamp, labels.value, body, spans, items, images.value
-        )
+        return BaseNote(id, type, folder, color, title, pinned, timestamp, labels, body, spans, items)
     }
 
     private fun getFilteredSpans(spanned: Spanned): ArrayList<SpanRepresentation> {
@@ -179,6 +121,7 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
                     representation.bold = span.style == Typeface.BOLD
                     representation.italic = span.style == Typeface.ITALIC
                 }
+
                 is URLSpan -> representation.link = true
                 is TypefaceSpan -> representation.monospace = span.family == "monospace"
                 is StrikethroughSpan -> representation.strikethrough = true

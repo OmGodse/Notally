@@ -24,7 +24,15 @@ import com.omgodse.notally.preferences.AutoBackup
 import com.omgodse.notally.preferences.ListInfo
 import com.omgodse.notally.preferences.Preferences
 import com.omgodse.notally.preferences.SeekbarInfo
-import com.omgodse.notally.room.*
+import com.omgodse.notally.room.BaseNote
+import com.omgodse.notally.room.Color
+import com.omgodse.notally.room.Converters
+import com.omgodse.notally.room.Folder
+import com.omgodse.notally.room.Header
+import com.omgodse.notally.room.Item
+import com.omgodse.notally.room.Label
+import com.omgodse.notally.room.NotallyDatabase
+import com.omgodse.notally.room.Type
 import com.omgodse.notally.room.livedata.Content
 import com.omgodse.notally.room.livedata.SearchResult
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -37,7 +45,7 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
 import java.util.zip.ZipFile
 
 class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
@@ -245,7 +253,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         val spans = Converters.jsonToSpans(spansTmp)
         val items = Converters.jsonToItems(itemsTmp)
 
-        return BaseNote(0, type, folder, color, title, pinned, timestamp, labels, body, spans, items, emptyList())
+        return BaseNote(0, type, folder, color, title, pinned, timestamp, labels, body, spans, items)
     }
 
     private fun <T> convertCursorToList(cursor: Cursor, convert: (cursor: Cursor) -> T): ArrayList<T> {
