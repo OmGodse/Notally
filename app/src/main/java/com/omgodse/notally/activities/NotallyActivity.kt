@@ -1,6 +1,5 @@
 package com.omgodse.notally.activities
 
-import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
@@ -18,7 +17,6 @@ import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.miscellaneous.add
 import com.omgodse.notally.preferences.TextSize
-import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Folder
 import com.omgodse.notally.room.Type
 import com.omgodse.notally.viewmodels.BaseNoteModel
@@ -51,27 +49,29 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         initialiseBinding()
         setContentView(binding.root)
 
-        if (model.isFirstInstance) {
-            val selectedBaseNote = intent.getParcelableExtra<BaseNote>(Constants.SelectedBaseNote)
-            if (selectedBaseNote != null) {
-                model.isNewNote = false
-                model.setStateFromBaseNote(selectedBaseNote)
-            } else model.isNewNote = true
-
-            if (intent.action == Intent.ACTION_SEND) {
-                receiveSharedNote()
+        lifecycleScope.launch {
+            if (model.isFirstInstance) {
+                val selectedId = intent.getLongExtra(Constants.SelectedBaseNote, 0L)
+                if (selectedId != 0L) {
+                    model.isNewNote = false
+                    model.setState(selectedId)
+                } else {
+                    model.isNewNote = true
+                    model.createBaseNote()
+                }
+                model.isFirstInstance = false
             }
 
-            model.isFirstInstance = false
-        }
+            setupToolbar()
+            setupListeners()
+            setStateFromModel()
 
-        setupToolbar()
-        setupListeners()
-        setStateFromModel()
+            configureUI()
+        }
     }
 
 
-    open fun receiveSharedNote() {}
+    abstract fun configureUI()
 
     open fun setupListeners() {
         binding.EnterTitle.doAfterTextChanged { text ->

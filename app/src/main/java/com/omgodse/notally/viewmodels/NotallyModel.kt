@@ -59,8 +59,11 @@ class NotallyModel(app: Application) : AndroidViewModel(app) {
         labels.addAll(list)
     }
 
-    fun setStateFromBaseNote(baseNote: BaseNote) {
-        id = baseNote.id
+
+    suspend fun setState(id: Long) {
+        val baseNote = withContext(Dispatchers.IO) { baseNoteDao.get(id) }
+
+        this.id = id
         folder = baseNote.folder
         color = baseNote.color
 
@@ -76,13 +79,17 @@ class NotallyModel(app: Application) : AndroidViewModel(app) {
         items.addAll(baseNote.items)
     }
 
+    suspend fun createBaseNote() = withContext(Dispatchers.IO) {
+        id = baseNoteDao.insert(getBaseNote())
+    }
+
 
     suspend fun delete() = withContext(Dispatchers.IO) {
         baseNoteDao.delete(id)
     }
 
     suspend fun saveNote() = withContext(Dispatchers.IO) {
-        id = baseNoteDao.insert(getBaseNote())
+        baseNoteDao.insert(getBaseNote())
     }
 
 

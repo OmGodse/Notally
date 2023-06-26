@@ -1,6 +1,5 @@
 package com.omgodse.notally.activities
 
-import android.os.Bundle
 import com.omgodse.notally.R
 import com.omgodse.notally.miscellaneous.setOnNextAction
 import com.omgodse.notally.recyclerview.ListItemListener
@@ -13,9 +12,7 @@ class MakeList : NotallyActivity(Type.LIST) {
 
     private lateinit var adapter: MakeListAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    override fun configureUI() {
         binding.EnterTitle.setOnNextAction {
             moveToNext(-1)
         }

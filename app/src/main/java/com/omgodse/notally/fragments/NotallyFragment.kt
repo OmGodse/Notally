@@ -31,7 +31,11 @@ import com.omgodse.notally.miscellaneous.applySpans
 import com.omgodse.notally.recyclerview.ItemListener
 import com.omgodse.notally.recyclerview.adapters.BaseNoteAdapter
 import com.omgodse.notally.recyclerview.adapters.ColorAdapter
-import com.omgodse.notally.room.*
+import com.omgodse.notally.room.BaseNote
+import com.omgodse.notally.room.Color
+import com.omgodse.notally.room.Folder
+import com.omgodse.notally.room.Item
+import com.omgodse.notally.room.Type
 import com.omgodse.notally.viewmodels.BaseNoteModel
 import kotlinx.coroutines.launch
 import java.io.File
@@ -146,10 +150,12 @@ abstract class NotallyFragment : Fragment(), ItemListener {
                 dialog.add(R.string.archive) { model.moveBaseNoteToArchive(baseNote.id) }
                 dialog.add(R.string.change_color) { color(baseNote.id) }
             }
+
             Folder.DELETED -> {
                 dialog.add(R.string.restore) { model.restoreBaseNote(baseNote.id) }
                 dialog.add(R.string.delete_forever) { delete(baseNote.id) }
             }
+
             Folder.ARCHIVED -> {
                 dialog.add(R.string.delete) { model.moveBaseNoteToDeleted(baseNote.id) }
                 dialog.add(R.string.unarchive) { model.restoreBaseNote(baseNote.id) }
@@ -158,9 +164,9 @@ abstract class NotallyFragment : Fragment(), ItemListener {
         dialog.show()
     }
 
-    internal fun goToActivity(activity: Class<*>, baseNote: BaseNote? = null) {
+    private fun goToActivity(activity: Class<*>, baseNote: BaseNote) {
         val intent = Intent(requireContext(), activity)
-        intent.putExtra(Constants.SelectedBaseNote, baseNote)
+        intent.putExtra(Constants.SelectedBaseNote, baseNote.id)
         startActivity(intent)
     }
 
