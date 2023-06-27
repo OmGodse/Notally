@@ -1,5 +1,6 @@
 package com.omgodse.notally.recyclerview.adapters
 
+/*
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -33,4 +34,4 @@ class PreviewImageAdapter(private val root: File, private val onClick: (position
             return oldItem == newItem
         }
     }
-}
+}*/

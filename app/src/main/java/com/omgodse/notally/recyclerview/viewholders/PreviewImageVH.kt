@@ -1,5 +1,6 @@
 package com.omgodse.notally.recyclerview.viewholders
 
+/*
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -28,3 +29,4 @@ class PreviewImageVH(private val binding: RecyclerPreviewImageBinding, onClick: 
             .into(binding.ImageView)
     }
 }
+*/
