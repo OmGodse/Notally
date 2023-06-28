@@ -36,10 +36,11 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putLong("id", model.id)
         lifecycleScope.launch {
             model.saveNote()
         }
-        super.onSaveInstanceState(outState)
     }
 
 
@@ -51,10 +52,12 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
         lifecycleScope.launch {
             if (model.isFirstInstance) {
+                val persistedId = savedInstanceState?.getLong("id")
                 val selectedId = intent.getLongExtra(Constants.SelectedBaseNote, 0L)
-                if (selectedId != 0L) {
+                val id = persistedId ?: selectedId
+                if (id != 0L) {
                     model.isNewNote = false
-                    model.setState(selectedId)
+                    model.setState(id)
                 } else {
                     model.isNewNote = true
                     model.createBaseNote()
