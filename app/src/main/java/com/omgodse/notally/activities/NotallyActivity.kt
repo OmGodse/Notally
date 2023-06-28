@@ -1,8 +1,10 @@
 package com.omgodse.notally.activities
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
 import android.util.TypedValue
 import android.view.MenuItem
 import android.view.View
@@ -61,6 +63,10 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
                 } else {
                     model.isNewNote = true
                     model.createBaseNote()
+
+                    if (intent.action == Intent.ACTION_SEND) {
+                        handleSharedNote()
+                    }
                 }
                 model.isFirstInstance = false
             }
@@ -90,6 +96,22 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         Operations.bindLabels(binding.LabelGroup, model.labels, model.textSize)
 
         setupColor()
+    }
+
+
+    private fun handleSharedNote() {
+        val title = intent.getStringExtra(Intent.EXTRA_SUBJECT)
+
+        val string = intent.getStringExtra(Intent.EXTRA_TEXT)
+        val charSequence = intent.getCharSequenceExtra(Operations.extraCharSequence)
+        val body = charSequence ?: string
+
+        if (body != null) {
+            model.body = Editable.Factory.getInstance().newEditable(body)
+        }
+        if (title != null) {
+            model.title = title
+        }
     }
 
 
