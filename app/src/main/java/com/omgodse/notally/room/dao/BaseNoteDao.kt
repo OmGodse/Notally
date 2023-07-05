@@ -35,6 +35,9 @@ interface BaseNoteDao {
     @Query("SELECT * FROM BaseNote WHERE folder = :folder ORDER BY pinned DESC, timestamp DESC")
     fun getFrom(folder: Folder): LiveData<List<BaseNote>>
 
+    @Query("SELECT * FROM BaseNote")
+    fun getAll(): LiveData<List<BaseNote>>
+
     @Query("SELECT * FROM BaseNote WHERE id = :id")
     suspend fun get(id: Long): BaseNote
 

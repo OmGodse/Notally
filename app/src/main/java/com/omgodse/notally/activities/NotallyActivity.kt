@@ -76,6 +76,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
             setStateFromModel()
 
             configureUI()
+            binding.ScrollView.visibility = View.VISIBLE
         }
     }
 

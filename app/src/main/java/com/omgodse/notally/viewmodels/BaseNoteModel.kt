@@ -13,6 +13,7 @@ import androidx.core.text.toHtml
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.room.withTransaction
+import com.omgodse.notally.Cache
 import com.omgodse.notally.R
 import com.omgodse.notally.legacy.Migrations
 import com.omgodse.notally.legacy.XMLUtils
@@ -61,6 +62,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     var currentFile: File? = null
 
     val labels = labelDao.getAll()
+    val allNotes = baseNoteDao.getAll()
     val baseNotes = Content(baseNoteDao.getFrom(Folder.NOTES), ::transform)
     val deletedNotes = Content(baseNoteDao.getFrom(Folder.DELETED), ::transform)
     val archivedNotes = Content(baseNoteDao.getFrom(Folder.ARCHIVED), ::transform)
@@ -104,6 +106,9 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
                     Migrations.clearAllFolders(app)
                 }
             }
+        }
+        allNotes.observeForever { list ->
+            Cache.list = list
         }
     }
 
@@ -403,6 +408,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
                 jsonObject.put("body", baseNote.body)
                 jsonObject.put("spans", Converters.spansToJSONArray(baseNote.spans))
             }
+
             Type.LIST -> {
                 jsonObject.put("items", Converters.itemsToJSONArray(baseNote.items))
             }
@@ -430,6 +436,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
                 val body = baseNote.body.applySpans(baseNote.spans).toHtml()
                 append(body)
             }
+
             Type.LIST -> {
                 append("<ol style=\"list-style: none; padding: 0;\">")
                 baseNote.items.forEach { item ->
@@ -455,6 +462,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
             val pattern = when (locale.language) {
                 Locale.CHINESE.language,
                 Locale.JAPANESE.language -> "yyyy年 MMM d日 (EEE)"
+
                 else -> "EEE d MMM yyyy"
             }
             return SimpleDateFormat(pattern, locale)

@@ -11,11 +11,13 @@
         app:navigationIcon="?attr/homeAsUpIndicator" />
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/ScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/Toolbar"
         android:fillViewport="true"
-        android:theme="@style/Colorless">
+        android:theme="@style/Colorless"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"

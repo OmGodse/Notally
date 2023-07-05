@@ -13,6 +13,7 @@ import android.text.style.URLSpan
 import androidx.core.text.getSpans
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.omgodse.notally.Cache
 import com.omgodse.notally.miscellaneous.applySpans
 import com.omgodse.notally.preferences.Preferences
 import com.omgodse.notally.room.BaseNote
@@ -61,7 +62,8 @@ class NotallyModel(app: Application) : AndroidViewModel(app) {
 
 
     suspend fun setState(id: Long) {
-        val baseNote = withContext(Dispatchers.IO) { baseNoteDao.get(id) }
+        val cachedNote = Cache.list.find { baseNote -> baseNote.id == id }
+        val baseNote = cachedNote ?: withContext(Dispatchers.IO) { baseNoteDao.get(id) }
 
         this.id = id
         folder = baseNote.folder
