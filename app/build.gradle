@@ -1,27 +1,25 @@
 plugins {
-    id "com.android.application"
-    id "kotlin-android"
-    id "kotlin-kapt"
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'com.google.devtools.ksp'
 }
 
 android {
     compileSdk 33
-    namespace "com.omgodse.notally"
+    namespace 'com.omgodse.notally'
 
     defaultConfig {
-        applicationId "com.omgodse.notally"
+        applicationId 'com.omgodse.notally'
         minSdk 21
         targetSdk 32
         versionCode 48
         versionName "5.3"
-        resConfigs "en", "ca", "cs", "da", "de", "el", "es", "fr", "hu", "in", "it", "ja", "nb", "nl", "nn", "pl", "pt-rBR", "pt-rPT", "ru", "sk", "sv", "tl", "tr", "uk", "vi", "zh-rCN"
+        resConfigs 'en', 'ca', 'cs', 'da', 'de', 'el', 'es', 'fr', 'hu', 'in', 'it', 'ja', 'nb', 'nl', 'nn', 'pl', 'pt-rBR', 'pt-rPT', 'ru', 'sk', 'sv', 'tl', 'tr', 'uk', 'vi', 'zh-rCN'
         vectorDrawables.generatedDensities = []
     }
 
-    kapt {
-        arguments {
-            arg("room.schemaLocation", "$projectDir/schemas")
-        }
+    ksp {
+        arg("room.schemaLocation", "$projectDir/schemas")
     }
 
     buildTypes {
@@ -51,9 +49,9 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
 
 dependencies {
     final def navVersion = "2.3.5"
-    final def roomVersion = "2.5.1"
+    final def roomVersion = "2.5.2"
 
-    kapt "androidx.room:room-compiler:$roomVersion"
+    ksp "androidx.room:room-compiler:$roomVersion"
     implementation "androidx.room:room-ktx:$roomVersion"
     implementation "androidx.room:room-runtime:$roomVersion"
 
