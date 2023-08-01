@@ -4,6 +4,7 @@ import android.app.Application
 import android.database.sqlite.SQLiteConstraintException
 import android.graphics.Typeface
 import android.text.Editable
+import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.CharacterStyle
 import android.text.style.StrikethroughSpan
@@ -51,7 +52,7 @@ class NotallyModel(app: Application) : AndroidViewModel(app) {
 
     val labels = ArrayList<String>()
 
-    var body = Editable.Factory.getInstance().newEditable(String())
+    var body: Editable = SpannableStringBuilder()
 
     val items = ArrayList<ListItem>()
 

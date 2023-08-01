@@ -12,8 +12,8 @@
         android:fontFamily="sans-serif-medium"
         android:paddingBottom="16dp"
         android:text="August"
-        android:textColor="#000000"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        android:textColor="#000000" />
 
     <TextView
         android:layout_width="match_parent"

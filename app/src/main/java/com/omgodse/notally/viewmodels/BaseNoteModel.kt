@@ -62,7 +62,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     var currentFile: File? = null
 
     val labels = labelDao.getAll()
-    val allNotes = baseNoteDao.getAll()
+    private val allNotes = baseNoteDao.getAll()
     val baseNotes = Content(baseNoteDao.getFrom(Folder.NOTES), ::transform)
     val deletedNotes = Content(baseNoteDao.getFrom(Folder.DELETED), ::transform)
     val archivedNotes = Content(baseNoteDao.getFrom(Folder.ARCHIVED), ::transform)
@@ -120,26 +120,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     }
 
 
-    private fun transform(list: List<BaseNote>): List<Item> {
-        if (list.isEmpty()) {
-            return list
-        } else {
-            val firstNote = list[0]
-            return if (firstNote.pinned) {
-                val newList = ArrayList<Item>(list.size + 2)
-                newList.add(pinned)
-
-                val firstUnpinnedNote = list.indexOfFirst { baseNote -> !baseNote.pinned }
-                list.forEachIndexed { index, baseNote ->
-                    if (index == firstUnpinnedNote) {
-                        newList.add(others)
-                    }
-                    newList.add(baseNote)
-                }
-                newList
-            } else list
-        }
-    }
+    private fun transform(list: List<BaseNote>) = transform(list, pinned, others)
 
 
     fun savePreference(info: SeekbarInfo, value: Int) = executeAsync { preferences.savePreference(info, value) }
@@ -466,6 +447,27 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
                 else -> "EEE d MMM yyyy"
             }
             return SimpleDateFormat(pattern, locale)
+        }
+
+        fun transform(list: List<BaseNote>, pinned: Header, others: Header): List<Item> {
+            if (list.isEmpty()) {
+                return list
+            } else {
+                val firstNote = list[0]
+                return if (firstNote.pinned) {
+                    val newList = ArrayList<Item>(list.size + 2)
+                    newList.add(pinned)
+
+                    val firstUnpinnedNote = list.indexOfFirst { baseNote -> !baseNote.pinned }
+                    list.forEachIndexed { index, baseNote ->
+                        if (index == firstUnpinnedNote) {
+                            newList.add(others)
+                        }
+                        newList.add(baseNote)
+                    }
+                    newList
+                } else list
+            }
         }
     }
 }

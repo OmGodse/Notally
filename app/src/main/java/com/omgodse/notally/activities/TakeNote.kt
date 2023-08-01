@@ -41,7 +41,7 @@ class TakeNote : NotallyActivity(Type.NOTE) {
     override fun setupListeners() {
         super.setupListeners()
         binding.EnterBody.doAfterTextChanged { text ->
-            model.body = text
+            model.body = requireNotNull(text)
         }
     }
 
