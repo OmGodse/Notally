@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name" translatable="false">Notally</string>
-
     <!-- Fragment Titles -->
     <string name="notes">မှတ်စုများ</string>
     <string name="labels">အမှတ်အသားများ</string>
@@ -121,6 +119,4 @@
     <string name="libraries">လိုက်ဘရီများ</string>
     <string name="rate">အက်ပ်ကို အဆင့်သတ်မှတ်မည်</string>
     <string name="send_feedback">တုံ့ပြန်ချက်​ပေးပို့မည်</string>
-
-    <string name="github" translatable="false">GitHub</string>
 </resources>
