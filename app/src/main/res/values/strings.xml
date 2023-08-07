@@ -123,4 +123,8 @@
     <string name="send_feedback">Send feedback</string>
 
     <string name="github" translatable="false">GitHub</string>
+
+    <!-- Widget -->
+    <string name="single_note">Single note</string>
+    <string name="select_note">Select note</string>
 </resources>

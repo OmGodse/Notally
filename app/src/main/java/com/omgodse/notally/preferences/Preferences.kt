@@ -33,6 +33,14 @@ class Preferences private constructor(app: Application) {
     private fun getSeekbarPref(info: SeekbarInfo) = requireNotNull(preferences.getInt(info.key, info.defaultValue))
 
 
+    fun getWidgetData(id: Int) = preferences.getLong("widget:$id", 0)
+
+    fun updateWidget(id: Int, noteId: Long) {
+        editor.putLong("widget:$id", noteId)
+        editor.commit()
+    }
+
+
     fun savePreference(info: SeekbarInfo, value: Int) {
         editor.putInt(info.key, value)
         editor.commit()
