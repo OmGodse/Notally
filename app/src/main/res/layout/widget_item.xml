@@ -13,16 +13,14 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
         android:paddingBottom="16dp"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-        android:textColor="#000000" />
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
     <TextView
         android:id="@+id/Date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="16dp"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-        android:textColor="#99000000" />
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
 
     <TextView
         android:id="@+id/Note"
@@ -30,7 +28,6 @@
         android:layout_height="wrap_content"
         android:lineSpacingMultiplier="1.1"
         android:paddingBottom="16dp"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-        android:textColor="#99000000" />
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
 
 </LinearLayout>
