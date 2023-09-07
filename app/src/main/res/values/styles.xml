@@ -25,6 +25,8 @@
     <style name="AppTheme" parent="Base.AppTheme">
         <item name="colorPrimaryDark">@color/Black</item>
         <item name="colorPrimary">@color/LightBlue500</item>
+        <item name="alternateFabTint">@color/LightBlue500</item>
+        <item name="alternateFabBackground">@color/Blue50</item>
     </style>
 
     <style name="MainActivity" parent="AppTheme">
@@ -116,6 +118,11 @@
         <item name="android:paddingBottom">8dp</item>
         <item name="android:textColor">?attr/colorPrimary</item>
         <item name="android:textAppearance">?attr/textAppearanceSubtitle2</item>
+    </style>
+
+
+    <style name="RoundedRectangle" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerSize">16dp</item>
     </style>
 
 </resources>

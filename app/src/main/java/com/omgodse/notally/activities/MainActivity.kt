@@ -16,7 +16,6 @@ import androidx.navigation.navOptions
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
-import com.omgodse.notally.MenuDialog
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.ActivityMainBinding
 import com.omgodse.notally.viewmodels.BaseNoteModel
@@ -47,17 +46,13 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun setupFAB() {
-        binding.TakeNoteFAB.setOnClickListener {
-            MenuDialog(this)
-                .add(R.string.make_list, R.drawable.checkbox) {
-                    val intent = Intent(this, MakeList::class.java)
-                    startActivity(intent)
-                }
-                .add(R.string.take_note, R.drawable.edit) {
-                    val intent = Intent(this, TakeNote::class.java)
-                    startActivity(intent)
-                }
-                .show()
+        binding.TakeNote.setOnClickListener {
+            val intent = Intent(this, TakeNote::class.java)
+            startActivity(intent)
+        }
+        binding.MakeList.setOnClickListener {
+            val intent = Intent(this, MakeList::class.java)
+            startActivity(intent)
         }
     }
 
@@ -112,8 +107,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleDestinationChange(destination: NavDestination) {
         if (destination.id == R.id.Notes) {
-            binding.TakeNoteFAB.show()
-        } else binding.TakeNoteFAB.hide()
+            binding.TakeNote.show()
+            binding.MakeList.show()
+        } else {
+            binding.TakeNote.hide()
+            binding.MakeList.hide()
+        }
 
         binding.EnterSearchKeyword.isVisible = (destination.id == R.id.Search)
     }
