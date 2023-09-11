@@ -88,6 +88,11 @@
     <string name="max_lines_to_display">Nombre maximum de lignes à afficher dans une note</string>
 
     <string name="backup">Sauvegarde</string>
+
+    <!-- Auto backup -->
+    <string name="auto_backup">Sauvegarde automatique</string>
+    <string name="tap_to_set_up">Cliquer pour régler</string>
+
     <string name="export_backup">Exporter la sauvegarde</string>
     <string name="import_backup">Importer une sauvegarde</string>
 

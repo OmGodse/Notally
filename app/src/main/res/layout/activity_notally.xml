@@ -11,11 +11,13 @@
         app:navigationIcon="?attr/homeAsUpIndicator" />
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/ScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/Toolbar"
         android:fillViewport="true"
-        android:theme="@style/Colorless">
+        android:theme="@style/Colorless"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,11 +25,6 @@
             android:focusableInTouchMode="true"
             android:orientation="vertical"
             android:paddingBottom="16dp">
-
-            <com.omgodse.notally.AspectRatioRecyclerView
-                android:id="@+id/ImagePreview"
-                android:layout_width="match_parent"
-                android:layout_height="0dp" />
 
             <EditText
                 android:id="@+id/EnterTitle"

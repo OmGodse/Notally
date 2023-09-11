@@ -68,10 +68,14 @@
     <string name="saved_to_notally">Saved to Notally</string>
     <string name="empty_note">Empty note</string>
     <string name="empty_list">Empty list</string>
+
+    <!-- Messages -->
     <string name="cant_open_link">Can\'t open link</string>
+    <string name="invalid_image">Invalid image</string>
     <string name="invalid_backup">Invalid backup</string>
     <string name="imported_backup">Imported backup</string>
     <string name="something_went_wrong">Something went wrong. Please try again.</string>
+    <string name="image_format_not_supported">Image format not supported</string>
     <string name="install_an_email">Install an email app to send feedback</string>
     <string name="install_a_browser">Install a browser to open this link</string>
 
@@ -119,4 +123,8 @@
     <string name="send_feedback">Send feedback</string>
 
     <string name="github" translatable="false">GitHub</string>
+
+    <!-- Widget -->
+    <string name="single_note">Single note</string>
+    <string name="select_note">Select note</string>
 </resources>

@@ -1,6 +1,12 @@
 package com.omgodse.notally.legacy
 
-import com.omgodse.notally.room.*
+import com.omgodse.notally.room.BaseNote
+import com.omgodse.notally.room.Color
+import com.omgodse.notally.room.Folder
+import com.omgodse.notally.room.Label
+import com.omgodse.notally.room.ListItem
+import com.omgodse.notally.room.SpanRepresentation
+import com.omgodse.notally.room.Type
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.io.File
@@ -87,7 +93,7 @@ object XMLUtils {
         val type = if (rootTag == "note") {
             Type.NOTE
         } else Type.LIST
-        return BaseNote(0, type, folder, color, title, pinned, timestamp, labels, body, spans, items, emptyList())
+        return BaseNote(0, type, folder, color, title, pinned, timestamp, labels, body, spans, items)
     }
 
 

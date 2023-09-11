@@ -1,24 +1,35 @@
 package com.omgodse.notally.viewmodels
 
 import android.app.Application
+import android.database.sqlite.SQLiteConstraintException
 import android.graphics.Typeface
 import android.text.Editable
+import android.text.SpannableStringBuilder
 import android.text.Spanned
-import android.text.style.*
+import android.text.style.CharacterStyle
+import android.text.style.StrikethroughSpan
+import android.text.style.StyleSpan
+import android.text.style.TypefaceSpan
+import android.text.style.URLSpan
 import androidx.core.text.getSpans
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.omgodse.notally.Cache
 import com.omgodse.notally.miscellaneous.applySpans
 import com.omgodse.notally.preferences.Preferences
-import com.omgodse.notally.room.*
+import com.omgodse.notally.room.BaseNote
+import com.omgodse.notally.room.Color
+import com.omgodse.notally.room.Folder
+import com.omgodse.notally.room.Label
+import com.omgodse.notally.room.ListItem
+import com.omgodse.notally.room.NotallyDatabase
+import com.omgodse.notally.room.SpanRepresentation
+import com.omgodse.notally.room.Type
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.*
 
-class NotallyModel(app: Application, private val type: Type) : AndroidViewModel(app) {
+class NotallyModel(app: Application) : AndroidViewModel(app) {
 
     private val database = NotallyDatabase.getDatabase(app)
     private val labelDao = database.labelDao
@@ -29,28 +40,41 @@ class NotallyModel(app: Application, private val type: Type) : AndroidViewModel(
     var isNewNote = true
     var isFirstInstance = true
 
+    var type = Type.NOTE
+
     var id = 0L
     var folder = Folder.NOTES
     var color = Color.DEFAULT
 
     var title = String()
     var pinned = false
+    var timestamp = System.currentTimeMillis()
 
-    var timestamp = Date().time
-    var labels = HashSet<String>()
+    val labels = ArrayList<String>()
 
-    var body = Editable.Factory.getInstance().newEditable(String())
+    var body: Editable = SpannableStringBuilder()
+
     val items = ArrayList<ListItem>()
 
-    fun setStateFromBaseNote(baseNote: BaseNote) {
-        id = baseNote.id
+    fun setLabels(list: List<String>) {
+        labels.clear()
+        labels.addAll(list)
+    }
+
+
+    suspend fun setState(id: Long) {
+        val cachedNote = Cache.list.find { baseNote -> baseNote.id == id }
+        val baseNote = cachedNote ?: withContext(Dispatchers.IO) { baseNoteDao.get(id) }
+
+        this.id = id
         folder = baseNote.folder
         color = baseNote.color
 
         title = baseNote.title
         pinned = baseNote.pinned
         timestamp = baseNote.timestamp
-        labels = baseNote.labels
+
+        setLabels(baseNote.labels)
 
         body = baseNote.body.applySpans(baseNote.spans)
 
@@ -58,34 +82,29 @@ class NotallyModel(app: Application, private val type: Type) : AndroidViewModel(
         items.addAll(baseNote.items)
     }
 
+    suspend fun createBaseNote() = withContext(Dispatchers.IO) {
+        id = baseNoteDao.insert(getBaseNote())
+    }
 
-    fun saveNote(onComplete: () -> Unit) {
+
+    suspend fun delete() = withContext(Dispatchers.IO) {
+        baseNoteDao.delete(id)
+    }
+
+    suspend fun saveNote() = withContext(Dispatchers.IO) {
+        baseNoteDao.insert(getBaseNote())
+    }
+
+
+    fun insertLabel(label: Label, onComplete: (success: Boolean) -> Unit) {
         viewModelScope.launch {
-            id = withContext(Dispatchers.IO) { baseNoteDao.insert(getBaseNote()) }
-            onComplete()
-        }
-    }
-
-    fun insertLabel(label: Label, onComplete: (success: Boolean) -> Unit) =
-        executeAsyncWithCallback({ labelDao.insert(label) }, onComplete)
-
-
-    fun restore() {
-        folder = Folder.NOTES
-    }
-
-    fun archive() {
-        folder = Folder.ARCHIVED
-    }
-
-    fun delete() {
-        folder = Folder.DELETED
-    }
-
-    fun deleteForever(onComplete: () -> Unit) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) { baseNoteDao.delete(id) }
-            onComplete()
+            val success = try {
+                withContext(Dispatchers.IO) { labelDao.insert(label) }
+                true
+            } catch (exception: SQLiteConstraintException) {
+                false
+            }
+            onComplete(success)
         }
     }
 
@@ -95,9 +114,9 @@ class NotallyModel(app: Application, private val type: Type) : AndroidViewModel(
 
     private fun getBaseNote(): BaseNote {
         val spans = getFilteredSpans(body)
-        val trimmedBody = body.toString().trimEnd()
-        val filteredItems = items.filter { item -> item.body.isNotEmpty() }
-        return BaseNote(id, type, folder, color, title, pinned, timestamp, labels, trimmedBody, spans, filteredItems)
+        val body = this.body.trimEnd().toString()
+        val items = this.items.filter { item -> item.body.isNotEmpty() }
+        return BaseNote(id, type, folder, color, title, pinned, timestamp, labels, body, spans, items)
     }
 
     private fun getFilteredSpans(spanned: Spanned): ArrayList<SpanRepresentation> {
@@ -112,6 +131,7 @@ class NotallyModel(app: Application, private val type: Type) : AndroidViewModel(
                     representation.bold = span.style == Typeface.BOLD
                     representation.italic = span.style == Typeface.ITALIC
                 }
+
                 is URLSpan -> representation.link = true
                 is TypefaceSpan -> representation.monospace = span.family == "monospace"
                 is StrikethroughSpan -> representation.strikethrough = true
@@ -152,14 +172,5 @@ class NotallyModel(app: Application, private val type: Type) : AndroidViewModel(
             }
         }
         return representations
-    }
-
-
-    class Factory(private val app: Application, private val type: Type) :
-        ViewModelProvider.AndroidViewModelFactory(app) {
-
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return NotallyModel(app, type) as T
-        }
     }
 }

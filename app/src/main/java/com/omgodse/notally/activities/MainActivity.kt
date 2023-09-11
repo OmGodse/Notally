@@ -1,5 +1,6 @@
 package com.omgodse.notally.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -37,11 +38,23 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setSupportActionBar(binding.Toolbar)
+        setupFAB()
         setupMenu()
         setupNavigation()
         setupSearch()
     }
 
+
+    private fun setupFAB() {
+        binding.TakeNote.setOnClickListener {
+            val intent = Intent(this, TakeNote::class.java)
+            startActivity(intent)
+        }
+        binding.MakeList.setOnClickListener {
+            val intent = Intent(this, MakeList::class.java)
+            startActivity(intent)
+        }
+    }
 
     private fun setupMenu() {
         val menu = binding.NavigationView.menu
@@ -73,10 +86,10 @@ class MainActivity : AppCompatActivity() {
                     val options = navOptions {
                         launchSingleTop = true
                         anim {
-                            exit = R.anim.nav_default_exit_anim
-                            enter = R.anim.nav_default_enter_anim
-                            popExit = R.anim.nav_default_pop_exit_anim
-                            popEnter = R.anim.nav_default_pop_enter_anim
+                            exit = androidx.navigation.ui.R.anim.nav_default_exit_anim
+                            enter = androidx.navigation.ui.R.anim.nav_default_enter_anim
+                            popExit = androidx.navigation.ui.R.anim.nav_default_pop_exit_anim
+                            popEnter = androidx.navigation.ui.R.anim.nav_default_pop_enter_anim
                         }
                         popUpTo(navController.graph.startDestination) { inclusive = false }
                     }
@@ -93,6 +106,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun handleDestinationChange(destination: NavDestination) {
+        if (destination.id == R.id.Notes) {
+            binding.TakeNote.show()
+            binding.MakeList.show()
+        } else {
+            binding.TakeNote.hide()
+            binding.MakeList.hide()
+        }
+
         binding.EnterSearchKeyword.isVisible = (destination.id == R.id.Search)
     }
 

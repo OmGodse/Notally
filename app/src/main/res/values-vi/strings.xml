@@ -87,7 +87,7 @@
 
     <string name="date_format">Định dạng ngày tháng</string>
     <string name="none">Không</string>
-    
+
     <string name="text_size">Cỡ chữ</string>
     <string name="small">Nhỏ</string>
     <string name="medium">Vừa</string>
@@ -98,7 +98,7 @@
     <string name="max_lines_to_display">Số lượng dòng ghi chú tối đa</string>
 
     <string name="backup">Sao lưu</string>
-    
+
     <!-- Auto backup -->
     <string name="auto_backup">Sao lưu tự động</string>
     <string name="tap_to_set_up">Nhấn để thiết lập</string>
@@ -107,7 +107,7 @@
     <string name="disable_auto_backup">Tắt sao lưu tự động</string>
     <string name="choose_another_folder">Chọn thư mục khác</string>
     <string name="cant_find_folder">Không tìm thấy thư mục. Có thể do đã dời hoặc xóa.</string>
-    
+
     <string name="export_backup">Xuất dữ liệu</string>
     <string name="import_backup">Nhập dữ liệu</string>
 
@@ -115,5 +115,4 @@
     <string name="libraries">Thư viện sử dụng</string>
     <string name="rate">Đánh giá app</string>
     <string name="send_feedback">Gửi phản hồi</string>
-    
 </resources>

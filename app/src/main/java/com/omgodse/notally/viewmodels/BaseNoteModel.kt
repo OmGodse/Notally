@@ -13,6 +13,7 @@ import androidx.core.text.toHtml
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.room.withTransaction
+import com.omgodse.notally.Cache
 import com.omgodse.notally.R
 import com.omgodse.notally.legacy.Migrations
 import com.omgodse.notally.legacy.XMLUtils
@@ -24,7 +25,15 @@ import com.omgodse.notally.preferences.AutoBackup
 import com.omgodse.notally.preferences.ListInfo
 import com.omgodse.notally.preferences.Preferences
 import com.omgodse.notally.preferences.SeekbarInfo
-import com.omgodse.notally.room.*
+import com.omgodse.notally.room.BaseNote
+import com.omgodse.notally.room.Color
+import com.omgodse.notally.room.Converters
+import com.omgodse.notally.room.Folder
+import com.omgodse.notally.room.Header
+import com.omgodse.notally.room.Item
+import com.omgodse.notally.room.Label
+import com.omgodse.notally.room.NotallyDatabase
+import com.omgodse.notally.room.Type
 import com.omgodse.notally.room.livedata.Content
 import com.omgodse.notally.room.livedata.SearchResult
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -37,7 +46,7 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
 import java.util.zip.ZipFile
 
 class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
@@ -53,6 +62,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     var currentFile: File? = null
 
     val labels = labelDao.getAll()
+    private val allNotes = baseNoteDao.getAll()
     val baseNotes = Content(baseNoteDao.getFrom(Folder.NOTES), ::transform)
     val deletedNotes = Content(baseNoteDao.getFrom(Folder.DELETED), ::transform)
     val archivedNotes = Content(baseNoteDao.getFrom(Folder.ARCHIVED), ::transform)
@@ -97,6 +107,9 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
                 }
             }
         }
+        allNotes.observeForever { list ->
+            Cache.list = list
+        }
     }
 
     fun getNotesByLabel(label: String): Content {
@@ -107,26 +120,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     }
 
 
-    private fun transform(list: List<BaseNote>): List<Item> {
-        if (list.isEmpty()) {
-            return list
-        } else {
-            val firstNote = list[0]
-            return if (firstNote.pinned) {
-                val newList = ArrayList<Item>(list.size + 2)
-                newList.add(pinned)
-
-                val firstUnpinnedNote = list.indexOfFirst { baseNote -> !baseNote.pinned }
-                list.forEachIndexed { index, baseNote ->
-                    if (index == firstUnpinnedNote) {
-                        newList.add(others)
-                    }
-                    newList.add(baseNote)
-                }
-                newList
-            } else list
-        }
-    }
+    private fun transform(list: List<BaseNote>) = transform(list, pinned, others)
 
 
     fun savePreference(info: SeekbarInfo, value: Int) = executeAsync { preferences.savePreference(info, value) }
@@ -245,7 +239,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         val spans = Converters.jsonToSpans(spansTmp)
         val items = Converters.jsonToItems(itemsTmp)
 
-        return BaseNote(0, type, folder, color, title, pinned, timestamp, labels, body, spans, items, emptyList())
+        return BaseNote(0, type, folder, color, title, pinned, timestamp, labels, body, spans, items)
     }
 
     private fun <T> convertCursorToList(cursor: Cursor, convert: (cursor: Cursor) -> T): ArrayList<T> {
@@ -395,6 +389,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
                 jsonObject.put("body", baseNote.body)
                 jsonObject.put("spans", Converters.spansToJSONArray(baseNote.spans))
             }
+
             Type.LIST -> {
                 jsonObject.put("items", Converters.itemsToJSONArray(baseNote.items))
             }
@@ -422,6 +417,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
                 val body = baseNote.body.applySpans(baseNote.spans).toHtml()
                 append(body)
             }
+
             Type.LIST -> {
                 append("<ol style=\"list-style: none; padding: 0;\">")
                 baseNote.items.forEach { item ->
@@ -447,9 +443,31 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
             val pattern = when (locale.language) {
                 Locale.CHINESE.language,
                 Locale.JAPANESE.language -> "yyyy年 MMM d日 (EEE)"
+
                 else -> "EEE d MMM yyyy"
             }
             return SimpleDateFormat(pattern, locale)
+        }
+
+        fun transform(list: List<BaseNote>, pinned: Header, others: Header): List<Item> {
+            if (list.isEmpty()) {
+                return list
+            } else {
+                val firstNote = list[0]
+                return if (firstNote.pinned) {
+                    val newList = ArrayList<Item>(list.size + 2)
+                    newList.add(pinned)
+
+                    val firstUnpinnedNote = list.indexOfFirst { baseNote -> !baseNote.pinned }
+                    list.forEachIndexed { index, baseNote ->
+                        if (index == firstUnpinnedNote) {
+                            newList.add(others)
+                        }
+                        newList.add(baseNote)
+                    }
+                    newList
+                } else list
+            }
         }
     }
 }

@@ -35,6 +35,19 @@ interface BaseNoteDao {
     @Query("SELECT * FROM BaseNote WHERE folder = :folder ORDER BY pinned DESC, timestamp DESC")
     fun getFrom(folder: Folder): LiveData<List<BaseNote>>
 
+    @Query("SELECT * FROM BaseNote")
+    fun getAll(): LiveData<List<BaseNote>>
+
+    @Query("SELECT * FROM BaseNote WHERE id = :id")
+    fun get(id: Long): BaseNote
+
+
+    @Query("SELECT color FROM BaseNote WHERE id = :id")
+    fun getColor(id: Long): Color?
+
+    @Query("SELECT * FROM BaseNote WHERE folder = 'NOTES' AND type = 'NOTE' ORDER BY pinned DESC, timestamp DESC")
+    suspend fun getAllNotes(): List<BaseNote>
+
 
     @Query("UPDATE BaseNote SET folder = :folder WHERE id = :id")
     suspend fun move(id: Long, folder: Folder)

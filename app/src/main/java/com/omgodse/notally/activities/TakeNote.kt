@@ -3,10 +3,12 @@ package com.omgodse.notally.activities
 import android.content.Intent
 import android.graphics.Typeface
 import android.net.Uri
-import android.os.Bundle
-import android.text.Editable
 import android.text.Spanned
-import android.text.style.*
+import android.text.style.CharacterStyle
+import android.text.style.StrikethroughSpan
+import android.text.style.StyleSpan
+import android.text.style.TypefaceSpan
+import android.text.style.URLSpan
 import android.util.Patterns
 import android.view.ActionMode
 import android.view.Menu
@@ -17,16 +19,13 @@ import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.LinkMovementMethod
 import com.omgodse.notally.R
-import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.miscellaneous.add
 import com.omgodse.notally.miscellaneous.setOnNextAction
 import com.omgodse.notally.room.Type
 
 class TakeNote : NotallyActivity(Type.NOTE) {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    override fun configureUI() {
         binding.EnterTitle.setOnNextAction {
             binding.EnterBody.requestFocus()
         }
@@ -39,28 +38,10 @@ class TakeNote : NotallyActivity(Type.NOTE) {
     }
 
 
-    override fun receiveSharedNote() {
-        val title = intent.getStringExtra(Intent.EXTRA_SUBJECT)
-
-        val string = intent.getStringExtra(Intent.EXTRA_TEXT)
-        val charSequence = intent.getCharSequenceExtra(Operations.extraCharSequence)
-        val body = charSequence ?: string
-
-        if (body != null) {
-            model.body = Editable.Factory.getInstance().newEditable(body)
-        }
-        if (title != null) {
-            model.title = title
-        }
-
-        Toast.makeText(this, R.string.saved_to_notally, Toast.LENGTH_SHORT).show()
-    }
-
-
     override fun setupListeners() {
         super.setupListeners()
         binding.EnterBody.doAfterTextChanged { text ->
-            model.body = text
+            model.body = requireNotNull(text)
         }
     }
 
