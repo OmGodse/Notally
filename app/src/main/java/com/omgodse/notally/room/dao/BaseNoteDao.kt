@@ -42,9 +42,6 @@ interface BaseNoteDao {
     fun get(id: Long): BaseNote
 
 
-    @Query("SELECT color FROM BaseNote WHERE id = :id")
-    fun getColor(id: Long): Color?
-
     @Query("SELECT * FROM BaseNote WHERE folder = 'NOTES' AND type = 'NOTE' ORDER BY pinned DESC, timestamp DESC")
     suspend fun getAllNotes(): List<BaseNote>
 

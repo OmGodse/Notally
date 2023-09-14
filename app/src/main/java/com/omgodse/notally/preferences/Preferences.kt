@@ -35,9 +35,35 @@ class Preferences private constructor(app: Application) {
 
     fun getWidgetData(id: Int) = preferences.getLong("widget:$id", 0)
 
+    fun deleteWidget(id: Int) {
+        editor.remove("widget:$id")
+        editor.commit()
+    }
+
     fun updateWidget(id: Int, noteId: Long) {
         editor.putLong("widget:$id", noteId)
         editor.commit()
+    }
+
+    fun getWidgetIds(noteId: Long): List<Int> {
+        val pairs = preferences.all
+        val widgetIds = ArrayList<Int>()
+        pairs.keys.forEach { key ->
+            val token = "widget:"
+            if (key.startsWith(token)) {
+                val end = key.substringAfter(token)
+                val id = end.toIntOrNull()
+                if (id != null) {
+                    val value = pairs[key] as? Long
+                    if (value != null) {
+                        if (value == noteId) {
+                            widgetIds.add(id)
+                        }
+                    }
+                }
+            }
+        }
+        return widgetIds
     }
 
 

@@ -23,6 +23,7 @@ import com.omgodse.notally.room.Folder
 import com.omgodse.notally.room.Type
 import com.omgodse.notally.viewmodels.BaseNoteModel
 import com.omgodse.notally.viewmodels.NotallyModel
+import com.omgodse.notally.widget.WidgetProvider
 import kotlinx.coroutines.launch
 
 abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
@@ -33,6 +34,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     override fun finish() {
         lifecycleScope.launch {
             model.saveNote()
+            sendModificationBroadcast()
             super.finish()
         }
     }
@@ -42,6 +44,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         outState.putLong("id", model.id)
         lifecycleScope.launch {
             model.saveNote()
+            sendModificationBroadcast()
         }
     }
 
@@ -97,6 +100,14 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         Operations.bindLabels(binding.LabelGroup, model.labels, model.textSize)
 
         setupColor()
+    }
+
+
+    private fun sendModificationBroadcast() {
+        val intent = Intent(this, WidgetProvider::class.java)
+        intent.action = WidgetProvider.ACTION_NOTE_MODIFIED
+        intent.putExtra(WidgetProvider.EXTRA_NOTE_ID, model.id)
+        sendBroadcast(intent)
     }
 
 
@@ -158,6 +169,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
             .setPositiveButton(R.string.delete) { _, _ ->
                 lifecycleScope.launch {
                     model.delete()
+                    sendModificationBroadcast()
                     super.finish()
                 }
             }

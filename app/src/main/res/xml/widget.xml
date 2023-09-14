@@ -2,6 +2,7 @@
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:configure="com.omgodse.notally.activities.ConfigureWidget"
     android:initialLayout="@layout/widget"
+    android:previewImage="@mipmap/widget_preview"
     android:previewLayout="@layout/widget_preview"
     android:resizeMode="horizontal|vertical"
     android:targetCellWidth="4"
