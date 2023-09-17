@@ -18,16 +18,17 @@ class WidgetProvider : AppWidgetProvider() {
 
     override fun onReceive(context: Context, intent: Intent) {
         super.onReceive(context, intent)
-        if (intent.action == ACTION_NOTE_MODIFIED) {
-            val noteId = intent.getLongExtra(EXTRA_NOTE_ID, 0)
+        if (intent.action == ACTION_NOTES_MODIFIED) {
+            val noteIds = intent.getLongArrayExtra(EXTRA_MODIFIED_NOTES)
+            if (noteIds != null) {
+                val app = context.applicationContext as Application
+                val preferences = Preferences.getInstance(app)
 
-            val app = context.applicationContext as Application
-            val preferences = Preferences.getInstance(app)
-
-            val manager = AppWidgetManager.getInstance(context)
-            val widgetIds = preferences.getWidgetIds(noteId)
-            widgetIds.forEach { id ->
-                updateWidget(context, manager, id, noteId)
+                val manager = AppWidgetManager.getInstance(context)
+                val updatableWidgets = preferences.getUpdatableWidgets(noteIds)
+                updatableWidgets.forEach { pair ->
+                    updateWidget(context, manager, pair.first, pair.second)
+                }
             }
         }
     }
@@ -95,6 +96,7 @@ class WidgetProvider : AppWidgetProvider() {
         }
 
         const val EXTRA_NOTE_ID = "com.omgodse.notally.EXTRA_NOTE_ID"
-        const val ACTION_NOTE_MODIFIED = "com.omgodse.notally.ACTION_NOTE_MODIFIED"
+        const val EXTRA_MODIFIED_NOTES = "com.omgodse.notally.EXTRA_MODIFIED_NOTES"
+        const val ACTION_NOTES_MODIFIED = "com.omgodse.notally.ACTION_NOTE_MODIFIED"
     }
 }

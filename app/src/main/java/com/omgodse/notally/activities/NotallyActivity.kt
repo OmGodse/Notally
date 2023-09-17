@@ -105,8 +105,8 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
     private fun sendModificationBroadcast() {
         val intent = Intent(this, WidgetProvider::class.java)
-        intent.action = WidgetProvider.ACTION_NOTE_MODIFIED
-        intent.putExtra(WidgetProvider.EXTRA_NOTE_ID, model.id)
+        intent.action = WidgetProvider.ACTION_NOTES_MODIFIED
+        intent.putExtra(WidgetProvider.EXTRA_MODIFIED_NOTES, longArrayOf(model.id))
         sendBroadcast(intent)
     }
 

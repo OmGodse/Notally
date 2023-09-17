@@ -45,9 +45,9 @@ class Preferences private constructor(app: Application) {
         editor.commit()
     }
 
-    fun getWidgetIds(noteId: Long): List<Int> {
+    fun getUpdatableWidgets(noteIds: LongArray): List<Pair<Int, Long>> {
+        val updatableWidgets = ArrayList<Pair<Int, Long>>()
         val pairs = preferences.all
-        val widgetIds = ArrayList<Int>()
         pairs.keys.forEach { key ->
             val token = "widget:"
             if (key.startsWith(token)) {
@@ -56,14 +56,14 @@ class Preferences private constructor(app: Application) {
                 if (id != null) {
                     val value = pairs[key] as? Long
                     if (value != null) {
-                        if (value == noteId) {
-                            widgetIds.add(id)
+                        if (noteIds.contains(value)) {
+                            updatableWidgets.add(Pair(id, value))
                         }
                     }
                 }
             }
         }
-        return widgetIds
+        return updatableWidgets
     }
 
 

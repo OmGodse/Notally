@@ -42,6 +42,10 @@ interface BaseNoteDao {
     fun get(id: Long): BaseNote
 
 
+    @Query("SELECT id FROM BaseNote WHERE folder = 'DELETED'")
+    suspend fun getDeletedNoteIds(): LongArray
+
+
     @Query("SELECT * FROM BaseNote WHERE folder = 'NOTES' AND type = 'NOTE' ORDER BY pinned DESC, timestamp DESC")
     suspend fun getAllNotes(): List<BaseNote>
 

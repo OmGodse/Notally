@@ -36,6 +36,7 @@ import com.omgodse.notally.room.NotallyDatabase
 import com.omgodse.notally.room.Type
 import com.omgodse.notally.room.livedata.Content
 import com.omgodse.notally.room.livedata.SearchResult
+import com.omgodse.notally.widget.WidgetProvider
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -333,7 +334,19 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     fun unpinBaseNote(id: Long) = executeAsync { baseNoteDao.updatePinned(id, false) }
 
 
-    fun deleteAllBaseNotes() = executeAsync { baseNoteDao.deleteFrom(Folder.DELETED) }
+    fun deleteAllBaseNotes() {
+        viewModelScope.launch {
+            val ids: LongArray
+            withContext(Dispatchers.IO) {
+                ids = baseNoteDao.getDeletedNoteIds()
+                baseNoteDao.deleteFrom(Folder.DELETED)
+            }
+            val intent = Intent(app, WidgetProvider::class.java)
+            intent.action = WidgetProvider.ACTION_NOTES_MODIFIED
+            intent.putExtra(WidgetProvider.EXTRA_MODIFIED_NOTES, ids)
+            app.sendBroadcast(intent)
+        }
+    }
 
     fun restoreBaseNote(id: Long) = executeAsync { baseNoteDao.move(id, Folder.NOTES) }
 
