@@ -2,11 +2,11 @@
 Notally was created because I wanted to make something that was beautiful and at the same time, useful. It's extremely light, there are minimal dependencies and lines of code.
 
 ### Features
+* Widgets
 * Auto backup
 * Adjustable text size
 * Support for Lollipop devices and up
 * APK size of 1.2 MB (1.6 MB uncompressed)
-* Add notes to your home screen with widgets
 * Color, pin and label your notes for quick organisation
 * Archive notes to keep them around, but out of your way
 * Export notes as TXT, JSON, HTML or PDF files with formatting
