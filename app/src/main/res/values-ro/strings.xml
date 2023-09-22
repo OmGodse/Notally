@@ -3,7 +3,7 @@
     <!-- Fragment Titles -->
     <string name="notes">Notiţe</string>
     <string name="labels">Etichete</string>
-    <string name="deleted">Șters</string>
+    <string name="deleted">Șterse</string>
     <string name="archived">Arhivat</string>
     <string name="settings">Setări</string>
 
@@ -64,7 +64,7 @@
 
     <!-- Miscellaneous -->
     <string name="saved_to_device">Salvat pe dispozitiv</string>
-    <string name="saved_to_notally">Salvat în Notally</string>
+    <string name="saved_to_notally">Salvat pe Notally</string>
     <string name="empty_note">Nota goală</string>
     <string name="empty_list">Lista goală</string>
 
@@ -111,7 +111,7 @@
     <string name="choose_folder">Alegeți dosarul</string>
     <string name="disable_auto_backup">Dezactivați backup-ul automat</string>
     <string name="choose_another_folder">Alegeți un alt dosar</string>
-    <string name="cant_find_folder">Nu găsesc dosarul. E posibil să-l fi mutat sau șters</string>
+    <string name="cant_find_folder">Nu găsesc dosarul. E posibil să fie mutat sau șters</string>
 
     <string name="export_backup">Exportă backup-ul</string>
     <string name="import_backup">Importă backup-ul</string>
