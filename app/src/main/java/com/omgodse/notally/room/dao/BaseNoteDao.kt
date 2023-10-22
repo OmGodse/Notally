@@ -8,6 +8,7 @@ import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Color
 import com.omgodse.notally.room.Folder
 import com.omgodse.notally.room.LabelsInBaseNote
+import com.omgodse.notally.room.ListItem
 
 @Dao
 interface BaseNoteDao {
@@ -46,7 +47,7 @@ interface BaseNoteDao {
     suspend fun getDeletedNoteIds(): LongArray
 
 
-    @Query("SELECT * FROM BaseNote WHERE folder = 'NOTES' AND type = 'NOTE' ORDER BY pinned DESC, timestamp DESC")
+    @Query("SELECT * FROM BaseNote WHERE folder = 'NOTES' ORDER BY pinned DESC, timestamp DESC")
     suspend fun getAllNotes(): List<BaseNote>
 
 
@@ -62,6 +63,16 @@ interface BaseNoteDao {
 
     @Query("UPDATE BaseNote SET labels = :labels WHERE id = :id")
     suspend fun updateLabels(id: Long, labels: List<String>)
+
+    @Query("UPDATE BaseNote SET items = :items WHERE id = :id")
+    suspend fun updateItems(id: Long, items: List<ListItem>)
+
+
+    suspend fun updateChecked(id: Long, position: Int, checked: Boolean) {
+        val items = get(id).items
+        items[position].checked = checked
+        updateItems(id, items)
+    }
 
 
     /**
