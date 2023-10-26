@@ -9,4 +9,5 @@
     android:paddingTop="8dp"
     android:paddingEnd="0dp"
     android:paddingBottom="8dp"
-    android:textAppearance="?attr/textAppearanceBody2" />
+    android:textAppearance="?attr/textAppearanceBody2"
+    android:theme="@style/AppTheme" />
