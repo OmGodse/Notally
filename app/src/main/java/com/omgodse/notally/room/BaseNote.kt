@@ -17,4 +17,5 @@ data class BaseNote(
     val body: String,
     val spans: List<SpanRepresentation>,
     val items: List<ListItem>,
+    val images: List<Image>
 ) : Item

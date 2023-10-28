@@ -93,7 +93,7 @@ object XMLUtils {
         val type = if (rootTag == "note") {
             Type.NOTE
         } else Type.LIST
-        return BaseNote(0, type, folder, color, title, pinned, timestamp, labels, body, spans, items)
+        return BaseNote(0, type, folder, color, title, pinned, timestamp, labels, body, spans, items, emptyList())
     }
 
 
