@@ -13,12 +13,12 @@ import com.omgodse.notally.room.dao.LabelDao
 @Database(entities = [BaseNote::class, Label::class], version = 3)
 abstract class NotallyDatabase : RoomDatabase() {
 
-    abstract val labelDao: LabelDao
-    abstract val commonDao: CommonDao
-    abstract val baseNoteDao: BaseNoteDao
+    abstract fun getLabelDao(): LabelDao
+    abstract fun getCommonDao(): CommonDao
+    abstract fun getBaseNoteDao(): BaseNoteDao
 
     fun checkpoint() {
-        baseNoteDao.query(SimpleSQLiteQuery("pragma wal_checkpoint(FULL)"))
+        getBaseNoteDao().query(SimpleSQLiteQuery("pragma wal_checkpoint(FULL)"))
     }
 
     companion object {
@@ -40,15 +40,15 @@ abstract class NotallyDatabase : RoomDatabase() {
 
         object Migration2 : Migration(1, 2) {
 
-            override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("ALTER TABLE `BaseNote` ADD COLUMN `color` TEXT NOT NULL DEFAULT 'DEFAULT'")
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE `BaseNote` ADD COLUMN `color` TEXT NOT NULL DEFAULT 'DEFAULT'")
             }
         }
 
         object Migration3 : Migration(2, 3) {
 
-            override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("ALTER TABLE `BaseNote` ADD COLUMN `images` TEXT NOT NULL DEFAULT `[]`")
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE `BaseNote` ADD COLUMN `images` TEXT NOT NULL DEFAULT `[]`")
             }
         }
     }

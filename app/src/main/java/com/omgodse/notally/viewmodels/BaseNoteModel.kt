@@ -53,9 +53,9 @@ import java.util.zip.ZipFile
 class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
     private val database = NotallyDatabase.getDatabase(app)
-    private val labelDao = database.labelDao
-    private val commonDao = database.commonDao
-    private val baseNoteDao = database.baseNoteDao
+    private val labelDao = database.getLabelDao()
+    private val commonDao = database.getCommonDao()
+    private val baseNoteDao = database.getBaseNoteDao()
 
     private val labelCache = HashMap<String, Content>()
     val formatter = getDateFormatter(app)

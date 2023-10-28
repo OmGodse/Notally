@@ -64,7 +64,7 @@ class ConfigureWidget : AppCompatActivity(), ItemListener {
 
         lifecycleScope.launch {
             val notes = withContext(Dispatchers.IO) {
-                val raw = database.baseNoteDao.getAllNotes()
+                val raw = database.getBaseNoteDao().getAllNotes()
                 BaseNoteModel.transform(raw, pinned, others)
             }
             adapter.submitList(notes)

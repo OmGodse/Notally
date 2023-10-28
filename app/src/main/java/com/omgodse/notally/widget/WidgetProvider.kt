@@ -46,7 +46,7 @@ class WidgetProvider : AppWidgetProvider() {
                 GlobalScope.launch {
                     withContext(Dispatchers.IO) {
                         try {
-                            database.baseNoteDao.updateChecked(noteId, position, checked)
+                            database.getBaseNoteDao().updateChecked(noteId, position, checked)
                         } finally {
                             updateWidgets(context, longArrayOf(noteId))
                             pendingResult.finish()

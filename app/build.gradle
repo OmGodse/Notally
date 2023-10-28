@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    compileSdk 33
+    compileSdk 34
     namespace 'com.omgodse.notally'
 
     defaultConfig {
@@ -19,6 +19,7 @@ android {
     }
 
     ksp {
+        arg("room.generateKotlin", "true")
         arg("room.schemaLocation", "$projectDir/schemas")
     }
 
@@ -49,7 +50,7 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
 
 dependencies {
     final def navVersion = "2.3.5"
-    final def roomVersion = "2.5.2"
+    final def roomVersion = "2.6.0"
 
     ksp "androidx.room:room-compiler:$roomVersion"
     implementation "androidx.room:room-ktx:$roomVersion"

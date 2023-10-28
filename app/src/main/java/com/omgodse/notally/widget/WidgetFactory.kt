@@ -33,7 +33,7 @@ class WidgetFactory(private val app: Application, private val id: Long) : Remote
     }
 
     override fun onDataSetChanged() {
-        baseNote = database.baseNoteDao.get(id)
+        baseNote = database.getBaseNoteDao().get(id)
     }
 
     override fun getViewAt(position: Int): RemoteViews {
