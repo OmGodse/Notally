@@ -9,11 +9,13 @@
 
     <!-- Menu Options -->
     <string name="share">Delen</string>
+    <string name="filter">Filteren</string>
     <string name="search">Zoeken</string>
     <string name="delete">Verwijderen</string>
     <string name="restore">Herstellen</string>
     <string name="archive">Archiveren</string>
-    <string name="unarchive">Acutaliseren</string>
+    <string name="unarchive">Actualiseren</string>
+    <string name="add_images">Afbeeldingen toevoegen</string>
     <string name="delete_all">Alles verwijderen</string>
     <string name="change_color">Wijzig kleur</string>
     <string name="delete_forever">Definitief verwijderen</string>
@@ -39,7 +41,7 @@
     <string name="view_file">Bekijk bestand</string>
     <string name="save_to_device">Opslaan op apparaat</string>
     <string name="edit_label">Bewerk label</string>
-    <string name="label_exists">Label bestaat</string>
+    <string name="label_exists">Label bestaat al</string>
     <string name="delete_label">Label verwijderen?</string>
     <string name="create_new">Er zijn nog geen labels. Nieuw label toevoegen?</string>
     <string name="delete_all_notes">Alle notities verwijderen?</string>
@@ -65,8 +67,16 @@
     <string name="saved_to_notally">Opgeslagen in Notally</string>
     <string name="empty_note">Lege notitie</string>
     <string name="empty_list">Lege lijst</string>
+
+     <!-- Messages -->
     <string name="cant_open_link">Kan link niet openen</string>
+    <string name="invalid_image">Afbeelding ongeldig</string>
+    <string name="invalid_backup">Backup ongeldig</string>
+    <string name="imported_backup">Backup geïmporteerd</string>    
     <string name="something_went_wrong">Er is iets fout gegaan. Probeer het opnieuw.</string>
+    <string name="image_format_not_supported">Afbeelding formaat wordt niet ondersteund</string>
+    <string name="install_an_email">Installeer een email app om de feedback te versturen</string>
+    <string name="install_a_browser">Installeer een web browser om deze link te openen</string>
 
     <!-- Settings Page -->
     <string name="appearance">Uiterlijk</string>
@@ -78,16 +88,31 @@
     <string name="theme">Thema</string>
     <string name="dark">Donker</string>
     <string name="light">Licht</string>
-    <string name="follow_system">Systeem</string>
+    <string name="follow_system">Systeem instellingen</string>
 
     <string name="date_format">Datum weergave</string>
     <string name="none">Geen</string>
 
+    <string name="text_size">Text grootte</string>
+    <string name="small">Klein</string>
+    <string name="medium">Gemiddeld</string>
+    <string name="large">Groot</string>
+    
     <string name="content_density">Inhoudsdichtheid</string>
     <string name="max_items_to_display">Maximum aantal items dat in de lijst kan worden weergegeven</string>
     <string name="max_lines_to_display">Maximum aantal regels in de notitie weer geven</string>
 
     <string name="backup">Back-up</string>
+
+    <!-- Auto backup -->
+    <string name="auto_backup">Automatische backup</string>
+    <string name="tap_to_set_up">Tap om te configureren</string>
+    <string name="notes_will_be">Notities worden elke dag gebackupped op het interne opslagmedium in uw apparaat.\n\nMogelijk werkt dit niet wanneer energie besparing is geactiveerd</string>
+    <string name="choose_folder">Kies een map</string>
+    <string name="disable_auto_backup">Deactiveer automatische backup</string>
+    <string name="choose_another_folder">Kies een andere map</string>
+    <string name="cant_find_folder">Kan de map niet vinden. Mogelijk is deze verplaatst of verwijderd</string>
+
     <string name="export_backup">Back-up exporteren</string>
     <string name="import_backup">Back-up importeren</string>
 
@@ -95,4 +120,8 @@
     <string name="libraries">Bibliotheken</string>
     <string name="rate">Beoordeel deze app</string>
     <string name="send_feedback">Stuur feedback</string>
+
+    <!-- Widget -->
+    <string name="single_note">Enkele notitie</string>
+    <string name="select_note">Selecteer notitie</string>
 </resources>
