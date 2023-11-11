@@ -9,23 +9,25 @@
 
     <!-- Menu Options -->
     <string name="share">Partager</string>
+    <string name="filter">Filtrer</string>
     <string name="search">Rechercher</string>
     <string name="delete">Supprimer</string>
     <string name="restore">Restaurer</string>
     <string name="archive">Archiver</string>
     <string name="unarchive">Restaurer</string>
+    <string name="add_images">Ajouter des images</string>
     <string name="delete_all">Tout supprimer</string>
     <string name="change_color">Changer la couleur</string>
     <string name="delete_forever">Supprimer définitivement</string>
-
-    <!-- Chooser dialog hints -->
-    <string name="view_note">Voir la note…</string>
 
     <!-- Pinning -->
     <string name="pin">Épingler</string>
     <string name="unpin">Détacher</string>
     <string name="pinned">Épinglé</string>
     <string name="others">Autres</string>
+
+    <!-- Chooser dialog hints -->
+    <string name="view_note">Voir la note…</string>
 
     <!-- Dialogs -->
     <string name="save">Sauvegarder</string>
@@ -36,13 +38,13 @@
     <string name="take_note">Prendre des notes</string>
     <string name="add_label">Ajouter une étiquette</string>
     <string name="export">Exporter</string>
-    <string name="save_to_device">Sauvegarder sur l\'appareil</string>
     <string name="view_file">Voir le fichier</string>
+    <string name="save_to_device">Sauvegarder sur l\'appareil</string>
     <string name="edit_label">Modifier l\'étiquette</string>
     <string name="label_exists">L\'étiquette existe</string>
     <string name="delete_label">Supprimer l\'étiquette ?</string>
     <string name="create_new">Il n\'existe pas encore d\'étiquettes. En créer une ?</string>
-    <string name="delete_all_notes">Supprimer toutes les notes?</string>
+    <string name="delete_all_notes">Supprimer toutes les notes ?</string>
     <string name="delete_note_forever">Supprimer la note définitivement ?</string>
     <string name="your_notes_associated">Vos notes associées à cette étiquette ne seront pas supprimées</string>
 
@@ -65,8 +67,16 @@
     <string name="saved_to_notally">Sauvegardé sur Notally</string>
     <string name="empty_note">Note vide</string>
     <string name="empty_list">Liste vide</string>
+
+    <!-- Messages -->
     <string name="cant_open_link">Ouverture du lien impossible</string>
+    <string name="invalid_image">Image invalide</string>
+    <string name="invalid_backup">Sauvegarde invalide</string>
+    <string name="imported_backup">Sauvegarde importée</string>
     <string name="something_went_wrong">Quelque chose a mal tourné. Veuillez réessayer.</string>
+    <string name="image_format_not_supported">Format d\'image non supporté</string>
+    <string name="install_an_email">Installez une application de messagerie pour envoyer des commentaires</string>
+    <string name="install_a_browser">Installez un navigateur pour ouvrir ce lien</string>
 
     <!-- Settings Page -->
     <string name="appearance">Apparence</string>
@@ -83,6 +93,11 @@
     <string name="date_format">Format de la date</string>
     <string name="none">Aucun</string>
 
+    <string name="text_size">Taille du texte</string>
+    <string name="small">Petite</string>
+    <string name="medium">Moyenne</string>
+    <string name="large">Grande</string>
+
     <string name="content_density">Densité d\'affichage</string>
     <string name="max_items_to_display">Nombre maximum d\'éléments à afficher dans une liste</string>
     <string name="max_lines_to_display">Nombre maximum de lignes à afficher dans une note</string>
@@ -92,11 +107,21 @@
     <!-- Auto backup -->
     <string name="auto_backup">Sauvegarde automatique</string>
     <string name="tap_to_set_up">Cliquer pour régler</string>
+    <string name="notes_will_be">Les notes seront sauvegardées dans le stockage interne de votre téléphone tous les jours.\n\nCela peut ne pas fonctionner si le mode d'économie d'énergie est activé.</string>
+    <string name="choose_folder">Choisir un dossier</string>
+    <string name="disable_auto_backup">Désactiver la sauvegarde automatique</string>
+    <string name="choose_another_folder">Choisir un autre dossier</string>
+    <string name="cant_find_folder">Impossible de trouver le dossier. Il a peut-être été déplacé ou supprimé.</string>
 
     <string name="export_backup">Exporter la sauvegarde</string>
     <string name="import_backup">Importer une sauvegarde</string>
 
-    <string name="about">A propos</string>
+    <string name="about">À propos</string>
     <string name="libraries">Librairies</string>
     <string name="rate">Noter cette application</string>
+    <string name="send_feedback">Envoyer des commentaires</string>
+
+    <!-- Widget -->
+    <string name="single_note">Note seule</string>
+    <string name="select_note">Sélectionnez une note</string>
 </resources>
