@@ -1,0 +1,1 @@
+Une application de notes open-source, simple et élégante.
