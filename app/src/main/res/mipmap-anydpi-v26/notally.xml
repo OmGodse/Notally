@@ -2,4 +2,5 @@
 <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
     <background android:drawable="@color/LightBlue500" />
     <foreground android:drawable="@drawable/notally_foreground" />
+    <monochrome android:drawable="@drawable/notally_monochrome" />
 </adaptive-icon>
