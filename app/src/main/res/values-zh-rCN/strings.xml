@@ -1,118 +1,128 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    
     <!-- Fragment Titles -->
-    <string name="notes">笔记</string>
-    <string name="labels">标签</string>
-    <string name="deleted">已删除</string>
-    <string name="archived">已存档</string>
-    <string name="settings">设置</string>
+    <string name="notes">�ʼ�</string>
+    <string name="labels">��ǩ</string>
+    <string name="deleted">��ɾ��</string>
+    <string name="archived">�Ѵ浵</string>
+    <string name="settings">����</string>
 
     <!-- Menu Options -->
-    <string name="share">分享</string>
-    <string name="filter">过滤</string>
-    <string name="search">搜索</string>
-    <string name="delete">删除</string>
-    <string name="restore">恢复</string>
-    <string name="archive">存档</string>
-    <string name="unarchive">取消存档</string>
-    <string name="delete_all">删除全部</string>
-    <string name="change_color">更改色彩</string>
-    <string name="delete_forever">永久删除</string>
+    <string name="share">����</string>
+    <string name="filter">����</string>
+    <string name="search">����</string>
+    <string name="delete">ɾ��</string>
+    <string name="restore">�ָ�</string>
+    <string name="archive">�浵</string>
+    <string name="unarchive">ȡ���浵</string>
+    <string name="add_images">����ͼƬ</string>
+    <string name="delete_all">ɾ��ȫ��</string>
+    <string name="change_color">����ɫ��</string>
+    <string name="delete_forever">����ɾ��</string>
 
     <!-- Pinning -->
-    <string name="pin">置于顶部</string>
-    <string name="unpin">取消置顶</string>
-    <string name="pinned">已置顶</string>
-    <string name="others">其他</string>
+    <string name="pin">���ڶ���</string>
+    <string name="unpin">ȡ���ö�</string>
+    <string name="pinned">���ö�</string>
+    <string name="others">����</string>
 
     <!-- Chooser dialog hints -->
-    <string name="view_note">查看笔记…</string>
+    <string name="view_note">�鿴�ʼǡ�</string>
 
     <!-- Dialogs -->
-    <string name="save">保存</string>
-    <string name="edit">编辑</string>
-    <string name="cancel">取消</string>
-    <string name="open_link">打开链接</string>
-    <string name="make_list">制作列表</string>
-    <string name="take_note">记笔记</string>
-    <string name="add_label">添加标签</string>
-    <string name="export">导出</string>
-    <string name="view_file">查看文件</string>
-    <string name="save_to_device">保存到设备</string>
-    <string name="edit_label">编辑标签</string>
-    <string name="label_exists">标签已存在</string>
-    <string name="delete_label">删除标签？</string>
-    <string name="create_new">还没有标签。创建一个？</string>
-    <string name="delete_all_notes">删除全部笔记？</string>
-    <string name="delete_note_forever">永久性删除笔记？</string>
-    <string name="your_notes_associated">不会删除与此标签相关联的笔记</string>
+    <string name="save">����</string>
+    <string name="edit">�༭</string>
+    <string name="cancel">ȡ��</string>
+    <string name="open_link">������</string>
+    <string name="make_list">�����б�</string>
+    <string name="take_note">�Ǳʼ�</string>
+    <string name="add_label">���ӱ�ǩ</string>
+    <string name="export">����</string>
+    <string name="view_file">�鿴�ļ�</string>
+    <string name="save_to_device">���浽�豸</string>
+    <string name="edit_label">�༭��ǩ</string>
+    <string name="label_exists">��ǩ�Ѵ���</string>
+    <string name="delete_label">ɾ����ǩ��</string>
+    <string name="create_new">��û�б�ǩ������һ����</string>
+    <string name="delete_all_notes">ɾ��ȫ���ʼǣ�</string>
+    <string name="delete_note_forever">������ɾ���ʼǣ�</string>
+    <string name="your_notes_associated">����ɾ����˱�ǩ������ıʼ�</string>
 
     <!-- Lists and Notes -->
-    <string name="note">笔记</string>
-    <string name="item">项目</string>
-    <string name="date">日期</string>
-    <string name="title">标题</string>
-    <string name="add_item">添加项目</string>
-    <string name="drag_handle">拖动处理</string>
-    <string name="bold">粗体</string>
-    <string name="link">链接</string>
-    <string name="italic">斜体</string>
-    <string name="strikethrough">删除线</string>
-    <string name="clear_formatting">清除格式</string>
-    <string name="monospace">等宽</string>
+    <string name="note">�ʼ�</string>
+    <string name="item">��Ŀ</string>
+    <string name="date">����</string>
+    <string name="title">����</string>
+    <string name="add_item">������Ŀ</string>
+    <string name="drag_handle">�϶�����</string>
+    <string name="bold">����</string>
+    <string name="link">����</string>
+    <string name="italic">б��</string>
+    <string name="strikethrough">ɾ����</string>
+    <string name="clear_formatting">�����ʽ</string>
+    <string name="monospace">�ȿ�</string>
 
     <!-- Miscellaneous -->
-    <string name="saved_to_device">已保存到设备</string>
-    <string name="saved_to_notally">已保存至 Notally</string>
-    <string name="empty_note">空白笔记</string>
-    <string name="empty_list">空白列表</string>
-    <string name="cant_open_link">打不开链接</string>
-    <string name="invalid_backup">无效的备份</string>
-    <string name="imported_backup">已导入备份</string>
-    <string name="something_went_wrong">出错了。请重试。</string>
-    <string name="install_an_email">安装电子邮件应用来发送反馈</string>
-    <string name="install_a_browser">安装浏览器打开此链接</string>
+    <string name="saved_to_device">�ѱ��浽�豸</string>
+    <string name="saved_to_notally">�ѱ����� Notally</string>
+    <string name="empty_note">�հױʼ�</string>
+    <string name="empty_list">�հ��б�</string>
+    
+    <!-- Messages -->
+    <string name="cant_open_link">�򲻿�����</string>
+    <string name="invalid_image">��ЧͼƬ</string>
+    <string name="invalid_backup">��Ч�ı���</string>
+    <string name="imported_backup">�ѵ��뱸��</string>
+    <string name="something_went_wrong">�����ˡ������ԡ�</string>
+    <string name="image_format_not_supported">��֧�ָ�ͼƬ��ʽ</string>
+    <string name="install_an_email">��װ�����ʼ�Ӧ�������ͷ���</string>
+    <string name="install_a_browser">��װ������򿪴�����</string>
 
     <!-- Settings Page -->
-    <string name="appearance">外观</string>
+    <string name="appearance">���</string>
 
-    <string name="view">视图</string>
-    <string name="list">列表</string>
-    <string name="grid">网格</string>
+    <string name="view">��ͼ</string>
+    <string name="list">�б�</string>
+    <string name="grid">����</string>
 
-    <string name="theme">主题</string>
-    <string name="dark">深</string>
-    <string name="light">浅</string>
-    <string name="follow_system">系统主题</string>
+    <string name="theme">����</string>
+    <string name="dark">��</string>
+    <string name="light">ǳ</string>
+    <string name="follow_system">ϵͳ����</string>
 
-    <string name="date_format">日期格式</string>
-    <string name="none">无</string>
+    <string name="date_format">���ڸ�ʽ</string>
+    <string name="none">��</string>
+    
+    <string name="text_size">�ı���С</string>
+    <string name="small">С</string>
+    <string name="medium">��</string>
+    <string name="large">��</string>
+    		
+    <string name="content_density">�����ܶ�</string>
+    <string name="max_items_to_display">�б������ʾ������Ŀ</string>
+    <string name="max_lines_to_display">�ʼ������ʾ����</string>
 
-    <string name="text_size">文本大小</string>
-    <string name="small">小</string>
-    <string name="medium">中</string>
-    <string name="large">大</string>
-
-    <string name="content_density">内容密度</string>
-    <string name="max_items_to_display">列表最多显示多少条目</string>
-    <string name="max_lines_to_display">笔记最多显示几行</string>
-
-    <string name="backup">备份</string>
-
+    <string name="backup">����</string>
+    
     <!-- Auto backup -->
-    <string name="auto_backup">自动备份</string>
-    <string name="tap_to_set_up">轻按进行设置</string>
-    <string name="notes_will_be">笔记每天将备份到你手机的内部存储中。\n\n如果你启用了节电模式，此功能可能无法正常工作。</string>
-    <string name="choose_folder">选择文件夹</string>
-    <string name="disable_auto_backup">禁用自动备份</string>
-    <string name="choose_another_folder">选择另一个文件夹</string>
-    <string name="cant_find_folder">找不到该文件夹。可能被移动或删除了。</string>
+    <string name="auto_backup">�Զ�����</string>
+    <string name="tap_to_set_up">�ᰴ��������</string>
+    <string name="notes_will_be">�ʼ�ÿ�콫���ݵ����ֻ����ڲ��洢�С�\n\n����������˽ڵ�ģʽ���˹��ܿ����޷�����������</string>
+    <string name="choose_folder">ѡ���ļ���</string>
+    <string name="disable_auto_backup">�����Զ�����</string>
+    <string name="choose_another_folder">ѡ����һ���ļ���</string>
+    <string name="cant_find_folder">�Ҳ������ļ��С����ܱ��ƶ���ɾ���ˡ�</string>
+    
+    <string name="export_backup">��������</string>
+    <string name="import_backup">���뱸��</string>
 
-    <string name="export_backup">导出备份</string>
-    <string name="import_backup">导入备份</string>
-
-    <string name="about">关于</string>
-    <string name="libraries">库</string>
-    <string name="rate">给应用打分</string>
-    <string name="send_feedback">发送反馈</string>
+    <string name="about">����</string>
+    <string name="libraries">��</string>
+    <string name="rate">��Ӧ�ô��</string>
+    <string name="send_feedback">���ͷ���</string>
+   
+    
+    <!-- Widget -->
+    <string name="single_note">�����ʼ�</string>
+    <string name="select_note">ѡ��ʼ�</string>
 </resources>
