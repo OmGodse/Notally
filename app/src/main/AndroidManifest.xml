@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:installLocation="auto">
+    android:installLocation="auto"
+    android:targetSandboxVersion="2"
+    tools:targetApi="o">
+
 
     <uses-permission
         android:name="android.permission.ACCESS_NETWORK_STATE"
