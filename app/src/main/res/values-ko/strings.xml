@@ -3,8 +3,8 @@
     <!-- Fragment Titles -->
     <string name="notes">메모</string>
     <string name="labels">라벨</string>
-    <string name="deleted">삭제됨</string>
-    <string name="archived">보관됨</string>
+    <string name="deleted">휴지통</string>
+    <string name="archived">보관된 메모</string>
     <string name="settings">설정</string>
 
     <!-- Menu Options -->
@@ -63,7 +63,7 @@
     <string name="monospace">고정 폭</string>
 
     <!-- Miscellaneous -->
-    <string name="saved_to_device">장치에 저장</string>
+    <string name="saved_to_device">장치에 저장됨</string>
     <string name="saved_to_notally">Notally에 저장됨</string>
     <string name="empty_note">빈 메모</string>
     <string name="empty_list">빈 목록</string>
