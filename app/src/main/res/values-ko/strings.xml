@@ -60,7 +60,7 @@
     <string name="italic">기울기</string>
     <string name="strikethrough">취소선</string>
     <string name="clear_formatting">서식 지우기</string>
-    <string name="monospace">고정 폭</string>
+    <string name="monospace">고정폭</string>
 
     <!-- Miscellaneous -->
     <string name="saved_to_device">장치에 저장됨</string>
@@ -99,8 +99,8 @@
     <string name="large">크게</string>
 
     <string name="content_density">콘텐츠 밀도</string>
-    <string name="max_items_to_display">목록에 표시할 최대 항목</string>
-    <string name="max_lines_to_display">메모에 표시할 최대 줄 수</string>
+    <string name="max_items_to_display">미리보기에서 목록의 최대 항목</string>
+    <string name="max_lines_to_display">미리보기에서 메모의 최대 줄 수</string>
 
     <string name="backup">백업</string>
 
