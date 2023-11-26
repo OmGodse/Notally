@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="unit">1dp</dimen>
     <integer name="config_navAnimTime">300</integer>
 </resources>

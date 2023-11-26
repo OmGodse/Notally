@@ -131,7 +131,7 @@ object Operations {
 
         val drawable = MaterialShapeDrawable(model)
         drawable.fillColor = ColorStateList.valueOf(0)
-        drawable.strokeWidth = context.resources.getDimension(R.dimen.unit)
+        drawable.strokeWidth = context.resources.displayMetrics.density
         drawable.strokeColor = ContextCompat.getColorStateList(context, R.color.chip_stroke)
 
         return drawable
