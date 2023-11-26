@@ -122,6 +122,6 @@
     <string name="send_feedback">Envoyer des commentaires</string>
 
     <!-- Widget -->
-    <string name="single_note">Note seule</string>
+    <string name="single_note_or_list">Note ou liste seule</string>
     <string name="select_note">Sélectionnez une note</string>
 </resources>
