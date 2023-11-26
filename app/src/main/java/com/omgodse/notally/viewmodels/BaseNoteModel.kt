@@ -456,6 +456,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
             val pattern = when (locale.language) {
                 Locale.CHINESE.language,
                 Locale.JAPANESE.language -> "yyyy年 MMM d日 (EEE)"
+                Locale.KOREAN.language -> "yyyy년 MMM d일 (EEE)"
 
                 else -> "EEE d MMM yyyy"
             }

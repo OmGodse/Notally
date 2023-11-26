@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fragment Titles -->
+    <string name="notes">메모</string>
+    <string name="labels">라벨</string>
+    <string name="deleted">삭제됨</string>
+    <string name="archived">보관됨</string>
+    <string name="settings">설정</string>
+
+    <!-- Menu Options -->
+    <string name="share">공유하기</string>
+    <string name="filter">필터</string>
+    <string name="search">검색</string>
+    <string name="delete">삭제</string>
+    <string name="restore">복원</string>
+    <string name="archive">보관</string>
+    <string name="unarchive">보관 취소</string>
+    <string name="add_images">이미지 추가</string>
+    <string name="delete_all">모두 삭제</string>
+    <string name="change_color">색상 변경</string>
+    <string name="delete_forever">완전 삭제</string>
+
+    <!-- Pinning -->
+    <string name="pin">고정</string>
+    <string name="unpin">고정 해제</string>
+    <string name="pinned">고정됨</string>
+    <string name="others">기타</string>
+
+    <!-- Chooser dialog hints -->
+    <string name="view_note">메모 보기…</string>
+
+    <!-- Dialogs -->
+    <string name="save">저장</string>
+    <string name="edit">편집</string>
+    <string name="cancel">취소</string>
+    <string name="open_link">링크 열기</string>
+    <string name="make_list">목록 만들기</string>
+    <string name="take_note">메모하기</string>
+    <string name="add_label">라벨 추가</string>
+    <string name="export">내보내기</string>
+    <string name="view_file">파일 보기</string>
+    <string name="save_to_device">장치에 저장</string>
+    <string name="edit_label">라벨 수정</string>
+    <string name="label_exists">라벨이 존재합니다</string>
+    <string name="delete_label">라벨을 삭제하시겠습니까?</string>
+    <string name="create_new">라벨이 없습니다. 만드시겠습니까?</string>
+    <string name="delete_all_notes">모든 메모를 삭제하시겠습니까?</string>
+    <string name="delete_note_forever">메모를 완전히 삭제하시겠습니까?</string>
+    <string name="your_notes_associated">이 라벨에 소속된 메모는 삭제되지 않습니다</string>
+
+    <!-- Lists and Notes -->
+    <string name="note">메모</string>
+    <string name="item">아이템</string>
+    <string name="date">날짜</string>
+    <string name="title">제목</string>
+    <string name="add_item">아이템 추가</string>
+    <string name="drag_handle">드래그 핸들</string>
+    <string name="bold">굵게</string>
+    <string name="link">링크</string>
+    <string name="italic">기울기</string>
+    <string name="strikethrough">취소선</string>
+    <string name="clear_formatting">서식 지우기</string>
+    <string name="monospace">고정 폭</string>
+
+    <!-- Miscellaneous -->
+    <string name="saved_to_device">장치에 저장</string>
+    <string name="saved_to_notally">Notally에 저장됨</string>
+    <string name="empty_note">빈 메모</string>
+    <string name="empty_list">빈 목록</string>
+
+    <!-- Messages -->
+    <string name="cant_open_link">열 수 없는 링크</string>
+    <string name="invalid_image">잘못된 이미지</string>
+    <string name="invalid_backup">잘못된 백업</string>
+    <string name="imported_backup">가져온 백업</string>
+    <string name="something_went_wrong">문제가 발생했습니다. 다시 시도해 주세요.</string>
+    <string name="image_format_not_supported">지원되지 않는 이미지 포맷입니다</string>
+    <string name="install_an_email">피드백을 보내려면 이메일 앱을 설치하세요</string>
+    <string name="install_a_browser">이 링크를 열려면 브라우저를 설치하세요</string>
+
+    <!-- Settings Page -->
+    <string name="appearance">모습</string>
+
+    <string name="view">보기</string>
+    <string name="list">목록</string>
+    <string name="grid">그리드</string>
+
+    <string name="theme">테마</string>
+    <string name="dark">다크</string>
+    <string name="light">라이트</string>
+    <string name="follow_system">시스템</string>
+
+    <string name="date_format">날짜 형식</string>
+    <string name="none">없음</string>
+
+    <string name="text_size">텍스트 크기</string>
+    <string name="small">작게</string>
+    <string name="medium">중간</string>
+    <string name="large">크게</string>
+
+    <string name="content_density">콘텐츠 밀도</string>
+    <string name="max_items_to_display">목록에 표시할 최대 항목</string>
+    <string name="max_lines_to_display">메모에 표시할 최대 줄 수</string>
+
+    <string name="backup">백업</string>
+
+    <!-- Auto backup -->
+    <string name="auto_backup">자동 백업</string>
+    <string name="tap_to_set_up">설정하려면 탭하세요</string>
+    <string name="notes_will_be">메모는 매일 휴대폰 내부 저장소에 백업됩니다.\n\n절전 모드가 활성화된 경우 작동하지 않을 수 있습니다.</string>
+    <string name="choose_folder">폴더 선택</string>
+    <string name="disable_auto_backup">자동 백업 비활성화</string>
+    <string name="choose_another_folder">다른 폴더 선택</string>
+    <string name="cant_find_folder">폴더를 찾을 수 없습니다. 이동되었거나 삭제되었을 수 있습니다.</string>
+
+    <string name="export_backup">백업 내보내기</string>
+    <string name="import_backup">백업 가져오기</string>
+
+    <string name="about">정보</string>
+    <string name="libraries">라이브러리</string>
+    <string name="rate">이 앱 평가</string>
+    <string name="send_feedback">피드백 보내기</string>
+
+    <!-- Widget -->
+    <string name="single_note">단일 메모</string>
+    <string name="select_note">메모 선택</string>
+</resources>
