@@ -72,7 +72,7 @@
     <string name="cant_open_link">열 수 없는 링크</string>
     <string name="invalid_image">잘못된 이미지</string>
     <string name="invalid_backup">잘못된 백업</string>
-    <string name="imported_backup">가져온 백업</string>
+    <string name="imported_backup">백업 가져옴</string>
     <string name="something_went_wrong">문제가 발생했습니다. 다시 시도해 주세요.</string>
     <string name="image_format_not_supported">지원되지 않는 이미지 포맷입니다</string>
     <string name="install_an_email">피드백을 보내려면 이메일 앱을 설치하세요</string>
@@ -82,7 +82,7 @@
     <string name="appearance">모습</string>
 
     <string name="view">보기</string>
-    <string name="list">목록</string>
+    <string name="list">리스트</string>
     <string name="grid">그리드</string>
 
     <string name="theme">테마</string>
@@ -93,13 +93,13 @@
     <string name="date_format">날짜 형식</string>
     <string name="none">없음</string>
 
-    <string name="text_size">텍스트 크기</string>
+    <string name="text_size">글자 크기</string>
     <string name="small">작게</string>
     <string name="medium">중간</string>
     <string name="large">크게</string>
 
     <string name="content_density">콘텐츠 밀도</string>
-    <string name="max_items_to_display">미리보기에서 목록의 최대 항목</string>
+    <string name="max_items_to_display">미리보기에서 목록의 최대 항목 수</string>
     <string name="max_lines_to_display">미리보기에서 메모의 최대 줄 수</string>
 
     <string name="backup">백업</string>
@@ -118,7 +118,7 @@
 
     <string name="about">정보</string>
     <string name="libraries">라이브러리</string>
-    <string name="rate">이 앱 평가</string>
+    <string name="rate">이 앱 평가하기</string>
     <string name="send_feedback">피드백 보내기</string>
 
     <!-- Widget -->
