@@ -15,6 +15,7 @@
     <string name="archive">Archivar</string>
     <string name="unarchive">Desarchivar</string>
     <string name="delete_all">Borrar todo</string>
+    <string name="change_color">Change color</string>
     <string name="delete_forever">Eliminar para siempre</string>
 
     <!-- Chooser dialog hints -->
@@ -24,6 +25,7 @@
     <string name="pin">Fijar</string>
     <string name="unpin">Desfijar</string>
     <string name="pinned">Fijados</string>
+    <string name="others">Otros</string>
 
     <!-- Dialogs -->
     <string name="save">Guardar</string>
@@ -57,12 +59,18 @@
     <string name="monospace">Monoespaciado</string>
 
     <!-- Miscellaneous -->
-    <string name="saved_to_device">Guardadas a dispositivo</string>
-    <string name="saved_to_notally">Guardadas a Notally</string>
+    <string name="saved_to_device">Guardada en dispositivo</string>
+    <string name="saved_to_notally">Guardada en Notally</string>
     <string name="empty_note">Vaciar nota</string>
     <string name="empty_list">Vaciar lista</string>
     <string name="cant_open_link">No se puede abrir el enlace</string>
     <string name="something_went_wrong">Algo salió mal. Inténtalo de nuevo.</string>
+
+    <!-- Messages -->
+    <string name="invalid_backup">Copia de seguridad inválida</string>
+    <string name="imported_backup">Copia de seguridad importada</string>
+    <string name="install_an_email">Instale una aplicación de correo electrónico para enviar comentarios</string>
+    <string name="install_a_browser">Instala un navegador para abrir este enlace</string>
 
     <!-- Settings Page -->
     <string name="appearance">Apariencia</string>
@@ -74,6 +82,11 @@
     <string name="date_format">Formato de fecha</string>
     <string name="none">Ninguno</string>
 
+    <string name="text_size">Tamaño de texto</string>
+    <string name="small">Pequeño</string>
+    <string name="medium">Mediano</string>
+    <string name="large">Grande</string>
+
     <string name="theme">Tema</string>
     <string name="dark">Oscuro</string>
     <string name="light">Claro</string>
@@ -84,10 +97,21 @@
     <string name="max_lines_to_display">Elementos máximos para mostrar en nota</string>
 
     <string name="backup">Respaldar</string>
+
+    <!-- Auto backup -->
+    <string name="auto_backup">Copia de seguridad automática</string>
+    <string name="tap_to_set_up">Toque para configurar</string>
+    <string name="notes_will_be">Se realizará una copia de seguridad de las notas en el almacenamiento interno de su teléfono todos los días.\n\nEs posible que esto no funcione si tiene habilitado el modo de ahorro de energía</string>
+    <string name="choose_folder">Elegir carpeta</string>
+    <string name="disable_auto_backup">Desactivar copia de seguridad automática</string>
+    <string name="choose_another_folder">Elegir otra carpeta</string>
+    <string name="cant_find_folder">No se pudo encontrar la carpeta. Quizás haya sido movida o eliminada.</string>
+
     <string name="export_backup">Exportar copia de seguridad</string>
     <string name="import_backup">Importar copia de seguridad</string>
 
     <string name="about">Acerca de</string>
     <string name="libraries">Bibliotecas</string>
     <string name="rate">Calificar esta app</string>
+    <string name="send_feedback">Enviar comentarios</string>
 </resources>
