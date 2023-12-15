@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.ActivityConfigureWidgetBinding
+import com.omgodse.notally.miscellaneous.IO
 import com.omgodse.notally.preferences.Preferences
 import com.omgodse.notally.preferences.View
 import com.omgodse.notally.recyclerview.ItemListener
@@ -45,10 +46,10 @@ class ConfigureWidget : AppCompatActivity(), ItemListener {
         val maxLines = preferences.maxLines
         val textSize = preferences.textSize.value
         val dateFormat = preferences.dateFormat.value
-
         val formatter = BaseNoteModel.getDateFormatter(this)
+        val mediaRoot = IO.getExternalImagesDirectory(application)
 
-        adapter = BaseNoteAdapter(dateFormat, textSize, maxItems, maxLines, formatter, this)
+        adapter = BaseNoteAdapter(dateFormat, textSize, maxItems, maxLines, formatter, mediaRoot, this)
 
         binding.RecyclerView.adapter = adapter
         binding.RecyclerView.setHasFixedSize(true)

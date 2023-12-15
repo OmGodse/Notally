@@ -70,14 +70,13 @@
     <string name="empty_list">Empty list</string>
 
     <!-- Messages -->
-    <string name="cant_open_link">Can\'t open link</string>
-    <string name="invalid_image">Invalid image</string>
+    <string name="cant_open_link">Can’t open link</string>
     <string name="invalid_backup">Invalid backup</string>
     <string name="imported_backup">Imported backup</string>
     <string name="something_went_wrong">Something went wrong. Please try again.</string>
-    <string name="image_format_not_supported">Image format not supported</string>
     <string name="install_an_email">Install an email app to send feedback</string>
     <string name="install_a_browser">Install a browser to open this link</string>
+    <string name="cant_find_note">Can’t find note. It may have been deleted</string>
 
     <!-- Settings Page -->
     <string name="appearance">Appearance</string>
@@ -108,11 +107,11 @@
     <!-- Auto backup -->
     <string name="auto_backup">Auto backup</string>
     <string name="tap_to_set_up">Tap to set up</string>
-    <string name="notes_will_be">Notes will be backed up to your phone\'s internal storage everyday.\n\nThis may not work if you have power saving mode enabled</string>
+    <string name="notes_will_be">Notes will be backed up to your phone’s internal storage everyday.\n\nThis may not work if you have power saving mode enabled</string>
     <string name="choose_folder">Choose folder</string>
     <string name="disable_auto_backup">Disable auto backup</string>
     <string name="choose_another_folder">Choose another folder</string>
-    <string name="cant_find_folder">Can\'t find folder. It may have been moved or deleted</string>
+    <string name="cant_find_folder">Can’t find folder. It may have been moved or deleted</string>
 
     <string name="export_backup">Export backup</string>
     <string name="import_backup">Import backup</string>
@@ -125,6 +124,25 @@
     <string name="github" translatable="false">GitHub</string>
 
     <!-- Widget -->
-    <string name="single_note">Single note</string>
+    <string name="single_note_or_list">Single note or list</string>
     <string name="select_note">Select note</string>
+
+    <!-- Images -->
+    <string name="count" translatable="false">%1$d / %2$d</string>
+    <string name="adding_images">Adding images</string>
+    <string name="deleting_images">Deleting images</string>
+    <string name="invalid_image">Invalid image</string>
+    <string name="error_while_renaming_image">Error while renaming image</string>
+    <string name="image_format_not_supported">Image format not supported</string>
+    <string name="delete_image_forever">Delete image forever?</string>
+    <string name="cant_load_image">Can’t load image. It may have been moved or deleted</string>
+    <string name="unknown_name">Unknown name</string>
+    <string name="unknown_error">Unknown error</string>
+    <string name="insert_an_sd_card">Insert an SD card to add images</string>
+
+    <plurals name="cant_add_images">
+        <item quantity="one">Can’t add %d image</item>
+        <item quantity="other">Can’t add %d images</item>
+    </plurals>
+
 </resources>

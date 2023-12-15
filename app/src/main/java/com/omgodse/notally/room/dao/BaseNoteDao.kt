@@ -2,11 +2,17 @@ package com.omgodse.notally.room.dao
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import androidx.room.RawQuery
+import androidx.room.Update
 import androidx.sqlite.db.SupportSQLiteQuery
 import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Color
 import com.omgodse.notally.room.Folder
+import com.omgodse.notally.room.Image
 import com.omgodse.notally.room.LabelsInBaseNote
 import com.omgodse.notally.room.ListItem
 
@@ -33,6 +39,7 @@ interface BaseNoteDao {
     @Query("DELETE FROM BaseNote WHERE folder = :folder")
     suspend fun deleteFrom(folder: Folder)
 
+
     @Query("SELECT * FROM BaseNote WHERE folder = :folder ORDER BY pinned DESC, timestamp DESC")
     fun getFrom(folder: Folder): LiveData<List<BaseNote>>
 
@@ -40,11 +47,17 @@ interface BaseNoteDao {
     fun getAll(): LiveData<List<BaseNote>>
 
     @Query("SELECT * FROM BaseNote WHERE id = :id")
-    fun get(id: Long): BaseNote
+    fun get(id: Long): BaseNote?
+
+    @Query("SELECT images FROM BaseNote WHERE id = :id")
+    fun getImages(id: Long): String
 
 
     @Query("SELECT id FROM BaseNote WHERE folder = 'DELETED'")
     suspend fun getDeletedNoteIds(): LongArray
+
+    @Query("SELECT images FROM BaseNote WHERE folder = 'DELETED'")
+    suspend fun getDeletedNoteImages(): List<String>
 
 
     @Query("SELECT * FROM BaseNote WHERE folder = 'NOTES' ORDER BY pinned DESC, timestamp DESC")
@@ -67,9 +80,27 @@ interface BaseNoteDao {
     @Query("UPDATE BaseNote SET items = :items WHERE id = :id")
     suspend fun updateItems(id: Long, items: List<ListItem>)
 
+    @Query("UPDATE BaseNote SET images = :images WHERE id = :id")
+    suspend fun updateImages(id: Long, images: List<Image>)
 
+
+    /**
+     * Both id and position can be invalid.
+     *
+     * Example of id being invalid - User adds a widget,
+     * then goes to Settings and clears app data. Now the
+     * widget refers to a list which doesn't exist.
+     *
+     * Example of position being invalid - User adds a widget,
+     * goes to Settings, clears app data and then imports a backup.
+     * Even if the backup contains the same list and it is inserted
+     * with the same id, it may not be of the safe size.
+     *
+     * In this case, an exception will be thrown. It is the caller's
+     * responsibility to handle it.
+     */
     suspend fun updateChecked(id: Long, position: Int, checked: Boolean) {
-        val items = get(id).items
+        val items = requireNotNull(get(id)).items
         items[position].checked = checked
         updateItems(id, items)
     }

@@ -14,6 +14,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.room.withTransaction
 import com.omgodse.notally.Cache
+import com.omgodse.notally.ImageDeleteService
 import com.omgodse.notally.R
 import com.omgodse.notally.legacy.Migrations
 import com.omgodse.notally.legacy.XMLUtils
@@ -30,6 +31,7 @@ import com.omgodse.notally.room.Color
 import com.omgodse.notally.room.Converters
 import com.omgodse.notally.room.Folder
 import com.omgodse.notally.room.Header
+import com.omgodse.notally.room.Image
 import com.omgodse.notally.room.Item
 import com.omgodse.notally.room.Label
 import com.omgodse.notally.room.NotallyDatabase
@@ -58,7 +60,6 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     private val baseNoteDao = database.getBaseNoteDao()
 
     private val labelCache = HashMap<String, Content>()
-    val formatter = getDateFormatter(app)
 
     var currentFile: File? = null
 
@@ -89,6 +90,8 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     private val others = Header(app.getString(R.string.others))
 
     val preferences = Preferences.getInstance(app)
+
+    val mediaRoot = IO.getExternalImagesDirectory(app)
 
     private val backupExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         Operations.log(app, throwable)
@@ -240,7 +243,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         val spans = Converters.jsonToSpans(spansTmp)
         val items = Converters.jsonToItems(itemsTmp)
 
-        return BaseNote(0, type, folder, color, title, pinned, timestamp, labels, body, spans, items)
+        return BaseNote(0, type, folder, color, title, pinned, timestamp, labels, body, spans, items, emptyList())
     }
 
     private fun <T> convertCursorToList(cursor: Cursor, convert: (cursor: Cursor) -> T): ArrayList<T> {
@@ -293,7 +296,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         val file = File(getExportedPath(), "Untitled.txt")
         val writer = file.bufferedWriter()
 
-        val date = formatter.format(baseNote.timestamp)
+        val date = getDateFormatter(app).format(baseNote.timestamp)
 
         val body = when (baseNote.type) {
             Type.NOTE -> baseNote.body
@@ -337,24 +340,44 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     fun deleteAllBaseNotes() {
         viewModelScope.launch {
             val ids: LongArray
+            val images = ArrayList<Image>()
             withContext(Dispatchers.IO) {
                 ids = baseNoteDao.getDeletedNoteIds()
+                val strings = baseNoteDao.getDeletedNoteImages()
+                strings.flatMapTo(images, Converters::jsonToImages)
                 baseNoteDao.deleteFrom(Folder.DELETED)
             }
-            val intent = Intent(app, WidgetProvider::class.java)
-            intent.action = WidgetProvider.ACTION_NOTES_MODIFIED
-            intent.putExtra(WidgetProvider.EXTRA_MODIFIED_NOTES, ids)
-            app.sendBroadcast(intent)
+            if (images.isNotEmpty()) {
+                ImageDeleteService.start(app, images)
+            }
+            if (ids.isNotEmpty()) {
+                WidgetProvider.sendBroadcast(app, ids)
+            }
         }
     }
+
+    fun deleteBaseNoteForever(id: Long) {
+        viewModelScope.launch {
+            val images = ArrayList<Image>()
+            withContext(Dispatchers.IO) {
+                val json = baseNoteDao.getImages(id)
+                val actualImages = Converters.jsonToImages(json)
+                images.addAll(actualImages)
+                baseNoteDao.delete(id)
+            }
+            if (images.isNotEmpty()) {
+                ImageDeleteService.start(app, images)
+            }
+            WidgetProvider.sendBroadcast(app, longArrayOf(id))
+        }
+    }
+
 
     fun restoreBaseNote(id: Long) = executeAsync { baseNoteDao.move(id, Folder.NOTES) }
 
     fun moveBaseNoteToDeleted(id: Long) = executeAsync { baseNoteDao.move(id, Folder.DELETED) }
 
     fun moveBaseNoteToArchive(id: Long) = executeAsync { baseNoteDao.move(id, Folder.ARCHIVED) }
-
-    fun deleteBaseNoteForever(id: Long) = executeAsync { baseNoteDao.delete(id) }
 
     fun updateBaseNoteLabels(labels: List<String>, id: Long) = executeAsync { baseNoteDao.updateLabels(id, labels) }
 
@@ -412,7 +435,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     }
 
     private fun getHTML(baseNote: BaseNote, showDateCreated: Boolean) = buildString {
-        val date = formatter.format(baseNote.timestamp)
+        val date = getDateFormatter(app).format(baseNote.timestamp)
         val title = Html.escapeHtml(baseNote.title)
 
         append("<!DOCTYPE html>")

@@ -14,6 +14,7 @@ import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Header
 import com.omgodse.notally.room.Item
 import org.ocpsoft.prettytime.PrettyTime
+import java.io.File
 import java.text.SimpleDateFormat
 
 class BaseNoteAdapter(
@@ -22,6 +23,7 @@ class BaseNoteAdapter(
     private val maxItems: Int,
     private val maxLines: Int,
     private val formatter: SimpleDateFormat,
+    private val mediaRoot: File?,
     private val listener: ItemListener
 ) : ListAdapter<Item, RecyclerView.ViewHolder>(DiffCallback) {
 
@@ -37,7 +39,7 @@ class BaseNoteAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = getItem(position)) {
             is Header -> (holder as HeaderVH).bind(item)
-            is BaseNote -> (holder as BaseNoteVH).bind(item)
+            is BaseNote -> (holder as BaseNoteVH).bind(item, mediaRoot)
         }
     }
 
