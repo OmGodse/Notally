@@ -11,14 +11,15 @@ import android.text.Html
 import android.widget.Toast
 import androidx.core.text.toHtml
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.room.withTransaction
+import com.omgodse.notally.BackupProgress
 import com.omgodse.notally.Cache
 import com.omgodse.notally.ImageDeleteService
 import com.omgodse.notally.R
 import com.omgodse.notally.legacy.Migrations
 import com.omgodse.notally.legacy.XMLUtils
-import com.omgodse.notally.miscellaneous.Export
 import com.omgodse.notally.miscellaneous.IO
 import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.miscellaneous.applySpans
@@ -41,6 +42,7 @@ import com.omgodse.notally.room.livedata.SearchResult
 import com.omgodse.notally.widget.WidgetProvider
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONArray
@@ -50,7 +52,9 @@ import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.Locale
+import java.util.zip.ZipEntry
 import java.util.zip.ZipFile
+import java.util.zip.ZipOutputStream
 
 class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
@@ -93,6 +97,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
     val mediaRoot = IO.getExternalImagesDirectory(app)
 
+    val exportingBackup = MutableLiveData<BackupProgress>()
     private val backupExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         Operations.log(app, throwable)
         Toast.makeText(app, R.string.invalid_backup, Toast.LENGTH_LONG).show()
@@ -159,15 +164,65 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
     fun exportBackup(uri: Uri) {
         viewModelScope.launch {
+            exportingBackup.value = BackupProgress(true, 0, 0, true)
+
             withContext(Dispatchers.IO) {
-                (app.contentResolver.openOutputStream(uri) as? FileOutputStream)?.use { stream ->
-                    stream.channel.truncate(0)
-                    Export.backupToZip(app, stream)
+                val outputStream = requireNotNull(app.contentResolver.openOutputStream(uri))
+                (outputStream as FileOutputStream).channel.truncate(0)
+
+                val zipStream = ZipOutputStream(outputStream)
+
+                database.checkpoint()
+                backupDatabase(zipStream)
+
+                delay(1000)
+
+                val strings = baseNoteDao.getAllImages()
+                val images = strings.flatMap(Converters::jsonToImages)
+                images.forEachIndexed { index, image ->
+                    try {
+                        backupImage(zipStream, image)
+                    } catch (exception: Exception) {
+                        Operations.log(app, exception)
+                    } finally {
+                        exportingBackup.postValue(BackupProgress(true, index + 1, images.size, false))
+                    }
                 }
+
+                zipStream.close()
             }
+
+            exportingBackup.value = BackupProgress(false, 0, 0, false)
             Toast.makeText(app, R.string.saved_to_device, Toast.LENGTH_LONG).show()
         }
     }
+
+    private fun backupDatabase(zipStream: ZipOutputStream) {
+        val entry = ZipEntry(NotallyDatabase.DatabaseName)
+        zipStream.putNextEntry(entry)
+
+        val file = app.getDatabasePath(NotallyDatabase.DatabaseName)
+        val inputStream = FileInputStream(file)
+        inputStream.copyTo(zipStream)
+        inputStream.close()
+
+        zipStream.closeEntry()
+    }
+
+    private fun backupImage(zipStream: ZipOutputStream, image: Image) {
+        val file = if (mediaRoot != null) File(mediaRoot, image.name) else null
+        if (file != null && file.exists()) {
+            val entry = ZipEntry("Images/${image.name}")
+            zipStream.putNextEntry(entry)
+
+            val inputStream = FileInputStream(file)
+            inputStream.copyTo(zipStream)
+            inputStream.close()
+
+            zipStream.closeEntry()
+        }
+    }
+
 
     fun importBackup(uri: Uri) {
         when (app.contentResolver.getType(uri)) {

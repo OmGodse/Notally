@@ -17,6 +17,7 @@ import androidx.fragment.app.activityViewModels
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.MenuDialog
 import com.omgodse.notally.R
+import com.omgodse.notally.databinding.DialogProgressBinding
 import com.omgodse.notally.databinding.FragmentSettingsBinding
 import com.omgodse.notally.databinding.PreferenceBinding
 import com.omgodse.notally.databinding.PreferenceSeekbarBinding
@@ -61,6 +62,27 @@ class Settings : Fragment() {
 
         binding.ExportBackup.setOnClickListener {
             exportBackup()
+        }
+
+        val dialogBinding = DialogProgressBinding.inflate(layoutInflater)
+        val dialog = MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.exporting_backup)
+            .setView(dialogBinding.root)
+            .setCancelable(false)
+            .create()
+
+        model.exportingBackup.observe(viewLifecycleOwner) { progress ->
+            if (progress.inProgress) {
+                if (progress.indeterminate) {
+                    dialogBinding.ProgressBar.isIndeterminate = true
+                    dialogBinding.Count.setText(R.string.calculating)
+                } else {
+                    dialogBinding.ProgressBar.max = progress.total
+                    dialogBinding.ProgressBar.setProgressCompat(progress.current, true)
+                    dialogBinding.Count.text = getString(R.string.count, progress.current, progress.total)
+                }
+                dialog.show()
+            } else dialog.dismiss()
         }
 
 
@@ -236,8 +258,10 @@ class Settings : Fragment() {
             Toast.makeText(requireContext(), R.string.install_a_browser, Toast.LENGTH_LONG).show()
         }
     }
-}
 
-private const val REQUEST_IMPORT_BACKUP = 20
-private const val REQUEST_EXPORT_BACKUP = 21
-private const val REQUEST_CHOOSE_FOLDER = 22
+    companion object {
+        private const val REQUEST_IMPORT_BACKUP = 20
+        private const val REQUEST_EXPORT_BACKUP = 21
+        private const val REQUEST_CHOOSE_FOLDER = 22
+    }
+}

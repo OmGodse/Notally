@@ -20,9 +20,9 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.omgodse.notally.Cache
-import com.omgodse.notally.Event
 import com.omgodse.notally.ImageDeleteService
 import com.omgodse.notally.R
+import com.omgodse.notally.image.Event
 import com.omgodse.notally.image.ImageError
 import com.omgodse.notally.image.ImageProgress
 import com.omgodse.notally.miscellaneous.IO
@@ -141,7 +141,7 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
                 addingImages.value = ImageProgress(true, index + 1, uris.size)
             }
 
-            addingImages.value = ImageProgress(false, uris.size, uris.size)
+            addingImages.value = ImageProgress(false, 0, 0)
 
             if (successes.isNotEmpty()) {
                 val copy = ArrayList(images.value)

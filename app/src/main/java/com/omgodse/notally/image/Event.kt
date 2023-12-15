@@ -1,4 +1,4 @@
-package com.omgodse.notally
+package com.omgodse.notally.image
 
 class Event<T>(val data: T) {
 

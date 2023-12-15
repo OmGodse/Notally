@@ -28,7 +28,7 @@
     <string name="others">Others</string>
 
     <!-- Chooser dialog hints -->
-    <string name="view_note">View note…</string>
+    <string name="view_note">View note</string>
 
     <!-- Dialogs -->
     <string name="save">Save</string>
@@ -71,8 +71,6 @@
 
     <!-- Messages -->
     <string name="cant_open_link">Can’t open link</string>
-    <string name="invalid_backup">Invalid backup</string>
-    <string name="imported_backup">Imported backup</string>
     <string name="something_went_wrong">Something went wrong. Please try again.</string>
     <string name="install_an_email">Install an email app to send feedback</string>
     <string name="install_a_browser">Install a browser to open this link</string>
@@ -102,9 +100,8 @@
     <string name="max_items_to_display">Max items to display in list</string>
     <string name="max_lines_to_display">Max lines to display in note</string>
 
+    <!-- Backup -->
     <string name="backup">Backup</string>
-
-    <!-- Auto backup -->
     <string name="auto_backup">Auto backup</string>
     <string name="tap_to_set_up">Tap to set up</string>
     <string name="notes_will_be">Notes will be backed up to your phone’s internal storage everyday.\n\nThis may not work if you have power saving mode enabled</string>
@@ -112,6 +109,10 @@
     <string name="disable_auto_backup">Disable auto backup</string>
     <string name="choose_another_folder">Choose another folder</string>
     <string name="cant_find_folder">Can’t find folder. It may have been moved or deleted</string>
+    <string name="invalid_backup">Invalid backup</string>
+    <string name="imported_backup">Imported backup</string>
+    <string name="exporting_backup">Exporting backup</string>
+    <string name="calculating">Calculating…</string>
 
     <string name="export_backup">Export backup</string>
     <string name="import_backup">Import backup</string>

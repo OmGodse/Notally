@@ -43,6 +43,9 @@ interface BaseNoteDao {
     @Query("SELECT * FROM BaseNote WHERE folder = :folder ORDER BY pinned DESC, timestamp DESC")
     fun getFrom(folder: Folder): LiveData<List<BaseNote>>
 
+    @Query("SELECT * FROM BaseNote WHERE folder = 'NOTES' ORDER BY pinned DESC, timestamp DESC")
+    suspend fun getAllNotes(): List<BaseNote>
+
     @Query("SELECT * FROM BaseNote")
     fun getAll(): LiveData<List<BaseNote>>
 
@@ -52,16 +55,15 @@ interface BaseNoteDao {
     @Query("SELECT images FROM BaseNote WHERE id = :id")
     fun getImages(id: Long): String
 
+    @Query("SELECT images FROM BaseNote")
+    fun getAllImages(): List<String>
+
 
     @Query("SELECT id FROM BaseNote WHERE folder = 'DELETED'")
     suspend fun getDeletedNoteIds(): LongArray
 
     @Query("SELECT images FROM BaseNote WHERE folder = 'DELETED'")
     suspend fun getDeletedNoteImages(): List<String>
-
-
-    @Query("SELECT * FROM BaseNote WHERE folder = 'NOTES' ORDER BY pinned DESC, timestamp DESC")
-    suspend fun getAllNotes(): List<BaseNote>
 
 
     @Query("UPDATE BaseNote SET folder = :folder WHERE id = :id")
