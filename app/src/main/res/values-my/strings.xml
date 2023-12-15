@@ -1,0 +1,122 @@
+<resources>
+    <!-- Fragment Titles -->
+    <string name="notes">မှတ်စုများ</string>
+    <string name="labels">အမှတ်အသားများ</string>
+    <string name="deleted">ဖျက်ထား​သော</string>
+    <string name="archived">သိမ်းဆည်းထား​သော</string>
+    <string name="settings">ချိန်ညှိစရာများ</string>
+
+    <!-- Menu Options -->
+    <string name="share">မျှ​ဝေမည်</string>
+    <string name="filter">စစ်ထုတ်မှု</string>
+    <string name="search">ရှာရန်</string>
+    <string name="delete">ဖျက်မည်</string>
+    <string name="restore">ပြန်ယူမည်</string>
+    <string name="archive">သိမ်းဆည်းမည်</string>
+    <string name="unarchive">မသိမ်းဆည်း​တော့ပါ</string>
+    <string name="add_images">ရုပ်ပုံများထည့်မည်</string>
+    <string name="delete_all">အားလုံးကိုဖျက်မည်</string>
+    <string name="change_color">အ​ရောင်​ပြောင်းမည်</string>
+    <string name="delete_forever">အပြီးဖျက်မည်</string>
+
+    <!-- Pinning -->
+    <string name="pin">ပင်တွဲမည်</string>
+    <string name="unpin">ပင်ဖြုတ်မည်</string>
+    <string name="pinned">ပင်တွဲပြီး</string>
+    <string name="others">အခြား</string>
+
+    <!-- Chooser dialog hints -->
+    <string name="view_note">မှတ်စုကိုဖတ်မည်…</string>
+
+    <!-- Dialogs -->
+    <string name="save">သိမ်းမည်</string>
+    <string name="edit">တည်းဖြတ်မည်</string>
+    <string name="cancel">ပယ်ဖျက်ပါ</string>
+    <string name="open_link">လင့်ကိုဖွင့်မည်</string>
+    <string name="make_list">အမှတ်ခြစ်စာရင်း</string>
+    <string name="take_note">မှတ်စု</string>
+    <string name="add_label">အမှတ်အသား တက်မည်</string>
+    <string name="export">ထုတ်မည်</string>
+    <string name="view_file">ဖိုင်ကိုကြည့်မည်</string>
+    <string name="save_to_device">ဖုန်းထဲကိုသိမ်းမည်</string>
+    <string name="edit_label">အမှတ်အသားကို ပြင်မည်</string>
+    <string name="label_exists">အမှတ်အသား မှတ်ပြီးသား</string>
+    <string name="delete_label">အမှတ်အသားကိုဖျက်မည်လား။</string>
+    <string name="create_new">အမှတ်အသား မရှိ​သေးပါ။တစ်ခု ဖန်တီးမလား။</string>
+    <string name="delete_all_notes">Delete all notes?</string>
+    <string name="delete_note_forever">မှတ်စုကို အပြီးဖျက်မည်</string>
+    <string name="your_notes_associated">ဒီတံဆိပ်တပ်ထားတဲ့ မှတ်စုက ပျက်သွားမှာမဟုတ်ပါ။</string>
+
+    <!-- Lists and Notes -->
+    <string name="note">မှတ်စု</string>
+    <string name="item">အိုင်တမ်</string>
+    <string name="date">နေ့ရက်</string>
+    <string name="title">ခေါင်းစဥ်</string>
+    <string name="add_item">အိုင်တမ် အသစ်ထည့်မည်</string>
+    <string name="drag_handle">ဟန်ယ်ကို ရွှေ့မည်</string>
+    <string name="bold">စာထူ</string>
+    <string name="link">လင့်</string>
+    <string name="italic">စာတွန့်</string>
+    <string name="strikethrough">ဖျက်မှတ်</string>
+    <string name="clear_formatting">ပုံစံချထားသည်များ ဖျက်မည်</string>
+    <string name="monospace">မိုနိုစ​ပေ့စ်</string>
+
+    <!-- Miscellaneous -->
+    <string name="saved_to_device">ဖုန်းထဲသို့သိမ်းပြီး</string>
+    <string name="saved_to_notally">အက်ပ်ထဲသို့သိမ်းပြီး။</string>
+    <string name="empty_note">မှတ်စုအလွတ်</string>
+    <string name="empty_list">စာရင်းအလွတ်</string>
+
+    <!-- Messages -->
+    <string name="cant_open_link">လင့်ကိုမဖွင့်နိုင်ပါ။</string>
+    <string name="invalid_image">ရုပ်ပုံမှား​နေသည်။</string>
+    <string name="invalid_backup">အရန်သိမ်းဖိုင်မှားနေသည်။</string>
+    <string name="imported_backup">အရန်သိမ်းထားသည်များ သွင်းမည်။</string>
+    <string name="something_went_wrong">တစ်စုံတစ်ခုမှားယွင်း​နေသည်။ထပ်မံကြိုးစားပါ။</string>
+    <string name="image_format_not_supported">ဤရုပ်ပုံဖိုင်အမျိုးအစားအား လက်မခံပါ။</string>
+    <string name="install_an_email">တုံ့ပြန်ချက်​ပေးပို့ရန် အီး​မေးလ်အက်ပ် တစ်ခုအရင်သွင်းပါ</string>
+    <string name="install_a_browser">လင့်ဖွင့်ရန် ဘ​ရောက်ဇာတစ်ခု အရင်သွင်းပါ။</string>
+
+    <!-- Settings Page -->
+    <string name="appearance">အက်ပ် အသွင်အပြင်</string>
+
+    <string name="view">ဖတ်မည်</string>
+    <string name="list">စာရင်းပုံစံ</string>
+    <string name="grid">ဂရပ်ပုံစံ</string>
+
+    <string name="theme">နောက်ခံပုံစံ</string>
+    <string name="dark">အ​​မှောင်</string>
+    <string name="light">အလင်း</string>
+    <string name="follow_system">ဖုန်းအတိုင်း</string>
+
+    <string name="date_format">နေ့ရက်ပုံစံ</string>
+    <string name="none">ဘာမှမရှိ</string>
+
+    <string name="text_size">စာလလုံးအရွယ်အစား</string>
+    <string name="small">သေးငယ်</string>
+    <string name="medium">အ​နေ​တော်</string>
+    <string name="large">ကြီးမား</string>
+
+    <string name="content_density">စာစု </string>
+    <string name="max_items_to_display">အမှတ်ခြစ်စာရင်းထဲတွင် အများဆုံးပြရမည့်အိုင်တမ်အ​ရေအတွက်</string>
+    <string name="max_lines_to_display">မှတ်စုတစ်ခုထဲတွင်အများဆုံးပြရမည့်စာ​ကြောင်း​ရေ</string>
+
+    <string name="backup">Backup</string>
+
+    <!-- Auto backup -->
+    <string name="auto_backup">Auto backup</string>
+    <string name="tap_to_set_up">ချိန်ညှိရန် နှိပ်ပါ</string>
+    <string name="notes_will_be">မှတ်စု​ဖိုင်များသည်သင့် ဖုန်းထဲသို့​နေ့စဥ်အရန်သိမ်းမည်ဖြစ်သည်။သင့်ဖုန်းမှာဘက်ထ္ထရီ​ချွေတာ​ရေးလုပ်​ဆောင်ချက် ဖွင့်ထားရင်အလုပ်မလုပ်နိုင်ပါ။</string>
+    <string name="choose_folder">ဖိုဒါ ရွေးပါ</string>
+    <string name="disable_auto_backup">အလိုအ​လျောက်အရန်သိမ်းဆည်းခြင်းကိုပိတ်မည်</string>
+    <string name="choose_another_folder">အခြား ဖိုဒါကို​ရွေးပါ။</string>
+    <string name="cant_find_folder">ဖိုဒါကို ရှာမ​တွေ့ပါ။ဖိုဒါဖျက်ခံရတာ သို့မဟုတ် နေရာ​ပြောင်းတာဖြစ်နိုင်ပါတယ်။ </string>
+
+    <string name="export_backup">မှတ်စုများထုတ်မည်</string>
+    <string name="import_backup">မှတ်စုများ သွင်းမည်</string>
+
+    <string name="about">အ​ကြောင်း</string>
+    <string name="libraries">လိုက်ဘရီများ</string>
+    <string name="rate">အက်ပ်ကို အဆင့်သတ်မှတ်မည်</string>
+    <string name="send_feedback">တုံ့ပြန်ချက်​ပေးပို့မည်</string>
+</resources>
