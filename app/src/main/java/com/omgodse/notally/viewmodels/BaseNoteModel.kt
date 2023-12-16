@@ -20,6 +20,7 @@ import com.omgodse.notally.ImageDeleteService
 import com.omgodse.notally.R
 import com.omgodse.notally.legacy.Migrations
 import com.omgodse.notally.legacy.XMLUtils
+import com.omgodse.notally.miscellaneous.Export
 import com.omgodse.notally.miscellaneous.IO
 import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.miscellaneous.applySpans
@@ -52,7 +53,6 @@ import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.Locale
-import java.util.zip.ZipEntry
 import java.util.zip.ZipFile
 import java.util.zip.ZipOutputStream
 
@@ -173,7 +173,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
                 val zipStream = ZipOutputStream(outputStream)
 
                 database.checkpoint()
-                backupDatabase(zipStream)
+                Export.backupDatabase(app, zipStream)
 
                 delay(1000)
 
@@ -181,7 +181,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
                 val images = strings.flatMap(Converters::jsonToImages)
                 images.forEachIndexed { index, image ->
                     try {
-                        backupImage(zipStream, image)
+                        Export.backupImage(zipStream, mediaRoot, image)
                     } catch (exception: Exception) {
                         Operations.log(app, exception)
                     } finally {
@@ -194,32 +194,6 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
             exportingBackup.value = BackupProgress(false, 0, 0, false)
             Toast.makeText(app, R.string.saved_to_device, Toast.LENGTH_LONG).show()
-        }
-    }
-
-    private fun backupDatabase(zipStream: ZipOutputStream) {
-        val entry = ZipEntry(NotallyDatabase.DatabaseName)
-        zipStream.putNextEntry(entry)
-
-        val file = app.getDatabasePath(NotallyDatabase.DatabaseName)
-        val inputStream = FileInputStream(file)
-        inputStream.copyTo(zipStream)
-        inputStream.close()
-
-        zipStream.closeEntry()
-    }
-
-    private fun backupImage(zipStream: ZipOutputStream, image: Image) {
-        val file = if (mediaRoot != null) File(mediaRoot, image.name) else null
-        if (file != null && file.exists()) {
-            val entry = ZipEntry("Images/${image.name}")
-            zipStream.putNextEntry(entry)
-
-            val inputStream = FileInputStream(file)
-            inputStream.copyTo(zipStream)
-            inputStream.close()
-
-            zipStream.closeEntry()
         }
     }
 
@@ -534,7 +508,6 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
             val pattern = when (locale.language) {
                 Locale.CHINESE.language,
                 Locale.JAPANESE.language -> "yyyy年 MMM d日 (EEE)"
-
                 else -> "EEE d MMM yyyy"
             }
             return SimpleDateFormat(pattern, locale)

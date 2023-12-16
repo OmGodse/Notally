@@ -7,10 +7,15 @@ import androidx.documentfile.provider.DocumentFile
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.omgodse.notally.miscellaneous.Export
+import com.omgodse.notally.miscellaneous.IO
+import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.preferences.AutoBackup
 import com.omgodse.notally.preferences.Preferences
+import com.omgodse.notally.room.Converters
+import com.omgodse.notally.room.NotallyDatabase
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
+import java.util.zip.ZipOutputStream
 
 class AutoBackupWorker(private val context: Context, params: WorkerParameters) : Worker(context, params) {
 
@@ -28,7 +33,27 @@ class AutoBackupWorker(private val context: Context, params: WorkerParameters) :
                 val name = formatter.format(System.currentTimeMillis())
                 val file = requireNotNull(folder.createFile("application/zip", name))
                 val outputStream = requireNotNull(app.contentResolver.openOutputStream(file.uri))
-                Export.backupToZip(app, outputStream)
+
+                val zipStream = ZipOutputStream(outputStream)
+
+                val database = NotallyDatabase.getDatabase(app)
+                database.checkpoint()
+
+                Export.backupDatabase(app, zipStream)
+
+                val mediaRoot = IO.getExternalImagesDirectory(app)
+                database.getBaseNoteDao().getAllImages()
+                    .asSequence()
+                    .flatMap(Converters::jsonToImages)
+                    .forEach { image ->
+                        try {
+                            Export.backupImage(zipStream, mediaRoot, image)
+                        } catch (exception: Exception) {
+                            Operations.log(app, exception)
+                        }
+                    }
+
+                zipStream.close()
             }
         }
 
