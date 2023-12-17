@@ -53,6 +53,7 @@ import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.Locale
+import java.util.UUID
 import java.util.zip.ZipFile
 import java.util.zip.ZipOutputStream
 
@@ -97,11 +98,8 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
     val mediaRoot = IO.getExternalImagesDirectory(app)
 
+    val importingBackup = MutableLiveData<BackupProgress>()
     val exportingBackup = MutableLiveData<BackupProgress>()
-    private val backupExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        Operations.log(app, throwable)
-        Toast.makeText(app, R.string.invalid_backup, Toast.LENGTH_LONG).show()
-    }
 
     init {
         viewModelScope.launch {
@@ -207,16 +205,27 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
 
     /**
-     * Lots of things can go wrong, instead of trying to account for all of them,
-     * display a generic message and allow the user to send a report
+     * We use a ZipFile instead of ZipInputStream because importing one image of 3 MB takes 1 second
+     * on a phone with 6GB RAM. This is non negligible so we need to display the progress. However, with a stream
+     * there is no way to know how many images are there, hence we can only display an indeterminate progress bar
+     * which is almost as useless as displaying no progress bar.
+     *
+     * We only import the images referenced in notes. e.g If someone has added garbage to the
+     * ZIP file, like a 100 MB image, ignore it.
      */
     private fun importZipBackup(uri: Uri) {
-        viewModelScope.launch(backupExceptionHandler) {
-            val stream = app.contentResolver.openInputStream(uri)
-            requireNotNull(stream) { "inputStream opened by contentResolver is null" }
+        val backupDir = getBackupDir()
+
+        val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+            finishImporting(backupDir)
+            Operations.log(app, throwable)
+        }
+
+        viewModelScope.launch(exceptionHandler) {
+            importingBackup.value = BackupProgress(true, 0, 0, true)
 
             withContext(Dispatchers.IO) {
-                val backupDir = getBackupPath()
+                val stream = requireNotNull(app.contentResolver.openInputStream(uri))
                 val destination = File(backupDir, "TEMP.zip")
                 IO.copyStreamToFile(stream, destination)
 
@@ -235,9 +244,37 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
                 val labels = convertCursorToList(labelCursor, ::convertCursorToLabel)
                 val baseNotes = convertCursorToList(baseNoteCursor, ::convertCursorToBaseNote)
 
+                delay(1000)
+
+                val total = baseNotes.fold(0) { acc, baseNote -> return@fold acc + baseNote.images.size }
+                var current = 1
+
+                // Don't let a single image bring down the entire backup
+                baseNotes.forEach { baseNote ->
+                    baseNote.images.forEach { image ->
+                        try {
+                            val entry = zipFile.getEntry("Images/${image.name}")
+                            if (entry != null) {
+                                val extension = image.name.substringAfterLast(".")
+                                val name = "${UUID.randomUUID()}.$extension"
+                                val file = File(mediaRoot, name)
+                                image.name = name
+                                val imageStream = zipFile.getInputStream(entry)
+                                IO.copyStreamToFile(imageStream, file)
+                            }
+                        } catch (exception: Exception) {
+                            Operations.log(app, exception)
+                        } finally {
+                            importingBackup.postValue(BackupProgress(true, current, total, false))
+                            current++
+                        }
+                    }
+                }
+
                 commonDao.importBackup(baseNotes, labels)
             }
-            Toast.makeText(app, R.string.imported_backup, Toast.LENGTH_LONG).show()
+
+            finishImporting(backupDir)
         }
     }
 
@@ -272,7 +309,12 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         val spans = Converters.jsonToSpans(spansTmp)
         val items = Converters.jsonToItems(itemsTmp)
 
-        return BaseNote(0, type, folder, color, title, pinned, timestamp, labels, body, spans, items, emptyList())
+        val imagesIndex = cursor.getColumnIndex("images")
+        val images = if (imagesIndex != -1) {
+            Converters.jsonToImages(cursor.getString(imagesIndex))
+        } else emptyList()
+
+        return BaseNote(0, type, folder, color, title, pinned, timestamp, labels, body, spans, items, images)
     }
 
     private fun <T> convertCursorToList(cursor: Cursor, convert: (cursor: Cursor) -> T): ArrayList<T> {
@@ -285,12 +327,22 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         return list
     }
 
+    private fun finishImporting(backupDir: File) {
+        importingBackup.value = BackupProgress(false, 0, 0, false)
+        Toast.makeText(app, R.string.invalid_backup, Toast.LENGTH_LONG).show()
+        clear(backupDir)
+    }
+
 
     private fun importXmlBackup(uri: Uri) {
-        viewModelScope.launch(backupExceptionHandler) {
+        val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+            Operations.log(app, throwable)
+            Toast.makeText(app, R.string.invalid_backup, Toast.LENGTH_LONG).show()
+        }
+
+        viewModelScope.launch(exceptionHandler) {
             withContext(Dispatchers.IO) {
-                val stream = app.contentResolver.openInputStream(uri)
-                requireNotNull(stream) { "inputStream opened by contentResolver is null" }
+                val stream = requireNotNull(app.contentResolver.openInputStream(uri))
                 val backup = XMLUtils.readBackupFromStream(stream)
                 commonDao.importBackup(backup.first, backup.second)
             }
@@ -425,17 +477,21 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     private fun getEmptyFolder(name: String): File {
         val folder = File(app.cacheDir, name)
         if (folder.exists()) {
-            val files = folder.listFiles()
-            if (files != null) {
-                for (file in files) {
-                    file.delete()
-                }
-            }
+            clear(folder)
         } else folder.mkdir()
         return folder
     }
 
-    private fun getBackupPath() = getEmptyFolder("backup")
+    private fun clear(directory: File) {
+        val files = directory.listFiles()
+        if (files != null) {
+            for (file in files) {
+                file.delete()
+            }
+        }
+    }
+
+    private fun getBackupDir() = getEmptyFolder("backup")
 
     private fun getExportedPath() = getEmptyFolder("exported")
 

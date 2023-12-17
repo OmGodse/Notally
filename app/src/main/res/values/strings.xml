@@ -112,6 +112,7 @@
     <string name="invalid_backup">Invalid backup</string>
     <string name="imported_backup">Imported backup</string>
     <string name="exporting_backup">Exporting backup</string>
+    <string name="importing_backup">Importing backup</string>
     <string name="calculating">Calculating…</string>
 
     <string name="export_backup">Export backup</string>
