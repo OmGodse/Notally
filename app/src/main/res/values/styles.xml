@@ -125,4 +125,11 @@
         <item name="cornerSize">16dp</item>
     </style>
 
+
+    <style name="WidgetPreview.ListItem" parent="Widget.AppCompat.TextView">
+        <item name="android:drawablePadding">8dp</item>
+        <item name="android:drawableStart">@drawable/checkbox_outline_16</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body2</item>
+    </style>
+
 </resources>

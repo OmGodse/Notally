@@ -11,24 +11,56 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
         android:paddingBottom="16dp"
-        android:text="August"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-        android:textColor="#000000" />
+        android:text="Taylor’s albums"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="16dp"
-        android:text="Fri 24 Jul 2020"
+        android:text="Sun 4 June 2023"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
         android:textColor="#99000000" />
 
     <TextView
+        style="@style/WidgetPreview.ListItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:lineSpacingMultiplier="1.1"
-        android:text="Salt air, and the rust on your door\nI never needed anything more\nWhispers of “Are you sure?”\n“Never have I ever before”"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-        android:textColor="#99000000" />
+        android:paddingBottom="6dp"
+        android:text="1989" />
+
+    <TextView
+        style="@style/WidgetPreview.ListItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="6dp"
+        android:text="Reputation" />
+
+    <TextView
+        style="@style/WidgetPreview.ListItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="6dp"
+        android:text="Lover" />
+
+    <TextView
+        style="@style/WidgetPreview.ListItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="6dp"
+        android:text="Folklore" />
+
+    <TextView
+        style="@style/WidgetPreview.ListItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="6dp"
+        android:text="Evermore" />
+
+    <TextView
+        style="@style/WidgetPreview.ListItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Midnights" />
 
 </LinearLayout>
