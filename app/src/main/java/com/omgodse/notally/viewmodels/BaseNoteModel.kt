@@ -218,6 +218,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
         val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
             finishImporting(backupDir)
+            Toast.makeText(app, R.string.invalid_backup, Toast.LENGTH_LONG).show()
             Operations.log(app, throwable)
         }
 
@@ -329,7 +330,6 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
     private fun finishImporting(backupDir: File) {
         importingBackup.value = BackupProgress(false, 0, 0, false)
-        Toast.makeText(app, R.string.invalid_backup, Toast.LENGTH_LONG).show()
         clear(backupDir)
     }
 

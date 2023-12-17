@@ -1,7 +1,9 @@
 package com.omgodse.notally.activities
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
@@ -111,6 +113,13 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         }
     }
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_NOTIFICATION_PERMISSION) {
+            selectImages()
+        }
+    }
+
 
     abstract fun configureUI()
 
@@ -177,6 +186,25 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
             intent.addCategory(Intent.CATEGORY_OPENABLE)
             startActivityForResult(intent, REQUEST_ADD_IMAGES)
         } else Toast.makeText(this, R.string.insert_an_sd_card, Toast.LENGTH_LONG).show()
+    }
+
+
+    private fun checkNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val permission = Manifest.permission.POST_NOTIFICATIONS
+            if (checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
+                if (shouldShowRequestPermissionRationale(permission)) {
+                    MaterialAlertDialogBuilder(this)
+                        .setMessage(R.string.please_grant_notally)
+                        .setNegativeButton(R.string.cancel) { _, _ -> selectImages() }
+                        .setPositiveButton(R.string.continue_) { _, _ ->
+                            requestPermissions(arrayOf(permission), REQUEST_NOTIFICATION_PERMISSION)
+                        }
+                        .setOnDismissListener { selectImages() }
+                        .show()
+                } else requestPermissions(arrayOf(permission), REQUEST_NOTIFICATION_PERMISSION)
+            } else selectImages()
+        } else selectImages()
     }
 
 
@@ -299,7 +327,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
         menu.add(R.string.share, R.drawable.share) { share() }
         menu.add(R.string.labels, R.drawable.label) { label() }
-        menu.add(R.string.add_images, R.drawable.add_images) { selectImages() }
+        menu.add(R.string.add_images, R.drawable.add_images) { checkNotificationPermission() }
 
         when (model.folder) {
             Folder.NOTES -> {
@@ -357,5 +385,6 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     companion object {
         private const val REQUEST_ADD_IMAGES = 30
         private const val REQUEST_VIEW_IMAGES = 31
+        private const val REQUEST_NOTIFICATION_PERMISSION = 32
     }
 }
