@@ -1,0 +1,5 @@
+You can now add images to notes
+
+Added Romanian and Burmese translations
+Updated Dutch, French and Spanish translations
+Fixed bug where widgets wouldn’t display properly on Lollipop devices
