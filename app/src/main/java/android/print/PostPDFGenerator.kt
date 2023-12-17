@@ -53,7 +53,10 @@ object PostPDFGenerator {
         }
 
         val pages = arrayOf(PageRange.ALL_PAGES)
-        val fileDescriptor = getFileDescriptor(file)
+        if (!file.exists()) {
+            file.createNewFile()
+        }
+        val fileDescriptor = ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_WRITE)
         adapter.onWrite(pages, fileDescriptor, null, onWriteResult)
     }
 
@@ -64,13 +67,6 @@ object PostPDFGenerator {
         builder.setMinMargins(PrintAttributes.Margins.NO_MARGINS)
         builder.setResolution(PrintAttributes.Resolution("Standard", "Standard", 100, 100))
         return builder.build()
-    }
-
-    private fun getFileDescriptor(file: File): ParcelFileDescriptor {
-        if (!file.exists()) {
-            file.createNewFile()
-        }
-        return ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_WRITE)
     }
 
     interface OnResult {
