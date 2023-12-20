@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name" translatable="false">Notally</string>
+    
     <!-- Fragment Titles -->
     <string name="notes">Notizen</string>
     <string name="labels">Labels</string>
@@ -15,7 +16,8 @@
     <string name="restore">Wiederherstellen</string>
     <string name="archive">Archivieren</string>
     <string name="unarchive">Archivierung aufheben</string>
-    <string name="delete_all">Papierkorb leeren</string>
+    <string name="add_images">Bilder hinzufügen</string>
+    <string name="delete_all">Alles löschen</string>
     <string name="change_color">Farbe ändern</string>
     <string name="delete_forever">Endgültig löschen</string>
 
@@ -26,12 +28,13 @@
     <string name="others">Andere</string>
 
     <!-- Chooser dialog hints -->
-    <string name="view_note">Notiz ansehen…</string>
+    <string name="view_note">Notiz ansehen</string>
 
     <!-- Dialogs -->
     <string name="save">Speichern</string>
     <string name="edit">Bearbeiten</string>
     <string name="cancel">Abbrechen</string>
+     <string name="continue_">Weiter</string>
     <string name="open_link">Link öffnen</string>
     <string name="make_list">Liste erstellen</string>
     <string name="take_note">Notiz erstellen</string>
@@ -43,9 +46,9 @@
     <string name="label_exists">Label existiert bereits</string>
     <string name="delete_label">Label löschen?</string>
     <string name="create_new">Keine Label vorhanden. Tippen, um ein neues Label zu erstellen.</string>
-    <string name="delete_all_notes">Alle Notizen im Papierkorb endgültig löschen?</string>
+    <string name="delete_all_notes">Alle Notizen löschen?</string>
     <string name="delete_note_forever">Notiz endgültig löschen?</string>
-    <string name="your_notes_associated">Dieses Label wird gelöscht und aus allen Notizen entfernt. Notizen, welche dieses Label verwenden, werden nicht gelöscht.</string>
+    <string name="your_notes_associated">Notizen, welche dieses Label verwenden, werden nicht gelöscht.</string>
 
     <!-- Lists and Notes -->
     <string name="note">Notiz</string>
@@ -66,13 +69,14 @@
     <string name="saved_to_notally">In Notally gespeichert</string>
     <string name="empty_note">Leere Notiz</string>
     <string name="empty_list">Leere Liste</string>
+    
+    <!-- Messages -->
     <string name="cant_open_link">Link konnte nicht geöffnet werden</string>
-    <string name="invalid_backup">Ungültige Sicherung</string>
-    <string name="imported_backup">Importierte Sicherung</string>
     <string name="something_went_wrong">Etwas ist schief gelaufen. Bitte erneut versuchen.</string>
     <string name="install_an_email">Installiere eine E-Mail-App zum Senden von Feedback</string>
     <string name="install_a_browser">Installiere einen Browser, um diesen Link zu öffnen</string>
-
+    <string name="cant_find_note">Kann Notiz nicht finden. Vielleicht wurde sie gelöscht</string>
+    
     <!-- Settings Page -->
     <string name="appearance">Erscheinungsbild</string>
 
@@ -97,9 +101,8 @@
     <string name="max_items_to_display">Maximal angezeigte Listeneinträge</string>
     <string name="max_lines_to_display">Maximal angezeigte Zeilen</string>
 
-    <string name="backup">Sichern und Wiederherstellen</string>
-
-    <!-- Auto backup -->
+    <!-- Backup -->
+    <string name="backup">Sicherung</string>
     <string name="auto_backup">Automatische Sicherung</string>
     <string name="tap_to_set_up">Zum Einrichten antippen</string>
     <string name="notes_will_be">Notizen werden täglich auf dem internen Speicher deines Telefons gesichert.\n\nDies funktioniert möglicherweise nicht, wenn du den Energiesparmodus aktiviert hast.</string>
@@ -107,7 +110,12 @@
     <string name="disable_auto_backup">Automatische Sicherung deaktivieren</string>
     <string name="choose_another_folder">Anderen Ordner wählen</string>
     <string name="cant_find_folder">Kann den Ordner nicht finden. Er kann verschoben oder gelöscht worden sein</string>
-
+    <string name="invalid_backup">Ungültige Sicherung</string>
+    <string name="imported_backup">Importierte Sicherung</string>
+    <string name="exporting_backup">Exportieren der Sicherung</string>
+    <string name="importing_backup">Importieren der Sicherung</string>
+    <string name="calculating">Berechne…</string>
+    
     <string name="export_backup">Notizen sichern</string>
     <string name="import_backup">Notizen wiederherstellen</string>
 
@@ -115,4 +123,30 @@
     <string name="libraries">Bibliotheken</string>
     <string name="rate">App bewerten</string>
     <string name="send_feedback">Feedback senden</string>
+
+    <string name="github" translatable="false">GitHub</string>
+
+    <!-- Widget -->
+    <string name="single_note_or_list">Einzelne Notiz oder Liste</string>
+    <string name="select_note">Notiz auswählen</string>
+
+    <!-- Images -->
+    <string name="count" translatable="false">%1$d / %2$d</string>
+    <string name="adding_images">Bilder hinzufügen</string>
+    <string name="deleting_images">Bilder löschen</string>
+    <string name="invalid_image">Ungültiges Bild</string>
+    <string name="error_while_renaming_image">Fehler beim Umbenennen des Bildes</string>
+    <string name="image_format_not_supported">Bildformat nicht unterstützt</string>
+    <string name="delete_image_forever">Bild endgültig löschen?</string>
+    <string name="cant_load_image">Bild kann nicht geladen werden. Es kann verschoben oder gelöscht worden sein</string>
+    <string name="unknown_name">Unbekannter Name</string>
+    <string name="unknown_error">Unbekannter Fehler</string>
+    <string name="insert_an_sd_card">SD-Karte einlegen, um Bilder hinzuzufügen</string>
+    <string name="please_grant_notally">Bitte erteile Notally die Berechtigung, Benachrichtigungen zu senden. Dies wird verwendet, um den Fortschritt anzuzeigen, wenn Vorgänge wie das Löschen von Bildern oder das Importieren von Sicherungen Zeit in Anspruch nehmen</string>
+
+    <plurals name="cant_add_images">
+        <item quantity="one">Kann %d Bild nicht hinzufügen</item>
+        <item quantity="other">Kann %d Bilder nicht hinzufügen</item>
+    </plurals>
+    
 </resources>
