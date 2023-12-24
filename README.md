@@ -26,6 +26,7 @@ All translations are crowd sourced. To contribute, follow these [guidelines](htt
 * [De-Googling Any Android Phone! (Google Apps Alternatives)](https://www.youtube.com/watch?v=RQUEgwgV99I)
 * [The BEST Private Notetaking Apps Explained](https://www.youtube.com/watch?v=BJw5tKPP1PY)
 * [Notally](https://www.noteapps.ca/notally/)
+* [The 9 Best Simple Note-Taking Apps for Android](https://www.makeuseof.com/simple-note-apps-android/)
 
 ### Copycats
 Clones of Notally keep popping up on the Play Store. They are not licensed under GPL3 and usually change a few colors, include ads, etc. Please [report them](https://support.google.com/googleplay/android-developer/contact/takedown) and [inform me](mailto:omgodseapps@gmail.com) if you find a new one.

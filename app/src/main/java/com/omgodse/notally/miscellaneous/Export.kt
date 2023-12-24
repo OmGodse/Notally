@@ -1,29 +1,38 @@
 package com.omgodse.notally.miscellaneous
 
 import android.app.Application
+import com.omgodse.notally.room.Image
 import com.omgodse.notally.room.NotallyDatabase
+import java.io.File
 import java.io.FileInputStream
-import java.io.OutputStream
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
 object Export {
 
-    fun backupToZip(app: Application, outputStream: OutputStream) {
-        val database = NotallyDatabase.getDatabase(app)
-        database.checkpoint()
-
-        val source = app.getDatabasePath(NotallyDatabase.DatabaseName)
-
-        val zipStream = ZipOutputStream(outputStream)
-        val entry = ZipEntry(source.name)
+    fun backupDatabase(app: Application, zipStream: ZipOutputStream) {
+        val entry = ZipEntry(NotallyDatabase.DatabaseName)
         zipStream.putNextEntry(entry)
 
-        val inputStream = FileInputStream(source)
+        val file = app.getDatabasePath(NotallyDatabase.DatabaseName)
+        val inputStream = FileInputStream(file)
         inputStream.copyTo(zipStream)
         inputStream.close()
 
         zipStream.closeEntry()
-        zipStream.close()
+    }
+
+    fun backupImage(zipStream: ZipOutputStream, mediaRoot: File?, image: Image) {
+        val file = if (mediaRoot != null) File(mediaRoot, image.name) else null
+        if (file != null && file.exists()) {
+            val entry = ZipEntry("Images/${image.name}")
+            zipStream.putNextEntry(entry)
+
+            val inputStream = FileInputStream(file)
+            inputStream.copyTo(zipStream)
+            inputStream.close()
+
+            zipStream.closeEntry()
+        }
     }
 }

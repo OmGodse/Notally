@@ -1,6 +1,5 @@
 package com.omgodse.notally.activities
 
-import com.omgodse.notally.R
 import com.omgodse.notally.miscellaneous.setOnNextAction
 import com.omgodse.notally.recyclerview.ListItemListener
 import com.omgodse.notally.recyclerview.adapters.MakeListAdapter
@@ -17,8 +16,6 @@ class MakeList : NotallyActivity(Type.LIST) {
             moveToNext(-1)
         }
 
-        setupRecyclerView()
-
         if (model.isNewNote) {
             if (model.items.isEmpty()) {
                 addListItem()
@@ -34,22 +31,9 @@ class MakeList : NotallyActivity(Type.LIST) {
         }
     }
 
-
-    private fun addListItem() {
-        val position = model.items.size
-        val listItem = ListItem(String(), false)
-        model.items.add(listItem)
-        adapter.notifyItemInserted(position)
-        binding.RecyclerView.post {
-            val viewHolder = binding.RecyclerView.findViewHolderForAdapterPosition(position) as MakeListVH?
-            viewHolder?.binding?.EditText?.requestFocus()
-        }
-    }
-
-
-    private fun setupRecyclerView() {
-        val unit = resources.getDimension(R.dimen.unit)
-        val elevation = unit * 2
+    override fun setStateFromModel() {
+        super.setStateFromModel()
+        val elevation = resources.displayMetrics.density * 2
 
         adapter = MakeListAdapter(model.textSize, elevation, model.items, object : ListItemListener {
 
@@ -72,6 +56,18 @@ class MakeList : NotallyActivity(Type.LIST) {
         })
 
         binding.RecyclerView.adapter = adapter
+    }
+
+
+    private fun addListItem() {
+        val position = model.items.size
+        val listItem = ListItem(String(), false)
+        model.items.add(listItem)
+        adapter.notifyItemInserted(position)
+        binding.RecyclerView.post {
+            val viewHolder = binding.RecyclerView.findViewHolderForAdapterPosition(position) as MakeListVH?
+            viewHolder?.binding?.EditText?.requestFocus()
+        }
     }
 
     private fun moveToNext(currentPosition: Int) {

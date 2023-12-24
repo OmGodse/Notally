@@ -46,7 +46,7 @@ class WidgetProvider : AppWidgetProvider() {
                 GlobalScope.launch {
                     withContext(Dispatchers.IO) {
                         try {
-                            database.baseNoteDao.updateChecked(noteId, position, checked)
+                            database.getBaseNoteDao().updateChecked(noteId, position, checked)
                         } finally {
                             updateWidgets(context, longArrayOf(noteId))
                             pendingResult.finish()
@@ -115,6 +115,13 @@ class WidgetProvider : AppWidgetProvider() {
             manager.notifyAppWidgetViewDataChanged(id, R.id.ListView)
         }
 
+        fun sendBroadcast(app: Application, ids: LongArray) {
+            val intent = Intent(app, WidgetProvider::class.java)
+            intent.action = ACTION_NOTES_MODIFIED
+            intent.putExtra(EXTRA_MODIFIED_NOTES, ids)
+            app.sendBroadcast(intent)
+        }
+
         // Each widget has it's own intent since the widget id is embedded
         private fun getSelectNoteIntent(context: Context, id: Int): PendingIntent {
             val intent = Intent(context, ConfigureWidget::class.java)
@@ -137,8 +144,8 @@ class WidgetProvider : AppWidgetProvider() {
             intent.data = Uri.parse(string)
         }
 
-        const val EXTRA_MODIFIED_NOTES = "com.omgodse.notally.EXTRA_MODIFIED_NOTES"
-        const val ACTION_NOTES_MODIFIED = "com.omgodse.notally.ACTION_NOTE_MODIFIED"
+        private const val EXTRA_MODIFIED_NOTES = "com.omgodse.notally.EXTRA_MODIFIED_NOTES"
+        private const val ACTION_NOTES_MODIFIED = "com.omgodse.notally.ACTION_NOTE_MODIFIED"
 
         const val ACTION_OPEN_NOTE = "com.omgodse.notally.ACTION_OPEN_NOTE"
         const val ACTION_OPEN_LIST = "com.omgodse.notally.ACTION_OPEN_LIST"

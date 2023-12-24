@@ -1,24 +1,26 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-parcelize'
     id 'com.google.devtools.ksp'
 }
 
 android {
-    compileSdk 33
+    compileSdk 34
     namespace 'com.omgodse.notally'
 
     defaultConfig {
         applicationId 'com.omgodse.notally'
         minSdk 21
         targetSdk 33
-        versionCode 50
-        versionName "5.5"
-        resConfigs 'en', 'ca', 'cs', 'da', 'de', 'el', 'es', 'fr', 'hu', 'in', 'it', 'ja', 'ko', 'nb', 'nl', 'nn', 'pl', 'pt-rBR', 'pt-rPT', 'ru', 'sk', 'sv', 'tl', 'tr', 'uk', 'vi', 'zh-rCN'
+        versionCode 51
+        versionName "5.6"
+        resConfigs 'en', 'ca', 'cs', 'da', 'de', 'el', 'es', 'fr', 'hu', 'in', 'it', 'ja', 'ko', 'my', 'nb', 'nl', 'nn', 'pl', 'pt-rBR', 'pt-rPT', 'ro', 'ru', 'sk', 'sv', 'tl', 'tr', 'uk', 'vi', 'zh-rCN'
         vectorDrawables.generatedDensities = []
     }
 
     ksp {
+        arg("room.generateKotlin", "true")
         arg("room.schemaLocation", "$projectDir/schemas")
     }
 
@@ -49,7 +51,7 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
 
 dependencies {
     final def navVersion = "2.3.5"
-    final def roomVersion = "2.5.2"
+    final def roomVersion = "2.6.1"
 
     ksp "androidx.room:room-compiler:$roomVersion"
     implementation "androidx.room:room-ktx:$roomVersion"
@@ -64,4 +66,7 @@ dependencies {
     implementation "com.google.android.material:material:1.4.0"
 
     implementation "ru.rambler.android:swipe-layout:1.1.0"
+
+    implementation "com.github.bumptech.glide:glide:4.15.1"
+    implementation "com.davemorrissey.labs:subsampling-scale-image-view-androidx:3.10.0"
 }

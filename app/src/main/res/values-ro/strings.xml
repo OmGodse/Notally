@@ -122,6 +122,6 @@
     <string name="send_feedback">Trimite feedback</string>
 
     <!-- Widget -->
-    <string name="single_note">Notă unică</string>
+    <string name="single_note_or_list">Notă unică</string>
     <string name="select_note">Selectați nota</string>
 </resources>

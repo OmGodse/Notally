@@ -14,9 +14,12 @@ import androidx.core.content.FileProvider
 import androidx.documentfile.provider.DocumentFile
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.MutableLiveData
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.omgodse.notally.BackupProgress
 import com.omgodse.notally.MenuDialog
 import com.omgodse.notally.R
+import com.omgodse.notally.databinding.DialogProgressBinding
 import com.omgodse.notally.databinding.FragmentSettingsBinding
 import com.omgodse.notally.databinding.PreferenceBinding
 import com.omgodse.notally.databinding.PreferenceSeekbarBinding
@@ -63,6 +66,8 @@ class Settings : Fragment() {
             exportBackup()
         }
 
+        setupProgressDialog(R.string.exporting_backup, model.exportingBackup)
+        setupProgressDialog(R.string.importing_backup, model.importingBackup)
 
         binding.GitHub.setOnClickListener {
             openLink("https://github.com/OmGodse/Notally")
@@ -115,6 +120,29 @@ class Settings : Fragment() {
         intent.putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("application/zip", "text/xml"))
         intent.addCategory(Intent.CATEGORY_OPENABLE)
         startActivityForResult(intent, REQUEST_IMPORT_BACKUP)
+    }
+
+    private fun setupProgressDialog(titleId: Int, liveData: MutableLiveData<BackupProgress>) {
+        val dialogBinding = DialogProgressBinding.inflate(layoutInflater)
+        val dialog = MaterialAlertDialogBuilder(requireContext())
+            .setTitle(titleId)
+            .setView(dialogBinding.root)
+            .setCancelable(false)
+            .create()
+
+        liveData.observe(viewLifecycleOwner) { progress ->
+            if (progress.inProgress) {
+                if (progress.indeterminate) {
+                    dialogBinding.ProgressBar.isIndeterminate = true
+                    dialogBinding.Count.setText(R.string.calculating)
+                } else {
+                    dialogBinding.ProgressBar.max = progress.total
+                    dialogBinding.ProgressBar.setProgressCompat(progress.current, true)
+                    dialogBinding.Count.text = getString(R.string.count, progress.current, progress.total)
+                }
+                dialog.show()
+            } else dialog.dismiss()
+        }
     }
 
 
@@ -236,8 +264,10 @@ class Settings : Fragment() {
             Toast.makeText(requireContext(), R.string.install_a_browser, Toast.LENGTH_LONG).show()
         }
     }
-}
 
-private const val REQUEST_IMPORT_BACKUP = 20
-private const val REQUEST_EXPORT_BACKUP = 21
-private const val REQUEST_CHOOSE_FOLDER = 22
+    companion object {
+        private const val REQUEST_IMPORT_BACKUP = 20
+        private const val REQUEST_EXPORT_BACKUP = 21
+        private const val REQUEST_CHOOSE_FOLDER = 22
+    }
+}

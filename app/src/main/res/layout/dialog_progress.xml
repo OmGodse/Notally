@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="24dp">
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/ProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/Count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ProgressBar"
+        android:paddingTop="16dp"
+        android:textAppearance="?attr/textAppearanceBody2"
+        android:textColor="?attr/colorControlNormal" />
+
+</RelativeLayout>

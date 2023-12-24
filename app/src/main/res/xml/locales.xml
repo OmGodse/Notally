@@ -12,12 +12,14 @@
     <locale android:name="in" />
     <locale android:name="it" />
     <locale android:name="ja" />
+    <locale android:name="my" />
     <locale android:name="nb" />
     <locale android:name="nl" />
     <locale android:name="nn" />
     <locale android:name="pl" />
     <locale android:name="pt-rBR" />
     <locale android:name="pt-rPT" />
+    <locale android:name="ro" />
     <locale android:name="ru" />
     <locale android:name="sk" />
     <locale android:name="sv" />
