@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.omgodse.notally.databinding.RecyclerListItemBinding
 import com.omgodse.notally.recyclerview.DragCallback
 import com.omgodse.notally.recyclerview.ListItemListener
-import com.omgodse.notally.recyclerview.viewholders.MakeListVH
+import com.omgodse.notally.recyclerview.viewholder.MakeListVH
 import com.omgodse.notally.room.ListItem
 
 class MakeListAdapter(

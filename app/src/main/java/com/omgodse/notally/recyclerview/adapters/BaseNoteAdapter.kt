@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.omgodse.notally.databinding.RecyclerBaseNoteBinding
 import com.omgodse.notally.databinding.RecyclerHeaderBinding
 import com.omgodse.notally.recyclerview.ItemListener
-import com.omgodse.notally.recyclerview.viewholders.BaseNoteVH
-import com.omgodse.notally.recyclerview.viewholders.HeaderVH
+import com.omgodse.notally.recyclerview.viewholder.BaseNoteVH
+import com.omgodse.notally.recyclerview.viewholder.HeaderVH
 import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Header
 import com.omgodse.notally.room.Item

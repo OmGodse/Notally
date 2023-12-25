@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.omgodse.notally.databinding.RecyclerPreviewImageBinding
-import com.omgodse.notally.recyclerview.viewholders.PreviewImageVH
+import com.omgodse.notally.recyclerview.viewholder.PreviewImageVH
 import com.omgodse.notally.room.Image
 import java.io.File
 

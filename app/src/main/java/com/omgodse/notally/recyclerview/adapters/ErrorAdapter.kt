@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.omgodse.notally.databinding.ErrorBinding
 import com.omgodse.notally.image.ImageError
-import com.omgodse.notally.recyclerview.viewholders.ErrorVH
+import com.omgodse.notally.recyclerview.viewholder.ErrorVH
 
 class ErrorAdapter(private val items: List<ImageError>) : RecyclerView.Adapter<ErrorVH>() {
 
