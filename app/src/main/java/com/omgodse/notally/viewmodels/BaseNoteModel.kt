@@ -1,7 +1,6 @@
 package com.omgodse.notally.viewmodels
 
 import android.app.Application
-import android.content.Context
 import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
@@ -51,8 +50,7 @@ import org.json.JSONObject
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
-import java.text.SimpleDateFormat
-import java.util.Locale
+import java.text.DateFormat
 import java.util.UUID
 import java.util.zip.ZipFile
 import java.util.zip.ZipOutputStream
@@ -377,7 +375,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         val file = File(getExportedPath(), "Untitled.txt")
         val writer = file.bufferedWriter()
 
-        val date = getDateFormatter(app).format(baseNote.timestamp)
+        val date = DateFormat.getDateInstance(DateFormat.FULL).format(baseNote.timestamp)
 
         val body = when (baseNote.type) {
             Type.NOTE -> baseNote.body
@@ -520,7 +518,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     }
 
     private fun getHTML(baseNote: BaseNote, showDateCreated: Boolean) = buildString {
-        val date = getDateFormatter(app).format(baseNote.timestamp)
+        val date = DateFormat.getDateInstance(DateFormat.FULL).format(baseNote.timestamp)
         val title = Html.escapeHtml(baseNote.title)
 
         append("<!DOCTYPE html>")
@@ -558,16 +556,6 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     }
 
     companion object {
-
-        fun getDateFormatter(context: Context): SimpleDateFormat {
-            val locale = context.resources.configuration.locale
-            val pattern = when (locale.language) {
-                Locale.CHINESE.language,
-                Locale.JAPANESE.language -> "yyyy年 MMM d日 (EEE)"
-                else -> "EEE d MMM yyyy"
-            }
-            return SimpleDateFormat(pattern, locale)
-        }
 
         fun transform(list: List<BaseNote>, pinned: Header, others: Header): List<Item> {
             if (list.isEmpty()) {

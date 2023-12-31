@@ -30,7 +30,6 @@ import com.omgodse.notally.room.SpanRepresentation
 import com.omgodse.notally.room.Type
 import org.ocpsoft.prettytime.PrettyTime
 import java.io.File
-import java.text.SimpleDateFormat
 import java.util.Date
 
 class BaseNoteVH(
@@ -42,7 +41,7 @@ class BaseNoteVH(
     maxTitle: Int,
     listener: ItemListener,
     private val prettyTime: PrettyTime,
-    private val formatter: SimpleDateFormat,
+    private val formatter: java.text.DateFormat,
 ) : RecyclerView.ViewHolder(binding.root) {
 
     init {

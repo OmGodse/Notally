@@ -23,6 +23,7 @@ import com.omgodse.notally.widget.WidgetProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.text.DateFormat
 
 class ConfigureWidget : AppCompatActivity(), ItemListener {
 
@@ -47,7 +48,7 @@ class ConfigureWidget : AppCompatActivity(), ItemListener {
         val maxTitle = preferences.maxTitle
         val textSize = preferences.textSize.value
         val dateFormat = preferences.dateFormat.value
-        val formatter = BaseNoteModel.getDateFormatter(this)
+        val formatter = DateFormat.getDateInstance(DateFormat.FULL)
         val mediaRoot = IO.getExternalImagesDirectory(application)
 
         adapter = BaseNoteAdapter(dateFormat, textSize, maxItems, maxLines, maxTitle, formatter, mediaRoot, this)

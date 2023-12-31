@@ -2,9 +2,9 @@ package com.omgodse.notally.preferences
 
 import android.content.Context
 import com.omgodse.notally.R
-import com.omgodse.notally.viewmodels.BaseNoteModel
 import org.ocpsoft.prettytime.PrettyTime
-import java.util.*
+import java.text.DateFormat
+import java.util.Date
 
 sealed interface ListInfo {
 
@@ -73,7 +73,7 @@ object DateFormat : ListInfo {
         val none = context.getString(R.string.none)
         val date = Date(System.currentTimeMillis() - 86400000)
         val relative = PrettyTime().format(date)
-        val absolute = BaseNoteModel.getDateFormatter(context).format(date)
+        val absolute = DateFormat.getDateInstance(DateFormat.FULL).format(date)
         return arrayOf(none, relative, absolute)
     }
 }

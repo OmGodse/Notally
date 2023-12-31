@@ -35,10 +35,10 @@ import com.omgodse.notally.recyclerview.adapters.PreviewImageAdapter
 import com.omgodse.notally.room.Folder
 import com.omgodse.notally.room.Image
 import com.omgodse.notally.room.Type
-import com.omgodse.notally.viewmodels.BaseNoteModel
 import com.omgodse.notally.viewmodels.NotallyModel
 import com.omgodse.notally.widget.WidgetProvider
 import kotlinx.coroutines.launch
+import java.text.DateFormat
 
 abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
@@ -130,7 +130,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     }
 
     open fun setStateFromModel() {
-        val formatter = BaseNoteModel.getDateFormatter(this)
+        val formatter = DateFormat.getDateInstance(DateFormat.FULL)
         binding.DateCreated.text = formatter.format(model.timestamp)
 
         binding.EnterTitle.setText(model.title)

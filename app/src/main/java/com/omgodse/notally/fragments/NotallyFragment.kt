@@ -39,6 +39,7 @@ import com.omgodse.notally.room.Type
 import com.omgodse.notally.viewmodels.BaseNoteModel
 import kotlinx.coroutines.launch
 import java.io.File
+import java.text.DateFormat
 import com.omgodse.notally.preferences.View as ViewPref
 
 abstract class NotallyFragment : Fragment(), ItemListener {
@@ -109,7 +110,7 @@ abstract class NotallyFragment : Fragment(), ItemListener {
         val maxLines = model.preferences.maxLines
         val maxTitle = model.preferences.maxTitle
         val dateFormat = model.preferences.dateFormat.value
-        val formatter = BaseNoteModel.getDateFormatter(requireContext())
+        val formatter = DateFormat.getDateInstance(DateFormat.FULL)
 
         adapter = BaseNoteAdapter(dateFormat, textSize, maxItems, maxLines, maxTitle, formatter, model.mediaRoot, this)
         adapter?.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {

@@ -15,7 +15,7 @@ import com.omgodse.notally.room.Header
 import com.omgodse.notally.room.Item
 import org.ocpsoft.prettytime.PrettyTime
 import java.io.File
-import java.text.SimpleDateFormat
+import java.text.DateFormat
 
 class BaseNoteAdapter(
     private val dateFormat: String,
@@ -23,7 +23,7 @@ class BaseNoteAdapter(
     private val maxItems: Int,
     private val maxLines: Int,
     private val maxTitle: Int,
-    private val formatter: SimpleDateFormat,
+    private val formatter: DateFormat,
     private val mediaRoot: File?,
     private val listener: ItemListener
 ) : ListAdapter<Item, RecyclerView.ViewHolder>(DiffCallback) {
