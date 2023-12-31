@@ -100,6 +100,7 @@
     <string name="content_density">Content density</string>
     <string name="max_items_to_display">Max items to display in list</string>
     <string name="max_lines_to_display">Max lines to display in note</string>
+    <string name="max_lines_to_display_title">Max lines to display in title</string>
 
     <!-- Backup -->
     <string name="backup">Backup</string>

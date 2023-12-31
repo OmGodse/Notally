@@ -22,6 +22,7 @@ class BaseNoteAdapter(
     private val textSize: String,
     private val maxItems: Int,
     private val maxLines: Int,
+    private val maxTitle: Int,
     private val formatter: SimpleDateFormat,
     private val mediaRoot: File?,
     private val listener: ItemListener
@@ -52,7 +53,7 @@ class BaseNoteAdapter(
             }
             else -> {
                 val binding = RecyclerBaseNoteBinding.inflate(inflater, parent, false)
-                BaseNoteVH(binding, dateFormat, textSize, maxItems, maxLines, listener, prettyTime, formatter)
+                BaseNoteVH(binding, dateFormat, textSize, maxItems, maxLines, maxTitle, listener, prettyTime, formatter)
             }
         }
     }

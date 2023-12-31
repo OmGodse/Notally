@@ -44,12 +44,13 @@ class ConfigureWidget : AppCompatActivity(), ItemListener {
 
         val maxItems = preferences.maxItems
         val maxLines = preferences.maxLines
+        val maxTitle = preferences.maxTitle
         val textSize = preferences.textSize.value
         val dateFormat = preferences.dateFormat.value
         val formatter = BaseNoteModel.getDateFormatter(this)
         val mediaRoot = IO.getExternalImagesDirectory(application)
 
-        adapter = BaseNoteAdapter(dateFormat, textSize, maxItems, maxLines, formatter, mediaRoot, this)
+        adapter = BaseNoteAdapter(dateFormat, textSize, maxItems, maxLines, maxTitle, formatter, mediaRoot, this)
 
         binding.RecyclerView.adapter = adapter
         binding.RecyclerView.setHasFixedSize(true)

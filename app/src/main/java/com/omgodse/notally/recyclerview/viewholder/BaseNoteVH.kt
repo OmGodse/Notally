@@ -39,6 +39,7 @@ class BaseNoteVH(
     private val textSize: String,
     private val maxItems: Int,
     maxLines: Int,
+    maxTitle: Int,
     listener: ItemListener,
     private val prettyTime: PrettyTime,
     private val formatter: SimpleDateFormat,
@@ -57,6 +58,7 @@ class BaseNoteVH(
             view.setTextSize(TypedValue.COMPLEX_UNIT_SP, body)
         }
 
+        binding.Title.maxLines = maxTitle
         binding.Note.maxLines = maxLines
 
         binding.root.setOnClickListener {
