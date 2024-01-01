@@ -46,7 +46,7 @@
     <string name="delete_label">Smazat štítek?</string>
     <string name="create_new">Žádné štítky. Vytvořit nový?</string>
     <string name="delete_all_notes">Smazat všechny poznámky?</string>
-    <string name="delete_note_forever">Smazat poznámku navždy?</string>
+    <string name="delete_note_forever">Smazat poznámku?</string>
     <string name="your_notes_associated">Vaše poznámky přiřazené k tomuto štítku nebudou smazány</string>
 
     <!-- Lists and Notes -->
@@ -134,7 +134,7 @@
     <string name="invalid_image">Neplatný obrázek</string>
     <string name="error_while_renaming_image">Chyba při přejmenování obrázku</string>
     <string name="image_format_not_supported">Formát obrázku není podporován</string>
-    <string name="delete_image_forever">Smazat obrázek navždy?</string>
+    <string name="delete_image_forever">Smazat obrázek?</string>
     <string name="cant_load_image">Nelze načíst obrázek. Možná byl přesunut nebo odstraněn</string>
     <string name="unknown_name">Neznámý název</string>
     <string name="unknown_error">Neznámá chyba</string>
@@ -143,6 +143,6 @@
 
     <plurals name="cant_add_images">
         <item quantity="one">Nepodařilo se přidat %d obrázek</item>
-        <item quantity="other">Nepodařilo se přidat %d obrázků</item>
+        <item quantity="few">Nepodařilo se přidat %d obrázků</item>
     </plurals>
 </resources>
