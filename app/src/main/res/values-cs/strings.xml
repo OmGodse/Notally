@@ -143,6 +143,7 @@
 
     <plurals name="cant_add_images">
         <item quantity="one">Nepodařilo se přidat %d obrázek</item>
-        <item quantity="few">Nepodařilo se přidat %d obrázků</item>
+        <item quantity="few">Nepodařilo se přidat %d obrázky</item>
+        <item quantity="many">Nepodařilo se přidat %d obrázků</item>
     </plurals>
 </resources>
