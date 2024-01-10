@@ -318,6 +318,12 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         binding.Toolbar.backgroundTintList = ColorStateList.valueOf(color)
     }
 
+    private fun deleteCheckedListItems() {
+        val checkedItems = model.items.filter { it.checked }.toSet()
+        model.items.removeAll(checkedItems)
+        binding.RecyclerView.adapter?.notifyDataSetChanged()
+    }
+
     private fun setupToolbar() {
         binding.Toolbar.setNavigationOnClickListener { finish() }
 
@@ -328,6 +334,12 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         menu.add(R.string.share, R.drawable.share) { share() }
         menu.add(R.string.labels, R.drawable.label) { label() }
         menu.add(R.string.add_images, R.drawable.add_images) { checkNotificationPermission() }
+
+        if (type === Type.LIST) {
+            menu.add(R.string.delete_checked_items, R.drawable.delete_all) {
+                deleteCheckedListItems()
+            }
+        }
 
         when (model.folder) {
             Folder.NOTES -> {

@@ -20,6 +20,7 @@
     <string name="delete_all">Delete all</string>
     <string name="change_color">Change color</string>
     <string name="delete_forever">Delete forever</string>
+    <string name="delete_checked_items">Delete checked items</string>
 
     <!-- Pinning -->
     <string name="pin">Pin</string>
