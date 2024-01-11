@@ -17,7 +17,7 @@
     <string name="unarchive">Fjern fra arkivet</string>
     <string name="delete_all">Slett alle</string>
     <string name="change_color">Endre farge</string>
-    <string name="delete_forever">Slett for alltid</string>
+    <string name="delete_forever">Slett for godt</string>
 
     <!-- Pinning -->
     <string name="pin">Fest</string>
@@ -44,7 +44,7 @@
     <string name="delete_label">Vil du slette etiketten?</string>
     <string name="create_new">Ingen etiketter. Vil du opprette en?</string>
     <string name="delete_all_notes">Vil du slette alle notatene?</string>
-    <string name="delete_note_forever">Vil du slette notatet for alltid?</string>
+    <string name="delete_note_forever">Vil du slette notatet for godt?</string>
     <string name="your_notes_associated">Notatene assosiert med etikketten vil ikke bli slettet.</string>
 
     <!-- Lists and Notes -->
