@@ -15,6 +15,7 @@
     <string name="restore">Gjenopprett</string>
     <string name="archive">Arkivér</string>
     <string name="unarchive">Fjern frå arkivet</string>
+    <string name="add_images">Legg til bilete</string>
     <string name="delete_all">Slett alle</string>
     <string name="change_color">Endra farge</string>
     <string name="delete_forever">Slett for godt</string>
@@ -26,12 +27,13 @@
     <string name="others">Anna</string>
 
     <!-- Chooser dialog hints -->
-    <string name="view_note">Sjå notat …</string>
+    <string name="view_note">Sjå notat</string>
 
     <!-- Dialogs -->
     <string name="save">Lagra</string>
     <string name="edit">Rediger</string>
     <string name="cancel">Avbryt</string>
+    <string name="continue_">Fortsett</string>
     <string name="open_link">Opna lenkje</string>
     <string name="make_list">Lag ei liste</string>
     <string name="take_note">Ta eit notat</string>
@@ -66,12 +68,13 @@
     <string name="saved_to_notally">Lagra i Notally</string>
     <string name="empty_note">Tomt notat</string>
     <string name="empty_list">Tom liste</string>
+
+    <!-- Messages -->
     <string name="cant_open_link">Kan ikkje opna lenkja</string>
-    <string name="invalid_backup">Ugyldig sikkerheitskopi</string>
-    <string name="imported_backup">Importert sikkerheitskopi</string>
     <string name="something_went_wrong">Noko gjekk gale. Prøv igjen.</string>
     <string name="install_an_email">Installer ein e-postapp for å senda ein tilbakemelding</string>
     <string name="install_a_browser">Installer ein nettlesar for å opna lenkja</string>
+    <string name="cant_find_note">Finn ikkje notat. Den kan ha blitt sletta</string>
 
     <!-- Settings Page -->
     <string name="appearance">Utsjånad</string>
@@ -97,9 +100,8 @@
     <string name="max_items_to_display">Maks mengd element framvist av liste</string>
     <string name="max_lines_to_display">Maks mengd linjer vist frå notata</string>
 
+    <!-- Backup -->
     <string name="backup">Sikkerheitskopiering</string>
-
-    <!-- Auto backup -->
     <string name="auto_backup">Sikkerheitskopiér automatisk</string>
     <string name="tap_to_set_up">Trykk for å konfigurera</string>
     <string name="notes_will_be">Notata vil bli sikkerheitskopiert til den interne lagringa kvar dag.\n\nDette fungerer muligens ikkje viss strømsparingsmodus er aktivert</string>
@@ -107,6 +109,11 @@
     <string name="disable_auto_backup">Slå av automatisk sikkerheitskopiering</string>
     <string name="choose_another_folder">Vel ei anna mappe</string>
     <string name="cant_find_folder">Finn ikkje mappa. Den kan ha blitt flytta eller sletta</string>
+    <string name="invalid_backup">Ugyldeg sikkerheitskopi<string>
+    <string name="imported_backup">Importert sikkerheitskopi<string>
+    <string name="exporting_backup">Eksporterer sikkerheitskopi</string>
+    <string name="importing_backup">Importerer sikkerheitskopi</string>
+    <string name="calculating">Bereknar …</string>
 
     <string name="export_backup">Eksportér sikkerheitskopi</string>
     <string name="import_backup">Importér sikkerheitskopi</string>
@@ -115,4 +122,26 @@
     <string name="libraries">Tredjepartsbibliotek</string>
     <string name="rate">Vurder denne appen</string>
     <string name="send_feedback">Send tilbakemelding</string>
+
+    <!-- Widget -->
+    <string name="single_note_or_list">Enkelt notat eller liste</string>
+    <string name="select_note">Vel notat</string>
+
+    <!-- Images -->
+    <string name="adding_images">Legg til bilete</string>
+    <string name="deleting_images">Slettar bilete</string>
+    <string name="invalid_image">Ugyldeg bilete</string>
+    <string name="error_while_renaming_image">Feil under endring av biletenamn</string>
+    <string name="image_format_not_supported">Bileteformatet er ikkje støtta</string>
+    <string name="delete_image_forever">Vil du sletta biletet for godt?</string>
+    <string name="cant_load_image">Kan ikkje lasta inn biletet. Det kan ha blitt flytta eller sletta</string>
+    <string name="unknown_name">Ukjend namn</string>
+    <string name="unknown_error">Ukjend feil</string>
+    <string name="insert_an_sd_card">Sett inn eit SD-kort for å legga til bilete</string>
+    <string name="please_grant_notally">Gi Notally tillating til å senda varsel. Dette brukas for å visa fremdrifta viss handlinger som å sletta bilete eller importera sikkerheitskopier tar tid</string>
+
+    <plurals name="cant_add_images">
+        <item quantity="other">Kan ikkje legga til %d bilete</item>
+    </plurals>
+
 </resources>
