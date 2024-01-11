@@ -14,7 +14,7 @@ import com.omgodse.notally.miscellaneous.IO
 import com.omgodse.notally.preferences.Preferences
 import com.omgodse.notally.preferences.View
 import com.omgodse.notally.recyclerview.ItemListener
-import com.omgodse.notally.recyclerview.adapters.BaseNoteAdapter
+import com.omgodse.notally.recyclerview.adapter.BaseNoteAdapter
 import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Header
 import com.omgodse.notally.room.NotallyDatabase

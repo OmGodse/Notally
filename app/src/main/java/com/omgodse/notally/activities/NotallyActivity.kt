@@ -30,8 +30,8 @@ import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.miscellaneous.add
 import com.omgodse.notally.preferences.TextSize
-import com.omgodse.notally.recyclerview.adapters.ErrorAdapter
-import com.omgodse.notally.recyclerview.adapters.PreviewImageAdapter
+import com.omgodse.notally.recyclerview.adapter.ErrorAdapter
+import com.omgodse.notally.recyclerview.adapter.PreviewImageAdapter
 import com.omgodse.notally.room.Folder
 import com.omgodse.notally.room.Image
 import com.omgodse.notally.room.Type

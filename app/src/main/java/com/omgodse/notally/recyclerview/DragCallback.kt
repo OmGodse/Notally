@@ -4,8 +4,8 @@ import android.graphics.Canvas
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.omgodse.notally.recyclerview.adapters.MakeListAdapter
-import java.util.*
+import com.omgodse.notally.recyclerview.adapter.MakeListAdapter
+import java.util.Collections
 
 class DragCallback(private val elevation: Float, private val adapter: MakeListAdapter) : ItemTouchHelper.Callback() {
 

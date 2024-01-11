@@ -1,4 +1,4 @@
-package com.omgodse.notally.recyclerview.adapters
+package com.omgodse.notally.recyclerview.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

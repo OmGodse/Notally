@@ -17,7 +17,7 @@ import com.omgodse.notally.activities.TakeNote
 import com.omgodse.notally.databinding.FragmentNotesBinding
 import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.recyclerview.ItemListener
-import com.omgodse.notally.recyclerview.adapters.BaseNoteAdapter
+import com.omgodse.notally.recyclerview.adapter.BaseNoteAdapter
 import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Item
 import com.omgodse.notally.room.Type
