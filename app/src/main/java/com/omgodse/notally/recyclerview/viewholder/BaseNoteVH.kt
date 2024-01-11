@@ -70,7 +70,13 @@ class BaseNoteVH(
         }
     }
 
-    fun bind(baseNote: BaseNote, mediaRoot: File?) {
+    fun updateCheck(checked: Boolean) {
+        binding.root.isChecked = checked
+    }
+
+    fun bind(baseNote: BaseNote, mediaRoot: File?, checked: Boolean) {
+        updateCheck(checked)
+
         when (baseNote.type) {
             Type.NOTE -> bindNote(baseNote.body, baseNote.spans)
             Type.LIST -> bindList(baseNote.items)

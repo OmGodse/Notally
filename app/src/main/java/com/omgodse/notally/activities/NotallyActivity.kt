@@ -168,12 +168,12 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     private fun label() {
         lifecycleScope.launch {
             val labels = model.getAllLabels()
-            val onUpdated = { new: List<String> ->
-                model.setLabels(new)
-                Operations.bindLabels(binding.LabelGroup, model.labels, model.textSize)
-            }
-            val add = { Operations.displayAddLabelDialog(this@NotallyActivity, model::insertLabel) { label() } }
-            Operations.labelNote(this@NotallyActivity, labels, model.labels, onUpdated, add)
+            if (labels.isNotEmpty()) {
+                Operations.labelNote(this@NotallyActivity, labels, model.labels) { new ->
+                    model.setLabels(new)
+                    Operations.bindLabels(binding.LabelGroup, model.labels, model.textSize)
+                }
+            } else Operations.displayAddLabelDialog(this@NotallyActivity, model::insertLabel) { label() }
         }
     }
 

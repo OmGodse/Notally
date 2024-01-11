@@ -47,6 +47,7 @@
     <string name="delete_label">Delete label?</string>
     <string name="create_new">No labels yet. Create one?</string>
     <string name="delete_all_notes">Delete all notes?</string>
+    <string name="delete_selected_notes">Delete selected notes?</string>
     <string name="delete_note_forever">Delete note forever?</string>
     <string name="your_notes_associated">Your notes attached to this label will not be deleted</string>
 

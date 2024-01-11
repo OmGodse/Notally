@@ -13,6 +13,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.room.withTransaction
+import com.omgodse.notally.ActionMode
 import com.omgodse.notally.BackupProgress
 import com.omgodse.notally.Cache
 import com.omgodse.notally.ImageDeleteService
@@ -98,6 +99,8 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
     val importingBackup = MutableLiveData<BackupProgress>()
     val exportingBackup = MutableLiveData<BackupProgress>()
+
+    val actionMode = ActionMode()
 
     init {
         viewModelScope.launch {
@@ -408,13 +411,43 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     }
 
 
-    fun colorBaseNote(id: Long, color: Color) = executeAsync { baseNoteDao.updateColor(id, color) }
+    fun pinBaseNote(pinned: Boolean) {
+        val id = actionMode.selectedIds.toLongArray()
+        actionMode.close(false)
+        executeAsync { baseNoteDao.updatePinned(id, pinned) }
+    }
+
+    fun colorBaseNote(color: Color) {
+        val ids = actionMode.selectedIds.toLongArray()
+        actionMode.close(true)
+        executeAsync { baseNoteDao.updateColor(ids, color) }
+    }
+
+    fun moveBaseNotes(folder: Folder) {
+        val ids = actionMode.selectedIds.toLongArray()
+        actionMode.close(false)
+        executeAsync { baseNoteDao.move(ids, folder) }
+    }
+
+    fun updateBaseNoteLabels(labels: List<String>, id: Long) {
+        actionMode.close(true)
+        executeAsync { baseNoteDao.updateLabels(id, labels) }
+    }
 
 
-    fun pinBaseNote(id: Long) = executeAsync { baseNoteDao.updatePinned(id, true) }
-
-    fun unpinBaseNote(id: Long) = executeAsync { baseNoteDao.updatePinned(id, false) }
-
+    fun deleteBaseNotes() {
+        val ids = LongArray(actionMode.selectedNotes.size)
+        val images = ArrayList<Image>()
+        actionMode.selectedNotes.onEachIndexed { index, entry ->
+            ids[index] = entry.key
+            images.addAll(entry.value.images)
+        }
+        actionMode.close(false)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) { baseNoteDao.delete(ids) }
+            informOtherComponents(images, ids)
+        }
+    }
 
     fun deleteAllBaseNotes() {
         viewModelScope.launch {
@@ -426,39 +459,18 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
                 strings.flatMapTo(images, Converters::jsonToImages)
                 baseNoteDao.deleteFrom(Folder.DELETED)
             }
-            if (images.isNotEmpty()) {
-                ImageDeleteService.start(app, images)
-            }
-            if (ids.isNotEmpty()) {
-                WidgetProvider.sendBroadcast(app, ids)
-            }
+            informOtherComponents(images, ids)
         }
     }
 
-    fun deleteBaseNoteForever(id: Long) {
-        viewModelScope.launch {
-            val images = ArrayList<Image>()
-            withContext(Dispatchers.IO) {
-                val json = baseNoteDao.getImages(id)
-                val actualImages = Converters.jsonToImages(json)
-                images.addAll(actualImages)
-                baseNoteDao.delete(id)
-            }
-            if (images.isNotEmpty()) {
-                ImageDeleteService.start(app, images)
-            }
-            WidgetProvider.sendBroadcast(app, longArrayOf(id))
+    private fun informOtherComponents(images: ArrayList<Image>, ids: LongArray) {
+        if (images.isNotEmpty()) {
+            ImageDeleteService.start(app, images)
+        }
+        if (ids.isNotEmpty()) {
+            WidgetProvider.sendBroadcast(app, ids)
         }
     }
-
-
-    fun restoreBaseNote(id: Long) = executeAsync { baseNoteDao.move(id, Folder.NOTES) }
-
-    fun moveBaseNoteToDeleted(id: Long) = executeAsync { baseNoteDao.move(id, Folder.DELETED) }
-
-    fun moveBaseNoteToArchive(id: Long) = executeAsync { baseNoteDao.move(id, Folder.ARCHIVED) }
-
-    fun updateBaseNoteLabels(labels: List<String>, id: Long) = executeAsync { baseNoteDao.updateLabels(id, labels) }
 
 
     suspend fun getAllLabels() = withContext(Dispatchers.IO) { labelDao.getArrayOfAll() }

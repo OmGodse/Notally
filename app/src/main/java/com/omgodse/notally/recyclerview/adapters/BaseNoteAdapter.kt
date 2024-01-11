@@ -18,6 +18,7 @@ import java.io.File
 import java.text.DateFormat
 
 class BaseNoteAdapter(
+    private val selectedIds: Set<Long>,
     private val dateFormat: String,
     private val textSize: String,
     private val maxItems: Int,
@@ -40,8 +41,14 @@ class BaseNoteAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = getItem(position)) {
             is Header -> (holder as HeaderVH).bind(item)
-            is BaseNote -> (holder as BaseNoteVH).bind(item, mediaRoot)
+            is BaseNote -> (holder as BaseNoteVH).bind(item, mediaRoot, selectedIds.contains(item.id))
         }
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int, payloads: MutableList<Any>) {
+        if (payloads.isEmpty()) {
+            onBindViewHolder(holder, position)
+        } else handleCheck(holder, position)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -56,6 +63,12 @@ class BaseNoteAdapter(
                 BaseNoteVH(binding, dateFormat, textSize, maxItems, maxLines, maxTitle, listener, prettyTime, formatter)
             }
         }
+    }
+
+
+    private fun handleCheck(holder: RecyclerView.ViewHolder, position: Int) {
+        val baseNote = getItem(position) as BaseNote
+        (holder as BaseNoteVH).updateCheck(selectedIds.contains(baseNote.id))
     }
 
 

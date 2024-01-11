@@ -24,6 +24,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.text.DateFormat
+import java.util.Collections
 
 class ConfigureWidget : AppCompatActivity(), ItemListener {
 
@@ -51,7 +52,7 @@ class ConfigureWidget : AppCompatActivity(), ItemListener {
         val formatter = DateFormat.getDateInstance(DateFormat.FULL)
         val mediaRoot = IO.getExternalImagesDirectory(application)
 
-        adapter = BaseNoteAdapter(dateFormat, textSize, maxItems, maxLines, maxTitle, formatter, mediaRoot, this)
+        adapter = BaseNoteAdapter(Collections.emptySet(), dateFormat, textSize, maxItems, maxLines, maxTitle, formatter, mediaRoot, this)
 
         binding.RecyclerView.adapter = adapter
         binding.RecyclerView.setHasFixedSize(true)
