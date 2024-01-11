@@ -123,7 +123,6 @@
     <string name="rate">Oceń aplikację</string>
     <string name="send_feedback">Wyślij opinię</string>
 
-
     <string name="github" translatable="false">GitHub</string>
 
     <!-- Widget -->
@@ -134,7 +133,7 @@
     <string name="count" translatable="false">%1$d / %2$d</string>
     <string name="adding_images">Dodawanie obrazów</string>
     <string name="deleting_images">Usuwanie obrazów</string>
-    <string name="invalid_image">Niewłaściwy obraz</string>  
+    <string name="invalid_image">Niewłaściwy obraz</string>
     <string name="error_while_renaming_image">Błąd podczas zmiany nazwy obrazu</string>
     <string name="image_format_not_supported">Format obrazu nie jest obsługiwany</string>
     <string name="delete_image_forever">Usunąć obraz bezpowrotnie?</string>
