@@ -97,8 +97,8 @@
     <string name="large">Stor</string>
 
     <string name="content_density">Innholdstetthet</string>
-    <string name="max_items_to_display">Maks antall elementer fremvist av liste</string>
-    <string name="max_lines_to_display">Maks antall linjer vist fra notatene</string>
+    <string name="max_items_to_display">Maks antall elementer å vise fra lister</string>
+    <string name="max_lines_to_display">Maks antall linjer å vise fra notater</string>
 
     <!-- Backup -->
     <string name="backup">Sikkerhetskopiering</string>
