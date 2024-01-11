@@ -132,7 +132,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         val menu = binding.ActionMode.menu
-        val pinned = menu.add(R.string.pin)
+        val pinned = menu.add(R.string.pin, R.drawable.pin) {}
         val share = menu.add(R.string.share, R.drawable.share) { share() }
         val labels = menu.add(R.string.labels, R.drawable.label) { label() }
 
