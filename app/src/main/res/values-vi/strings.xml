@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <resources>
     <!-- Fragment Titles -->
     <string name="notes">Ghi chú</string>
@@ -33,6 +34,7 @@
     <string name="save">Lưu</string>
     <string name="edit">Sửa</string>
     <string name="cancel">Hủy</string>
+    <string name="continue_">Tiếp tục</string>
     <string name="open_link">Mở liên kết</string>
     <string name="make_list">Liệt kê</string>
     <string name="take_note">Ghi chú</string>
@@ -45,6 +47,7 @@
     <string name="delete_label">Xóa nhãn?</string>
     <string name="create_new">Chưa có nhãn nào. Thử tạo mới?</string>
     <string name="delete_all_notes">Xóa toàn bộ ghi chú?</string>
+    <string name="delete_selected_notes">Xóa những ghi chú đã chọn?</string>
     <string name="delete_note_forever">Xóa vĩnh viễn ghi chú?</string>
     <string name="your_notes_associated">Những ghi chú có sử dụng nhãn này sẽ không bị xóa.</string>
 
@@ -60,6 +63,7 @@
     <string name="italic">Nghiêng</string>
     <string name="strikethrough">Gạch giữa</string>
     <string name="clear_formatting">Xóa định dạng</string>
+    <string name="monospace">Monospace</string>
 
     <!-- Miscellaneous -->
     <string name="saved_to_device">Đã lưu vào thiết bị</string>
@@ -72,6 +76,7 @@
     <string name="something_went_wrong">Có lỗi xảy ra. Vui lòng thử lại.</string>
     <string name="install_an_email">Cài đặt một ứng dụng email để gửi phản hồi</string>
     <string name="install_a_browser">Cài đặt một trình duyệt để mở link này</string>
+    <string name="cant_find_note">Không tìm thấy ghi chú. Có lẽ nó đã bị xóa</string>
 
     <!-- Settings Page -->
     <string name="appearance">Giao diện</string>
@@ -96,9 +101,22 @@
     <string name="content_density">Mật độ hiển thị nội dung</string>
     <string name="max_items_to_display">Số lượng mục liệt kê tối đa</string>
     <string name="max_lines_to_display">Số lượng dòng ghi chú tối đa</string>
+    <string name="max_lines_to_display_title">Số lượng dòng tựa đề tối đa</string>
 
     <string name="backup">Sao lưu</string>
     <string name="auto_backup">Sao lưu tự động</string>
+    <string name="tap_to_set_up">Thiết lập</string>
+    <string name="notes_will_be">Ghi chú sẽ được lưu vào bộ nhớ trong của điện thoại.\n\nTính năng sẽ không hoạt động nếu bạn bật tiết kiệm pin</string>
+    <string name="choose_folder">Chọn thư mục</string>
+    <string name="disable_auto_backup">Tắt sao lưu tự động</string>
+    <string name="choose_another_folder">Chọn thư mục khác</string>
+    <string name="cant_find_folder">Không tìm thấy thư mục. Có lẽ nó đã bị đổi tên hoặc xóa</string>
+    <string name="invalid_backup">Bản sao lưu không hợp lệ</string>
+    <string name="imported_backup">Đã nhập bản sao lưu</string>
+    <string name="exporting_backup">Đã xuất bản sao lưu</string>
+    <string name="import_backup">Nhập dữ liệu</string>
+    <string name="calculating">Đang xử lý…</string>
+
     <string name="export_backup">Xuất dữ liệu</string>
     <string name="import_backup">Nhập dữ liệu</string>
 
@@ -107,13 +125,29 @@
     <string name="rate">Đánh giá app</string>
     <string name="send_feedback">Gửi phản hồi</string>
 
-    <!-- Auto backup -->
-    <string name="tap_to_set_up">Nhấn để thiết lập</string>
-    <string name="notes_will_be">Ghi chú sẽ được sao lưu vào bộ nhớ trong\ của thiết bị hằng ngày.\n\nBạn hãy lưu ý tắt chế độ tiết kiệm pin trước.</string>
-    <string name="choose_folder">Chọn thư mục</string>
-    <string name="disable_auto_backup">Tắt sao lưu tự động</string>
-    <string name="choose_another_folder">Chọn thư mục khác</string>
-    <string name="cant_find_folder">Không tìm thấy thư mục. Có thể do đã dời hoặc xóa.</string>
-    <string name="invalid_backup">Bản sao lưu không hợp lệ</string>
-    <string name="imported_backup">Đã nhập bản sao lưu</string>
+    <string name="github" translatable="false">GitHub</string>
+
+    <!-- Widget -->
+    <string name="single_note_or_list">Ghi chú hoặc liệt kê</string>
+    <string name="select_note">Chọn ghi chú</string>
+
+    <!-- Images -->
+    <string name="count" translatable="false">%1$d/%2$d</string>
+    <string name="adding_images">Đang thêm ảnh</string>
+    <string name="deleting_images">Đang xóa ảnh</string>
+    <string name="invalid_image">Ảnh không hợp lệ</string>
+    <string name="error_while_renaming_image">Xảy ra lỗi khi đổi tên ảnh</string>
+    <string name="image_format_not_supported">Định dạng không hỗ trợ</string>
+    <string name="delete_image_forever">Xóa vĩnh viễn ảnh?</string>
+    <string name="cant_load_image">Không thể tải ảnh. Có lẽ nó đã bị đổi tên hoặc xóa</string>
+    <string name="unknown_name">Không rõ tên</string>
+    <string name="unknown_error">Không rõ lỗi</string>
+    <string name="insert_an_sd_card">Gắn thẻ SD trước</string>
+    <string name="please_grant_notally">Xin cho phép Notally quyền gửi thông báo. Nó sẽ cho phép hiển thị tiến trình nếu các thao tác xóa hình ảnh hoặc nhập bản sao lưu mất nhiều thời gian</string>
+
+    <plurals name="cant_add_images">
+        <item quantity="one">Không thể thêm %d ảnh</item>
+        <item quantity="other">Không thể thêm %d ảnh</item>
+    </plurals>
+    
 </resources>
