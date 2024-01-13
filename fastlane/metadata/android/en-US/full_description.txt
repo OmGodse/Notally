@@ -23,7 +23,7 @@ Add clickable links to notes with support for phone numbers, email addresses and
 • Completely free
 • Adjustable text size
 • Auto save and backup
-• APK size of 1.2 MB (1.6 MB uncompressed)
+• APK size of 1.4 MB (1.8 MB uncompressed)
 • Add notes and lists to your home screen with widgets
 
 <b>Privacy</b>

@@ -23,7 +23,7 @@ Ajoutez des liens cliquables à vos notes avec prise en charge des numéros de t
 • Complètement gratuit
 • Taille du texte ajustable
 • Sauvegarde et sauvegarde automatique
-• Taille d'APK de 1,2 Mo (1,6 Mo décompressé)
+• Taille d'APK de 1,4 Mo (1,8 Mo décompressé)
 • Add notes and lists to your home screen with widgets
 
 <b>Vie privée</b>
