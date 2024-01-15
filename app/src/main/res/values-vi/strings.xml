@@ -15,6 +15,7 @@
     <string name="restore">Khôi phục</string>
     <string name="archive">Lưu trữ</string>
     <string name="unarchive">Bỏ lưu trữ</string>
+    <string name="add_images">Thêm ảnh</string>
     <string name="delete_all">Xóa toàn bộ</string>
     <string name="change_color">Đổi màu</string>
     <string name="delete_forever">Xóa vĩnh viễn</string>
@@ -65,9 +66,9 @@
     <string name="saved_to_notally">Đã lưu trong Notally</string>
     <string name="empty_note">Nội dung ghi chú trống</string>
     <string name="empty_list">Nội dung liệt kê trống</string>
+
+    <!-- Messages -->
     <string name="cant_open_link">Không thể mở liên kết</string>
-    <string name="invalid_backup">Bản sao lưu không hợp lệ</string>
-    <string name="imported_backup">Đã nhập bản sao lưu</string>
     <string name="something_went_wrong">Có lỗi xảy ra. Vui lòng thử lại.</string>
     <string name="install_an_email">Cài đặt một ứng dụng email để gửi phản hồi</string>
     <string name="install_a_browser">Cài đặt một trình duyệt để mở link này</string>
@@ -97,16 +98,7 @@
     <string name="max_lines_to_display">Số lượng dòng ghi chú tối đa</string>
 
     <string name="backup">Sao lưu</string>
-
-    <!-- Auto backup -->
     <string name="auto_backup">Sao lưu tự động</string>
-    <string name="tap_to_set_up">Nhấn để thiết lập</string>
-    <string name="notes_will_be">Ghi chú sẽ được sao lưu vào bộ nhớ trong\ của thiết bị hằng ngày.\n\nBạn hãy lưu ý tắt chế độ tiết kiệm pin trước.</string>
-    <string name="choose_folder">Chọn thư mục</string>
-    <string name="disable_auto_backup">Tắt sao lưu tự động</string>
-    <string name="choose_another_folder">Chọn thư mục khác</string>
-    <string name="cant_find_folder">Không tìm thấy thư mục. Có thể do đã dời hoặc xóa.</string>
-
     <string name="export_backup">Xuất dữ liệu</string>
     <string name="import_backup">Nhập dữ liệu</string>
 
@@ -114,4 +106,14 @@
     <string name="libraries">Thư viện sử dụng</string>
     <string name="rate">Đánh giá app</string>
     <string name="send_feedback">Gửi phản hồi</string>
+
+    <!-- Auto backup -->
+    <string name="tap_to_set_up">Nhấn để thiết lập</string>
+    <string name="notes_will_be">Ghi chú sẽ được sao lưu vào bộ nhớ trong\ của thiết bị hằng ngày.\n\nBạn hãy lưu ý tắt chế độ tiết kiệm pin trước.</string>
+    <string name="choose_folder">Chọn thư mục</string>
+    <string name="disable_auto_backup">Tắt sao lưu tự động</string>
+    <string name="choose_another_folder">Chọn thư mục khác</string>
+    <string name="cant_find_folder">Không tìm thấy thư mục. Có thể do đã dời hoặc xóa.</string>
+    <string name="invalid_backup">Bản sao lưu không hợp lệ</string>
+    <string name="imported_backup">Đã nhập bản sao lưu</string>
 </resources>

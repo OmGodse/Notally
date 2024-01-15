@@ -138,37 +138,25 @@ object Operations {
     }
 
 
-    fun labelNote(
-        context: Context,
-        labels: Array<String>,
-        old: List<String>,
-        onUpdated: (new: List<String>) -> Unit,
-        addLabel: () -> Unit
-    ) {
-        val checkedPositions = labels.map { label -> old.contains(label) }.toBooleanArray()
+    fun labelNote(context: Context, labels: Array<String>, old: List<String>, onUpdated: (List<String>) -> Unit) {
+        val checkedPositions = BooleanArray(labels.size) { index -> old.contains(labels[index]) }
 
         val builder = MaterialAlertDialogBuilder(context)
-
-        if (labels.isNotEmpty()) {
-            builder.setTitle(R.string.labels)
-            builder.setNegativeButton(R.string.cancel, null)
-            builder.setMultiChoiceItems(labels, checkedPositions) { dialog, which, isChecked ->
+            .setTitle(R.string.labels)
+            .setNegativeButton(R.string.cancel, null)
+            .setMultiChoiceItems(labels, checkedPositions) { _, which, isChecked ->
                 checkedPositions[which] = isChecked
             }
-            builder.setPositiveButton(R.string.save) { dialog, which ->
-                val newLabels = ArrayList<String>()
+            .setPositiveButton(R.string.save) { _, _ ->
+                val new = ArrayList<String>()
                 checkedPositions.forEachIndexed { index, checked ->
                     if (checked) {
                         val label = labels[index]
-                        newLabels.add(label)
+                        new.add(label)
                     }
                 }
-                onUpdated(newLabels)
+                onUpdated(new)
             }
-        } else {
-            builder.setMessage(R.string.create_new)
-            builder.setPositiveButton(R.string.add_label) { dialog, which -> addLabel() }
-        }
 
         builder.show()
     }

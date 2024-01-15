@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Fragment Titles -->
+     <!-- Fragment Titles -->
     <string name="notes">Poznámky</string>
     <string name="labels">Štítky</string>
     <string name="deleted">Smazané</string>
@@ -15,6 +15,7 @@
     <string name="restore">Obnovit</string>
     <string name="archive">Archivovat</string>
     <string name="unarchive">Zrušit archivaci</string>
+    <string name="add_images">Přidat obrázky</string>
     <string name="delete_all">Smazat vše</string>
     <string name="change_color">Změnit barvu</string>
     <string name="delete_forever">Smazat navždy</string>
@@ -32,6 +33,7 @@
     <string name="save">Uložit</string>
     <string name="edit">Upravit</string>
     <string name="cancel">Zrušit</string>
+    <string name="continue_">Pokračovat</string>
     <string name="open_link">Otevřít odkaz</string>
     <string name="make_list">Vytvořit seznam</string>
     <string name="take_note">Napsat poznámku</string>
@@ -44,7 +46,7 @@
     <string name="delete_label">Smazat štítek?</string>
     <string name="create_new">Žádné štítky. Vytvořit nový?</string>
     <string name="delete_all_notes">Smazat všechny poznámky?</string>
-    <string name="delete_note_forever">Smazat poznámku navždy?</string>
+    <string name="delete_note_forever">Smazat poznámku?</string>
     <string name="your_notes_associated">Vaše poznámky přiřazené k tomuto štítku nebudou smazány</string>
 
     <!-- Lists and Notes -->
@@ -66,12 +68,13 @@
     <string name="saved_to_notally">Uloženo do Notally</string>
     <string name="empty_note">Prázdná poznámka</string>
     <string name="empty_list">Prázdný seznam</string>
+
+    <!-- Messages -->
     <string name="cant_open_link">Odkaz nelze otevřit</string>
-    <string name="invalid_backup">Neplatný soubor zálohy</string>
-    <string name="imported_backup">Záloha importována</string>
     <string name="something_went_wrong">Něco se pokazilo. Zkuste to znovu.</string>
     <string name="install_an_email">Pro odeslání zpětné vazby nainstalujte e-mailového klienta</string>
     <string name="install_a_browser">Pro otevření odkazu nainstalujte webový prohlížeč</string>
+    <string name="cant_find_note">Poznámka nenalezena. Pravděpodobně byla smazána</string>
 
     <!-- Settings Page -->
     <string name="appearance">Vzhled</string>
@@ -97,9 +100,8 @@
     <string name="max_items_to_display">Max. počet položek v seznamu</string>
     <string name="max_lines_to_display">Max. počet položek v poznámce</string>
 
+    <!-- Backup -->
     <string name="backup">Zálohování</string>
-
-    <!-- Auto backup -->
     <string name="auto_backup">Automatická záloha</string>
     <string name="tap_to_set_up">Nastavit klepnutím sem</string>
     <string name="notes_will_be">Poznámky budou každý den zálohovány do interního uložiště telefonu.\n\nPokud máte zapnutý úsporný režim, nemusí to fungovat.</string>
@@ -107,7 +109,12 @@
     <string name="disable_auto_backup">Zakázat automatickou zálohu</string>
     <string name="choose_another_folder">Vybrat jinou složku</string>
     <string name="cant_find_folder">Složka nebyla nalezena. Možná byla přesunuta nebo smazána.</string>
-
+    <string name="invalid_backup">Neplatný soubor zálohy</string>
+    <string name="imported_backup">Záloha importována</string>
+    <string name="exporting_backup">Vytváří se záloha</string>
+    <string name="importing_backup">Importuje se záloha</string>
+    <string name="calculating">Probíhá výpočet…</string>
+    
     <string name="export_backup">Exportovat zálohu</string>
     <string name="import_backup">Importovat zálohu</string>
 
@@ -115,4 +122,28 @@
     <string name="libraries">Knihovny</string>
     <string name="rate">Ohodnotit aplikaci</string>
     <string name="send_feedback">Odeslat zpětnou vazbu</string>
+    
+    
+    <!-- Widget -->
+    <string name="single_note_or_list">Poznámka nebo seznam</string>
+    <string name="select_note">Vybrat poznámku</string>
+
+    <!-- Images -->
+    <string name="adding_images">Přidávání obrázků</string>
+    <string name="deleting_images">Mazání obrázků</string>
+    <string name="invalid_image">Neplatný obrázek</string>
+    <string name="error_while_renaming_image">Chyba při přejmenování obrázku</string>
+    <string name="image_format_not_supported">Formát obrázku není podporován</string>
+    <string name="delete_image_forever">Smazat obrázek?</string>
+    <string name="cant_load_image">Nelze načíst obrázek. Možná byl přesunut nebo odstraněn</string>
+    <string name="unknown_name">Neznámý název</string>
+    <string name="unknown_error">Neznámá chyba</string>
+    <string name="insert_an_sd_card">Vložte kartu SD a přidejte obrázky</string>
+    <string name="please_grant_notally">Udělte Notally oprávnění k zasílání oznámení. Tato se používájí k zobrazení průběhu, pokud operace, jako je mazání obrázků nebo import záloh, trvají dlouho.</string>
+
+    <plurals name="cant_add_images">
+        <item quantity="one">Nepodařilo se přidat %d obrázek</item>
+        <item quantity="few">Nepodařilo se přidat %d obrázky</item>
+        <item quantity="many">Nepodařilo se přidat %d obrázků</item>
+    </plurals>
 </resources>

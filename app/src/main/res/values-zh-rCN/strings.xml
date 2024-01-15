@@ -15,6 +15,7 @@
     <string name="restore">恢复</string>
     <string name="archive">存档</string>
     <string name="unarchive">取消存档</string>
+    <string name="add_images">添加图片</string>
     <string name="delete_all">删除全部</string>
     <string name="change_color">更改色彩</string>
     <string name="delete_forever">永久删除</string>
@@ -66,9 +67,9 @@
     <string name="saved_to_notally">已保存至 Notally</string>
     <string name="empty_note">空白笔记</string>
     <string name="empty_list">空白列表</string>
+
+    <!-- Messages -->
     <string name="cant_open_link">打不开链接</string>
-    <string name="invalid_backup">无效的备份</string>
-    <string name="imported_backup">已导入备份</string>
     <string name="something_went_wrong">出错了。请重试。</string>
     <string name="install_an_email">安装电子邮件应用来发送反馈</string>
     <string name="install_a_browser">安装浏览器打开此链接</string>
@@ -98,6 +99,13 @@
     <string name="max_lines_to_display">笔记最多显示几行</string>
 
     <string name="backup">备份</string>
+    <string name="export_backup">导出备份</string>
+    <string name="import_backup">导入备份</string>
+
+    <string name="about">关于</string>
+    <string name="libraries">库</string>
+    <string name="rate">给应用打分</string>
+    <string name="send_feedback">发送反馈</string>
 
     <!-- Auto backup -->
     <string name="auto_backup">自动备份</string>
@@ -107,12 +115,14 @@
     <string name="disable_auto_backup">禁用自动备份</string>
     <string name="choose_another_folder">选择另一个文件夹</string>
     <string name="cant_find_folder">找不到该文件夹。可能被移动或删除了。</string>
+    <string name="invalid_backup">无效的备份</string>
+    <string name="imported_backup">已导入备份</string>
 
-    <string name="export_backup">导出备份</string>
-    <string name="import_backup">导入备份</string>
+    <!-- Widget -->
+    <string name="single_note_or_list">单条笔记</string>
+    <string name="select_note">选择笔记</string>
 
-    <string name="about">关于</string>
-    <string name="libraries">库</string>
-    <string name="rate">给应用打分</string>
-    <string name="send_feedback">发送反馈</string>
+    <!-- Images -->
+    <string name="invalid_image">无效图片</string>
+    <string name="image_format_not_supported">不支持该图片格式</string>
 </resources>

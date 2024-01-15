@@ -16,6 +16,9 @@
         <item name="textAppearanceSubtitle1">@style/TextAppearance.Subtitle1</item>
         <item name="textAppearanceHeadline6">@style/TextAppearance.Headline6</item>
 
+        <!-- Submenu Title -->
+        <item name="textAppearancePopupMenuHeader">@style/TextAppearance.Subtitle2.PopupMenu</item>
+
         <item name="toolbarStyle">@style/Toolbar</item>
         <item name="chipGroupStyle">@style/ChipGroup</item>
 
@@ -48,6 +51,10 @@
 
     <style name="TextAppearance.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
         <item name="android:letterSpacing">0.02</item>
+    </style>
+
+    <style name="TextAppearance.Subtitle2.PopupMenu">
+        <item name="android:textColor">?attr/colorControlNormal</item>
     </style>
 
 

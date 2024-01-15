@@ -6,7 +6,9 @@
     android:layout_marginStart="4dp"
     android:layout_marginEnd="4dp"
     android:layout_marginBottom="8dp"
+    android:checkable="true"
     app:cardElevation="0dp"
+    app:checkedIcon="@drawable/checked_circle"
     app:strokeWidth="1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout

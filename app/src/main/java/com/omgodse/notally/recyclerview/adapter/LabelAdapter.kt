@@ -1,4 +1,4 @@
-package com.omgodse.notally.recyclerview.adapters
+package com.omgodse.notally.recyclerview.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.omgodse.notally.databinding.RecyclerLabelBinding
 import com.omgodse.notally.recyclerview.ItemListener
-import com.omgodse.notally.recyclerview.viewholders.LabelVH
+import com.omgodse.notally.recyclerview.viewholder.LabelVH
 
 class LabelAdapter(private val listener: ItemListener) : ListAdapter<String, LabelVH>(DiffCallback) {
 

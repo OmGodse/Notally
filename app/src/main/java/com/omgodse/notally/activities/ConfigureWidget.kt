@@ -14,7 +14,7 @@ import com.omgodse.notally.miscellaneous.IO
 import com.omgodse.notally.preferences.Preferences
 import com.omgodse.notally.preferences.View
 import com.omgodse.notally.recyclerview.ItemListener
-import com.omgodse.notally.recyclerview.adapters.BaseNoteAdapter
+import com.omgodse.notally.recyclerview.adapter.BaseNoteAdapter
 import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Header
 import com.omgodse.notally.room.NotallyDatabase
@@ -23,6 +23,8 @@ import com.omgodse.notally.widget.WidgetProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.text.DateFormat
+import java.util.Collections
 
 class ConfigureWidget : AppCompatActivity(), ItemListener {
 
@@ -44,12 +46,13 @@ class ConfigureWidget : AppCompatActivity(), ItemListener {
 
         val maxItems = preferences.maxItems
         val maxLines = preferences.maxLines
+        val maxTitle = preferences.maxTitle
         val textSize = preferences.textSize.value
         val dateFormat = preferences.dateFormat.value
-        val formatter = BaseNoteModel.getDateFormatter(this)
+        val formatter = DateFormat.getDateInstance(DateFormat.FULL)
         val mediaRoot = IO.getExternalImagesDirectory(application)
 
-        adapter = BaseNoteAdapter(dateFormat, textSize, maxItems, maxLines, formatter, mediaRoot, this)
+        adapter = BaseNoteAdapter(Collections.emptySet(), dateFormat, textSize, maxItems, maxLines, maxTitle, formatter, mediaRoot, this)
 
         binding.RecyclerView.adapter = adapter
         binding.RecyclerView.setHasFixedSize(true)

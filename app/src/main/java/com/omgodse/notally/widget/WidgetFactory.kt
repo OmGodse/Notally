@@ -10,7 +10,7 @@ import com.omgodse.notally.R
 import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.NotallyDatabase
 import com.omgodse.notally.room.Type
-import com.omgodse.notally.viewmodels.BaseNoteModel
+import java.text.DateFormat
 
 class WidgetFactory(private val app: Application, private val id: Long) : RemoteViewsService.RemoteViewsFactory {
 
@@ -59,7 +59,7 @@ class WidgetFactory(private val app: Application, private val id: Long) : Remote
             view.setViewVisibility(R.id.Title, View.VISIBLE)
         } else view.setViewVisibility(R.id.Title, View.GONE)
 
-        val formatter = BaseNoteModel.getDateFormatter(app)
+        val formatter = DateFormat.getDateInstance(DateFormat.FULL)
         val date = formatter.format(note.timestamp)
         view.setTextViewText(R.id.Date, date)
 
@@ -83,7 +83,7 @@ class WidgetFactory(private val app: Application, private val id: Long) : Remote
             view.setViewVisibility(R.id.Title, View.VISIBLE)
         } else view.setViewVisibility(R.id.Title, View.GONE)
 
-        val formatter = BaseNoteModel.getDateFormatter(app)
+        val formatter = DateFormat.getDateInstance(DateFormat.FULL)
         val date = formatter.format(list.timestamp)
         view.setTextViewText(R.id.Date, date)
 

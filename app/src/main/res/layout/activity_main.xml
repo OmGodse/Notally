@@ -7,6 +7,7 @@
     android:fitsSystemWindows="true">
 
     <RelativeLayout
+        android:id="@+id/RelativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -30,12 +31,19 @@
 
         </com.google.android.material.appbar.MaterialToolbar>
 
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/ActionMode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Toolbar"
+            app:navigationIcon="?attr/homeAsUpIndicator" />
+
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/NavHostFragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/Toolbar"
+            android:layout_below="@id/ActionMode"
             app:defaultNavHost="true"
             app:navGraph="@navigation/navigation" />
 

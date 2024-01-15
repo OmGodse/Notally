@@ -17,7 +17,7 @@ import com.omgodse.notally.databinding.ActivityViewImageBinding
 import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.miscellaneous.IO
 import com.omgodse.notally.miscellaneous.add
-import com.omgodse.notally.recyclerview.adapters.ImageAdapter
+import com.omgodse.notally.recyclerview.adapter.ImageAdapter
 import com.omgodse.notally.room.Converters
 import com.omgodse.notally.room.Image
 import com.omgodse.notally.room.NotallyDatabase

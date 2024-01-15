@@ -15,6 +15,7 @@
     <string name="restore">Przywróć</string>
     <string name="archive">Zarchwizuj</string>
     <string name="unarchive">Cofnij archiwizację</string>
+    <string name="add_images">Dodaj obrazy</string>
     <string name="delete_all">Usuń wszystkie</string>
     <string name="change_color">Zmień kolor</string>
     <string name="delete_forever">Usunąć na zawsze?</string>
@@ -32,9 +33,10 @@
     <string name="save">Zapisz</string>
     <string name="edit">Edytuj</string>
     <string name="cancel">Anuluj</string>
+    <string name="continue_">Kontynuuj</string>
     <string name="open_link">Otwórz odnośnik</string>
-    <string name="make_list">Stwórz listę</string>
-    <string name="take_note">Stwórz notatkę</string>
+    <string name="make_list">Utwórz listę</string>
+    <string name="take_note">Utwórz notatkę</string>
     <string name="add_label">Dodaj etykietę</string>
     <string name="export">Eksportuj</string>
     <string name="view_file">Zobacz plik</string>
@@ -54,7 +56,7 @@
     <string name="title">Tytuł</string>
     <string name="add_item">Dodaj element</string>
     <string name="drag_handle">Punkt zaczepienia</string>
-    <string name="bold">Pogrubione</string>
+    <string name="bold">Pogrubienie</string>
     <string name="link">Odnośnik</string>
     <string name="italic">Kursywa</string>
     <string name="strikethrough">Przekreślenie</string>
@@ -66,12 +68,13 @@
     <string name="saved_to_notally">Zapisano w Notally</string>
     <string name="empty_note">Pusta notatka</string>
     <string name="empty_list">Pusta lista</string>
+
+    <!-- Messages -->
     <string name="cant_open_link">Nie można otworzyć odnośnika</string>
-    <string name="invalid_backup">Niewłaściwy plik kopii zapasowej</string>
-    <string name="imported_backup">Kopia zapasowa została przywrócona</string>
     <string name="something_went_wrong">Coś poszło nie tak. Spróbuj ponownie.</string>
     <string name="install_an_email">Zainstaluj aplikację do obsługi e-maili, aby móc wysłać opinię</string>
     <string name="install_a_browser">Zainstaluj przeglądarkę, aby móc otworzyć ten odnośnik</string>
+    <string name="cant_find_note">Nie można znaleźć notatki. Mogła zostać usunięta</string>
 
     <!-- Settings Page -->
     <string name="appearance">Wygląd</string>
@@ -97,16 +100,20 @@
     <string name="max_items_to_display">Maksymalna ilość elementów w liście do pokazania</string>
     <string name="max_lines_to_display">Maksymalna ilość linii w notatce do pokazania</string>
 
-    <string name="backup">Kopia</string>
-
-    <!-- Auto backup -->
+    <!-- Backup -->
+    <string name="backup">Kopia zapasowa</string>
     <string name="auto_backup">Automatyczna kopia zapasowa</string>
     <string name="tap_to_set_up">Dotknij, aby ustawić</string>
     <string name="notes_will_be">Notatki będą codziennie zapisywane w wewnętrznej pamięci telefonu.\n\nTo może nie działać, jeśli masz włączony tryb oszczędzania energii.</string>
     <string name="choose_folder">Wybierz katalog</string>
     <string name="disable_auto_backup">Wyłącz automatyczną kopię zapasową</string>
     <string name="choose_another_folder">Wybierz inny katalog</string>
-    <string name="cant_find_folder">Nie mogę odnaleźć katalogu. Być może został przeniesiony lub usunięty</string>
+    <string name="cant_find_folder">Nie można znaleźć katalogu. Być może został przeniesiony lub usunięty</string>
+    <string name="invalid_backup">Niewłaściwy plik kopii zapasowej</string>
+    <string name="imported_backup">Kopia zapasowa została przywrócona</string>
+    <string name="exporting_backup">Wykonywanie kopii zapasowej</string>
+    <string name="importing_backup">Przywracanie kopii zapasowej</string>
+    <string name="calculating">Obliczanie…</string>
 
     <string name="export_backup">Wykonaj kopię zapasową</string>
     <string name="import_backup">Przywróć kopię zapasową</string>
@@ -115,4 +122,30 @@
     <string name="libraries">Biblioteki</string>
     <string name="rate">Oceń aplikację</string>
     <string name="send_feedback">Wyślij opinię</string>
+
+    <string name="github" translatable="false">GitHub</string>
+
+    <!-- Widget -->
+    <string name="single_note_or_list">Pojedyncza notatka lub lista</string>
+    <string name="select_note">Wybierz notatkę</string>
+
+    <!-- Images -->
+    <string name="count" translatable="false">%1$d / %2$d</string>
+    <string name="adding_images">Dodawanie obrazów</string>
+    <string name="deleting_images">Usuwanie obrazów</string>
+    <string name="invalid_image">Niewłaściwy obraz</string>
+    <string name="error_while_renaming_image">Błąd podczas zmiany nazwy obrazu</string>
+    <string name="image_format_not_supported">Format obrazu nie jest obsługiwany</string>
+    <string name="delete_image_forever">Usunąć obraz bezpowrotnie?</string>
+    <string name="cant_load_image">Nie można załadować obrazu. Mógł zostać przeniesiony lub usunięty</string>
+    <string name="unknown_name">Nieznana nazwa</string>
+    <string name="unknown_error">Nieznany błąd</string>
+    <string name="insert_an_sd_card">Włóż kartę SD, aby dodać obrazy</string>
+    <string name="please_grant_notally">Przyznaj Notally uprawnienia do wysyłania powiadomień. Umożliwia to wyświetlanie postępu, jeśli operacje takie jak usuwanie obrazów lub przywracanie kopii zapasowych zajmuje więcej czasu</string>
+
+    <plurals name="cant_add_images">
+        <item quantity="one">Nie można dodać %d obrazu</item>
+        <item quantity="other">Nie można dodać %d obrazów</item>
+    </plurals>
+
 </resources>

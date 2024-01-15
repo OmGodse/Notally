@@ -53,6 +53,8 @@ class Settings : Fragment() {
 
         binding.MaxLines.setup(MaxLines, model.preferences.maxLines)
 
+        binding.MaxTitle.setup(MaxTitle, model.preferences.maxTitle)
+
 
         model.preferences.autoBackup.observe(viewLifecycleOwner) { value ->
             binding.AutoBackup.setup(AutoBackup, value)
