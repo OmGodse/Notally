@@ -3,10 +3,10 @@ Notally est une application de prise de notes minimaliste avec un beau material 
 <b>Organisation</b>
 
 Créez des listes pour rester sur la bonne voie
-Épinglez des notes pour toujours les conserver en haut
+Épinglez des notes pour toujours les conserver en haut de l'écran
 Colorez et étiquetez vos notes pour une organisation rapide
 Archivez vos notes pour les garder à portée de main, mais hors de votre chemin
-Complement your notes with pictures (JPG, PNG, WEBP)
+Complétez vos notes avec des photos (JPG, PNG, WEBP)
 Créez des notes de texte enrichi avec prise en charge du gras, de l'italique, de la chasse fixe et du texte barré
 Ajoutez des liens cliquables à vos notes avec prise en charge des numéros de téléphone, des adresses mail et des URL web
 
@@ -17,28 +17,28 @@ Ajoutez des liens cliquables à vos notes avec prise en charge des numéros de t
 • JSON
 • HTML
 
-<b>Avantages/b>
+<b>Avantages</b>
 
 • Mode sombre
 • Complètement gratuit
 • Taille du texte ajustable
-• Sauvegarde et sauvegarde automatique
+• Sauvegarde automatique et manuelle
 • Taille d'APK de 1,4 Mo (1,8 Mo décompressé)
-• Add notes and lists to your home screen with widgets
+• Ajoutez vos notes et listes à votre écran d'accueil grâce aux widgets
 
 <b>Vie privée</b>
 
-Il n'y a pas d'annonces, de trackers ou d'analyses de toutes sortes. Toutes vos notes sont entièrement stockées sur votre appareil et ne le quittent jamais.
+Il n'y a pas de publicités, de traceurs ou d'analyses de toutes sortes. Toutes vos notes sont entièrement stockées sur votre appareil et ne le quittent jamais.
 
-<b>Permissions<b>
+<b>Permissions</b>
 
-• show notifications, run foreground service
+• afficher des notifications, exécuter un service de premier plan
 
-Used to display a notification if deleting images or importing backups takes time
+Utilisé pour afficher une notification si la suppression d'images ou l'importation de sauvegarde prend un certain temps
 
-• prevent phone from sleeping, run at startup
+• empêcher le téléphone de passer en mode veille, s'exécuter au démarrage
 
-Used by the auto backup feature to ensure backups keep happening even if your phone is restarted
+Utilisé par la fonction de sauvegarde automatique pour s'assurer que les sauvegardes continuent d'être enregistrées même après avoir redémarré votre appareil
 
 <b>Note</b>
 
