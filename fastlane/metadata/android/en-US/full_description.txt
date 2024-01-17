@@ -30,7 +30,7 @@ Add clickable links to notes with support for phone numbers, email addresses and
 
 There are no ads, trackers or analytics of any kind. All your notes are stored completely on and never leave your device.
 
-<b>Permissions<b>
+<b>Permissions</b>
 
 • show notifications, run foreground service
 
