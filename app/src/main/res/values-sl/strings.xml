@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name" translatable="false">Notally</string>
-
     <!-- Fragment Titles -->
     <string name="notes">Zapiski</string>
     <string name="labels">Oznake</string>
@@ -126,14 +124,11 @@
     <string name="rate">Oceni aplikacijo</string>
     <string name="send_feedback">Pošlji povratne informacije</string>
 
-    <string name="github" translatable="false">GitHub</string>
-
     <!-- Widget -->
     <string name="single_note_or_list">Posamezen zapisek ali seznam</string>
     <string name="select_note">Izbira zapiska</string>
 
     <!-- Images -->
-    <string name="count" translatable="false">%1$d / %2$d</string>
     <string name="adding_images">Dodajanje slik</string>
     <string name="deleting_images">Brisanje slik</string>
     <string name="invalid_image">Neveljavna slika</string>
