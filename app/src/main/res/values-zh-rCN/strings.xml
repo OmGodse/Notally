@@ -144,8 +144,8 @@
     <string name="please_grant_notally">请授予 Notally 发送通知的权限。 此权限用于展示进度，如果像删除图片或导入备份等操作需要一定时间。</string>
 
     <plurals name="cant_add_images">
-            <item quantity="one">无法添加 %d 张图片</item>
-            <item quantity="other">无法添加 %d 张图片</item>
+        <item quantity="one">无法添加 %d 张图片</item>
+        <item quantity="other">无法添加 %d 张图片</item>
     </plurals>
 
 </resources>
