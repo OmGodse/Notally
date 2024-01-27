@@ -98,9 +98,9 @@
     <string name="large">Velké</string>
 
     <string name="content_density">Kompaktnost obsahu</string>
-    <string name="max_items_to_display">Počet položek v seznamu</string>
-    <string name="max_lines_to_display">Počet položek v poznámce</string>
-    <string name="max_lines_to_display_title">Počet řádků v názvu poznámky</string>
+    <string name="max_items_to_display">Max. počet položek v seznamu</string>
+    <string name="max_lines_to_display">Max. počet položek v poznámce</string>
+    <string name="max_lines_to_display_title">Max. počet řádků v názvu poznámky</string>
 
     <!-- Backup -->
     <string name="backup">Zálohování</string>
