@@ -46,6 +46,7 @@
     <string name="delete_label">Smazat štítek?</string>
     <string name="create_new">Žádné štítky. Vytvořit nový?</string>
     <string name="delete_all_notes">Smazat všechny poznámky?</string>
+    <string name="delete_selected_notes">Smazat vybrané poznámky?</string>
     <string name="delete_note_forever">Smazat poznámku?</string>
     <string name="your_notes_associated">Vaše poznámky přiřazené k tomuto štítku nebudou smazány</string>
 
@@ -97,8 +98,9 @@
     <string name="large">Velké</string>
 
     <string name="content_density">Kompaktnost obsahu</string>
-    <string name="max_items_to_display">Max. počet položek v seznamu</string>
-    <string name="max_lines_to_display">Max. počet položek v poznámce</string>
+    <string name="max_items_to_display">Počet položek v seznamu</string>
+    <string name="max_lines_to_display">Počet položek v poznámce</string>
+    <string name="max_lines_to_display_title">Počet řádků v názvu poznámky</string>
 
     <!-- Backup -->
     <string name="backup">Zálohování</string>
