@@ -23,6 +23,7 @@ class Preferences private constructor(app: Application) {
     val textSize = BetterLiveData(getListPref(TextSize))
     var maxItems = getSeekbarPref(MaxItems)
     var maxLines = getSeekbarPref(MaxLines)
+    var maxTitle = getSeekbarPref(MaxTitle)
 
     val autoBackup = BetterLiveData(getTextPref(AutoBackup))
 
@@ -73,6 +74,7 @@ class Preferences private constructor(app: Application) {
         when (info) {
             MaxItems -> maxItems = getSeekbarPref(MaxItems)
             MaxLines -> maxLines = getSeekbarPref(MaxLines)
+            MaxTitle -> maxTitle = getSeekbarPref(MaxTitle)
         }
     }
 

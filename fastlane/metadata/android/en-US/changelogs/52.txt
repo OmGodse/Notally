@@ -1,0 +1,5 @@
+New features
+- Select multiple notes at once
+- Change the number of lines of the title displayed in a note's preview
+
+Updated Vietnamese, Polish and Chinese (Simplified) translation

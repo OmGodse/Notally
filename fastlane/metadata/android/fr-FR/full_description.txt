@@ -6,6 +6,7 @@ Créez des listes pour rester sur la bonne voie
 Épinglez des notes pour toujours les conserver en haut
 Colorez et étiquetez vos notes pour une organisation rapide
 Archivez vos notes pour les garder à portée de main, mais hors de votre chemin
+Complement your notes with pictures (JPG, PNG, WEBP)
 Créez des notes de texte enrichi avec prise en charge du gras, de l'italique, de la chasse fixe et du texte barré
 Ajoutez des liens cliquables à vos notes avec prise en charge des numéros de téléphone, des adresses mail et des URL web
 
@@ -22,12 +23,22 @@ Ajoutez des liens cliquables à vos notes avec prise en charge des numéros de t
 • Complètement gratuit
 • Taille du texte ajustable
 • Sauvegarde et sauvegarde automatique
-• Taille d'APK de 1,2 Mo (1,6 Mo décompressé)
+• Taille d'APK de 1,4 Mo (1,8 Mo décompressé)
 • Add notes and lists to your home screen with widgets
 
 <b>Vie privée</b>
 
 Il n'y a pas d'annonces, de trackers ou d'analyses de toutes sortes. Toutes vos notes sont entièrement stockées sur votre appareil et ne le quittent jamais.
+
+<b>Permissions<b>
+
+• show notifications, run foreground service
+
+Used to display a notification if deleting images or importing backups takes time
+
+• prevent phone from sleeping, run at startup
+
+Used by the auto backup feature to ensure backups keep happening even if your phone is restarted
 
 <b>Note</b>
 

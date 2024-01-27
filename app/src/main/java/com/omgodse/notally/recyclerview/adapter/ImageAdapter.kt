@@ -1,10 +1,10 @@
-package com.omgodse.notally.recyclerview.adapters
+package com.omgodse.notally.recyclerview.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.omgodse.notally.databinding.RecyclerImageBinding
-import com.omgodse.notally.recyclerview.viewholders.ImageVH
+import com.omgodse.notally.recyclerview.viewholder.ImageVH
 import com.omgodse.notally.room.Image
 import java.io.File
 

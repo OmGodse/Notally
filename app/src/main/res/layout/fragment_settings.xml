@@ -42,6 +42,10 @@
             android:text="@string/content_density" />
 
         <include
+            android:id="@+id/MaxTitle"
+            layout="@layout/preference_seekbar" />
+
+        <include
             android:id="@+id/MaxItems"
             layout="@layout/preference_seekbar" />
 

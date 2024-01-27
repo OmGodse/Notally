@@ -1,7 +1,6 @@
 package com.omgodse.notally.viewmodels
 
 import android.app.Application
-import android.content.Context
 import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
@@ -14,6 +13,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.room.withTransaction
+import com.omgodse.notally.ActionMode
 import com.omgodse.notally.BackupProgress
 import com.omgodse.notally.Cache
 import com.omgodse.notally.ImageDeleteService
@@ -51,8 +51,7 @@ import org.json.JSONObject
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
-import java.text.SimpleDateFormat
-import java.util.Locale
+import java.text.DateFormat
 import java.util.UUID
 import java.util.zip.ZipFile
 import java.util.zip.ZipOutputStream
@@ -100,6 +99,8 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
     val importingBackup = MutableLiveData<BackupProgress>()
     val exportingBackup = MutableLiveData<BackupProgress>()
+
+    val actionMode = ActionMode()
 
     init {
         viewModelScope.launch {
@@ -377,7 +378,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         val file = File(getExportedPath(), "Untitled.txt")
         val writer = file.bufferedWriter()
 
-        val date = getDateFormatter(app).format(baseNote.timestamp)
+        val date = DateFormat.getDateInstance(DateFormat.FULL).format(baseNote.timestamp)
 
         val body = when (baseNote.type) {
             Type.NOTE -> baseNote.body
@@ -410,13 +411,43 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     }
 
 
-    fun colorBaseNote(id: Long, color: Color) = executeAsync { baseNoteDao.updateColor(id, color) }
+    fun pinBaseNote(pinned: Boolean) {
+        val id = actionMode.selectedIds.toLongArray()
+        actionMode.close(false)
+        executeAsync { baseNoteDao.updatePinned(id, pinned) }
+    }
+
+    fun colorBaseNote(color: Color) {
+        val ids = actionMode.selectedIds.toLongArray()
+        actionMode.close(true)
+        executeAsync { baseNoteDao.updateColor(ids, color) }
+    }
+
+    fun moveBaseNotes(folder: Folder) {
+        val ids = actionMode.selectedIds.toLongArray()
+        actionMode.close(false)
+        executeAsync { baseNoteDao.move(ids, folder) }
+    }
+
+    fun updateBaseNoteLabels(labels: List<String>, id: Long) {
+        actionMode.close(true)
+        executeAsync { baseNoteDao.updateLabels(id, labels) }
+    }
 
 
-    fun pinBaseNote(id: Long) = executeAsync { baseNoteDao.updatePinned(id, true) }
-
-    fun unpinBaseNote(id: Long) = executeAsync { baseNoteDao.updatePinned(id, false) }
-
+    fun deleteBaseNotes() {
+        val ids = LongArray(actionMode.selectedNotes.size)
+        val images = ArrayList<Image>()
+        actionMode.selectedNotes.onEachIndexed { index, entry ->
+            ids[index] = entry.key
+            images.addAll(entry.value.images)
+        }
+        actionMode.close(false)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) { baseNoteDao.delete(ids) }
+            informOtherComponents(images, ids)
+        }
+    }
 
     fun deleteAllBaseNotes() {
         viewModelScope.launch {
@@ -428,39 +459,18 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
                 strings.flatMapTo(images, Converters::jsonToImages)
                 baseNoteDao.deleteFrom(Folder.DELETED)
             }
-            if (images.isNotEmpty()) {
-                ImageDeleteService.start(app, images)
-            }
-            if (ids.isNotEmpty()) {
-                WidgetProvider.sendBroadcast(app, ids)
-            }
+            informOtherComponents(images, ids)
         }
     }
 
-    fun deleteBaseNoteForever(id: Long) {
-        viewModelScope.launch {
-            val images = ArrayList<Image>()
-            withContext(Dispatchers.IO) {
-                val json = baseNoteDao.getImages(id)
-                val actualImages = Converters.jsonToImages(json)
-                images.addAll(actualImages)
-                baseNoteDao.delete(id)
-            }
-            if (images.isNotEmpty()) {
-                ImageDeleteService.start(app, images)
-            }
-            WidgetProvider.sendBroadcast(app, longArrayOf(id))
+    private fun informOtherComponents(images: ArrayList<Image>, ids: LongArray) {
+        if (images.isNotEmpty()) {
+            ImageDeleteService.start(app, images)
+        }
+        if (ids.isNotEmpty()) {
+            WidgetProvider.sendBroadcast(app, ids)
         }
     }
-
-
-    fun restoreBaseNote(id: Long) = executeAsync { baseNoteDao.move(id, Folder.NOTES) }
-
-    fun moveBaseNoteToDeleted(id: Long) = executeAsync { baseNoteDao.move(id, Folder.DELETED) }
-
-    fun moveBaseNoteToArchive(id: Long) = executeAsync { baseNoteDao.move(id, Folder.ARCHIVED) }
-
-    fun updateBaseNoteLabels(labels: List<String>, id: Long) = executeAsync { baseNoteDao.updateLabels(id, labels) }
 
 
     suspend fun getAllLabels() = withContext(Dispatchers.IO) { labelDao.getArrayOfAll() }
@@ -520,7 +530,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     }
 
     private fun getHTML(baseNote: BaseNote, showDateCreated: Boolean) = buildString {
-        val date = getDateFormatter(app).format(baseNote.timestamp)
+        val date = DateFormat.getDateInstance(DateFormat.FULL).format(baseNote.timestamp)
         val title = Html.escapeHtml(baseNote.title)
 
         append("<!DOCTYPE html>")
@@ -558,16 +568,6 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     }
 
     companion object {
-
-        fun getDateFormatter(context: Context): SimpleDateFormat {
-            val locale = context.resources.configuration.locale
-            val pattern = when (locale.language) {
-                Locale.CHINESE.language,
-                Locale.JAPANESE.language -> "yyyy年 MMM d日 (EEE)"
-                else -> "EEE d MMM yyyy"
-            }
-            return SimpleDateFormat(pattern, locale)
-        }
 
         fun transform(list: List<BaseNote>, pinned: Header, others: Header): List<Item> {
             if (list.isEmpty()) {

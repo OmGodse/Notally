@@ -1,4 +1,4 @@
-package com.omgodse.notally.recyclerview.viewholders
+package com.omgodse.notally.recyclerview.viewholder
 
 import android.graphics.drawable.Drawable
 import android.util.TypedValue
@@ -30,7 +30,6 @@ import com.omgodse.notally.room.SpanRepresentation
 import com.omgodse.notally.room.Type
 import org.ocpsoft.prettytime.PrettyTime
 import java.io.File
-import java.text.SimpleDateFormat
 import java.util.Date
 
 class BaseNoteVH(
@@ -39,9 +38,10 @@ class BaseNoteVH(
     private val textSize: String,
     private val maxItems: Int,
     maxLines: Int,
+    maxTitle: Int,
     listener: ItemListener,
     private val prettyTime: PrettyTime,
-    private val formatter: SimpleDateFormat,
+    private val formatter: java.text.DateFormat,
 ) : RecyclerView.ViewHolder(binding.root) {
 
     init {
@@ -57,6 +57,7 @@ class BaseNoteVH(
             view.setTextSize(TypedValue.COMPLEX_UNIT_SP, body)
         }
 
+        binding.Title.maxLines = maxTitle
         binding.Note.maxLines = maxLines
 
         binding.root.setOnClickListener {
@@ -69,7 +70,13 @@ class BaseNoteVH(
         }
     }
 
-    fun bind(baseNote: BaseNote, mediaRoot: File?) {
+    fun updateCheck(checked: Boolean) {
+        binding.root.isChecked = checked
+    }
+
+    fun bind(baseNote: BaseNote, mediaRoot: File?, checked: Boolean) {
+        updateCheck(checked)
+
         when (baseNote.type) {
             Type.NOTE -> bindNote(baseNote.body, baseNote.spans)
             Type.LIST -> bindList(baseNote.items)

@@ -34,3 +34,14 @@ object MaxLines : SeekbarInfo {
     override val min = 1
     override val max = 10
 }
+
+object MaxTitle : SeekbarInfo {
+
+    override val title = R.string.max_lines_to_display_title
+
+    override val key = "maxLinesToDisplayInTitle"
+    override val defaultValue = 1
+
+    override val min = 1
+    override val max = 10
+}

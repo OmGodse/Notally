@@ -1,4 +1,4 @@
-package com.omgodse.notally.recyclerview.viewholders
+package com.omgodse.notally.recyclerview.viewholder
 
 import android.net.Uri
 import android.view.View

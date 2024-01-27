@@ -2,8 +2,8 @@ package com.omgodse.notally.activities
 
 import com.omgodse.notally.miscellaneous.setOnNextAction
 import com.omgodse.notally.recyclerview.ListItemListener
-import com.omgodse.notally.recyclerview.adapters.MakeListAdapter
-import com.omgodse.notally.recyclerview.viewholders.MakeListVH
+import com.omgodse.notally.recyclerview.adapter.MakeListAdapter
+import com.omgodse.notally.recyclerview.viewholder.MakeListVH
 import com.omgodse.notally.room.ListItem
 import com.omgodse.notally.room.Type
 

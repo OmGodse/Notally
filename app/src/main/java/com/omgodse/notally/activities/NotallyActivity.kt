@@ -30,15 +30,15 @@ import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.miscellaneous.add
 import com.omgodse.notally.preferences.TextSize
-import com.omgodse.notally.recyclerview.adapters.ErrorAdapter
-import com.omgodse.notally.recyclerview.adapters.PreviewImageAdapter
+import com.omgodse.notally.recyclerview.adapter.ErrorAdapter
+import com.omgodse.notally.recyclerview.adapter.PreviewImageAdapter
 import com.omgodse.notally.room.Folder
 import com.omgodse.notally.room.Image
 import com.omgodse.notally.room.Type
-import com.omgodse.notally.viewmodels.BaseNoteModel
 import com.omgodse.notally.viewmodels.NotallyModel
 import com.omgodse.notally.widget.WidgetProvider
 import kotlinx.coroutines.launch
+import java.text.DateFormat
 
 abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
@@ -130,7 +130,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     }
 
     open fun setStateFromModel() {
-        val formatter = BaseNoteModel.getDateFormatter(this)
+        val formatter = DateFormat.getDateInstance(DateFormat.FULL)
         binding.DateCreated.text = formatter.format(model.timestamp)
 
         binding.EnterTitle.setText(model.title)
@@ -168,12 +168,12 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     private fun label() {
         lifecycleScope.launch {
             val labels = model.getAllLabels()
-            val onUpdated = { new: List<String> ->
-                model.setLabels(new)
-                Operations.bindLabels(binding.LabelGroup, model.labels, model.textSize)
-            }
-            val add = { Operations.displayAddLabelDialog(this@NotallyActivity, model::insertLabel) { label() } }
-            Operations.labelNote(this@NotallyActivity, labels, model.labels, onUpdated, add)
+            if (labels.isNotEmpty()) {
+                Operations.labelNote(this@NotallyActivity, labels, model.labels) { new ->
+                    model.setLabels(new)
+                    Operations.bindLabels(binding.LabelGroup, model.labels, model.textSize)
+                }
+            } else Operations.displayAddLabelDialog(this@NotallyActivity, model::insertLabel) { label() }
         }
     }
 

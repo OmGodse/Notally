@@ -36,6 +36,9 @@ interface BaseNoteDao {
     @Query("DELETE FROM BaseNote WHERE id = :id")
     suspend fun delete(id: Long)
 
+    @Query("DELETE FROM BaseNote WHERE id IN (:ids)")
+    suspend fun delete(ids: LongArray)
+
     @Query("DELETE FROM BaseNote WHERE folder = :folder")
     suspend fun deleteFrom(folder: Folder)
 
@@ -66,15 +69,15 @@ interface BaseNoteDao {
     suspend fun getDeletedNoteImages(): List<String>
 
 
-    @Query("UPDATE BaseNote SET folder = :folder WHERE id = :id")
-    suspend fun move(id: Long, folder: Folder)
+    @Query("UPDATE BaseNote SET folder = :folder WHERE id IN (:ids)")
+    suspend fun move(ids: LongArray, folder: Folder)
 
 
-    @Query("UPDATE BaseNote SET color = :color WHERE id = :id")
-    suspend fun updateColor(id: Long, color: Color)
+    @Query("UPDATE BaseNote SET color = :color WHERE id IN (:ids)")
+    suspend fun updateColor(ids: LongArray, color: Color)
 
-    @Query("UPDATE BaseNote SET pinned = :pinned WHERE id = :id")
-    suspend fun updatePinned(id: Long, pinned: Boolean)
+    @Query("UPDATE BaseNote SET pinned = :pinned WHERE id IN (:ids)")
+    suspend fun updatePinned(ids: LongArray, pinned: Boolean)
 
     @Query("UPDATE BaseNote SET labels = :labels WHERE id = :id")
     suspend fun updateLabels(id: Long, labels: List<String>)

@@ -47,6 +47,7 @@
     <string name="delete_label">Delete label?</string>
     <string name="create_new">No labels yet. Create one?</string>
     <string name="delete_all_notes">Delete all notes?</string>
+    <string name="delete_selected_notes">Delete selected notes?</string>
     <string name="delete_note_forever">Delete note forever?</string>
     <string name="your_notes_associated">Your notes attached to this label will not be deleted</string>
 
@@ -100,6 +101,7 @@
     <string name="content_density">Content density</string>
     <string name="max_items_to_display">Max items to display in list</string>
     <string name="max_lines_to_display">Max lines to display in note</string>
+    <string name="max_lines_to_display_title">Max lines to display in title</string>
 
     <!-- Backup -->
     <string name="backup">Backup</string>
