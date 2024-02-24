@@ -125,14 +125,11 @@
     <string name="rate">Đánh giá app</string>
     <string name="send_feedback">Gửi phản hồi</string>
 
-    <string name="github" translatable="false">GitHub</string>
-
     <!-- Widget -->
     <string name="single_note_or_list">Ghi chú hoặc liệt kê</string>
     <string name="select_note">Chọn ghi chú</string>
 
     <!-- Images -->
-    <string name="count" translatable="false">%1$d/%2$d</string>
     <string name="adding_images">Đang thêm ảnh</string>
     <string name="deleting_images">Đang xóa ảnh</string>
     <string name="invalid_image">Ảnh không hợp lệ</string>
