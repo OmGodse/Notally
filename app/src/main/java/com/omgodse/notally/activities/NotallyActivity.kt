@@ -95,20 +95,32 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_ADD_IMAGES && resultCode == Activity.RESULT_OK) {
-            val uri = data?.data
-            val clipData = data?.clipData
-            if (uri != null) {
-                val uris = arrayOf(uri)
-                model.addImages(uris)
-            } else if (clipData != null) {
-                val uris = Array(clipData.itemCount) { index -> clipData.getItemAt(index).uri }
-                model.addImages(uris)
-            }
-        } else if (requestCode == REQUEST_VIEW_IMAGES && resultCode == Activity.RESULT_OK) {
-            val list = data?.getParcelableArrayListExtra<Image>(ViewImage.DELETED_IMAGES)
-            if (!list.isNullOrEmpty()) {
-                model.deleteImages(list)
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                REQUEST_ADD_IMAGES -> {
+                    val uri = data?.data
+                    val clipData = data?.clipData
+                    if (uri != null) {
+                        val uris = arrayOf(uri)
+                        model.addImages(uris)
+                    } else if (clipData != null) {
+                        val uris = Array(clipData.itemCount) { index -> clipData.getItemAt(index).uri }
+                        model.addImages(uris)
+                    }
+                }
+                REQUEST_VIEW_IMAGES -> {
+                    val list = data?.getParcelableArrayListExtra<Image>(ViewImage.DELETED_IMAGES)
+                    if (!list.isNullOrEmpty()) {
+                        model.deleteImages(list)
+                    }
+                }
+                REQUEST_SELECT_LABELS -> {
+                    val list = data?.getStringArrayListExtra(SelectLabels.SELECTED_LABELS)
+                    if (list != null && list != model.labels) {
+                        model.setLabels(list)
+                        Operations.bindLabels(binding.LabelGroup, model.labels, model.textSize)
+                    }
+                }
             }
         }
     }
@@ -166,15 +178,9 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     }
 
     private fun label() {
-        lifecycleScope.launch {
-            val labels = model.getAllLabels()
-            if (labels.isNotEmpty()) {
-                Operations.labelNote(this@NotallyActivity, labels, model.labels) { new ->
-                    model.setLabels(new)
-                    Operations.bindLabels(binding.LabelGroup, model.labels, model.textSize)
-                }
-            } else Operations.displayAddLabelDialog(this@NotallyActivity, model::insertLabel) { label() }
-        }
+        val intent = Intent(this, SelectLabels::class.java)
+        intent.putStringArrayListExtra(SelectLabels.SELECTED_LABELS, model.labels)
+        startActivityForResult(intent, REQUEST_SELECT_LABELS)
     }
 
     private fun selectImages() {
@@ -386,5 +392,6 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         private const val REQUEST_ADD_IMAGES = 30
         private const val REQUEST_VIEW_IMAGES = 31
         private const val REQUEST_NOTIFICATION_PERMISSION = 32
+        private const val REQUEST_SELECT_LABELS = 33
     }
 }

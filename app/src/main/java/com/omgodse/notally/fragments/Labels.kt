@@ -20,10 +20,10 @@ import com.omgodse.notally.R
 import com.omgodse.notally.databinding.DialogInputBinding
 import com.omgodse.notally.databinding.FragmentNotesBinding
 import com.omgodse.notally.miscellaneous.Constants
-import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.miscellaneous.add
 import com.omgodse.notally.recyclerview.ItemListener
 import com.omgodse.notally.recyclerview.adapter.LabelAdapter
+import com.omgodse.notally.room.Label
 import com.omgodse.notally.viewmodels.BaseNoteModel
 
 class Labels : Fragment(), ItemListener {
@@ -93,7 +93,27 @@ class Labels : Fragment(), ItemListener {
 
 
     private fun displayAddLabelDialog() {
-        Operations.displayAddLabelDialog(requireContext(), model::insertLabel) {}
+        val inflater = LayoutInflater.from(requireContext())
+        val dialogBinding = DialogInputBinding.inflate(inflater)
+
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.add_label)
+            .setView(dialogBinding.root)
+            .setNegativeButton(R.string.cancel, null)
+            .setPositiveButton(R.string.save) { dialog, _ ->
+                val value = dialogBinding.EditText.text.toString().trim()
+                if (value.isNotEmpty()) {
+                    val label = Label(value)
+                    model.insertLabel(label) { success: Boolean ->
+                        if (success) {
+                            dialog.dismiss()
+                        } else Toast.makeText(context, R.string.label_exists, Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+            .show()
+
+        dialogBinding.EditText.requestFocus()
     }
 
     private fun confirmDeletion(value: String) {

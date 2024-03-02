@@ -70,6 +70,7 @@
     <string name="saved_to_notally">Saved to Notally</string>
     <string name="empty_note">Empty note</string>
     <string name="empty_list">Empty list</string>
+    <string name="select_labels">Select labels</string>
 
     <!-- Messages -->
     <string name="cant_open_link">Can’t open link</string>

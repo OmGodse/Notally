@@ -1,7 +1,6 @@
 package com.omgodse.notally.viewmodels
 
 import android.app.Application
-import android.database.sqlite.SQLiteConstraintException
 import android.graphics.BitmapFactory
 import android.graphics.Typeface
 import android.net.Uri
@@ -34,7 +33,6 @@ import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Color
 import com.omgodse.notally.room.Folder
 import com.omgodse.notally.room.Image
-import com.omgodse.notally.room.Label
 import com.omgodse.notally.room.ListItem
 import com.omgodse.notally.room.NotallyDatabase
 import com.omgodse.notally.room.SpanRepresentation
@@ -49,7 +47,6 @@ import java.util.UUID
 class NotallyModel(private val app: Application) : AndroidViewModel(app) {
 
     private val database = NotallyDatabase.getDatabase(app)
-    private val labelDao = database.getLabelDao()
     private val baseNoteDao = database.getBaseNoteDao()
 
     val textSize = Preferences.getInstance(app).textSize.value
@@ -234,22 +231,6 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
     private suspend fun updateImages() {
         withContext(Dispatchers.IO) { baseNoteDao.updateImages(id, images.value) }
     }
-
-
-    fun insertLabel(label: Label, onComplete: (success: Boolean) -> Unit) {
-        viewModelScope.launch {
-            val success = try {
-                withContext(Dispatchers.IO) { labelDao.insert(label) }
-                true
-            } catch (exception: SQLiteConstraintException) {
-                false
-            }
-            onComplete(success)
-        }
-    }
-
-
-    suspend fun getAllLabels() = withContext(Dispatchers.IO) { labelDao.getArrayOfAll() }
 
 
     private fun getBaseNote(): BaseNote {

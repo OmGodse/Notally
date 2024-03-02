@@ -69,6 +69,8 @@
 
         <activity android:name=".activities.ViewImage" />
 
+        <activity android:name=".activities.SelectLabels" />
+
         <activity
             android:name=".activities.ConfigureWidget"
             android:exported="false">

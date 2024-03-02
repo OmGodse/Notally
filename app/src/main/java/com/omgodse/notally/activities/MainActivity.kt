@@ -37,6 +37,7 @@ import com.omgodse.notally.miscellaneous.add
 import com.omgodse.notally.miscellaneous.applySpans
 import com.omgodse.notally.recyclerview.ItemListener
 import com.omgodse.notally.recyclerview.adapter.ColorAdapter
+import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Color
 import com.omgodse.notally.room.Folder
 import com.omgodse.notally.room.Type
@@ -209,21 +210,6 @@ class MainActivity : AppCompatActivity() {
         Operations.shareNote(this, baseNote.title, body)
     }
 
-    private fun label() {
-        val baseNote = model.actionMode.getFirstNote()
-        lifecycleScope.launch {
-            val labels = model.getAllLabels()
-            if (labels.isNotEmpty()) {
-                Operations.labelNote(this@MainActivity, labels, baseNote.labels) { new ->
-                    model.updateBaseNoteLabels(new, baseNote.id)
-                }
-            } else {
-                model.actionMode.close(true)
-                navigateWithAnimation(R.id.Labels)
-            }
-        }
-    }
-
     private fun changeColor() {
         val dialog = MaterialAlertDialogBuilder(this)
             .setTitle(R.string.change_color)
@@ -251,6 +237,40 @@ class MainActivity : AppCompatActivity() {
             .setMessage(R.string.delete_selected_notes)
             .setPositiveButton(R.string.delete) { _, _ -> model.deleteBaseNotes() }
             .setNegativeButton(R.string.cancel, null)
+            .show()
+    }
+
+
+    private fun label() {
+        val baseNote = model.actionMode.getFirstNote()
+        lifecycleScope.launch {
+            val labels = model.getAllLabels()
+            if (labels.isNotEmpty()) {
+                displaySelectLabelsDialog(labels, baseNote)
+            } else {
+                model.actionMode.close(true)
+                navigateWithAnimation(R.id.Labels)
+            }
+        }
+    }
+
+    private fun displaySelectLabelsDialog(labels: Array<String>, baseNote: BaseNote) {
+        val checkedPositions = BooleanArray(labels.size) { index -> baseNote.labels.contains(labels[index]) }
+
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.labels)
+            .setNegativeButton(R.string.cancel, null)
+            .setMultiChoiceItems(labels, checkedPositions) { _, which, isChecked -> checkedPositions[which] = isChecked }
+            .setPositiveButton(R.string.save) { _, _ ->
+                val new = ArrayList<String>()
+                checkedPositions.forEachIndexed { index, checked ->
+                    if (checked) {
+                        val label = labels[index]
+                        new.add(label)
+                    }
+                }
+                model.updateBaseNoteLabels(new, baseNote.id)
+            }
             .show()
     }
 
