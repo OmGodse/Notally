@@ -46,6 +46,7 @@
     <string name="delete_label">Usunąć etykietę?</string>
     <string name="create_new">Nie masz jeszcze etykiet? Stworzyć jedną?</string>
     <string name="delete_all_notes">Usunąć wszystkie notatki?</string>
+    <string name="delete_selected_notes">Usunąć zaznaczone notatki?</string>
     <string name="delete_note_forever">Usunąć notatkę na zawsze?</string>
     <string name="your_notes_associated">Notatki z tą etykietą nie zostaną usunięte</string>
 
@@ -97,8 +98,9 @@
     <string name="large">Duży</string>
 
     <string name="content_density">Zagęszczenie treści</string>
-    <string name="max_items_to_display">Maksymalna ilość elementów w liście do pokazania</string>
-    <string name="max_lines_to_display">Maksymalna ilość linii w notatce do pokazania</string>
+    <string name="max_items_to_display">Maksymalna ilość wyświetlanych elementów na liście</string>
+    <string name="max_lines_to_display">Maksymalna ilość wyświetlanych linii w notatce</string>
+    <string name="max_lines_to_display_title">Maksymalna ilość wyświetlanych linii w tytule</string>
 
     <!-- Backup -->
     <string name="backup">Kopia zapasowa</string>
@@ -145,7 +147,8 @@
 
     <plurals name="cant_add_images">
         <item quantity="one">Nie można dodać %d obrazu</item>
-        <item quantity="other">Nie można dodać %d obrazów</item>
+	<item quantity="other">Nie można dodać %d obrazów</item>
+	<item quantity="few">Nie można dodać %d obrazów</item>
+        <item quantity="many">Nie można dodać %d obrazów</item>
     </plurals>
-
 </resources>
