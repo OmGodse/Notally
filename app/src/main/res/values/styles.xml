@@ -73,7 +73,7 @@
     </style>
 
     <style name="Preview.ListItem">
-        <item name="android:paddingBottom">6dp</item>
+        <item name="android:paddingBottom">4dp</item>
         <item name="android:drawablePadding">8dp</item>
     </style>
 

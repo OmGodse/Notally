@@ -170,15 +170,17 @@ class Settings : Fragment() {
     }
 
     private fun displayLibraries() {
-        val libraries = arrayOf("Pretty Time", "Swipe Layout", "Work Manager", "Material Components for Android")
+        val libraries = arrayOf("Glide", "Pretty Time", "Swipe Layout", "Work Manager", "Subsampling Scale ImageView" ,"Material Components for Android")
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.libraries)
             .setItems(libraries) { _, which ->
                 when (which) {
-                    0 -> openLink("https://github.com/ocpsoft/prettytime")
-                    1 -> openLink("https://github.com/rambler-digital-solutions/swipe-layout-android")
-                    2 -> openLink("https://developer.android.com/jetpack/androidx/releases/work")
-                    3 -> openLink("https://github.com/material-components/material-components-android")
+                    0 -> openLink("https://github.com/bumptech/glide")
+                    1 -> openLink("https://github.com/ocpsoft/prettytime")
+                    2 -> openLink("https://github.com/rambler-digital-solutions/swipe-layout-android")
+                    3 -> openLink("https://developer.android.com/jetpack/androidx/releases/work")
+                    4 -> openLink("https://github.com/davemorrissey/subsampling-scale-image-view")
+                    5 -> openLink("https://github.com/material-components/material-components-android")
                 }
             }
             .setNegativeButton(R.string.cancel, null)
