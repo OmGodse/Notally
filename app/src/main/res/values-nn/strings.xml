@@ -141,6 +141,7 @@
     <string name="please_grant_notally">Gi Notally tillating til å senda varsel. Dette brukas for å visa fremdrifta viss handlinger som å sletta bilete eller importera sikkerheitskopier tar tid</string>
 
     <plurals name="cant_add_images">
+        <item quantity="one">Kan ikkje legga til %d bilete</item>
         <item quantity="other">Kan ikkje legga til %d bilete</item>
     </plurals>
 
