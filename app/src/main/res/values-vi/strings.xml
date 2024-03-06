@@ -118,7 +118,7 @@
     <string name="calculating">Đang xử lý…</string>
 
     <string name="export_backup">Xuất dữ liệu</string>
-    <string name="import_backup">Nhập dữ liệu</string>
+<!--    <string name="import_backup">Nhập dữ liệu</string>-->
 
     <string name="about">Giới thiệu</string>
     <string name="libraries">Thư viện sử dụng</string>

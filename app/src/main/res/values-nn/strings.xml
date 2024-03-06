@@ -109,8 +109,8 @@
     <string name="disable_auto_backup">Slå av automatisk sikkerheitskopiering</string>
     <string name="choose_another_folder">Vel ei anna mappe</string>
     <string name="cant_find_folder">Finn ikkje mappa. Den kan ha blitt flytta eller sletta</string>
-    <string name="invalid_backup">Ugyldeg sikkerheitskopi<string>
-    <string name="imported_backup">Importert sikkerheitskopi<string>
+    <string name="invalid_backup">Ugyldeg sikkerheitskopi</string>
+    <string name="imported_backup">Importert sikkerheitskopi</string>
     <string name="exporting_backup">Eksporterer sikkerheitskopi</string>
     <string name="importing_backup">Importerer sikkerheitskopi</string>
     <string name="calculating">Bereknar …</string>
@@ -141,7 +141,7 @@
     <string name="please_grant_notally">Gi Notally tillating til å senda varsel. Dette brukas for å visa fremdrifta viss handlinger som å sletta bilete eller importera sikkerheitskopier tar tid</string>
 
     <plurals name="cant_add_images">
-        <item quantity="other">Kan ikkje legga til %d bilete</item>
-    </plurals>
+        <item quantity="one">Kan ikkje legga til %d bilete</item>
+    </plurals>other
 
 </resources>
