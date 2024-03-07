@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <resources>
     <!-- Fragment Titles -->
     <string name="notes">Ghi chú</string>
@@ -114,7 +113,6 @@
     <string name="invalid_backup">Bản sao lưu không hợp lệ</string>
     <string name="imported_backup">Đã nhập bản sao lưu</string>
     <string name="exporting_backup">Đã xuất bản sao lưu</string>
-    <string name="import_backup">Nhập dữ liệu</string>
     <string name="calculating">Đang xử lý…</string>
 
     <string name="export_backup">Xuất dữ liệu</string>
@@ -146,5 +144,5 @@
         <item quantity="one">Không thể thêm %d ảnh</item>
         <item quantity="other">Không thể thêm %d ảnh</item>
     </plurals>
-    
+
 </resources>

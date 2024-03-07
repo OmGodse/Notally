@@ -109,11 +109,11 @@
     <string name="disable_auto_backup">Slå av automatisk sikkerhetskopiering</string>
     <string name="choose_another_folder">Velg en annen mappe</string>
     <string name="cant_find_folder">Finner ikke mappen. Den kan ha blitt flyttet eller slettet</string>
-    <string name="invalid_backup">Ugyldig sikkerhetskopi<string>
-    <string name="imported_backup">Importert sikkerhetskopi<string>
+    <string name="invalid_backup">Ugyldig sikkerhetskopi</string>
+    <string name="imported_backup">Importert sikkerhetskopi</string>
     <string name="exporting_backup">Eksporterer sikkerhetskopi</string>
     <string name="importing_backup">Importerer sikkerhetskopi</string>
-    <string name="calculating">Beregner …</string>
+    <string name="calculating">Beregner…</string>
 
     <string name="export_backup">Eksportér sikkerhetskopi</string>
     <string name="import_backup">Importér sikkerhetskopi</string>
