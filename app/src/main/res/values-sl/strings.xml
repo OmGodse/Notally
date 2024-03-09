@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Fragment Titles -->
     <string name="notes">Zapiski</string>
@@ -7,16 +8,16 @@
     <string name="settings">Nastavitve</string>
 
     <!-- Menu Options -->
-    <string name="share">Pošlji</string>
+    <string name="share">Deli</string>
     <string name="filter">Filter</string>
     <string name="search">Iskanje</string>
     <string name="delete">Izbriši</string>
     <string name="restore">Obnovi</string>
-    <string name="archive">Arhiviranje</string>
+    <string name="archive">Arhiviraj</string>
     <string name="unarchive">Vzemi iz arhiva</string>
     <string name="add_images">Dodaj slike</string>
     <string name="delete_all">Izbriši vse</string>
-    <string name="change_color">Sprememba barve</string>
+    <string name="change_color">Spremeni barvo</string>
     <string name="delete_forever">Dokončno izbriši</string>
 
     <!-- Pinning -->
