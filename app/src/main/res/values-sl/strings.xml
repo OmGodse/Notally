@@ -69,6 +69,7 @@
     <string name="saved_to_notally">Shranjeno v Notally</string>
     <string name="empty_note">Prazen zapisek</string>
     <string name="empty_list">Prazen seznam</string>
+    <string name="select_labels">Izberi oznake</string>
 
     <!-- Messages -->
     <string name="cant_open_link">Povezave ni mogoče odpreti</string>
