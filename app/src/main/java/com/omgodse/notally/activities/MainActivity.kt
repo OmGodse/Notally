@@ -391,7 +391,16 @@ class MainActivity : AppCompatActivity() {
             binding.MakeList.hide()
         }
 
-        binding.EnterSearchKeyword.isVisible = (destination.id == R.id.Search)
+        val isVisible = destination.id == R.id.Search
+        binding.EnterSearchKeyword.isVisible = isVisible
+        val imm: InputMethodManager =
+            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager;
+        if (isVisible) {
+            binding.EnterSearchKeyword.requestFocus();
+            imm.showSoftInput(binding.EnterSearchKeyword, InputMethodManager.SHOW_IMPLICIT);
+        } else {
+            imm.hideSoftInputFromWindow(binding.EnterSearchKeyword.windowToken, 0);
+        }
     }
 
     private fun navigateWithAnimation(id: Int) {
