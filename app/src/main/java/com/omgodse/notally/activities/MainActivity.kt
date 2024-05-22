@@ -9,13 +9,13 @@ import android.transition.TransitionManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.core.view.GravityCompat
 import androidx.core.view.forEach
-import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
@@ -391,15 +391,14 @@ class MainActivity : AppCompatActivity() {
             binding.MakeList.hide()
         }
 
-        val isVisible = destination.id == R.id.Search
-        binding.EnterSearchKeyword.isVisible = isVisible
-        val imm: InputMethodManager =
-            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager;
-        if (isVisible) {
-            binding.EnterSearchKeyword.requestFocus();
-            imm.showSoftInput(binding.EnterSearchKeyword, InputMethodManager.SHOW_IMPLICIT);
+        val inputManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        if (destination.id == R.id.Search) {
+            binding.EnterSearchKeyword.visibility = View.VISIBLE
+            binding.EnterSearchKeyword.requestFocus()
+            inputManager.showSoftInput(binding.EnterSearchKeyword, InputMethodManager.SHOW_IMPLICIT)
         } else {
-            imm.hideSoftInputFromWindow(binding.EnterSearchKeyword.windowToken, 0);
+            binding.EnterSearchKeyword.visibility = View.GONE
+            inputManager.hideSoftInputFromWindow(binding.EnterSearchKeyword.windowToken, 0)
         }
     }
 

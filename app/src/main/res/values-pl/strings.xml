@@ -125,14 +125,11 @@
     <string name="rate">Oceń aplikację</string>
     <string name="send_feedback">Wyślij opinię</string>
 
-    <string name="github" translatable="false">GitHub</string>
-
     <!-- Widget -->
     <string name="single_note_or_list">Pojedyncza notatka lub lista</string>
     <string name="select_note">Wybierz notatkę</string>
 
     <!-- Images -->
-    <string name="count" translatable="false">%1$d / %2$d</string>
     <string name="adding_images">Dodawanie obrazów</string>
     <string name="deleting_images">Usuwanie obrazów</string>
     <string name="invalid_image">Niewłaściwy obraz</string>
@@ -147,8 +144,8 @@
 
     <plurals name="cant_add_images">
         <item quantity="one">Nie można dodać %d obrazu</item>
-	<item quantity="other">Nie można dodać %d obrazów</item>
-	<item quantity="few">Nie można dodać %d obrazów</item>
+        <item quantity="other">Nie można dodać %d obrazów</item>
+        <item quantity="few">Nie można dodać %d obrazów</item>
         <item quantity="many">Nie można dodać %d obrazów</item>
     </plurals>
 </resources>
