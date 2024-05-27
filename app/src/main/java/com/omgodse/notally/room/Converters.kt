@@ -36,6 +36,27 @@ object Converters {
 
 
     @TypeConverter
+    fun audiosToJson(audios: List<Audio>): String {
+        val objects = audios.map { audio ->
+            val jsonObject = JSONObject()
+            jsonObject.put("name", audio.name)
+            jsonObject.put("duration", audio.duration)
+        }
+        return JSONArray(objects).toString()
+    }
+
+    @TypeConverter
+    fun jsonToAudios(json: String): List<Audio> {
+        val iterable = JSONArray(json).iterable<JSONObject>()
+        return iterable.map { jsonObject ->
+            val name = jsonObject.getString("name")
+            val duration = jsonObject.getLong("duration")
+            Audio(name, duration)
+        }
+    }
+
+
+    @TypeConverter
     fun jsonToSpans(json: String): List<SpanRepresentation> {
         val iterable = JSONArray(json).iterable<JSONObject>()
         return iterable.map { jsonObject ->

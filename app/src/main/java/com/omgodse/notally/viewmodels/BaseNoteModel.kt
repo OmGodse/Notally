@@ -316,7 +316,12 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
             Converters.jsonToImages(cursor.getString(imagesIndex))
         } else emptyList()
 
-        return BaseNote(0, type, folder, color, title, pinned, timestamp, labels, body, spans, items, images)
+        val audiosIndex = cursor.getColumnIndex("audios")
+        val audios = if (audiosIndex != -1) {
+            Converters.jsonToAudios(cursor.getString(audiosIndex))
+        } else emptyList()
+
+        return BaseNote(0, type, folder, color, title, pinned, timestamp, labels, body, spans, items, images, audios)
     }
 
     private fun <T> convertCursorToList(cursor: Cursor, convert: (cursor: Cursor) -> T): ArrayList<T> {
