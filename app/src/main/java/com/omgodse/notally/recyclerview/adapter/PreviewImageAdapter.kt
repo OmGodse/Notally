@@ -9,12 +9,12 @@ import com.omgodse.notally.recyclerview.viewholder.PreviewImageVH
 import com.omgodse.notally.room.Image
 import java.io.File
 
-class PreviewImageAdapter(private val mediaRoot: File?, private val onClick: (position: Int) -> Unit) :
+class PreviewImageAdapter(private val imageRoot: File?, private val onClick: (position: Int) -> Unit) :
     ListAdapter<Image, PreviewImageVH>(DiffCallback) {
 
     override fun onBindViewHolder(holder: PreviewImageVH, position: Int) {
         val image = getItem(position)
-        val file = if (mediaRoot != null) File(mediaRoot, image.name) else null
+        val file = if (imageRoot != null) File(imageRoot, image.name) else null
         holder.bind(file)
     }
 
