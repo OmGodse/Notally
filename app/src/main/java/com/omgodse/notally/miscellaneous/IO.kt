@@ -1,6 +1,7 @@
 package com.omgodse.notally.miscellaneous
 
 import android.app.Application
+import android.content.Context
 import android.os.Build
 import java.io.File
 import java.io.FileOutputStream
@@ -15,13 +16,17 @@ object IO {
         } else file.mkdir()
     }
 
-    fun getExternalImagesDirectory(app: Application): File? {
+    fun getExternalImagesDirectory(app: Application) = getExternalDirectory(app, "Images")
+
+    fun getExternalAudioDirectory(app: Application) = getExternalDirectory(app, "Audios")
+
+    private fun getExternalDirectory(app: Application, name: String): File? {
         var file: File? = null
 
         try {
             val mediaDir = app.externalMediaDirs.firstOrNull()
             if (mediaDir != null) {
-                file = File(mediaDir, "Images")
+                file = File(mediaDir, name)
                 if (file.exists()) {
                     if (!file.isDirectory) {
                         file.delete()
@@ -34,6 +39,11 @@ object IO {
         }
 
         return file
+    }
+
+
+    fun getTempAudioFile(context: Context): File {
+        return File(context.externalCacheDir, "Temp.m4a")
     }
 
 

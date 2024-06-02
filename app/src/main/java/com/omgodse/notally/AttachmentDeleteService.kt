@@ -11,6 +11,8 @@ import android.os.Build
 import android.os.IBinder
 import androidx.core.content.ContextCompat
 import com.omgodse.notally.miscellaneous.IO
+import com.omgodse.notally.room.Attachment
+import com.omgodse.notally.room.Audio
 import com.omgodse.notally.room.Image
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
@@ -20,10 +22,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
 
-class ImageDeleteService : Service() {
+class AttachmentDeleteService : Service() {
 
     private val scope = MainScope()
-    private val channel = Channel<ArrayList<Image>>()
+    private val channel = Channel<ArrayList<Attachment>>()
 
     override fun onCreate() {
         val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -55,16 +57,20 @@ class ImageDeleteService : Service() {
 
         scope.launch {
             withContext(Dispatchers.IO) {
-                val mediaRoot = IO.getExternalImagesDirectory(application)
+                val imageRoot = IO.getExternalImagesDirectory(application)
+                val audioRoot = IO.getExternalAudioDirectory(application)
                 do {
-                    val images = channel.receive()
-                    images.forEachIndexed { index, image ->
-                        val file = if (mediaRoot != null) File(mediaRoot, image.name) else null
+                    val attachments = channel.receive()
+                    attachments.forEachIndexed { index, attachment ->
+                        val file = when (attachment) {
+                            is Audio -> if (audioRoot != null) File(audioRoot, attachment.name) else null
+                            is Image -> if (imageRoot != null) File(imageRoot, attachment.name) else null
+                        }
                         if (file != null && file.exists()) {
                             file.delete()
                         }
-                        builder.setContentText(getString(R.string.count, index + 1, images.size))
-                        builder.setProgress(images.size, index + 1, false)
+                        builder.setContentText(getString(R.string.count, index + 1, attachments.size))
+                        builder.setProgress(attachments.size, index + 1, false)
                         manager.notify(1, builder.build())
                     }
                 } while (!channel.isEmpty)
@@ -75,12 +81,10 @@ class ImageDeleteService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        if (intent != null) {
-            val list = requireNotNull(intent.getParcelableArrayListExtra<Image>(EXTRA_IMAGES))
-            scope.launch {
-                withContext(Dispatchers.IO) {
-                    channel.send(list)
-                }
+        scope.launch {
+            val list = requireNotNull(intent).getParcelableArrayListExtra<Attachment>(EXTRA_ATTACHMENTS)
+            withContext(Dispatchers.IO) {
+                channel.send(requireNotNull(list))
             }
         }
         return START_NOT_STICKY
@@ -93,11 +97,11 @@ class ImageDeleteService : Service() {
     override fun onBind(intent: Intent?): IBinder? = null
 
     companion object {
-        private const val EXTRA_IMAGES = "com.omgodse.notally.EXTRA_IMAGES"
+        private const val EXTRA_ATTACHMENTS = "com.omgodse.notally.EXTRA_ATTACHMENTS"
 
-        fun start(app: Application, list: ArrayList<Image>) {
-            val intent = Intent(app, ImageDeleteService::class.java)
-            intent.putParcelableArrayListExtra(EXTRA_IMAGES, list)
+        fun start(app: Application, list: ArrayList<out Attachment>) {
+            val intent = Intent(app, AttachmentDeleteService::class.java)
+            intent.putParcelableArrayListExtra(EXTRA_ATTACHMENTS, list)
             ContextCompat.startForegroundService(app, intent)
         }
     }
