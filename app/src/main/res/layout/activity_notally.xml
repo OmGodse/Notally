@@ -90,9 +90,9 @@
                 android:drawablePadding="12dp"
                 android:gravity="center_vertical"
                 android:paddingStart="20dp"
-                android:paddingTop="12dp"
+                android:paddingTop="8dp"
                 android:paddingEnd="20dp"
-                android:paddingBottom="12dp"
+                android:paddingBottom="8dp"
                 android:text="@string/add_item"
                 android:textAppearance="?attr/textAppearanceSubtitle2"
                 android:textColor="?android:textColorHint"
@@ -105,6 +105,23 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="24dp"
                 android:paddingEnd="24dp" />
+
+            <TextView
+                android:id="@+id/AudioHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="24dp"
+                android:paddingTop="16dp"
+                android:paddingEnd="24dp"
+                android:text="@string/audio_recordings"
+                android:textAppearance="?attr/textAppearanceSubtitle2" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/AudioRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         </LinearLayout>
 
