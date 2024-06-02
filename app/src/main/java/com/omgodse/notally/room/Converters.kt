@@ -41,6 +41,7 @@ object Converters {
             val jsonObject = JSONObject()
             jsonObject.put("name", audio.name)
             jsonObject.put("duration", audio.duration)
+            jsonObject.put("timestamp", audio.timestamp)
         }
         return JSONArray(objects).toString()
     }
@@ -51,7 +52,8 @@ object Converters {
         return iterable.map { jsonObject ->
             val name = jsonObject.getString("name")
             val duration = jsonObject.getLong("duration")
-            Audio(name, duration)
+            val timestamp = jsonObject.getLong("timestamp")
+            Audio(name, duration, timestamp)
         }
     }
 
