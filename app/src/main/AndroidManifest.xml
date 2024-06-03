@@ -9,6 +9,7 @@
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:name=".NotallyApplication"
@@ -72,6 +73,12 @@
         <activity android:name=".activities.SelectLabels" />
 
         <activity
+            android:name=".activities.RecordAudio"
+            android:launchMode="singleTask" />
+
+        <activity android:name=".activities.PlayAudio" />
+
+        <activity
             android:name=".activities.ConfigureWidget"
             android:exported="false">
 
@@ -101,9 +108,18 @@
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <service
-            android:name=".ImageDeleteService"
+            android:name=".AttachmentDeleteService"
             android:exported="false"
             android:foregroundServiceType="dataSync" />
+
+        <service
+            android:name=".audio.AudioRecordService"
+            android:exported="false"
+            android:foregroundServiceType="microphone" />
+
+        <service
+            android:name=".audio.AudioPlayService"
+            android:exported="false" />
 
     </application>
 
