@@ -1,0 +1,4 @@
+You can now record audio notes in Notally
+
+Updated Dutch and German translations
+When navigating to the Search page, the keyboard comes up automatically now
