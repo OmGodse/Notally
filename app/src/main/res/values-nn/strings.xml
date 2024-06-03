@@ -137,8 +137,8 @@
     <string name="cant_load_image">Kan ikkje lasta inn biletet. Det kan ha blitt flytta eller sletta</string>
     <string name="unknown_name">Ukjend namn</string>
     <string name="unknown_error">Ukjend feil</string>
-    <string name="insert_an_sd_card">Sett inn eit SD-kort for å legga til bilete</string>
-    <string name="please_grant_notally">Gi Notally tillating til å senda varsel. Dette brukas for å visa fremdrifta viss handlinger som å sletta bilete eller importera sikkerheitskopier tar tid</string>
+    <string name="insert_an_sd_card_images">Sett inn eit SD-kort for å legga til bilete</string>
+    <string name="please_grant_notally_notification">Gi Notally tillating til å senda varsel. Dette brukas for å visa fremdrifta viss handlinger som å sletta bilete eller importera sikkerheitskopier tar tid</string>
 
     <plurals name="cant_add_images">
         <item quantity="one">Kan ikkje legga til %d bilete</item>

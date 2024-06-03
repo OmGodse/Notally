@@ -138,8 +138,8 @@
     <string name="cant_load_image">Slike ni mogoče odpreti. Morda je bila premaknjena ali izbrisana.</string>
     <string name="unknown_name">Neznano ime</string>
     <string name="unknown_error">Neznana napaka</string>
-    <string name="insert_an_sd_card">Za dodajanje slik vstavite kartico SD</string>
-    <string name="please_grant_notally">Prosimo dovolite aplikaciji Notally da vas obvešča o napredku operacij kot sta brisanje slik in uvažanje varnostnih kopij.</string>
+    <string name="insert_an_sd_card_images">Za dodajanje slik vstavite kartico SD</string>
+    <string name="please_grant_notally_notification">Prosimo dovolite aplikaciji Notally da vas obvešča o napredku operacij kot sta brisanje slik in uvažanje varnostnih kopij.</string>
 
     <plurals name="cant_add_images">
         <item quantity="one">%d slika ni bila dodana.</item>

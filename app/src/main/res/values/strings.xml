@@ -18,6 +18,7 @@
     <string name="unarchive">Unarchive</string>
     <string name="add_images">Add images</string>
     <string name="delete_all">Delete all</string>
+    <string name="record_audio">Record audio</string>
     <string name="change_color">Change color</string>
     <string name="delete_forever">Delete forever</string>
 
@@ -57,6 +58,7 @@
     <string name="date">Date</string>
     <string name="title">Title</string>
     <string name="add_item">Add Item</string>
+    <string name="audio_recordings">Audio Recordings</string>
     <string name="drag_handle">Drag Handle</string>
     <string name="bold">Bold</string>
     <string name="link">Link</string>
@@ -144,12 +146,29 @@
     <string name="cant_load_image">Can’t load image. It may have been moved or deleted</string>
     <string name="unknown_name">Unknown name</string>
     <string name="unknown_error">Unknown error</string>
-    <string name="insert_an_sd_card">Insert an SD card to add images</string>
-    <string name="please_grant_notally">Please grant Notally the permission to send notifications. This is used to display the progress if operations like deleting images or importing backups take time</string>
+    <string name="insert_an_sd_card_images">Insert an SD card to add images</string>
+    <string name="please_grant_notally_notification">Please grant Notally the permission to send notifications. This is used to display the progress if operations like deleting images or importing backups take time</string>
 
     <plurals name="cant_add_images">
         <item quantity="one">Can’t add %d image</item>
         <item quantity="other">Can’t add %d images</item>
     </plurals>
 
+    <!-- Audio -->
+    <string name="play">Play</string>
+    <string name="stop">Stop</string>
+    <string name="start">Start</string>
+    <string name="pause">Pause</string>
+    <string name="resume">Resume</string>
+    <string name="paused">Paused</string>
+    <string name="recording">Recording…</string>
+    <string name="ready_to_record">Ready to record</string>
+    <string name="discard">Discard</string>
+    <string name="save_recording">Save recording?</string>
+    <string name="delete_audio_recording_forever">Delete audio recording forever?</string>
+    <string name="tap_for_more_options">Tap for more options</string>
+    <string name="to_record_audio">To record audio, allow Notally access to your microphone. Tap Settings > Permissions and turn Microphone on</string>
+    <string name="please_grant_notally_audio">Please grant Notally the permission to record audio. Recordings never leave your device</string>
+    <string name="insert_an_sd_card_audio">Insert an SD card to record audio</string>
+    <string name="something_went_wrong_audio">Something went wrong. The audio recording may have been moved or deleted.\n\nError : (%1$d, %2$d)</string>
 </resources>
