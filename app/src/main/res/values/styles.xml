@@ -139,4 +139,17 @@
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body2</item>
     </style>
 
+    <style name="PillButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:layout_width">112dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
+        <item name="android:paddingTop">14dp</item>
+        <item name="android:paddingBottom">14dp</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.MaterialComponents.Chip</item>
+    </style>
+
 </resources>
