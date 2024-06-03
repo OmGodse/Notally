@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.R
 import com.omgodse.notally.audio.AudioPlayService
 import com.omgodse.notally.audio.LocalBinder
@@ -113,10 +114,16 @@ class PlayAudio : AppCompatActivity() {
     }
 
     private fun delete() {
-        val intent = Intent()
-        intent.putExtra(AUDIO, audio)
-        setResult(RESULT_OK, intent)
-        finish()
+        MaterialAlertDialogBuilder(this)
+            .setMessage(R.string.delete_audio_recording_forever)
+            .setNegativeButton(R.string.cancel, null)
+            .setPositiveButton(R.string.delete) { _, _ ->
+                val intent = Intent()
+                intent.putExtra(AUDIO, audio)
+                setResult(RESULT_OK, intent)
+                finish()
+            }
+            .show()
     }
 
 
