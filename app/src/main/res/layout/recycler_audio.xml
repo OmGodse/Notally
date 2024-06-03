@@ -4,9 +4,9 @@
     android:layout_height="wrap_content"
     android:background="?attr/selectableItemBackground"
     android:paddingStart="24dp"
-    android:paddingTop="16dp"
+    android:paddingTop="12dp"
     android:paddingEnd="24dp"
-    android:paddingBottom="16dp">
+    android:paddingBottom="12dp">
 
     <TextView
         android:id="@+id/Date"

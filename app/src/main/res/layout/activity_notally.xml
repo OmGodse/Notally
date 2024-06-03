@@ -71,14 +71,15 @@
                 android:paddingStart="24dp"
                 android:paddingTop="16dp"
                 android:paddingEnd="24dp"
-                android:paddingBottom="16dp"
                 android:textAppearance="?attr/textAppearanceBody1" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/RecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clipToPadding="false"
                 android:overScrollMode="never"
+                android:paddingTop="4dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             <TextView
@@ -86,25 +87,17 @@
                 style="@style/TextView.Clickable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 android:drawablePadding="12dp"
                 android:gravity="center_vertical"
                 android:paddingStart="20dp"
-                android:paddingTop="8dp"
+                android:paddingTop="12dp"
                 android:paddingEnd="20dp"
-                android:paddingBottom="8dp"
+                android:paddingBottom="12dp"
                 android:text="@string/add_item"
                 android:textAppearance="?attr/textAppearanceSubtitle2"
                 android:textColor="?android:textColorHint"
                 app:drawableStartCompat="@drawable/add"
                 app:drawableTint="?android:textColorHint" />
-
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/LabelGroup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="24dp"
-                android:paddingEnd="24dp" />
 
             <TextView
                 android:id="@+id/AudioHeader"
@@ -113,6 +106,7 @@
                 android:paddingStart="24dp"
                 android:paddingTop="16dp"
                 android:paddingEnd="24dp"
+                android:paddingBottom="12dp"
                 android:text="@string/audio_recordings"
                 android:textAppearance="?attr/textAppearanceSubtitle2" />
 
@@ -122,6 +116,14 @@
                 android:layout_height="wrap_content"
                 android:overScrollMode="never"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/LabelGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="24dp"
+                android:paddingTop="16dp"
+                android:paddingEnd="24dp" />
 
         </LinearLayout>
 
