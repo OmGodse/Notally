@@ -47,6 +47,7 @@
     <string name="delete_label">Label löschen?</string>
     <string name="create_new">Keine Label vorhanden. Tippen, um ein neues Label zu erstellen.</string>
     <string name="delete_all_notes">Alle Notizen löschen?</string>
+    <string name="delete_selected_notes">Ausgewählte Notizen löschen?</string>
     <string name="delete_note_forever">Notiz endgültig löschen?</string>
     <string name="your_notes_associated">Notizen, welche dieses Label verwenden, werden nicht gelöscht.</string>
 
@@ -69,6 +70,7 @@
     <string name="saved_to_notally">In Notally gespeichert</string>
     <string name="empty_note">Leere Notiz</string>
     <string name="empty_list">Leere Liste</string>
+    <string name="select_labels">Label auswählen</string>
     
     <!-- Messages -->
     <string name="cant_open_link">Link konnte nicht geöffnet werden</string>
@@ -100,7 +102,8 @@
     <string name="content_density">Notizvorschau</string>
     <string name="max_items_to_display">Maximal angezeigte Listeneinträge</string>
     <string name="max_lines_to_display">Maximal angezeigte Zeilen</string>
-
+     <string name="max_lines_to_display_title">Maximal angezeigte Zeilen im Titel</string>
+    
     <!-- Backup -->
     <string name="backup">Sicherung</string>
     <string name="auto_backup">Automatische Sicherung</string>
