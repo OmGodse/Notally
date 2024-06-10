@@ -140,8 +140,8 @@
     <string name="cant_load_image">Afbeelding kan niet geladen worden. Misschien is deze verplaatst of verwijderd</string>
     <string name="unknown_name">Onbekende naam</string>
     <string name="unknown_error">Onbekende foutmelding</string>
-    <string name="insert_an_sd_card">Plaats een SD kaart om afbeeldingen toe te voegen</string>
-    <string name="please_grant_notally">Geef Notally rechten om notificaties te versturen. Dit wordt gebruikt om de voortgang weer te geven wanneer bijvoorbeeld verwijderen afbeeldingen of importeren van backups langer duurt</string>
+    <string name="insert_an_sd_card_images">Plaats een SD kaart om afbeeldingen toe te voegen</string>
+    <string name="please_grant_notally_notification">Geef Notally rechten om notificaties te versturen. Dit wordt gebruikt om de voortgang weer te geven wanneer bijvoorbeeld verwijderen afbeeldingen of importeren van backups langer duurt</string>
 
     <plurals name="cant_add_images">
         <item quantity="one">Kan %d afbeelding niet toevoegen</item>
