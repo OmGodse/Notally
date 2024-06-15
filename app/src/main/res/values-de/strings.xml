@@ -18,6 +18,7 @@
     <string name="unarchive">Archivierung aufheben</string>
     <string name="add_images">Bilder hinzufügen</string>
     <string name="delete_all">Alles löschen</string>
+    <string name="record_audio">Audio aufnehmen</string>
     <string name="change_color">Farbe ändern</string>
     <string name="delete_forever">Endgültig löschen</string>
 
@@ -57,6 +58,7 @@
     <string name="date">Datum</string>
     <string name="title">Titel</string>
     <string name="add_item">Eintrag hinzufügen</string>
+    <string name="audio_recordings">Audioaufnahmen</string>
     <string name="drag_handle">Ziehgriff</string>
     <string name="bold">Fett</string>
     <string name="link">Link erstellen</string>
@@ -102,7 +104,7 @@
     <string name="content_density">Notizvorschau</string>
     <string name="max_items_to_display">Maximal angezeigte Listeneinträge</string>
     <string name="max_lines_to_display">Maximal angezeigte Zeilen</string>
-     <string name="max_lines_to_display_title">Maximal angezeigte Zeilen im Titel</string>
+    <string name="max_lines_to_display_title">Maximal angezeigte Zeilen im Titel</string>
     
     <!-- Backup -->
     <string name="backup">Sicherung</string>
@@ -151,5 +153,22 @@
         <item quantity="one">Kann %d Bild nicht hinzufügen</item>
         <item quantity="other">Kann %d Bilder nicht hinzufügen</item>
     </plurals>
-    
+   
+    <!-- Audio -->
+    <string name="play">Abspielen</string>
+    <string name="stop">Stoppen</string>
+    <string name="start">Starten</string>
+    <string name="pause">Pausieren</string>
+    <string name="resume">Fortsetzen</string>
+    <string name="paused">Pausiert</string>
+    <string name="recording">Aufnehmen…</string>
+    <string name="ready_to_record">Bereit zur Aufnahme</string>
+    <string name="discard">Verwerfen</string>
+    <string name="save_recording">Aufnahme speichern?</string>
+    <string name="delete_audio_recording_forever">Audioaufnahme für endgültig löschen?</string>
+    <string name="tap_for_more_options">Antippen für weitere Optionen</string>
+    <string name="to_record_audio">Um Audio aufzunehmen, erlaube Notally den Zugriff auf dein Mikrofon. Tippe auf Einstellungen > Berechtigungen und schalte Mikrofon ein</string>
+    <string name="please_grant_notally_audio">Bitte erteile Notally die Berechtigung zur Audioaufnahme. Die Aufnahmen verlassen niemals dein Gerät</string>
+    <string name="insert_an_sd_card_audio">SD-Karte für Audioaufnahmen einsetzen</string>
+    <string name="something_went_wrong_audio">Etwas ist schief gelaufen. Die Audioaufnahme wurde möglicherweise verschoben oder gelöscht.\n\nFehler : (%1$d, %2$d)</string>
 </resources>
