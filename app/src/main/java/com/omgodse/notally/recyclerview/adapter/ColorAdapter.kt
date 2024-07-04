@@ -10,7 +10,7 @@ import com.omgodse.notally.room.Color
 
 class ColorAdapter(private val listener: ItemListener) : RecyclerView.Adapter<ColorVH>() {
 
-    private val colors = Color.values()
+    private val colors = Color.entries
 
     override fun getItemCount() = colors.size
 
