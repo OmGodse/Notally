@@ -116,7 +116,7 @@
     <string name="imported_backup">Backup geïmporteerd</string>    
     <string name="exporting_backup">Backup aan het exporteren</string>
     <string name="importing_backup">Backup aan het importeren</string>
-    <string name="calculating">Berekenen...</string>
+    <string name="calculating">Berekenen…</string>
 
     <string name="export_backup">Backup exporteren</string>
     <string name="import_backup">Backup importeren</string>
