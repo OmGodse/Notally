@@ -79,9 +79,9 @@ object DateFormat : ListInfo {
 }
 
 object TextSize : ListInfo {
-    const val small = "small"
-    const val medium = "medium"
-    const val large = "large"
+    private const val small = "small"
+    private const val medium = "medium"
+    private const val large = "large"
 
     override val title = R.string.text_size
     override val key = "textSize"

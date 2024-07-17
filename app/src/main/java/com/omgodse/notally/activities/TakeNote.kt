@@ -41,7 +41,7 @@ class TakeNote : NotallyActivity(Type.NOTE) {
     override fun setupListeners() {
         super.setupListeners()
         binding.EnterBody.doAfterTextChanged { text ->
-            model.body = text
+            model.body = text!!
         }
     }
 
@@ -105,7 +105,7 @@ class TakeNote : NotallyActivity(Type.NOTE) {
         val items = arrayOf(getString(R.string.edit), getString(R.string.open_link))
         val movementMethod = LinkMovementMethod { span ->
             MaterialAlertDialogBuilder(this)
-                .setItems(items) { dialog, which ->
+                .setItems(items) { _, which ->
                     if (which == 1) {
                         val spanStart = binding.EnterBody.text?.getSpanStart(span)
                         val spanEnd = binding.EnterBody.text?.getSpanEnd(span)

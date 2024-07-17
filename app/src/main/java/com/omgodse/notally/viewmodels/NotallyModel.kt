@@ -51,7 +51,7 @@ class NotallyModel(app: Application) : AndroidViewModel(app) {
 
     val labels = ArrayList<String>()
 
-    var body = Editable.Factory.getInstance().newEditable(String())
+    var body = Editable.Factory.getInstance().newEditable(String())!!
 
     val items = ArrayList<ListItem>()
 
@@ -123,7 +123,15 @@ class NotallyModel(app: Application) : AndroidViewModel(app) {
         spanned.getSpans<CharacterStyle>().forEach { span ->
             val end = spanned.getSpanEnd(span)
             val start = spanned.getSpanStart(span)
-            val representation = SpanRepresentation(false, false, false, false, false, start, end)
+            val representation = SpanRepresentation(
+                bold = false,
+                link = false,
+                italic = false,
+                monospace = false,
+                strikethrough = false,
+                start = start,
+                end = end
+            )
 
             when (span) {
                 is StyleSpan -> {

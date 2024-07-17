@@ -67,14 +67,14 @@ private fun Spannable.setSpan(span: Any, start: Int, end: Int) {
 fun EditText.setOnNextAction(onNext: () -> Unit) {
     setRawInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES)
 
-    setOnKeyListener { v, keyCode, event ->
+    setOnKeyListener { _, keyCode, event ->
         if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
             onNext()
             return@setOnKeyListener true
         } else return@setOnKeyListener false
     }
 
-    setOnEditorActionListener { v, actionId, event ->
+    setOnEditorActionListener { _, actionId, _ ->
         if (actionId == EditorInfo.IME_ACTION_NEXT) {
             onNext()
             return@setOnEditorActionListener true

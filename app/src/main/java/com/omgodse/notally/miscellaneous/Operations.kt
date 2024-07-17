@@ -152,10 +152,10 @@ object Operations {
         if (labels.isNotEmpty()) {
             builder.setTitle(R.string.labels)
             builder.setNegativeButton(R.string.cancel, null)
-            builder.setMultiChoiceItems(labels, checkedPositions) { dialog, which, isChecked ->
+            builder.setMultiChoiceItems(labels, checkedPositions) { _, which, isChecked ->
                 checkedPositions[which] = isChecked
             }
-            builder.setPositiveButton(R.string.save) { dialog, which ->
+            builder.setPositiveButton(R.string.save) { _, _ ->
                 val newLabels = ArrayList<String>()
                 checkedPositions.forEachIndexed { index, checked ->
                     if (checked) {
@@ -167,7 +167,7 @@ object Operations {
             }
         } else {
             builder.setMessage(R.string.create_new)
-            builder.setPositiveButton(R.string.add_label) { dialog, which -> addLabel() }
+            builder.setPositiveButton(R.string.add_label) { _, _ -> addLabel() }
         }
 
         builder.show()
@@ -185,7 +185,7 @@ object Operations {
             .setTitle(R.string.add_label)
             .setView(binding.root)
             .setNegativeButton(R.string.cancel, null)
-            .setPositiveButton(R.string.save) { dialog, which ->
+            .setPositiveButton(R.string.save) { dialog, _ ->
                 val value = binding.EditText.text.toString().trim()
                 if (value.isNotEmpty()) {
                     val label = Label(value)

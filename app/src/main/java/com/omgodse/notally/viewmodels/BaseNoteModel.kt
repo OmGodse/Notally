@@ -62,7 +62,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     var currentFile: File? = null
 
     val labels = labelDao.getAll()
-    val allNotes = baseNoteDao.getAll()
+    private val allNotes = baseNoteDao.getAll()
     val baseNotes = Content(baseNoteDao.getFrom(Folder.NOTES), ::transform)
     val deletedNotes = Content(baseNoteDao.getFrom(Folder.DELETED), ::transform)
     val archivedNotes = Content(baseNoteDao.getFrom(Folder.ARCHIVED), ::transform)
