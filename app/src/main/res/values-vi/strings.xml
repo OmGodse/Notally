@@ -17,6 +17,7 @@
     <string name="unarchive">Bỏ lưu trữ</string>
     <string name="add_images">Thêm ảnh</string>
     <string name="delete_all">Xóa toàn bộ</string>
+    <string name="record_audio">Ghi âm</string>
     <string name="change_color">Đổi màu</string>
     <string name="delete_forever">Xóa vĩnh viễn</string>
 
@@ -56,6 +57,7 @@
     <string name="date">Ngày</string>
     <string name="title">Tựa đề</string>
     <string name="add_item">Thêm nội dung</string>
+    <string name="audio_recordings">Ghi âm</string>
     <string name="drag_handle">Kéo thả</string>
     <string name="bold">Đậm</string>
     <string name="link">Liên kết</string>
@@ -145,4 +147,21 @@
         <item quantity="other">Không thể thêm %d ảnh</item>
     </plurals>
 
+        <!-- Audio -->
+    <string name="play">Phát</string>
+    <string name="stop">Ngừng</string>
+    <string name="start">Bắt đầu</string>
+    <string name="pause">Tạm dừng</string>
+    <string name="resume">Tiếp tục</string>
+    <string name="paused">Đã dừng</string>
+    <string name="recording">Đang ghi âm…</string>
+    <string name="ready_to_record">Sẵn sàng ghi âm</string>
+    <string name="discard">Bỏ qua</string>
+    <string name="save_recording">Lưu bản ghi âm?</string>
+    <string name="delete_audio_recording_forever">Xóa bản ghi âm?</string>
+    <string name="tap_for_more_options">Nhấn để thêm tùy chọn</string>
+    <string name="to_record_audio">Xin cho phép Notally quyền truy cập microphone. Nhấn Cài đặt > Quyền và bật Microphone lên</string>
+    <string name="please_grant_notally_audio">Xin cho phép Notally ghi âm. Những bản ghi sẽ lưu ở điện thoại của bạn</string>
+    <string name="insert_an_sd_card_audio">Gắn thẻ SD trước</string>
+    <string name="something_went_wrong_audio">Xảy ra lỗi. Bản ghi âm đã bị xóa hoặc di chuyển.\n\nLỗi : (%1$d, %2$d)</string>
 </resources>
