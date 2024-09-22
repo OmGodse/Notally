@@ -9,4 +9,6 @@ interface ListItemListener {
     fun textChanged(position: Int, text: String)
 
     fun checkedChanged(position: Int, checked: Boolean)
+
+    fun isChildItemChanged(position: Int, isChildItem: Boolean)
 }

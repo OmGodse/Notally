@@ -51,7 +51,25 @@ class MakeList : NotallyActivity(Type.LIST) {
             }
 
             override fun checkedChanged(position: Int, checked: Boolean) {
-                model.items[position].checked = checked
+                val item = model.items[position]
+                item.checked = checked
+                if(!item.isChildItem) {
+                    var childPosition = position + 1
+                    while (childPosition < model.items.size) {
+                        val childItem = model.items[childPosition]
+                        if (childItem.isChildItem) {
+                            childItem.checked = checked
+                            adapter.notifyItemChanged(childPosition)
+                        } else {
+                            break;
+                        }
+                        childPosition++;
+                    }
+                }
+            }
+
+            override fun isChildItemChanged(position: Int, isChildItem: Boolean) {
+                model.items[position].isChildItem = isChildItem
             }
         })
 
@@ -61,7 +79,8 @@ class MakeList : NotallyActivity(Type.LIST) {
 
     private fun addListItem() {
         val position = model.items.size
-        val listItem = ListItem(String(), false)
+        val isChildItem = model.items.isNotEmpty() && model.items.last().isChildItem
+        val listItem = ListItem(String(), false, isChildItem)
         model.items.add(listItem)
         adapter.notifyItemInserted(position)
         binding.RecyclerView.post {

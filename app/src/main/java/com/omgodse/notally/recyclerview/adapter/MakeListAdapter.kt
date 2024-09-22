@@ -29,7 +29,7 @@ class MakeListAdapter(
 
     override fun onBindViewHolder(holder: MakeListVH, position: Int) {
         val item = list[position]
-        holder.bind(item)
+        holder.bind(item, position == 0)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MakeListVH {

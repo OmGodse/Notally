@@ -3,6 +3,7 @@ package com.omgodse.notally.recyclerview.viewholder
 import android.graphics.drawable.Drawable
 import android.util.TypedValue
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
@@ -19,6 +20,7 @@ import com.omgodse.notally.R
 import com.omgodse.notally.databinding.RecyclerBaseNoteBinding
 import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.miscellaneous.applySpans
+import com.omgodse.notally.miscellaneous.dp
 import com.omgodse.notally.preferences.DateFormat
 import com.omgodse.notally.preferences.TextSize
 import com.omgodse.notally.recyclerview.ItemListener
@@ -121,6 +123,11 @@ class BaseNoteVH(
                         view.text = item.body
                         handleChecked(view, item.checked)
                         view.visibility = View.VISIBLE
+                        if(item.isChildItem) {
+                            val layoutParams = view.layoutParams as LinearLayout.LayoutParams
+                            layoutParams.marginStart = 150.dp
+                            view.layoutParams = layoutParams
+                        }
                     } else view.visibility = View.GONE
                 }
             }

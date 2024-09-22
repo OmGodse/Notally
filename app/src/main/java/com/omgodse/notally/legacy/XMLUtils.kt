@@ -100,12 +100,15 @@ object XMLUtils {
     private fun parseItem(parser: XmlPullParser, rootTag: String): ListItem {
         var body = String()
         var checked = false
+        var isChildItem = false
 
+        // TODO: migration required?
         while (parser.next() != XmlPullParser.END_DOCUMENT) {
             if (parser.eventType == XmlPullParser.START_TAG) {
                 when (parser.name) {
                     "text" -> body = parser.nextText()
                     "checked" -> checked = parser.nextText()?.toBoolean() ?: false
+                    "isChildItem" -> isChildItem = parser.nextText()?.toBoolean() ?: false
                 }
             } else if (parser.eventType == XmlPullParser.END_TAG) {
                 if (parser.name == rootTag) {
@@ -114,7 +117,7 @@ object XMLUtils {
             }
         }
 
-        return ListItem(body, checked)
+        return ListItem(body, checked, isChildItem)
     }
 
     private fun parseSpan(parser: XmlPullParser): SpanRepresentation {

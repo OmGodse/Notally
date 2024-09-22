@@ -1,5 +1,6 @@
 package com.omgodse.notally.miscellaneous
 
+import android.content.res.Resources
 import android.graphics.Typeface
 import android.text.Editable
 import android.text.InputType
@@ -16,6 +17,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import com.omgodse.notally.activities.TakeNote
 import com.omgodse.notally.room.SpanRepresentation
+import kotlin.math.roundToInt
 
 /**
  * For some reason, this method crashes sometimes with an
@@ -93,3 +95,6 @@ fun Menu.add(title: Int, drawable: Int, onClick: (item: MenuItem) -> Unit): Menu
     menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
     return menuItem
 }
+
+val Int.dp: Int
+    get() = (this / Resources.getSystem().displayMetrics.density).roundToInt()
