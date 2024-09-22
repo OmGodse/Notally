@@ -150,6 +150,38 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     }
 
 
+    protected open fun setupToolbar() {
+        binding.Toolbar.setNavigationOnClickListener { finish() }
+
+        val menu = binding.Toolbar.menu
+        val pin = menu.add(R.string.pin, R.drawable.pin) { item -> pin(item) }
+        bindPinned(pin)
+
+        menu.add(R.string.share, R.drawable.share) { share() }
+        menu.add(R.string.labels, R.drawable.label) { label() }
+        menu.add(R.string.add_images, R.drawable.add_images) { checkNotificationPermission() }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            menu.add(R.string.record_audio, R.drawable.record_audio) { checkAudioPermission() }
+        }
+
+        when (model.folder) {
+            Folder.NOTES -> {
+                menu.add(R.string.delete, R.drawable.delete) { delete() }
+                menu.add(R.string.archive, R.drawable.archive) { archive() }
+            }
+            Folder.DELETED -> {
+                menu.add(R.string.restore, R.drawable.restore) { restore() }
+                menu.add(R.string.delete_forever, R.drawable.delete) { deleteForever() }
+            }
+            Folder.ARCHIVED -> {
+                menu.add(R.string.delete, R.drawable.delete) { delete() }
+                menu.add(R.string.unarchive, R.drawable.unarchive) { restore() }
+            }
+        }
+    }
+
+
     abstract fun configureUI()
 
     open fun setupListeners() {
@@ -391,37 +423,6 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         binding.root.setBackgroundColor(color)
         binding.RecyclerView.setBackgroundColor(color)
         binding.Toolbar.backgroundTintList = ColorStateList.valueOf(color)
-    }
-
-    private fun setupToolbar() {
-        binding.Toolbar.setNavigationOnClickListener { finish() }
-
-        val menu = binding.Toolbar.menu
-        val pin = menu.add(R.string.pin, R.drawable.pin) { item -> pin(item) }
-        bindPinned(pin)
-
-        menu.add(R.string.share, R.drawable.share) { share() }
-        menu.add(R.string.labels, R.drawable.label) { label() }
-        menu.add(R.string.add_images, R.drawable.add_images) { checkNotificationPermission() }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            menu.add(R.string.record_audio, R.drawable.record_audio) { checkAudioPermission() }
-        }
-
-        when (model.folder) {
-            Folder.NOTES -> {
-                menu.add(R.string.delete, R.drawable.delete) { delete() }
-                menu.add(R.string.archive, R.drawable.archive) { archive() }
-            }
-            Folder.DELETED -> {
-                menu.add(R.string.restore, R.drawable.restore) { restore() }
-                menu.add(R.string.delete_forever, R.drawable.delete) { deleteForever() }
-            }
-            Folder.ARCHIVED -> {
-                menu.add(R.string.delete, R.drawable.delete) { delete() }
-                menu.add(R.string.unarchive, R.drawable.unarchive) { restore() }
-            }
-        }
     }
 
     private fun initialiseBinding() {

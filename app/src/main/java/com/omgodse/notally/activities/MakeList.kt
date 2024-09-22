@@ -2,6 +2,8 @@ package com.omgodse.notally.activities
 
 import android.os.Bundle
 import androidx.recyclerview.widget.DiffUtil
+import com.omgodse.notally.R
+import com.omgodse.notally.miscellaneous.add
 import com.omgodse.notally.miscellaneous.setOnNextAction
 import com.omgodse.notally.preferences.ListItemSorting
 import com.omgodse.notally.preferences.Preferences
@@ -22,6 +24,11 @@ class MakeList() : NotallyActivity(Type.LIST) {
         preferences = Preferences.getInstance(application)
     }
 
+    override fun setupToolbar(){
+        super.setupToolbar()
+        binding.Toolbar.menu.add(R.string.remove_checked_items, R.drawable.delete_all) { deleteCheckedItems() }
+    }
+
     override fun configureUI() {
         binding.EnterTitle.setOnNextAction {
             moveToNext(-1)
@@ -33,7 +40,6 @@ class MakeList() : NotallyActivity(Type.LIST) {
             }
         }
     }
-
 
     override fun setupListeners() {
         super.setupListeners()
@@ -159,5 +165,11 @@ class MakeList() : NotallyActivity(Type.LIST) {
                 moveToNext(currentPosition + 1)
             } else viewHolder.binding.EditText.requestFocus()
         } else addListItem()
+    }
+
+    private fun deleteCheckedItems() {
+        val newList = model.items.clone() as ArrayList<ListItem>
+        newList.removeAll { it.checked }
+        updateList(newList)
     }
 }

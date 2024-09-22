@@ -21,6 +21,7 @@
     <string name="record_audio">Record audio</string>
     <string name="change_color">Change color</string>
     <string name="delete_forever">Delete forever</string>
+    <string name="remove_checked_items">Remove checked items</string>
 
     <!-- Pinning -->
     <string name="pin">Pin</string>
