@@ -60,6 +60,10 @@ class MakeList : NotallyActivity(Type.LIST) {
                 this@MakeList.moveToNext(position)
             }
 
+            override fun add(position: Int) {
+                addListItem(position)
+            }
+
             override fun textChanged(position: Int, text: String) {
                 model.items[position].body = text
             }
@@ -143,11 +147,10 @@ class MakeList : NotallyActivity(Type.LIST) {
     }
 
 
-    private fun addListItem() {
-        val position = model.items.size
+    private fun addListItem(position: Int = model.items.size) {
         val isChildItem = model.items.isNotEmpty() && model.items.last().isChildItem
         val listItem = ListItem(String(), false, isChildItem)
-        model.items.add(listItem)
+        model.items.add(position, listItem)
         adapter.notifyItemInserted(position)
         binding.RecyclerView.post {
             val viewHolder = binding.RecyclerView.findViewHolderForAdapterPosition(position) as MakeListVH?
