@@ -1,6 +1,7 @@
 package com.omgodse.notally.activities
 
 import android.os.Build
+import android.view.inputmethod.InputMethodManager
 import androidx.recyclerview.widget.DiffUtil
 import com.omgodse.notally.R
 import com.omgodse.notally.miscellaneous.add
@@ -11,6 +12,7 @@ import com.omgodse.notally.recyclerview.adapter.MakeListAdapter
 import com.omgodse.notally.recyclerview.viewholder.MakeListVH
 import com.omgodse.notally.room.ListItem
 import com.omgodse.notally.room.Type
+
 
 class MakeList : NotallyActivity(Type.LIST) {
 
@@ -155,6 +157,8 @@ class MakeList : NotallyActivity(Type.LIST) {
         binding.RecyclerView.post {
             val viewHolder = binding.RecyclerView.findViewHolderForAdapterPosition(position) as MakeListVH?
             viewHolder?.binding?.EditText?.requestFocus()
+            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.showSoftInput(viewHolder?.binding?.EditText, InputMethodManager.SHOW_IMPLICIT)
         }
     }
 
