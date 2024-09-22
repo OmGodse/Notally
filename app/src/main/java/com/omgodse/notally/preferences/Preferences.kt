@@ -21,6 +21,7 @@ class Preferences private constructor(app: Application) {
     val dateFormat = BetterLiveData(getListPref(DateFormat))
 
     val textSize = BetterLiveData(getListPref(TextSize))
+    val listItemSorting = BetterLiveData(getListPref(ListItemSorting))
     var maxItems = getSeekbarPref(MaxItems)
     var maxLines = getSeekbarPref(MaxLines)
     var maxTitle = getSeekbarPref(MaxTitle)
@@ -86,6 +87,7 @@ class Preferences private constructor(app: Application) {
             Theme -> theme.postValue(getListPref(info))
             DateFormat -> dateFormat.postValue(getListPref(info))
             TextSize -> textSize.postValue(getListPref(info))
+            ListItemSorting -> listItemSorting.postValue(getListPref(info))
         }
     }
 

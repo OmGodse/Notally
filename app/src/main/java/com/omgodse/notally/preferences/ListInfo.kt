@@ -131,3 +131,21 @@ object TextSize : ListInfo {
         }
     }
 }
+
+
+object ListItemSorting : ListInfo {
+    const val noAutoSort = "noAutoSort"
+    const val autoSortByChecked = "autoSortByChecked"
+
+    override val title = R.string.checked_list_item_sorting
+    override val key = "checkedListItemSorting"
+    override val defaultValue = noAutoSort
+
+    override fun getEntryValues() = arrayOf(noAutoSort, autoSortByChecked)
+
+    override fun getEntries(context: Context): Array<String> {
+        val ids = arrayOf(R.string.no_auto_sort, R.string.auto_sort_by_checked)
+        return convertToValues(ids, context)
+    }
+
+}

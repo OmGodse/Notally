@@ -48,6 +48,10 @@ class Settings : Fragment() {
             binding.TextSize.setup(TextSize, value)
         }
 
+        model.preferences.listItemSorting.observe(viewLifecycleOwner) { value ->
+            binding.CheckedListItemSorting.setup(ListItemSorting, value)
+        }
+
 
         binding.MaxItems.setup(MaxItems, model.preferences.maxItems)
 

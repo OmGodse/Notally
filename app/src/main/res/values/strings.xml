@@ -101,6 +101,10 @@
     <string name="medium">Medium</string>
     <string name="large">Large</string>
 
+    <string name="checked_list_item_sorting">List auto sort</string>
+    <string name="no_auto_sort">Dont autosort</string>
+    <string name="auto_sort_by_checked">Autosort by checked items</string>
+
     <string name="content_density">Content density</string>
     <string name="max_items_to_display">Max items to display in list</string>
     <string name="max_lines_to_display">Max lines to display in note</string>
