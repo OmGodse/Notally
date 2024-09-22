@@ -3,19 +3,23 @@ package com.omgodse.notally.widget
 import android.app.Application
 import android.content.Intent
 import android.os.Build
+import android.util.TypedValue
 import android.view.View
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import com.omgodse.notally.R
+import com.omgodse.notally.miscellaneous.displayFormattedTimestamp
+import com.omgodse.notally.preferences.Preferences
+import com.omgodse.notally.preferences.TextSize
 import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.NotallyDatabase
 import com.omgodse.notally.room.Type
-import java.text.DateFormat
 
 class WidgetFactory(private val app: Application, private val id: Long) : RemoteViewsService.RemoteViewsFactory {
 
     private var baseNote: BaseNote? = null
     private val database = NotallyDatabase.getDatabase(app)
+    private val preferences = Preferences.getInstance(app)
 
     override fun onCreate() {}
 
@@ -54,15 +58,18 @@ class WidgetFactory(private val app: Application, private val id: Long) : Remote
     private fun getNoteView(note: BaseNote): RemoteViews {
         val view = RemoteViews(app.packageName, R.layout.widget_note)
 
+        view.setTextViewTextSize(R.id.Title, TypedValue.COMPLEX_UNIT_SP, TextSize.getDisplayTitleSize(preferences.textSize.value))
         if (note.title.isNotEmpty()) {
             view.setTextViewText(R.id.Title, note.title)
             view.setViewVisibility(R.id.Title, View.VISIBLE)
         } else view.setViewVisibility(R.id.Title, View.GONE)
 
-        val formatter = DateFormat.getDateInstance(DateFormat.FULL)
-        val date = formatter.format(note.timestamp)
-        view.setTextViewText(R.id.Date, date)
+        val bodyTextSize = TextSize.getDisplayBodySize(preferences.textSize.value)
 
+        view.setTextViewTextSize(R.id.Date, TypedValue.COMPLEX_UNIT_SP, bodyTextSize)
+        view.displayFormattedTimestamp(R.id.Date, note.timestamp, preferences.dateFormat.value)
+
+        view.setTextViewTextSize(R.id.Note, TypedValue.COMPLEX_UNIT_SP, bodyTextSize)
         if (note.body.isNotEmpty()) {
             view.setTextViewText(R.id.Note, note.body)
             view.setViewVisibility(R.id.Note, View.VISIBLE)
@@ -78,14 +85,16 @@ class WidgetFactory(private val app: Application, private val id: Long) : Remote
     private fun getListHeaderView(list: BaseNote): RemoteViews {
         val view = RemoteViews(app.packageName, R.layout.widget_list_header)
 
+        view.setTextViewTextSize(R.id.Title, TypedValue.COMPLEX_UNIT_SP, TextSize.getDisplayTitleSize(preferences.textSize.value))
         if (list.title.isNotEmpty()) {
             view.setTextViewText(R.id.Title, list.title)
             view.setViewVisibility(R.id.Title, View.VISIBLE)
         } else view.setViewVisibility(R.id.Title, View.GONE)
 
-        val formatter = DateFormat.getDateInstance(DateFormat.FULL)
-        val date = formatter.format(list.timestamp)
-        view.setTextViewText(R.id.Date, date)
+        val bodyTextSize = TextSize.getDisplayBodySize(preferences.textSize.value)
+
+        view.setTextViewTextSize(R.id.Date, TypedValue.COMPLEX_UNIT_SP, bodyTextSize)
+        view.displayFormattedTimestamp(R.id.Date, list.timestamp, preferences.dateFormat.value)
 
         val intent = Intent(WidgetProvider.ACTION_OPEN_LIST)
         view.setOnClickFillInIntent(R.id.LinearLayout, intent)
@@ -97,6 +106,8 @@ class WidgetFactory(private val app: Application, private val id: Long) : Remote
         val view = RemoteViews(app.packageName, R.layout.widget_list_item)
 
         val item = list.items[index]
+
+        view.setTextViewTextSize(R.id.CheckBox, TypedValue.COMPLEX_UNIT_SP, TextSize.getDisplayBodySize(preferences.textSize.value))
         view.setTextViewText(R.id.CheckBox, item.body)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {

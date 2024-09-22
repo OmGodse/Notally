@@ -20,8 +20,8 @@ import com.omgodse.notally.R
 import com.omgodse.notally.databinding.RecyclerBaseNoteBinding
 import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.miscellaneous.applySpans
+import com.omgodse.notally.miscellaneous.displayFormattedTimestamp
 import com.omgodse.notally.miscellaneous.dp
-import com.omgodse.notally.preferences.DateFormat
 import com.omgodse.notally.preferences.TextSize
 import com.omgodse.notally.recyclerview.ItemListener
 import com.omgodse.notally.room.BaseNote
@@ -30,9 +30,7 @@ import com.omgodse.notally.room.Image
 import com.omgodse.notally.room.ListItem
 import com.omgodse.notally.room.SpanRepresentation
 import com.omgodse.notally.room.Type
-import org.ocpsoft.prettytime.PrettyTime
 import java.io.File
-import java.util.Date
 
 class BaseNoteVH(
     private val binding: RecyclerBaseNoteBinding,
@@ -42,8 +40,6 @@ class BaseNoteVH(
     maxLines: Int,
     maxTitle: Int,
     listener: ItemListener,
-    private val prettyTime: PrettyTime,
-    private val formatter: java.text.DateFormat,
 ) : RecyclerView.ViewHolder(binding.root) {
 
     init {
@@ -84,7 +80,7 @@ class BaseNoteVH(
             Type.LIST -> bindList(baseNote.items)
         }
 
-        setDate(baseNote.timestamp)
+        binding.Date.displayFormattedTimestamp(baseNote.timestamp, dateFormat)
         setColor(baseNote.color)
         setImages(baseNote.images, mediaRoot)
 
@@ -123,7 +119,7 @@ class BaseNoteVH(
                         view.text = item.body
                         handleChecked(view, item.checked)
                         view.visibility = View.VISIBLE
-                        if(item.isChildItem) {
+                        if (item.isChildItem) {
                             val layoutParams = view.layoutParams as LinearLayout.LayoutParams
                             layoutParams.marginStart = 150.dp
                             view.layoutParams = layoutParams
@@ -139,17 +135,6 @@ class BaseNoteVH(
         }
     }
 
-
-    private fun setDate(timestamp: Long) {
-        if (dateFormat != DateFormat.none) {
-            binding.Date.visibility = View.VISIBLE
-            val date = Date(timestamp)
-            when (dateFormat) {
-                DateFormat.relative -> binding.Date.text = prettyTime.format(date)
-                DateFormat.absolute -> binding.Date.text = formatter.format(date)
-            }
-        } else binding.Date.visibility = View.GONE
-    }
 
     private fun setColor(color: Color) {
         val context = binding.root.context
@@ -225,7 +210,17 @@ class BaseNoteVH(
 
     private fun handleChecked(textView: TextView, checked: Boolean) {
         if (checked) {
-            textView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.checkbox_16, 0, 0, 0)
-        } else textView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.checkbox_outline_16, 0, 0, 0)
+            textView.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                R.drawable.checkbox_16,
+                0,
+                0,
+                0
+            )
+        } else textView.setCompoundDrawablesRelativeWithIntrinsicBounds(
+            R.drawable.checkbox_outline_16,
+            0,
+            0,
+            0
+        )
     }
 }

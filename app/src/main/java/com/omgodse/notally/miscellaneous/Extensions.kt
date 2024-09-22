@@ -13,10 +13,15 @@ import android.text.style.URLSpan
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
+import android.widget.RemoteViews
+import android.widget.TextView
 import com.omgodse.notally.activities.TakeNote
 import com.omgodse.notally.room.SpanRepresentation
+import org.ocpsoft.prettytime.PrettyTime
+import java.util.Date
 import kotlin.math.roundToInt
 
 /**
@@ -94,6 +99,28 @@ fun Menu.add(title: Int, drawable: Int, onClick: (item: MenuItem) -> Unit): Menu
     }
     menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
     return menuItem
+}
+
+fun TextView.displayFormattedTimestamp(timestamp: Long, dateFormat: String){
+    if (dateFormat != com.omgodse.notally.preferences.DateFormat.none) {
+        visibility = View.VISIBLE
+        text = formatTimestamp(timestamp, dateFormat)
+    } else visibility = View.GONE
+}
+
+fun RemoteViews.displayFormattedTimestamp(id: Int, timestamp: Long, dateFormat: String){
+    if (dateFormat != com.omgodse.notally.preferences.DateFormat.none) {
+        setViewVisibility(id, View.VISIBLE)
+        setTextViewText(id, formatTimestamp(timestamp, dateFormat))
+    } else setViewVisibility(id, View.GONE)
+}
+
+private fun formatTimestamp(timestamp: Long, dateFormat: String): String {
+    val date = Date(timestamp)
+    return when (dateFormat) {
+        com.omgodse.notally.preferences.DateFormat.relative -> PrettyTime().format(date)
+        else -> java.text.DateFormat.getDateInstance(java.text.DateFormat.FULL).format(date)
+    }
 }
 
 val Int.dp: Int

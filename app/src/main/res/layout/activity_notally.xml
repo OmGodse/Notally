@@ -42,6 +42,7 @@
                 android:paddingStart="24dp"
                 android:paddingTop="16dp"
                 android:paddingEnd="24dp"
+                android:paddingBottom="8dp"
                 android:textAppearance="?attr/textAppearanceHeadline6" />
 
             <TextView
@@ -49,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="24dp"
-                android:paddingTop="16dp"
+                android:paddingTop="2dp"
                 android:paddingEnd="24dp"
                 android:paddingBottom="16dp"
                 android:text="@string/date"

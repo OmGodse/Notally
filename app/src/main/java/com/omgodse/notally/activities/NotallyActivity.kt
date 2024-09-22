@@ -32,6 +32,8 @@ import com.omgodse.notally.image.ImageError
 import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.miscellaneous.add
+import com.omgodse.notally.miscellaneous.displayFormattedTimestamp
+import com.omgodse.notally.preferences.Preferences
 import com.omgodse.notally.preferences.TextSize
 import com.omgodse.notally.recyclerview.adapter.AudioAdapter
 import com.omgodse.notally.recyclerview.adapter.ErrorAdapter
@@ -43,12 +45,12 @@ import com.omgodse.notally.room.Type
 import com.omgodse.notally.viewmodels.NotallyModel
 import com.omgodse.notally.widget.WidgetProvider
 import kotlinx.coroutines.launch
-import java.text.DateFormat
 
 abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
     internal lateinit var binding: ActivityNotallyBinding
     internal val model: NotallyModel by viewModels()
+    internal lateinit var preferences: Preferences
 
     override fun finish() {
         lifecycleScope.launch {
@@ -70,6 +72,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        preferences = Preferences.getInstance(application)
         model.type = type
         initialiseBinding()
         setContentView(binding.root)
@@ -191,8 +194,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     }
 
     open fun setStateFromModel() {
-        val formatter = DateFormat.getDateInstance(DateFormat.FULL)
-        binding.DateCreated.text = formatter.format(model.timestamp)
+        binding.DateCreated.displayFormattedTimestamp(model.timestamp, preferences.dateFormat.value)
 
         binding.EnterTitle.setText(model.title)
         Operations.bindLabels(binding.LabelGroup, model.labels, model.textSize)

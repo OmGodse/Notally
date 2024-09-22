@@ -95,9 +95,8 @@ abstract class NotallyFragment : Fragment(), ItemListener {
         val maxLines = model.preferences.maxLines
         val maxTitle = model.preferences.maxTitle
         val dateFormat = model.preferences.dateFormat.value
-        val formatter = DateFormat.getDateInstance(DateFormat.FULL)
 
-        adapter = BaseNoteAdapter(model.actionMode.selectedIds, dateFormat, textSize, maxItems, maxLines, maxTitle, formatter, model.mediaRoot, this)
+        adapter = BaseNoteAdapter(model.actionMode.selectedIds, dateFormat, textSize, maxItems, maxLines, maxTitle, model.mediaRoot, this)
         adapter?.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
 
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {

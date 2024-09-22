@@ -1,28 +1,19 @@
 package com.omgodse.notally.activities
 
-import android.os.Bundle
 import androidx.recyclerview.widget.DiffUtil
 import com.omgodse.notally.R
 import com.omgodse.notally.miscellaneous.add
 import com.omgodse.notally.miscellaneous.setOnNextAction
 import com.omgodse.notally.preferences.ListItemSorting
-import com.omgodse.notally.preferences.Preferences
 import com.omgodse.notally.recyclerview.ListItemListener
 import com.omgodse.notally.recyclerview.adapter.MakeListAdapter
 import com.omgodse.notally.recyclerview.viewholder.MakeListVH
 import com.omgodse.notally.room.ListItem
 import com.omgodse.notally.room.Type
 
-class MakeList() : NotallyActivity(Type.LIST) {
+class MakeList : NotallyActivity(Type.LIST) {
 
     private lateinit var adapter: MakeListAdapter
-
-    private lateinit var preferences: Preferences
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        preferences = Preferences.getInstance(application)
-    }
 
     override fun setupToolbar(){
         super.setupToolbar()
