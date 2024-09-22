@@ -1,5 +1,6 @@
 package com.omgodse.notally.activities
 
+import android.os.Build
 import androidx.recyclerview.widget.DiffUtil
 import com.omgodse.notally.R
 import com.omgodse.notally.miscellaneous.add
@@ -17,7 +18,12 @@ class MakeList : NotallyActivity(Type.LIST) {
 
     override fun setupToolbar(){
         super.setupToolbar()
-        binding.Toolbar.menu.add(R.string.remove_checked_items, R.drawable.delete_all) { deleteCheckedItems() }
+        binding.Toolbar.menu.add(1,R.string.remove_checked_items, R.drawable.delete_all) { deleteCheckedItems() }
+        binding.Toolbar.menu.add(1,R.string.check_all_items, R.drawable.checkbox_fill) { checkAllItems(true) }
+        binding.Toolbar.menu.add(1,R.string.uncheck_all_items, R.drawable.checkbox) { checkAllItems(false) }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            binding.Toolbar.menu.setGroupDividerEnabled(true)
+        }
     }
 
     override fun configureUI() {
@@ -162,5 +168,10 @@ class MakeList : NotallyActivity(Type.LIST) {
         val newList = model.items.clone() as ArrayList<ListItem>
         newList.removeAll { it.checked }
         updateList(newList)
+    }
+
+    private fun checkAllItems(checked: Boolean) {
+        model.items.forEach { it.checked = checked }
+        adapter.notifyDataSetChanged()
     }
 }

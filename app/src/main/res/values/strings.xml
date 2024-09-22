@@ -22,6 +22,8 @@
     <string name="change_color">Change color</string>
     <string name="delete_forever">Delete forever</string>
     <string name="remove_checked_items">Remove checked items</string>
+    <string name="check_all_items">Check all items</string>
+    <string name="uncheck_all_items">Uncheck all items</string>
 
     <!-- Pinning -->
     <string name="pin">Pin</string>

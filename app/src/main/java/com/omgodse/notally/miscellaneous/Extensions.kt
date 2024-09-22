@@ -91,7 +91,11 @@ fun EditText.setOnNextAction(onNext: () -> Unit) {
 
 
 fun Menu.add(title: Int, drawable: Int, onClick: (item: MenuItem) -> Unit): MenuItem {
-    val menuItem = add(title)
+    return add(Menu.NONE, title, drawable, onClick)
+}
+
+fun Menu.add(groupId: Int, title: Int, drawable: Int, onClick: (item: MenuItem) -> Unit): MenuItem {
+    val menuItem = add(groupId, Menu.NONE, Menu.NONE, title)
     menuItem.setIcon(drawable)
     menuItem.setOnMenuItemClickListener { item ->
         onClick(item)
