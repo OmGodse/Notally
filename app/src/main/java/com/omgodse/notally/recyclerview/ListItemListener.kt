@@ -2,7 +2,7 @@ package com.omgodse.notally.recyclerview
 
 interface ListItemListener {
 
-    fun delete(position: Int)
+    fun delete(position: Int, force: Boolean)
 
     fun moveToNext(position: Int)
 

@@ -1,6 +1,7 @@
 package com.omgodse.notally.recyclerview.viewholder
 
 import android.util.TypedValue
+import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView.INVISIBLE
@@ -44,12 +45,19 @@ class MakeListVH(
             false
         })
 
+        binding.EditText.setOnKeyListener { v, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_DEL) {
+                listener.delete(adapterPosition, false)
+            }
+            true
+        }
+
         binding.EditText.setOnFocusChangeListener { _, hasFocus ->
             binding.Delete.visibility = if(hasFocus) VISIBLE else INVISIBLE
         }
 
         binding.Delete.setOnClickListener {
-            listener.delete(adapterPosition)
+            listener.delete(adapterPosition, true)
         }
 
         binding.CheckBox.setOnClickListener { _ ->

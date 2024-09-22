@@ -53,9 +53,19 @@ class MakeList : NotallyActivity(Type.LIST) {
 
         adapter = MakeListAdapter(model.textSize, elevation, model.items, object : ListItemListener {
 
-            override fun delete(position: Int) {
-                model.items.removeAt(position)
-                adapter.notifyItemRemoved(position)
+            override fun delete(position: Int, force: Boolean) {
+                if(force || position > 0) {
+                    model.items.removeAt(position)
+                    adapter.notifyItemRemoved(position)
+                }
+                if(!force) {
+                    if(position > 0) {
+                        this@MakeList.moveToNext(position - 2)
+                    } else if(model.items.size > 1) {
+                        this@MakeList.moveToNext(position)
+                    }
+                }
+
             }
 
             override fun moveToNext(position: Int) {
