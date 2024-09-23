@@ -7,6 +7,7 @@ import com.omgodse.notally.R
 import com.omgodse.notally.miscellaneous.add
 import com.omgodse.notally.miscellaneous.setOnNextAction
 import com.omgodse.notally.preferences.ListItemSorting
+import com.omgodse.notally.preferences.Preferences
 import com.omgodse.notally.recyclerview.ListItemListener
 import com.omgodse.notally.recyclerview.adapter.MakeListAdapter
 import com.omgodse.notally.recyclerview.viewholder.MakeListVH
@@ -51,7 +52,7 @@ class MakeList : NotallyActivity(Type.LIST) {
         super.setStateFromModel()
         val elevation = resources.displayMetrics.density * 2
 
-        adapter = MakeListAdapter(model.textSize, elevation, model.items, object : ListItemListener {
+        adapter = MakeListAdapter(model.textSize, elevation, model.items, Preferences.getInstance(application), object : ListItemListener {
 
             override fun delete(position: Int, force: Boolean) {
                 if(force || position > 0) {
@@ -83,26 +84,24 @@ class MakeList : NotallyActivity(Type.LIST) {
             override fun checkedChanged(position: Int, checked: Boolean) {
                 val item = model.items[position]
                 if(!item.isChildItem) {
-                    val lastChildPosition = checkAllChildItems(position, checked)
                     if(preferences.listItemSorting.value == ListItemSorting.autoSortByChecked) {
-                            val newList = model.items.clone() as ArrayList<ListItem>
-                            var firstCheckedItemPosition =
-                                newList.indexOfFirst { it != item && it.checked && !it.isChildItem }
+                        val lastChildPosition = checkWithAllChildren(position, checked)
+                        var firstCheckedItemPosition =
+                                model.items.indexOfFirst { it != item && it.checked && !it.isChildItem }
                             if (firstCheckedItemPosition == -1) {
-                                firstCheckedItemPosition = newList.size
+                                firstCheckedItemPosition = model.items.size
                             }
-                                moveItemRange(
-                                    newList,
-                                    firstCheckedItemPosition,
-                                    position,
-                                    lastChildPosition
-                                )
-                            updateList(newList)
+                            moveItemRange(
+                                firstCheckedItemPosition,
+                                position,
+                                lastChildPosition,
+                                adapter
+                            )
                     }
-                }
-                item.checked = checked
+                } else {
+                    item.checked = checked
                     adapter.notifyItemChanged(position)
-
+                }
             }
 
             override fun isChildItemChanged(position: Int, isChildItem: Boolean) {
@@ -121,7 +120,12 @@ class MakeList : NotallyActivity(Type.LIST) {
         diffCourses.dispatchUpdatesTo(adapter)
     }
 
-    private fun checkAllChildItems(position: Int, checked: Boolean): Int {
+    /**
+     * Checks ListItem and all its children.
+     * @return position of the last child ListItem
+     */
+    private fun checkWithAllChildren(position: Int, checked: Boolean): Int {
+        model.items[position].checked = checked
         var childPosition = position + 1
         while (childPosition < model.items.size) {
             val childItem = model.items[childPosition]
@@ -139,23 +143,25 @@ class MakeList : NotallyActivity(Type.LIST) {
     }
 
     private fun moveItemRange(
-        newList: ArrayList<ListItem>,
         insertPosition: Int,
         rangeStartPosition: Int,
-        rangeEndPosition: Int
+        rangeEndPosition: Int,
+        adapter: MakeListAdapter
     ) {
-        newList.addAll(
+        model.items.addAll(
             insertPosition,
-            newList.subList(rangeStartPosition, rangeEndPosition)
+            model.items.subList(rangeStartPosition, rangeEndPosition)
         )
         val amountItems = rangeEndPosition - rangeStartPosition
         val removeStartPosition = rangeStartPosition + if(insertPosition > rangeStartPosition) 0 else amountItems
         val removeEndPosition = rangeEndPosition + if(insertPosition > rangeStartPosition) 0 else amountItems
         var counter = 0
         for (idx in removeStartPosition..< removeEndPosition) {
-            newList.removeAt(idx - counter)
+            model.items.removeAt(idx - counter)
             counter++
         }
+        adapter.notifyItemRangeInserted(insertPosition, amountItems)
+        adapter.notifyItemRangeRemoved(removeStartPosition, amountItems)
     }
 
 

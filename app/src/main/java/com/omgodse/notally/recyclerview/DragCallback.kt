@@ -4,10 +4,16 @@ import android.graphics.Canvas
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.omgodse.notally.preferences.ListItemSorting
+import com.omgodse.notally.preferences.Preferences
 import com.omgodse.notally.recyclerview.adapter.MakeListAdapter
 import java.util.Collections
 
-class DragCallback(private val elevation: Float, private val adapter: MakeListAdapter) : ItemTouchHelper.Callback() {
+class DragCallback(
+    private val elevation: Float,
+    private val adapter: MakeListAdapter,
+    private val preferences: Preferences
+) : ItemTouchHelper.Callback() {
 
     override fun isLongPressDragEnabled() = false
 
@@ -22,6 +28,9 @@ class DragCallback(private val elevation: Float, private val adapter: MakeListAd
     override fun onMove(view: RecyclerView, viewHolder: ViewHolder, target: ViewHolder): Boolean {
         val from = viewHolder.adapterPosition
         val to = target.adapterPosition
+        if(adapter.list[to].checked && preferences.listItemSorting.value == ListItemSorting.autoSortByChecked){
+            return false
+        }
         Collections.swap(adapter.list, from, to)
         adapter.notifyItemMoved(from, to)
         return true

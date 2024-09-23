@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.omgodse.notally.databinding.RecyclerListItemBinding
 import com.omgodse.notally.miscellaneous.setOnNextAction
+import com.omgodse.notally.preferences.ListItemSorting
 import com.omgodse.notally.preferences.TextSize
 import com.omgodse.notally.recyclerview.ListItemListener
 import com.omgodse.notally.room.ListItem
@@ -83,7 +84,7 @@ class MakeListVH(
         })
     }
 
-    fun bind(item: ListItem, firstItem: Boolean) {
+    fun bind(item: ListItem, firstItem: Boolean, autoSort: String) {
         binding.EditText.setText(item.body)
         binding.EditText.isEnabled = !item.checked
         binding.CheckBox.isChecked = item.checked
@@ -95,5 +96,11 @@ class MakeListVH(
             if (!binding.SwipeLayout.isClosed)
                 binding.SwipeLayout.post { binding.SwipeLayout.close(false) }
         }
+        if(item.checked && autoSort == ListItemSorting.autoSortByChecked) {
+            binding.DragHandle.visibility = INVISIBLE
+        } else {
+            binding.DragHandle.visibility = VISIBLE
+        }
+
     }
 }
