@@ -31,20 +31,12 @@ class MakeListVH(
         binding.EditText.setTextSize(TypedValue.COMPLEX_UNIT_SP, body)
 
         binding.EditText.setOnNextAction {
-            listener.moveToNext(adapterPosition)
+            listener.add(adapterPosition + 1)
         }
 
         binding.EditText.doAfterTextChanged { text ->
             listener.textChanged(adapterPosition, requireNotNull(text).trim().toString())
         }
-
-        binding.EditText.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
-            if (actionId == EditorInfo.IME_ACTION_NEXT) {
-                listener.add(adapterPosition + 1)
-                return@OnEditorActionListener true
-            }
-            false
-        })
 
         binding.EditText.setOnKeyListener { v, keyCode, event ->
             if (event.action == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_DEL) {
