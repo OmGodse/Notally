@@ -289,27 +289,6 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
         withContext(Dispatchers.IO) { baseNoteDao.updateAudios(id, audios.value) }
     }
 
-    fun sortedItems(sorting: String): ArrayList<ListItem> {
-        val sortedList = items.clone() as ArrayList<ListItem>
-        sortedList.forEachIndexed { idx, it ->
-            if (!it.checked && it.uncheckedPosition == -1) it.uncheckedPosition = idx
-        }
-        if (sorting == ListItemSorting.autoSortByChecked) {
-            sortedList.sortWith(Comparator { i1, i2 ->
-                if (i1.checked && !i2.checked) {
-                    return@Comparator 1
-                }
-                if (!i1.checked && i2.checked) {
-                    return@Comparator -1
-                }
-                return@Comparator i1.uncheckedPosition.compareTo(i2.uncheckedPosition)
-
-            })
-        }
-        return sortedList
-    }
-
-
     private fun getBaseNote(): BaseNote {
         val spans = getFilteredSpans(body)
         val body = this.body.trimEnd().toString()

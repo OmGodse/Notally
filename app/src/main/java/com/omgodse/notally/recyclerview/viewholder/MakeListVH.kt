@@ -189,18 +189,14 @@ class MakeListVH(
             }
         }
         binding.SwipeLayout.isEnabledSwipe = !firstItem
-        if (open) {
-            if (!binding.SwipeLayout.isLeftOpen)
-                binding.SwipeLayout.post {
-                    binding.SwipeLayout.openLeft(false)
-                    binding.SwipeLayout.setOnActionsListener(swipeActionListener)
-                }
-        } else {
-            if (!binding.SwipeLayout.isClosed)
-                binding.SwipeLayout.post {
-                    binding.SwipeLayout.close(false)
-                    binding.SwipeLayout.setOnActionsListener(swipeActionListener)
-                }
+
+        binding.SwipeLayout.post {
+            if (open) {
+                binding.SwipeLayout.openLeft(false)
+            } else {
+                binding.SwipeLayout.close(false)
+            }
+            binding.SwipeLayout.setOnActionsListener(swipeActionListener)
         }
 
     }

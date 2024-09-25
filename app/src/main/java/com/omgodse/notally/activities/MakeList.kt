@@ -9,6 +9,7 @@ import com.omgodse.notally.miscellaneous.Change
 import com.omgodse.notally.miscellaneous.ChangeHistory
 import com.omgodse.notally.miscellaneous.add
 import com.omgodse.notally.miscellaneous.setOnNextAction
+import com.omgodse.notally.preferences.ListItemSorting
 import com.omgodse.notally.preferences.Preferences
 import com.omgodse.notally.recyclerview.ListItemCallback
 import com.omgodse.notally.recyclerview.ListItemListener
@@ -70,7 +71,7 @@ class MakeList : NotallyActivity(Type.LIST) {
         super.setupListeners()
         binding.AddItem.setOnClickListener {
             addListItem()
-            changeHistory.addChange(object: Change {
+            changeHistory.addChange(object : Change {
                 override fun redo() {
                     addListItem()
                 }
@@ -100,7 +101,13 @@ class MakeList : NotallyActivity(Type.LIST) {
                     this@MakeList.moveToNext(position)
                 }
 
-                override fun add(position: Int, initialText: String, checked: Boolean, isChildItem: Boolean?, uncheckedPosition: Int) {
+                override fun add(
+                    position: Int,
+                    initialText: String,
+                    checked: Boolean,
+                    isChildItem: Boolean?,
+                    uncheckedPosition: Int
+                ) {
                     addListItem(position, initialText, checked, isChildItem, uncheckedPosition)
                 }
 
@@ -122,9 +129,9 @@ class MakeList : NotallyActivity(Type.LIST) {
                         adapter.notifyItemChanged(position)
                         return position
                     }
-                    checkWithAllChildren(position, checked)
-                    updateList(model.sortedItems(preferences.listItemSorting.value))
-                    return model.items.indexOf(item)
+                    val (updatedItem, updateList) = checkWithAllChildren(position, checked)
+                    sortAndUpdateItems(updateList)
+                    return model.items.indexOf(updatedItem)
                 }
 
                 override fun isChildItemChanged(position: Int, isChildItem: Boolean) {
@@ -134,10 +141,50 @@ class MakeList : NotallyActivity(Type.LIST) {
             changeHistory
         )
         binding.RecyclerView.adapter = adapter
-        updateList(model.sortedItems(preferences.listItemSorting.value))
+        sortAndUpdateItems()
     }
 
-    private fun updateList(newList: ArrayList<ListItem>) {
+    private fun sortAndUpdateItems(newList: List<ListItem> = model.items) {
+        updateList(sortedItems(newList, preferences.listItemSorting.value))
+    }
+
+    private fun sortedItems(list: List<ListItem>, sorting: String): List<ListItem> {
+        // Make sure every unchecked item has uncheckedPosition set
+        list.forEachIndexed { idx, it ->
+            if (!it.checked && it.uncheckedPosition == -1) it.uncheckedPosition = idx
+        }
+        if (sorting == ListItemSorting.autoSortByChecked) {
+            val sortedParents = list.mapIndexedNotNull { idx, item ->
+                if (item.isChildItem) {
+                    null
+                } else if (idx < list.lastIndex) {
+                    val lastChildIdx = list.subList(idx + 1, list.size)
+                        .indexOfFirst { !it.isChildItem } + idx
+                    val children = list.subList(idx, lastChildIdx + 1)
+                    children
+                } else {
+                    mutableListOf(item)
+                }
+            }.sortedWith(Comparator { i1, i2 ->
+                val parent1 = i1[0]
+                val parent2 = i2[0]
+                if (parent1.checked && !parent2.checked) {
+                    return@Comparator 1
+                }
+                if (!parent1.checked && parent2.checked) {
+                    return@Comparator -1
+                }
+                return@Comparator parent1.uncheckedPosition.compareTo(parent2.uncheckedPosition)
+
+            })
+            val sortedItems =  sortedParents.flatten().toMutableList()
+            sortedItems.forEachIndexed { index, item -> if(!item.checked) item.uncheckedPosition = index }
+            return sortedItems
+        }
+        return list.toMutableList()
+    }
+
+    private fun updateList(newList: List<ListItem>) {
         val diffCallback = ListItemCallback(model.items, newList)
         val diffCourses = DiffUtil.calculateDiff(diffCallback)
         model.items.clear()
@@ -145,11 +192,20 @@ class MakeList : NotallyActivity(Type.LIST) {
         diffCourses.dispatchUpdatesTo(adapter)
     }
 
-    private fun checkWithAllChildren(position: Int, checked: Boolean) {
-        model.items[position].checked = checked
+    /**
+     * Checks item at position and its children (not in-place, returns cloned list)
+     *
+     * @return The updated ListItem + the updated ListItem
+     */
+    private fun checkWithAllChildren(position: Int, checked: Boolean): Pair<ListItem, List<ListItem>> {
+        val items = model.items.toMutableList()
+        val item = items[position].clone() as ListItem
+        items[position] = item
+        item.checked = checked
         var childPosition = position + 1
-        while (childPosition < model.items.size) {
-            val childItem = model.items[childPosition]
+        while (childPosition < items.size) {
+            val childItem = items[childPosition].clone() as ListItem
+            items[childPosition] = childItem
             if (childItem.isChildItem) {
                 if (childItem.checked != checked) {
                     childItem.checked = checked
@@ -159,7 +215,7 @@ class MakeList : NotallyActivity(Type.LIST) {
             }
             childPosition++;
         }
-        adapter.notifyItemRangeChanged(position, childPosition - position)
+        return Pair(item, items)
     }
 
     private fun deleteListItem(position: Int = model.items.size - 1, force: Boolean): Boolean {
@@ -188,7 +244,8 @@ class MakeList : NotallyActivity(Type.LIST) {
         isChildItem: Boolean? = null,
         uncheckedPosition: Int = position
     ) {
-        val actualIsChildItem = isChildItem ?: model.items.isNotEmpty() && model.items.last().isChildItem
+        val actualIsChildItem =
+            isChildItem ?: model.items.isNotEmpty() && model.items.last().isChildItem
         val listItem = ListItem(initialText, checked, actualIsChildItem, uncheckedPosition)
         model.items.add(position, listItem)
         adapter.notifyItemInserted(position)
@@ -216,14 +273,12 @@ class MakeList : NotallyActivity(Type.LIST) {
     }
 
     private fun deleteCheckedItems() {
-        val newList = model.items.clone() as ArrayList<ListItem>
-        newList.removeAll { it.checked }
-        updateList(newList)
+        updateList(model.items.filter { !it.checked }.toMutableList())
     }
 
     private fun checkAllItems(checked: Boolean) {
         model.items.forEachIndexed { idx, item ->
-            if(item.checked != checked) {
+            if (item.checked != checked) {
                 item.checked = checked
                 adapter.notifyItemChanged(idx)
             }
