@@ -45,6 +45,7 @@ import com.omgodse.notally.room.Image
 import com.omgodse.notally.room.Type
 import com.omgodse.notally.viewmodels.NotallyModel
 import com.omgodse.notally.widget.WidgetProvider
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
@@ -56,7 +57,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     internal lateinit var changeHistory: ChangeHistory
 
     override fun finish() {
-        lifecycleScope.launch {
+        lifecycleScope.launch(Dispatchers.Main) {
             model.saveNote()
             WidgetProvider.sendBroadcast(application, longArrayOf(model.id))
             super.finish()
