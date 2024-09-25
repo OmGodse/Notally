@@ -6,6 +6,7 @@ import android.text.Editable
 import android.text.InputType
 import android.text.Spannable
 import android.text.Spanned
+import android.text.TextWatcher
 import android.text.style.StrikethroughSpan
 import android.text.style.StyleSpan
 import android.text.style.TypefaceSpan
@@ -15,9 +16,11 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.widget.CompoundButton.OnCheckedChangeListener
 import android.widget.EditText
 import android.widget.RemoteViews
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.omgodse.notally.activities.TakeNote
 import com.omgodse.notally.room.SpanRepresentation
 import org.ocpsoft.prettytime.PrettyTime
@@ -91,33 +94,180 @@ fun EditText.setOnNextAction(onNext: () -> Unit) {
 
 
 fun Menu.add(title: Int, drawable: Int, onClick: (item: MenuItem) -> Unit): MenuItem {
-    return add(Menu.NONE, title, drawable, onClick)
+    return add(Menu.NONE, title, drawable, MenuItem.SHOW_AS_ACTION_IF_ROOM, onClick)
 }
 
-fun Menu.add(groupId: Int, title: Int, drawable: Int, onClick: (item: MenuItem) -> Unit): MenuItem {
+fun Menu.add(
+    title: Int,
+    drawable: Int,
+    showAsAction: Int,
+    onClick: (item: MenuItem) -> Unit
+): MenuItem {
+    return add(Menu.NONE, title, drawable, showAsAction, onClick)
+}
+
+fun Menu.add(
+    groupId: Int,
+    title: Int,
+    drawable: Int,
+    showAsAction: Int,
+    onClick: (item: MenuItem) -> Unit
+): MenuItem {
     val menuItem = add(groupId, Menu.NONE, Menu.NONE, title)
     menuItem.setIcon(drawable)
     menuItem.setOnMenuItemClickListener { item ->
         onClick(item)
         return@setOnMenuItemClickListener false
     }
-    menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
+    menuItem.setShowAsAction(showAsAction)
     return menuItem
 }
 
-fun TextView.displayFormattedTimestamp(timestamp: Long, dateFormat: String){
+fun TextView.displayFormattedTimestamp(timestamp: Long, dateFormat: String) {
     if (dateFormat != com.omgodse.notally.preferences.DateFormat.none) {
         visibility = View.VISIBLE
         text = formatTimestamp(timestamp, dateFormat)
     } else visibility = View.GONE
 }
 
-fun RemoteViews.displayFormattedTimestamp(id: Int, timestamp: Long, dateFormat: String){
+fun RemoteViews.displayFormattedTimestamp(id: Int, timestamp: Long, dateFormat: String) {
     if (dateFormat != com.omgodse.notally.preferences.DateFormat.none) {
         setViewVisibility(id, View.VISIBLE)
         setTextViewText(id, formatTimestamp(timestamp, dateFormat))
     } else setViewVisibility(id, View.GONE)
 }
+
+val Int.dp: Int
+    get() = (this / Resources.getSystem().displayMetrics.density).roundToInt()
+
+/**
+ * Creates a TextWatcher for an EditText that is part of a list.
+ * Everytime the text is changed, a Change is added to the ChangeHistory.
+ *
+ * @param positionGetter Function to determine the current position of the EditText in the list
+ * (e.g. the current adapterPosition when using RecyclerViewer.Adapter)
+ * @param updateModel Function to update the model. Is called on any text changes and on undo/redo.
+ */
+fun EditText.createListChangeTextWatcher(
+    changeHistory: ChangeHistory,
+    positionGetter: () -> Int,
+    updateModel: (position: Int, text: String) -> Unit
+) = object : TextWatcher {
+    private lateinit var currentTextBefore: String
+
+    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        currentTextBefore = s.toString()
+    }
+
+    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+    }
+
+    override fun afterTextChanged(s: Editable?) {
+        val textBefore = currentTextBefore
+        val textAfter = requireNotNull(s).toString()
+        val itemPosition = positionGetter.invoke()
+        updateModel.invoke(itemPosition, textAfter)
+        changeHistory.addChange(
+            createChange(
+                this,
+                textAfter,
+                textBefore,
+                itemPosition
+            ) { position, text ->
+                updateModel.invoke(position, text)
+            }
+        )
+    }
+}
+
+/**
+ * Creates a TextWatcher for a standalone EditText.
+ * Everytime the text is changed, a Change is added to the ChangeHistory.
+ *
+ * @param updateModel Function to update the model. Is called on any text changes and on undo/redo.
+ */
+fun EditText.createChangeTextWatcher(
+    changeHistory: ChangeHistory,
+    updateModel: (text: String) -> Unit
+) = object : TextWatcher {
+    private lateinit var currentTextBefore: String
+
+    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        currentTextBefore = s.toString()
+    }
+
+    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+    }
+
+    override fun afterTextChanged(s: Editable?) {
+        val textBefore = currentTextBefore
+        val textAfter = requireNotNull(s).toString()
+        updateModel.invoke(textAfter)
+        changeHistory.addChange(
+            createChange(
+                this,
+                textAfter,
+                textBefore,
+                -1
+            ) { _, text ->
+                updateModel.invoke(text)
+            }
+        )
+    }
+}
+
+/**
+ * Creates an OnCheckedChangeListener for CheckBox inside of a RecyclerView with a re-/undo function.
+ * @param updateModel Function to update the underlying model, taking in the position of the item in the list + new isChecked value.
+ * Returns the position of the item in the list after the update.
+ */
+fun RecyclerView.ViewHolder.createChangeOnCheckedListener(
+    changeHistory: ChangeHistory,
+    updateModel: (position: Int, isChecked: Boolean) -> Int
+) = OnCheckedChangeListener { _, isChecked ->
+    val currentPosition = adapterPosition
+    val positionAfter = updateModel.invoke(currentPosition, isChecked)
+    changeHistory.addChange(object : Change {
+        override fun redo() {
+            updateModel.invoke(currentPosition, isChecked)
+        }
+
+        override fun undo() {
+            updateModel.invoke(positionAfter, !isChecked)
+        }
+
+    })
+}
+
+private fun EditText.createChange(
+    listener: TextWatcher,
+    textAfter: String,
+    textBefore: String,
+    position: Int,
+    updateModel: (position: Int, text: String) -> Unit
+) = object : Change {
+
+    private val cursorPosition = selectionStart
+
+    override fun redo() {
+        changeText(position, textAfter, false)
+    }
+
+    override fun undo() {
+        changeText(position, textBefore, true)
+    }
+
+    private fun changeText(position: Int, text: String, isUndo: Boolean) {
+        updateModel.invoke(position, text)
+        removeTextChangedListener(listener)
+        setText(text)
+        requestFocus()
+        setSelection(Math.max(0, cursorPosition - (if (isUndo) 1 else 0)))
+        addTextChangedListener(listener)
+    }
+
+}
+
 
 private fun formatTimestamp(timestamp: Long, dateFormat: String): String {
     val date = Date(timestamp)
@@ -126,6 +276,3 @@ private fun formatTimestamp(timestamp: Long, dateFormat: String): String {
         else -> java.text.DateFormat.getDateInstance(java.text.DateFormat.FULL).format(date)
     }
 }
-
-val Int.dp: Int
-    get() = (this / Resources.getSystem().displayMetrics.density).roundToInt()

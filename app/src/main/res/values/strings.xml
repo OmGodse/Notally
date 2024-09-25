@@ -24,6 +24,8 @@
     <string name="remove_checked_items">Remove checked items</string>
     <string name="check_all_items">Check all items</string>
     <string name="uncheck_all_items">Uncheck all items</string>
+    <string name="redo">Redo</string>
+    <string name="undo">Undo</string>
 
     <!-- Pinning -->
     <string name="pin">Pin</string>

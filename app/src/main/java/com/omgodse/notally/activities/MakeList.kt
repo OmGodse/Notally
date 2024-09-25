@@ -1,12 +1,14 @@
 package com.omgodse.notally.activities
 
 import android.os.Build
+import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
 import androidx.recyclerview.widget.DiffUtil
 import com.omgodse.notally.R
+import com.omgodse.notally.miscellaneous.Change
+import com.omgodse.notally.miscellaneous.ChangeHistory
 import com.omgodse.notally.miscellaneous.add
 import com.omgodse.notally.miscellaneous.setOnNextAction
-import com.omgodse.notally.preferences.ListItemSorting
 import com.omgodse.notally.preferences.Preferences
 import com.omgodse.notally.recyclerview.ListItemCallback
 import com.omgodse.notally.recyclerview.ListItemListener
@@ -20,13 +22,35 @@ class MakeList : NotallyActivity(Type.LIST) {
 
     private lateinit var adapter: MakeListAdapter
 
-    override fun setupToolbar(){
+    override fun setupToolbar() {
         super.setupToolbar()
-        binding.Toolbar.menu.add(1,R.string.remove_checked_items, R.drawable.delete_all) { deleteCheckedItems() }
-        binding.Toolbar.menu.add(1,R.string.check_all_items, R.drawable.checkbox_fill) { checkAllItems(true) }
-        binding.Toolbar.menu.add(1,R.string.uncheck_all_items, R.drawable.checkbox) { checkAllItems(false) }
+        binding.Toolbar.menu.add(
+            1,
+            R.string.remove_checked_items,
+            R.drawable.delete_all,
+            MenuItem.SHOW_AS_ACTION_IF_ROOM
+        ) { deleteCheckedItems() }
+        binding.Toolbar.menu.add(
+            1,
+            R.string.check_all_items,
+            R.drawable.checkbox_fill,
+            MenuItem.SHOW_AS_ACTION_IF_ROOM
+        ) { checkAllItems(true) }
+        binding.Toolbar.menu.add(
+            1,
+            R.string.uncheck_all_items,
+            R.drawable.checkbox,
+            MenuItem.SHOW_AS_ACTION_IF_ROOM
+        ) { checkAllItems(false) }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             binding.Toolbar.menu.setGroupDividerEnabled(true)
+        }
+    }
+
+    override fun initActionManager(undo: MenuItem, redo: MenuItem) {
+        changeHistory = ChangeHistory {
+            undo.isEnabled = changeHistory.canUndo()
+            redo.isEnabled = changeHistory.canRedo()
         }
     }
 
@@ -46,37 +70,39 @@ class MakeList : NotallyActivity(Type.LIST) {
         super.setupListeners()
         binding.AddItem.setOnClickListener {
             addListItem()
+            changeHistory.addChange(object: Change {
+                override fun redo() {
+                    addListItem()
+                }
+
+                override fun undo() {
+                    deleteListItem(force = true)
+                }
+
+            })
         }
     }
 
     override fun setStateFromModel() {
         super.setStateFromModel()
         val elevation = resources.displayMetrics.density * 2
-
-        adapter = MakeListAdapter(model.textSize, elevation, model.items, Preferences.getInstance(application), object : ListItemListener {
-
-            override fun delete(position: Int, force: Boolean) {
-                if(force || position > 0) {
-                    model.items.removeAt(position)
-                    adapter.notifyItemRemoved(position)
-                }
-                if(!force) {
-                    if(position > 0) {
-                        this@MakeList.moveToNext(position - 2)
-                    } else if(model.items.size > 1) {
-                        this@MakeList.moveToNext(position)
-                    }
+        adapter = MakeListAdapter(
+            model.textSize,
+            elevation,
+            model.items,
+            Preferences.getInstance(application),
+            object : ListItemListener {
+                override fun delete(position: Int, force: Boolean): Boolean {
+                    return deleteListItem(position, force)
                 }
 
-            }
+                override fun moveToNext(position: Int) {
+                    this@MakeList.moveToNext(position)
+                }
 
-            override fun moveToNext(position: Int) {
-                this@MakeList.moveToNext(position)
-            }
-
-            override fun add(position: Int) {
-                addListItem(position)
-            }
+                override fun add(position: Int, initialText: String, checked: Boolean, isChildItem: Boolean?, uncheckedPosition: Int) {
+                    addListItem(position, initialText, checked, isChildItem, uncheckedPosition)
+                }
 
                 override fun textChanged(position: Int, text: String) {
                     val item = model.items[position]
@@ -119,11 +145,7 @@ class MakeList : NotallyActivity(Type.LIST) {
         diffCourses.dispatchUpdatesTo(adapter)
     }
 
-    /**
-     * Checks ListItem and all its children.
-     * @return position of the last child ListItem
-     */
-    private fun checkWithAllChildren(position: Int, checked: Boolean): Int {
+    private fun checkWithAllChildren(position: Int, checked: Boolean) {
         model.items[position].checked = checked
         var childPosition = position + 1
         while (childPosition < model.items.size) {
@@ -138,49 +160,54 @@ class MakeList : NotallyActivity(Type.LIST) {
             childPosition++;
         }
         adapter.notifyItemRangeChanged(position, childPosition - position)
-        return childPosition
     }
 
-    private fun moveItemRange(
-        insertPosition: Int,
-        rangeStartPosition: Int,
-        rangeEndPosition: Int,
-        adapter: MakeListAdapter
-    ) {
-        model.items.addAll(
-            insertPosition,
-            model.items.subList(rangeStartPosition, rangeEndPosition)
-        )
-        val amountItems = rangeEndPosition - rangeStartPosition
-        val removeStartPosition =
-            rangeStartPosition + if (insertPosition > rangeStartPosition) 0 else amountItems
-        val removeEndPosition =
-            rangeEndPosition + if (insertPosition > rangeStartPosition) 0 else amountItems
-        var counter = 0
-        for (idx in removeStartPosition..<removeEndPosition) {
-            model.items.removeAt(idx - counter)
-            counter++
+    private fun deleteListItem(position: Int = model.items.size - 1, force: Boolean): Boolean {
+        // TODO: Delete all children as well?
+        var isDeleted = false
+        if (force || position > 0) {
+            model.items.removeAt(position)
+            adapter.notifyItemRemoved(position)
+            isDeleted = true
         }
-        adapter.notifyItemRangeInserted(insertPosition, amountItems)
-        adapter.notifyItemRangeRemoved(removeStartPosition, amountItems)
+        if (!force) {
+            if (position > 0) {
+                this@MakeList.moveToNext(position - 2)
+            } else if (model.items.size > 1) {
+                this@MakeList.moveToNext(position)
+            }
+        }
+        return isDeleted
     }
 
 
-    private fun addListItem(position: Int = model.items.size) {
-        val isChildItem = model.items.isNotEmpty() && model.items.last().isChildItem
-        val listItem = ListItem(String(), false, isChildItem)
+    private fun addListItem(
+        position: Int = model.items.size,
+        initialText: String = "",
+        checked: Boolean = false,
+        isChildItem: Boolean? = null,
+        uncheckedPosition: Int = position
+    ) {
+        val actualIsChildItem = isChildItem ?: model.items.isNotEmpty() && model.items.last().isChildItem
+        val listItem = ListItem(initialText, checked, actualIsChildItem, uncheckedPosition)
         model.items.add(position, listItem)
         adapter.notifyItemInserted(position)
         binding.RecyclerView.post {
-            val viewHolder = binding.RecyclerView.findViewHolderForAdapterPosition(position) as MakeListVH?
-            viewHolder?.binding?.EditText?.requestFocus()
-            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.showSoftInput(viewHolder?.binding?.EditText, InputMethodManager.SHOW_IMPLICIT)
+            val viewHolder =
+                binding.RecyclerView.findViewHolderForAdapterPosition(position) as MakeListVH?
+            if (!checked) {
+                val editText = viewHolder?.binding?.EditText
+                editText?.requestFocus()
+                editText?.setSelection(editText.text.length)
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.showSoftInput(viewHolder?.binding?.EditText, InputMethodManager.SHOW_IMPLICIT)
+            }
         }
     }
 
     private fun moveToNext(currentPosition: Int) {
-        val viewHolder = binding.RecyclerView.findViewHolderForAdapterPosition(currentPosition + 1) as MakeListVH?
+        val viewHolder =
+            binding.RecyclerView.findViewHolderForAdapterPosition(currentPosition + 1) as MakeListVH?
         if (viewHolder != null) {
             if (viewHolder.binding.CheckBox.isChecked) {
                 moveToNext(currentPosition + 1)

@@ -29,6 +29,7 @@ import com.omgodse.notally.R
 import com.omgodse.notally.databinding.ActivityNotallyBinding
 import com.omgodse.notally.databinding.DialogProgressBinding
 import com.omgodse.notally.image.ImageError
+import com.omgodse.notally.miscellaneous.ChangeHistory
 import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.miscellaneous.add
@@ -49,8 +50,10 @@ import kotlinx.coroutines.launch
 abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
     internal lateinit var binding: ActivityNotallyBinding
+
     internal val model: NotallyModel by viewModels()
     internal lateinit var preferences: Preferences
+    internal lateinit var changeHistory: ChangeHistory
 
     override fun finish() {
         lifecycleScope.launch {
@@ -152,13 +155,32 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         }
     }
 
+    protected open fun initActionManager(undo: MenuItem, redo: MenuItem) {
+        changeHistory = ChangeHistory {
+            undo.isEnabled = changeHistory.canUndo()
+            redo.isEnabled = changeHistory.canRedo()
+        }
+    }
+
 
     protected open fun setupToolbar() {
         binding.Toolbar.setNavigationOnClickListener { finish() }
 
         val menu = binding.Toolbar.menu
-        val pin = menu.add(R.string.pin, R.drawable.pin) { item -> pin(item) }
+        val pin = menu.add(R.string.pin, R.drawable.pin, MenuItem.SHOW_AS_ACTION_ALWAYS) { item -> pin(item) }
         bindPinned(pin)
+
+        val undo = menu.add(R.string.undo, R.drawable.undo, MenuItem.SHOW_AS_ACTION_ALWAYS) {
+            changeHistory.undo()
+        }
+        val redo = menu.add(R.string.redo, R.drawable.redo, MenuItem.SHOW_AS_ACTION_ALWAYS) {
+            changeHistory.redo()
+        }
+
+        initActionManager(undo, redo)
+
+        undo.isEnabled = changeHistory.canUndo()
+        redo.isEnabled = changeHistory.canRedo()
 
         menu.add(R.string.share, R.drawable.share) { share() }
         menu.add(R.string.labels, R.drawable.label) { label() }

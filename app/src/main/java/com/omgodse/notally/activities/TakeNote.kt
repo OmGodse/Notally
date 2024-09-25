@@ -3,7 +3,9 @@ package com.omgodse.notally.activities
 import android.content.Intent
 import android.graphics.Typeface
 import android.net.Uri
+import android.text.Editable
 import android.text.Spanned
+import android.text.TextWatcher
 import android.text.style.CharacterStyle
 import android.text.style.StrikethroughSpan
 import android.text.style.StyleSpan
@@ -15,15 +17,18 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.core.text.getSpans
-import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.LinkMovementMethod
 import com.omgodse.notally.R
 import com.omgodse.notally.miscellaneous.add
+import com.omgodse.notally.miscellaneous.createChangeTextWatcher
+import com.omgodse.notally.miscellaneous.createListChangeTextWatcher
 import com.omgodse.notally.miscellaneous.setOnNextAction
 import com.omgodse.notally.room.Type
 
 class TakeNote : NotallyActivity(Type.NOTE) {
+
+    private lateinit var enterBodyTextWatcher: TextWatcher
 
     override fun configureUI() {
         binding.EnterTitle.setOnNextAction {
@@ -40,14 +45,21 @@ class TakeNote : NotallyActivity(Type.NOTE) {
 
     override fun setupListeners() {
         super.setupListeners()
-        binding.EnterBody.doAfterTextChanged { text ->
-            model.body = requireNotNull(text)
+        enterBodyTextWatcher = binding.EnterBody.createChangeTextWatcher(changeHistory) { text ->
+            model.body = Editable.Factory.getInstance().newEditable(text)
         }
+        binding.EnterBody.addTextChangedListener(enterBodyTextWatcher)
     }
 
     override fun setStateFromModel() {
         super.setStateFromModel()
+        updateEditText()
+    }
+
+    private fun updateEditText() {
+        binding.EnterBody.removeTextChangedListener(enterBodyTextWatcher)
         binding.EnterBody.text = model.body
+        binding.EnterBody.addTextChangedListener(enterBodyTextWatcher)
     }
 
 
@@ -120,7 +132,8 @@ class TakeNote : NotallyActivity(Type.NOTE) {
                                 try {
                                     startActivity(intent)
                                 } catch (exception: Exception) {
-                                    Toast.makeText(this, R.string.cant_open_link, Toast.LENGTH_LONG).show()
+                                    Toast.makeText(this, R.string.cant_open_link, Toast.LENGTH_LONG)
+                                        .show()
                                 }
                             }
                         }
@@ -151,7 +164,11 @@ class TakeNote : NotallyActivity(Type.NOTE) {
         }
     }
 
-    private fun ifBothNotNullAndInvalid(start: Int?, end: Int?, function: (start: Int, end: Int) -> Unit) {
+    private fun ifBothNotNullAndInvalid(
+        start: Int?,
+        end: Int?,
+        function: (start: Int, end: Int) -> Unit
+    ) {
         if (start != null && start != -1 && end != null && end != -1) {
             function.invoke(start, end)
         }
