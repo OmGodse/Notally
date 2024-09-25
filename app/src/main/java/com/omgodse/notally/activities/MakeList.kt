@@ -8,6 +8,7 @@ import com.omgodse.notally.miscellaneous.add
 import com.omgodse.notally.miscellaneous.setOnNextAction
 import com.omgodse.notally.preferences.ListItemSorting
 import com.omgodse.notally.preferences.Preferences
+import com.omgodse.notally.recyclerview.ListItemCallback
 import com.omgodse.notally.recyclerview.ListItemListener
 import com.omgodse.notally.recyclerview.adapter.MakeListAdapter
 import com.omgodse.notally.recyclerview.viewholder.MakeListVH
@@ -77,39 +78,37 @@ class MakeList : NotallyActivity(Type.LIST) {
                 addListItem(position)
             }
 
-            override fun textChanged(position: Int, text: String) {
-                model.items[position].body = text
-            }
-
-            override fun checkedChanged(position: Int, checked: Boolean) {
-                val item = model.items[position]
-                if(!item.isChildItem) {
-                    if(preferences.listItemSorting.value == ListItemSorting.autoSortByChecked) {
-                        val lastChildPosition = checkWithAllChildren(position, checked)
-                        var firstCheckedItemPosition =
-                                model.items.indexOfFirst { it != item && it.checked && !it.isChildItem }
-                            if (firstCheckedItemPosition == -1) {
-                                firstCheckedItemPosition = model.items.size
-                            }
-                            moveItemRange(
-                                firstCheckedItemPosition,
-                                position,
-                                lastChildPosition,
-                                adapter
-                            )
-                    }
-                } else {
-                    item.checked = checked
-                    adapter.notifyItemChanged(position)
+                override fun textChanged(position: Int, text: String) {
+                    val item = model.items[position]
+                    item.body = text
                 }
-            }
 
-            override fun isChildItemChanged(position: Int, isChildItem: Boolean) {
-                model.items[position].isChildItem = isChildItem
-            }
-        })
+                override fun checkedChanged(
+                    position: Int,
+                    checked: Boolean
+                ): Int {
+                    val item = model.items[position]
+                    if (item.checked == checked) {
+                        return position
+                    }
+                    if (item.isChildItem) {
+                        item.checked = checked
+                        adapter.notifyItemChanged(position)
+                        return position
+                    }
+                    checkWithAllChildren(position, checked)
+                    updateList(model.sortedItems(preferences.listItemSorting.value))
+                    return model.items.indexOf(item)
+                }
 
+                override fun isChildItemChanged(position: Int, isChildItem: Boolean) {
+                    model.items[position].isChildItem = isChildItem
+                }
+            },
+            changeHistory
+        )
         binding.RecyclerView.adapter = adapter
+        updateList(model.sortedItems(preferences.listItemSorting.value))
     }
 
     private fun updateList(newList: ArrayList<ListItem>) {
@@ -132,13 +131,13 @@ class MakeList : NotallyActivity(Type.LIST) {
             if (childItem.isChildItem) {
                 if (childItem.checked != checked) {
                     childItem.checked = checked
-                    adapter.notifyItemChanged(childPosition)
                 }
             } else {
                 break;
             }
             childPosition++;
         }
+        adapter.notifyItemRangeChanged(position, childPosition - position)
         return childPosition
     }
 
@@ -153,10 +152,12 @@ class MakeList : NotallyActivity(Type.LIST) {
             model.items.subList(rangeStartPosition, rangeEndPosition)
         )
         val amountItems = rangeEndPosition - rangeStartPosition
-        val removeStartPosition = rangeStartPosition + if(insertPosition > rangeStartPosition) 0 else amountItems
-        val removeEndPosition = rangeEndPosition + if(insertPosition > rangeStartPosition) 0 else amountItems
+        val removeStartPosition =
+            rangeStartPosition + if (insertPosition > rangeStartPosition) 0 else amountItems
+        val removeEndPosition =
+            rangeEndPosition + if (insertPosition > rangeStartPosition) 0 else amountItems
         var counter = 0
-        for (idx in removeStartPosition..< removeEndPosition) {
+        for (idx in removeStartPosition..<removeEndPosition) {
             model.items.removeAt(idx - counter)
             counter++
         }
@@ -194,7 +195,11 @@ class MakeList : NotallyActivity(Type.LIST) {
     }
 
     private fun checkAllItems(checked: Boolean) {
-        model.items.forEach { it.checked = checked }
-        adapter.notifyDataSetChanged()
+        model.items.forEachIndexed { idx, item ->
+            if(item.checked != checked) {
+                item.checked = checked
+                adapter.notifyItemChanged(idx)
+            }
+        }
     }
 }

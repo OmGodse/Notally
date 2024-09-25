@@ -29,6 +29,7 @@ import com.omgodse.notally.miscellaneous.IO
 import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.miscellaneous.applySpans
 import com.omgodse.notally.preferences.BetterLiveData
+import com.omgodse.notally.preferences.ListItemSorting
 import com.omgodse.notally.preferences.Preferences
 import com.omgodse.notally.room.Audio
 import com.omgodse.notally.room.BaseNote
@@ -106,7 +107,8 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
 
                 val retriever = MediaMetadataRetriever()
                 retriever.setDataSource(final.path)
-                val duration = requireNotNull(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION))
+                val duration =
+                    requireNotNull(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION))
                 Audio(name, duration.toLong(), System.currentTimeMillis())
             }
             val copy = ArrayList(audios.value)
@@ -287,12 +289,46 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
         withContext(Dispatchers.IO) { baseNoteDao.updateAudios(id, audios.value) }
     }
 
+    fun sortedItems(sorting: String): ArrayList<ListItem> {
+        val sortedList = items.clone() as ArrayList<ListItem>
+        sortedList.forEachIndexed { idx, it ->
+            if (!it.checked && it.uncheckedPosition == -1) it.uncheckedPosition = idx
+        }
+        if (sorting == ListItemSorting.autoSortByChecked) {
+            sortedList.sortWith(Comparator { i1, i2 ->
+                if (i1.checked && !i2.checked) {
+                    return@Comparator 1
+                }
+                if (!i1.checked && i2.checked) {
+                    return@Comparator -1
+                }
+                return@Comparator i1.uncheckedPosition.compareTo(i2.uncheckedPosition)
+
+            })
+        }
+        return sortedList
+    }
+
 
     private fun getBaseNote(): BaseNote {
         val spans = getFilteredSpans(body)
         val body = this.body.trimEnd().toString()
         val items = this.items.filter { item -> item.body.isNotEmpty() }
-        return BaseNote(id, type, folder, color, title, pinned, timestamp, labels, body, spans, items, images.value, audios.value)
+        return BaseNote(
+            id,
+            type,
+            folder,
+            color,
+            title,
+            pinned,
+            timestamp,
+            labels,
+            body,
+            spans,
+            items,
+            images.value,
+            audios.value
+        )
     }
 
     private fun getFilteredSpans(spanned: Spanned): ArrayList<SpanRepresentation> {
