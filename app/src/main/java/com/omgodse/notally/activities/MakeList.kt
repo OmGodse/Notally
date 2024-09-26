@@ -8,6 +8,7 @@ import com.omgodse.notally.R
 import com.omgodse.notally.miscellaneous.Change
 import com.omgodse.notally.miscellaneous.ChangeHistory
 import com.omgodse.notally.miscellaneous.add
+import com.omgodse.notally.miscellaneous.moveRangeAndNotify
 import com.omgodse.notally.miscellaneous.setOnNextAction
 import com.omgodse.notally.preferences.ListItemSorting
 import com.omgodse.notally.preferences.Preferences
@@ -93,6 +94,7 @@ class MakeList : NotallyActivity(Type.LIST) {
             model.items,
             Preferences.getInstance(application),
             object : ListItemListener {
+
                 override fun delete(position: Int, force: Boolean): Boolean {
                     return deleteListItem(position, force)
                 }
@@ -101,14 +103,118 @@ class MakeList : NotallyActivity(Type.LIST) {
                     this@MakeList.moveToNext(position)
                 }
 
+                override fun swap(positionFrom: Int, positionTo: Int): Boolean {
+                    if (positionFrom < 0 || positionTo < 0)
+                        return false
+                    // Disallow dragging into item's own children or unchecked item under any checked item (if auto-sort enabled)
+                    val itemTo = model.items[positionTo]
+                    val itemFrom = model.items[positionFrom]
+                    if (
+                        !itemFrom.isChildItem && itemFrom.children.contains(itemTo)
+                        || itemTo.checked && preferences.listItemSorting.value == ListItemSorting.autoSortByChecked
+                    ) {
+                        return false
+                    }
+                    if (!itemFrom.checked) {
+                        itemFrom.uncheckedPosition = positionTo
+                    }
+                    if (!itemTo.checked) {
+                        itemTo.uncheckedPosition = positionFrom
+                    }
+                    model.items.moveRangeAndNotify(
+                        positionFrom,
+                        itemFrom.children.size + 1,
+                        positionTo,
+                        adapter
+                    )
+
+                    return true
+                }
+
+                override fun move(positionFrom: Int, positionTo: Int, byDrag: Boolean): Boolean {
+                    val itemTo = model.items[positionTo]
+                    var itemFrom = model.items[positionFrom]
+
+                    if (byDrag) {
+                        // have already been swapped
+                        itemFrom = itemTo
+                    } else {
+                        model.items.moveRangeAndNotify(
+                            positionFrom,
+                            itemFrom.children.size + 1,
+                            positionTo,
+                            adapter
+                        )
+                    }
+                    val isChildItemBefore = itemFrom.isChildItem
+
+                    if ((positionTo < positionFrom && (!byDrag && itemTo.isChildItem || byDrag && isBeforeChildItem(
+                            positionTo
+                        )))
+                        || (positionTo > positionFrom && isBeforeChildItem(positionTo))
+                    ) {
+                        val movedPosition = if (byDrag) positionTo else positionFrom
+                        for (position in movedPosition..movedPosition + itemFrom.children.size) {
+                            updateChildren(position, true)
+                            adapter.notifyItemChanged(position)
+                        }
+                    }
+                    if (positionTo == 0 && itemFrom.isChildItem) {
+                        itemFrom.isChildItem = false
+                        adapter.notifyItemChanged(positionTo)
+                    }
+
+                    return isChildItemBefore
+                }
+
+                override fun revertMove(
+                    positionFrom: Int,
+                    positionTo: Int,
+                    isChildItemBefore: Boolean?
+                ) {
+                    val itemTo = model.items[positionTo]
+
+                    val actualPositionFrom = positionFrom + itemTo.children.size
+                    model.items.moveRangeAndNotify(
+                        positionTo,
+                        itemTo.children.size + 1,
+                        actualPositionFrom,
+                        adapter
+                    )
+
+                    if (isChildItemBefore != null) {
+                        model.items[positionFrom].isChildItem = isChildItemBefore
+                        adapter.notifyItemChanged(positionFrom)
+                    }
+
+                    itemTo.children.forEachIndexed { index, item ->
+                        item.isChildItem = true
+                        adapter.notifyItemChanged(positionTo + index)
+                    }
+
+                    return
+                }
+
+                private fun isBeforeChildItem(positionTo: Int): Boolean {
+                    return positionTo < model.items.lastIndex && model.items[positionTo + 1].isChildItem
+                }
+
                 override fun add(
                     position: Int,
                     initialText: String,
                     checked: Boolean,
                     isChildItem: Boolean?,
-                    uncheckedPosition: Int
+                    uncheckedPosition: Int?,
+                    children: MutableList<ListItem>
                 ) {
-                    addListItem(position, initialText, checked, isChildItem, uncheckedPosition)
+                    addListItem(
+                        position,
+                        initialText,
+                        checked,
+                        isChildItem,
+                        uncheckedPosition,
+                        children
+                    )
                 }
 
                 override fun textChanged(position: Int, text: String) {
@@ -135,13 +241,33 @@ class MakeList : NotallyActivity(Type.LIST) {
                 }
 
                 override fun isChildItemChanged(position: Int, isChildItem: Boolean) {
-                    model.items[position].isChildItem = isChildItem
+                    updateChildren(position, isChildItem)
                 }
             },
             changeHistory
         )
         binding.RecyclerView.adapter = adapter
         sortAndUpdateItems()
+    }
+
+    private fun updateChildren(position: Int, isChildItem: Boolean) {
+        val item = model.items[position]
+        item.isChildItem = isChildItem
+        val parentAndIndex = findParentItem(position) ?: return
+        if (isChildItem) {
+            parentAndIndex.first.children.add(parentAndIndex.second, item)
+        } else {
+            parentAndIndex.first.children.remove(item)
+        }
+    }
+
+    private fun findParentItem(childPosition: Int): Pair<ListItem, Int>? {
+        (childPosition - 1 downTo 0).forEachIndexed { index, position ->
+            if (!model.items[position].isChildItem) {
+                return Pair(model.items[position], index)
+            }
+        }
+        return null
     }
 
     private fun sortAndUpdateItems(newList: List<ListItem> = model.items) {
@@ -197,7 +323,10 @@ class MakeList : NotallyActivity(Type.LIST) {
      *
      * @return The updated ListItem + the updated ListItem
      */
-    private fun checkWithAllChildren(position: Int, checked: Boolean): Pair<ListItem, List<ListItem>> {
+    private fun checkWithAllChildren(
+        position: Int,
+        checked: Boolean
+    ): Pair<ListItem, List<ListItem>> {
         val items = model.items.toMutableList()
         val item = items[position].clone() as ListItem
         items[position] = item
@@ -242,11 +371,13 @@ class MakeList : NotallyActivity(Type.LIST) {
         initialText: String = "",
         checked: Boolean = false,
         isChildItem: Boolean? = null,
-        uncheckedPosition: Int = position
+        uncheckedPosition: Int? = position,
+        children: MutableList<ListItem> = mutableListOf()
     ) {
         val actualIsChildItem =
             isChildItem ?: model.items.isNotEmpty() && model.items.last().isChildItem
-        val listItem = ListItem(initialText, checked, actualIsChildItem, uncheckedPosition)
+        val listItem =
+            ListItem(initialText, checked, actualIsChildItem, uncheckedPosition, children)
         model.items.add(position, listItem)
         adapter.notifyItemInserted(position)
         binding.RecyclerView.post {

@@ -239,6 +239,40 @@ fun RecyclerView.ViewHolder.createChangeOnCheckedListener(
     })
 }
 
+fun <T> MutableList<T>.moveRangeAndNotify(
+    fromIndex: Int,
+    itemCount: Int,
+    toIndex: Int,
+    adapter: RecyclerView.Adapter<*>
+) {
+    if (fromIndex == toIndex || itemCount <= 0) return // No move required
+
+    // Move items internally in the list
+    if (fromIndex < toIndex) {
+        // Move range forwards
+        val itemsToMove = this.subList(fromIndex, fromIndex + itemCount)
+        val copy = itemsToMove.toList() // Create a copy since subList is a view
+        this.removeAll(copy)
+        this.addAll(toIndex - itemCount + 1, copy)
+
+        // Notify adapter of item movements (from back to front)
+        for (i in itemCount - 1 downTo 0) {
+            adapter.notifyItemMoved(fromIndex + i, toIndex + i - (itemCount - 1))
+        }
+    } else {
+        // Move range backwards
+        val itemsToMove = this.subList(fromIndex, fromIndex + itemCount)
+        val copy = itemsToMove.toList()
+        this.removeAll(copy)
+        this.addAll(toIndex, copy)
+
+        // Notify adapter of item movements (from front to back)
+        for (i in 0 until itemCount) {
+            adapter.notifyItemMoved(fromIndex + i, toIndex + i)
+        }
+    }
+}
+
 private fun EditText.createChange(
     listener: TextWatcher,
     textAfter: String,

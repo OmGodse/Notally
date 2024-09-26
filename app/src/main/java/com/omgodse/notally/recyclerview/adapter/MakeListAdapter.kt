@@ -21,7 +21,7 @@ class MakeListAdapter(
     private val changeHistory: ChangeHistory
 ) : RecyclerView.Adapter<MakeListVH>() {
 
-    private val callback = DragCallback(elevation, this, changeHistory, preferences)
+    private val callback = DragCallback(elevation, this, listener, changeHistory)
     private val touchHelper = ItemTouchHelper(callback)
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {

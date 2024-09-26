@@ -85,7 +85,7 @@ object Converters {
             val checked = jsonObject.getBoolean("checked")
             val isChildItem = jsonObject.getSafeBoolean("isChildItem")
             val uncheckedPosition = jsonObject.getSafeInt("uncheckedPosition")
-            ListItem(body, checked, isChildItem, uncheckedPosition)
+            ListItem(body, checked, isChildItem, uncheckedPosition, mutableListOf())
         }
     }
 
@@ -126,11 +126,11 @@ object Converters {
         }
     }
 
-    private fun JSONObject.getSafeInt(name: String): Int {
+    private fun JSONObject.getSafeInt(name: String): Int? {
         return try {
             getInt(name)
         } catch (exception: JSONException) {
-            -1
+            null
         }
     }
 

@@ -1,22 +1,28 @@
 package com.omgodse.notally.recyclerview
 
 import android.graphics.Canvas
+import android.util.Log
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.omgodse.notally.miscellaneous.ChangeHistory
 import com.omgodse.notally.miscellaneous.Change
-import com.omgodse.notally.preferences.ListItemSorting
+import com.omgodse.notally.miscellaneous.ChangeHistory
 import com.omgodse.notally.preferences.Preferences
 import com.omgodse.notally.recyclerview.adapter.MakeListAdapter
-import java.util.Collections
 
 class DragCallback(
     private val elevation: Float,
     private val adapter: MakeListAdapter,
-    private val changeHistory: ChangeHistory,
-    private val preferences: Preferences
+    private val listener: ListItemListener,
+    private val changeHistory: ChangeHistory
 ) : ItemTouchHelper.Callback() {
+
+    private var lastState = ItemTouchHelper.ACTION_STATE_IDLE
+    private var lastIsCurrentlyActive = false
+    private var childViewHolders: List<ViewHolder> = mutableListOf()
+
+    private var fromPosition: Int = -1
+    private var toPosition: Int = -1
 
     override fun isLongPressDragEnabled() = false
 
@@ -31,33 +37,20 @@ class DragCallback(
     override fun onMove(view: RecyclerView, viewHolder: ViewHolder, target: ViewHolder): Boolean {
         val from = viewHolder.adapterPosition
         val to = target.adapterPosition
-        // Disallow dragging unchecked item under any checked item
-        if (adapter.list[to].checked && preferences.listItemSorting.value == ListItemSorting.autoSortByChecked) {
-            return false
+        if (fromPosition == -1) {
+            fromPosition = from
         }
-        swapItem(from, to)
-        changeHistory.addChange(object : Change {
-            override fun redo() {
-                swapItem(from, to)
-            }
-
-            override fun undo() {
-                swapItem(to, from)
-            }
-
-        })
-        // TODO: fix children beneath moved object
-        return true
+        toPosition = to
+        return listener.swap(from, to)
     }
 
-    private fun swapItem(from: Int, to: Int) {
-        if (!adapter.list[from].checked) {
-            adapter.list[from].uncheckedPosition = to
+    override fun onSelectedChanged(viewHolder: ViewHolder?, actionState: Int) {
+        if (lastState != actionState && actionState == ItemTouchHelper.ACTION_STATE_IDLE) {
+            onDragEnd()
         }
-        Collections.swap(adapter.list, from, to)
-        adapter.notifyItemMoved(from, to)
+        lastState = actionState
+        super.onSelectedChanged(viewHolder, actionState)
     }
-
 
     override fun onChildDraw(
         c: Canvas,
@@ -73,11 +66,73 @@ class DragCallback(
         if (isCurrentlyActive) {
             viewHolder.itemView.elevation = elevation
         }
+        if (lastIsCurrentlyActive != isCurrentlyActive && isCurrentlyActive) {
+            if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
+                onDragStart(viewHolder, recyclerView)
+            }
+        }
+        lastIsCurrentlyActive = isCurrentlyActive
     }
+
+    private fun clearItemView(viewHolder: ViewHolder) {
+        viewHolder.itemView.animate()
+            .translationY(-100f)
+            .alpha(0f)
+            .setDuration(300)
+            .start()
+    }
+
+    private fun showItemView(viewHolder: ViewHolder) {
+        viewHolder.itemView.animate()
+            .alpha(1f)
+            .setDuration(300)
+            .start()
+    }
+
+    private fun onDragStart(viewHolder: ViewHolder, recyclerView: RecyclerView) {
+        Log.d(TAG, "onDragStart")
+        fromPosition = -1
+        toPosition = -1
+        val item = adapter.list[viewHolder.adapterPosition]
+        if (!item.isChildItem) {
+            childViewHolders = item.children.mapIndexedNotNull { index, listItem ->
+                recyclerView.findViewHolderForAdapterPosition(viewHolder.adapterPosition + index + 1)
+            }
+            childViewHolders.forEach { clearItemView(it) }
+        }
+
+    }
+
+    private fun onDragEnd() {
+        Log.d(TAG, "onDragEnd: from: $fromPosition to: $toPosition")
+        childViewHolders.forEach { showItemView(it) }
+        if (fromPosition == toPosition) {
+            return
+        }
+        val isChildItemBefore = listener.move(fromPosition, toPosition, true)
+        changeHistory.addChange(object : Change {
+            override fun redo() {
+                listener.move(fromPosition, toPosition, false)
+            }
+
+            override fun undo() {
+                listener.revertMove(fromPosition, toPosition, isChildItemBefore)
+            }
+
+            override fun toString(): String {
+                return "MoveChange from: $fromPosition to: $toPosition isChildItemBefore: $isChildItemBefore"
+            }
+        })
+    }
+
 
     override fun clearView(recyclerView: RecyclerView, viewHolder: ViewHolder) {
         viewHolder.itemView.translationX = 0f
         viewHolder.itemView.translationY = 0f
         viewHolder.itemView.elevation = 0f
+    }
+
+    companion object {
+        private const val TAG = "DragCallback"
     }
 }

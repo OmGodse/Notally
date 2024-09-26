@@ -101,7 +101,7 @@ object XMLUtils {
         var body = String()
         var checked = false
         var isChildItem = false
-        var uncheckedPosition = -1
+        var uncheckedPosition: Int? = null
 
         // TODO: migration required?
         while (parser.next() != XmlPullParser.END_DOCUMENT) {
@@ -110,7 +110,7 @@ object XMLUtils {
                     "text" -> body = parser.nextText()
                     "checked" -> checked = parser.nextText()?.toBoolean() ?: false
                     "isChildItem" -> isChildItem = parser.nextText()?.toBoolean() ?: false
-                    "uncheckedPosition" -> uncheckedPosition = parser.nextText()?.toInt() ?: -1
+                    "uncheckedPosition" -> uncheckedPosition = parser.nextText()?.toInt()
                 }
             } else if (parser.eventType == XmlPullParser.END_TAG) {
                 if (parser.name == rootTag) {
@@ -119,7 +119,7 @@ object XMLUtils {
             }
         }
 
-        return ListItem(body, checked, isChildItem, uncheckedPosition)
+        return ListItem(body, checked, isChildItem, uncheckedPosition, mutableListOf())
     }
 
     private fun parseSpan(parser: XmlPullParser): SpanRepresentation {
