@@ -37,14 +37,18 @@ class MakeListVH(
 
         binding.EditText.setOnNextAction {
             val position = adapterPosition + 1
-            listener.add(position)
+            listener.add(position, children = mutableListOf())
             changeHistory.addChange(object : Change {
                 override fun redo() {
-                    listener.add(position)
+                    listener.add(position, children = mutableListOf())
                 }
 
                 override fun undo() {
                     listener.delete(position, true)
+                }
+
+                override fun toString(): String {
+                    return "Add at position: $position"
                 }
 
             })
@@ -105,8 +109,13 @@ class MakeListVH(
                         text,
                         checked,
                         isChildItem,
-                        item.uncheckedPosition
+                        item.uncheckedPosition,
+                        mutableListOf() // TODO make listener.delete return removed object
                     )
+                }
+
+                override fun toString(): String {
+                    return "DeleteChange at $positionBeforeDelete"
                 }
             })
         }
@@ -134,8 +143,13 @@ class MakeListVH(
                                 text,
                                 checked,
                                 item.isChildItem,
-                                item.uncheckedPosition
+                                item.uncheckedPosition,
+                                mutableListOf() // TODO make listener.delete return removed object
                             )
+                        }
+
+                        override fun toString(): String {
+                            return "DeleteChange at $positionBeforeDelete"
                         }
 
                     })
@@ -169,6 +183,10 @@ class MakeListVH(
                         listener.isChildItemChanged(position, false)
                         updateSwipe(false, firstItem)
                     }
+
+                    override fun toString(): String {
+                        return "SwipeChange at $position true"
+                    }
                 })
             }
 
@@ -184,6 +202,10 @@ class MakeListVH(
                     override fun undo() {
                         listener.isChildItemChanged(position, true)
                         updateSwipe(true, firstItem)
+                    }
+
+                    override fun toString(): String {
+                        return "SwipeChange at $position false"
                     }
                 })
             }

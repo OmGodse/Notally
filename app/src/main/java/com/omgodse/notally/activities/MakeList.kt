@@ -81,6 +81,10 @@ class MakeList : NotallyActivity(Type.LIST) {
                     deleteListItem(force = true)
                 }
 
+                override fun toString(): String {
+                    return "Add"
+                }
+
             })
         }
     }

@@ -236,6 +236,10 @@ fun RecyclerView.ViewHolder.createChangeOnCheckedListener(
             updateModel.invoke(positionAfter, !isChecked)
         }
 
+        override fun toString(): String {
+            return "CheckedChange at $currentPosition checked: $isChecked"
+        }
+
     })
 }
 
@@ -298,6 +302,10 @@ private fun EditText.createChange(
         requestFocus()
         setSelection(Math.max(0, cursorPosition - (if (isUndo) 1 else 0)))
         addTextChangedListener(listener)
+    }
+
+    override fun toString(): String {
+        return "CheckedText at $position from: $textBefore to: $textAfter"
     }
 
 }
