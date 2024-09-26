@@ -50,6 +50,8 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
 }
 
 dependencies {
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'junit:junit:4.12'
     final def navVersion = "2.3.5"
     final def roomVersion = "2.6.1"
 
@@ -69,4 +71,9 @@ dependencies {
 
     implementation "com.github.bumptech.glide:glide:4.15.1"
     implementation "com.davemorrissey.labs:subsampling-scale-image-view-androidx:3.10.0"
+
+    testImplementation "junit:junit:4.13.2"
+    testImplementation "androidx.test:core:1.6.1"
+    testImplementation "org.mockito:mockito-core:5.13.0"
+    testImplementation "org.mockito.kotlin:mockito-kotlin:5.4.0"
 }
