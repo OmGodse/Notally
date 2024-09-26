@@ -234,10 +234,16 @@ class MakeList : NotallyActivity(Type.LIST) {
                     if (item.checked == checked) {
                         return position
                     }
+                    if (checked) {
+                        item.uncheckedPosition = position
+                    }
                     if (item.isChildItem) {
                         item.checked = checked
                         adapter.notifyItemChanged(position)
                         return position
+                    }
+                    if(!checked) {
+                        item.uncheckedPosition = item.uncheckedPosition?.dec()
                     }
                     val (updatedItem, updateList) = checkWithAllChildren(position, checked)
                     sortAndUpdateItems(updateList)
@@ -281,17 +287,28 @@ class MakeList : NotallyActivity(Type.LIST) {
     private fun sortedItems(list: List<ListItem>, sorting: String): List<ListItem> {
         // Make sure every unchecked item has uncheckedPosition set
         list.forEachIndexed { idx, it ->
-            if (!it.checked && it.uncheckedPosition == -1) it.uncheckedPosition = idx
+            if (!it.checked && it.uncheckedPosition == null) it.uncheckedPosition = idx
         }
         if (sorting == ListItemSorting.autoSortByChecked) {
-            val sortedParents = list.mapIndexedNotNull { idx, item ->
+            // Sorted by parents
+            val sortedGroups = list.mapIndexedNotNull { idx, item ->
                 if (item.isChildItem) {
                     null
                 } else if (idx < list.lastIndex) {
-                    val lastChildIdx = list.subList(idx + 1, list.size)
-                        .indexOfFirst { !it.isChildItem } + idx
-                    val children = list.subList(idx, lastChildIdx + 1)
-                    children
+                    val itemsBelow = list.subList(idx + 1, list.size)
+                    var nextParentIdx = itemsBelow.indexOfFirst { !it.isChildItem }
+                    if (nextParentIdx == -1) {
+                        // there is only children below it
+                        nextParentIdx = list.lastIndex
+                    } else {
+                        nextParentIdx += idx
+                    }
+                    val items = list.subList(idx, nextParentIdx + 1)
+                    if (items.size > 1) {
+                        items[0].children =
+                            list.subList(idx + 1, nextParentIdx + 1).toMutableList()
+                    }
+                    items
                 } else {
                     mutableListOf(item)
                 }
@@ -304,11 +321,13 @@ class MakeList : NotallyActivity(Type.LIST) {
                 if (!parent1.checked && parent2.checked) {
                     return@Comparator -1
                 }
-                return@Comparator parent1.uncheckedPosition.compareTo(parent2.uncheckedPosition)
+                return@Comparator parent1.uncheckedPosition!!.compareTo(parent2.uncheckedPosition!!)
 
             })
-            val sortedItems =  sortedParents.flatten().toMutableList()
-            sortedItems.forEachIndexed { index, item -> if(!item.checked) item.uncheckedPosition = index }
+            val sortedItems = sortedGroups.flatten().toMutableList()
+            sortedItems.forEachIndexed { index, item ->
+                if (!item.checked) item.uncheckedPosition = index
+            }
             return sortedItems
         }
         return list.toMutableList()
