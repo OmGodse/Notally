@@ -7,13 +7,12 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.omgodse.notally.miscellaneous.Change
 import com.omgodse.notally.miscellaneous.ChangeHistory
-import com.omgodse.notally.preferences.Preferences
 import com.omgodse.notally.recyclerview.adapter.MakeListAdapter
 
 class DragCallback(
     private val elevation: Float,
     private val adapter: MakeListAdapter,
-    private val listener: ListItemListener,
+    private val listManager: ListManager,
     private val changeHistory: ChangeHistory
 ) : ItemTouchHelper.Callback() {
 
@@ -41,7 +40,7 @@ class DragCallback(
             fromPosition = from
         }
         toPosition = to
-        return listener.swap(from, to)
+        return listManager.swap(from, to)
     }
 
     override fun onSelectedChanged(viewHolder: ViewHolder?, actionState: Int) {
@@ -94,7 +93,7 @@ class DragCallback(
         fromPosition = -1
         toPosition = -1
         val item = adapter.list[viewHolder.adapterPosition]
-        if (!item.isChildItem) {
+        if (!item.isChild) {
             childViewHolders = item.children.mapIndexedNotNull { index, listItem ->
                 recyclerView.findViewHolderForAdapterPosition(viewHolder.adapterPosition + index + 1)
             }
@@ -109,18 +108,18 @@ class DragCallback(
         if (fromPosition == toPosition) {
             return
         }
-        val isChildItemBefore = listener.move(fromPosition, toPosition, true)
+        val isChildBefore = listManager.move(fromPosition, toPosition, true)
         changeHistory.addChange(object : Change {
             override fun redo() {
-                listener.move(fromPosition, toPosition, false)
+                listManager.move(fromPosition, toPosition, false)
             }
 
             override fun undo() {
-                listener.revertMove(fromPosition, toPosition, isChildItemBefore)
+                listManager.revertMove(fromPosition, toPosition, isChildBefore)
             }
 
             override fun toString(): String {
-                return "MoveChange from: $fromPosition to: $toPosition isChildItemBefore: $isChildItemBefore"
+                return "MoveChange from: $fromPosition to: $toPosition isChildBefore: $isChildBefore"
             }
         })
     }

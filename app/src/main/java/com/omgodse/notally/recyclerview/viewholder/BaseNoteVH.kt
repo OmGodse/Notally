@@ -119,7 +119,7 @@ class BaseNoteVH(
                         view.text = item.body
                         handleChecked(view, item.checked)
                         view.visibility = View.VISIBLE
-                        if (item.isChildItem) {
+                        if (item.isChild) {
                             val layoutParams = view.layoutParams as LinearLayout.LayoutParams
                             layoutParams.marginStart = 150.dp
                             view.layoutParams = layoutParams

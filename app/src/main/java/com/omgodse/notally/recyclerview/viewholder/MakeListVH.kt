@@ -16,14 +16,14 @@ import com.omgodse.notally.miscellaneous.createListChangeTextWatcher
 import com.omgodse.notally.miscellaneous.setOnNextAction
 import com.omgodse.notally.preferences.ListItemSorting
 import com.omgodse.notally.preferences.TextSize
-import com.omgodse.notally.recyclerview.ListItemListener
+import com.omgodse.notally.recyclerview.ListManager
 import com.omgodse.notally.room.ListItem
 import com.zerobranch.layout.SwipeLayout.SwipeActionsListener
 
 
 class MakeListVH(
     val binding: RecyclerListItemBinding,
-    val listener: ListItemListener,
+    val listener: ListManager,
     val changeHistory: ChangeHistory,
     touchHelper: ItemTouchHelper,
     textSize: String
@@ -58,7 +58,7 @@ class MakeListVH(
             changeHistory,
             { adapterPosition }
         ) { position, text ->
-            listener.textChanged(position, text)
+            listener.changeText(position, text)
         }
         binding.EditText.addTextChangedListener(editTextWatcher)
 
@@ -82,7 +82,7 @@ class MakeListVH(
 
         updateDeleteButton(item)
 
-        updateSwipe(item.isChildItem, firstItem)
+        updateSwipe(item.isChild, firstItem)
         if (item.checked && autoSort == ListItemSorting.autoSortByChecked) {
             binding.DragHandle.visibility = INVISIBLE
         } else {
@@ -94,24 +94,14 @@ class MakeListVH(
         binding.Delete.visibility = if (item.checked) VISIBLE else INVISIBLE
         binding.Delete.setOnClickListener {
             val positionBeforeDelete = adapterPosition
-            val text = binding.EditText.text.toString()
-            val checked = binding.CheckBox.isChecked
-            val isChildItem = binding.SwipeLayout.isLeftOpen
-            listener.delete(adapterPosition, true)
+            val deletedItem = listener.delete(positionBeforeDelete, true)!!
             changeHistory.addChange(object : Change {
                 override fun redo() {
                     listener.delete(positionBeforeDelete, true)
                 }
 
                 override fun undo() {
-                    listener.add(
-                        positionBeforeDelete,
-                        text,
-                        checked,
-                        isChildItem,
-                        item.uncheckedPosition,
-                        mutableListOf() // TODO make listener.delete return removed object
-                    )
+                    listener.add(positionBeforeDelete, deletedItem)
                 }
 
                 override fun toString(): String {
@@ -129,7 +119,7 @@ class MakeListVH(
         binding.EditText.setOnKeyListener { _, keyCode, event ->
             if (event.action == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_DEL) {
                 val positionBeforeDelete = adapterPosition
-                if (listener.delete(adapterPosition, false)) {
+                if (listener.delete(adapterPosition, false) != null) {
                     val text = binding.EditText.text.toString()
                     val checked = binding.CheckBox.isChecked
                     changeHistory.addChange(object : Change {
@@ -142,7 +132,7 @@ class MakeListVH(
                                 positionBeforeDelete,
                                 text,
                                 checked,
-                                item.isChildItem,
+                                item.isChild,
                                 item.uncheckedPosition,
                                 mutableListOf() // TODO make listener.delete return removed object
                             )
@@ -163,7 +153,7 @@ class MakeListVH(
         binding.CheckBox.setOnCheckedChangeListener(null)
         binding.CheckBox.isChecked = item.checked
         binding.CheckBox.setOnCheckedChangeListener(createChangeOnCheckedListener(changeHistory) { position, isChecked ->
-            listener.checkedChanged(position, isChecked)
+            listener.changeChecked(position, isChecked)
         })
     }
 
@@ -172,15 +162,15 @@ class MakeListVH(
         val swipeActionListener = object : SwipeActionsListener {
             override fun onOpen(direction: Int, isContinuous: Boolean) {
                 val position = adapterPosition
-                listener.isChildItemChanged(position, true)
+                listener.changeIsChild(position, true)
                 changeHistory.addChange(object : Change {
                     override fun redo() {
-                        listener.isChildItemChanged(position, true)
+                        listener.changeIsChild(position, true)
                         updateSwipe(true, firstItem)
                     }
 
                     override fun undo() {
-                        listener.isChildItemChanged(position, false)
+                        listener.changeIsChild(position, false)
                         updateSwipe(false, firstItem)
                     }
 
@@ -192,15 +182,15 @@ class MakeListVH(
 
             override fun onClose() {
                 val position = adapterPosition
-                listener.isChildItemChanged(adapterPosition, false)
+                listener.changeIsChild(adapterPosition, false)
                 changeHistory.addChange(object : Change {
                     override fun redo() {
-                        listener.isChildItemChanged(position, false)
+                        listener.changeIsChild(position, false)
                         updateSwipe(false, firstItem)
                     }
 
                     override fun undo() {
-                        listener.isChildItemChanged(position, true)
+                        listener.changeIsChild(position, true)
                         updateSwipe(true, firstItem)
                     }
 

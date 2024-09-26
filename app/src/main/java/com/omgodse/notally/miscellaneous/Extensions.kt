@@ -22,6 +22,7 @@ import android.widget.RemoteViews
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.omgodse.notally.activities.TakeNote
+import com.omgodse.notally.room.ListItem
 import com.omgodse.notally.room.SpanRepresentation
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.Date
@@ -243,7 +244,7 @@ fun RecyclerView.ViewHolder.createChangeOnCheckedListener(
     })
 }
 
-fun <T> MutableList<T>.moveRangeAndNotify(
+fun MutableList<ListItem>.moveRangeAndNotify(
     fromIndex: Int,
     itemCount: Int,
     toIndex: Int,
@@ -251,31 +252,35 @@ fun <T> MutableList<T>.moveRangeAndNotify(
 ) {
     if (fromIndex == toIndex || itemCount <= 0) return // No move required
 
-    // Move items internally in the list
-    if (fromIndex < toIndex) {
-        // Move range forwards
-        val itemsToMove = this.subList(fromIndex, fromIndex + itemCount)
-        val copy = itemsToMove.toList() // Create a copy since subList is a view
-        this.removeAll(copy)
-        this.addAll(toIndex - itemCount + 1, copy)
-
-        // Notify adapter of item movements (from back to front)
-        for (i in itemCount - 1 downTo 0) {
-            adapter.notifyItemMoved(fromIndex + i, toIndex + i - (itemCount - 1))
-        }
-    } else {
-        // Move range backwards
-        val itemsToMove = this.subList(fromIndex, fromIndex + itemCount)
-        val copy = itemsToMove.toList()
-        this.removeAll(copy)
-        this.addAll(toIndex, copy)
-
-        // Notify adapter of item movements (from front to back)
-        for (i in 0 until itemCount) {
-            adapter.notifyItemMoved(fromIndex + i, toIndex + i)
-        }
+    val itemsToMove = subList(fromIndex, fromIndex + itemCount).toList()
+    removeAll(itemsToMove)
+    val insertIndex = if (fromIndex < toIndex) toIndex - itemCount + 1 else toIndex
+    addAll(insertIndex, itemsToMove)
+    updateUncheckedPositions()
+    val movedIndexes = if (fromIndex < toIndex) itemCount - 1 downTo 0 else 0 until itemCount
+    for (idx in movedIndexes) {
+        val newPosition = if (fromIndex < toIndex) toIndex + idx - (itemCount - 1) else toIndex + idx
+        adapter.notifyItemMoved(fromIndex + idx, newPosition)
     }
 }
+
+fun MutableList<ListItem>.updateUncheckedPositions(){
+    forEachIndexed { index, item -> if (!item.checked) item.uncheckedPosition = index }
+}
+
+fun <T> MutableList<T>.addAndNotify(
+    position: Int,
+    item: T,
+    adapter: RecyclerView.Adapter<*>
+) {
+    add(position, item)
+    adapter.notifyItemInserted(position)
+}
+
+fun ListItem.isChildOf(other: ListItem): Boolean {
+    return !other.isChild && other.children.contains(this)
+}
+
 
 private fun EditText.createChange(
     listener: TextWatcher,

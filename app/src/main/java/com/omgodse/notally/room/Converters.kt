@@ -83,9 +83,9 @@ object Converters {
         return iterable.map { jsonObject ->
             val body = jsonObject.getString("body")
             val checked = jsonObject.getBoolean("checked")
-            val isChildItem = jsonObject.getSafeBoolean("isChildItem")
+            val isChild = jsonObject.getSafeBoolean("isChild")
             val uncheckedPosition = jsonObject.getSafeInt("uncheckedPosition")
-            ListItem(body, checked, isChildItem, uncheckedPosition, mutableListOf())
+            ListItem(body, checked, isChild, uncheckedPosition, mutableListOf())
         }
     }
 
@@ -98,7 +98,7 @@ object Converters {
             val jsonObject = JSONObject()
             jsonObject.put("body", item.body)
             jsonObject.put("checked", item.checked)
-            jsonObject.put("isChildItem", item.isChildItem)
+            jsonObject.put("isChild", item.isChild)
             jsonObject.put("uncheckedPosition", item.uncheckedPosition)
         }
         return JSONArray(objects)

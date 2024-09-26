@@ -8,7 +8,7 @@ import com.omgodse.notally.databinding.RecyclerListItemBinding
 import com.omgodse.notally.miscellaneous.ChangeHistory
 import com.omgodse.notally.preferences.Preferences
 import com.omgodse.notally.recyclerview.DragCallback
-import com.omgodse.notally.recyclerview.ListItemListener
+import com.omgodse.notally.recyclerview.ListManager
 import com.omgodse.notally.recyclerview.viewholder.MakeListVH
 import com.omgodse.notally.room.ListItem
 
@@ -17,11 +17,11 @@ class MakeListAdapter(
     elevation: Float,
     val list: ArrayList<ListItem>,
     private val preferences: Preferences,
-    private val listener: ListItemListener,
+    private val listManager: ListManager,
     private val changeHistory: ChangeHistory
 ) : RecyclerView.Adapter<MakeListVH>() {
 
-    private val callback = DragCallback(elevation, this, listener, changeHistory)
+    private val callback = DragCallback(elevation, this, listManager, changeHistory)
     private val touchHelper = ItemTouchHelper(callback)
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
@@ -40,7 +40,7 @@ class MakeListAdapter(
         val inflater = LayoutInflater.from(parent.context)
         val binding = RecyclerListItemBinding.inflate(inflater, parent, false)
         binding.root.background = parent.background
-        return MakeListVH(binding, listener, changeHistory, touchHelper, textSize)
+        return MakeListVH(binding, listManager, changeHistory, touchHelper, textSize)
     }
 
 }
