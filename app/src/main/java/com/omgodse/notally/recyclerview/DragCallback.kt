@@ -36,15 +36,18 @@ class DragCallback(
     override fun onMove(view: RecyclerView, viewHolder: ViewHolder, target: ViewHolder): Boolean {
         val from = viewHolder.adapterPosition
         val to = target.adapterPosition
-        if (fromPosition == -1) {
-            fromPosition = from
+        val swapped = listManager.swap(from, to)
+        if (swapped) {
+            if (fromPosition == -1) {
+                fromPosition = from
+            }
+            toPosition = to
         }
-        toPosition = to
-        return listManager.swap(from, to)
+        return swapped
     }
 
     override fun onSelectedChanged(viewHolder: ViewHolder?, actionState: Int) {
-        if (lastState != actionState && actionState == ItemTouchHelper.ACTION_STATE_IDLE) {
+        if (lastState != actionState && actionState == ItemTouchHelper.ACTION_STATE_IDLE && toPosition != -1) {
             onDragEnd()
         }
         lastState = actionState
