@@ -24,27 +24,29 @@ class ListManager(
 
     internal fun add(
         position: Int = items.size,
-        initialText: String = "",
-        checked: Boolean = false,
-        isChild: Boolean? = null,
-        uncheckedPosition: Int? = position,
-        children: MutableList<ListItem> = mutableListOf()
+        item: ListItem = ListItem(
+            "",
+            false,
+            items.isNotEmpty() && items.last().isChild,
+            null,
+            mutableListOf()
+        )
     ) {
         val listItem =
             ListItem(
-                initialText,
-                checked,
-                isChild ?: (items.isNotEmpty() && items.last().isChild),
-                uncheckedPosition,
-                children
+                item.body,
+                item.checked,
+                item.isChild,
+                item.uncheckedPosition,
+                item.children
             )
         items.addAndNotify(position, listItem, adapter)
-        for ((idx, item) in children.withIndex()) {
-            items.addAndNotify(position + idx + 1, item, adapter)
+        for ((idx, child) in item.children.withIndex()) {
+            items.addAndNotify(position + idx + 1, child, adapter)
         }
         recyclerView.post {
             val viewHolder = recyclerView.findViewHolderForAdapterPosition(position) as MakeListVH?
-            if (!checked && viewHolder != null) {
+            if (!item.checked && viewHolder != null) {
                 val editText = viewHolder.binding.EditText
                 editText.requestFocus()
                 editText.setSelection(editText.text.length)
@@ -54,17 +56,6 @@ class ListManager(
                 )
             }
         }
-    }
-
-    internal fun add(position: Int, item: ListItem) {
-        add(
-            position,
-            item.body,
-            item.checked,
-            item.isChild,
-            item.uncheckedPosition,
-            item.children
-        )
     }
 
     internal fun delete(position: Int = items.size - 1, force: Boolean): ListItem? {
@@ -85,7 +76,7 @@ class ListManager(
     }
 
     internal fun swap(positionFrom: Int, positionTo: Int): Boolean {
-        if (positionFrom < 0 || positionTo < 0)
+        if (positionFrom < 0 || positionTo < 0 || positionFrom == positionTo)
             return false
         val itemTo = items[positionTo]
         val itemFrom = items[positionFrom]
@@ -230,7 +221,7 @@ class ListManager(
         items.addAll(newList)
         diffCourses.dispatchUpdatesTo(adapter)
 
-        diffCourses.dispatchUpdatesTo(object: ListUpdateCallback{
+        diffCourses.dispatchUpdatesTo(object : ListUpdateCallback {
             override fun onInserted(position: Int, count: Int) {
                 println("onInserted pos: $position count: $count")
             }

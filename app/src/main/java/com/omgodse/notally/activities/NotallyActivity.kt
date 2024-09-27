@@ -29,7 +29,7 @@ import com.omgodse.notally.R
 import com.omgodse.notally.databinding.ActivityNotallyBinding
 import com.omgodse.notally.databinding.DialogProgressBinding
 import com.omgodse.notally.image.ImageError
-import com.omgodse.notally.miscellaneous.ChangeHistory
+import com.omgodse.notally.changehistory.ChangeHistory
 import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.miscellaneous.add

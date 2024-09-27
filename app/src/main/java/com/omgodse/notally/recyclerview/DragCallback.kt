@@ -5,8 +5,8 @@ import android.util.Log
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.omgodse.notally.miscellaneous.Change
-import com.omgodse.notally.miscellaneous.ChangeHistory
+import com.omgodse.notally.changehistory.ChangeHistory
+import com.omgodse.notally.changehistory.ListMoveChange
 import com.omgodse.notally.recyclerview.adapter.MakeListAdapter
 
 class DragCallback(
@@ -109,19 +109,7 @@ class DragCallback(
             return
         }
         val isChildBefore = listManager.move(fromPosition, toPosition, true)
-        changeHistory.addChange(object : Change {
-            override fun redo() {
-                listManager.move(fromPosition, toPosition, false)
-            }
-
-            override fun undo() {
-                listManager.revertMove(fromPosition, toPosition, isChildBefore)
-            }
-
-            override fun toString(): String {
-                return "MoveChange from: $fromPosition to: $toPosition isChildBefore: $isChildBefore"
-            }
-        })
+        changeHistory.push(ListMoveChange(fromPosition, toPosition, isChildBefore, listManager))
     }
 
 

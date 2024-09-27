@@ -20,9 +20,9 @@ import androidx.core.text.getSpans
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.LinkMovementMethod
 import com.omgodse.notally.R
+import com.omgodse.notally.changehistory.EditTextChange
 import com.omgodse.notally.miscellaneous.add
-import com.omgodse.notally.miscellaneous.createChangeTextWatcher
-import com.omgodse.notally.miscellaneous.createListChangeTextWatcher
+import com.omgodse.notally.miscellaneous.createTextWatcherWithHistory
 import com.omgodse.notally.miscellaneous.setOnNextAction
 import com.omgodse.notally.room.Type
 
@@ -45,8 +45,10 @@ class TakeNote : NotallyActivity(Type.NOTE) {
 
     override fun setupListeners() {
         super.setupListeners()
-        enterBodyTextWatcher = binding.EnterBody.createChangeTextWatcher(changeHistory) { text ->
-            model.body = Editable.Factory.getInstance().newEditable(text)
+        enterBodyTextWatcher = run {
+            binding.EnterBody.createTextWatcherWithHistory(changeHistory) { text: String ->
+                model.body = Editable.Factory.getInstance().newEditable(text)
+            }
         }
         binding.EnterBody.addTextChangedListener(enterBodyTextWatcher)
     }

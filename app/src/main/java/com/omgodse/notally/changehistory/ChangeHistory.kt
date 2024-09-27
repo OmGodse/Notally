@@ -1,4 +1,4 @@
-package com.omgodse.notally.miscellaneous
+package com.omgodse.notally.changehistory
 
 import android.util.Log
 
@@ -10,8 +10,8 @@ class ChangeHistory(
     private val changeStack = ArrayList<Change>()
     private var stackPointer =-1
 
-    fun addChange(change: Change) {
-        invalidateRedos()
+    fun push(change: Change) {
+        popRedos()
         changeStack.add(change)
         stackPointer++
         Log.d(TAG, "addChange: $change")
@@ -48,7 +48,7 @@ class ChangeHistory(
         return stackPointer > -1
     }
 
-    private fun invalidateRedos() {
+    private fun popRedos() {
         if (stackPointer > -1 && stackPointer + 1 < changeStack.size) {
             changeStack.subList(stackPointer + 1, changeStack.size).clear()
         }

@@ -16,12 +16,17 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.CompoundButton.OnCheckedChangeListener
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.RemoteViews
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.omgodse.notally.activities.TakeNote
+import com.omgodse.notally.changehistory.ListBooleanChange
+import com.omgodse.notally.changehistory.ChangeHistory
+import com.omgodse.notally.changehistory.EditTextChange
+import com.omgodse.notally.changehistory.ListEditTextChange
+import com.omgodse.notally.recyclerview.ListManager
 import com.omgodse.notally.room.ListItem
 import com.omgodse.notally.room.SpanRepresentation
 import org.ocpsoft.prettytime.PrettyTime
@@ -149,10 +154,10 @@ val Int.dp: Int
  * (e.g. the current adapterPosition when using RecyclerViewer.Adapter)
  * @param updateModel Function to update the model. Is called on any text changes and on undo/redo.
  */
-fun EditText.createListChangeTextWatcher(
+fun EditText.createListTextWatcherWithHistory(
     changeHistory: ChangeHistory,
+    listManager: ListManager,
     positionGetter: () -> Int,
-    updateModel: (position: Int, text: String) -> Unit
 ) = object : TextWatcher {
     private lateinit var currentTextBefore: String
 
@@ -167,81 +172,80 @@ fun EditText.createListChangeTextWatcher(
         val textBefore = currentTextBefore
         val textAfter = requireNotNull(s).toString()
         val itemPosition = positionGetter.invoke()
-        updateModel.invoke(itemPosition, textAfter)
-        changeHistory.addChange(
-            createChange(
-                this,
-                textAfter,
+        listManager.changeText(itemPosition, textAfter)
+        changeHistory.push(
+            ListEditTextChange(
+                this@createListTextWatcherWithHistory,
+                itemPosition,
                 textBefore,
-                itemPosition
-            ) { position, text ->
-                updateModel.invoke(position, text)
-            }
+                textAfter,
+                this,
+                listManager
+            )
         )
     }
 }
 
-/**
- * Creates a TextWatcher for a standalone EditText.
- * Everytime the text is changed, a Change is added to the ChangeHistory.
- *
- * @param updateModel Function to update the model. Is called on any text changes and on undo/redo.
- */
-fun EditText.createChangeTextWatcher(
+fun EditText.createTextWatcherWithHistory(
     changeHistory: ChangeHistory,
     updateModel: (text: String) -> Unit
-) = object : TextWatcher {
-    private lateinit var currentTextBefore: String
+) =
+    object : TextWatcher {
+        private lateinit var currentTextBefore: String
 
-    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-        currentTextBefore = s.toString()
-    }
+        override fun beforeTextChanged(
+            s: CharSequence?,
+            start: Int,
+            count: Int,
+            after: Int
+        ) {
+            currentTextBefore = s.toString()
+        }
 
-    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-    }
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        }
 
-    override fun afterTextChanged(s: Editable?) {
-        val textBefore = currentTextBefore
-        val textAfter = requireNotNull(s).toString()
-        updateModel.invoke(textAfter)
-        changeHistory.addChange(
-            createChange(
-                this,
-                textAfter,
-                textBefore,
-                -1
-            ) { _, text ->
-                updateModel.invoke(text)
-            }
-        )
+        override fun afterTextChanged(s: Editable?) {
+            val textBefore = currentTextBefore
+            val textAfter = requireNotNull(s).toString()
+            updateModel.invoke(textAfter)
+
+            changeHistory.push(
+                EditTextChange(
+                    this@createTextWatcherWithHistory,
+                    textAfter,
+                    textBefore,
+                    this,
+                    updateModel
+                )
+            )
+        }
     }
-}
 
 /**
- * Creates an OnCheckedChangeListener for CheckBox inside of a RecyclerView with a re-/undo function.
+ * Set an OnCheckedChangeListener for CheckBox that automatically adds changes to ChangeHistory.
  * @param updateModel Function to update the underlying model, taking in the position of the item in the list + new isChecked value.
  * Returns the position of the item in the list after the update.
  */
-fun RecyclerView.ViewHolder.createChangeOnCheckedListener(
+fun CheckBox.setOnCheckedChangeListenerWithHistory(
+    positionGetter: () -> Int,
     changeHistory: ChangeHistory,
     updateModel: (position: Int, isChecked: Boolean) -> Int
-) = OnCheckedChangeListener { _, isChecked ->
-    val currentPosition = adapterPosition
-    val positionAfter = updateModel.invoke(currentPosition, isChecked)
-    changeHistory.addChange(object : Change {
-        override fun redo() {
-            updateModel.invoke(currentPosition, isChecked)
-        }
+) {
+    setOnCheckedChangeListener { _, isChecked ->
+        val currentPosition = positionGetter.invoke()
+        val positionAfter = updateModel.invoke(currentPosition, isChecked)
+        changeHistory.push(object : ListBooleanChange(isChecked, currentPosition, positionAfter) {
+            override fun update(position: Int, value: Boolean, isUndo: Boolean) {
+                updateModel.invoke(position, value)
+            }
 
-        override fun undo() {
-            updateModel.invoke(positionAfter, !isChecked)
-        }
+            override fun toString(): String {
+                return "CheckedChange pos: $position positionAfter: $positionAfter isChecked: $isChecked"
+            }
 
-        override fun toString(): String {
-            return "CheckedChange at $currentPosition checked: $isChecked"
-        }
-
-    })
+        })
+    }
 }
 
 fun MutableList<ListItem>.moveRangeAndNotify(
@@ -259,12 +263,13 @@ fun MutableList<ListItem>.moveRangeAndNotify(
     updateUncheckedPositions()
     val movedIndexes = if (fromIndex < toIndex) itemCount - 1 downTo 0 else 0 until itemCount
     for (idx in movedIndexes) {
-        val newPosition = if (fromIndex < toIndex) toIndex + idx - (itemCount - 1) else toIndex + idx
+        val newPosition =
+            if (fromIndex < toIndex) toIndex + idx - (itemCount - 1) else toIndex + idx
         adapter.notifyItemMoved(fromIndex + idx, newPosition)
     }
 }
 
-fun MutableList<ListItem>.updateUncheckedPositions(){
+fun MutableList<ListItem>.updateUncheckedPositions() {
     forEachIndexed { index, item -> if (!item.checked) item.uncheckedPosition = index }
 }
 
@@ -279,40 +284,6 @@ fun <T> MutableList<T>.addAndNotify(
 
 fun ListItem.isChildOf(other: ListItem): Boolean {
     return !other.isChild && other.children.contains(this)
-}
-
-
-private fun EditText.createChange(
-    listener: TextWatcher,
-    textAfter: String,
-    textBefore: String,
-    position: Int,
-    updateModel: (position: Int, text: String) -> Unit
-) = object : Change {
-
-    private val cursorPosition = selectionStart
-
-    override fun redo() {
-        changeText(position, textAfter, false)
-    }
-
-    override fun undo() {
-        changeText(position, textBefore, true)
-    }
-
-    private fun changeText(position: Int, text: String, isUndo: Boolean) {
-        updateModel.invoke(position, text)
-        removeTextChangedListener(listener)
-        setText(text)
-        requestFocus()
-        setSelection(Math.max(0, cursorPosition - (if (isUndo) 1 else 0)))
-        addTextChangedListener(listener)
-    }
-
-    override fun toString(): String {
-        return "CheckedText at $position from: $textBefore to: $textAfter"
-    }
-
 }
 
 

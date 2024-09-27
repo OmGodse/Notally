@@ -8,11 +8,13 @@ import android.widget.TextView.INVISIBLE
 import android.widget.TextView.VISIBLE
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.omgodse.notally.changehistory.ListAddChange
+import com.omgodse.notally.changehistory.ListBooleanChange
 import com.omgodse.notally.databinding.RecyclerListItemBinding
-import com.omgodse.notally.miscellaneous.Change
-import com.omgodse.notally.miscellaneous.ChangeHistory
-import com.omgodse.notally.miscellaneous.createChangeOnCheckedListener
-import com.omgodse.notally.miscellaneous.createListChangeTextWatcher
+import com.omgodse.notally.changehistory.ChangeHistory
+import com.omgodse.notally.changehistory.ListDeleteChange
+import com.omgodse.notally.miscellaneous.createListTextWatcherWithHistory
+import com.omgodse.notally.miscellaneous.setOnCheckedChangeListenerWithHistory
 import com.omgodse.notally.miscellaneous.setOnNextAction
 import com.omgodse.notally.preferences.ListItemSorting
 import com.omgodse.notally.preferences.TextSize
@@ -23,7 +25,7 @@ import com.zerobranch.layout.SwipeLayout.SwipeActionsListener
 
 class MakeListVH(
     val binding: RecyclerListItemBinding,
-    val listener: ListManager,
+    val listManager: ListManager,
     val changeHistory: ChangeHistory,
     touchHelper: ItemTouchHelper,
     textSize: String
@@ -37,29 +39,15 @@ class MakeListVH(
 
         binding.EditText.setOnNextAction {
             val position = adapterPosition + 1
-            listener.add(position, children = mutableListOf())
-            changeHistory.addChange(object : Change {
-                override fun redo() {
-                    listener.add(position, children = mutableListOf())
-                }
-
-                override fun undo() {
-                    listener.delete(position, true)
-                }
-
-                override fun toString(): String {
-                    return "Add at position: $position"
-                }
-
-            })
+            listManager.add(position)
+            changeHistory.push(ListAddChange(position, listManager))
         }
 
-        editTextWatcher = binding.EditText.createListChangeTextWatcher(
+        editTextWatcher = binding.EditText.createListTextWatcherWithHistory(
             changeHistory,
-            { adapterPosition }
-        ) { position, text ->
-            listener.changeText(position, text)
-        }
+            listManager,
+            this::getAdapterPosition
+        )
         binding.EditText.addTextChangedListener(editTextWatcher)
 
         binding.EditText.setOnFocusChangeListener { _, hasFocus ->
@@ -94,20 +82,8 @@ class MakeListVH(
         binding.Delete.visibility = if (item.checked) VISIBLE else INVISIBLE
         binding.Delete.setOnClickListener {
             val positionBeforeDelete = adapterPosition
-            val deletedItem = listener.delete(positionBeforeDelete, true)!!
-            changeHistory.addChange(object : Change {
-                override fun redo() {
-                    listener.delete(positionBeforeDelete, true)
-                }
-
-                override fun undo() {
-                    listener.add(positionBeforeDelete, deletedItem)
-                }
-
-                override fun toString(): String {
-                    return "DeleteChange at $positionBeforeDelete"
-                }
-            })
+            val deletedItem = listManager.delete(positionBeforeDelete, true)!!
+            changeHistory.push(ListDeleteChange(positionBeforeDelete, deletedItem, listManager))
         }
     }
 
@@ -119,30 +95,15 @@ class MakeListVH(
         binding.EditText.setOnKeyListener { _, keyCode, event ->
             if (event.action == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_DEL) {
                 val positionBeforeDelete = adapterPosition
-                if (listener.delete(adapterPosition, false) != null) {
-                    val text = binding.EditText.text.toString()
-                    val checked = binding.CheckBox.isChecked
-                    changeHistory.addChange(object : Change {
-                        override fun redo() {
-                            listener.delete(positionBeforeDelete, true)
-                        }
-
-                        override fun undo() {
-                            listener.add(
-                                positionBeforeDelete,
-                                text,
-                                checked,
-                                item.isChild,
-                                item.uncheckedPosition,
-                                mutableListOf() // TODO make listener.delete return removed object
-                            )
-                        }
-
-                        override fun toString(): String {
-                            return "DeleteChange at $positionBeforeDelete"
-                        }
-
-                    })
+                val deletedItem = listManager.delete(adapterPosition, false)
+                if (deletedItem != null) {
+                    changeHistory.push(
+                        ListDeleteChange(
+                            positionBeforeDelete,
+                            deletedItem,
+                            listManager
+                        )
+                    )
                 }
             }
             true
@@ -152,9 +113,12 @@ class MakeListVH(
     private fun updateCheckBox(item: ListItem) {
         binding.CheckBox.setOnCheckedChangeListener(null)
         binding.CheckBox.isChecked = item.checked
-        binding.CheckBox.setOnCheckedChangeListener(createChangeOnCheckedListener(changeHistory) { position, isChecked ->
-            listener.changeChecked(position, isChecked)
-        })
+        binding.CheckBox.setOnCheckedChangeListenerWithHistory(
+            this::getAdapterPosition,
+            changeHistory
+        ) { position, isChecked ->
+            listManager.changeChecked(position, isChecked)
+        }
     }
 
     private fun updateSwipe(open: Boolean, firstItem: Boolean) {
@@ -162,40 +126,23 @@ class MakeListVH(
         val swipeActionListener = object : SwipeActionsListener {
             override fun onOpen(direction: Int, isContinuous: Boolean) {
                 val position = adapterPosition
-                listener.changeIsChild(position, true)
-                changeHistory.addChange(object : Change {
-                    override fun redo() {
-                        listener.changeIsChild(position, true)
-                        updateSwipe(true, firstItem)
-                    }
+                listManager.changeIsChild(position, true)
 
-                    override fun undo() {
-                        listener.changeIsChild(position, false)
-                        updateSwipe(false, firstItem)
-                    }
-
-                    override fun toString(): String {
-                        return "SwipeChange at $position true"
+                changeHistory.push(object: ListBooleanChange(true, position) {
+                    override fun update(position: Int, value: Boolean, isUndo: Boolean) {
+                        listManager.changeIsChild(position, value)
+                        updateSwipe(value, firstItem)
                     }
                 })
             }
 
             override fun onClose() {
                 val position = adapterPosition
-                listener.changeIsChild(adapterPosition, false)
-                changeHistory.addChange(object : Change {
-                    override fun redo() {
-                        listener.changeIsChild(position, false)
-                        updateSwipe(false, firstItem)
-                    }
-
-                    override fun undo() {
-                        listener.changeIsChild(position, true)
-                        updateSwipe(true, firstItem)
-                    }
-
-                    override fun toString(): String {
-                        return "SwipeChange at $position false"
+                listManager.changeIsChild(position, false)
+                changeHistory.push(object: ListBooleanChange(false, position) {
+                    override fun update(position: Int, value: Boolean, isUndo: Boolean) {
+                        listManager.changeIsChild(position, value)
+                        updateSwipe(value, firstItem)
                     }
                 })
             }

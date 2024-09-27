@@ -1,4 +1,4 @@
-package com.omgodse.notally.miscellaneous
+package com.omgodse.notally.changehistory
 
 interface Change {
     fun redo()

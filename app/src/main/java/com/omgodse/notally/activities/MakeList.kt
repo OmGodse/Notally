@@ -4,8 +4,8 @@ import android.os.Build
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
 import com.omgodse.notally.R
-import com.omgodse.notally.miscellaneous.Change
-import com.omgodse.notally.miscellaneous.ChangeHistory
+import com.omgodse.notally.changehistory.ListAddChange
+import com.omgodse.notally.changehistory.ChangeHistory
 import com.omgodse.notally.miscellaneous.add
 import com.omgodse.notally.miscellaneous.setOnNextAction
 import com.omgodse.notally.preferences.Preferences
@@ -68,20 +68,7 @@ class MakeList : NotallyActivity(Type.LIST) {
         super.setupListeners()
         binding.AddItem.setOnClickListener {
             listManager.add()
-            changeHistory.addChange(object : Change {
-                override fun redo() {
-                    listManager.add()
-                }
-
-                override fun undo() {
-                    listManager.delete(force = true)
-                }
-
-                override fun toString(): String {
-                    return "Add"
-                }
-
-            })
+            changeHistory.push(ListAddChange(model.items.size, listManager))
         }
     }
 

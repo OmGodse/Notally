@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.omgodse.notally.databinding.RecyclerListItemBinding
-import com.omgodse.notally.miscellaneous.ChangeHistory
+import com.omgodse.notally.changehistory.ChangeHistory
 import com.omgodse.notally.preferences.Preferences
 import com.omgodse.notally.recyclerview.DragCallback
 import com.omgodse.notally.recyclerview.ListManager
