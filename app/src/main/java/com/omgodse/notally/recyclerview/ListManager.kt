@@ -6,7 +6,6 @@ import android.widget.EditText
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListUpdateCallback
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.omgodse.notally.changehistory.ChangeHistory
 import com.omgodse.notally.changehistory.ListAddChange
 import com.omgodse.notally.changehistory.ListBooleanChange
@@ -272,10 +271,12 @@ class ListManager(
             changeHistory.push(object : ListBooleanChange(isChild, position) {
                 override fun update(position: Int, value: Boolean, isUndo: Boolean) {
                     changeIsChild(position, value, pushChange = false)
-//                    val viewHolder =
-//                        recyclerView.findViewHolderForAdapterPosition(position) as MakeListVH?
-//                    viewHolder?.updateSwipe(value, position == 0)
                 }
+
+                override fun toString(): String {
+                    return "IsChildChange position: $position isChild: $isChild"
+                }
+
             })
         }
     }
@@ -328,23 +329,38 @@ class ListManager(
     private fun updateChildren(position: Int, isChild: Boolean) {
         val item = items[position]
         item.isChild = isChild
-        val parentAndIndex = findParentItem(position) ?: return
+        val parentAndIndex = findParentItem(position)
         if (isChild) {
-            parentAndIndex.first.children.add(parentAndIndex.second, item)
-            parentAndIndex.first.children.addAll(item.children)
+            parentAndIndex.first?.children?.add(parentAndIndex.second!!, item)
+            parentAndIndex.first?.children?.addAll(item.children)
             item.children.clear()
         } else {
-            parentAndIndex.first.children.clear()
+            parentAndIndex.first?.children?.remove(item)
+            val children = findChildren(position)
+            item.children.addAll(children)
+            parentAndIndex.first?.children?.removeAll(children)
         }
     }
 
-    private fun findParentItem(childPosition: Int): Pair<ListItem, Int>? {
-        (childPosition - 1 downTo 0).forEachIndexed { index, position ->
+    private fun findChildren(position: Int): MutableList<ListItem> {
+        val children = mutableListOf<ListItem>()
+        (position + 1..items.lastIndex).forEachIndexed { index, position ->
+            if (items[position].isChild) {
+                children.add(items[position])
+            } else {
+                return children
+            }
+        }
+        return children
+    }
+
+    private fun findParentItem(position: Int): Pair<ListItem?, Int?> {
+        (position - 1 downTo 0).forEachIndexed { index, position ->
             if (!items[position].isChild) {
                 return Pair(items[position], index)
             }
         }
-        return null
+        return Pair(null, null)
     }
 
     private fun isBeforeChildItem(positionTo: Int): Boolean {

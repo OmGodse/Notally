@@ -94,8 +94,7 @@ class MakeListVH(
         binding.CheckBox.setOnCheckedChangeListener(null)
         binding.CheckBox.isChecked = item.checked
         binding.CheckBox.setOnCheckedChangeListener { _, isChecked ->
-            val currentPosition = getAdapterPosition()
-            listManager.changeChecked(currentPosition, isChecked)
+            listManager.changeChecked(adapterPosition, isChecked)
         }
     }
 
