@@ -41,13 +41,24 @@ class AutoBackupWorker(private val context: Context, params: WorkerParameters) :
 
                 Export.backupDatabase(app, zipStream)
 
-                val mediaRoot = IO.getExternalImagesDirectory(app)
+                val imageRoot = IO.getExternalImagesDirectory(app)
+                val audioRoot = IO.getExternalAudioDirectory(app)
                 database.getBaseNoteDao().getAllImages()
                     .asSequence()
-                    .flatMap(Converters::jsonToImages)
+                    .flatMap { string -> Converters.jsonToImages(string) }
                     .forEach { image ->
                         try {
-                            Export.backupImage(zipStream, mediaRoot, image)
+                            Export.backupFile(zipStream, imageRoot, "Images", image.name)
+                        } catch (exception: Exception) {
+                            Operations.log(app, exception)
+                        }
+                    }
+                database.getBaseNoteDao().getAllAudios()
+                    .asSequence()
+                    .flatMap { string -> Converters.jsonToAudios(string) }
+                    .forEach { audio ->
+                        try {
+                            Export.backupFile(zipStream, audioRoot, "Audios", audio.name)
                         } catch (exception: Exception) {
                             Operations.log(app, exception)
                         }

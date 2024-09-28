@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/Toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:navigationIcon="?attr/homeAsUpIndicator" />
+
+    <TextView
+        android:id="@+id/Error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/AudioControlView"
+        android:layout_below="@id/Toolbar"
+        android:gravity="center"
+        android:textAppearance="?attr/textAppearanceBody2" />
+
+    <com.omgodse.notally.audio.AudioControlView
+        android:id="@+id/AudioControlView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/Play"
+        android:layout_marginBottom="32dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/Progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stepSize="1" />
+
+        <TextView
+            android:id="@+id/Chronometer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Progress"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="8dp"
+            android:textAppearance="?attr/textAppearanceCaption" />
+
+        <TextView
+            android:id="@+id/Length"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Progress"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="8dp"
+            android:textAppearance="?attr/textAppearanceCaption" />
+
+    </com.omgodse.notally.audio.AudioControlView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/Play"
+        style="@style/PillButton"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginBottom="32dp"
+        android:text="@string/play" />
+
+</RelativeLayout>

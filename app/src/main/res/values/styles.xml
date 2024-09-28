@@ -73,7 +73,7 @@
     </style>
 
     <style name="Preview.ListItem">
-        <item name="android:paddingBottom">6dp</item>
+        <item name="android:paddingBottom">4dp</item>
         <item name="android:drawablePadding">8dp</item>
     </style>
 
@@ -137,6 +137,19 @@
         <item name="android:drawablePadding">8dp</item>
         <item name="android:drawableStart">@drawable/checkbox_outline_16</item>
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body2</item>
+    </style>
+
+    <style name="PillButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:layout_width">112dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
+        <item name="android:paddingTop">14dp</item>
+        <item name="android:paddingBottom">14dp</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.MaterialComponents.Chip</item>
     </style>
 
 </resources>

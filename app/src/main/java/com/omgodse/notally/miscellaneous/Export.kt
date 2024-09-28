@@ -1,7 +1,6 @@
 package com.omgodse.notally.miscellaneous
 
 import android.app.Application
-import com.omgodse.notally.room.Image
 import com.omgodse.notally.room.NotallyDatabase
 import java.io.File
 import java.io.FileInputStream
@@ -22,10 +21,10 @@ object Export {
         zipStream.closeEntry()
     }
 
-    fun backupImage(zipStream: ZipOutputStream, mediaRoot: File?, image: Image) {
-        val file = if (mediaRoot != null) File(mediaRoot, image.name) else null
+    fun backupFile(zipStream: ZipOutputStream, root: File?, folder: String, name: String) {
+        val file = if (root != null) File(root, name) else null
         if (file != null && file.exists()) {
-            val entry = ZipEntry("Images/${image.name}")
+            val entry = ZipEntry("$folder/$name")
             zipStream.putNextEntry(entry)
 
             val inputStream = FileInputStream(file)

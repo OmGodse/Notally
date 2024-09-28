@@ -15,9 +15,10 @@
     <string name="restore">Gjenopprett</string>
     <string name="archive">Arkivér</string>
     <string name="unarchive">Fjern fra arkivet</string>
+    <string name="add_images">Legg til bilder</string>
     <string name="delete_all">Slett alle</string>
     <string name="change_color">Endre farge</string>
-    <string name="delete_forever">Slett for alltid</string>
+    <string name="delete_forever">Slett for godt</string>
 
     <!-- Pinning -->
     <string name="pin">Fest</string>
@@ -26,12 +27,13 @@
     <string name="others">Annet</string>
 
     <!-- Chooser dialog hints -->
-    <string name="view_note">Se notat …</string>
+    <string name="view_note">Se notat</string>
 
     <!-- Dialogs -->
     <string name="save">Lagre</string>
     <string name="edit">Rediger</string>
     <string name="cancel">Avbryt</string>
+    <string name="continue_">Fortsett</string>
     <string name="open_link">Åpne lenke</string>
     <string name="make_list">Lag en liste</string>
     <string name="take_note">Ta et notat</string>
@@ -44,7 +46,7 @@
     <string name="delete_label">Vil du slette etiketten?</string>
     <string name="create_new">Ingen etiketter. Vil du opprette en?</string>
     <string name="delete_all_notes">Vil du slette alle notatene?</string>
-    <string name="delete_note_forever">Vil du slette notatet for alltid?</string>
+    <string name="delete_note_forever">Vil du slette notatet for godt?</string>
     <string name="your_notes_associated">Notatene assosiert med etikketten vil ikke bli slettet.</string>
 
     <!-- Lists and Notes -->
@@ -66,12 +68,13 @@
     <string name="saved_to_notally">Lagret i Notally</string>
     <string name="empty_note">Tomt notat</string>
     <string name="empty_list">Tom liste</string>
+
+    <!-- Messages -->
     <string name="cant_open_link">Kan ikke åpne lenken</string>
-    <string name="invalid_backup">Ugyldig sikkerhetskopi</string>
-    <string name="imported_backup">Importert sikkerhetskopi</string>
     <string name="something_went_wrong">Noe gikk galt. Prøv igjen.</string>
     <string name="install_an_email">Installer en e-postapp for å sende en tilbakemelding</string>
     <string name="install_a_browser">Installer en nettleser for å åpne lenken</string>
+    <string name="cant_find_note">Finner ikke notat. Den kan ha blitt slettet</string>
 
     <!-- Settings Page -->
     <string name="appearance">Utseende</string>
@@ -94,12 +97,11 @@
     <string name="large">Stor</string>
 
     <string name="content_density">Innholdstetthet</string>
-    <string name="max_items_to_display">Maks antall elementer fremvist av liste</string>
-    <string name="max_lines_to_display">Maks antall linjer vist fra notatene</string>
+    <string name="max_items_to_display">Maks antall elementer å vise fra lister</string>
+    <string name="max_lines_to_display">Maks antall linjer å vise fra notater</string>
 
+    <!-- Backup -->
     <string name="backup">Sikkerhetskopiering</string>
-
-    <!-- Auto backup -->
     <string name="auto_backup">Sikkerhetskopiér automatisk</string>
     <string name="tap_to_set_up">Trykk for å konfigurere</string>
     <string name="notes_will_be">Notatene vil bli sikkerhetskopiert til den interne lagringen hver dag.\n\nDette fungerer muligens ikke hvis strømsparingsmodus er aktivert</string>
@@ -107,6 +109,11 @@
     <string name="disable_auto_backup">Slå av automatisk sikkerhetskopiering</string>
     <string name="choose_another_folder">Velg en annen mappe</string>
     <string name="cant_find_folder">Finner ikke mappen. Den kan ha blitt flyttet eller slettet</string>
+    <string name="invalid_backup">Ugyldig sikkerhetskopi</string>
+    <string name="imported_backup">Importert sikkerhetskopi</string>
+    <string name="exporting_backup">Eksporterer sikkerhetskopi</string>
+    <string name="importing_backup">Importerer sikkerhetskopi</string>
+    <string name="calculating">Beregner…</string>
 
     <string name="export_backup">Eksportér sikkerhetskopi</string>
     <string name="import_backup">Importér sikkerhetskopi</string>
@@ -115,4 +122,27 @@
     <string name="libraries">Tredjepartsbiblioteker</string>
     <string name="rate">Vurder denne appen</string>
     <string name="send_feedback">Send tilbakemelding</string>
+
+    <!-- Widget -->
+    <string name="single_note_or_list">Enkelt notat eller liste</string>
+    <string name="select_note">Velg notat</string>
+
+    <!-- Images -->
+    <string name="adding_images">Legger til bilder</string>
+    <string name="deleting_images">Sletter bilder</string>
+    <string name="invalid_image">Ugyldig bilde</string>
+    <string name="error_while_renaming_image">Feil under endring av bildenavn</string>
+    <string name="image_format_not_supported">Bildeformatet er ikke støttet</string>
+    <string name="delete_image_forever">Vil du slette bildet for godt?</string>
+    <string name="cant_load_image">Kan ikke laste inn bildet. Det kan ha blitt flyttet eller slettet</string>
+    <string name="unknown_name">Ukjent navn</string>
+    <string name="unknown_error">Ukjent feil</string>
+    <string name="insert_an_sd_card_images">Sett inn et SD-kort for å legge til bilder</string>
+    <string name="please_grant_notally_notification">Gi Notally tillatelse til å sende varsler. Dette brukes for å vise fremdriften hvis handlinger som å slette bilder eller importere sikkerhetskopier tar tid</string>
+
+    <plurals name="cant_add_images">
+        <item quantity="one">Kan ikke legge til %d bilde</item>
+        <item quantity="other">Kan ikke legge til %d bilder</item>
+    </plurals>
+
 </resources>

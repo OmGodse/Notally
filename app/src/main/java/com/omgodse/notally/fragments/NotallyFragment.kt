@@ -85,7 +85,7 @@ abstract class NotallyFragment : Fragment(), ItemListener {
         if (model.actionMode.selectedNotes.contains(id)) {
             model.actionMode.remove(id)
         } else model.actionMode.add(id, baseNote)
-        adapter?.notifyItemChanged(position)
+        adapter?.notifyItemChanged(position, 0)
     }
 
 

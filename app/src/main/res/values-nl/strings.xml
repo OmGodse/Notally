@@ -27,12 +27,13 @@
     <string name="others">Anders</string>
 
     <!-- Chooser dialog hints -->
-    <string name="view_note">Notitie bekijken…</string>
+    <string name="view_note">Notitie bekijken</string>
 
     <!-- Dialogs -->
     <string name="save">Opslaan</string>
     <string name="edit">Bewerken</string>
     <string name="cancel">Annuleren</string>
+    <string name="continue_">Doorgaan</string>
     <string name="open_link">Open link</string>
     <string name="make_list">Maak een lijst</string>
     <string name="take_note">Maak een Notitie</string>
@@ -45,6 +46,7 @@
     <string name="delete_label">Label verwijderen?</string>
     <string name="create_new">Er zijn nog geen labels. Nieuw label toevoegen?</string>
     <string name="delete_all_notes">Alle notities verwijderen?</string>
+    <string name="delete_selected_notes">Geselecteerde notities verwijderen?</string>
     <string name="delete_note_forever">Notitie definitief verwijderen?</string>
     <string name="your_notes_associated">Notities die aan dit label zijn gekoppeld, worden niet verwijderd</string>
 
@@ -67,16 +69,14 @@
     <string name="saved_to_notally">Opgeslagen in Notally</string>
     <string name="empty_note">Lege notitie</string>
     <string name="empty_list">Lege lijst</string>
+    <string name="select_labels">Selecteer labels</string>
 
-     <!-- Messages -->
+    <!-- Messages -->
     <string name="cant_open_link">Kan link niet openen</string>
-    <string name="invalid_image">Afbeelding ongeldig</string>
-    <string name="invalid_backup">Backup ongeldig</string>
-    <string name="imported_backup">Backup geïmporteerd</string>    
     <string name="something_went_wrong">Er is iets fout gegaan. Probeer het opnieuw.</string>
-    <string name="image_format_not_supported">Afbeelding formaat wordt niet ondersteund</string>
     <string name="install_an_email">Installeer een email app om de feedback te versturen</string>
     <string name="install_a_browser">Installeer een web browser om deze link te openen</string>
+    <string name="cant_find_note">Kan notitie niet vinden. Misschien is deze verwijderd</string>
 
     <!-- Settings Page -->
     <string name="appearance">Uiterlijk</string>
@@ -97,24 +97,29 @@
     <string name="small">Klein</string>
     <string name="medium">Gemiddeld</string>
     <string name="large">Groot</string>
-    
+
     <string name="content_density">Inhoudsdichtheid</string>
     <string name="max_items_to_display">Maximum aantal items dat in de lijst kan worden weergegeven</string>
-    <string name="max_lines_to_display">Maximum aantal regels in de notitie weer geven</string>
+    <string name="max_lines_to_display">Maximum aantal regels in de notitie weergeven</string>
+    <string name="max_lines_to_display_title">Maximum aantal regel in de titel weergeven</string>
 
-    <string name="backup">Back-up</string>
-
-    <!-- Auto backup -->
+    <!-- Backup -->
+    <string name="backup">Backup</string>
     <string name="auto_backup">Automatische backup</string>
     <string name="tap_to_set_up">Tap om te configureren</string>
     <string name="notes_will_be">Notities worden elke dag gebackupped op het interne opslagmedium in uw apparaat.\n\nMogelijk werkt dit niet wanneer energie besparing is geactiveerd</string>
     <string name="choose_folder">Kies een map</string>
-    <string name="disable_auto_backup">Deactiveer automatische backup</string>
+    <string name="disable_auto_backup">Deactiveer automatische back-up</string>
     <string name="choose_another_folder">Kies een andere map</string>
     <string name="cant_find_folder">Kan de map niet vinden. Mogelijk is deze verplaatst of verwijderd</string>
+    <string name="invalid_backup">Backup ongeldig</string>
+    <string name="imported_backup">Backup geïmporteerd</string>    
+    <string name="exporting_backup">Backup aan het exporteren</string>
+    <string name="importing_backup">Backup aan het importeren</string>
+    <string name="calculating">Berekenen...</string>
 
-    <string name="export_backup">Back-up exporteren</string>
-    <string name="import_backup">Back-up importeren</string>
+    <string name="export_backup">Backup exporteren</string>
+    <string name="import_backup">Backup importeren</string>
 
     <string name="about">Over</string>
     <string name="libraries">Bibliotheken</string>
@@ -122,6 +127,25 @@
     <string name="send_feedback">Stuur feedback</string>
 
     <!-- Widget -->
-    <string name="single_note_or_list">Enkele notitie</string>
+    <string name="single_note_or_list">Enkele notitie of lijst</string>
     <string name="select_note">Selecteer notitie</string>
+
+    <!-- Images -->
+    <string name="adding_images">Afbeeldingen toevoegen</string>
+    <string name="deleting_images">Afbeeldingen verwijderen</string>
+    <string name="invalid_image">Afbeelding ongeldig</string>
+    <string name="error_while_renaming_image">Foutmelding tijdens hernoemen afbeelding</string>
+    <string name="image_format_not_supported">Afbeelding formaat wordt niet ondersteund</string>
+    <string name="delete_image_forever">Afbeelding definitief verwijderen?</string>
+    <string name="cant_load_image">Afbeelding kan niet geladen worden. Misschien is deze verplaatst of verwijderd</string>
+    <string name="unknown_name">Onbekende naam</string>
+    <string name="unknown_error">Onbekende foutmelding</string>
+    <string name="insert_an_sd_card">Plaats een SD kaart om afbeeldingen toe te voegen</string>
+    <string name="please_grant_notally">Geef Notally rechten om notificaties te versturen. Dit wordt gebruikt om de voortgang weer te geven wanneer bijvoorbeeld verwijderen afbeeldingen of importeren van backups langer duurt</string>
+
+    <plurals name="cant_add_images">
+        <item quantity="one">Kan %d afbeelding niet toevoegen</item>
+        <item quantity="other">Kan %d afbeeldingen niet toevoegen</item>
+    </plurals>
+
 </resources>

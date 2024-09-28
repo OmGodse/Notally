@@ -1,9 +1,9 @@
 package com.omgodse.notally.viewmodels
 
 import android.app.Application
-import android.database.sqlite.SQLiteConstraintException
 import android.graphics.BitmapFactory
 import android.graphics.Typeface
+import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.text.Editable
 import android.text.SpannableStringBuilder
@@ -19,8 +19,8 @@ import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.omgodse.notally.AttachmentDeleteService
 import com.omgodse.notally.Cache
-import com.omgodse.notally.ImageDeleteService
 import com.omgodse.notally.R
 import com.omgodse.notally.image.Event
 import com.omgodse.notally.image.ImageError
@@ -30,11 +30,11 @@ import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.miscellaneous.applySpans
 import com.omgodse.notally.preferences.BetterLiveData
 import com.omgodse.notally.preferences.Preferences
+import com.omgodse.notally.room.Audio
 import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Color
 import com.omgodse.notally.room.Folder
 import com.omgodse.notally.room.Image
-import com.omgodse.notally.room.Label
 import com.omgodse.notally.room.ListItem
 import com.omgodse.notally.room.NotallyDatabase
 import com.omgodse.notally.room.SpanRepresentation
@@ -44,12 +44,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.io.FileInputStream
 import java.util.UUID
 
 class NotallyModel(private val app: Application) : AndroidViewModel(app) {
 
     private val database = NotallyDatabase.getDatabase(app)
-    private val labelDao = database.getLabelDao()
     private val baseNoteDao = database.getBaseNoteDao()
 
     val textSize = Preferences.getInstance(app).textSize.value
@@ -73,11 +73,59 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
 
     val items = ArrayList<ListItem>()
     val images = BetterLiveData<List<Image>>(emptyList())
+    val audios = BetterLiveData<List<Audio>>(emptyList())
 
     val addingImages = MutableLiveData<ImageProgress>()
     val eventBus = MutableLiveData<Event<List<ImageError>>>()
 
-    var externalRoot = IO.getExternalImagesDirectory(app)
+    var imageRoot = IO.getExternalImagesDirectory(app)
+    var audioRoot = IO.getExternalAudioDirectory(app)
+
+    fun addAudio() {
+        viewModelScope.launch {
+            val audio = withContext(Dispatchers.IO) {
+                /*
+                Regenerate because the directory may have been deleted between the time of activity creation
+                and audio recording
+                */
+                audioRoot = IO.getExternalAudioDirectory(app)
+                requireNotNull(audioRoot) { "audioRoot is null" }
+
+                /*
+                If we have reached this point, an SD card (emulated or real) exists and audioRoot
+                is not null. audioRoot.exists() can be false if the folder `Audio` has been deleted after
+                the previous line, but audioRoot itself can't be null
+                */
+                val original = IO.getTempAudioFile(app)
+                val name = "${UUID.randomUUID()}.m4a"
+                val final = File(audioRoot, name)
+                val input = FileInputStream(original)
+                IO.copyStreamToFile(input, final)
+
+                original.delete()
+
+                val retriever = MediaMetadataRetriever()
+                retriever.setDataSource(final.path)
+                val duration = requireNotNull(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION))
+                Audio(name, duration.toLong(), System.currentTimeMillis())
+            }
+            val copy = ArrayList(audios.value)
+            copy.add(audio)
+            audios.value = copy
+            updateAudios()
+        }
+    }
+
+    fun deleteAudio(audio: Audio) {
+        viewModelScope.launch {
+            val copy = ArrayList(audios.value)
+            copy.remove(audio)
+            audios.value = copy
+            updateAudios()
+            AttachmentDeleteService.start(app, arrayListOf(audio))
+        }
+    }
+
 
     fun addImages(uris: Array<Uri>) {
         val unknownName = app.getString(R.string.unknown_name)
@@ -101,16 +149,15 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
                         Regenerate because the directory may have been deleted between the time of activity creation
                         and image addition
                          */
-                        externalRoot = IO.getExternalImagesDirectory(app)
+                        imageRoot = IO.getExternalImagesDirectory(app)
+                        requireNotNull(imageRoot) { "externalRoot is null" }
 
                         /*
                         If we have reached this point, an SD card (emulated or real) exists and externalRoot
                         is not null. externalRoot.exists() can be false if the folder `Images` has been deleted after
                         the previous line, but externalRoot itself can't be null
-                         */
-                        requireNotNull(externalRoot) { "externalRoot is null" }
-
-                        val temp = File(externalRoot, "Temp")
+                        */
+                        val temp = File(imageRoot, "Temp")
 
                         val inputStream = requireNotNull(app.contentResolver.openInputStream(uri))
                         IO.copyStreamToFile(inputStream, temp)
@@ -162,7 +209,7 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
             copy.removeAll(list)
             images.value = copy
             updateImages()
-            ImageDeleteService.start(app, list)
+            AttachmentDeleteService.start(app, list)
         }
     }
 
@@ -206,6 +253,7 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
                 items.addAll(baseNote.items)
 
                 images.value = baseNote.images
+                audios.value = baseNote.audios
             } else {
                 createBaseNote()
                 Toast.makeText(app, R.string.cant_find_note, Toast.LENGTH_LONG).show()
@@ -221,9 +269,9 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
     suspend fun deleteBaseNote() {
         withContext(Dispatchers.IO) { baseNoteDao.delete(id) }
         WidgetProvider.sendBroadcast(app, longArrayOf(id))
-        if (images.value.isNotEmpty()) {
-            val copy = ArrayList(images.value)
-            ImageDeleteService.start(app, copy)
+        val attachments = ArrayList(images.value + audios.value)
+        if (attachments.isNotEmpty()) {
+            AttachmentDeleteService.start(app, attachments)
         }
     }
 
@@ -235,28 +283,16 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
         withContext(Dispatchers.IO) { baseNoteDao.updateImages(id, images.value) }
     }
 
-
-    fun insertLabel(label: Label, onComplete: (success: Boolean) -> Unit) {
-        viewModelScope.launch {
-            val success = try {
-                withContext(Dispatchers.IO) { labelDao.insert(label) }
-                true
-            } catch (exception: SQLiteConstraintException) {
-                false
-            }
-            onComplete(success)
-        }
+    private suspend fun updateAudios() {
+        withContext(Dispatchers.IO) { baseNoteDao.updateAudios(id, audios.value) }
     }
-
-
-    suspend fun getAllLabels() = withContext(Dispatchers.IO) { labelDao.getArrayOfAll() }
 
 
     private fun getBaseNote(): BaseNote {
         val spans = getFilteredSpans(body)
         val body = this.body.trimEnd().toString()
         val items = this.items.filter { item -> item.body.isNotEmpty() }
-        return BaseNote(id, type, folder, color, title, pinned, timestamp, labels, body, spans, items, images.value)
+        return BaseNote(id, type, folder, color, title, pinned, timestamp, labels, body, spans, items, images.value, audios.value)
     }
 
     private fun getFilteredSpans(spanned: Spanned): ArrayList<SpanRepresentation> {

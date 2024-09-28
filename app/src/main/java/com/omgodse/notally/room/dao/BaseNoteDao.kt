@@ -9,6 +9,7 @@ import androidx.room.Query
 import androidx.room.RawQuery
 import androidx.room.Update
 import androidx.sqlite.db.SupportSQLiteQuery
+import com.omgodse.notally.room.Audio
 import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Color
 import com.omgodse.notally.room.Folder
@@ -58,8 +59,12 @@ interface BaseNoteDao {
     @Query("SELECT images FROM BaseNote WHERE id = :id")
     fun getImages(id: Long): String
 
+
     @Query("SELECT images FROM BaseNote")
     fun getAllImages(): List<String>
+
+    @Query("SELECT audios FROM BaseNote")
+    fun getAllAudios(): List<String>
 
 
     @Query("SELECT id FROM BaseNote WHERE folder = 'DELETED'")
@@ -67,6 +72,9 @@ interface BaseNoteDao {
 
     @Query("SELECT images FROM BaseNote WHERE folder = 'DELETED'")
     suspend fun getDeletedNoteImages(): List<String>
+
+    @Query("SELECT audios FROM BaseNote WHERE folder = 'DELETED'")
+    suspend fun getDeletedNoteAudios(): List<String>
 
 
     @Query("UPDATE BaseNote SET folder = :folder WHERE id IN (:ids)")
@@ -87,6 +95,9 @@ interface BaseNoteDao {
 
     @Query("UPDATE BaseNote SET images = :images WHERE id = :id")
     suspend fun updateImages(id: Long, images: List<Image>)
+
+    @Query("UPDATE BaseNote SET audios = :audios WHERE id = :id")
+    suspend fun updateAudios(id: Long, audios: List<Audio>)
 
 
     /**

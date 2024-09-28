@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fragment Titles -->
+    <string name="notes">Zapiski</string>
+    <string name="labels">Oznake</string>
+    <string name="deleted">Smetnjak</string>
+    <string name="archived">Arhiv</string>
+    <string name="settings">Nastavitve</string>
+
+    <!-- Menu Options -->
+    <string name="share">Deli</string>
+    <string name="filter">Filter</string>
+    <string name="search">Iskanje</string>
+    <string name="delete">Izbriši</string>
+    <string name="restore">Obnovi</string>
+    <string name="archive">Arhiviraj</string>
+    <string name="unarchive">Vzemi iz arhiva</string>
+    <string name="add_images">Dodaj slike</string>
+    <string name="delete_all">Izbriši vse</string>
+    <string name="change_color">Spremeni barvo</string>
+    <string name="delete_forever">Dokončno izbriši</string>
+
+    <!-- Pinning -->
+    <string name="pin">Pripni</string>
+    <string name="unpin">Odpni</string>
+    <string name="pinned">Pripeto</string>
+    <string name="others">Drugi</string>
+
+    <!-- Chooser dialog hints -->
+    <string name="view_note">Ogled zapiska</string>
+
+    <!-- Dialogs -->
+    <string name="save">Shrani</string>
+    <string name="edit">Uredi</string>
+    <string name="cancel">Prekliči</string>
+    <string name="continue_">Nadaljuj</string>
+    <string name="open_link">Odpri povezavo</string>
+    <string name="make_list">Nov seznam</string>
+    <string name="take_note">Nov zapisek</string>
+    <string name="add_label">Ustvari novo oznako</string>
+    <string name="export">Izvozi</string>
+    <string name="view_file">Ogled datoteke</string>
+    <string name="save_to_device">Shrani v napravo</string>
+    <string name="edit_label">Uredi oznako</string>
+    <string name="label_exists">Oznaka že obstaja</string>
+    <string name="delete_label">Izbriši oznako?</string>
+    <string name="create_new">Nimate oznak. Ustvari novo?</string>
+    <string name="delete_all_notes">Izbriši vse zapiske?</string>
+    <string name="delete_selected_notes">Izbriši izbrane zapiske?</string>
+    <string name="delete_note_forever">Dokončno izbriši zapisek?</string>
+    <string name="your_notes_associated">Zapiski povezani z oznako ne bodo izbrisani.</string>
+
+    <!-- Lists and Notes -->
+    <string name="note">Zapisek</string>
+    <string name="item">Element</string>
+    <string name="date">Datum</string>
+    <string name="title">Naslov</string>
+    <string name="add_item">Dodaj element seznama</string>
+    <string name="drag_handle">Ročica za vlečenje</string>
+    <string name="bold">Krepko</string>
+    <string name="link">Povezava</string>
+    <string name="italic">Ležeče</string>
+    <string name="strikethrough">Prečrtano</string>
+    <string name="clear_formatting">Počisti oblikovanje</string>
+    <string name="monospace">Enoprostorno besedilo</string>
+
+    <!-- Miscellaneous -->
+    <string name="saved_to_device">Shranjeno v napravo</string>
+    <string name="saved_to_notally">Shranjeno v Notally</string>
+    <string name="empty_note">Prazen zapisek</string>
+    <string name="empty_list">Prazen seznam</string>
+    <string name="select_labels">Izberi oznake</string>
+
+    <!-- Messages -->
+    <string name="cant_open_link">Povezave ni mogoče odpreti</string>
+    <string name="something_went_wrong">Prišlo je do napake. Prosimo poskusite ponovno.</string>
+    <string name="install_an_email">Za pošiljanje povratnih informacij potrebujete odjemalca e-pošte.</string>
+    <string name="install_a_browser">Za odpiranje povezave potrebujete brskalnik.</string>
+    <string name="cant_find_note">Zapisek ne obstaja. Morda je bil izbrisan.</string>
+
+    <!-- Settings Page -->
+    <string name="appearance">Videz</string>
+
+    <string name="view">Pogled</string>
+    <string name="list">Seznam</string>
+    <string name="grid">Mreža</string>
+
+    <string name="theme">Tema</string>
+    <string name="dark">Temno</string>
+    <string name="light">Svetlo</string>
+    <string name="follow_system">Privzeto v sistemu</string>
+
+    <string name="date_format">Zapis datuma</string>
+    <string name="none">Brez</string>
+
+    <string name="text_size">Velikost pisave</string>
+    <string name="small">Majhna</string>
+    <string name="medium">Srednja</string>
+    <string name="large">Velika</string>
+
+    <string name="content_density">Gostota vsebine</string>
+    <string name="max_items_to_display">Največje število prikazanih elementov v seznamih</string>
+    <string name="max_lines_to_display">Največje število prikazanih vrstic v zapiskih</string>
+    <string name="max_lines_to_display_title">Največje število prikazanih vrstic v naslovih zapiskov</string>
+
+    <!-- Backup -->
+    <string name="backup">Varnostno kopiranje</string>
+    <string name="auto_backup">Samodejno kopiranje</string>
+    <string name="tap_to_set_up">Pritisnite za nastavitev</string>
+    <string name="notes_will_be">Zapiski bodo dnevno varnostno kopirani v notranji pomnilnik vaše naprave.\n\nKopiranje morda ne bo delovalo v kolikor ste omogočili varčevanje z energijo baterije.</string>
+    <string name="choose_folder">Izberite mapo</string>
+    <string name="disable_auto_backup">Onemogoči samodejno kopiranje</string>
+    <string name="choose_another_folder">Izberite drugo mapo</string>
+    <string name="cant_find_folder">Mapa ne obstaja. Morda je bila premaknjena ali izbrisana.</string>
+    <string name="invalid_backup">Neveljavna varnostna kopija</string>
+    <string name="imported_backup">Varnostna kopija je bila uvožena</string>
+    <string name="exporting_backup">Izvažanje varnostne kopije</string>
+    <string name="importing_backup">Uvažanje varnostne kopije</string>
+    <string name="calculating">Izračun…</string>
+
+    <string name="export_backup">Izvozi kopijo podatkov</string>
+    <string name="import_backup">Uvozi kopijo podatkov</string>
+
+    <string name="about">O aplikaciji</string>
+    <string name="libraries">Knjižnice</string>
+    <string name="rate">Oceni aplikacijo</string>
+    <string name="send_feedback">Pošlji povratne informacije</string>
+
+    <!-- Widget -->
+    <string name="single_note_or_list">Posamezen zapisek ali seznam</string>
+    <string name="select_note">Izbira zapiska</string>
+
+    <!-- Images -->
+    <string name="adding_images">Dodajanje slik</string>
+    <string name="deleting_images">Brisanje slik</string>
+    <string name="invalid_image">Neveljavna slika</string>
+    <string name="error_while_renaming_image">Napaka pri preimenovanju slike</string>
+    <string name="image_format_not_supported">Ta vrsta slike ni podprta</string>
+    <string name="delete_image_forever">Dokončno izbriši sliko?</string>
+    <string name="cant_load_image">Slike ni mogoče odpreti. Morda je bila premaknjena ali izbrisana.</string>
+    <string name="unknown_name">Neznano ime</string>
+    <string name="unknown_error">Neznana napaka</string>
+    <string name="insert_an_sd_card_images">Za dodajanje slik vstavite kartico SD</string>
+    <string name="please_grant_notally_notification">Prosimo dovolite aplikaciji Notally da vas obvešča o napredku operacij kot sta brisanje slik in uvažanje varnostnih kopij.</string>
+
+    <plurals name="cant_add_images">
+        <item quantity="one">%d slika ni bila dodana.</item>
+        <item quantity="two">%d sliki nista bili dodani.</item>
+        <item quantity="few">%d slike niso bile dodane.</item>
+        <item quantity="other">%d slik ni bilo dodanih.</item>
+    </plurals>
+
+</resources>
