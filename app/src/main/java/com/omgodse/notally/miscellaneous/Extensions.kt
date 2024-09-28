@@ -155,7 +155,6 @@ val Int.dp: Int
  * @param updateModel Function to update the model. Is called on any text changes and on undo/redo.
  */
 fun EditText.createListTextWatcherWithHistory(
-    changeHistory: ChangeHistory,
     listManager: ListManager,
     positionGetter: () -> Int,
 ) = object : TextWatcher {
@@ -169,20 +168,14 @@ fun EditText.createListTextWatcherWithHistory(
     }
 
     override fun afterTextChanged(s: Editable?) {
-        val textBefore = currentTextBefore
-        val textAfter = requireNotNull(s).toString()
-        val itemPosition = positionGetter.invoke()
-        listManager.changeText(itemPosition, textAfter)
-        changeHistory.push(
-            ListEditTextChange(
-                this@createListTextWatcherWithHistory,
-                itemPosition,
-                textBefore,
-                textAfter,
-                this,
-                listManager
-            )
+        listManager.changeText(
+            this@createListTextWatcherWithHistory,
+            this,
+            positionGetter.invoke(),
+            currentTextBefore,
+            requireNotNull(s).toString()
         )
+
     }
 }
 
@@ -221,32 +214,6 @@ fun EditText.createTextWatcherWithHistory(
             )
         }
     }
-
-/**
- * Set an OnCheckedChangeListener for CheckBox that automatically adds changes to ChangeHistory.
- * @param updateModel Function to update the underlying model, taking in the position of the item in the list + new isChecked value.
- * Returns the position of the item in the list after the update.
- */
-fun CheckBox.setOnCheckedChangeListenerWithHistory(
-    positionGetter: () -> Int,
-    changeHistory: ChangeHistory,
-    updateModel: (position: Int, isChecked: Boolean) -> Int
-) {
-    setOnCheckedChangeListener { _, isChecked ->
-        val currentPosition = positionGetter.invoke()
-        val positionAfter = updateModel.invoke(currentPosition, isChecked)
-        changeHistory.push(object : ListBooleanChange(isChecked, currentPosition, positionAfter) {
-            override fun update(position: Int, value: Boolean, isUndo: Boolean) {
-                updateModel.invoke(position, value)
-            }
-
-            override fun toString(): String {
-                return "CheckedChange pos: $position positionAfter: $positionAfter isChecked: $isChecked"
-            }
-
-        })
-    }
-}
 
 fun MutableList<ListItem>.moveRangeAndNotify(
     fromIndex: Int,

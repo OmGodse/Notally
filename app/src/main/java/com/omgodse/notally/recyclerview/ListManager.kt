@@ -1,9 +1,18 @@
 package com.omgodse.notally.recyclerview
 
+import android.text.TextWatcher
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListUpdateCallback
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.omgodse.notally.changehistory.ChangeHistory
+import com.omgodse.notally.changehistory.ListAddChange
+import com.omgodse.notally.changehistory.ListBooleanChange
+import com.omgodse.notally.changehistory.ListDeleteChange
+import com.omgodse.notally.changehistory.ListEditTextChange
+import com.omgodse.notally.changehistory.ListMoveChange
 import com.omgodse.notally.miscellaneous.CheckedSorter
 import com.omgodse.notally.miscellaneous.addAndNotify
 import com.omgodse.notally.miscellaneous.isChildOf
@@ -13,9 +22,14 @@ import com.omgodse.notally.preferences.Preferences
 import com.omgodse.notally.recyclerview.viewholder.MakeListVH
 import com.omgodse.notally.room.ListItem
 
+/**
+ * Should be use for all changes to the items list..
+ * Notifies the RecyclerView.Adapter and pushes according changes to the ChangeHistory
+ */
 class ListManager(
     private val items: MutableList<ListItem>,
     private val recyclerView: RecyclerView,
+    private val changeHistory: ChangeHistory,
     private val preferences: Preferences,
     private val inputMethodManager: InputMethodManager
 ) {
@@ -30,7 +44,8 @@ class ListManager(
             items.isNotEmpty() && items.last().isChild,
             null,
             mutableListOf()
-        )
+        ),
+        pushChange: Boolean = true
     ) {
         val listItem =
             ListItem(
@@ -43,6 +58,9 @@ class ListManager(
         items.addAndNotify(position, listItem, adapter)
         for ((idx, child) in item.children.withIndex()) {
             items.addAndNotify(position + idx + 1, child, adapter)
+        }
+        if (pushChange) {
+            changeHistory.push(ListAddChange(position, this))
         }
         recyclerView.post {
             val viewHolder = recyclerView.findViewHolderForAdapterPosition(position) as MakeListVH?
@@ -58,7 +76,11 @@ class ListManager(
         }
     }
 
-    internal fun delete(position: Int = items.size - 1, force: Boolean): ListItem? {
+    internal fun delete(
+        position: Int = items.size - 1,
+        force: Boolean,
+        pushChange: Boolean = true
+    ): ListItem? {
         var listItem: ListItem? = null
         if (force || position > 0) {
             listItem = items.removeAt(position)
@@ -71,6 +93,9 @@ class ListManager(
             } else if (items.size > 1) {
                 this.moveFocusToNext(position)
             }
+        }
+        if (listItem != null && pushChange) {
+            changeHistory.push(ListDeleteChange(position, listItem, this))
         }
         return listItem
     }
@@ -96,7 +121,12 @@ class ListManager(
         return true
     }
 
-    internal fun move(positionFrom: Int, positionTo: Int, byDrag: Boolean): Boolean {
+    internal fun move(
+        positionFrom: Int,
+        positionTo: Int,
+        byDrag: Boolean,
+        pushChange: Boolean = true
+    ) {
         val itemTo = items[positionTo]
         var itemFrom = items[positionFrom]
 
@@ -128,8 +158,9 @@ class ListManager(
             itemFrom.isChild = false
             adapter.notifyItemChanged(positionTo)
         }
-
-        return isChildBefore
+        if (pushChange) {
+            changeHistory.push(ListMoveChange(positionFrom, positionTo, isChildBefore, this))
+        }
     }
 
     internal fun revertMove(
@@ -164,14 +195,34 @@ class ListManager(
         this.moveToNextInternal(position)
     }
 
-    internal fun changeText(position: Int, text: String) {
+    internal fun changeText(
+        editText: EditText,
+        listener: TextWatcher,
+        position: Int,
+        textBefore: String,
+        textAfter: String,
+        pushChange: Boolean = true
+    ) {
         val item = items[position]
-        item.body = text
+        item.body = textAfter
+        if (pushChange) {
+            changeHistory.push(
+                ListEditTextChange(
+                    editText,
+                    position,
+                    textBefore,
+                    textAfter,
+                    listener,
+                    this
+                )
+            )
+        }
     }
 
     internal fun changeChecked(
         position: Int,
-        checked: Boolean
+        checked: Boolean,
+        pushChange: Boolean = true
     ): Int {
         val item = items[position]
         if (item.checked == checked) {
@@ -183,6 +234,9 @@ class ListManager(
         if (item.isChild) {
             item.checked = checked
             adapter.notifyItemChanged(position)
+            if (pushChange) {
+                pushChangeCheckChange(position, position, checked)
+            }
             return position
         }
         if (!checked) {
@@ -190,11 +244,40 @@ class ListManager(
         }
         val (updatedItem, updateList) = checkWithAllChildren(position, checked)
         sortAndUpdateItems(updateList)
-        return items.indexOf(updatedItem)
+
+        val positionAfter = items.indexOf(updatedItem)
+        if (pushChange) {
+            pushChangeCheckChange(position, positionAfter, checked)
+        }
+        return positionAfter
     }
 
-    internal fun changeIsChild(position: Int, isChild: Boolean) {
+    private fun pushChangeCheckChange(position: Int, positionAfter: Int, checked: Boolean) {
+        changeHistory.push(object : ListBooleanChange(checked, position, positionAfter) {
+            override fun update(position: Int, value: Boolean, isUndo: Boolean) {
+                changeChecked(position, value, pushChange = false)
+            }
+
+            override fun toString(): String {
+                return "CheckedChange pos: $position positionAfter: $positionAfter isChecked: $checked"
+            }
+
+        })
+    }
+
+    internal fun changeIsChild(position: Int, isChild: Boolean, pushChange: Boolean = true) {
         updateChildren(position, isChild)
+        adapter.notifyItemChanged(position)
+        if (pushChange) {
+            changeHistory.push(object : ListBooleanChange(isChild, position) {
+                override fun update(position: Int, value: Boolean, isUndo: Boolean) {
+                    changeIsChild(position, value, pushChange = false)
+//                    val viewHolder =
+//                        recyclerView.findViewHolderForAdapterPosition(position) as MakeListVH?
+//                    viewHolder?.updateSwipe(value, position == 0)
+                }
+            })
+        }
     }
 
     internal fun checkAllItems(checked: Boolean) {
@@ -248,8 +331,10 @@ class ListManager(
         val parentAndIndex = findParentItem(position) ?: return
         if (isChild) {
             parentAndIndex.first.children.add(parentAndIndex.second, item)
+            parentAndIndex.first.children.addAll(item.children)
+            item.children.clear()
         } else {
-            parentAndIndex.first.children.remove(item)
+            parentAndIndex.first.children.clear()
         }
     }
 
@@ -306,7 +391,11 @@ class ListManager(
             if (viewHolder.binding.CheckBox.isChecked) {
                 moveToNextInternal(currentPosition + 1)
             } else viewHolder.binding.EditText.requestFocus()
-        } else add()
+        } else add(pushChange = false)
+    }
+
+    fun getItem(position: Int): ListItem {
+        return items[position]
     }
 
     companion object {

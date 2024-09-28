@@ -7,11 +7,11 @@ class ListAddChange(
     private val listManager: ListManager
 ) : ListChange(position) {
     override fun redo() {
-        listManager.add(position)
+        listManager.add(position, pushChange = false)
     }
 
     override fun undo() {
-        listManager.delete(position, true)
+        listManager.delete(position, true, pushChange = false)
     }
 
     override fun toString(): String {

@@ -3,20 +3,20 @@ package com.omgodse.notally.changehistory
 import com.omgodse.notally.recyclerview.ListManager
 
 class ListMoveChange(
-    fromPosition: Int,
-    private val toPosition: Int,
+    positionFrom: Int,
+    private val positionTo: Int,
     private val isChildBefore: Boolean,
     private val listManager: ListManager
-) : ListChange(fromPosition) {
+) : ListChange(positionFrom) {
     override fun redo() {
-        listManager.move(position, toPosition, false)
+        listManager.move(position, positionTo, false, pushChange = false)
     }
 
     override fun undo() {
-        listManager.revertMove(position, toPosition, isChildBefore)
+        listManager.revertMove(position, positionTo, isChildBefore)
     }
 
     override fun toString(): String {
-        return "MoveChange from: $position to: $toPosition isChildBefore: $isChildBefore"
+        return "MoveChange from: $position to: $positionTo isChildBefore: $isChildBefore"
     }
 }

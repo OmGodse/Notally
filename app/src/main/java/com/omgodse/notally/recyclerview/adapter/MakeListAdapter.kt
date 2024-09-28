@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.omgodse.notally.databinding.RecyclerListItemBinding
-import com.omgodse.notally.changehistory.ChangeHistory
 import com.omgodse.notally.preferences.Preferences
 import com.omgodse.notally.recyclerview.DragCallback
 import com.omgodse.notally.recyclerview.ListManager
@@ -15,19 +14,17 @@ import com.omgodse.notally.room.ListItem
 class MakeListAdapter(
     private val textSize: String,
     elevation: Float,
-    val list: ArrayList<ListItem>,
+    private val list: ArrayList<ListItem>,
     private val preferences: Preferences,
     private val listManager: ListManager,
-    private val changeHistory: ChangeHistory
 ) : RecyclerView.Adapter<MakeListVH>() {
 
-    private val callback = DragCallback(elevation, this, listManager, changeHistory)
+    private val callback = DragCallback(elevation, listManager)
     private val touchHelper = ItemTouchHelper(callback)
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         touchHelper.attachToRecyclerView(recyclerView)
     }
-
 
     override fun getItemCount() = list.size
 
@@ -40,7 +37,7 @@ class MakeListAdapter(
         val inflater = LayoutInflater.from(parent.context)
         val binding = RecyclerListItemBinding.inflate(inflater, parent, false)
         binding.root.background = parent.background
-        return MakeListVH(binding, listManager, changeHistory, touchHelper, textSize)
+        return MakeListVH(binding, listManager, touchHelper, textSize)
     }
 
 }

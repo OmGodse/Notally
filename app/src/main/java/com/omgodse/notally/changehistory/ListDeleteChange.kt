@@ -9,11 +9,11 @@ class ListDeleteChange(
     private val listManager: ListManager
 ) : ListChange(position) {
     override fun redo() {
-        listManager.delete(position, true)
+        listManager.delete(position, true, pushChange = false)
     }
 
     override fun undo() {
-        listManager.add(position, item)
+        listManager.add(position, item, pushChange = false)
     }
 
     override fun toString(): String {

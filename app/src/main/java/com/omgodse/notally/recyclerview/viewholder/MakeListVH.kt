@@ -8,13 +8,8 @@ import android.widget.TextView.INVISIBLE
 import android.widget.TextView.VISIBLE
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.omgodse.notally.changehistory.ListAddChange
-import com.omgodse.notally.changehistory.ListBooleanChange
 import com.omgodse.notally.databinding.RecyclerListItemBinding
-import com.omgodse.notally.changehistory.ChangeHistory
-import com.omgodse.notally.changehistory.ListDeleteChange
 import com.omgodse.notally.miscellaneous.createListTextWatcherWithHistory
-import com.omgodse.notally.miscellaneous.setOnCheckedChangeListenerWithHistory
 import com.omgodse.notally.miscellaneous.setOnNextAction
 import com.omgodse.notally.preferences.ListItemSorting
 import com.omgodse.notally.preferences.TextSize
@@ -26,7 +21,6 @@ import com.zerobranch.layout.SwipeLayout.SwipeActionsListener
 class MakeListVH(
     val binding: RecyclerListItemBinding,
     val listManager: ListManager,
-    val changeHistory: ChangeHistory,
     touchHelper: ItemTouchHelper,
     textSize: String
 ) : RecyclerView.ViewHolder(binding.root) {
@@ -40,11 +34,9 @@ class MakeListVH(
         binding.EditText.setOnNextAction {
             val position = adapterPosition + 1
             listManager.add(position)
-            changeHistory.push(ListAddChange(position, listManager))
         }
 
         editTextWatcher = binding.EditText.createListTextWatcherWithHistory(
-            changeHistory,
             listManager,
             this::getAdapterPosition
         )
@@ -70,7 +62,7 @@ class MakeListVH(
 
         updateDeleteButton(item)
 
-        updateSwipe(item.isChild, firstItem)
+        updateSwipe(item.isChild, !firstItem && !item.checked)
         if (item.checked && autoSort == ListItemSorting.autoSortByChecked) {
             binding.DragHandle.visibility = INVISIBLE
         } else {
@@ -81,9 +73,7 @@ class MakeListVH(
     private fun updateDeleteButton(item: ListItem) {
         binding.Delete.visibility = if (item.checked) VISIBLE else INVISIBLE
         binding.Delete.setOnClickListener {
-            val positionBeforeDelete = adapterPosition
-            val deletedItem = listManager.delete(positionBeforeDelete, true)!!
-            changeHistory.push(ListDeleteChange(positionBeforeDelete, deletedItem, listManager))
+            listManager.delete(adapterPosition, true)
         }
     }
 
@@ -94,17 +84,7 @@ class MakeListVH(
         binding.EditText.addTextChangedListener(editTextWatcher)
         binding.EditText.setOnKeyListener { _, keyCode, event ->
             if (event.action == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_DEL) {
-                val positionBeforeDelete = adapterPosition
-                val deletedItem = listManager.delete(adapterPosition, false)
-                if (deletedItem != null) {
-                    changeHistory.push(
-                        ListDeleteChange(
-                            positionBeforeDelete,
-                            deletedItem,
-                            listManager
-                        )
-                    )
-                }
+                listManager.delete(adapterPosition, false)
             }
             true
         }
@@ -113,42 +93,32 @@ class MakeListVH(
     private fun updateCheckBox(item: ListItem) {
         binding.CheckBox.setOnCheckedChangeListener(null)
         binding.CheckBox.isChecked = item.checked
-        binding.CheckBox.setOnCheckedChangeListenerWithHistory(
-            this::getAdapterPosition,
-            changeHistory
-        ) { position, isChecked ->
-            listManager.changeChecked(position, isChecked)
+        binding.CheckBox.setOnCheckedChangeListener { _, isChecked ->
+            val currentPosition = getAdapterPosition()
+            listManager.changeChecked(currentPosition, isChecked)
         }
     }
 
-    private fun updateSwipe(open: Boolean, firstItem: Boolean) {
+    fun updateSwipe(open: Boolean, canSwipe: Boolean) {
         binding.SwipeLayout.setOnActionsListener(null)
         val swipeActionListener = object : SwipeActionsListener {
             override fun onOpen(direction: Int, isContinuous: Boolean) {
-                val position = adapterPosition
-                listManager.changeIsChild(position, true)
-
-                changeHistory.push(object: ListBooleanChange(true, position) {
-                    override fun update(position: Int, value: Boolean, isUndo: Boolean) {
-                        listManager.changeIsChild(position, value)
-                        updateSwipe(value, firstItem)
-                    }
-                })
+                listManager.changeIsChild(adapterPosition, true)
             }
 
             override fun onClose() {
-                val position = adapterPosition
-                listManager.changeIsChild(position, false)
-                changeHistory.push(object: ListBooleanChange(false, position) {
-                    override fun update(position: Int, value: Boolean, isUndo: Boolean) {
-                        listManager.changeIsChild(position, value)
-                        updateSwipe(value, firstItem)
-                    }
-                })
+                if(canSwipe) {
+                    listManager.changeIsChild(adapterPosition, false)
+                } else {
+                    // TODO: temporary fix for https://github.com/zerobranch/SwipeLayout/issues/15.
+                    //  SwipeLayout.isEnabledSwipe still allows to close the swipe, therefore it resets
+                    //  it immediately.
+                    listManager.changeIsChild(adapterPosition, true, pushChange = false)
+                }
             }
         }
-        binding.SwipeLayout.isEnabledSwipe = !firstItem
 
+        binding.SwipeLayout.isEnabledSwipe = canSwipe
         binding.SwipeLayout.post {
             if (open) {
                 binding.SwipeLayout.openLeft(false)

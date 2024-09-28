@@ -59,7 +59,7 @@ class MakeList : NotallyActivity(Type.LIST) {
 
         if (model.isNewNote) {
             if (model.items.isEmpty()) {
-                listManager.add()
+                listManager.add(pushChange = false)
             }
         }
     }
@@ -68,7 +68,6 @@ class MakeList : NotallyActivity(Type.LIST) {
         super.setupListeners()
         binding.AddItem.setOnClickListener {
             listManager.add()
-            changeHistory.push(ListAddChange(model.items.size, listManager))
         }
     }
 
@@ -78,6 +77,7 @@ class MakeList : NotallyActivity(Type.LIST) {
         listManager = ListManager(
             model.items,
             binding.RecyclerView,
+            changeHistory,
             preferences,
             getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         )
@@ -87,7 +87,6 @@ class MakeList : NotallyActivity(Type.LIST) {
             model.items,
             Preferences.getInstance(application),
             listManager,
-            changeHistory
         )
         binding.RecyclerView.adapter = adapter
         listManager.adapter = adapter
