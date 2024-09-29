@@ -40,7 +40,7 @@ class ListManager(
         item: ListItem = ListItem(
             "",
             false,
-            items.isNotEmpty() && items.last().isChild,
+            items.isNotEmpty() && position > 0 && items[position - 1].isChild,
             null,
             mutableListOf()
         ),
