@@ -360,25 +360,6 @@ class ListManager(
         items.clear()
         items.addAll(newList)
         diffCourses.dispatchUpdatesTo(adapter)
-
-        diffCourses.dispatchUpdatesTo(object : ListUpdateCallback {
-            override fun onInserted(position: Int, count: Int) {
-                println("onInserted pos: $position count: $count")
-            }
-
-            override fun onRemoved(position: Int, count: Int) {
-                println("onRemoved pos: $position count: $count")
-            }
-
-            override fun onMoved(fromPosition: Int, toPosition: Int) {
-                println("onMoved fromPosition: $fromPosition toPosition: $toPosition")
-            }
-
-            override fun onChanged(position: Int, count: Int, payload: Any?) {
-                println("onChanged position: $position count: $count")
-            }
-
-        })
     }
 
 
