@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Fragment Titles -->
     <string name="notes">Notities</string>
@@ -14,11 +13,15 @@
     <string name="delete">Verwijderen</string>
     <string name="restore">Herstellen</string>
     <string name="archive">Archiveren</string>
-    <string name="unarchive">Actualiseren</string>
+    <string name="unarchive">De-archiveren</string>
     <string name="add_images">Afbeeldingen toevoegen</string>
     <string name="delete_all">Alles verwijderen</string>
-    <string name="change_color">Wijzig kleur</string>
+    <string name="record_audio">Audio opnemen</string>
+    <string name="change_color">Kleur wijzigen</string>
     <string name="delete_forever">Definitief verwijderen</string>
+    <string name="remove_checked_items">Geselecteerde items verwijderen</string>
+    <string name="check_all_items">Alle items selecteren</string>
+    <string name="uncheck_all_items">Selectie opheffen van alle items</string>
 
     <!-- Pinning -->
     <string name="pin">Vastmaken</string>
@@ -34,34 +37,35 @@
     <string name="edit">Bewerken</string>
     <string name="cancel">Annuleren</string>
     <string name="continue_">Doorgaan</string>
-    <string name="open_link">Open link</string>
-    <string name="make_list">Maak een lijst</string>
-    <string name="take_note">Maak een Notitie</string>
+    <string name="open_link">Link openen</string>
+    <string name="make_list">Lijst maken</string>
+    <string name="take_note">Notitie maken</string>
     <string name="add_label">Label toevoegen</string>
     <string name="export">Exporteren</string>
-    <string name="view_file">Bekijk bestand</string>
+    <string name="view_file">Bestand bekijken</string>
     <string name="save_to_device">Opslaan op apparaat</string>
-    <string name="edit_label">Bewerk label</string>
+    <string name="edit_label">Label bewerken</string>
     <string name="label_exists">Label bestaat al</string>
     <string name="delete_label">Label verwijderen?</string>
-    <string name="create_new">Er zijn nog geen labels. Nieuw label toevoegen?</string>
+    <string name="create_new">Nog geen labels. Nieuw label aanmaken?</string>
     <string name="delete_all_notes">Alle notities verwijderen?</string>
     <string name="delete_selected_notes">Geselecteerde notities verwijderen?</string>
     <string name="delete_note_forever">Notitie definitief verwijderen?</string>
-    <string name="your_notes_associated">Notities die aan dit label zijn gekoppeld, worden niet verwijderd</string>
+    <string name="your_notes_associated">Je notities die aan dit label zijn gekoppeld, worden niet verwijderd</string>
 
     <!-- Lists and Notes -->
     <string name="note">Notitie</string>
     <string name="item">Item</string>
     <string name="date">Datum</string>
     <string name="title">Titel</string>
-    <string name="add_item">Voeg item toe</string>
+    <string name="add_item">Item toevoegen</string>
+    <string name="audio_recordings">Audio-opnames</string>
     <string name="drag_handle">Handvat</string>
     <string name="bold">Vetgedrukt</string>
     <string name="link">Link</string>
     <string name="italic">Cursief</string>
     <string name="strikethrough">Doorgestreept</string>
-    <string name="clear_formatting">Opmaak verwijderen</string>
+    <string name="clear_formatting">Opmaak wissen</string>
     <string name="monospace">Monospace</string>
 
     <!-- Miscellaneous -->
@@ -74,8 +78,8 @@
     <!-- Messages -->
     <string name="cant_open_link">Kan link niet openen</string>
     <string name="something_went_wrong">Er is iets fout gegaan. Probeer het opnieuw.</string>
-    <string name="install_an_email">Installeer een email app om de feedback te versturen</string>
-    <string name="install_a_browser">Installeer een web browser om deze link te openen</string>
+    <string name="install_an_email">Installeer een e-mail app om feedback te versturen</string>
+    <string name="install_a_browser">Installeer een browser om deze link te openen</string>
     <string name="cant_find_note">Kan notitie niet vinden. Misschien is deze verwijderd</string>
 
     <!-- Settings Page -->
@@ -88,64 +92,88 @@
     <string name="theme">Thema</string>
     <string name="dark">Donker</string>
     <string name="light">Licht</string>
-    <string name="follow_system">Systeem instellingen</string>
+    <string name="follow_system">Volg systeeminstellingen</string>
 
-    <string name="date_format">Datum weergave</string>
+    <string name="date_format">Datumformaat</string>
     <string name="none">Geen</string>
 
-    <string name="text_size">Text grootte</string>
+    <string name="text_size">Tekstgrootte</string>
     <string name="small">Klein</string>
     <string name="medium">Gemiddeld</string>
     <string name="large">Groot</string>
 
+    <string name="checked_list_item_sorting">Lijst automatisch sorteren</string>
+    <string name="no_auto_sort">Niet automatisch sorteren</string>
+    <string name="auto_sort_by_checked">Automatisch sorteren op geselecteerde items</string>
+
     <string name="content_density">Inhoudsdichtheid</string>
-    <string name="max_items_to_display">Maximum aantal items dat in de lijst kan worden weergegeven</string>
-    <string name="max_lines_to_display">Maximum aantal regels in de notitie weergeven</string>
-    <string name="max_lines_to_display_title">Maximum aantal regel in de titel weergeven</string>
+    <string name="max_items_to_display">Maximaal aantal items dat in de lijst kan worden weergegeven</string>
+    <string name="max_lines_to_display">Maximaal aantal regels in de notitie weergeven</string>
+    <string name="max_lines_to_display_title">Maximaal aantal regels in de titel weergeven</string>
 
     <!-- Backup -->
-    <string name="backup">Backup</string>
-    <string name="auto_backup">Automatische backup</string>
-    <string name="tap_to_set_up">Tap om te configureren</string>
-    <string name="notes_will_be">Notities worden elke dag gebackupped op het interne opslagmedium in uw apparaat.\n\nMogelijk werkt dit niet wanneer energie besparing is geactiveerd</string>
+    <string name="backup">Back-up</string>
+    <string name="auto_backup">Automatische back-up</string>
+    <string name="tap_to_set_up">Tik om in te stellen</string>
+    <string name="notes_will_be">Notities worden elke dag geback-upt op de interne opslag van je apparaat.\n\nDit werkt mogelijk niet als energiebesparingsmodus is ingeschakeld</string>
     <string name="choose_folder">Kies een map</string>
-    <string name="disable_auto_backup">Deactiveer automatische back-up</string>
+    <string name="disable_auto_backup">Automatische back-up uitschakelen</string>
     <string name="choose_another_folder">Kies een andere map</string>
-    <string name="cant_find_folder">Kan de map niet vinden. Mogelijk is deze verplaatst of verwijderd</string>
-    <string name="invalid_backup">Backup ongeldig</string>
-    <string name="imported_backup">Backup geïmporteerd</string>    
-    <string name="exporting_backup">Backup aan het exporteren</string>
-    <string name="importing_backup">Backup aan het importeren</string>
-    <string name="calculating">Berekenen...</string>
+    <string name="cant_find_folder">Kan de map niet vinden. Deze is misschien verplaatst of verwijderd</string>
+    <string name="invalid_backup">Ongeldige back-up</string>
+    <string name="imported_backup">Back-up geïmporteerd</string>
+    <string name="exporting_backup">Back-up exporteren</string>
+    <string name="importing_backup">Back-up importeren</string>
+    <string name="calculating">Berekenen…</string>
 
-    <string name="export_backup">Backup exporteren</string>
-    <string name="import_backup">Backup importeren</string>
+    <string name="export_backup">Back-up exporteren</string>
+    <string name="import_backup">Back-up importeren</string>
 
     <string name="about">Over</string>
     <string name="libraries">Bibliotheken</string>
     <string name="rate">Beoordeel deze app</string>
     <string name="send_feedback">Stuur feedback</string>
 
+    <string name="github" translatable="false">GitHub</string>
+
     <!-- Widget -->
     <string name="single_note_or_list">Enkele notitie of lijst</string>
     <string name="select_note">Selecteer notitie</string>
 
     <!-- Images -->
+    <string name="count" translatable="false">%1$d / %2$d</string>
     <string name="adding_images">Afbeeldingen toevoegen</string>
     <string name="deleting_images">Afbeeldingen verwijderen</string>
-    <string name="invalid_image">Afbeelding ongeldig</string>
-    <string name="error_while_renaming_image">Foutmelding tijdens hernoemen afbeelding</string>
-    <string name="image_format_not_supported">Afbeelding formaat wordt niet ondersteund</string>
+    <string name="invalid_image">Ongeldige afbeelding</string>
+    <string name="error_while_renaming_image">Fout tijdens het hernoemen van afbeelding</string>
+    <string name="image_format_not_supported">Afbeeldingsformaat wordt niet ondersteund</string>
     <string name="delete_image_forever">Afbeelding definitief verwijderen?</string>
-    <string name="cant_load_image">Afbeelding kan niet geladen worden. Misschien is deze verplaatst of verwijderd</string>
+    <string name="cant_load_image">Afbeelding kan niet worden geladen. Deze is misschien verplaatst of verwijderd</string>
     <string name="unknown_name">Onbekende naam</string>
-    <string name="unknown_error">Onbekende foutmelding</string>
-    <string name="insert_an_sd_card">Plaats een SD kaart om afbeeldingen toe te voegen</string>
-    <string name="please_grant_notally">Geef Notally rechten om notificaties te versturen. Dit wordt gebruikt om de voortgang weer te geven wanneer bijvoorbeeld verwijderen afbeeldingen of importeren van backups langer duurt</string>
+    <string name="unknown_error">Onbekende fout</string>
+    <string name="insert_an_sd_card_images">Plaats een SD-kaart om afbeeldingen toe te voegen</string>
+    <string name="please_grant_notally_notification">Geef Notally toestemming om meldingen te versturen. Dit wordt gebruikt om de voortgang weer te geven als operaties zoals het verwijderen van afbeeldingen of het importeren van back-ups langer duren</string>
 
     <plurals name="cant_add_images">
         <item quantity="one">Kan %d afbeelding niet toevoegen</item>
         <item quantity="other">Kan %d afbeeldingen niet toevoegen</item>
     </plurals>
 
+    <!-- Audio -->
+    <string name="play">Afspelen</string>
+    <string name="stop">Stoppen</string>
+    <string name="start">Starten</string>
+    <string name="pause">Pauzeren</string>
+    <string name="resume">Hervatten</string>
+    <string name="paused">Geplaatst op pauze</string>
+    <string name="recording">Opnemen…</string>
+    <string name="ready_to_record">Klaar om op te nemen</string>
+    <string name="discard">Verwerpen</string>
+    <string name="save_recording">Opname opslaan?</string>
+    <string name="delete_audio_recording_forever">Audio-opname definitief verwijderen?</string>
+    <string name="tap_for_more_options">Tik voor meer opties</string>
+    <string name="to_record_audio">Om audio op te nemen, geef Notally toegang tot je microfoon. Tik op Instellingen > Machtigingen en zet Microfoon aan</string>
+    <string name="please_grant_notally_audio">Geef Notally toestemming om audio op te nemen. Opnames verlaten nooit je apparaat</string>
+    <string name="insert_an_sd_card_audio">Plaats een SD-kaart om audio op te nemen</string>
+    <string name="something_went_wrong_audio">Er is iets fout gegaan. De audio-opname kan zijn verplaatst of verwijderd.\n\nFout: (%1$d, %2$d)</string>
 </resources>
