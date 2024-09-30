@@ -36,13 +36,7 @@ class ListManager(
 
     internal fun add(
         position: Int = items.size,
-        item: ListItem = ListItem(
-            "",
-            false,
-            items.isNotEmpty() && (position < items.size && items[position].isChild) || (position == items.size && items[position - 1].isChild),
-            null,
-            mutableListOf()
-        ),
+        item: ListItem = defaultNewItem(position),
         pushChange: Boolean = true
     ) {
         items.addAndNotify(position, item, adapter)
@@ -215,33 +209,6 @@ class ListManager(
         return
     }
 
-    private fun findParentAndUpdateChildren(position: Int) {
-        val (_, newParentIndex) = findParentItem(position)
-        newParentIndex?.let {
-            updateChildren(position - (newParentIndex + 1), false)
-        }
-    }
-
-    private fun updateChildrenAfterMove(
-        itemFrom: ListItem,
-        positionTo: Int,
-        positionFrom: Int,
-    ) {
-        if ((positionTo < positionFrom && isBeforeChildItem(positionTo))
-            || (positionTo > positionFrom && isBeforeChildItem(positionTo))
-        ) {
-            for (position in positionTo..positionTo + itemFrom.children.size) {
-                updateChildren(position, true)
-                adapter.notifyItemChanged(position)
-            }
-        }
-        if (positionTo == 0 && itemFrom.isChild) {
-            itemFrom.isChild = false
-            adapter.notifyItemChanged(positionTo)
-        }
-
-    }
-
     internal fun moveFocusToNext(position: Int) {
         this.moveToNextInternal(position)
     }
@@ -303,6 +270,37 @@ class ListManager(
         return positionAfter
     }
 
+    internal fun getItem(position: Int): ListItem {
+        return items[position]
+    }
+
+    private fun findParentAndUpdateChildren(position: Int) {
+        val (_, newParentIndex) = findParentItem(position)
+        newParentIndex?.let {
+            updateChildren(position - (newParentIndex + 1), false)
+        }
+    }
+
+    private fun updateChildrenAfterMove(
+        itemFrom: ListItem,
+        positionTo: Int,
+        positionFrom: Int,
+    ) {
+        if ((positionTo < positionFrom && isBeforeChildItem(positionTo))
+            || (positionTo > positionFrom && isBeforeChildItem(positionTo))
+        ) {
+            for (position in positionTo..positionTo + itemFrom.children.size) {
+                updateChildren(position, true)
+                adapter.notifyItemChanged(position)
+            }
+        }
+        if (positionTo == 0 && itemFrom.isChild) {
+            itemFrom.isChild = false
+            adapter.notifyItemChanged(positionTo)
+        }
+
+    }
+
     private fun pushChangeCheckChange(position: Int, positionAfter: Int, checked: Boolean) {
         changeHistory.push(object : ListBooleanChange(checked, position, positionAfter) {
             override fun update(position: Int, value: Boolean, isUndo: Boolean) {
@@ -351,6 +349,7 @@ class ListManager(
         sortAndUpdateItems()
     }
 
+
     private fun sortAndUpdateItems(newList: List<ListItem> = items) {
         updateList(sortedItems(newList, preferences.listItemSorting.value))
     }
@@ -362,7 +361,6 @@ class ListManager(
         items.addAll(newList)
         diffCourses.dispatchUpdatesTo(adapter)
     }
-
 
     private fun updateChildren(position: Int, isChild: Boolean) {
         val item = items[position]
@@ -450,9 +448,13 @@ class ListManager(
         } else add(pushChange = false)
     }
 
-    fun getItem(position: Int): ListItem {
-        return items[position]
-    }
+    private fun defaultNewItem(position: Int) = ListItem(
+        "",
+        false,
+        items.isNotEmpty() && ((position < items.size && items[position].isChild) || (position == items.size && items[position - 1].isChild)),
+        null,
+        mutableListOf()
+    )
 
     companion object {
         private val SORTERS = mapOf(ListItemSorting.autoSortByChecked to CheckedSorter())
