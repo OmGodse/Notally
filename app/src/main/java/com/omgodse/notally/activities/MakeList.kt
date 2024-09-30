@@ -90,6 +90,6 @@ class MakeList : NotallyActivity(Type.LIST) {
         )
         binding.RecyclerView.adapter = adapter
         listManager.adapter = adapter
-        listManager.sortAndUpdateItems()
+        listManager.initList()
     }
 }

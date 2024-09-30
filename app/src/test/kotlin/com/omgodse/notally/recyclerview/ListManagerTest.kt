@@ -776,8 +776,7 @@ class ListManagerTest {
 
         // Assert
         assertTrue(items[0].checked)
-        verify(adapter).notifyItemRangeRemoved(0, 1)
-        verify(adapter).notifyItemRangeInserted(0, 1)
+        verify(adapter).notifyItemRangeChanged(0, 1,null)
         verify(changeHistory).push(MockitoHelper.anyObject<ListBooleanChange>())
         assertEquals(0, positionAfter)
     }
@@ -795,8 +794,7 @@ class ListManagerTest {
         // Assert
         assertFalse(items[0].checked)
         assertEquals(0, items[0].uncheckedPosition)
-        verify(adapter).notifyItemRangeRemoved(0, 1)
-        verify(adapter).notifyItemRangeInserted(0, 1)
+        verify(adapter).notifyItemRangeChanged(0, 1,null)
         verify(changeHistory).push(MockitoHelper.anyObject<ListBooleanChange>())
         assertEquals(0, positionAfter)
     }
@@ -856,11 +854,8 @@ class ListManagerTest {
         assertTrue(items[0].checked) // Parent checked
         assertTrue(items[1].checked) // Child 1 checked
         assertTrue(items[2].checked) // Child 2 checked
-        verify(adapter).notifyItemRangeRemoved(0, 3)
-        verify(adapter).notifyItemRangeInserted(0, 3)
-//        verify(adapter).notifyItemChanged(0)
-//        verify(adapter).notifyItemChanged(1)
-//        verify(adapter).notifyItemChanged(2)
+
+        verify(adapter).notifyItemRangeChanged(0, 3,null)
         verify(changeHistory).push(MockitoHelper.anyObject<ListBooleanChange>())
         assertEquals(0, positionAfter)
     }
@@ -873,14 +868,6 @@ class ListManagerTest {
         val itemB = createListItem("Item B", checked = false)
         items.addAll(listOf(itemA, childA, itemB))
         mockPreferences(preferences)
-//
-//        doAnswer { invocation ->
-//            // Simulate reordering by swapping items
-//            val sortedList = listOf(itemB, itemA)
-//            items.clear()
-//            items.addAll(sortedList)
-//            null
-//        }.whenever(listManager).sortAndUpdateItems(anyList())
 
         // Act
         val positionAfter = listManager.changeChecked(0, checked = true, pushChange = true)
@@ -890,10 +877,7 @@ class ListManagerTest {
         assertEquals(childA.body, items[2].body)
         assertTrue(items[1].checked)
         assertTrue(items[2].checked)
-        verify(adapter).notifyItemRangeRemoved(0, 3)
-        verify(adapter).notifyItemRangeInserted(0, 3)
-//        verify(adapter).notifyItemChanged(0)
-//        verify(adapter).notifyItemChanged(1)
+        verify(adapter).notifyItemRangeChanged(0, 3,null)
         verify(changeHistory).push(MockitoHelper.anyObject<ListBooleanChange>())
         assertEquals(1, positionAfter)
     }

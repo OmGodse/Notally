@@ -4,7 +4,6 @@ import android.text.TextWatcher
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListUpdateCallback
 import androidx.recyclerview.widget.RecyclerView
 import com.omgodse.notally.changehistory.ChangeHistory
 import com.omgodse.notally.changehistory.ListAddChange
@@ -347,14 +346,16 @@ class ListManager(
         updateList(items.filter { !it.checked }.toMutableList())
     }
 
-    internal fun sortAndUpdateItems(newList: List<ListItem> = items) {
+    internal fun initList() {
+        items.forEachIndexed { index, item -> item.id = index }
+        sortAndUpdateItems()
+    }
+
+    private fun sortAndUpdateItems(newList: List<ListItem> = items) {
         updateList(sortedItems(newList, preferences.listItemSorting.value))
     }
 
     private fun updateList(newList: List<ListItem>) {
-        // TODO: can be optimized, perhaps add id field to ListItem, otherwise DiffUtil adds
-        //  adapter.notifyItemRangeRemoved() and adapter.notifyItemRangeInserted instead of
-        //  adapter.notifyItemChanged or adapter.notifyItemMoved
         val diffCallback = ListItemCallback(items, newList)
         val diffCourses = DiffUtil.calculateDiff(diffCallback)
         items.clear()

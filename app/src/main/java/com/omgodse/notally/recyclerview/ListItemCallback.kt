@@ -8,7 +8,7 @@ class ListItemCallback(private val oldList: List<ListItem>, private val newList:
     override fun getNewListSize(): Int = newList.size
 
     override fun areItemsTheSame(oldPosition: Int, newPosition: Int): Boolean {
-        return oldList[oldPosition] === newList[newPosition]
+        return oldList[oldPosition].id == newList[newPosition].id
     }
 
     override fun areContentsTheSame(oldPosition: Int, newPosition: Int): Boolean {
