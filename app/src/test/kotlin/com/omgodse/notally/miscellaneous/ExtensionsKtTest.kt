@@ -2,6 +2,7 @@ package com.omgodse.notally.miscellaneous
 
 import androidx.recyclerview.widget.RecyclerView
 import com.omgodse.notally.room.ListItem
+import com.omgodse.notally.test.createListItem
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -21,12 +22,12 @@ class ExtensionsKtTest {
 
         // Create a sample list of items
         list = mutableListOf(
-            createListItem("Item 1"),
-            createListItem("Item 2"),
-            createListItem("Item 3"),
-            createListItem("Item 4"),
-            createListItem("Item 5"),
-            createListItem("Item 6")
+            createListItem("Item 1", checked = true),
+            createListItem("Item 2", checked = true),
+            createListItem("Item 3", checked = true),
+            createListItem("Item 4", checked = true),
+            createListItem("Item 5", checked = true),
+            createListItem("Item 6", checked = true)
         )
     }
 
@@ -36,12 +37,12 @@ class ExtensionsKtTest {
 
         // Verify no changes to the list and no adapter notifications
         assertEquals(listOf(
-            createListItem("Item 1"),
-            createListItem("Item 2"),
-            createListItem("Item 3"),
-            createListItem("Item 4"),
-            createListItem("Item 5"),
-            createListItem("Item 6")
+            createListItem("Item 1", checked = true),
+            createListItem("Item 2", checked = true),
+            createListItem("Item 3", checked = true),
+            createListItem("Item 4", checked = true),
+            createListItem("Item 5", checked = true),
+            createListItem("Item 6", checked = true)
         ), list)
         verify(adapter, never()).notifyItemMoved(anyInt(), anyInt())
     }
@@ -52,12 +53,12 @@ class ExtensionsKtTest {
 
         // Verify no changes to the list and no adapter notifications
         assertEquals(listOf(
-            createListItem("Item 1"),
-            createListItem("Item 2"),
-            createListItem("Item 3"),
-            createListItem("Item 4"),
-            createListItem("Item 5"),
-            createListItem("Item 6")
+            createListItem("Item 1", checked = true),
+            createListItem("Item 2", checked = true),
+            createListItem("Item 3", checked = true),
+            createListItem("Item 4", checked = true),
+            createListItem("Item 5", checked = true),
+            createListItem("Item 6", checked = true)
         ), list)
         verify(adapter, never()).notifyItemMoved(anyInt(), anyInt())
     }
@@ -67,12 +68,12 @@ class ExtensionsKtTest {
         list.moveRangeAndNotify(fromIndex = 1, itemCount = 2, toIndex = 4, adapter = adapter)
 
         assertEquals(listOf(
-            createListItem("Item 1"),
-            createListItem("Item 4"),
-            createListItem("Item 5"),
-            createListItem("Item 2"),
-            createListItem("Item 3"),
-            createListItem("Item 6")
+            createListItem("Item 1", checked = true),
+            createListItem("Item 4", checked = true),
+            createListItem("Item 5", checked = true),
+            createListItem("Item 2", checked = true),
+            createListItem("Item 3", checked = true),
+            createListItem("Item 6", checked = true)
         ), list)
 
         verify(adapter).notifyItemMoved(1, 3)
@@ -85,12 +86,12 @@ class ExtensionsKtTest {
 
         // After moving items 4 and 5 backward to after 1:
         assertEquals(listOf(
-            createListItem("Item 1"),
-            createListItem("Item 4"),
-            createListItem("Item 5"),
-            createListItem("Item 2"),
-            createListItem("Item 3"),
-            createListItem("Item 6")
+            createListItem("Item 1", checked = true),
+            createListItem("Item 4", checked = true),
+            createListItem("Item 5", checked = true),
+            createListItem("Item 2", checked = true),
+            createListItem("Item 3", checked = true),
+            createListItem("Item 6", checked = true)
         ), list)
 
         verify(adapter).notifyItemMoved(3, 1)
@@ -104,20 +105,17 @@ class ExtensionsKtTest {
         list.moveRangeAndNotify(fromIndex = 1, itemCount = 2, toIndex = 4, adapter = adapter)
 
         assertEquals(listOf(
-            createListItem("Item 1"),
-            createListItem("Item 4"),
-            createListItem("Item 5"),
+            createListItem("Item 1", checked = true),
+            createListItem("Item 4", checked = true),
+            createListItem("Item 5", checked = true),
             createListItem("Item 2", checked = false, uncheckedPosition = 3),
-            createListItem("Item 3"),
-            createListItem("Item 6")
+            createListItem("Item 3", checked = true),
+            createListItem("Item 6", checked = true)
         ), list)
 
         verify(adapter).notifyItemMoved(2, 4)
         verify(adapter).notifyItemMoved(1, 3)
     }
-    
-    private fun createListItem(body: String, checked: Boolean = true, isChild: Boolean = true, uncheckedPosition: Int? = null, children: MutableList<ListItem> = mutableListOf()): ListItem{
-        return ListItem(body, checked, isChild, uncheckedPosition, children)
-    }
+
 
 }

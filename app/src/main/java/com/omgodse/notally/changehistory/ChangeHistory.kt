@@ -48,10 +48,19 @@ class ChangeHistory(
         return stackPointer > -1
     }
 
-    private fun popRedos() {
-        if (stackPointer > -1 && stackPointer + 1 < changeStack.size) {
-            changeStack.subList(stackPointer + 1, changeStack.size).clear()
+    internal fun lookUp(position: Int = 0): Change {
+        if (stackPointer - position < 0) {
+            throw IllegalArgumentException("ChangeHistory only has $stackPointer changes!")
         }
+        return changeStack[stackPointer - position]
+    }
+
+    private fun popRedos() {
+        while (changeStack.size > stackPointer + 1) {
+            changeStack.removeAt(stackPointer+1)
+        }
+//            changeStack.subList(stackPointer, changeStack.size).clear()
+
     }
 
 }
