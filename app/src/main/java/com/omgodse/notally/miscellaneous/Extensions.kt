@@ -16,16 +16,13 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.RemoteViews
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.omgodse.notally.activities.TakeNote
-import com.omgodse.notally.changehistory.ListBooleanChange
 import com.omgodse.notally.changehistory.ChangeHistory
 import com.omgodse.notally.changehistory.EditTextChange
-import com.omgodse.notally.changehistory.ListEditTextChange
 import com.omgodse.notally.recyclerview.ListManager
 import com.omgodse.notally.room.ListItem
 import com.omgodse.notally.room.SpanRepresentation
@@ -240,11 +237,14 @@ fun MutableList<ListItem>.updateUncheckedPositions() {
     forEachIndexed { index, item -> if (!item.checked) item.uncheckedPosition = index }
 }
 
-fun <T> MutableList<T>.addAndNotify(
+fun MutableList<ListItem>.addAndNotify(
     position: Int,
-    item: T,
+    item: ListItem,
     adapter: RecyclerView.Adapter<*>
 ) {
+    if (item.checked && item.uncheckedPosition == null) {
+        item.uncheckedPosition = position
+    }
     add(position, item)
     adapter.notifyItemInserted(position)
 }
