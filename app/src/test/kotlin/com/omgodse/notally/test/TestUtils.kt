@@ -35,10 +35,16 @@ fun mockAndroidLog() {
 fun mockDrag(positionFrom: Int, positionTo: Int, listManager: ListManager) {
     val item = listManager.getItem(positionFrom)
     val itemCount = item.children.size + 1
-    listManager.swap(positionFrom, item.children.size + 2)
-    for ((idx, i) in ((positionFrom + 1)..positionTo - itemCount).withIndex()) {
-        listManager.swap(i, i + itemCount)
+    if (positionFrom < positionTo) {
+        for (i in positionFrom..positionTo - itemCount) {
+            listManager.swap(i, i + itemCount)
+        }
+    } else {
+        for ((idx, i) in (positionFrom downTo positionTo + itemCount).withIndex()) {
+            listManager.swap(i, i - itemCount)
+        }
     }
+
     listManager.endDrag(positionFrom, positionTo, item.isChild)
 }
 
