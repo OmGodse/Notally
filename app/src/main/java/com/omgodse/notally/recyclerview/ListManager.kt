@@ -113,24 +113,32 @@ class ListManager(
     internal fun move(
         positionFrom: Int,
         positionTo: Int,
-        byDrag: Boolean,
         pushChange: Boolean = true
     ) {
         val itemTo = items[positionTo]
-        var itemFrom = items[positionFrom]
+        val itemFrom = items[positionFrom]
 
-        if (byDrag) {
-            // have already been swapped
-            itemFrom = itemTo
-        } else {
-            items.moveRangeAndNotify(
-                positionFrom,
-                itemFrom.children.size + 1,
-                positionTo,
-                adapter
-            )
+        // Disallow move unchecked item under any checked item (if auto-sort enabled)
+        if (preferences.listItemSorting.value == ListItemSorting.autoSortByChecked && itemTo.checked) {
+            return
         }
-        val isChildBefore = itemFrom.isChild
+
+        // Disallow moving into item's own children
+        if (itemTo.isChildOf(itemFrom)) {
+            return
+        }
+        items.moveRangeAndNotify(
+            positionFrom,
+            itemFrom.children.size + 1,
+            positionTo,
+            adapter
+        )
+
+        updateChildrenAfterMove(itemFrom, positionTo, positionFrom)
+        if (pushChange) {
+            changeHistory.push(ListMoveChange(positionFrom, positionTo, itemFrom.isChild, this))
+        }
+    }
 
         if ((positionTo < positionFrom && (!byDrag && itemTo.isChild || byDrag && isBeforeChildItem(
                 positionTo
@@ -159,25 +167,63 @@ class ListManager(
     ) {
         val itemTo = items[positionTo]
 
-        val actualPositionFrom = positionFrom + itemTo.children.size
+        var actualPositionFrom = positionFrom + itemTo.children.size
+        var actualPositionTo = positionTo
+        var itemCount = 1
+        if (isChildBefore != null && !isChildBefore) {
+            val parentAndIndex = findParentItem(positionTo + 1)
+            parentAndIndex.second?.let {
+                actualPositionTo -= it
+            }
+            parentAndIndex.first?.let {
+                itemCount += it.children.size
+            }
+        }
         items.moveRangeAndNotify(
-            positionTo,
-            itemTo.children.size + 1,
+            actualPositionTo,
+            itemCount,
             actualPositionFrom,
             adapter
         )
 
-        if (isChildBefore != null) {
-            items[positionFrom].isChild = isChildBefore
-            adapter.notifyItemChanged(positionFrom)
+        if (isChildBefore != null && items[actualPositionFrom].isChild != isChildBefore) {
+            updateChildren(actualPositionFrom, isChildBefore)
+            adapter.notifyItemChanged(actualPositionFrom)
         }
 
-        itemTo.children.forEachIndexed { index, item ->
-            item.isChild = true
-            adapter.notifyItemChanged(positionTo + index)
+        if (isChildBefore == true) {
+            findParentAndUpdateChildren(actualPositionTo)
+            findParentAndUpdateChildren(actualPositionFrom)
         }
 
         return
+    }
+
+    private fun findParentAndUpdateChildren(position: Int) {
+        val (_, newParentIndex) = findParentItem(position)
+        newParentIndex?.let {
+            updateChildren(position - (newParentIndex + 1), false)
+        }
+    }
+
+    private fun updateChildrenAfterMove(
+        itemFrom: ListItem,
+        positionTo: Int,
+        positionFrom: Int,
+    ) {
+        if ((positionTo < positionFrom && isBeforeChildItem(positionTo))
+            || (positionTo > positionFrom && isBeforeChildItem(positionTo))
+        ) {
+            for (position in positionTo..positionTo + itemFrom.children.size) {
+                updateChildren(position, true)
+                adapter.notifyItemChanged(position)
+            }
+        }
+        if (positionTo == 0 && itemFrom.isChild) {
+            itemFrom.isChild = false
+            adapter.notifyItemChanged(positionTo)
+        }
+
     }
 
     internal fun moveFocusToNext(position: Int) {
@@ -289,6 +335,9 @@ class ListManager(
     }
 
     private fun updateList(newList: List<ListItem>) {
+        // TODO: can be optimized, perhaps add id field to ListItem, otherwise DiffUtil adds
+        //  adapter.notifyItemRangeRemoved() and adapter.notifyItemRangeInserted instead of
+        //  adapter.notifyItemChanged or adapter.notifyItemMoved
         val diffCallback = ListItemCallback(items, newList)
         val diffCourses = DiffUtil.calculateDiff(diffCallback)
         items.clear()
@@ -321,12 +370,14 @@ class ListManager(
         item.isChild = isChild
         val parentAndIndex = findParentItem(position)
         if (isChild) {
-            parentAndIndex.first?.children?.add(parentAndIndex.second!!, item)
-            parentAndIndex.first?.children?.addAll(item.children)
+            val parentChildren = parentAndIndex.first?.children
+            parentChildren?.add(parentAndIndex.second!!, item)
+            parentChildren?.addAll(item.children)
             item.children.clear()
         } else {
             parentAndIndex.first?.children?.remove(item)
             val children = findChildren(position)
+            item.children.clear()
             item.children.addAll(children)
             parentAndIndex.first?.children?.removeAll(children)
         }

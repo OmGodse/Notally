@@ -9,7 +9,7 @@ class ListMoveChange(
     private val listManager: ListManager
 ) : ListChange(positionFrom) {
     override fun redo() {
-        listManager.move(position, positionTo, false, pushChange = false)
+        listManager.move(position, positionTo, pushChange = false)
     }
 
     override fun undo() {
