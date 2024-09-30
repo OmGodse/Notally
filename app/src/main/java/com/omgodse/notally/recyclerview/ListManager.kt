@@ -153,9 +153,9 @@ class ListManager(
         }
 
         if (!draggedItemIsChild) {
-            val parentItemAndIndex = findParentItem(positionTo + 1)
+            val parentItemAndIndex = findParentItem(Math.min(items.lastIndex, positionTo + 1))
             actualPositionFrom = positionTo - (parentItemAndIndex.second!!)
-            actualPositionTo = actualPositionFrom - 1
+            actualPositionTo = Math.max(0, actualPositionFrom - 1)
         }
 
         val itemFrom = items[actualPositionFrom]
@@ -166,13 +166,13 @@ class ListManager(
             return
         }
 
-        updateChildrenAfterMove(itemFrom, actualPositionTo, actualPositionFrom)
+        updateChildrenAfterMove(itemFrom, positionTo, positionFrom)
         if (draggedItemIsChild) {
-            findParentAndUpdateChildren(positionFrom)
-            findParentAndUpdateChildren(positionTo)
+            findParentAndUpdateChildren(if (positionTo == 0) positionFrom + 1 else positionFrom)
+            findParentAndUpdateChildren(if (positionTo == items.lastIndex) positionTo + 1 else positionTo)
         }
         if (pushChange) {
-            changeHistory.push(ListMoveChange(positionFrom, positionTo, itemFrom.isChild, this))
+            changeHistory.push(ListMoveChange(positionFrom, positionTo, draggedItemIsChild, this))
         }
     }
 
@@ -208,7 +208,7 @@ class ListManager(
         }
 
         if (isChildBefore == true) {
-            findParentAndUpdateChildren(actualPositionTo)
+            findParentAndUpdateChildren(if (positionTo == items.lastIndex) actualPositionTo + 1 else actualPositionTo)
             findParentAndUpdateChildren(actualPositionFrom)
         }
 
