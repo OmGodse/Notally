@@ -16,6 +16,7 @@ class DragCallback(private val elevation: Float, private val listManager: ListMa
     private var lastIsCurrentlyActive = false
     private var childViewHolders: List<ViewHolder> = mutableListOf()
 
+    private var draggedItemIsChild: Boolean = false
     private var positionFrom: Int = -1
     private var positionTo: Int = -1
 
@@ -32,6 +33,9 @@ class DragCallback(private val elevation: Float, private val listManager: ListMa
     override fun onMove(view: RecyclerView, viewHolder: ViewHolder, target: ViewHolder): Boolean {
         val from = viewHolder.adapterPosition
         val to = target.adapterPosition
+        if (positionFrom == -1) {
+            draggedItemIsChild = listManager.getItem(from).isChild
+        }
         val swapped = listManager.swap(from, to)
         if (swapped) {
             if (positionFrom == -1) {
@@ -100,7 +104,7 @@ class DragCallback(private val elevation: Float, private val listManager: ListMa
         if (positionFrom == positionTo) {
             return
         }
-        listManager.move(positionFrom, positionTo, true)
+        listManager.endDrag(positionFrom, positionTo, draggedItemIsChild)
     }
 
     private fun animateFadeOut(viewHolder: ViewHolder) {
@@ -113,6 +117,7 @@ class DragCallback(private val elevation: Float, private val listManager: ListMa
 
     private fun animateFadeIn(viewHolder: ViewHolder) {
         viewHolder.itemView.animate()
+            .translationY(0f)
             .alpha(1f)
             .setDuration(300)
             .start()

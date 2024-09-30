@@ -140,23 +140,40 @@ class ListManager(
         }
     }
 
-        if ((positionTo < positionFrom && (!byDrag && itemTo.isChild || byDrag && isBeforeChildItem(
-                positionTo
-            )))
-            || (positionTo > positionFrom && isBeforeChildItem(positionTo))
-        ) {
-            val movedPosition = if (byDrag) positionTo else positionFrom
-            for (position in movedPosition..movedPosition + itemFrom.children.size) {
-                updateChildren(position, true)
-                adapter.notifyItemChanged(position)
-            }
+    internal fun endDrag(
+        positionFrom: Int,
+        positionTo: Int,
+        draggedItemIsChild: Boolean,
+        pushChange: Boolean = true
+    ) {
+        var actualPositionFrom = positionTo
+        var actualPositionTo = if (positionTo < positionFrom) {
+            positionTo + 1
+        } else {
+            positionTo - 1
         }
-        if (positionTo == 0 && itemFrom.isChild) {
-            itemFrom.isChild = false
-            adapter.notifyItemChanged(positionTo)
+
+        if (!draggedItemIsChild) {
+            val parentItemAndIndex = findParentItem(positionTo + 1)
+            actualPositionFrom = positionTo - (parentItemAndIndex.second!!)
+            actualPositionTo = actualPositionFrom - 1
+        }
+
+        val itemFrom = items[actualPositionFrom]
+        val itemTo = items[actualPositionTo]
+
+        // Disallow move unchecked item under any checked item (if auto-sort enabled)
+        if (preferences.listItemSorting.value == ListItemSorting.autoSortByChecked && itemTo.checked) {
+            return
+        }
+
+        updateChildrenAfterMove(itemFrom, actualPositionTo, actualPositionFrom)
+        if (draggedItemIsChild) {
+            findParentAndUpdateChildren(positionFrom)
+            findParentAndUpdateChildren(positionTo)
         }
         if (pushChange) {
-            changeHistory.push(ListMoveChange(positionFrom, positionTo, isChildBefore, this))
+            changeHistory.push(ListMoveChange(positionFrom, positionTo, itemFrom.isChild, this))
         }
     }
 
