@@ -10,12 +10,12 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.omgodse.notally.databinding.RecyclerListItemBinding
 import com.omgodse.notally.miscellaneous.createListTextWatcherWithHistory
+import com.omgodse.notally.miscellaneous.layout.SwipeLayout.SwipeActionsListener
 import com.omgodse.notally.miscellaneous.setOnNextAction
 import com.omgodse.notally.preferences.ListItemSorting
 import com.omgodse.notally.preferences.TextSize
 import com.omgodse.notally.recyclerview.ListManager
 import com.omgodse.notally.room.ListItem
-import com.zerobranch.layout.SwipeLayout.SwipeActionsListener
 
 
 class MakeListVH(
@@ -98,7 +98,7 @@ class MakeListVH(
         }
     }
 
-    fun updateSwipe(open: Boolean, canSwipe: Boolean) {
+    private fun updateSwipe(open: Boolean, canSwipe: Boolean) {
         binding.SwipeLayout.setOnActionsListener(null)
         val swipeActionListener = object : SwipeActionsListener {
             override fun onOpen(direction: Int, isContinuous: Boolean) {
@@ -106,14 +106,7 @@ class MakeListVH(
             }
 
             override fun onClose() {
-                if(canSwipe) {
-                    listManager.changeIsChild(adapterPosition, false)
-                } else {
-                    // TODO: temporary fix for https://github.com/zerobranch/SwipeLayout/issues/15.
-                    //  SwipeLayout.isEnabledSwipe still allows to close the swipe, therefore it resets
-                    //  it immediately.
-                    listManager.changeIsChild(adapterPosition, true, pushChange = false)
-                }
+                listManager.changeIsChild(adapterPosition, false)
             }
         }
 

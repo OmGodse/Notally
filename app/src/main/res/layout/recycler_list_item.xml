@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     >
 
-    <com.zerobranch.layout.SwipeLayout
+    <com.omgodse.notally.miscellaneous.layout.SwipeLayout
         android:id="@+id/SwipeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
             android:layout_marginEnd="40dp"
             android:textAppearance="?attr/textAppearanceBody1" />
     </RelativeLayout>
-    </com.zerobranch.layout.SwipeLayout>
+    </com.omgodse.notally.miscellaneous.layout.SwipeLayout>
 
     <ImageButton
         android:id="@+id/Delete"
