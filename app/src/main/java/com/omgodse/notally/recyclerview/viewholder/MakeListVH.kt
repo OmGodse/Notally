@@ -4,6 +4,7 @@ import android.text.TextWatcher
 import android.util.TypedValue
 import android.view.KeyEvent
 import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView.INVISIBLE
 import android.widget.TextView.VISIBLE
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -70,10 +71,22 @@ class MakeListVH(
         }
     }
 
+    fun focusEditText(
+        selectionStart: Int = binding.EditText.text.length,
+        inputMethodManager: InputMethodManager
+    ) {
+        binding.EditText.requestFocus()
+        binding.EditText.setSelection(selectionStart)
+        inputMethodManager.showSoftInput(
+            binding.EditText,
+            InputMethodManager.SHOW_IMPLICIT
+        )
+    }
+
     private fun updateDeleteButton(item: ListItem) {
         binding.Delete.visibility = if (item.checked) VISIBLE else INVISIBLE
         binding.Delete.setOnClickListener {
-            listManager.delete(adapterPosition, true)
+            listManager.delete(adapterPosition)
         }
     }
 

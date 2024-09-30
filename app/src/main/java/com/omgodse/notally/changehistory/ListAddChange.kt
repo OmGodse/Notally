@@ -11,7 +11,7 @@ class ListAddChange(
     }
 
     override fun undo() {
-        listManager.delete(position, true, pushChange = false)
+        listManager.delete(position, pushChange = false)
     }
 
     override fun toString(): String {

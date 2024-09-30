@@ -40,46 +40,36 @@ class ListManager(
         item: ListItem = ListItem(
             "",
             false,
-            items.isNotEmpty() && position > 0 && items[position - 1].isChild,
+            items.isNotEmpty() && (position < items.size && items[position].isChild) || (position == items.size && items[position - 1].isChild),
             null,
             mutableListOf()
         ),
         pushChange: Boolean = true
     ) {
-        val listItem =
-            ListItem(
-                item.body,
-                item.checked,
-                item.isChild,
-                item.uncheckedPosition,
-                item.children
-            )
-        items.addAndNotify(position, listItem, adapter)
+        items.addAndNotify(position, item, adapter)
         for ((idx, child) in item.children.withIndex()) {
             items.addAndNotify(position + idx + 1, child, adapter)
         }
+        updateChildren(position, item.isChild)
         if (pushChange) {
             changeHistory.push(ListAddChange(position, this))
         }
         recyclerView.post {
             val viewHolder = recyclerView.findViewHolderForAdapterPosition(position) as MakeListVH?
             if (!item.checked && viewHolder != null) {
-                val editText = viewHolder.binding.EditText
-                editText.requestFocus()
-                editText.setSelection(editText.text.length)
-                inputMethodManager.showSoftInput(
-                    viewHolder.binding.EditText,
-                    InputMethodManager.SHOW_IMPLICIT
-                )
+                viewHolder.focusEditText(inputMethodManager = inputMethodManager)
             }
         }
     }
 
     internal fun delete(
         position: Int = items.size - 1,
-        force: Boolean,
+        force: Boolean = true,
         pushChange: Boolean = true
     ): ListItem? {
+        if (position < 0 || position > items.lastIndex) {
+            return null
+        }
         var listItem: ListItem? = null
         if (force || position > 0) {
             listItem = items.removeAt(position)

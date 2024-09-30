@@ -9,7 +9,7 @@ class ListDeleteChange(
     private val listManager: ListManager
 ) : ListChange(position) {
     override fun redo() {
-        listManager.delete(position, true, pushChange = false)
+        listManager.delete(position, pushChange = false)
     }
 
     override fun undo() {
