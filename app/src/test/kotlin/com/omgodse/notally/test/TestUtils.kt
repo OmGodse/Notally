@@ -54,14 +54,7 @@ fun ListManager.simulateDrag(positionFrom: Int, positionTo: Int): Int? {
     }
     if (newPosition != null) {
         // The items have already been moved accordingly via move() calls
-        this.updateChildrenAndPushMoveChange(
-            positionFrom,
-            positionTo,
-            newPosition,
-            item,
-            true,
-            true,
-        )
+        this.finishMove(positionFrom, positionTo, newPosition, item, true, true)
     }
     return newPosition
 }
@@ -126,5 +119,5 @@ fun ListIsChildChange.assert(newValue: Boolean, position: Int, positionAfter: In
 
 fun ListAddChange.assert(position: Int, newItem: ListItem) {
     assertEquals("position", position, this.position)
-    assertEquals("newItem", newItem, this.newItem)
+    assertEquals("newItem", newItem, this.itemBeforeInsert)
 }

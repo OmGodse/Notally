@@ -12,6 +12,13 @@ data class ListItem(
         return ListItem(body, checked, isChild, uncheckedPosition, children.toMutableList(), id)
     }
 
+    val itemCount: Int
+        get() = children.size + 1
+
+    fun isChildOf(other: ListItem): Boolean {
+        return !other.isChild && other.children.contains(this)
+    }
+
     override fun toString(): String {
         return "${if (isChild) " >" else ""}${if (checked) "x" else ""} ${body}${
             if (children.isNotEmpty()) "(${

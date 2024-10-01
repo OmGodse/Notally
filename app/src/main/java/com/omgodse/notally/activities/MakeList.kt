@@ -22,7 +22,7 @@ class MakeList : NotallyActivity(Type.LIST) {
         super.setupToolbar()
         binding.Toolbar.menu.add(
             1,
-            R.string.remove_checked_items,
+            R.string.delete_checked_items,
             R.drawable.delete_all,
             MenuItem.SHOW_AS_ACTION_IF_ROOM,
         ) {
@@ -34,7 +34,7 @@ class MakeList : NotallyActivity(Type.LIST) {
             R.drawable.checkbox_fill,
             MenuItem.SHOW_AS_ACTION_IF_ROOM,
         ) {
-            listManager.checkAllItems(true)
+            listManager.changeCheckedForAll(true)
         }
         binding.Toolbar.menu.add(
             1,
@@ -42,7 +42,7 @@ class MakeList : NotallyActivity(Type.LIST) {
             R.drawable.checkbox,
             MenuItem.SHOW_AS_ACTION_IF_ROOM,
         ) {
-            listManager.checkAllItems(false)
+            listManager.changeCheckedForAll(false)
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             binding.Toolbar.menu.setGroupDividerEnabled(true)

@@ -1,5 +1,6 @@
 package com.omgodse.notally.miscellaneous
 
+import com.omgodse.notally.recyclerview.updateUncheckedPositions
 import com.omgodse.notally.room.ListItem
 
 class CheckedSorter : ListItemSorterStrategy {

@@ -23,7 +23,6 @@ import com.omgodse.notally.activities.TakeNote
 import com.omgodse.notally.changehistory.ChangeHistory
 import com.omgodse.notally.changehistory.EditTextChange
 import com.omgodse.notally.recyclerview.ListManager
-import com.omgodse.notally.room.ListItem
 import com.omgodse.notally.room.SpanRepresentation
 import java.util.Date
 import kotlin.math.roundToInt
@@ -196,10 +195,6 @@ fun EditText.createTextWatcherWithHistory(
             )
         }
     }
-
-fun MutableList<ListItem>.updateUncheckedPositions() {
-    forEachIndexed { index, item -> if (!item.checked) item.uncheckedPosition = index }
-}
 
 private fun formatTimestamp(timestamp: Long, dateFormat: String): String {
     val date = Date(timestamp)

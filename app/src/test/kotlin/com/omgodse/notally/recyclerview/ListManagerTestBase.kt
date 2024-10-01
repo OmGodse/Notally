@@ -3,7 +3,6 @@ package com.omgodse.notally.recyclerview
 import android.view.inputmethod.InputMethodManager
 import androidx.recyclerview.widget.RecyclerView
 import com.omgodse.notally.changehistory.ChangeHistory
-import com.omgodse.notally.miscellaneous.updateUncheckedPositions
 import com.omgodse.notally.preferences.Preferences
 import com.omgodse.notally.recyclerview.viewholder.MakeListVH
 import com.omgodse.notally.room.ListItem

@@ -5,15 +5,19 @@ import com.omgodse.notally.room.ListItem
 
 class ListAddChange(
     position: Int,
-    internal val newItem: ListItem,
+    internal val itemBeforeInsert: ListItem,
     private val listManager: ListManager,
 ) : ListChange(position) {
     override fun redo() {
-        listManager.add(position, item = newItem, pushChange = false)
+        listManager.add(position, item = itemBeforeInsert, pushChange = false)
     }
 
     override fun undo() {
-        listManager.delete(position, newItem = newItem, pushChange = false)
+        listManager.delete(
+            position,
+            childrenToDelete = itemBeforeInsert.children,
+            pushChange = false,
+        )
     }
 
     override fun toString(): String {

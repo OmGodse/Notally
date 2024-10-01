@@ -113,7 +113,7 @@ class DragCallback(private val elevation: Float, private val listManager: ListMa
         }
         if (newPosition != null && draggedItem != null) {
             // The items have already been moved accordingly via move() calls
-            listManager.updateChildrenAndPushMoveChange(
+            listManager.finishMove(
                 positionFrom!!,
                 positionTo!!,
                 newPosition!!,
