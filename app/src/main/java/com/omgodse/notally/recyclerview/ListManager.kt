@@ -79,141 +79,87 @@ class ListManager(
         return item
     }
 
-    internal fun swap(positionFrom: Int, positionTo: Int): Boolean {
-        if (positionFrom < 0 || positionTo < 0 || positionFrom == positionTo)
-            return false
-        val itemTo = items[positionTo]
-        val itemFrom = items[positionFrom]
-        // Disallow dragging into item's own children or unchecked item under any checked item (if auto-sort enabled)
-        if (itemTo.isChildOf(itemFrom) || isAutoSortByCheckedEnabled() && itemTo.checked) {
-            return false
+    internal fun updateChildrenAndPushMoveChange(
+        positionFrom: Int,
+        positionTo: Int,
+        newPosition: Int,
+        itemBeforeMove: ListItem,
+        updateChildren: Boolean,
+        pushChange: Boolean
+    ) {
+        if (updateChildren) {
+            updateChildrenAfterMove(newPosition)
         }
-        items.moveRangeAndNotify(
-            positionFrom,
-            itemFrom.itemCount,
-            positionTo,
-            adapter
-        )
-
-        return true
+        if (pushChange) {
+            changeHistory.push(
+                ListMoveChange(
+                    positionFrom,
+                    positionTo,
+                    newPosition,
+                    itemBeforeMove,
+                    this
+                )
+            )
+        }
     }
 
+    /**
+     * @return position of the moved item afterwards
+     */
     internal fun move(
         positionFrom: Int,
         positionTo: Int,
-        pushChange: Boolean = true
-    ) {
+        pushChange: Boolean = true,
+        updateChildren: Boolean = true
+    ): Int? {
         val itemTo = items[positionTo]
         val itemFrom = items[positionFrom]
-
+        val itemBeforeMove = itemFrom.clone() as ListItem
         // Disallow move unchecked item under any checked item (if auto-sort enabled)
         if (isAutoSortByCheckedEnabled() && itemTo.checked || itemTo.isChildOf(itemFrom)) {
-            return
+            return null
         }
 
-        items.moveRangeAndNotify(
+        val newPosition = items.moveRangeAndNotify(
             positionFrom,
             itemFrom.itemCount,
             positionTo,
             adapter
         )
 
-        updateChildrenAfterMove(itemFrom, positionTo, positionFrom)
-        if (pushChange) {
-            changeHistory.push(
-                ListMoveChange(
-                    positionFrom,
-                    positionTo,
-                    itemFrom.isChild,
-                    itemFrom.children.isNotEmpty(),
-                    this
-                )
-            )
+        if (newPosition == null) {
+            return null
         }
+
+        updateChildrenAndPushMoveChange(
+            positionFrom,
+            positionTo,
+            newPosition,
+            itemBeforeMove,
+            updateChildren,
+            pushChange
+        )
+        return newPosition
     }
 
     internal fun revertMove(
+        positionAfter: Int,
         positionFrom: Int,
-        positionTo: Int,
-        isChildBefore: Boolean?,
-        hadChildren: Boolean?
+        itemBeforeMove: ListItem
     ) {
-        val itemTo = items[positionTo]
-
-        val actualPositionFrom = positionFrom + itemTo.children.size
-        var actualPositionTo = positionTo
-        var itemCount = itemTo.itemCount
-        if (isChildBefore != null && hadChildren == true) {
-            val (parent, parentPosition, _) = positionTo.findParentItem(positionTo == items.lastIndex)
-            if (parent != null) {
-                actualPositionTo = parentPosition!!
-                itemCount = parent.itemCount
-            }
-        }
-        items.moveRangeAndNotify(
-            actualPositionTo,
-            itemCount,
-            actualPositionFrom,
-            adapter
-        )
-
-        if (isChildBefore != null && items[actualPositionFrom].isChild != isChildBefore) {
-            actualPositionFrom.updateIsChild(isChildBefore)
-        }
-
-        if (isChildBefore == true) {
-            findParentAndUpdateChildren(actualPositionTo, actualPositionTo == items.lastIndex)
-            findParentAndUpdateChildren(actualPositionFrom)
-        }
-    }
-
-    internal fun endDrag(
-        positionFrom: Int,
-        positionTo: Int,
-        draggedItemIsChild: Boolean,
-        pushChange: Boolean = true
-    ) {
-        var actualPositionFrom = positionTo
-        var actualPositionTo = if (isMoveUp(positionFrom, positionTo)) {
-            positionTo + 1
+        val actualPositionTo = if (positionAfter < positionFrom) {
+            positionFrom + itemBeforeMove.children.size
         } else {
-            positionTo - 1
+            positionFrom
+        }
+        val positionBefore =
+            move(positionAfter, actualPositionTo, pushChange = false, updateChildren = false)!!
+        if (items[positionBefore].isChild != itemBeforeMove.isChild) {
+            positionBefore.updateIsChild(itemBeforeMove.isChild)
+        } else {
+            updateAllChildren()
         }
 
-        if (!draggedItemIsChild) {
-            val parentPosition = positionTo.parentPosition()
-            actualPositionFrom = parentPosition ?: positionTo
-            actualPositionTo = if (parentPosition == null) {
-                actualPositionFrom
-            } else {
-                Math.max(0, actualPositionFrom - 1)
-            }
-        }
-
-        val itemFrom = items[actualPositionFrom]
-        val itemTo = items[actualPositionTo]
-
-        // Disallow move unchecked item under any checked item (if auto-sort enabled)
-        if (isAutoSortByCheckedEnabled() && itemTo.checked) {
-            return
-        }
-
-        updateChildrenAfterMove(itemFrom, positionTo, positionFrom)
-        if (draggedItemIsChild) {
-            findParentAndUpdateChildren(positionFrom, positionTo == 0)
-            findParentAndUpdateChildren(positionTo, positionTo == items.lastIndex)
-        }
-        if (pushChange) {
-            changeHistory.push(
-                ListMoveChange(
-                    positionFrom,
-                    positionTo,
-                    draggedItemIsChild,
-                    itemFrom.children.isNotEmpty(),
-                    this
-                )
-            )
-        }
     }
 
 
@@ -283,11 +229,12 @@ class ListManager(
         return items[position]
     }
 
-    private fun findParentAndUpdateChildren(position: Int, allowFindSelf: Boolean = false) {
-        val (parent, parentPosition, _) = position.findParentItem(allowFindSelf)
-        parentPosition?.let {
-            if (parent != items[position]) {
-                parentPosition.updateIsChild(false)
+    private fun updateAllChildren() {
+        var parent: ListItem? = null
+        items.forEach { item ->
+            if (item.isChild) {
+                item.children.clear()
+                parent!!.children.add(item)
             } else {
                 position.updateIsChild(false)
             }
@@ -298,22 +245,15 @@ class ListManager(
         preferences.listItemSorting.value == ListItemSorting.autoSortByChecked
 
     private fun updateChildrenAfterMove(
-        itemFrom: ListItem,
-        positionTo: Int,
-        positionFrom: Int,
+        position: Int,
     ) {
-        if (isBeforeChildItem(positionTo)) {
-            for (position in positionTo..positionTo + itemFrom.children.size) {
-                position.updateIsChild(true)
-            }
+        if (isBeforeChildItemOfOtherParent(position)) {
+            position.updateIsChild(true, forceOnChildren = true)
+        } else if (position == 0) {
+            position.updateIsChild(false)
+        } else {
+            updateAllChildren()
         }
-        if (positionTo == 0 && itemFrom.isChild) {
-            positionTo.updateIsChild(false)
-        }
-    }
-
-    private fun isMoveUp(positionFrom: Int, positionTo: Int): Boolean {
-        return positionTo < positionFrom
     }
 
     private fun pushChangeCheckChange(position: Int, positionAfter: Int, checked: Boolean) {
@@ -372,55 +312,33 @@ class ListManager(
         diffCourses.dispatchUpdatesTo(adapter)
     }
 
-    private fun Int.updateIsChild(isChild: Boolean) {
+    private fun Int.updateIsChild(isChild: Boolean, forceOnChildren: Boolean = false) {
         val item = items[this]
         val isValueChanged = isChild != item.isChild
         item.isChild = isChild
-        val (parent, _, childIndex) = this.findParentItem()
-        if (isChild) {
-            parent?.children?.add(childIndex!!, item)
-            parent?.children?.addAll(childIndex!! + 1, item.children)
-            item.children.clear()
-        } else {
-            val children = this.findChildren()
-            parent?.children?.remove(item)
-            parent?.children?.removeAll(children)
-            item.children.clear()
-            item.children.addAll(children)
+        if (forceOnChildren) {
+            item.children.forEachIndexed { childIndex, it ->
+                if (it.isChild != isChild) {
+                    it.isChild = isChild
+                    adapter.notifyItemChanged(this + childIndex + 1)
+                }
+            }
         }
+        updateAllChildren() // TODO: optimize performance by only updating position
         if (isValueChanged) {
             adapter.notifyItemChanged(this)
         }
     }
 
-    private fun Int.findChildren(): MutableList<ListItem> {
-        val children = mutableListOf<ListItem>()
-        for (position in this + 1..items.lastIndex) {
-            if (items[position].isChild) {
-                children.add(items[position])
-            } else {
-                return children
-            }
-        }
-        return children
+    private fun isBeforeChildItemOfOtherParent(position: Int): Boolean {
+        val item = items[position]
+        return position > 0 && item.isNextItemChild(position) && !items[position + item.itemCount].isChildOf(
+            position
+        )
     }
 
-    private fun Int.findParentItem(allowFindSelf: Boolean = false): Triple<ListItem?, Int?, Int?> {
-        val startPosition = if (allowFindSelf) {
-            this
-        } else {
-            this - 1
-        }
-        for ((childIndex, position) in (startPosition downTo 0).withIndex()) {
-            if (!items[position].isChild) {
-                return Triple(items[position], position, childIndex)
-            }
-        }
-        return Triple(null, null, null)
-    }
-
-    private fun isBeforeChildItem(positionTo: Int): Boolean {
-        return positionTo < items.lastIndex && items[positionTo + 1].isChild
+    private fun ListItem.isNextItemChild(position: Int): Boolean {
+        return (position < items.size - itemCount) && (items[position + this.itemCount].isChild)
     }
 
     private fun sortedItems(
@@ -480,8 +398,8 @@ class ListManager(
         itemCount: Int,
         toIndex: Int,
         adapter: RecyclerView.Adapter<*>
-    ) {
-        if (fromIndex == toIndex || itemCount <= 0) return
+    ): Int? {
+        if (fromIndex == toIndex || itemCount <= 0) return null
 
         val itemsToMove = subList(fromIndex, fromIndex + itemCount).toList()
         removeAll(itemsToMove)
@@ -502,6 +420,7 @@ class ListManager(
                 }
             adapter.notifyItemMoved(fromIndex + idx, newPosition)
         }
+        return insertIndex
     }
 
     private fun MutableList<ListItem>.addAndNotify(
@@ -518,6 +437,10 @@ class ListManager(
 
     private fun ListItem.isChildOf(other: ListItem): Boolean {
         return !other.isChild && other.children.contains(this)
+    }
+
+    private fun ListItem.isChildOf(otherPosition: Int): Boolean {
+        return isChildOf(items[otherPosition])
     }
 
     companion object {

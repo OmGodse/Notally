@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.omgodse.notally.room.ListItem
 
 /**
  * ItemTouchHelper.Callback that allows dragging ListItem with its children.
@@ -16,9 +17,10 @@ class DragCallback(private val elevation: Float, private val listManager: ListMa
     private var lastIsCurrentlyActive = false
     private var childViewHolders: List<ViewHolder> = mutableListOf()
 
-    private var draggedItemIsChild: Boolean = false
-    private var positionFrom: Int = -1
-    private var positionTo: Int = -1
+    private var draggedItem: ListItem? = null
+    private var positionFrom: Int? = null
+    private var positionTo: Int? = null
+    private var newPosition: Int? = null
 
     override fun isLongPressDragEnabled() = false
 
@@ -33,17 +35,18 @@ class DragCallback(private val elevation: Float, private val listManager: ListMa
     override fun onMove(view: RecyclerView, viewHolder: ViewHolder, target: ViewHolder): Boolean {
         val from = viewHolder.adapterPosition
         val to = target.adapterPosition
-        if (positionFrom == -1) {
-            draggedItemIsChild = listManager.getItem(from).isChild
+        if (positionFrom == null) {
+            draggedItem = listManager.getItem(from).clone() as ListItem
         }
-        val swapped = listManager.swap(from, to)
-        if (swapped) {
-            if (positionFrom == -1) {
+        val swapped = listManager.move(from, to, false, false)
+        if (swapped != null) {
+            if (positionFrom == null) {
                 positionFrom = from
             }
             positionTo = to
+            newPosition = swapped
         }
-        return swapped
+        return swapped != null
     }
 
     override fun onSelectedChanged(viewHolder: ViewHolder?, actionState: Int) {
@@ -85,8 +88,10 @@ class DragCallback(private val elevation: Float, private val listManager: ListMa
 
     private fun onDragStart(viewHolder: ViewHolder, recyclerView: RecyclerView) {
         Log.d(TAG, "onDragStart")
-        positionFrom = -1
-        positionTo = -1
+        positionFrom = null
+        positionTo = null
+        newPosition = null
+        draggedItem = null
 
         val item = listManager.getItem(viewHolder.adapterPosition)
         if (!item.isChild) {
@@ -104,7 +109,18 @@ class DragCallback(private val elevation: Float, private val listManager: ListMa
         if (positionFrom == positionTo) {
             return
         }
-        listManager.endDrag(positionFrom, positionTo, draggedItemIsChild)
+        if (newPosition != null && draggedItem != null) {
+            // The items have already been moved accordingly via move() calls
+            listManager.updateChildrenAndPushMoveChange(
+                positionFrom!!,
+                positionTo!!,
+                newPosition!!,
+                draggedItem!!,
+                true,
+                true
+            )
+
+        }
     }
 
     private fun animateFadeOut(viewHolder: ViewHolder) {
