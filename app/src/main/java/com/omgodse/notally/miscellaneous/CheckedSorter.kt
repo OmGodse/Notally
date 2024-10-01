@@ -9,7 +9,9 @@ class CheckedSorter : ListItemSorterStrategy {
         initUncheckedPositions: Boolean,
     ): MutableList<ListItem> {
         if (initUncheckedPositions) {
-            list.updateUncheckedPositions()
+            list.forEachIndexed { index, item ->
+                if (item.uncheckedPosition == null) item.uncheckedPosition = index
+            }
         }
         // Sorted by parents
         val sortedGroups =
