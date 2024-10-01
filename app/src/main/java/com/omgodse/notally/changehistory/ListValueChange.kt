@@ -1,10 +1,10 @@
 package com.omgodse.notally.changehistory
 
 abstract class ListValueChange<T>(
-    protected val newValue: T,
-    protected val oldValue: T,
+    internal val newValue: T,
+    internal val oldValue: T,
     position: Int,
-    protected val positionAfter: Int = position,
+    internal val positionAfter: Int = position,
     ) : ListChange(position) {
 
     override fun redo() {

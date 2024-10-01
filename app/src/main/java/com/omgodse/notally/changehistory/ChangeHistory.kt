@@ -48,6 +48,11 @@ class ChangeHistory(
         return stackPointer > -1
     }
 
+    fun reset() {
+        stackPointer = -1
+        changeStack.clear()
+    }
+
     internal fun lookUp(position: Int = 0): Change {
         if (stackPointer - position < 0) {
             throw IllegalArgumentException("ChangeHistory only has $stackPointer changes!")
