@@ -38,13 +38,22 @@ class ListManager(
         item: ListItem = defaultNewItem(position),
         pushChange: Boolean = true
     ) {
+        val newItem = item.clone() as ListItem
+        if (item.uncheckedPosition == null) {
+            item.uncheckedPosition = position
+        }
         items.addAndNotify(position, item, adapter)
         for ((idx, child) in item.children.withIndex()) {
-            items.addAndNotify(position + idx + 1, child, adapter)
+            val childPosition = position + idx + 1
+            items.addAndNotify(childPosition, child, adapter)
+            if (child.uncheckedPosition == null) {
+                child.uncheckedPosition = childPosition
+            }
         }
-        position.updateIsChild(item.isChild)
+        sortAndUpdateItems()
+        updateAllChildren()
         if (pushChange) {
-            changeHistory.push(ListAddChange(position, this))
+            changeHistory.push(ListAddChange(position, newItem, this))
         }
         recyclerView.post {
             val viewHolder = recyclerView.findViewHolderForAdapterPosition(position) as MakeListVH?
@@ -57,16 +66,18 @@ class ListManager(
     internal fun delete(
         position: Int = items.lastIndex,
         force: Boolean = true,
-        pushChange: Boolean = true
+        newItem: ListItem? = null,
+        pushChange: Boolean = true,
+        allowFocusChange: Boolean = true
     ): ListItem? {
         if (position < 0 || position > items.lastIndex) {
             return null
         }
         var item: ListItem? = null
         if (force || position > 0) {
-            item = deleteItemAndNotify(position)
+            item = deleteItemAndNotify(position, childrenToDelete = newItem?.children)
         }
-        if (!force) {
+        if (!force && allowFocusChange) {
             if (position > 0) {
                 this.moveFocusToNext(position - 2)
             } else if (items.size > 1) {
@@ -260,14 +271,20 @@ class ListManager(
         changeHistory.push(ListCheckedChange(checked, position, positionAfter, this))
     }
 
-    private fun Int.parentPosition(allowFindSelf: Boolean = false): Int? {
-        return this.findParentItem(allowFindSelf).second
-    }
-
-    private fun deleteItemAndNotify(position: Int): ListItem {
+    private fun deleteItemAndNotify(
+        position: Int,
+        childrenToDelete: List<ListItem>? = null
+    ): ListItem {
         val item = items.removeAt(position)
-        item.children.indices.forEach { items.removeAt(position) }
-        adapter.notifyItemRangeRemoved(position, item.itemCount)
+        if (childrenToDelete == null) {
+            item.children.indices.forEach { items.removeAt(position) }
+        } else {
+            childrenToDelete.indices.forEach { items.removeAt(position) }
+        }
+        adapter.notifyItemRangeRemoved(
+            position,
+            if (childrenToDelete == null) item.itemCount else 1 + childrenToDelete.size
+        )
         return item
     }
 
@@ -380,12 +397,12 @@ class ListManager(
         } else add(pushChange = false)
     }
 
-    private fun defaultNewItem(position: Int) = ListItem(
+    internal fun defaultNewItem(position: Int) = ListItem(
         "",
         false,
         items.isNotEmpty() &&
                 ((position < items.size && items[position].isChild)
-                        || (position == items.size && items[position - 1].isChild)),
+                        || (position > 0 && items[position - 1].isChild)),
         null,
         mutableListOf()
     )
