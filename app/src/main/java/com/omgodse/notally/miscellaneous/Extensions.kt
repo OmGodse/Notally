@@ -19,7 +19,6 @@ import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.RemoteViews
 import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
 import com.omgodse.notally.activities.TakeNote
 import com.omgodse.notally.changehistory.ChangeHistory
 import com.omgodse.notally.changehistory.EditTextChange
@@ -212,45 +211,8 @@ fun EditText.createTextWatcherWithHistory(
         }
     }
 
-fun MutableList<ListItem>.moveRangeAndNotify(
-    fromIndex: Int,
-    itemCount: Int,
-    toIndex: Int,
-    adapter: RecyclerView.Adapter<*>
-) {
-    if (fromIndex == toIndex || itemCount <= 0) return // No move required
-
-    val itemsToMove = subList(fromIndex, fromIndex + itemCount).toList()
-    removeAll(itemsToMove)
-    val insertIndex = if (fromIndex < toIndex) toIndex - itemCount + 1 else toIndex
-    addAll(insertIndex, itemsToMove)
-    updateUncheckedPositions()
-    val movedIndexes = if (fromIndex < toIndex) itemCount - 1 downTo 0 else 0 until itemCount
-    for (idx in movedIndexes) {
-        val newPosition =
-            if (fromIndex < toIndex) toIndex + idx - (itemCount - 1) else toIndex + idx
-        adapter.notifyItemMoved(fromIndex + idx, newPosition)
-    }
-}
-
 fun MutableList<ListItem>.updateUncheckedPositions() {
     forEachIndexed { index, item -> if (!item.checked) item.uncheckedPosition = index }
-}
-
-fun MutableList<ListItem>.addAndNotify(
-    position: Int,
-    item: ListItem,
-    adapter: RecyclerView.Adapter<*>
-) {
-    if (item.checked && item.uncheckedPosition == null) {
-        item.uncheckedPosition = position
-    }
-    add(position, item)
-    adapter.notifyItemInserted(position)
-}
-
-fun ListItem.isChildOf(other: ListItem): Boolean {
-    return !other.isChild && other.children.contains(this)
 }
 
 

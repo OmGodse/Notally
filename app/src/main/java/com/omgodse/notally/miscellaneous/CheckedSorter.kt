@@ -3,10 +3,12 @@ package com.omgodse.notally.miscellaneous
 import com.omgodse.notally.room.ListItem
 
 class CheckedSorter : ListItemSorterStrategy {
-    override fun sort(list: List<ListItem>): MutableList<ListItem> {
-        // Make sure every unchecked item has uncheckedPosition set
-        list.forEachIndexed { idx, it ->
-            if (!it.checked && it.uncheckedPosition == null) it.uncheckedPosition = idx
+    override fun sort(
+        list: MutableList<ListItem>,
+        initUncheckedPositions: Boolean
+    ): MutableList<ListItem> {
+        if (initUncheckedPositions) {
+            list.updateUncheckedPositions()
         }
         // Sorted by parents
         val sortedGroups = list.mapIndexedNotNull { idx, item ->

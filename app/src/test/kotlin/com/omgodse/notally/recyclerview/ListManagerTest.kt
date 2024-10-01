@@ -564,35 +564,27 @@ class ListManagerTest {
         verify(changeHistory).push(MockitoHelper.anyObject<ListMoveChange>())
     }
 
-
     @Test
-    fun `drag item to top`() {
+    fun `move child to parent without children`() {
         // Arrange
-        val itemB = createListItem("Item B")
-        items.add(createListItem("Item A"))
-        items.add(itemB)
+        val parentItem1 = createListItem("Parent1")
+        val childItem1 = createListItem("Child 1", isChild = true)
+        val childItem2 = createListItem("Child 2", isChild = true)
+        val parentItem2 =
+            createListItem("Parent2", children = mutableListOf(childItem1, childItem2))
+        items.addAll(listOf(parentItem1, parentItem2, childItem1, childItem2))
         mockPreferences(preferences)
 
         // Act
-        mockDrag(1,0, listManager)
+        mockDrag(3, 1, listManager)
 
         // Assert
-        assertEquals(itemB, items[0])
-    }
-
-    @Test
-    fun `drag item to bottom`() {
-        // Arrange
-        val itemA = createListItem("Item A")
-        items.add(itemA)
-        items.add(createListItem("Item B"))
-        mockPreferences(preferences)
-
-        // Act
-        mockDrag(0,1, listManager)
-
-        // Assert
-        assertEquals(itemA, items[1])
+        assertTrue(items[1].isChild)
+        assertEquals(listOf(childItem2), parentItem1.children)
+        assertEquals(1, parentItem1.children.size)
+        assertEquals(1, parentItem2.children.size)
+        verify(adapter).notifyItemMoved(3, 2)
+        verify(adapter).notifyItemMoved(2, 1)
     }
 
     @Test
@@ -679,6 +671,93 @@ class ListManagerTest {
         assertEquals(itemK.body, items[10].body)
     }
 
+    //endregion
+
+    //region endDrag
+
+    @Test
+    fun `drag item to top`() {
+        // Arrange
+        val itemB = createListItem("Item B")
+        items.add(createListItem("Item A"))
+        items.add(itemB)
+        mockPreferences(preferences)
+
+        // Act
+        mockDrag(1, 0, listManager)
+
+        // Assert
+        assertEquals(itemB, items[0])
+    }
+
+    @Test
+    fun `drag item to bottom`() {
+        // Arrange
+        val itemA = createListItem("Item A")
+        items.add(itemA)
+        items.add(createListItem("Item B"))
+        mockPreferences(preferences)
+
+        // Act
+        mockDrag(0, 1, listManager)
+
+        // Assert
+        assertEquals(itemA, items[1])
+    }
+
+    @Test
+    fun `drag last item to top`() {
+        // Arrange
+        val itemA = createListItem("Item A")
+        val itemB = createListItem("Item B")
+        val itemC = createListItem("Item C")
+        val itemD = createListItem("Item D")
+        items.addAll(listOf(itemA, itemB, itemC, itemD))
+        mockPreferences(preferences)
+        println("Before drag")
+        printList(items)
+
+        // Act
+        mockDrag(items.lastIndex, 0, listManager)
+        println("After drag")
+        printList(items)
+
+        // Assert
+        assertEquals(itemD, items[0])
+        assertEquals(itemA, items[1])
+        assertEquals(itemB, items[2])
+        assertEquals(itemC, items[3])
+        verify(adapter).notifyItemMoved(3, 2)
+        verify(adapter).notifyItemMoved(2, 1)
+        verify(adapter).notifyItemMoved(1, 0)
+    }
+
+    @Test
+    fun `drag top item to bottom`() {
+        // Arrange
+        val itemA = createListItem("Item A")
+        val itemB = createListItem("Item B")
+        val itemC = createListItem("Item C")
+        val itemD = createListItem("Item D")
+        items.addAll(listOf(itemA, itemB, itemC, itemD))
+        mockPreferences(preferences)
+        println("Before drag")
+        printList(items)
+
+        // Act
+        mockDrag(0, items.lastIndex, listManager)
+        println("After drag")
+        printList(items)
+
+        // Assert
+        assertEquals(itemB, items[0])
+        assertEquals(itemC, items[1])
+        assertEquals(itemD, items[2])
+        assertEquals(itemA, items[3])
+        verify(adapter).notifyItemMoved(0, 1)
+        verify(adapter).notifyItemMoved(1, 2)
+        verify(adapter).notifyItemMoved(2, 3)
+    }
 
     //endregion
 
@@ -686,18 +765,28 @@ class ListManagerTest {
     @Test
     fun `revert move with no children and isChildBefore is true`() {
         // Arrange
-        items.add(createListItem("Item A"))
-        items.add(createListItem("Item C", isChild = true))
-        val itemB = createListItem("Item B")
+        val itemA = createListItem("A")
+        val itemB = createListItem("B", isChild = true)
+        val itemC = createListItem("C", children = mutableListOf(itemB))
+        items.add(itemA)
+        items.add(itemC)
         items.add(itemB)
 
-        // Act
-        listManager.revertMove(positionFrom = 1, positionTo = 2, isChildBefore = true)
+        println("Before revert move")
+        printList(items)
 
+        // Act
+        listManager.revertMove(positionFrom = 1, positionTo = 2, isChildBefore = true, hadChildren = false)
+
+        println("After revert move")
+        printList(items)
         // Assert
         assertEquals(itemB, items[1])
         assertTrue(items[1].isChild)
-        verify(adapter).notifyItemChanged(1)
+        assertEquals(itemC, items[2])
+        assertFalse(items[2].isChild)
+        verify(adapter).notifyItemMoved(2, 1)
+        verify(adapter, never()).notifyItemChanged(anyInt())
     }
 
     @Test
@@ -709,7 +798,7 @@ class ListManagerTest {
         items.addAll(listOf(parentItem2, parentItem1, childItem))
 
         // Act
-        listManager.revertMove(positionFrom = 2, positionTo = 0, isChildBefore = null)
+        listManager.revertMove(positionFrom = 2, positionTo = 0, isChildBefore = null, hadChildren = true)
 
         // Assert
         assertEquals(parentItem1, items[0]) // Child remains child
@@ -727,9 +816,14 @@ class ListManagerTest {
         val parentItem2 = createListItem("C", children = mutableListOf())
         items.addAll(listOf(createListItem("D"), parentItem2, parentItem1, childItem))
 
-        // Act
-        listManager.revertMove(positionFrom = 1, positionTo = 3, isChildBefore = false)
+        println("before revertMove")
+        printList(items)
 
+        // Act
+        listManager.revertMove(positionFrom = 1, positionTo = 3, isChildBefore = false, hadChildren = true)
+
+        println("after revertMove")
+        printList(items)
         // Assert
         assertEquals(parentItem1, items[1]) // Child remains child
         assertEquals(childItem, items[2]) // Child remains child
@@ -742,6 +836,37 @@ class ListManagerTest {
     }
 
     @Test
+    fun `revert move with isChildBefore is different than before`() {
+        // Arrange
+        val itemB = createListItem("B", isChild = true)
+        val itemC = createListItem("C")
+        val itemA = createListItem("A", children = mutableListOf(itemB))
+        val itemD = createListItem("D")
+        items.addAll(listOf(itemA, itemB, itemC, itemD))
+        mockPreferences(preferences)
+        println("before move")
+        printList(items)
+
+        listManager.move(2, 1, false)
+        println("after move")
+        printList(items)
+
+        // Act
+        listManager.revertMove(positionFrom = 2, positionTo = 1, isChildBefore = false, hadChildren = false)
+        println("after revert move")
+        printList(items)
+
+        // Assert
+        assertEquals(itemA, items[0]) // Child remains child
+        assertEquals(itemB, items[1]) // Child remains child
+        assertEquals(itemC, items[2]) // Child remains child
+        assertEquals(itemD, items[3]) // Child remains child
+        assertFalse(itemC.isChild) // Child remains child
+        verify(adapter).notifyItemMoved(1, 2) // Parent update
+        verify(adapter).notifyItemChanged(2) // Parent update
+    }
+
+    @Test
     fun `revert move with children updates uncheckedposition`() {
         // Arrange
         val childItem = createListItem("B", isChild = true)
@@ -751,13 +876,63 @@ class ListManagerTest {
         items.addAll(listOf(createListItem("D"), parentItem2, childItem, childItem2))
 
         // Act
-        listManager.revertMove(positionFrom = 1, positionTo = 3, isChildBefore = true)
+        listManager.revertMove(positionFrom = 1, positionTo = 3, isChildBefore = true, hadChildren = false)
 
         // Assert
         assertEquals(0, items[0].uncheckedPosition) // Child remains child
         assertNull(items[1].uncheckedPosition) // Child remains child
         assertEquals(2, items[2].uncheckedPosition) // Child remains child
         assertEquals(3, items[3].uncheckedPosition) // Child remains child
+    }
+
+    @Test
+    fun `revert move last to top`() {
+        // Arrange
+        val itemB = createListItem("B")
+        val itemC = createListItem("C")
+        val itemD = createListItem("D")
+        val itemA = createListItem("A")
+        items.addAll(listOf(itemB, itemC, itemD, itemA))
+        println("Before revert move")
+        printList(items)
+
+        // Act
+        listManager.revertMove(positionFrom = 0, positionTo = 3, isChildBefore = false, hadChildren = false)
+        println("After revert move")
+        printList(items)
+
+        // Assert
+        assertEquals(itemA, items[0]) // Child remains child
+        assertEquals(itemB, items[1]) // Child remains child
+        assertEquals(itemC, items[2]) // Child remains child
+        assertEquals(itemD, items[3]) // Child remains child
+        verify(adapter).notifyItemMoved(3, 0) // Parent update
+        verify(adapter, never()).notifyItemChanged(anyInt()) // Parent update
+    }
+
+    @Test
+    fun `revert move top to last`() {
+        // Arrange
+        val itemD = createListItem("D")
+        val itemA = createListItem("A")
+        val itemB = createListItem("B")
+        val itemC = createListItem("C")
+        items.addAll(listOf(itemD, itemA, itemB, itemC))
+        println("Before revert move")
+        printList(items)
+
+        // Act
+        listManager.revertMove(positionFrom = 3, positionTo = 0, isChildBefore = false, hadChildren = false)
+        println("After revert move")
+        printList(items)
+
+        // Assert
+        assertEquals(itemA, items[0]) // Child remains child
+        assertEquals(itemB, items[1]) // Child remains child
+        assertEquals(itemC, items[2]) // Child remains child
+        assertEquals(itemD, items[3]) // Child remains child
+        verify(adapter).notifyItemMoved(0, 3) // Parent update
+        verify(adapter, never()).notifyItemChanged(anyInt()) // Parent update
     }
 
     //endregion
@@ -937,27 +1112,6 @@ class ListManagerTest {
         verify(adapter).notifyItemChanged(1)
     }
 
-    @Test
-    fun `move child to parent without children`() {
-        // Arrange
-        val parentItem1 = createListItem("Parent1")
-        val childItem1 = createListItem("Child 1", isChild = true)
-        val childItem2 = createListItem("Child 2", isChild = true)
-        val parentItem2 = createListItem("Parent2", children =  mutableListOf(childItem1, childItem2))
-        items.addAll(listOf(parentItem1,parentItem2, childItem1, childItem2))
-        mockPreferences(preferences)
-
-        // Act
-        mockDrag(3,1, listManager)
-
-        // Assert
-        assertTrue(items[1].isChild)
-        assertEquals(listOf(childItem2), parentItem1.children)
-        assertEquals(1, parentItem1.children.size)
-        assertEquals(1, parentItem2.children.size)
-        verify(adapter).notifyItemMoved(3,2)
-        verify(adapter).notifyItemMoved(2,1)
-    }
     //endregion
 
     object MockitoHelper {

@@ -24,7 +24,7 @@ import org.mockito.Mockito.mock
 import org.mockito.Mockito.`when`
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-class ListManagerIT {
+class ListManagerComplexTest {
 
     @Before
     fun setup() {
@@ -56,6 +56,8 @@ class ListManagerIT {
     @Test
     fun `test 03 undo move parent with children`() {
         changeHistory.undo()
+        println("After undo")
+        printList(items)
 
         assertEquals(itemA, items[0])
         assertEquals(itemB, items[1])
@@ -108,6 +110,8 @@ class ListManagerIT {
     @Test
     fun `test 07 undo check parent with children`() {
         changeHistory.undo()
+        println("After undo")
+        printList(items)
 
         assertEquals(itemF.body, items[5].body)
         assertEquals(5, items[5].uncheckedPosition)
