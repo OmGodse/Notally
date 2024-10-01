@@ -222,8 +222,9 @@ class ListManager(
             }
             return position
         }
-        if (!checked) {
-            // TODO: ?
+        if (!checked && isAutoSortByCheckedEnabled()) {
+            // TODO: atm needed for correct sorting. If an item is unchecked without decrementing uncheckedPosition
+            //  it will be positioned 1 below its correct position
             item.uncheckedPosition = item.uncheckedPosition?.dec()
         }
         val (updatedItem, updatedList) = checkWithAllChildren(position, checked)
@@ -247,7 +248,8 @@ class ListManager(
                 item.children.clear()
                 parent!!.children.add(item)
             } else {
-                position.updateIsChild(false)
+                parent = item
+                parent!!.children.clear()
             }
         }
     }
