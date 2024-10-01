@@ -93,7 +93,8 @@ object Operations {
     fun getBody(list: List<ListItem>) = buildString {
         for (item in list) {
             val check = if (item.checked) "[✓]" else "[ ]"
-            appendLine("$check ${item.body}")
+            val childIndentation = if (item.isChild) "    " else ""
+            appendLine("$childIndentation$check ${item.body}")
         }
     }
 
