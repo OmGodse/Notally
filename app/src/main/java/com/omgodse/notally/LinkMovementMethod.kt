@@ -10,8 +10,8 @@ import android.view.MotionEvent
 import android.widget.TextView
 
 /**
- * Inspired by https://github.com/saket/Better-Link-Movement-Method
- * Intercepts touch events on links and dispatches them accordingly
+ * Inspired by https://github.com/saket/Better-Link-Movement-Method Intercepts touch events on links
+ * and dispatches them accordingly
  */
 class LinkMovementMethod(private val onClick: (span: URLSpan) -> Unit) : ArrowKeyMovementMethod() {
 
@@ -39,7 +39,10 @@ class LinkMovementMethod(private val onClick: (span: URLSpan) -> Unit) : ArrowKe
                 touchStartedOverALinkSpan
             }
             MotionEvent.ACTION_UP -> {
-                if (touchStartedOverALinkSpan && linkSpanUnderTouch === clickableSpanUnderTouchOnActionDown) {
+                if (
+                    touchStartedOverALinkSpan &&
+                        linkSpanUnderTouch === clickableSpanUnderTouchOnActionDown
+                ) {
                     dispatchUrlClick(linkSpanUnderTouch)
                 }
                 cleanupOnTouchUp(textView)
@@ -59,13 +62,16 @@ class LinkMovementMethod(private val onClick: (span: URLSpan) -> Unit) : ArrowKe
         }
     }
 
-
     private fun cleanupOnTouchUp(textView: TextView) {
         clickableSpanUnderTouchOnActionDown = null
         removeUrlHighlightColor(textView)
     }
 
-    private fun findLinkSpanUnderTouch(textView: TextView, text: Spannable, event: MotionEvent): URLSpan? {
+    private fun findLinkSpanUnderTouch(
+        textView: TextView,
+        text: Spannable,
+        event: MotionEvent,
+    ): URLSpan? {
         var touchX = event.x.toInt()
         var touchY = event.y.toInt()
 
@@ -88,7 +94,6 @@ class LinkMovementMethod(private val onClick: (span: URLSpan) -> Unit) : ArrowKe
             return spans.firstOrNull()
         } else null
     }
-
 
     private fun removeUrlHighlightColor(textView: TextView) {
         if (isUrlHighlighted) {

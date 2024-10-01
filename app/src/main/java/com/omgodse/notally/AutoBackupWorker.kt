@@ -17,7 +17,8 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.zip.ZipOutputStream
 
-class AutoBackupWorker(private val context: Context, params: WorkerParameters) : Worker(context, params) {
+class AutoBackupWorker(private val context: Context, params: WorkerParameters) :
+    Worker(context, params) {
 
     override fun doWork(): Result {
         val app = context.applicationContext as Application
@@ -29,7 +30,8 @@ class AutoBackupWorker(private val context: Context, params: WorkerParameters) :
             val folder = requireNotNull(DocumentFile.fromTreeUri(app, uri))
 
             if (folder.exists()) {
-                val formatter = SimpleDateFormat("yyyyMMdd HHmmss '(Notally Backup)'", Locale.ENGLISH)
+                val formatter =
+                    SimpleDateFormat("yyyyMMdd HHmmss '(Notally Backup)'", Locale.ENGLISH)
                 val name = formatter.format(System.currentTimeMillis())
                 val file = requireNotNull(folder.createFile("application/zip", name))
                 val outputStream = requireNotNull(app.contentResolver.openOutputStream(file.uri))
@@ -43,7 +45,9 @@ class AutoBackupWorker(private val context: Context, params: WorkerParameters) :
 
                 val imageRoot = IO.getExternalImagesDirectory(app)
                 val audioRoot = IO.getExternalAudioDirectory(app)
-                database.getBaseNoteDao().getAllImages()
+                database
+                    .getBaseNoteDao()
+                    .getAllImages()
                     .asSequence()
                     .flatMap { string -> Converters.jsonToImages(string) }
                     .forEach { image ->
@@ -53,7 +57,9 @@ class AutoBackupWorker(private val context: Context, params: WorkerParameters) :
                             Operations.log(app, exception)
                         }
                     }
-                database.getBaseNoteDao().getAllAudios()
+                database
+                    .getBaseNoteDao()
+                    .getAllAudios()
                     .asSequence()
                     .flatMap { string -> Converters.jsonToAudios(string) }
                     .forEach { audio ->

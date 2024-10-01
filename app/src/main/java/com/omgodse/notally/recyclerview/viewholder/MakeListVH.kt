@@ -18,12 +18,11 @@ import com.omgodse.notally.preferences.TextSize
 import com.omgodse.notally.recyclerview.ListManager
 import com.omgodse.notally.room.ListItem
 
-
 class MakeListVH(
     val binding: RecyclerListItemBinding,
     val listManager: ListManager,
     touchHelper: ItemTouchHelper,
-    textSize: String
+    textSize: String,
 ) : RecyclerView.ViewHolder(binding.root) {
 
     private var editTextWatcher: TextWatcher
@@ -37,10 +36,8 @@ class MakeListVH(
             listManager.add(position)
         }
 
-        editTextWatcher = binding.EditText.createListTextWatcherWithHistory(
-            listManager,
-            this::getAdapterPosition
-        )
+        editTextWatcher =
+            binding.EditText.createListTextWatcherWithHistory(listManager, this::getAdapterPosition)
         binding.EditText.addTextChangedListener(editTextWatcher)
 
         binding.EditText.setOnFocusChangeListener { _, hasFocus ->
@@ -53,7 +50,6 @@ class MakeListVH(
             }
             false
         }
-
     }
 
     fun bind(item: ListItem, firstItem: Boolean, autoSort: String) {
@@ -73,21 +69,16 @@ class MakeListVH(
 
     fun focusEditText(
         selectionStart: Int = binding.EditText.text.length,
-        inputMethodManager: InputMethodManager
+        inputMethodManager: InputMethodManager,
     ) {
         binding.EditText.requestFocus()
         binding.EditText.setSelection(selectionStart)
-        inputMethodManager.showSoftInput(
-            binding.EditText,
-            InputMethodManager.SHOW_IMPLICIT
-        )
+        inputMethodManager.showSoftInput(binding.EditText, InputMethodManager.SHOW_IMPLICIT)
     }
 
     private fun updateDeleteButton(item: ListItem) {
         binding.Delete.visibility = if (item.checked) VISIBLE else INVISIBLE
-        binding.Delete.setOnClickListener {
-            listManager.delete(adapterPosition)
-        }
+        binding.Delete.setOnClickListener { listManager.delete(adapterPosition) }
     }
 
     private fun updateEditText(item: ListItem) {
@@ -113,15 +104,16 @@ class MakeListVH(
 
     private fun updateSwipe(open: Boolean, canSwipe: Boolean) {
         binding.SwipeLayout.setOnActionsListener(null)
-        val swipeActionListener = object : SwipeActionsListener {
-            override fun onOpen(direction: Int, isContinuous: Boolean) {
-                listManager.changeIsChild(adapterPosition, true)
-            }
+        val swipeActionListener =
+            object : SwipeActionsListener {
+                override fun onOpen(direction: Int, isContinuous: Boolean) {
+                    listManager.changeIsChild(adapterPosition, true)
+                }
 
-            override fun onClose() {
-                listManager.changeIsChild(adapterPosition, false)
+                override fun onClose() {
+                    listManager.changeIsChild(adapterPosition, false)
+                }
             }
-        }
 
         binding.SwipeLayout.isEnabledSwipe = canSwipe
         binding.SwipeLayout.post {
@@ -132,7 +124,5 @@ class MakeListVH(
             }
             binding.SwipeLayout.setOnActionsListener(swipeActionListener)
         }
-
     }
-
 }

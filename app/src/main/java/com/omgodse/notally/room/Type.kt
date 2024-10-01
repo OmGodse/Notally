@@ -1,3 +1,6 @@
 package com.omgodse.notally.room
 
-enum class Type { NOTE, LIST }
+enum class Type {
+    NOTE,
+    LIST,
+}

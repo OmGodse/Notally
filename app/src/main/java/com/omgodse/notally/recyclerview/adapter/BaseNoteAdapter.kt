@@ -13,9 +13,7 @@ import com.omgodse.notally.recyclerview.viewholder.HeaderVH
 import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Header
 import com.omgodse.notally.room.Item
-import org.ocpsoft.prettytime.PrettyTime
 import java.io.File
-import java.text.DateFormat
 
 class BaseNoteAdapter(
     private val selectedIds: Set<Long>,
@@ -25,7 +23,7 @@ class BaseNoteAdapter(
     private val maxLines: Int,
     private val maxTitle: Int,
     private val mediaRoot: File?,
-    private val listener: ItemListener
+    private val listener: ItemListener,
 ) : ListAdapter<Item, RecyclerView.ViewHolder>(DiffCallback) {
 
     override fun getItemViewType(position: Int): Int {
@@ -38,11 +36,16 @@ class BaseNoteAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = getItem(position)) {
             is Header -> (holder as HeaderVH).bind(item)
-            is BaseNote -> (holder as BaseNoteVH).bind(item, mediaRoot, selectedIds.contains(item.id))
+            is BaseNote ->
+                (holder as BaseNoteVH).bind(item, mediaRoot, selectedIds.contains(item.id))
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int, payloads: MutableList<Any>) {
+    override fun onBindViewHolder(
+        holder: RecyclerView.ViewHolder,
+        position: Int,
+        payloads: MutableList<Any>,
+    ) {
         if (payloads.isEmpty()) {
             onBindViewHolder(holder, position)
         } else handleCheck(holder, position)
@@ -62,34 +65,36 @@ class BaseNoteAdapter(
         }
     }
 
-
     private fun handleCheck(holder: RecyclerView.ViewHolder, position: Int) {
         val baseNote = getItem(position) as BaseNote
         (holder as BaseNoteVH).updateCheck(selectedIds.contains(baseNote.id))
     }
 
-
     private object DiffCallback : DiffUtil.ItemCallback<Item>() {
 
         override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
             return when (oldItem) {
-                is BaseNote -> if (newItem is BaseNote) {
-                    oldItem.id == newItem.id
-                } else false
-                is Header -> if (newItem is Header) {
-                    oldItem.label == newItem.label
-                } else false
+                is BaseNote ->
+                    if (newItem is BaseNote) {
+                        oldItem.id == newItem.id
+                    } else false
+                is Header ->
+                    if (newItem is Header) {
+                        oldItem.label == newItem.label
+                    } else false
             }
         }
 
         override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean {
             return when (oldItem) {
-                is BaseNote -> if (newItem is BaseNote) {
-                    oldItem == newItem
-                } else false
-                is Header -> if (newItem is Header) {
-                    oldItem.label == newItem.label
-                } else false
+                is BaseNote ->
+                    if (newItem is BaseNote) {
+                        oldItem == newItem
+                    } else false
+                is Header ->
+                    if (newItem is Header) {
+                        oldItem.label == newItem.label
+                    } else false
             }
         }
     }

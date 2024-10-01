@@ -20,17 +20,19 @@ import com.omgodse.notally.room.Header
 import com.omgodse.notally.room.NotallyDatabase
 import com.omgodse.notally.viewmodels.BaseNoteModel
 import com.omgodse.notally.widget.WidgetProvider
+import java.util.Collections
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.text.DateFormat
-import java.util.Collections
 
 class ConfigureWidget : AppCompatActivity(), ItemListener {
 
     private lateinit var adapter: BaseNoteAdapter
     private val id by lazy {
-        intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
+        intent.getIntExtra(
+            AppWidgetManager.EXTRA_APPWIDGET_ID,
+            AppWidgetManager.INVALID_APPWIDGET_ID,
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,14 +53,25 @@ class ConfigureWidget : AppCompatActivity(), ItemListener {
         val dateFormat = preferences.dateFormat.value
         val mediaRoot = IO.getExternalImagesDirectory(application)
 
-        adapter = BaseNoteAdapter(Collections.emptySet(), dateFormat, textSize, maxItems, maxLines, maxTitle, mediaRoot, this)
+        adapter =
+            BaseNoteAdapter(
+                Collections.emptySet(),
+                dateFormat,
+                textSize,
+                maxItems,
+                maxLines,
+                maxTitle,
+                mediaRoot,
+                this,
+            )
 
         binding.RecyclerView.adapter = adapter
         binding.RecyclerView.setHasFixedSize(true)
 
-        binding.RecyclerView.layoutManager = if (preferences.view.value == View.grid) {
-            StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
-        } else LinearLayoutManager(this)
+        binding.RecyclerView.layoutManager =
+            if (preferences.view.value == View.grid) {
+                StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
+            } else LinearLayoutManager(this)
 
         val database = NotallyDatabase.getDatabase(application)
 
@@ -66,14 +79,14 @@ class ConfigureWidget : AppCompatActivity(), ItemListener {
         val others = Header(getString(R.string.others))
 
         lifecycleScope.launch {
-            val notes = withContext(Dispatchers.IO) {
-                val raw = database.getBaseNoteDao().getAllNotes()
-                BaseNoteModel.transform(raw, pinned, others)
-            }
+            val notes =
+                withContext(Dispatchers.IO) {
+                    val raw = database.getBaseNoteDao().getAllNotes()
+                    BaseNoteModel.transform(raw, pinned, others)
+                }
             adapter.submitList(notes)
         }
     }
-
 
     override fun onClick(position: Int) {
         if (position != -1) {

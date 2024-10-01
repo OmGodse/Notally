@@ -7,7 +7,7 @@ data class SpanRepresentation(
     var monospace: Boolean,
     var strikethrough: Boolean,
     var start: Int,
-    var end: Int
+    var end: Int,
 ) {
 
     fun isNotUseless(): Boolean {

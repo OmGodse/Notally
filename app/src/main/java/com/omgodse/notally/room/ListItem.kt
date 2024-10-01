@@ -6,7 +6,7 @@ data class ListItem(
     var isChild: Boolean,
     var uncheckedPosition: Int?,
     var children: MutableList<ListItem>,
-    var id: Int = -1
+    var id: Int = -1,
 ) : Cloneable {
     public override fun clone(): Any {
         return ListItem(body, checked, isChild, uncheckedPosition, children.toMutableList(), id)

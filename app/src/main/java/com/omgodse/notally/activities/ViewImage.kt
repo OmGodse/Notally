@@ -21,12 +21,12 @@ import com.omgodse.notally.recyclerview.adapter.ImageAdapter
 import com.omgodse.notally.room.Converters
 import com.omgodse.notally.room.Image
 import com.omgodse.notally.room.NotallyDatabase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ViewImage : AppCompatActivity() {
 
@@ -51,7 +51,8 @@ class ViewImage : AppCompatActivity() {
         }
 
         binding.RecyclerView.setHasFixedSize(true)
-        binding.RecyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
+        binding.RecyclerView.layoutManager =
+            LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
         PagerSnapHelper().attachToRecyclerView(binding.RecyclerView)
 
         val initial = intent.getIntExtra(POSITION, 0)
@@ -82,32 +83,33 @@ class ViewImage : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_EXPORT_FILE && resultCode == RESULT_OK) {
-            data?.data?.let { uri ->
-                writeImageToUri(uri)
-            }
+            data?.data?.let { uri -> writeImageToUri(uri) }
         }
     }
-
 
     private fun setupToolbar(binding: ActivityViewImageBinding, adapter: ImageAdapter) {
         binding.Toolbar.setNavigationOnClickListener { finish() }
 
         val layoutManager = binding.RecyclerView.layoutManager as LinearLayoutManager
-        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+        adapter.registerAdapterDataObserver(
+            object : RecyclerView.AdapterDataObserver() {
 
-            override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
-                val position = layoutManager.findFirstVisibleItemPosition()
-                binding.Toolbar.title = "${position + 1} / ${adapter.itemCount}"
+                override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
+                    val position = layoutManager.findFirstVisibleItemPosition()
+                    binding.Toolbar.title = "${position + 1} / ${adapter.itemCount}"
+                }
             }
-        })
+        )
 
-        binding.RecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        binding.RecyclerView.addOnScrollListener(
+            object : RecyclerView.OnScrollListener() {
 
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                val position = layoutManager.findFirstVisibleItemPosition()
-                binding.Toolbar.title = "${position + 1} / ${adapter.itemCount}"
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    val position = layoutManager.findFirstVisibleItemPosition()
+                    binding.Toolbar.title = "${position + 1} / ${adapter.itemCount}"
+                }
             }
-        })
+        )
 
         binding.Toolbar.menu.add(R.string.share, R.drawable.share) {
             val position = layoutManager.findFirstCompletelyVisibleItemPosition()
@@ -131,7 +133,6 @@ class ViewImage : AppCompatActivity() {
         }
     }
 
-
     private fun share(image: Image) {
         val mediaRoot = IO.getExternalImagesDirectory(application)
         val file = if (mediaRoot != null) File(mediaRoot, image.name) else null
@@ -143,7 +144,8 @@ class ViewImage : AppCompatActivity() {
             intent.putExtra(Intent.EXTRA_STREAM, uri)
 
             // Necessary for sharesheet to show a preview of the image
-            // Check -> https://commonsware.com/blog/2021/01/07/action_send-share-sheet-clipdata.html
+            // Check ->
+            // https://commonsware.com/blog/2021/01/07/action_send-share-sheet-clipdata.html
             intent.clipData = ClipData.newRawUri(null, uri)
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
@@ -151,7 +153,6 @@ class ViewImage : AppCompatActivity() {
             startActivity(chooser)
         }
     }
-
 
     private fun saveToDevice(image: Image) {
         val mediaRoot = IO.getExternalImagesDirectory(application)
@@ -171,7 +172,9 @@ class ViewImage : AppCompatActivity() {
         lifecycleScope.launch {
             withContext(Dispatchers.IO) {
                 val mediaRoot = IO.getExternalImagesDirectory(application)
-                val file = if (mediaRoot != null) File(mediaRoot, requireNotNull(currentImage).name) else null
+                val file =
+                    if (mediaRoot != null) File(mediaRoot, requireNotNull(currentImage).name)
+                    else null
                 if (file != null && file.exists()) {
                     val output = contentResolver.openOutputStream(uri) as FileOutputStream
                     output.channel.truncate(0)
@@ -184,7 +187,6 @@ class ViewImage : AppCompatActivity() {
             Toast.makeText(this@ViewImage, R.string.saved_to_device, Toast.LENGTH_LONG).show()
         }
     }
-
 
     private fun delete(position: Int, adapter: ImageAdapter) {
         MaterialAlertDialogBuilder(this)

@@ -114,7 +114,7 @@ class ListManagerWithChangeHistoryTest : ListManagerTestBase() {
         listManager.add(item = createListItem("Parent5"))
         listManager.add(
             items.lastIndex,
-            createListItem("Parent6", children = mutableListOf(child3, child4))
+            createListItem("Parent6", children = mutableListOf(child3, child4)),
         )
         val bodiesAfterAdd = items.map { it.body }.toTypedArray()
 
@@ -205,5 +205,4 @@ class ListManagerWithChangeHistoryTest : ListManagerTestBase() {
         "Parent6".assertChildren("Child4")
         "Parent4".assertChildren("Child2", "Child3")
     }
-
 }

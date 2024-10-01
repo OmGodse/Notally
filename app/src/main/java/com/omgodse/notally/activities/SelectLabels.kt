@@ -46,7 +46,6 @@ class SelectLabels : AppCompatActivity() {
         outState.putStringArrayList(SELECTED_LABELS, selectedLabels)
     }
 
-
     private fun setupToolbar() {
         binding.Toolbar.setNavigationOnClickListener { finish() }
         binding.Toolbar.menu.add(R.string.add_label, R.drawable.add) { addLabel() }

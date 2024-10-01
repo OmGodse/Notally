@@ -12,7 +12,6 @@ class Deleted : NotallyFragment() {
         menu.add(R.string.delete_all, R.drawable.delete_all) { deleteAllNotes() }
     }
 
-
     private fun deleteAllNotes() {
         MaterialAlertDialogBuilder(requireContext())
             .setMessage(R.string.delete_all_notes)
@@ -20,7 +19,6 @@ class Deleted : NotallyFragment() {
             .setNegativeButton(R.string.cancel, null)
             .show()
     }
-
 
     override fun getBackground() = R.drawable.delete
 

@@ -6,7 +6,7 @@ import com.omgodse.notally.room.ListItem
 class ListDeleteChange(
     position: Int,
     private val item: ListItem,
-    private val listManager: ListManager
+    private val listManager: ListManager,
 ) : ListChange(position) {
     override fun redo() {
         listManager.delete(position, pushChange = false)

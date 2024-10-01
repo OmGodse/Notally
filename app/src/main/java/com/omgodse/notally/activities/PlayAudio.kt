@@ -18,13 +18,13 @@ import com.omgodse.notally.databinding.ActivityPlayAudioBinding
 import com.omgodse.notally.miscellaneous.IO
 import com.omgodse.notally.miscellaneous.add
 import com.omgodse.notally.room.Audio
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.text.DateFormat
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class PlayAudio : AppCompatActivity() {
 
@@ -45,18 +45,19 @@ class PlayAudio : AppCompatActivity() {
         val intent = Intent(this, AudioPlayService::class.java)
         startService(intent)
 
-        connection = object : ServiceConnection {
+        connection =
+            object : ServiceConnection {
 
-            override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
-                val service = (binder as LocalBinder<AudioPlayService>).getService()
-                service.initialise(audio)
-                service.onStateChange = { updateUI(service) }
-                this@PlayAudio.service = service
-                updateUI(service)
+                override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
+                    val service = (binder as LocalBinder<AudioPlayService>).getService()
+                    service.initialise(audio)
+                    service.onStateChange = { updateUI(service) }
+                    this@PlayAudio.service = service
+                    updateUI(service)
+                }
+
+                override fun onServiceDisconnected(name: ComponentName?) {}
             }
-
-            override fun onServiceDisconnected(name: ComponentName?) {}
-        }
 
         bindService(intent, connection, BIND_AUTO_CREATE)
 
@@ -83,12 +84,9 @@ class PlayAudio : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_EXPORT_FILE && resultCode == RESULT_OK) {
-            data?.data?.let { uri ->
-                writeAudioToUri(uri)
-            }
+            data?.data?.let { uri -> writeAudioToUri(uri) }
         }
     }
-
 
     private fun setupToolbar(binding: ActivityPlayAudioBinding) {
         binding.Toolbar.setNavigationOnClickListener { onBackPressed() }
@@ -126,7 +124,6 @@ class PlayAudio : AppCompatActivity() {
             .show()
     }
 
-
     private fun saveToDevice() {
         val audioRoot = IO.getExternalAudioDirectory(application)
         val file = if (audioRoot != null) File(audioRoot, audio.name) else null
@@ -161,11 +158,12 @@ class PlayAudio : AppCompatActivity() {
         }
     }
 
-
     private fun updateUI(service: AudioPlayService) {
         binding.AudioControlView.setCurrentPosition(service.getCurrentPosition())
         when (service.getState()) {
-            AudioPlayService.PREPARED, AudioPlayService.PAUSED, AudioPlayService.COMPLETED -> {
+            AudioPlayService.PREPARED,
+            AudioPlayService.PAUSED,
+            AudioPlayService.COMPLETED -> {
                 binding.Play.setText(R.string.play)
                 binding.AudioControlView.setStarted(false)
             }
@@ -174,7 +172,12 @@ class PlayAudio : AppCompatActivity() {
                 binding.AudioControlView.setStarted(true)
             }
             AudioPlayService.ERROR -> {
-                binding.Error.text = getString(R.string.something_went_wrong_audio, service.getErrorType(), service.getErrorCode())
+                binding.Error.text =
+                    getString(
+                        R.string.something_went_wrong_audio,
+                        service.getErrorType(),
+                        service.getErrorCode(),
+                    )
             }
         }
     }

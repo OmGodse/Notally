@@ -4,5 +4,8 @@ import com.omgodse.notally.room.ListItem
 
 interface ListItemSorterStrategy {
 
-    fun sort(list: MutableList<ListItem>, initUncheckedPositions: Boolean = false): MutableList<ListItem>
+    fun sort(
+        list: MutableList<ListItem>,
+        initUncheckedPositions: Boolean = false,
+    ): MutableList<ListItem>
 }

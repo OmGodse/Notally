@@ -11,5 +11,4 @@ class ListIsChildChange(isChild: Boolean, position: Int, private val listManager
     override fun toString(): String {
         return "IsChildChange position: $position isChild: $newValue"
     }
-
 }

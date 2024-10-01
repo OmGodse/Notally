@@ -29,15 +29,16 @@ class RecordAudio : AppCompatActivity() {
         val intent = Intent(this, AudioRecordService::class.java)
         startService(intent)
 
-        connection = object : ServiceConnection {
+        connection =
+            object : ServiceConnection {
 
-            override fun onServiceConnected(name: ComponentName, binder: IBinder) {
-                service = (binder as LocalBinder<AudioRecordService>).getService()
-                updateUI(binding, requireNotNull(service))
+                override fun onServiceConnected(name: ComponentName, binder: IBinder) {
+                    service = (binder as LocalBinder<AudioRecordService>).getService()
+                    updateUI(binding, requireNotNull(service))
+                }
+
+                override fun onServiceDisconnected(name: ComponentName?) {}
             }
-
-            override fun onServiceDisconnected(name: ComponentName?) {}
-        }
 
         bindService(intent, connection, BIND_AUTO_CREATE)
 
@@ -87,7 +88,6 @@ class RecordAudio : AppCompatActivity() {
             } else super.onBackPressed()
         } else super.onBackPressed()
     }
-
 
     private fun discard(service: AudioRecordService) {
         service.stop()

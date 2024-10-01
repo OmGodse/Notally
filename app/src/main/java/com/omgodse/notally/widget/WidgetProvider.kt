@@ -41,7 +41,8 @@ class WidgetProvider : AppWidgetProvider() {
                 val position = intent.getIntExtra(EXTRA_POSITION, 0)
                 val checked = intent.getBooleanExtra(RemoteViews.EXTRA_CHECKED, false)
 
-                val database = NotallyDatabase.getDatabase(context.applicationContext as Application)
+                val database =
+                    NotallyDatabase.getDatabase(context.applicationContext as Application)
                 val pendingResult = goAsync()
                 GlobalScope.launch {
                     withContext(Dispatchers.IO) {
@@ -75,7 +76,6 @@ class WidgetProvider : AppWidgetProvider() {
         context.startActivity(intent)
     }
 
-
     override fun onDeleted(context: Context, appWidgetIds: IntArray) {
         val app = context.applicationContext as Application
         val preferences = Preferences.getInstance(app)
@@ -83,7 +83,11 @@ class WidgetProvider : AppWidgetProvider() {
         appWidgetIds.forEach { id -> preferences.deleteWidget(id) }
     }
 
-    override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
+    override fun onUpdate(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetIds: IntArray,
+    ) {
         val app = context.applicationContext as Application
         val preferences = Preferences.getInstance(app)
 
@@ -96,7 +100,8 @@ class WidgetProvider : AppWidgetProvider() {
     companion object {
 
         fun updateWidget(context: Context, manager: AppWidgetManager, id: Int, noteId: Long) {
-            // Widgets displaying the same note share the same factory since only the noteId is embedded
+            // Widgets displaying the same note share the same factory since only the noteId is
+            // embedded
             val intent = Intent(context, WidgetService::class.java)
             intent.putExtra(Constants.SelectedBaseNote, noteId)
             embedIntentExtras(intent)
@@ -135,7 +140,10 @@ class WidgetProvider : AppWidgetProvider() {
             val intent = Intent(context, WidgetProvider::class.java)
             intent.putExtra(Constants.SelectedBaseNote, noteId)
             embedIntentExtras(intent)
-            val flags = PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT or Intent.FILL_IN_ACTION
+            val flags =
+                PendingIntent.FLAG_MUTABLE or
+                    PendingIntent.FLAG_UPDATE_CURRENT or
+                    Intent.FILL_IN_ACTION
             return PendingIntent.getBroadcast(context, 0, intent, flags)
         }
 

@@ -15,7 +15,8 @@ import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.NotallyDatabase
 import com.omgodse.notally.room.Type
 
-class WidgetFactory(private val app: Application, private val id: Long) : RemoteViewsService.RemoteViewsFactory {
+class WidgetFactory(private val app: Application, private val id: Long) :
+    RemoteViewsService.RemoteViewsFactory {
 
     private var baseNote: BaseNote? = null
     private val database = NotallyDatabase.getDatabase(app)
@@ -24,7 +25,6 @@ class WidgetFactory(private val app: Application, private val id: Long) : Remote
     override fun onCreate() {}
 
     override fun onDestroy() {}
-
 
     override fun getCount(): Int {
         val copy = baseNote
@@ -54,11 +54,14 @@ class WidgetFactory(private val app: Application, private val id: Long) : Remote
         }
     }
 
-
     private fun getNoteView(note: BaseNote): RemoteViews {
         val view = RemoteViews(app.packageName, R.layout.widget_note)
 
-        view.setTextViewTextSize(R.id.Title, TypedValue.COMPLEX_UNIT_SP, TextSize.getDisplayTitleSize(preferences.textSize.value))
+        view.setTextViewTextSize(
+            R.id.Title,
+            TypedValue.COMPLEX_UNIT_SP,
+            TextSize.getDisplayTitleSize(preferences.textSize.value),
+        )
         if (note.title.isNotEmpty()) {
             view.setTextViewText(R.id.Title, note.title)
             view.setViewVisibility(R.id.Title, View.VISIBLE)
@@ -81,11 +84,14 @@ class WidgetFactory(private val app: Application, private val id: Long) : Remote
         return view
     }
 
-
     private fun getListHeaderView(list: BaseNote): RemoteViews {
         val view = RemoteViews(app.packageName, R.layout.widget_list_header)
 
-        view.setTextViewTextSize(R.id.Title, TypedValue.COMPLEX_UNIT_SP, TextSize.getDisplayTitleSize(preferences.textSize.value))
+        view.setTextViewTextSize(
+            R.id.Title,
+            TypedValue.COMPLEX_UNIT_SP,
+            TextSize.getDisplayTitleSize(preferences.textSize.value),
+        )
         if (list.title.isNotEmpty()) {
             view.setTextViewText(R.id.Title, list.title)
             view.setViewVisibility(R.id.Title, View.VISIBLE)
@@ -107,7 +113,11 @@ class WidgetFactory(private val app: Application, private val id: Long) : Remote
 
         val item = list.items[index]
 
-        view.setTextViewTextSize(R.id.CheckBox, TypedValue.COMPLEX_UNIT_SP, TextSize.getDisplayBodySize(preferences.textSize.value))
+        view.setTextViewTextSize(
+            R.id.CheckBox,
+            TypedValue.COMPLEX_UNIT_SP,
+            TextSize.getDisplayBodySize(preferences.textSize.value),
+        )
         view.setTextViewText(R.id.CheckBox, item.body)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -119,14 +129,26 @@ class WidgetFactory(private val app: Application, private val id: Long) : Remote
         } else {
             val intent = Intent(WidgetProvider.ACTION_OPEN_LIST)
             if (item.checked) {
-                view.setTextViewCompoundDrawablesRelative(R.id.CheckBox, R.drawable.checkbox_fill, 0, 0, 0)
-            } else view.setTextViewCompoundDrawablesRelative(R.id.CheckBox, R.drawable.checkbox_outline, 0, 0, 0)
+                view.setTextViewCompoundDrawablesRelative(
+                    R.id.CheckBox,
+                    R.drawable.checkbox_fill,
+                    0,
+                    0,
+                    0,
+                )
+            } else
+                view.setTextViewCompoundDrawablesRelative(
+                    R.id.CheckBox,
+                    R.drawable.checkbox_outline,
+                    0,
+                    0,
+                    0,
+                )
             view.setOnClickFillInIntent(R.id.CheckBox, intent)
         }
 
         return view
     }
-
 
     override fun getViewTypeCount() = 3
 

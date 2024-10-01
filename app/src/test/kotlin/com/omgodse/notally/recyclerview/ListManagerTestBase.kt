@@ -32,7 +32,6 @@ open class ListManagerTestBase {
 
     protected lateinit var listManager: ListManager
 
-
     @Before
     fun setUp() {
         recyclerView = mock(RecyclerView::class.java)
@@ -41,14 +40,15 @@ open class ListManagerTestBase {
         changeHistory = ChangeHistory() {}
         makeListVH = mock(MakeListVH::class.java)
         preferences = mock(Preferences::class.java)
-        items = mutableListOf(
-            createListItem("A", id = 0),
-            createListItem("B", id = 1),
-            createListItem("C", id = 2),
-            createListItem("D", id = 3),
-            createListItem("E", id = 4),
-            createListItem("F", id = 5),
-        )
+        items =
+            mutableListOf(
+                createListItem("A", id = 0),
+                createListItem("B", id = 1),
+                createListItem("C", id = 2),
+                createListItem("D", id = 3),
+                createListItem("E", id = 4),
+                createListItem("F", id = 5),
+            )
         items.updateUncheckedPositions()
         listManager =
             ListManager(items, recyclerView, changeHistory, preferences, inputMethodManager)
@@ -83,16 +83,12 @@ open class ListManagerTestBase {
         assertEquals(
             "uncheckedPosition",
             expected,
-            items.find { it.body == this }!!.uncheckedPosition
+            items.find { it.body == this }!!.uncheckedPosition,
         )
     }
 
     protected fun String.assertPosition(expected: Int) {
-        assertEquals(
-            "position in items",
-            expected,
-            items.indexOfFirst { it.body == this }
-        )
+        assertEquals("position in items", expected, items.indexOfFirst { it.body == this })
     }
 
     protected fun String.assertIsParent() {
@@ -105,7 +101,6 @@ open class ListManagerTestBase {
             return uninitialized()
         }
 
-        @Suppress("UNCHECKED_CAST")
-        fun <T> uninitialized(): T = null as T
+        @Suppress("UNCHECKED_CAST") fun <T> uninitialized(): T = null as T
     }
 }

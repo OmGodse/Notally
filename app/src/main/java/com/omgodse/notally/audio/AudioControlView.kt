@@ -41,17 +41,19 @@ class AudioControlView(context: Context, attrs: AttributeSet) : RelativeLayout(c
             DateUtils.formatElapsedTime(seconds)
         }
 
-        progress.addOnSliderTouchListener(object : Slider.OnSliderTouchListener {
+        progress.addOnSliderTouchListener(
+            object : Slider.OnSliderTouchListener {
 
-            override fun onStartTrackingTouch(slider: Slider) {
-                seeking = true
-            }
+                override fun onStartTrackingTouch(slider: Slider) {
+                    seeking = true
+                }
 
-            override fun onStopTrackingTouch(slider: Slider) {
-                seeking = false
-                onSeekComplete?.invoke(progress.value.toLong())
+                override fun onStopTrackingTouch(slider: Slider) {
+                    seeking = false
+                    onSeekComplete?.invoke(progress.value.toLong())
+                }
             }
-        })
+        )
 
         setCurrentPosition(0)
     }
@@ -73,7 +75,6 @@ class AudioControlView(context: Context, attrs: AttributeSet) : RelativeLayout(c
         updateRunning()
     }
 
-
     @Synchronized
     private fun updateComponents(now: Long) {
         var milliseconds = now - base
@@ -85,7 +86,6 @@ class AudioControlView(context: Context, attrs: AttributeSet) : RelativeLayout(c
             progress.value = milliseconds.toFloat()
         }
     }
-
 
     private fun updateRunning() {
         val running = visible && started && isShown()
@@ -100,15 +100,15 @@ class AudioControlView(context: Context, attrs: AttributeSet) : RelativeLayout(c
         }
     }
 
-    private val tickRunnable = object : Runnable {
-        override fun run() {
-            if (running) {
-                updateComponents(SystemClock.elapsedRealtime())
-                postDelayed(this, 100)
+    private val tickRunnable =
+        object : Runnable {
+            override fun run() {
+                if (running) {
+                    updateComponents(SystemClock.elapsedRealtime())
+                    postDelayed(this, 100)
+                }
             }
         }
-    }
-
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()

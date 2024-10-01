@@ -25,7 +25,7 @@ import org.mockito.Mockito.verifyNoMoreInteractions
 
 class ListManagerTest : ListManagerTestBase() {
 
-    //region add
+    // region add
     @Test
     fun `add item at default position`() {
         mockPreferences(preferences)
@@ -114,7 +114,6 @@ class ListManagerTest : ListManagerTestBase() {
         (changeHistory.lookUp() as ListAddChange).assert(0, newItem)
     }
 
-
     @Test
     fun `add item with children`() {
         mockPreferences(preferences)
@@ -147,9 +146,9 @@ class ListManagerTest : ListManagerTestBase() {
         (changeHistory.lookUp() as ListAddChange).assert(6, newItem)
     }
 
-    //endregion
+    // endregion
 
-    //region delete
+    // region delete
 
     @Test
     fun `delete first item from list unforced does not delete`() {
@@ -201,9 +200,9 @@ class ListManagerTest : ListManagerTestBase() {
         verify(adapter, never()).notifyItemRangeRemoved(anyInt(), anyInt())
     }
 
-    //endregion
+    // endregion
 
-    //region move
+    // region move
     @Test
     fun `move parent without children`() {
         mockPreferences(preferences)
@@ -333,7 +332,6 @@ class ListManagerTest : ListManagerTestBase() {
         verifyNoMoreInteractions(adapter)
     }
 
-
     @Test
     fun `dont move parent into own children`() {
         mockPreferences(preferences)
@@ -362,9 +360,9 @@ class ListManagerTest : ListManagerTestBase() {
         verifyNoMoreInteractions(adapter)
     }
 
-    //endregion
+    // endregion
 
-    //region revertMove
+    // region revertMove
 
     @Test
     fun `revertMove parent without children`() {
@@ -494,9 +492,9 @@ class ListManagerTest : ListManagerTestBase() {
         verifyNoMoreInteractions(adapter)
     }
 
-    //endregion
+    // endregion
 
-    //region endDrag
+    // region endDrag
 
     @Test
     fun `endDrag parent without children`() {
@@ -510,7 +508,6 @@ class ListManagerTest : ListManagerTestBase() {
         verifyNoMoreInteractions(adapter)
         (changeHistory.lookUp() as ListMoveChange).assert(3, 1, 1, " D")
     }
-
 
     @Test
     fun `endDrag parent with children into other parent`() {
@@ -582,7 +579,6 @@ class ListManagerTest : ListManagerTestBase() {
         (changeHistory.lookUp() as ListMoveChange).assert(3, 0, 0, " D(E)")
     }
 
-
     @Test
     fun `endDrag child to other parent`() {
         mockPreferences(preferences)
@@ -599,7 +595,6 @@ class ListManagerTest : ListManagerTestBase() {
         verifyNoMoreInteractions(adapter)
         (changeHistory.lookUp() as ListMoveChange).assert(3, 1, 1, " > D")
     }
-
 
     @Test
     fun `endDrag child above other child`() {
@@ -639,9 +634,9 @@ class ListManagerTest : ListManagerTestBase() {
         verifyNoMoreInteractions(adapter)
     }
 
-    //endregion
+    // endregion
 
-    //region changeChecked
+    // region changeChecked
 
     @Test
     fun `changeChecked marks item as checked and pushes change`() {
@@ -661,7 +656,7 @@ class ListManagerTest : ListManagerTestBase() {
         mockPreferences(preferences)
         listManager.changeChecked(0, true)
         reset(adapter)
-//        mockPreferences(preferences)
+        //        mockPreferences(preferences)
 
         // Act
         val positionAfter = listManager.changeChecked(0, checked = false, pushChange = true)
@@ -731,7 +726,6 @@ class ListManagerTest : ListManagerTestBase() {
         (changeHistory.lookUp() as ListCheckedChange).assert(true, 0, 0)
         verifyNoMoreInteractions(adapter)
     }
-
 
     @Test
     fun `changeChecked on child item and does not move when auto-sort is enabled`() {
@@ -806,10 +800,9 @@ class ListManagerTest : ListManagerTestBase() {
         verifyNoMoreInteractions(adapter)
     }
 
+    // endregion
 
-    //endregion
-
-    //region changeIsChild
+    // region changeIsChild
 
     @Test
     fun `changeIsChild changes parent to child and pushes change`() {
@@ -857,9 +850,6 @@ class ListManagerTest : ListManagerTestBase() {
         (changeHistory.lookUp() as ListIsChildChange).assert(false, 1, 1)
     }
 
-    //endregion
+    // endregion
 
 }
-
-
-

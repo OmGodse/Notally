@@ -5,7 +5,7 @@ import com.omgodse.notally.databinding.RecyclerSelectableLabelBinding
 
 class SelectableLabelVH(
     private val binding: RecyclerSelectableLabelBinding,
-    private val onChecked: (position: Int, checked: Boolean) -> Unit
+    private val onChecked: (position: Int, checked: Boolean) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
 
     init {

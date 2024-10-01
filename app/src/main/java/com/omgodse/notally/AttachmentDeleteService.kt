@@ -14,13 +14,13 @@ import com.omgodse.notally.miscellaneous.IO
 import com.omgodse.notally.room.Attachment
 import com.omgodse.notally.room.Audio
 import com.omgodse.notally.room.Image
+import java.io.File
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.File
 
 class AttachmentDeleteService : Service() {
 
@@ -33,7 +33,12 @@ class AttachmentDeleteService : Service() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channelId = "com.omgodse.fileUpdates"
-            val channel = NotificationChannel(channelId, "Backups and Images", NotificationManager.IMPORTANCE_DEFAULT)
+            val channel =
+                NotificationChannel(
+                    channelId,
+                    "Backups and Images",
+                    NotificationManager.IMPORTANCE_DEFAULT,
+                )
             manager.createNotificationChannel(channel)
             builder.setChannelId(channelId)
         }
@@ -62,14 +67,21 @@ class AttachmentDeleteService : Service() {
                 do {
                     val attachments = channel.receive()
                     attachments.forEachIndexed { index, attachment ->
-                        val file = when (attachment) {
-                            is Audio -> if (audioRoot != null) File(audioRoot, attachment.name) else null
-                            is Image -> if (imageRoot != null) File(imageRoot, attachment.name) else null
-                        }
+                        val file =
+                            when (attachment) {
+                                is Audio ->
+                                    if (audioRoot != null) File(audioRoot, attachment.name)
+                                    else null
+                                is Image ->
+                                    if (imageRoot != null) File(imageRoot, attachment.name)
+                                    else null
+                            }
                         if (file != null && file.exists()) {
                             file.delete()
                         }
-                        builder.setContentText(getString(R.string.count, index + 1, attachments.size))
+                        builder.setContentText(
+                            getString(R.string.count, index + 1, attachments.size)
+                        )
                         builder.setProgress(attachments.size, index + 1, false)
                         manager.notify(1, builder.build())
                     }
@@ -82,10 +94,9 @@ class AttachmentDeleteService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         scope.launch {
-            val list = requireNotNull(intent).getParcelableArrayListExtra<Attachment>(EXTRA_ATTACHMENTS)
-            withContext(Dispatchers.IO) {
-                channel.send(requireNotNull(list))
-            }
+            val list =
+                requireNotNull(intent).getParcelableArrayListExtra<Attachment>(EXTRA_ATTACHMENTS)
+            withContext(Dispatchers.IO) { channel.send(requireNotNull(list)) }
         }
         return START_NOT_STICKY
     }

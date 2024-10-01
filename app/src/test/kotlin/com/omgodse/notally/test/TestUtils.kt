@@ -22,7 +22,7 @@ fun createListItem(
     isChild: Boolean = false,
     uncheckedPosition: Int? = null,
     children: MutableList<ListItem> = mutableListOf(),
-    id: Int = -1
+    id: Int = -1,
 ): ListItem {
     return ListItem(body, checked, isChild, uncheckedPosition, children, id)
 }
@@ -60,16 +60,14 @@ fun ListManager.simulateDrag(positionFrom: Int, positionTo: Int): Int? {
             newPosition,
             item,
             true,
-            true
+            true,
         )
     }
     return newPosition
 }
 
 fun List<ListItem>.printList(text: String? = null) {
-    text?.let {
-        print("--------------\n$it\n")
-    }
+    text?.let { print("--------------\n$it\n") }
     println("--------------")
     println(joinToString("\n"))
     println("--------------")
@@ -83,10 +81,7 @@ fun List<ListItem>.assertOrder(vararg itemBodies: String) {
     }
 }
 
-fun List<ListItem>.assertChecked(
-    startingPosition: Int = 0,
-    vararg checked: Boolean
-) {
+fun List<ListItem>.assertChecked(startingPosition: Int = 0, vararg checked: Boolean) {
     checked.forEachIndexed { index, expected ->
         val position = index + startingPosition
         assertEquals("checked at position: $position", expected, get(position).checked)
@@ -105,7 +100,7 @@ fun ListItem.assertChildren(vararg childrenBodies: String) {
             "'${body}' expected empty children\t actual: ${
                 children.joinToString(",") { "'${it.body}'" }
             } ",
-            children.isEmpty()
+            children.isEmpty(),
         )
     }
 }
@@ -116,7 +111,6 @@ fun ListMoveChange.assert(from: Int, to: Int, after: Int, itemBeforeMove: String
     assertEquals("after", after, positionAfter)
     assertEquals("itemBeforeMove", itemBeforeMove, this.itemBeforeMove.toString())
 }
-
 
 fun ListCheckedChange.assert(newValue: Boolean, position: Int, positionAfter: Int) {
     assertEquals("checked", newValue, this.newValue)

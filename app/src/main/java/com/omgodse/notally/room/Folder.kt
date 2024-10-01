@@ -1,3 +1,7 @@
 package com.omgodse.notally.room
 
-enum class Folder { NOTES, DELETED, ARCHIVED }
+enum class Folder {
+    NOTES,
+    DELETED,
+    ARCHIVED,
+}

@@ -8,7 +8,8 @@ import com.omgodse.notally.recyclerview.viewholder.ImageVH
 import com.omgodse.notally.room.Image
 import java.io.File
 
-class ImageAdapter(private val mediaRoot: File?, val items: ArrayList<Image>) : RecyclerView.Adapter<ImageVH>() {
+class ImageAdapter(private val mediaRoot: File?, val items: ArrayList<Image>) :
+    RecyclerView.Adapter<ImageVH>() {
 
     override fun getItemCount() = items.size
 

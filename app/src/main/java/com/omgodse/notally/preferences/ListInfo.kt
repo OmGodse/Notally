@@ -2,9 +2,9 @@ package com.omgodse.notally.preferences
 
 import android.content.Context
 import com.omgodse.notally.R
-import org.ocpsoft.prettytime.PrettyTime
 import java.text.DateFormat
 import java.util.Date
+import org.ocpsoft.prettytime.PrettyTime
 
 sealed interface ListInfo {
 
@@ -94,7 +94,6 @@ object TextSize : ListInfo {
         return convertToValues(ids, context)
     }
 
-
     fun getEditBodySize(textSize: String): Float {
         return when (textSize) {
             small -> 14f
@@ -132,7 +131,6 @@ object TextSize : ListInfo {
     }
 }
 
-
 object ListItemSorting : ListInfo {
     const val noAutoSort = "noAutoSort"
     const val autoSortByChecked = "autoSortByChecked"
@@ -147,5 +145,4 @@ object ListItemSorting : ListInfo {
         val ids = arrayOf(R.string.no_auto_sort, R.string.auto_sort_by_checked)
         return convertToValues(ids, context)
     }
-
 }

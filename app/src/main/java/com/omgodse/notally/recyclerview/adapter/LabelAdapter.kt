@@ -8,7 +8,8 @@ import com.omgodse.notally.recyclerview.ItemListener
 import com.omgodse.notally.recyclerview.StringDiffCallback
 import com.omgodse.notally.recyclerview.viewholder.LabelVH
 
-class LabelAdapter(private val listener: ItemListener) : ListAdapter<String, LabelVH>(StringDiffCallback()) {
+class LabelAdapter(private val listener: ItemListener) :
+    ListAdapter<String, LabelVH>(StringDiffCallback()) {
 
     override fun onBindViewHolder(holder: LabelVH, position: Int) {
         val label = getItem(position)

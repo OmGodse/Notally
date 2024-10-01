@@ -6,12 +6,11 @@ import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.recyclerview.ItemListener
 import com.omgodse.notally.room.Color
 
-class ColorVH(private val binding: RecyclerColorBinding, listener: ItemListener) : RecyclerView.ViewHolder(binding.root) {
+class ColorVH(private val binding: RecyclerColorBinding, listener: ItemListener) :
+    RecyclerView.ViewHolder(binding.root) {
 
     init {
-        binding.CardView.setOnClickListener {
-            listener.onClick(adapterPosition)
-        }
+        binding.CardView.setOnClickListener { listener.onClick(adapterPosition) }
     }
 
     fun bind(color: Color) {

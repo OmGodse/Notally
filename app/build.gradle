@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-parcelize'
     id 'com.google.devtools.ksp'
+    id 'com.ncorti.ktfmt.gradle' version '0.20.1'
 }
 
 android {
@@ -47,6 +48,14 @@ android {
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+ktfmt {
+    kotlinLangStyle()
+}
+
+tasks.withType(Test).configureEach {
+    dependsOn 'ktfmtFormat'
 }
 
 dependencies {

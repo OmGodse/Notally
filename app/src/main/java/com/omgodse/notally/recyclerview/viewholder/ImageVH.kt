@@ -17,12 +17,14 @@ class ImageVH(private val binding: RecyclerImageBinding) : RecyclerView.ViewHold
         binding.SSIV.setDoubleTapZoomStyle(SubsamplingScaleImageView.ZOOM_FOCUS_CENTER)
         binding.SSIV.orientation = SubsamplingScaleImageView.ORIENTATION_USE_EXIF
 
-        binding.SSIV.setOnImageEventListener(object : DefaultOnImageEventListener() {
+        binding.SSIV.setOnImageEventListener(
+            object : DefaultOnImageEventListener() {
 
-            override fun onImageLoadError(e: Exception?) {
-                binding.Message.visibility = View.VISIBLE
+                override fun onImageLoadError(e: Exception?) {
+                    binding.Message.visibility = View.VISIBLE
+                }
             }
-        })
+        )
     }
 
     fun bind(file: File?) {

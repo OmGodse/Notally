@@ -20,15 +20,15 @@ import com.omgodse.notally.recyclerview.viewholder.MakeListVH
 import com.omgodse.notally.room.ListItem
 
 /**
- * Should be used for all changes to the items list.
- * Notifies the RecyclerView.Adapter and pushes according changes to the ChangeHistory
+ * Should be used for all changes to the items list. Notifies the RecyclerView.Adapter and pushes
+ * according changes to the ChangeHistory
  */
 class ListManager(
     private val items: MutableList<ListItem>,
     private val recyclerView: RecyclerView,
     private val changeHistory: ChangeHistory,
     private val preferences: Preferences,
-    private val inputMethodManager: InputMethodManager
+    private val inputMethodManager: InputMethodManager,
 ) {
 
     internal lateinit var adapter: RecyclerView.Adapter<MakeListVH>
@@ -36,7 +36,7 @@ class ListManager(
     internal fun add(
         position: Int = items.size,
         item: ListItem = defaultNewItem(position),
-        pushChange: Boolean = true
+        pushChange: Boolean = true,
     ) {
         val newItem = item.clone() as ListItem
         if (item.uncheckedPosition == null) {
@@ -68,7 +68,7 @@ class ListManager(
         force: Boolean = true,
         newItem: ListItem? = null,
         pushChange: Boolean = true,
-        allowFocusChange: Boolean = true
+        allowFocusChange: Boolean = true,
     ): ListItem? {
         if (position < 0 || position > items.lastIndex) {
             return null
@@ -96,32 +96,24 @@ class ListManager(
         newPosition: Int,
         itemBeforeMove: ListItem,
         updateChildren: Boolean,
-        pushChange: Boolean
+        pushChange: Boolean,
     ) {
         if (updateChildren) {
             updateChildrenAfterMove(newPosition)
         }
         if (pushChange) {
             changeHistory.push(
-                ListMoveChange(
-                    positionFrom,
-                    positionTo,
-                    newPosition,
-                    itemBeforeMove,
-                    this
-                )
+                ListMoveChange(positionFrom, positionTo, newPosition, itemBeforeMove, this)
             )
         }
     }
 
-    /**
-     * @return position of the moved item afterwards
-     */
+    /** @return position of the moved item afterwards */
     internal fun move(
         positionFrom: Int,
         positionTo: Int,
         pushChange: Boolean = true,
-        updateChildren: Boolean = true
+        updateChildren: Boolean = true,
     ): Int? {
         val itemTo = items[positionTo]
         val itemFrom = items[positionFrom]
@@ -131,12 +123,8 @@ class ListManager(
             return null
         }
 
-        val newPosition = items.moveRangeAndNotify(
-            positionFrom,
-            itemFrom.itemCount,
-            positionTo,
-            adapter
-        )
+        val newPosition =
+            items.moveRangeAndNotify(positionFrom, itemFrom.itemCount, positionTo, adapter)
 
         if (newPosition == null) {
             return null
@@ -148,21 +136,18 @@ class ListManager(
             newPosition,
             itemBeforeMove,
             updateChildren,
-            pushChange
+            pushChange,
         )
         return newPosition
     }
 
-    internal fun revertMove(
-        positionAfter: Int,
-        positionFrom: Int,
-        itemBeforeMove: ListItem
-    ) {
-        val actualPositionTo = if (positionAfter < positionFrom) {
-            positionFrom + itemBeforeMove.children.size
-        } else {
-            positionFrom
-        }
+    internal fun revertMove(positionAfter: Int, positionFrom: Int, itemBeforeMove: ListItem) {
+        val actualPositionTo =
+            if (positionAfter < positionFrom) {
+                positionFrom + itemBeforeMove.children.size
+            } else {
+                positionFrom
+            }
         val positionBefore =
             move(positionAfter, actualPositionTo, pushChange = false, updateChildren = false)!!
         if (items[positionBefore].isChild != itemBeforeMove.isChild) {
@@ -170,9 +155,7 @@ class ListManager(
         } else {
             updateAllChildren()
         }
-
     }
-
 
     internal fun moveFocusToNext(position: Int) {
         this.moveToNextInternal(position)
@@ -184,29 +167,18 @@ class ListManager(
         position: Int,
         textBefore: String,
         textAfter: String,
-        pushChange: Boolean = true
+        pushChange: Boolean = true,
     ) {
         val item = items[position]
         item.body = textAfter
         if (pushChange) {
             changeHistory.push(
-                ListEditTextChange(
-                    editText,
-                    position,
-                    textBefore,
-                    textAfter,
-                    listener,
-                    this
-                )
+                ListEditTextChange(editText, position, textBefore, textAfter, listener, this)
             )
         }
     }
 
-    internal fun changeChecked(
-        position: Int,
-        checked: Boolean,
-        pushChange: Boolean = true
-    ): Int {
+    internal fun changeChecked(position: Int, checked: Boolean, pushChange: Boolean = true): Int {
         val item = items[position]
         if (item.checked == checked) {
             return position
@@ -223,7 +195,8 @@ class ListManager(
             return position
         }
         if (!checked && isAutoSortByCheckedEnabled()) {
-            // TODO: atm needed for correct sorting. If an item is unchecked without decrementing uncheckedPosition
+            // TODO: atm needed for correct sorting. If an item is unchecked without decrementing
+            // uncheckedPosition
             //  it will be positioned 1 below its correct position
             item.uncheckedPosition = item.uncheckedPosition?.dec()
         }
@@ -257,9 +230,7 @@ class ListManager(
     private fun isAutoSortByCheckedEnabled() =
         preferences.listItemSorting.value == ListItemSorting.autoSortByChecked
 
-    private fun updateChildrenAfterMove(
-        position: Int,
-    ) {
+    private fun updateChildrenAfterMove(position: Int) {
         if (isBeforeChildItemOfOtherParent(position)) {
             position.updateIsChild(true, forceOnChildren = true)
         } else if (position == 0) {
@@ -275,7 +246,7 @@ class ListManager(
 
     private fun deleteItemAndNotify(
         position: Int,
-        childrenToDelete: List<ListItem>? = null
+        childrenToDelete: List<ListItem>? = null,
     ): ListItem {
         val item = items.removeAt(position)
         if (childrenToDelete == null) {
@@ -285,7 +256,7 @@ class ListManager(
         }
         adapter.notifyItemRangeRemoved(
             position,
-            if (childrenToDelete == null) item.itemCount else 1 + childrenToDelete.size
+            if (childrenToDelete == null) item.itemCount else 1 + childrenToDelete.size,
         )
         return item
     }
@@ -315,10 +286,9 @@ class ListManager(
         sortAndUpdateItems(initUncheckedPositions = true)
     }
 
-
     private fun sortAndUpdateItems(
         newList: MutableList<ListItem> = items,
-        initUncheckedPositions: Boolean = false
+        initUncheckedPositions: Boolean = false,
     ) {
         updateList(sortedItems(newList, preferences.listItemSorting.value, initUncheckedPositions))
     }
@@ -351,9 +321,9 @@ class ListManager(
 
     private fun isBeforeChildItemOfOtherParent(position: Int): Boolean {
         val item = items[position]
-        return position > 0 && item.isNextItemChild(position) && !items[position + item.itemCount].isChildOf(
-            position
-        )
+        return position > 0 &&
+            item.isNextItemChild(position) &&
+            !items[position + item.itemCount].isChildOf(position)
     }
 
     private fun ListItem.isNextItemChild(position: Int): Boolean {
@@ -363,7 +333,7 @@ class ListManager(
     private fun sortedItems(
         list: MutableList<ListItem>,
         sorting: String,
-        initUncheckedPositions: Boolean
+        initUncheckedPositions: Boolean,
     ): List<ListItem> {
         return SORTERS[sorting]?.sort(list, initUncheckedPositions) ?: list.toMutableList()
     }
@@ -375,7 +345,7 @@ class ListManager(
      */
     private fun checkWithAllChildren(
         position: Int,
-        checked: Boolean
+        checked: Boolean,
     ): Pair<ListItem, MutableList<ListItem>> {
         val items = items.toMutableList()
         val item = items[position].clone() as ListItem
@@ -399,15 +369,16 @@ class ListManager(
         } else add(pushChange = false)
     }
 
-    internal fun defaultNewItem(position: Int) = ListItem(
-        "",
-        false,
-        items.isNotEmpty() &&
-                ((position < items.size && items[position].isChild)
-                        || (position > 0 && items[position - 1].isChild)),
-        null,
-        mutableListOf()
-    )
+    internal fun defaultNewItem(position: Int) =
+        ListItem(
+            "",
+            false,
+            items.isNotEmpty() &&
+                ((position < items.size && items[position].isChild) ||
+                    (position > 0 && items[position - 1].isChild)),
+            null,
+            mutableListOf(),
+        )
 
     private val ListItem.itemCount: Int
         get() = children.size + 1
@@ -416,7 +387,7 @@ class ListManager(
         fromIndex: Int,
         itemCount: Int,
         toIndex: Int,
-        adapter: RecyclerView.Adapter<*>
+        adapter: RecyclerView.Adapter<*>,
     ): Int? {
         if (fromIndex == toIndex || itemCount <= 0) return null
 
@@ -425,11 +396,12 @@ class ListManager(
         val insertIndex = if (fromIndex < toIndex) toIndex - itemCount + 1 else toIndex
         addAll(insertIndex, itemsToMove)
         updateUncheckedPositions()
-        val movedIndexes = if (fromIndex < toIndex) {
-            itemCount - 1 downTo 0
-        } else {
-            0 until itemCount
-        }
+        val movedIndexes =
+            if (fromIndex < toIndex) {
+                itemCount - 1 downTo 0
+            } else {
+                0 until itemCount
+            }
         for (idx in movedIndexes) {
             val newPosition =
                 if (fromIndex < toIndex) {
@@ -445,7 +417,7 @@ class ListManager(
     private fun MutableList<ListItem>.addAndNotify(
         position: Int,
         item: ListItem,
-        adapter: RecyclerView.Adapter<*>
+        adapter: RecyclerView.Adapter<*>,
     ) {
         if (item.checked && item.uncheckedPosition == null) {
             item.uncheckedPosition = position
@@ -466,5 +438,3 @@ class ListManager(
         private val SORTERS = mapOf(ListItemSorting.autoSortByChecked to CheckedSorter())
     }
 }
-
-

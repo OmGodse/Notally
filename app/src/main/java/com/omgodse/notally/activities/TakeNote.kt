@@ -20,7 +20,6 @@ import androidx.core.text.getSpans
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.LinkMovementMethod
 import com.omgodse.notally.R
-import com.omgodse.notally.changehistory.EditTextChange
 import com.omgodse.notally.miscellaneous.add
 import com.omgodse.notally.miscellaneous.createTextWatcherWithHistory
 import com.omgodse.notally.miscellaneous.setOnNextAction
@@ -31,9 +30,7 @@ class TakeNote : NotallyActivity(Type.NOTE) {
     private lateinit var enterBodyTextWatcher: TextWatcher
 
     override fun configureUI() {
-        binding.EnterTitle.setOnNextAction {
-            binding.EnterBody.requestFocus()
-        }
+        binding.EnterTitle.setOnNextAction { binding.EnterBody.requestFocus() }
 
         setupEditor()
 
@@ -41,7 +38,6 @@ class TakeNote : NotallyActivity(Type.NOTE) {
             binding.EnterBody.requestFocus()
         }
     }
-
 
     override fun setupListeners() {
         super.setupListeners()
@@ -64,55 +60,56 @@ class TakeNote : NotallyActivity(Type.NOTE) {
         binding.EnterBody.addTextChangedListener(enterBodyTextWatcher)
     }
 
-
     private fun setupEditor() {
         setupMovementMethod()
 
-        binding.EnterBody.customSelectionActionModeCallback = object : ActionMode.Callback {
-            override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?) = false
+        binding.EnterBody.customSelectionActionModeCallback =
+            object : ActionMode.Callback {
+                override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?) = false
 
-            override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?) = false
+                override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?) = false
 
-            override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
-                binding.EnterBody.isActionModeOn = true
-                // Try block is there because this will crash on MiUI as Xiaomi has a broken ActionMode implementation
-                try {
-                    if (menu != null) {
-                        menu.add(R.string.bold, 0) {
-                            applySpan(StyleSpan(Typeface.BOLD))
-                            mode?.finish()
+                override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+                    binding.EnterBody.isActionModeOn = true
+                    // Try block is there because this will crash on MiUI as Xiaomi has a broken
+                    // ActionMode implementation
+                    try {
+                        if (menu != null) {
+                            menu.add(R.string.bold, 0) {
+                                applySpan(StyleSpan(Typeface.BOLD))
+                                mode?.finish()
+                            }
+                            menu.add(R.string.link, 0) {
+                                applySpan(URLSpan(null))
+                                mode?.finish()
+                            }
+                            menu.add(R.string.italic, 0) {
+                                applySpan(StyleSpan(Typeface.ITALIC))
+                                mode?.finish()
+                            }
+                            menu.add(R.string.monospace, 0) {
+                                applySpan(TypefaceSpan("monospace"))
+                                mode?.finish()
+                            }
+                            menu.add(R.string.strikethrough, 0) {
+                                applySpan(StrikethroughSpan())
+                                mode?.finish()
+                            }
+                            menu.add(R.string.clear_formatting, 0) {
+                                removeSpans()
+                                mode?.finish()
+                            }
                         }
-                        menu.add(R.string.link, 0) {
-                            applySpan(URLSpan(null))
-                            mode?.finish()
-                        }
-                        menu.add(R.string.italic, 0) {
-                            applySpan(StyleSpan(Typeface.ITALIC))
-                            mode?.finish()
-                        }
-                        menu.add(R.string.monospace, 0) {
-                            applySpan(TypefaceSpan("monospace"))
-                            mode?.finish()
-                        }
-                        menu.add(R.string.strikethrough, 0) {
-                            applySpan(StrikethroughSpan())
-                            mode?.finish()
-                        }
-                        menu.add(R.string.clear_formatting, 0) {
-                            removeSpans()
-                            mode?.finish()
-                        }
+                    } catch (exception: Exception) {
+                        exception.printStackTrace()
                     }
-                } catch (exception: Exception) {
-                    exception.printStackTrace()
+                    return true
                 }
-                return true
-            }
 
-            override fun onDestroyActionMode(mode: ActionMode?) {
-                binding.EnterBody.isActionModeOn = false
+                override fun onDestroyActionMode(mode: ActionMode?) {
+                    binding.EnterBody.isActionModeOn = false
+                }
             }
-        }
     }
 
     private fun setupMovementMethod() {
@@ -140,11 +137,11 @@ class TakeNote : NotallyActivity(Type.NOTE) {
                             }
                         }
                     }
-                }.show()
+                }
+                .show()
         }
         binding.EnterBody.movementMethod = movementMethod
     }
-
 
     private fun removeSpans() {
         val selectionEnd = binding.EnterBody.selectionEnd
@@ -169,13 +166,12 @@ class TakeNote : NotallyActivity(Type.NOTE) {
     private fun ifBothNotNullAndInvalid(
         start: Int?,
         end: Int?,
-        function: (start: Int, end: Int) -> Unit
+        function: (start: Int, end: Int) -> Unit,
     ) {
         if (start != null && start != -1 && end != null && end != -1) {
             function.invoke(start, end)
         }
     }
-
 
     companion object {
 

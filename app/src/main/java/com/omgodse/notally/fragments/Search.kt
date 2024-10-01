@@ -15,11 +15,12 @@ class Search : NotallyFragment() {
         }
         super.onViewCreated(view, savedInstanceState)
 
-        val checked = when (model.folder) {
-            Folder.NOTES -> R.id.Notes
-            Folder.DELETED -> R.id.Deleted
-            Folder.ARCHIVED -> R.id.Archived
-        }
+        val checked =
+            when (model.folder) {
+                Folder.NOTES -> R.id.Notes
+                Folder.DELETED -> R.id.Deleted
+                Folder.ARCHIVED -> R.id.Archived
+            }
 
         binding?.ChipGroup?.check(checked)
 
@@ -31,7 +32,6 @@ class Search : NotallyFragment() {
             }
         }
     }
-
 
     override fun getBackground() = R.drawable.search
 

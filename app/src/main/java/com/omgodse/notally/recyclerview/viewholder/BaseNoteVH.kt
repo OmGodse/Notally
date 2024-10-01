@@ -58,9 +58,7 @@ class BaseNoteVH(
         binding.Title.maxLines = maxTitle
         binding.Note.maxLines = maxLines
 
-        binding.root.setOnClickListener {
-            listener.onClick(adapterPosition)
-        }
+        binding.root.setOnClickListener { listener.onClick(adapterPosition) }
 
         binding.root.setOnLongClickListener {
             listener.onLongClick(adapterPosition)
@@ -135,7 +133,6 @@ class BaseNoteVH(
         }
     }
 
-
     private fun setColor(color: Color) {
         val context = binding.root.context
 
@@ -163,28 +160,30 @@ class BaseNoteVH(
                 .centerCrop()
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .listener(object : RequestListener<Drawable> {
+                .listener(
+                    object : RequestListener<Drawable> {
 
-                    override fun onLoadFailed(
-                        e: GlideException?,
-                        model: Any?,
-                        target: Target<Drawable>?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        binding.Message.visibility = View.VISIBLE
-                        return false
-                    }
+                        override fun onLoadFailed(
+                            e: GlideException?,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            isFirstResource: Boolean,
+                        ): Boolean {
+                            binding.Message.visibility = View.VISIBLE
+                            return false
+                        }
 
-                    override fun onResourceReady(
-                        resource: Drawable?,
-                        model: Any?,
-                        target: Target<Drawable>?,
-                        dataSource: DataSource?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        return false
+                        override fun onResourceReady(
+                            resource: Drawable?,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            dataSource: DataSource?,
+                            isFirstResource: Boolean,
+                        ): Boolean {
+                            return false
+                        }
                     }
-                })
+                )
                 .into(binding.ImageView)
         } else {
             binding.ImageView.visibility = View.GONE
@@ -193,11 +192,12 @@ class BaseNoteVH(
         }
     }
 
-
     private fun isEmpty(baseNote: BaseNote): Boolean {
         return when (baseNote.type) {
-            Type.NOTE -> baseNote.title.isBlank() && baseNote.body.isBlank() && baseNote.images.isEmpty()
-            Type.LIST -> baseNote.title.isBlank() && baseNote.items.isEmpty() && baseNote.images.isEmpty()
+            Type.NOTE ->
+                baseNote.title.isBlank() && baseNote.body.isBlank() && baseNote.images.isEmpty()
+            Type.LIST ->
+                baseNote.title.isBlank() && baseNote.items.isEmpty() && baseNote.images.isEmpty()
         }
     }
 
@@ -214,13 +214,14 @@ class BaseNoteVH(
                 R.drawable.checkbox_16,
                 0,
                 0,
-                0
+                0,
             )
-        } else textView.setCompoundDrawablesRelativeWithIntrinsicBounds(
-            R.drawable.checkbox_outline_16,
-            0,
-            0,
-            0
-        )
+        } else
+            textView.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                R.drawable.checkbox_outline_16,
+                0,
+                0,
+                0,
+            )
     }
 }

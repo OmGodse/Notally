@@ -7,9 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.omgodse.notally.room.ListItem
 
-/**
- * ItemTouchHelper.Callback that allows dragging ListItem with its children.
- */
+/** ItemTouchHelper.Callback that allows dragging ListItem with its children. */
 class DragCallback(private val elevation: Float, private val listManager: ListManager) :
     ItemTouchHelper.Callback() {
 
@@ -24,8 +22,7 @@ class DragCallback(private val elevation: Float, private val listManager: ListMa
 
     override fun isLongPressDragEnabled() = false
 
-    override fun onSwiped(viewHolder: ViewHolder, direction: Int) {
-    }
+    override fun onSwiped(viewHolder: ViewHolder, direction: Int) {}
 
     override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: ViewHolder): Int {
         val drag = ItemTouchHelper.UP or ItemTouchHelper.DOWN
@@ -50,7 +47,11 @@ class DragCallback(private val elevation: Float, private val listManager: ListMa
     }
 
     override fun onSelectedChanged(viewHolder: ViewHolder?, actionState: Int) {
-        if (lastState != actionState && actionState == ItemTouchHelper.ACTION_STATE_IDLE && positionTo != -1) {
+        if (
+            lastState != actionState &&
+                actionState == ItemTouchHelper.ACTION_STATE_IDLE &&
+                positionTo != -1
+        ) {
             onDragEnd()
         }
         lastState = actionState
@@ -64,7 +65,7 @@ class DragCallback(private val elevation: Float, private val listManager: ListMa
         dX: Float,
         dY: Float,
         actionState: Int,
-        isCurrentlyActive: Boolean
+        isCurrentlyActive: Boolean,
     ) {
         viewHolder.itemView.translationX = dX
         viewHolder.itemView.translationY = dY
@@ -95,14 +96,15 @@ class DragCallback(private val elevation: Float, private val listManager: ListMa
 
         val item = listManager.getItem(viewHolder.adapterPosition)
         if (!item.isChild) {
-            childViewHolders = item.children.mapIndexedNotNull { index, listItem ->
-                recyclerView.findViewHolderForAdapterPosition(viewHolder.adapterPosition + index + 1)
-            }
+            childViewHolders =
+                item.children.mapIndexedNotNull { index, listItem ->
+                    recyclerView.findViewHolderForAdapterPosition(
+                        viewHolder.adapterPosition + index + 1
+                    )
+                }
             childViewHolders.forEach { animateFadeOut(it) }
         }
-
     }
-
 
     private fun onDragEnd() {
         Log.d(TAG, "onDragEnd: from: $positionFrom to: $positionTo")
@@ -117,26 +119,17 @@ class DragCallback(private val elevation: Float, private val listManager: ListMa
                 newPosition!!,
                 draggedItem!!,
                 true,
-                true
+                true,
             )
-
         }
     }
 
     private fun animateFadeOut(viewHolder: ViewHolder) {
-        viewHolder.itemView.animate()
-            .translationY(-100f)
-            .alpha(0f)
-            .setDuration(300)
-            .start()
+        viewHolder.itemView.animate().translationY(-100f).alpha(0f).setDuration(300).start()
     }
 
     private fun animateFadeIn(viewHolder: ViewHolder) {
-        viewHolder.itemView.animate()
-            .translationY(0f)
-            .alpha(1f)
-            .setDuration(300)
-            .start()
+        viewHolder.itemView.animate().translationY(0f).alpha(1f).setDuration(300).start()
     }
 
     companion object {

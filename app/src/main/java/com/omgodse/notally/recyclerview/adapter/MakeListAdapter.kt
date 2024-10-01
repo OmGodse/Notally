@@ -39,5 +39,4 @@ class MakeListAdapter(
         binding.root.background = parent.background
         return MakeListVH(binding, listManager, touchHelper, textSize)
     }
-
 }

@@ -8,7 +8,7 @@ class EditTextChange(
     textBefore: String,
     textAfter: String,
     private val listener: TextWatcher,
-    private val updateModel: (newValue: String) -> Unit
+    private val updateModel: (newValue: String) -> Unit,
 ) : ValueChange<String>(textAfter, textBefore) {
 
     private val cursorPosition = editText.selectionStart
@@ -21,5 +21,4 @@ class EditTextChange(
         editText.setSelection(Math.max(0, cursorPosition - (if (isUndo) 1 else 0)))
         editText.addTextChangedListener(listener)
     }
-
 }

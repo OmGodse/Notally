@@ -9,7 +9,8 @@ import com.omgodse.notally.recyclerview.viewholder.AudioVH
 import com.omgodse.notally.room.Audio
 import java.text.DateFormat
 
-class AudioAdapter(private val onClick: (position: Int) -> Unit) : ListAdapter<Audio, AudioVH>(DiffCallback) {
+class AudioAdapter(private val onClick: (position: Int) -> Unit) :
+    ListAdapter<Audio, AudioVH>(DiffCallback) {
 
     private val formatter = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.SHORT)
 

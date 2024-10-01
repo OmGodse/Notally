@@ -95,19 +95,12 @@ class ChangeHistoryTest {
         assertEquals(change4, changeHistory.lookUp())
         assertEquals(change2, changeHistory.lookUp(1))
         assertEquals(change1, changeHistory.lookUp(2))
-        assertThrows(IllegalArgumentException::class.java){
-            changeHistory.lookUp(3)
-        }
+        assertThrows(IllegalArgumentException::class.java) { changeHistory.lookUp(3) }
     }
 
     class TestChange : Change {
-        override fun redo() {
+        override fun redo() {}
 
-        }
-
-        override fun undo() {
-
-        }
-
+        override fun undo() {}
     }
 }

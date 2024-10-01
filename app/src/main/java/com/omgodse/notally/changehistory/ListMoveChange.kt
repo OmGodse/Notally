@@ -8,7 +8,7 @@ class ListMoveChange(
     internal val positionTo: Int,
     internal var positionAfter: Int,
     internal val itemBeforeMove: ListItem,
-    internal val listManager: ListManager
+    internal val listManager: ListManager,
 ) : ListChange(positionFrom) {
     override fun redo() {
         positionAfter = listManager.move(position, positionTo, pushChange = false)!!

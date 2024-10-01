@@ -52,52 +52,43 @@ class Settings : Fragment() {
             binding.CheckedListItemSorting.setup(ListItemSorting, value)
         }
 
-
         binding.MaxItems.setup(MaxItems, model.preferences.maxItems)
 
         binding.MaxLines.setup(MaxLines, model.preferences.maxLines)
 
         binding.MaxTitle.setup(MaxTitle, model.preferences.maxTitle)
 
-
         model.preferences.autoBackup.observe(viewLifecycleOwner) { value ->
             binding.AutoBackup.setup(AutoBackup, value)
         }
 
-        binding.ImportBackup.setOnClickListener {
-            importBackup()
-        }
+        binding.ImportBackup.setOnClickListener { importBackup() }
 
-        binding.ExportBackup.setOnClickListener {
-            exportBackup()
-        }
+        binding.ExportBackup.setOnClickListener { exportBackup() }
 
         setupProgressDialog(R.string.exporting_backup, model.exportingBackup)
         setupProgressDialog(R.string.importing_backup, model.importingBackup)
 
-        binding.GitHub.setOnClickListener {
-            openLink("https://github.com/OmGodse/Notally")
-        }
+        binding.GitHub.setOnClickListener { openLink("https://github.com/OmGodse/Notally") }
 
-        binding.Libraries.setOnClickListener {
-            displayLibraries()
-        }
+        binding.Libraries.setOnClickListener { displayLibraries() }
 
         binding.Rate.setOnClickListener {
             openLink("https://play.google.com/store/apps/details?id=com.omgodse.notally")
         }
 
-        binding.SendFeedback.setOnClickListener {
-            sendEmailWithLog()
-        }
+        binding.SendFeedback.setOnClickListener { sendEmailWithLog() }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
         val binding = FragmentSettingsBinding.inflate(inflater)
         setupBinding(binding)
         return binding.root
     }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
@@ -110,7 +101,6 @@ class Settings : Fragment() {
             }
         }
     }
-
 
     private fun exportBackup() {
         val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
@@ -130,11 +120,12 @@ class Settings : Fragment() {
 
     private fun setupProgressDialog(titleId: Int, liveData: MutableLiveData<BackupProgress>) {
         val dialogBinding = DialogProgressBinding.inflate(layoutInflater)
-        val dialog = MaterialAlertDialogBuilder(requireContext())
-            .setTitle(titleId)
-            .setView(dialogBinding.root)
-            .setCancelable(false)
-            .create()
+        val dialog =
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(titleId)
+                .setView(dialogBinding.root)
+                .setCancelable(false)
+                .create()
 
         liveData.observe(viewLifecycleOwner) { progress ->
             if (progress.inProgress) {
@@ -144,13 +135,13 @@ class Settings : Fragment() {
                 } else {
                     dialogBinding.ProgressBar.max = progress.total
                     dialogBinding.ProgressBar.setProgressCompat(progress.current, true)
-                    dialogBinding.Count.text = getString(R.string.count, progress.current, progress.total)
+                    dialogBinding.Count.text =
+                        getString(R.string.count, progress.current, progress.total)
                 }
                 dialog.show()
             } else dialog.dismiss()
         }
     }
-
 
     private fun sendEmailWithLog() {
         val intent = Intent(Intent.ACTION_SEND)
@@ -174,17 +165,31 @@ class Settings : Fragment() {
     }
 
     private fun displayLibraries() {
-        val libraries = arrayOf("Glide", "Pretty Time", "Swipe Layout", "Work Manager", "Subsampling Scale ImageView" ,"Material Components for Android")
+        val libraries =
+            arrayOf(
+                "Glide",
+                "Pretty Time",
+                "Swipe Layout",
+                "Work Manager",
+                "Subsampling Scale ImageView",
+                "Material Components for Android",
+            )
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.libraries)
             .setItems(libraries) { _, which ->
                 when (which) {
                     0 -> openLink("https://github.com/bumptech/glide")
                     1 -> openLink("https://github.com/ocpsoft/prettytime")
-                    2 -> openLink("https://github.com/rambler-digital-solutions/swipe-layout-android")
+                    2 ->
+                        openLink(
+                            "https://github.com/rambler-digital-solutions/swipe-layout-android"
+                        )
                     3 -> openLink("https://developer.android.com/jetpack/androidx/releases/work")
                     4 -> openLink("https://github.com/davemorrissey/subsampling-scale-image-view")
-                    5 -> openLink("https://github.com/material-components/material-components-android")
+                    5 ->
+                        openLink(
+                            "https://github.com/material-components/material-components-android"
+                        )
                 }
             }
             .setNegativeButton(R.string.cancel, null)
@@ -200,7 +205,6 @@ class Settings : Fragment() {
             }
             .show()
     }
-
 
     private fun PreferenceBinding.setup(info: ListInfo, value: String) {
         Title.setText(info.title)
@@ -257,11 +261,8 @@ class Settings : Fragment() {
 
         Slider.value = initialValue.toFloat()
 
-        Slider.addOnChangeListener { _, value, _ ->
-            model.savePreference(info, value.toInt())
-        }
+        Slider.addOnChangeListener { _, value, _ -> model.savePreference(info, value.toInt()) }
     }
-
 
     private fun openLink(link: String) {
         val uri = Uri.parse(link)

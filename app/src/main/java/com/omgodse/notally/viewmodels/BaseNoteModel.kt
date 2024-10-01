@@ -43,13 +43,6 @@ import com.omgodse.notally.room.Type
 import com.omgodse.notally.room.livedata.Content
 import com.omgodse.notally.room.livedata.SearchResult
 import com.omgodse.notally.widget.WidgetProvider
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import org.json.JSONArray
-import org.json.JSONObject
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -57,6 +50,13 @@ import java.text.DateFormat
 import java.util.UUID
 import java.util.zip.ZipFile
 import java.util.zip.ZipOutputStream
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.json.JSONArray
+import org.json.JSONObject
 
 class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
@@ -82,6 +82,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
                 searchResults.fetch(keyword, folder)
             }
         }
+
     var keyword = String()
         set(value) {
             if (field != value) {
@@ -118,9 +119,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
                 }
             }
         }
-        allNotes.observeForever { list ->
-            Cache.list = list
-        }
+        allNotes.observeForever { list -> Cache.list = list }
     }
 
     fun getNotesByLabel(label: String): Content {
@@ -130,14 +129,15 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         return requireNotNull(labelCache[label])
     }
 
-
     private fun transform(list: List<BaseNote>) = transform(list, pinned, others)
 
+    fun savePreference(info: SeekbarInfo, value: Int) = executeAsync {
+        preferences.savePreference(info, value)
+    }
 
-    fun savePreference(info: SeekbarInfo, value: Int) = executeAsync { preferences.savePreference(info, value) }
-
-    fun savePreference(info: ListInfo, value: String) = executeAsync { preferences.savePreference(info, value) }
-
+    fun savePreference(info: ListInfo, value: String) = executeAsync {
+        preferences.savePreference(info, value)
+    }
 
     fun disableAutoBackup() {
         clearPersistedUriPermissions()
@@ -152,9 +152,9 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     }
 
     /**
-     * Release previously persisted permissions, if any
-     * There is a hard limit of 128 before Android 11, 512 after
-     * Check -> https://commonsware.com/blog/2020/06/13/count-your-saf-uri-permission-grants.html
+     * Release previously persisted permissions, if any There is a hard limit of 128 before Android
+     * 11, 512 after Check ->
+     * https://commonsware.com/blog/2020/06/13/count-your-saf-uri-permission-grants.html
      */
     private fun clearPersistedUriPermissions() {
         val flags = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
@@ -162,7 +162,6 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
             app.contentResolver.releasePersistableUriPermission(permission.uri, flags)
         }
     }
-
 
     fun exportBackup(uri: Uri) {
         viewModelScope.launch {
@@ -179,8 +178,10 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
                 delay(1000)
 
-                val images = baseNoteDao.getAllImages().flatMap { string -> Converters.jsonToImages(string) }
-                val audios = baseNoteDao.getAllAudios().flatMap { string -> Converters.jsonToAudios(string) }
+                val images =
+                    baseNoteDao.getAllImages().flatMap { string -> Converters.jsonToImages(string) }
+                val audios =
+                    baseNoteDao.getAllAudios().flatMap { string -> Converters.jsonToAudios(string) }
                 val total = images.size + audios.size
 
                 images.forEachIndexed { index, image ->
@@ -198,7 +199,9 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
                     } catch (exception: Exception) {
                         Operations.log(app, exception)
                     } finally {
-                        exportingBackup.postValue(BackupProgress(true, images.size + index + 1, total, false))
+                        exportingBackup.postValue(
+                            BackupProgress(true, images.size + index + 1, total, false)
+                        )
                     }
                 }
 
@@ -210,7 +213,6 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         }
     }
 
-
     fun importBackup(uri: Uri) {
         when (app.contentResolver.getType(uri)) {
             "text/xml" -> importXmlBackup(uri)
@@ -218,15 +220,14 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         }
     }
 
-
     /**
      * We use a ZipFile instead of ZipInputStream because importing one image of 3 MB takes 1 second
-     * on a phone with 6GB RAM. This is non negligible so we need to display the progress. However, with a stream
-     * there is no way to know how many images are there, hence we can only display an indeterminate progress bar
-     * which is almost as useless as displaying no progress bar.
+     * on a phone with 6GB RAM. This is non negligible so we need to display the progress. However,
+     * with a stream there is no way to know how many images are there, hence we can only display an
+     * indeterminate progress bar which is almost as useless as displaying no progress bar.
      *
-     * We only import the images referenced in notes. e.g If someone has added garbage to the
-     * ZIP file, like a 100 MB image, ignore it.
+     * We only import the images referenced in notes. e.g If someone has added garbage to the ZIP
+     * file, like a 100 MB image, ignore it.
      */
     private fun importZipBackup(uri: Uri) {
         val backupDir = getBackupDir()
@@ -252,17 +253,29 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
                 val inputStream = zipFile.getInputStream(databaseEntry)
                 IO.copyStreamToFile(inputStream, databaseFile)
 
-                val database = SQLiteDatabase.openDatabase(databaseFile.path, null, SQLiteDatabase.OPEN_READONLY)
+                val database =
+                    SQLiteDatabase.openDatabase(
+                        databaseFile.path,
+                        null,
+                        SQLiteDatabase.OPEN_READONLY,
+                    )
 
                 val labelCursor = database.query("Label", null, null, null, null, null, null)
                 val baseNoteCursor = database.query("BaseNote", null, null, null, null, null, null)
 
-                val labels = convertCursorToList(labelCursor) { cursor -> convertCursorToLabel(cursor) }
-                val baseNotes = convertCursorToList(baseNoteCursor) { cursor -> convertCursorToBaseNote(cursor) }
+                val labels =
+                    convertCursorToList(labelCursor) { cursor -> convertCursorToLabel(cursor) }
+                val baseNotes =
+                    convertCursorToList(baseNoteCursor) { cursor ->
+                        convertCursorToBaseNote(cursor)
+                    }
 
                 delay(1000)
 
-                val total = baseNotes.fold(0) { acc, baseNote -> acc + baseNote.images.size + baseNote.audios.size }
+                val total =
+                    baseNotes.fold(0) { acc, baseNote ->
+                        acc + baseNote.images.size + baseNote.audios.size
+                    }
                 var current = 1
 
                 // Don't let a single image bring down the entire backup
@@ -328,11 +341,12 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         val spansTmp = cursor.getString(cursor.getColumnIndexOrThrow("spans"))
         val itemsTmp = cursor.getString(cursor.getColumnIndexOrThrow("items"))
 
-        val pinned = when (pinnedTmp) {
-            0 -> false
-            1 -> true
-            else -> throw IllegalArgumentException("pinned must be 0 or 1")
-        }
+        val pinned =
+            when (pinnedTmp) {
+                0 -> false
+                1 -> true
+                else -> throw IllegalArgumentException("pinned must be 0 or 1")
+            }
 
         val type = Type.valueOf(typeTmp)
         val folder = Folder.valueOf(folderTmp)
@@ -343,19 +357,38 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         val items = Converters.jsonToItems(itemsTmp)
 
         val imagesIndex = cursor.getColumnIndex("images")
-        val images = if (imagesIndex != -1) {
-            Converters.jsonToImages(cursor.getString(imagesIndex))
-        } else emptyList()
+        val images =
+            if (imagesIndex != -1) {
+                Converters.jsonToImages(cursor.getString(imagesIndex))
+            } else emptyList()
 
         val audiosIndex = cursor.getColumnIndex("audios")
-        val audios = if (audiosIndex != -1) {
-            Converters.jsonToAudios(cursor.getString(audiosIndex))
-        } else emptyList()
+        val audios =
+            if (audiosIndex != -1) {
+                Converters.jsonToAudios(cursor.getString(audiosIndex))
+            } else emptyList()
 
-        return BaseNote(0, type, folder, color, title, pinned, timestamp, labels, body, spans, items, images, audios)
+        return BaseNote(
+            0,
+            type,
+            folder,
+            color,
+            title,
+            pinned,
+            timestamp,
+            labels,
+            body,
+            spans,
+            items,
+            images,
+            audios,
+        )
     }
 
-    private fun <T> convertCursorToList(cursor: Cursor, convert: (cursor: Cursor) -> T): ArrayList<T> {
+    private fun <T> convertCursorToList(
+        cursor: Cursor,
+        convert: (cursor: Cursor) -> T,
+    ): ArrayList<T> {
         val list = ArrayList<T>(cursor.count)
         while (cursor.moveToNext()) {
             val item = convert(cursor)
@@ -369,7 +402,6 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         importingBackup.value = BackupProgress(false, 0, 0, false)
         clear(backupDir)
     }
-
 
     private fun importXmlBackup(uri: Uri) {
         val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -387,7 +419,6 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         }
     }
 
-
     fun writeCurrentFileToUri(uri: Uri) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
@@ -402,50 +433,52 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         }
     }
 
-
-    suspend fun getJSONFile(baseNote: BaseNote) = withContext(Dispatchers.IO) {
-        val file = File(getExportedPath(), "Untitled.json")
-        val json = getJSON(baseNote)
-        file.writeText(json)
-        file
-    }
-
-    suspend fun getTXTFile(baseNote: BaseNote) = withContext(Dispatchers.IO) {
-        val file = File(getExportedPath(), "Untitled.txt")
-        val writer = file.bufferedWriter()
-
-        val date = DateFormat.getDateInstance(DateFormat.FULL).format(baseNote.timestamp)
-
-        val body = when (baseNote.type) {
-            Type.NOTE -> baseNote.body
-            Type.LIST -> Operations.getBody(baseNote.items)
+    suspend fun getJSONFile(baseNote: BaseNote) =
+        withContext(Dispatchers.IO) {
+            val file = File(getExportedPath(), "Untitled.json")
+            val json = getJSON(baseNote)
+            file.writeText(json)
+            file
         }
 
-        if (baseNote.title.isNotEmpty()) {
-            writer.append("${baseNote.title}\n\n")
-        }
-        if (preferences.showDateCreated()) {
-            writer.append("$date\n\n")
-        }
-        writer.append(body)
-        writer.close()
+    suspend fun getTXTFile(baseNote: BaseNote) =
+        withContext(Dispatchers.IO) {
+            val file = File(getExportedPath(), "Untitled.txt")
+            val writer = file.bufferedWriter()
 
-        file
-    }
+            val date = DateFormat.getDateInstance(DateFormat.FULL).format(baseNote.timestamp)
 
-    suspend fun getHTMLFile(baseNote: BaseNote) = withContext(Dispatchers.IO) {
-        val file = File(getExportedPath(), "Untitled.html")
-        val html = getHTML(baseNote, preferences.showDateCreated())
-        file.writeText(html)
-        file
-    }
+            val body =
+                when (baseNote.type) {
+                    Type.NOTE -> baseNote.body
+                    Type.LIST -> Operations.getBody(baseNote.items)
+                }
+
+            if (baseNote.title.isNotEmpty()) {
+                writer.append("${baseNote.title}\n\n")
+            }
+            if (preferences.showDateCreated()) {
+                writer.append("$date\n\n")
+            }
+            writer.append(body)
+            writer.close()
+
+            file
+        }
+
+    suspend fun getHTMLFile(baseNote: BaseNote) =
+        withContext(Dispatchers.IO) {
+            val file = File(getExportedPath(), "Untitled.html")
+            val html = getHTML(baseNote, preferences.showDateCreated())
+            file.writeText(html)
+            file
+        }
 
     fun getPDFFile(baseNote: BaseNote, onResult: PostPDFGenerator.OnResult) {
         val file = File(getExportedPath(), "Untitled.pdf")
         val html = getHTML(baseNote, preferences.showDateCreated())
         PostPDFGenerator.create(file, html, app, onResult)
     }
-
 
     fun pinBaseNote(pinned: Boolean) {
         val id = actionMode.selectedIds.toLongArray()
@@ -469,7 +502,6 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         actionMode.close(true)
         executeAsync { baseNoteDao.updateLabels(id, labels) }
     }
-
 
     fun deleteBaseNotes() {
         val ids = LongArray(actionMode.selectedNotes.size)
@@ -515,7 +547,6 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         }
     }
 
-
     suspend fun getAllLabels() = withContext(Dispatchers.IO) { labelDao.getArrayOfAll() }
 
     fun deleteLabel(value: String) = executeAsync { commonDao.deleteLabel(value) }
@@ -525,7 +556,6 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
     fun updateLabel(oldValue: String, newValue: String, onComplete: (success: Boolean) -> Unit) =
         executeAsyncWithCallback({ commonDao.updateLabel(oldValue, newValue) }, onComplete)
-
 
     private fun getEmptyFolder(name: String): File {
         val folder = File(app.cacheDir, name)
@@ -548,15 +578,15 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
     private fun getExportedPath() = getEmptyFolder("exported")
 
-
     private fun getJSON(baseNote: BaseNote): String {
-        val jsonObject = JSONObject()
-            .put("type", baseNote.type.name)
-            .put("color", baseNote.color.name)
-            .put("title", baseNote.title)
-            .put("pinned", baseNote.pinned)
-            .put("date-created", baseNote.timestamp)
-            .put("labels", JSONArray(baseNote.labels))
+        val jsonObject =
+            JSONObject()
+                .put("type", baseNote.type.name)
+                .put("color", baseNote.color.name)
+                .put("title", baseNote.title)
+                .put("pinned", baseNote.pinned)
+                .put("date-created", baseNote.timestamp)
+                .put("labels", JSONArray(baseNote.labels))
 
         when (baseNote.type) {
             Type.NOTE -> {
@@ -604,7 +634,6 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         }
         append("</body></html>")
     }
-
 
     private fun executeAsync(function: suspend () -> Unit) {
         viewModelScope.launch(Dispatchers.IO) { function() }

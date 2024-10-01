@@ -54,17 +54,19 @@ class Labels : Fragment(), ItemListener {
         setupObserver()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? {
         setHasOptionsMenu(true)
         binding = FragmentNotesBinding.inflate(inflater)
         return binding?.root
     }
 
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         menu.add(R.string.add_label, R.drawable.add) { displayAddLabelDialog() }
     }
-
 
     override fun onClick(position: Int) {
         adapter?.currentList?.get(position)?.let { value ->
@@ -83,14 +85,12 @@ class Labels : Fragment(), ItemListener {
         }
     }
 
-
     private fun setupObserver() {
         model.labels.observe(viewLifecycleOwner) { labels ->
             adapter?.submitList(labels)
             binding?.ImageView?.isVisible = labels.isEmpty()
         }
     }
-
 
     private fun displayAddLabelDialog() {
         val inflater = LayoutInflater.from(requireContext())
@@ -107,7 +107,8 @@ class Labels : Fragment(), ItemListener {
                     model.insertLabel(label) { success: Boolean ->
                         if (success) {
                             dialog.dismiss()
-                        } else Toast.makeText(context, R.string.label_exists, Toast.LENGTH_LONG).show()
+                        } else
+                            Toast.makeText(context, R.string.label_exists, Toast.LENGTH_LONG).show()
                     }
                 }
             }
@@ -140,7 +141,13 @@ class Labels : Fragment(), ItemListener {
                     model.updateLabel(oldValue, value) { success ->
                         if (success) {
                             dialog.dismiss()
-                        } else Toast.makeText(requireContext(), R.string.label_exists, Toast.LENGTH_LONG).show()
+                        } else
+                            Toast.makeText(
+                                    requireContext(),
+                                    R.string.label_exists,
+                                    Toast.LENGTH_LONG,
+                                )
+                                .show()
                     }
                 }
             }

@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 class SearchResult(
     private val scope: CoroutineScope,
     private val baseNoteDao: BaseNoteDao,
-    transform: (List<BaseNote>) -> List<Item>
+    transform: (List<BaseNote>) -> List<Item>,
 ) : LiveData<List<Item>>() {
 
     private var job: Job? = null
@@ -27,11 +27,12 @@ class SearchResult(
     fun fetch(keyword: String, folder: Folder) {
         job?.cancel()
         liveData?.removeObserver(observer)
-        job = scope.launch {
-            if (keyword.isNotEmpty()) {
-                liveData = baseNoteDao.getBaseNotesByKeyword(keyword, folder)
-                liveData?.observeForever(observer)
-            } else value = emptyList()
-        }
+        job =
+            scope.launch {
+                if (keyword.isNotEmpty()) {
+                    liveData = baseNoteDao.getBaseNotesByKeyword(keyword, folder)
+                    liveData?.observeForever(observer)
+                } else value = emptyList()
+            }
     }
 }

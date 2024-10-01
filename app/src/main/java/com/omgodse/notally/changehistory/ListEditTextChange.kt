@@ -26,5 +26,4 @@ open class ListEditTextChange(
     override fun toString(): String {
         return "CheckedText at $position from: $textBefore to: $textAfter"
     }
-
 }

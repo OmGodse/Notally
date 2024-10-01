@@ -42,8 +42,8 @@ import com.omgodse.notally.room.Color
 import com.omgodse.notally.room.Folder
 import com.omgodse.notally.room.Type
 import com.omgodse.notally.viewmodels.BaseNoteModel
-import kotlinx.coroutines.launch
 import java.io.File
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -79,12 +79,9 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_EXPORT_FILE && resultCode == Activity.RESULT_OK) {
-            data?.data?.let { uri ->
-                model.writeCurrentFileToUri(uri)
-            }
+            data?.data?.let { uri -> model.writeCurrentFileToUri(uri) }
         }
     }
-
 
     private fun setupFAB() {
         binding.TakeNote.setOnClickListener {
@@ -102,10 +99,15 @@ class MainActivity : AppCompatActivity() {
         menu.add(0, R.id.Notes, 0, R.string.notes).setCheckable(true).setIcon(R.drawable.home)
         menu.add(1, R.id.Labels, 0, R.string.labels).setCheckable(true).setIcon(R.drawable.label)
         menu.add(2, R.id.Deleted, 0, R.string.deleted).setCheckable(true).setIcon(R.drawable.delete)
-        menu.add(2, R.id.Archived, 0, R.string.archived).setCheckable(true).setIcon(R.drawable.archive)
-        menu.add(3, R.id.Settings, 0, R.string.settings).setCheckable(true).setIcon(R.drawable.settings)
+        menu
+            .add(2, R.id.Archived, 0, R.string.archived)
+            .setCheckable(true)
+            .setIcon(R.drawable.archive)
+        menu
+            .add(3, R.id.Settings, 0, R.string.settings)
+            .setCheckable(true)
+            .setIcon(R.drawable.settings)
     }
-
 
     private fun setupActionMode() {
         binding.ActionMode.setNavigationOnClickListener { model.actionMode.close(true) }
@@ -140,10 +142,14 @@ class MainActivity : AppCompatActivity() {
         val export = createExportMenu(menu)
 
         val changeColor = menu.add(R.string.change_color, R.drawable.change_color) { changeColor() }
-        val delete = menu.add(R.string.delete, R.drawable.delete) { model.moveBaseNotes(Folder.DELETED) }
-        val archive = menu.add(R.string.archive, R.drawable.archive) { model.moveBaseNotes(Folder.ARCHIVED) }
-        val restore = menu.add(R.string.restore, R.drawable.restore) { model.moveBaseNotes(Folder.NOTES) }
-        val unarchive = menu.add(R.string.unarchive, R.drawable.unarchive) { model.moveBaseNotes(Folder.NOTES) }
+        val delete =
+            menu.add(R.string.delete, R.drawable.delete) { model.moveBaseNotes(Folder.DELETED) }
+        val archive =
+            menu.add(R.string.archive, R.drawable.archive) { model.moveBaseNotes(Folder.ARCHIVED) }
+        val restore =
+            menu.add(R.string.restore, R.drawable.restore) { model.moveBaseNotes(Folder.NOTES) }
+        val unarchive =
+            menu.add(R.string.unarchive, R.drawable.unarchive) { model.moveBaseNotes(Folder.NOTES) }
         val deleteForever = menu.add(R.string.delete_forever, R.drawable.delete) { deleteForever() }
 
         model.actionMode.count.observe(this) { count ->
@@ -200,30 +206,31 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     private fun share() {
         val baseNote = model.actionMode.getFirstNote()
-        val body = when (baseNote.type) {
-            Type.NOTE -> baseNote.body.applySpans(baseNote.spans)
-            Type.LIST -> Operations.getBody(baseNote.items)
-        }
+        val body =
+            when (baseNote.type) {
+                Type.NOTE -> baseNote.body.applySpans(baseNote.spans)
+                Type.LIST -> Operations.getBody(baseNote.items)
+            }
         Operations.shareNote(this, baseNote.title, body)
     }
 
     private fun changeColor() {
-        val dialog = MaterialAlertDialogBuilder(this)
-            .setTitle(R.string.change_color)
-            .create()
+        val dialog = MaterialAlertDialogBuilder(this).setTitle(R.string.change_color).create()
 
-        val colorAdapter = ColorAdapter(object : ItemListener {
-            override fun onClick(position: Int) {
-                dialog.dismiss()
-                val color = Color.entries[position]
-                model.colorBaseNote(color)
-            }
+        val colorAdapter =
+            ColorAdapter(
+                object : ItemListener {
+                    override fun onClick(position: Int) {
+                        dialog.dismiss()
+                        val color = Color.entries[position]
+                        model.colorBaseNote(color)
+                    }
 
-            override fun onLongClick(position: Int) {}
-        })
+                    override fun onLongClick(position: Int) {}
+                }
+            )
 
         val dialogBinding = DialogColorBinding.inflate(layoutInflater)
         dialogBinding.RecyclerView.adapter = colorAdapter
@@ -240,7 +247,6 @@ class MainActivity : AppCompatActivity() {
             .show()
     }
 
-
     private fun label() {
         val baseNote = model.actionMode.getFirstNote()
         lifecycleScope.launch {
@@ -255,12 +261,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun displaySelectLabelsDialog(labels: Array<String>, baseNote: BaseNote) {
-        val checkedPositions = BooleanArray(labels.size) { index -> baseNote.labels.contains(labels[index]) }
+        val checkedPositions =
+            BooleanArray(labels.size) { index -> baseNote.labels.contains(labels[index]) }
 
         MaterialAlertDialogBuilder(this)
             .setTitle(R.string.labels)
             .setNegativeButton(R.string.cancel, null)
-            .setMultiChoiceItems(labels, checkedPositions) { _, which, isChecked -> checkedPositions[which] = isChecked }
+            .setMultiChoiceItems(labels, checkedPositions) { _, which, isChecked ->
+                checkedPositions[which] = isChecked
+            }
             .setPositiveButton(R.string.save) { _, _ ->
                 val new = ArrayList<String>()
                 checkedPositions.forEachIndexed { index, checked ->
@@ -274,19 +283,26 @@ class MainActivity : AppCompatActivity() {
             .show()
     }
 
-
     private fun exportToPDF() {
         val baseNote = model.actionMode.getFirstNote()
-        model.getPDFFile(baseNote, object : PostPDFGenerator.OnResult {
+        model.getPDFFile(
+            baseNote,
+            object : PostPDFGenerator.OnResult {
 
-            override fun onSuccess(file: File) {
-                showFileOptionsDialog(file, "application/pdf")
-            }
+                override fun onSuccess(file: File) {
+                    showFileOptionsDialog(file, "application/pdf")
+                }
 
-            override fun onFailure(message: CharSequence?) {
-                Toast.makeText(this@MainActivity, R.string.something_went_wrong, Toast.LENGTH_SHORT).show()
-            }
-        })
+                override fun onFailure(message: CharSequence?) {
+                    Toast.makeText(
+                            this@MainActivity,
+                            R.string.something_went_wrong,
+                            Toast.LENGTH_SHORT,
+                        )
+                        .show()
+                }
+            },
+        )
     }
 
     private fun exportToTXT() {
@@ -312,7 +328,6 @@ class MainActivity : AppCompatActivity() {
             showFileOptionsDialog(file, "text/html")
         }
     }
-
 
     private fun showFileOptionsDialog(file: File, mimeType: String) {
         val uri = FileProvider.getUriForFile(this, "${packageName}.provider", file)
@@ -352,9 +367,9 @@ class MainActivity : AppCompatActivity() {
         startActivityForResult(intent, REQUEST_EXPORT_FILE)
     }
 
-
     private fun setupNavigation() {
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.NavHostFragment) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.NavHostFragment) as NavHostFragment
         navController = navHostFragment.navController
         configuration = AppBarConfiguration(binding.NavigationView.menu, binding.DrawerLayout)
         setupActionBarWithNavController(navController, configuration)
@@ -366,14 +381,19 @@ class MainActivity : AppCompatActivity() {
             return@setNavigationItemSelectedListener true
         }
 
-        binding.DrawerLayout.addDrawerListener(object : DrawerLayout.SimpleDrawerListener() {
+        binding.DrawerLayout.addDrawerListener(
+            object : DrawerLayout.SimpleDrawerListener() {
 
-            override fun onDrawerClosed(drawerView: View) {
-                if (fragmentIdToLoad != null && navController.currentDestination?.id != fragmentIdToLoad) {
-                    navigateWithAnimation(requireNotNull(fragmentIdToLoad))
+                override fun onDrawerClosed(drawerView: View) {
+                    if (
+                        fragmentIdToLoad != null &&
+                            navController.currentDestination?.id != fragmentIdToLoad
+                    ) {
+                        navigateWithAnimation(requireNotNull(fragmentIdToLoad))
+                    }
                 }
             }
-        })
+        )
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             fragmentIdToLoad = destination.id
@@ -415,7 +435,6 @@ class MainActivity : AppCompatActivity() {
         }
         navController.navigate(id, null, options)
     }
-
 
     private fun setupSearch() {
         binding.EnterSearchKeyword.setText(model.keyword)

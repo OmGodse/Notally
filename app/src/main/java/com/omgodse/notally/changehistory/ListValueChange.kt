@@ -5,7 +5,7 @@ abstract class ListValueChange<T>(
     internal val oldValue: T,
     position: Int,
     internal val positionAfter: Int = position,
-    ) : ListChange(position) {
+) : ListChange(position) {
 
     override fun redo() {
         update(position, newValue, false)
@@ -15,6 +15,5 @@ abstract class ListValueChange<T>(
         update(positionAfter, oldValue, true)
     }
 
-     abstract fun update(position: Int, value: T, isUndo: Boolean)
-
+    abstract fun update(position: Int, value: T, isUndo: Boolean)
 }

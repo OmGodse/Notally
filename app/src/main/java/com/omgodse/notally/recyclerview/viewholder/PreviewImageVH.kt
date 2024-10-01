@@ -13,8 +13,10 @@ import com.bumptech.glide.request.target.Target
 import com.omgodse.notally.databinding.RecyclerPreviewImageBinding
 import java.io.File
 
-class PreviewImageVH(private val binding: RecyclerPreviewImageBinding, onClick: ((position: Int) -> Unit)) :
-    RecyclerView.ViewHolder(binding.root) {
+class PreviewImageVH(
+    private val binding: RecyclerPreviewImageBinding,
+    onClick: ((position: Int) -> Unit),
+) : RecyclerView.ViewHolder(binding.root) {
 
     init {
         binding.root.setOnClickListener { onClick(adapterPosition) }
@@ -28,28 +30,30 @@ class PreviewImageVH(private val binding: RecyclerPreviewImageBinding, onClick: 
             .centerCrop()
             .transition(DrawableTransitionOptions.withCrossFade())
             .diskCacheStrategy(DiskCacheStrategy.NONE)
-            .listener(object : RequestListener<Drawable> {
+            .listener(
+                object : RequestListener<Drawable> {
 
-                override fun onLoadFailed(
-                    e: GlideException?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    binding.Message.visibility = View.VISIBLE
-                    return false
-                }
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        isFirstResource: Boolean,
+                    ): Boolean {
+                        binding.Message.visibility = View.VISIBLE
+                        return false
+                    }
 
-                override fun onResourceReady(
-                    resource: Drawable?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    dataSource: DataSource?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    return false
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean,
+                    ): Boolean {
+                        return false
+                    }
                 }
-            })
+            )
             .into(binding.ImageView)
     }
 }

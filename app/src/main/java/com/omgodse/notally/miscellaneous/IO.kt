@@ -41,11 +41,9 @@ object IO {
         return file
     }
 
-
     fun getTempAudioFile(context: Context): File {
         return File(context.externalCacheDir, "Temp.m4a")
     }
-
 
     fun copyStreamToFile(input: InputStream, destination: File) {
         val output = FileOutputStream(destination)

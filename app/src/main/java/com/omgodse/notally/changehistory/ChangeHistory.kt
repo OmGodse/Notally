@@ -2,13 +2,10 @@ package com.omgodse.notally.changehistory
 
 import android.util.Log
 
-
-class ChangeHistory(
-    private val onStackChanged: (stackPointer: Int) -> Unit
-) {
+class ChangeHistory(private val onStackChanged: (stackPointer: Int) -> Unit) {
     private val TAG = "ChangeHistory"
     private val changeStack = ArrayList<Change>()
-    private var stackPointer =-1
+    private var stackPointer = -1
 
     fun push(change: Change) {
         popRedos()
@@ -62,10 +59,9 @@ class ChangeHistory(
 
     private fun popRedos() {
         while (changeStack.size > stackPointer + 1) {
-            changeStack.removeAt(stackPointer+1)
+            changeStack.removeAt(stackPointer + 1)
         }
-//            changeStack.subList(stackPointer, changeStack.size).clear()
+        //            changeStack.subList(stackPointer, changeStack.size).clear()
 
     }
-
 }

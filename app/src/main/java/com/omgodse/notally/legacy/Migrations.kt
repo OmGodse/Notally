@@ -30,12 +30,17 @@ object Migrations {
 
     fun getPreviousNotes(app: Application): List<BaseNote> {
         val list = ArrayList<BaseNote>()
-        getNotePath(app).listFiles()?.mapTo(list) { file -> XMLUtils.readBaseNoteFromFile(file, Folder.NOTES) }
-        getDeletedPath(app).listFiles()?.mapTo(list) { file -> XMLUtils.readBaseNoteFromFile(file, Folder.DELETED) }
-        getArchivedPath(app).listFiles()?.mapTo(list) { file -> XMLUtils.readBaseNoteFromFile(file, Folder.ARCHIVED) }
+        getNotePath(app).listFiles()?.mapTo(list) { file ->
+            XMLUtils.readBaseNoteFromFile(file, Folder.NOTES)
+        }
+        getDeletedPath(app).listFiles()?.mapTo(list) { file ->
+            XMLUtils.readBaseNoteFromFile(file, Folder.DELETED)
+        }
+        getArchivedPath(app).listFiles()?.mapTo(list) { file ->
+            XMLUtils.readBaseNoteFromFile(file, Folder.ARCHIVED)
+        }
         return list
     }
-
 
     private fun getNotePath(app: Application) = getFolder(app, "notes")
 
@@ -46,7 +51,6 @@ object Migrations {
     private fun getLabelsPreferences(app: Application): SharedPreferences {
         return app.getSharedPreferences("labelsPreferences", Context.MODE_PRIVATE)
     }
-
 
     private fun getFolder(app: Application, name: String): File {
         val folder = File(app.filesDir, name)

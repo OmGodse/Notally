@@ -7,11 +7,11 @@ import com.omgodse.notally.room.Label
 import com.omgodse.notally.room.ListItem
 import com.omgodse.notally.room.SpanRepresentation
 import com.omgodse.notally.room.Type
-import org.xmlpull.v1.XmlPullParser
-import org.xmlpull.v1.XmlPullParserFactory
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStream
+import org.xmlpull.v1.XmlPullParser
+import org.xmlpull.v1.XmlPullParserFactory
 
 object XMLUtils {
 
@@ -22,7 +22,6 @@ object XMLUtils {
         parser.next()
         return parseBaseNote(parser, parser.name, folder)
     }
-
 
     fun readBackupFromStream(inputStream: InputStream): Pair<List<BaseNote>, List<Label>> {
         val parser = XmlPullParserFactory.newInstance().newPullParser()
@@ -45,7 +44,12 @@ object XMLUtils {
         return Pair(baseNotes, labels)
     }
 
-    private fun parseList(parser: XmlPullParser, rootTag: String, list: ArrayList<BaseNote>, folder: Folder) {
+    private fun parseList(
+        parser: XmlPullParser,
+        rootTag: String,
+        list: ArrayList<BaseNote>,
+        folder: Folder,
+    ) {
         while (parser.next() != XmlPullParser.END_DOCUMENT) {
             if (parser.eventType == XmlPullParser.START_TAG) {
                 val note = parseBaseNote(parser, parser.name, folder)
@@ -90,12 +94,26 @@ object XMLUtils {
         }
 
         // Can be either `note` or `list`
-        val type = if (rootTag == "note") {
-            Type.NOTE
-        } else Type.LIST
-        return BaseNote(0, type, folder, color, title, pinned, timestamp, labels, body, spans, items, emptyList(), emptyList())
+        val type =
+            if (rootTag == "note") {
+                Type.NOTE
+            } else Type.LIST
+        return BaseNote(
+            0,
+            type,
+            folder,
+            color,
+            title,
+            pinned,
+            timestamp,
+            labels,
+            body,
+            spans,
+            items,
+            emptyList(),
+            emptyList(),
+        )
     }
-
 
     private fun parseItem(parser: XmlPullParser, rootTag: String): ListItem {
         var body = String()

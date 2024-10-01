@@ -35,7 +35,12 @@ class AudioRecordService : Service() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channelId = "com.omgodse.audio"
-            val channel = NotificationChannel(channelId, "Audio Recordings", NotificationManager.IMPORTANCE_HIGH)
+            val channel =
+                NotificationChannel(
+                    channelId,
+                    "Audio Recordings",
+                    NotificationManager.IMPORTANCE_HIGH,
+                )
             manager.createNotificationChannel(channel)
             builder.setChannelId(channelId)
         }
@@ -63,9 +68,10 @@ class AudioRecordService : Service() {
 
         startForeground(2, buildNotification())
 
-        recorder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            MediaRecorder(this)
-        } else MediaRecorder()
+        recorder =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                MediaRecorder(this)
+            } else MediaRecorder()
 
         recorder.setAudioSource(MediaRecorder.AudioSource.MIC)
         recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
@@ -80,9 +86,7 @@ class AudioRecordService : Service() {
         recorder.release()
     }
 
-
     override fun onBind(intent: Intent?) = LocalBinder(this)
-
 
     fun start() {
         recorder.start()
@@ -118,11 +122,12 @@ class AudioRecordService : Service() {
     }
 
     private fun buildNotification(): Notification {
-        val title = when (status) {
-            READY -> getString(R.string.ready_to_record)
-            PAUSED -> getString(R.string.paused)
-            RECORDING -> getString(R.string.recording)
-        }
+        val title =
+            when (status) {
+                READY -> getString(R.string.ready_to_record)
+                PAUSED -> getString(R.string.paused)
+                RECORDING -> getString(R.string.recording)
+            }
         builder.setContentTitle(title)
         builder.setContentText(getString(R.string.tap_for_more_options))
         return builder.build()

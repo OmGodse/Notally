@@ -36,5 +36,6 @@ class MenuDialog(context: Context) : BottomSheetDialog(context) {
         return this
     }
 
-    fun add(title: Int, drawable: Int = 0, onClick: () -> Unit) = add(context.getString(title), drawable, onClick)
+    fun add(title: Int, drawable: Int = 0, onClick: () -> Unit) =
+        add(context.getString(title), drawable, onClick)
 }

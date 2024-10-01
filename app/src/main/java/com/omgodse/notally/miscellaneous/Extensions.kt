@@ -25,14 +25,13 @@ import com.omgodse.notally.changehistory.EditTextChange
 import com.omgodse.notally.recyclerview.ListManager
 import com.omgodse.notally.room.ListItem
 import com.omgodse.notally.room.SpanRepresentation
-import org.ocpsoft.prettytime.PrettyTime
 import java.util.Date
 import kotlin.math.roundToInt
+import org.ocpsoft.prettytime.PrettyTime
 
 /**
- * For some reason, this method crashes sometimes with an
- * IndexOutOfBoundsException that I've not been able to replicate.
- * When this happens, to prevent the entire app from crashing and becoming
+ * For some reason, this method crashes sometimes with an IndexOutOfBoundsException that I've not
+ * been able to replicate. When this happens, to prevent the entire app from crashing and becoming
  * unusable, the exception is suppressed.
  */
 fun String.applySpans(representations: List<SpanRepresentation>): Editable {
@@ -62,7 +61,6 @@ fun String.applySpans(representations: List<SpanRepresentation>): Editable {
     return editable
 }
 
-
 private fun String.getURL(start: Int, end: Int): String {
     return if (end <= length) {
         TakeNote.getURLFrom(substring(start, end))
@@ -74,7 +72,6 @@ private fun Spannable.setSpan(span: Any, start: Int, end: Int) {
         setSpan(span, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
     } else setSpan(span, start, length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 }
-
 
 fun EditText.setOnNextAction(onNext: () -> Unit) {
     setRawInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES)
@@ -94,7 +91,6 @@ fun EditText.setOnNextAction(onNext: () -> Unit) {
     }
 }
 
-
 fun Menu.add(title: Int, drawable: Int, onClick: (item: MenuItem) -> Unit): MenuItem {
     return add(Menu.NONE, title, drawable, MenuItem.SHOW_AS_ACTION_IF_ROOM, onClick)
 }
@@ -103,7 +99,7 @@ fun Menu.add(
     title: Int,
     drawable: Int,
     showAsAction: Int,
-    onClick: (item: MenuItem) -> Unit
+    onClick: (item: MenuItem) -> Unit,
 ): MenuItem {
     return add(Menu.NONE, title, drawable, showAsAction, onClick)
 }
@@ -113,7 +109,7 @@ fun Menu.add(
     title: Int,
     drawable: Int,
     showAsAction: Int,
-    onClick: (item: MenuItem) -> Unit
+    onClick: (item: MenuItem) -> Unit,
 ): MenuItem {
     val menuItem = add(groupId, Menu.NONE, Menu.NONE, title)
     menuItem.setIcon(drawable)
@@ -143,56 +139,46 @@ val Int.dp: Int
     get() = (this / Resources.getSystem().displayMetrics.density).roundToInt()
 
 /**
- * Creates a TextWatcher for an EditText that is part of a list.
- * Everytime the text is changed, a Change is added to the ChangeHistory.
+ * Creates a TextWatcher for an EditText that is part of a list. Everytime the text is changed, a
+ * Change is added to the ChangeHistory.
  *
  * @param positionGetter Function to determine the current position of the EditText in the list
- * (e.g. the current adapterPosition when using RecyclerViewer.Adapter)
+ *   (e.g. the current adapterPosition when using RecyclerViewer.Adapter)
  * @param updateModel Function to update the model. Is called on any text changes and on undo/redo.
  */
-fun EditText.createListTextWatcherWithHistory(
-    listManager: ListManager,
-    positionGetter: () -> Int,
-) = object : TextWatcher {
-    private lateinit var currentTextBefore: String
+fun EditText.createListTextWatcherWithHistory(listManager: ListManager, positionGetter: () -> Int) =
+    object : TextWatcher {
+        private lateinit var currentTextBefore: String
 
-    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-        currentTextBefore = s.toString()
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            currentTextBefore = s.toString()
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+        override fun afterTextChanged(s: Editable?) {
+            listManager.changeText(
+                this@createListTextWatcherWithHistory,
+                this,
+                positionGetter.invoke(),
+                currentTextBefore,
+                requireNotNull(s).toString(),
+            )
+        }
     }
-
-    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-    }
-
-    override fun afterTextChanged(s: Editable?) {
-        listManager.changeText(
-            this@createListTextWatcherWithHistory,
-            this,
-            positionGetter.invoke(),
-            currentTextBefore,
-            requireNotNull(s).toString()
-        )
-
-    }
-}
 
 fun EditText.createTextWatcherWithHistory(
     changeHistory: ChangeHistory,
-    updateModel: (text: String) -> Unit
+    updateModel: (text: String) -> Unit,
 ) =
     object : TextWatcher {
         private lateinit var currentTextBefore: String
 
-        override fun beforeTextChanged(
-            s: CharSequence?,
-            start: Int,
-            count: Int,
-            after: Int
-        ) {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             currentTextBefore = s.toString()
         }
 
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        }
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
         override fun afterTextChanged(s: Editable?) {
             val textBefore = currentTextBefore
@@ -205,7 +191,7 @@ fun EditText.createTextWatcherWithHistory(
                     textAfter,
                     textBefore,
                     this,
-                    updateModel
+                    updateModel,
                 )
             )
         }
@@ -214,7 +200,6 @@ fun EditText.createTextWatcherWithHistory(
 fun MutableList<ListItem>.updateUncheckedPositions() {
     forEachIndexed { index, item -> if (!item.checked) item.uncheckedPosition = index }
 }
-
 
 private fun formatTimestamp(timestamp: Long, dateFormat: String): String {
     val date = Date(timestamp)

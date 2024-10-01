@@ -42,7 +42,6 @@ class AudioPlayService : Service() {
         return LocalBinder(this)
     }
 
-
     fun initialise(audio: Audio) {
         if (state == IDLE) {
             val audioRoot = IO.getExternalAudioDirectory(application)
@@ -62,7 +61,9 @@ class AudioPlayService : Service() {
 
     fun play() {
         when (state) {
-            PREPARED, PAUSED, COMPLETED -> {
+            PREPARED,
+            PAUSED,
+            COMPLETED -> {
                 player.start()
                 setState(STARTED)
             }
@@ -81,7 +82,6 @@ class AudioPlayService : Service() {
         }
     }
 
-
     fun getState(): Int {
         return state
     }
@@ -97,7 +97,6 @@ class AudioPlayService : Service() {
     fun getCurrentPosition(): Int {
         return if (state != IDLE && state != ERROR) player.currentPosition else 0
     }
-
 
     private fun setState(state: Int) {
         this.state = state
