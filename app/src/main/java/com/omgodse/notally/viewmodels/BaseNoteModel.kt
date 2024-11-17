@@ -612,18 +612,6 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
     companion object {
 
-        fun getDateFormatter(context: Context): SimpleDateFormat {
-            val locale = context.resources.configuration.locale
-            val pattern = when (locale.language) {
-                Locale.CHINESE.language,
-                Locale.JAPANESE.language -> "yyyy年 MMM d日 (EEE)"
-                Locale.KOREAN.language -> "yyyy년 MMM d일 (EEE)"
-
-                else -> "EEE d MMM yyyy"
-            }
-            return SimpleDateFormat(pattern, locale)
-        }
-
         fun transform(list: List<BaseNote>, pinned: Header, others: Header): List<Item> {
             if (list.isEmpty()) {
                 return list
