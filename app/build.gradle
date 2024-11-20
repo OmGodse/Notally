@@ -14,7 +14,7 @@ android {
         minSdk 21
         targetSdk 33
         versionCode 54
-        versionName "5.9"
+        versionName "5.10"
         resConfigs 'en', 'ca', 'cs', 'da', 'de', 'el', 'es', 'fr', 'hu', 'in', 'it', 'ja', 'my', 'nb', 'nl', 'nn', 'pl', 'pt-rBR', 'pt-rPT', 'ro', 'ru', 'sk', 'sv', 'tl', 'tr', 'uk', 'vi', 'zh-rCN'
         vectorDrawables.generatedDensities = []
     }
@@ -38,7 +38,9 @@ android {
 
     kotlinOptions { jvmTarget = "1.8" }
 
-    buildFeatures { viewBinding true }
+    buildFeatures {
+        viewBinding true
+    }
 
     packagingOptions.resources {
         excludes += ["DebugProbesKt.bin", "META-INF/**.version", "kotlin/**.kotlin_builtins", "kotlin-tooling-metadata.json"]
@@ -65,8 +67,7 @@ dependencies {
     implementation "org.ocpsoft.prettytime:prettytime:4.0.6.Final"
     implementation "com.google.android.material:material:1.4.0"
 
-    implementation "ru.rambler.android:swipe-layout:1.1.0"
-
+    implementation 'com.github.KevinGB97333:swipe-layout-android:1.2.0'
     implementation "com.github.bumptech.glide:glide:4.15.1"
     implementation "com.davemorrissey.labs:subsampling-scale-image-view-androidx:3.10.0"
 }
