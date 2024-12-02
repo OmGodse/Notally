@@ -105,7 +105,7 @@
     <string name="max_lines_to_display">미리보기에서 노트의 최대 줄 수</string>
     <string name="max_lines_to_display_title">미리보기에서 제목의 최대 줄 수</string>
 
-    <!-- Auto backup -->
+    <!-- Backup -->
     <string name="backup">백업</string>
     <string name="auto_backup">자동 백업</string>
     <string name="tap_to_set_up">설정하려면 탭하세요</string>

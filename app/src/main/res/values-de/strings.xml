@@ -1,6 +1,4 @@
 <resources>
-    
-    
     <!-- Fragment Titles -->
     <string name="notes">Notizen</string>
     <string name="labels">Labels</string>
@@ -35,7 +33,7 @@
     <string name="save">Speichern</string>
     <string name="edit">Bearbeiten</string>
     <string name="cancel">Abbrechen</string>
-     <string name="continue_">Weiter</string>
+    <string name="continue_">Weiter</string>
     <string name="open_link">Link öffnen</string>
     <string name="make_list">Liste erstellen</string>
     <string name="take_note">Notiz erstellen</string>
@@ -73,14 +71,14 @@
     <string name="empty_note">Leere Notiz</string>
     <string name="empty_list">Leere Liste</string>
     <string name="select_labels">Label auswählen</string>
-    
+
     <!-- Messages -->
     <string name="cant_open_link">Link konnte nicht geöffnet werden</string>
     <string name="something_went_wrong">Etwas ist schief gelaufen. Bitte erneut versuchen.</string>
     <string name="install_an_email">Installiere eine E-Mail-App zum Senden von Feedback</string>
     <string name="install_a_browser">Installiere einen Browser, um diesen Link zu öffnen</string>
     <string name="cant_find_note">Kann Notiz nicht finden. Vielleicht wurde sie gelöscht</string>
-    
+
     <!-- Settings Page -->
     <string name="appearance">Erscheinungsbild</string>
 
@@ -105,7 +103,7 @@
     <string name="max_items_to_display">Maximal angezeigte Listeneinträge</string>
     <string name="max_lines_to_display">Maximal angezeigte Zeilen</string>
     <string name="max_lines_to_display_title">Maximal angezeigte Zeilen im Titel</string>
-    
+
     <!-- Backup -->
     <string name="backup">Sicherung</string>
     <string name="auto_backup">Automatische Sicherung</string>
@@ -120,7 +118,7 @@
     <string name="exporting_backup">Exportieren der Sicherung</string>
     <string name="importing_backup">Importieren der Sicherung</string>
     <string name="calculating">Berechne…</string>
-    
+
     <string name="export_backup">Notizen sichern</string>
     <string name="import_backup">Notizen wiederherstellen</string>
 
@@ -129,14 +127,12 @@
     <string name="rate">App bewerten</string>
     <string name="send_feedback">Feedback senden</string>
 
-    
-
     <!-- Widget -->
     <string name="single_note_or_list">Einzelne Notiz oder Liste</string>
     <string name="select_note">Notiz auswählen</string>
 
     <!-- Images -->
-    
+
     <string name="adding_images">Bilder hinzufügen</string>
     <string name="deleting_images">Bilder löschen</string>
     <string name="invalid_image">Ungültiges Bild</string>
@@ -153,7 +149,7 @@
         <item quantity="one">Kann %d Bild nicht hinzufügen</item>
         <item quantity="other">Kann %d Bilder nicht hinzufügen</item>
     </plurals>
-   
+
     <!-- Audio -->
     <string name="play">Abspielen</string>
     <string name="stop">Stoppen</string>
