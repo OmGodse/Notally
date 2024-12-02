@@ -140,6 +140,7 @@ class MainActivity : AppCompatActivity() {
         val export = createExportMenu(menu)
 
         val changeColor = menu.add(R.string.change_color, R.drawable.change_color) { changeColor() }
+        val copy = menu.add(R.string.make_a_copy, R.drawable.copy) { model.copyBaseNote() }
         val delete = menu.add(R.string.delete, R.drawable.delete) { model.moveBaseNotes(Folder.DELETED) }
         val archive = menu.add(R.string.archive, R.drawable.archive) { model.moveBaseNotes(Folder.ARCHIVED) }
         val restore = menu.add(R.string.restore, R.drawable.restore) { model.moveBaseNotes(Folder.NOTES) }
@@ -169,6 +170,7 @@ class MainActivity : AppCompatActivity() {
                 labels.setVisible(count == 1)
                 export.setVisible(count == 1)
                 changeColor.setVisible(true)
+                copy.setVisible(true)
 
                 val folder = baseNote.folder
                 delete.setVisible(folder == Folder.NOTES || folder == Folder.ARCHIVED)

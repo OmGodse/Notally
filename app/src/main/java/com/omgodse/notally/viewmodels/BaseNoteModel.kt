@@ -459,6 +459,12 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         executeAsync { baseNoteDao.updateColor(ids, color) }
     }
 
+    fun copyBaseNote() {
+        val ids = actionMode.selectedIds.toLongArray()
+        actionMode.close(true)
+        executeAsync { baseNoteDao.copy(ids) }
+    }
+
     fun moveBaseNotes(folder: Folder) {
         val ids = actionMode.selectedIds.toLongArray()
         actionMode.close(false)

@@ -20,6 +20,7 @@
     <string name="delete_all">Delete all</string>
     <string name="record_audio">Record audio</string>
     <string name="change_color">Change color</string>
+    <string name="make_a_copy">Make a copy</string>
     <string name="delete_forever">Delete forever</string>
 
     <!-- Pinning -->

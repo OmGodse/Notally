@@ -34,6 +34,14 @@ interface BaseNoteDao {
     suspend fun update(labelsInBaseNotes: List<LabelsInBaseNote>)
 
 
+    @Query(
+        "INSERT INTO BaseNote (type, folder, color, title, pinned, timestamp, labels, body, spans, items, images, audios)\n" +
+                "SELECT type, folder, color, title, pinned, timestamp, labels, body, spans, items, images, audios\n" +
+                "FROM BaseNote WHERE id IN (:ids)"
+    )
+    suspend fun copy(ids: LongArray)
+
+
     @Query("DELETE FROM BaseNote WHERE id = :id")
     suspend fun delete(id: Long)
 
