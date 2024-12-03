@@ -16,8 +16,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MutableLiveData
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.omgodse.notally.BackupProgress
 import com.omgodse.notally.MenuDialog
+import com.omgodse.notally.Progress
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.DialogProgressBinding
 import com.omgodse.notally.databinding.FragmentSettingsBinding
@@ -124,7 +124,7 @@ class Settings : Fragment() {
         startActivityForResult(intent, REQUEST_IMPORT_BACKUP)
     }
 
-    private fun setupProgressDialog(titleId: Int, liveData: MutableLiveData<BackupProgress>) {
+    private fun setupProgressDialog(titleId: Int, liveData: MutableLiveData<Progress>) {
         val dialogBinding = DialogProgressBinding.inflate(layoutInflater)
         val dialog = MaterialAlertDialogBuilder(requireContext())
             .setTitle(titleId)

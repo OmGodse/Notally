@@ -15,8 +15,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.room.withTransaction
 import com.omgodse.notally.ActionMode
 import com.omgodse.notally.AttachmentDeleteService
-import com.omgodse.notally.BackupProgress
 import com.omgodse.notally.Cache
+import com.omgodse.notally.Progress
 import com.omgodse.notally.R
 import com.omgodse.notally.legacy.Migrations
 import com.omgodse.notally.legacy.XMLUtils
@@ -100,8 +100,8 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     val mediaRoot = IO.getExternalImagesDirectory(app)
     private val audioRoot = IO.getExternalAudioDirectory(app)
 
-    val importingBackup = MutableLiveData<BackupProgress>()
-    val exportingBackup = MutableLiveData<BackupProgress>()
+    val importingBackup = MutableLiveData<Progress>()
+    val exportingBackup = MutableLiveData<Progress>()
 
     val actionMode = ActionMode()
 
@@ -166,7 +166,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
     fun exportBackup(uri: Uri) {
         viewModelScope.launch {
-            exportingBackup.value = BackupProgress(true, 0, 0, true)
+            exportingBackup.value = Progress(true, 0, 0, true)
 
             withContext(Dispatchers.IO) {
                 val outputStream = requireNotNull(app.contentResolver.openOutputStream(uri))
@@ -189,7 +189,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
                     } catch (exception: Exception) {
                         Operations.log(app, exception)
                     } finally {
-                        exportingBackup.postValue(BackupProgress(true, index + 1, total, false))
+                        exportingBackup.postValue(Progress(true, index + 1, total, false))
                     }
                 }
                 audios.forEachIndexed { index, audio ->
@@ -198,14 +198,14 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
                     } catch (exception: Exception) {
                         Operations.log(app, exception)
                     } finally {
-                        exportingBackup.postValue(BackupProgress(true, images.size + index + 1, total, false))
+                        exportingBackup.postValue(Progress(true, images.size + index + 1, total, false))
                     }
                 }
 
                 zipStream.close()
             }
 
-            exportingBackup.value = BackupProgress(false, 0, 0, false)
+            exportingBackup.value = Progress(false, 0, 0, false)
             Toast.makeText(app, R.string.saved_to_device, Toast.LENGTH_LONG).show()
         }
     }
@@ -238,7 +238,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         }
 
         viewModelScope.launch(exceptionHandler) {
-            importingBackup.value = BackupProgress(true, 0, 0, true)
+            importingBackup.value = Progress(true, 0, 0, true)
 
             withContext(Dispatchers.IO) {
                 val stream = requireNotNull(app.contentResolver.openInputStream(uri))
@@ -281,7 +281,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
                         } catch (exception: Exception) {
                             Operations.log(app, exception)
                         } finally {
-                            importingBackup.postValue(BackupProgress(true, current, total, false))
+                            importingBackup.postValue(Progress(true, current, total, false))
                             current++
                         }
                     }
@@ -298,7 +298,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
                         } catch (exception: Exception) {
                             Operations.log(app, exception)
                         } finally {
-                            importingBackup.postValue(BackupProgress(true, current, total, false))
+                            importingBackup.postValue(Progress(true, current, total, false))
                             current++
                         }
                     }
@@ -366,7 +366,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     }
 
     private fun finishImporting(backupDir: File) {
-        importingBackup.value = BackupProgress(false, 0, 0, false)
+        importingBackup.value = Progress(false, 0, 0, false)
         clear(backupDir)
     }
 

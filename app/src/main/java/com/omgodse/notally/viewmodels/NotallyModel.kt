@@ -21,10 +21,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.omgodse.notally.AttachmentDeleteService
 import com.omgodse.notally.Cache
+import com.omgodse.notally.Progress
 import com.omgodse.notally.R
 import com.omgodse.notally.image.Event
 import com.omgodse.notally.image.ImageError
-import com.omgodse.notally.image.ImageProgress
 import com.omgodse.notally.miscellaneous.IO
 import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.miscellaneous.applySpans
@@ -75,7 +75,7 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
     val images = BetterLiveData<List<Image>>(emptyList())
     val audios = BetterLiveData<List<Audio>>(emptyList())
 
-    val addingImages = MutableLiveData<ImageProgress>()
+    val addingImages = MutableLiveData<Progress>()
     val eventBus = MutableLiveData<Event<List<ImageError>>>()
 
     var imageRoot = IO.getExternalImagesDirectory(app)
@@ -135,7 +135,7 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
         val errorWhileRenaming = app.getString(R.string.error_while_renaming_image)
 
         viewModelScope.launch {
-            addingImages.value = ImageProgress(true, 0, uris.size)
+            addingImages.value = Progress(true, 0, uris.size, false)
 
             val successes = ArrayList<Image>()
             val errors = ArrayList<ImageError>()
@@ -185,10 +185,10 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
                     }
                 }
 
-                addingImages.value = ImageProgress(true, index + 1, uris.size)
+                addingImages.value = Progress(true, index + 1, uris.size, false)
             }
 
-            addingImages.value = ImageProgress(false, 0, 0)
+            addingImages.value = Progress(false, 0, 0, false)
 
             if (successes.isNotEmpty()) {
                 val copy = ArrayList(images.value)
