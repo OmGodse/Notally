@@ -1,5 +1,6 @@
 package com.omgodse.notally.activities
 
+import android.view.inputmethod.InputMethodManager
 import com.omgodse.notally.miscellaneous.setOnNextAction
 import com.omgodse.notally.recyclerview.ListItemListener
 import com.omgodse.notally.recyclerview.adapter.MakeListAdapter
@@ -64,9 +65,13 @@ class MakeList : NotallyActivity(Type.LIST) {
         val listItem = ListItem(String(), false)
         model.items.add(listItem)
         adapter.notifyItemInserted(position)
+        val inputManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         binding.RecyclerView.post {
             val viewHolder = binding.RecyclerView.findViewHolderForAdapterPosition(position) as MakeListVH?
-            viewHolder?.binding?.EditText?.requestFocus()
+            if (viewHolder != null) {
+                viewHolder.binding.EditText.requestFocus()
+                inputManager.showSoftInput(viewHolder.binding.EditText, InputMethodManager.SHOW_IMPLICIT)
+            }
         }
     }
 
