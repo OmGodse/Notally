@@ -19,6 +19,7 @@
     <string name="delete_all">Usuń wszystkie</string>
     <string name="record_audio">Nagraj notatkę dźwiękową</string>
     <string name="change_color">Zmień kolor</string>
+    <string name="make_a_copy">Utwórz kopię</string>
     <string name="delete_forever">Usunąć na zawsze?</string>
 
     <!-- Pinning -->
