@@ -13,7 +13,7 @@ import com.omgodse.notally.room.dao.CommonDao
 import com.omgodse.notally.room.dao.LabelDao
 
 @TypeConverters(Converters::class)
-@Database(entities = [BaseNote::class, Label::class], version = 4)
+@Database(entities = [BaseNote::class, Label::class], version = 5)
 abstract class NotallyDatabase : RoomDatabase() {
 
     abstract fun getLabelDao(): LabelDao
@@ -34,7 +34,7 @@ abstract class NotallyDatabase : RoomDatabase() {
         fun getDatabase(app: Application): NotallyDatabase {
             return instance ?: synchronized(this) {
                 val instance = Room.databaseBuilder(app, NotallyDatabase::class.java, DatabaseName)
-                    .addMigrations(Migration2, Migration3, Migration4)
+                    .addMigrations(Migration2, Migration3, Migration4, Migration5)
                     .build()
                 this.instance = instance
                 return instance
@@ -59,6 +59,13 @@ abstract class NotallyDatabase : RoomDatabase() {
 
             override fun migrate(db: SupportSQLiteDatabase) {
                 db.execSQL("ALTER TABLE `BaseNote` ADD COLUMN `audios` TEXT NOT NULL DEFAULT `[]`")
+            }
+        }
+
+        object Migration5 : Migration(4, 5) {
+
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE `BaseNote` ADD COLUMN `reminder` TEXT")
             }
         }
     }

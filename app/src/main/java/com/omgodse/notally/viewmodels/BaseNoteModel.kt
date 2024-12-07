@@ -39,6 +39,7 @@ import com.omgodse.notally.room.Image
 import com.omgodse.notally.room.Item
 import com.omgodse.notally.room.Label
 import com.omgodse.notally.room.NotallyDatabase
+import com.omgodse.notally.room.Reminder
 import com.omgodse.notally.room.Type
 import com.omgodse.notally.room.livedata.Content
 import com.omgodse.notally.room.livedata.SearchResult
@@ -352,7 +353,15 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
             Converters.jsonToAudios(cursor.getString(audiosIndex))
         } else emptyList()
 
-        return BaseNote(0, type, folder, color, title, pinned, timestamp, labels, body, spans, items, images, audios)
+        var reminder: Reminder? = null
+        val reminderIndex = cursor.getColumnIndex("reminder")
+        if (reminderIndex != -1) {
+            if (!cursor.isNull(reminderIndex)) {
+                reminder = Converters.jsonToReminder(cursor.getString(reminderIndex))
+            }
+        }
+
+        return BaseNote(0, type, folder, color, title, pinned, timestamp, labels, body, spans, items, images, audios, reminder)
     }
 
     private fun <T> convertCursorToList(cursor: Cursor, convert: (cursor: Cursor) -> T): ArrayList<T> {

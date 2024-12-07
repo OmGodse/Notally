@@ -18,5 +18,6 @@ data class BaseNote(
     val spans: List<SpanRepresentation>,
     val items: List<ListItem>,
     val images: List<Image>,
-    val audios: List<Audio>
+    val audios: List<Audio>,
+    val reminder: Reminder?
 ) : Item

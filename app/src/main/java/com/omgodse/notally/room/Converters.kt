@@ -59,6 +59,23 @@ object Converters {
 
 
     @TypeConverter
+    fun reminderToJson(reminder: Reminder): String {
+        return JSONObject()
+            .put("timestamp", reminder.timestamp)
+            .put("frequency", reminder.frequency.name)
+            .toString()
+    }
+
+    @TypeConverter
+    fun jsonToReminder(json: String): Reminder {
+        val jsonObject = JSONObject(json)
+        val timestamp = jsonObject.getLong("timestamp")
+        val frequency = Frequency.valueOf(jsonObject.getString("frequency"))
+        return Reminder(timestamp, frequency)
+    }
+
+
+    @TypeConverter
     fun jsonToSpans(json: String): List<SpanRepresentation> {
         val iterable = JSONArray(json).iterable<JSONObject>()
         return iterable.map { jsonObject ->
