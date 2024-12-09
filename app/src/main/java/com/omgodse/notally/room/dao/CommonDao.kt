@@ -2,22 +2,26 @@ package com.omgodse.notally.room.dao
 
 import androidx.room.Dao
 import androidx.room.Transaction
+import androidx.room.Update
 import com.omgodse.notally.room.BaseNote
+import com.omgodse.notally.room.IdLabels
 import com.omgodse.notally.room.Label
-import com.omgodse.notally.room.LabelsInBaseNote
 import com.omgodse.notally.room.NotallyDatabase
 
 @Dao
 abstract class CommonDao(private val database: NotallyDatabase) {
+
+    @Update(entity = BaseNote::class)
+    abstract suspend fun update(list: List<IdLabels>)
 
     @Transaction
     open suspend fun deleteLabel(value: String) {
         val labelsInBaseNotes = database.getBaseNoteDao().getListOfBaseNotesByLabel(value).map { baseNote ->
             val labels = ArrayList(baseNote.labels)
             labels.remove(value)
-            LabelsInBaseNote(baseNote.id, labels)
+            IdLabels(baseNote.id, labels)
         }
-        database.getBaseNoteDao().update(labelsInBaseNotes)
+        update(labelsInBaseNotes)
         database.getLabelDao().delete(value)
     }
 
@@ -27,9 +31,9 @@ abstract class CommonDao(private val database: NotallyDatabase) {
             val labels = ArrayList(baseNote.labels)
             labels.remove(oldValue)
             labels.add(newValue)
-            LabelsInBaseNote(baseNote.id, labels)
+            IdLabels(baseNote.id, labels)
         }
-        database.getBaseNoteDao().update(labelsInBaseNotes)
+        update(labelsInBaseNotes)
         database.getLabelDao().update(oldValue, newValue)
     }
 
