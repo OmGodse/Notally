@@ -138,7 +138,7 @@
     <string name="unknown_name">Ukjent navn</string>
     <string name="unknown_error">Ukjent feil</string>
     <string name="insert_an_sd_card_images">Sett inn et SD-kort for å legge til bilder</string>
-    <string name="please_grant_notally_notification">Gi Notally tillatelse til å sende varsler. Dette brukes for å vise fremdriften hvis handlinger som å slette bilder eller importere sikkerhetskopier tar tid</string>
+    <string name="please_grant_notally_notification">Gi Notally tillatelse til å sende varsler.</string>
 
     <plurals name="cant_add_images">
         <item quantity="one">Kan ikke legge til %d bilde</item>

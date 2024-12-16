@@ -143,7 +143,7 @@
     <string name="unknown_name">Nieznana nazwa</string>
     <string name="unknown_error">Nieznany błąd</string>
     <string name="insert_an_sd_card_images">Włóż kartę SD, aby dodać obrazy</string>
-    <string name="please_grant_notally_notification">Przyznaj programowi Notally uprawnienia do wysyłania powiadomień. Umożliwia to wyświetlanie postępu, jeśli operacje takie jak usuwanie obrazów lub przywracanie kopii zapasowych zajmuje więcej czasu</string>
+    <string name="please_grant_notally_notification">Przyznaj programowi Notally uprawnienia do wysyłania powiadomień.</string>
 
     <plurals name="cant_add_images">
         <item quantity="one">Nie można dodać %d obrazu</item>

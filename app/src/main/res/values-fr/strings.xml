@@ -140,7 +140,7 @@
     <string name="unknown_name">Nom inconnu</string>
     <string name="unknown_error">Erreur inconnue</string>
     <string name="insert_an_sd_card_images">Insérez une carte SD pour ajouter des images</string>
-    <string name="please_grant_notally_notification"> Veuillez accordez à Notally l\'autorisation d\'envoyer des notifications. Cela permet d\'afficher la progression des opérations telles que la suppression d\'images ou l\'importation de sauvegarde si elles prennent du temps.</string>
+    <string name="please_grant_notally_notification"> Veuillez accordez à Notally l\'autorisation d\'envoyer des notifications.</string>
 
     <plurals name="cant_add_images">
         <item quantity="one">Impossible d\'ajouter %d image</item>

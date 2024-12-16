@@ -141,7 +141,7 @@
     <string name="unknown_name">Neznámý název</string>
     <string name="unknown_error">Neznámá chyba</string>
     <string name="insert_an_sd_card_images">Vložte kartu SD a přidejte obrázky</string>
-    <string name="please_grant_notally_notification">Udělte Notally oprávnění k zasílání oznámení. Tato se používájí k zobrazení průběhu, pokud operace, jako je mazání obrázků nebo import záloh, trvají dlouho.</string>
+    <string name="please_grant_notally_notification">Udělte Notally oprávnění k zasílání oznámení.</string>
 
     <plurals name="cant_add_images">
         <item quantity="one">Nepodařilo se přidat %d obrázek</item>

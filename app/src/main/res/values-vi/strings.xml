@@ -141,7 +141,7 @@
     <string name="unknown_name">Không rõ tên</string>
     <string name="unknown_error">Không rõ lỗi</string>
     <string name="insert_an_sd_card_images">Gắn thẻ SD trước</string>
-    <string name="please_grant_notally_notification">Xin cho phép Notally quyền gửi thông báo. Nó sẽ cho phép hiển thị tiến trình nếu các thao tác xóa hình ảnh hoặc nhập bản sao lưu mất nhiều thời gian</string>
+    <string name="please_grant_notally_notification">Xin cho phép Notally quyền gửi thông báo.</string>
 
     <plurals name="cant_add_images">
         <item quantity="one">Không thể thêm %d ảnh</item>
