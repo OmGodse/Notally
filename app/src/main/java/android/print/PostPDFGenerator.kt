@@ -64,7 +64,7 @@ object PostPDFGenerator {
     private fun getPrintAttributes(): PrintAttributes {
         val builder = PrintAttributes.Builder()
         builder.setMediaSize(PrintAttributes.MediaSize.ISO_A4)
-        builder.setMinMargins(PrintAttributes.Margins.NO_MARGINS)
+        builder.setMinMargins(PrintAttributes.Margins(250, 250, 250, 250))
         builder.setResolution(PrintAttributes.Resolution("Standard", "Standard", 100, 100))
         return builder.build()
     }
