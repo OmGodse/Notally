@@ -18,6 +18,7 @@ import com.omgodse.notally.AttachmentDeleteService
 import com.omgodse.notally.Cache
 import com.omgodse.notally.Progress
 import com.omgodse.notally.R
+import com.omgodse.notally.ReminderReceiver
 import com.omgodse.notally.legacy.Migrations
 import com.omgodse.notally.legacy.XMLUtils
 import com.omgodse.notally.miscellaneous.Export
@@ -488,26 +489,34 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
     fun deleteBaseNotes() {
         val ids = LongArray(actionMode.selectedNotes.size)
+        val reminderIds = ArrayList<Long>()
         val attachments = ArrayList<Attachment>()
         actionMode.selectedNotes.onEachIndexed { index, entry ->
-            ids[index] = entry.key
-            attachments.addAll(entry.value.images)
-            attachments.addAll(entry.value.audios)
+            val id = entry.key
+            val baseNote = entry.value
+            ids[index] = id
+            if (baseNote.reminder != null) {
+                reminderIds.add(id)
+            }
+            attachments.addAll(baseNote.images)
+            attachments.addAll(baseNote.audios)
         }
         actionMode.close(false)
         viewModelScope.launch {
             withContext(Dispatchers.IO) { baseNoteDao.delete(ids) }
-            informOtherComponents(attachments, ids)
+            informOtherComponents(attachments, ids, reminderIds)
         }
     }
 
     fun deleteAllBaseNotes() {
         viewModelScope.launch {
             val ids: LongArray
+            val reminderIds: List<Long>
             val images = ArrayList<Image>()
             val audios = ArrayList<Audio>()
             withContext(Dispatchers.IO) {
                 ids = baseNoteDao.getDeletedNoteIds()
+                reminderIds = baseNoteDao.getDeletedNoteReminderIds()
                 val imageStrings = baseNoteDao.getDeletedNoteImages()
                 val audioStrings = baseNoteDao.getDeletedNoteAudios()
                 imageStrings.flatMapTo(images) { json -> Converters.jsonToImages(json) }
@@ -517,16 +526,19 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
             val attachments = ArrayList<Attachment>(images.size + audios.size)
             attachments.addAll(images)
             attachments.addAll(audios)
-            informOtherComponents(attachments, ids)
+            informOtherComponents(attachments, ids, reminderIds)
         }
     }
 
-    private fun informOtherComponents(attachments: ArrayList<Attachment>, ids: LongArray) {
+    private fun informOtherComponents(attachments: ArrayList<Attachment>, ids: LongArray, reminderIds: List<Long>) {
         if (attachments.isNotEmpty()) {
             AttachmentDeleteService.start(app, attachments)
         }
         if (ids.isNotEmpty()) {
             WidgetProvider.sendBroadcast(app, ids)
+        }
+        if (reminderIds.isNotEmpty()) {
+            ReminderReceiver.deleteReminders(app, reminderIds)
         }
     }
 

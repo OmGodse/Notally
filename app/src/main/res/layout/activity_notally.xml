@@ -51,10 +51,24 @@
                 android:paddingStart="24dp"
                 android:paddingTop="16dp"
                 android:paddingEnd="24dp"
-                android:paddingBottom="16dp"
                 android:text="@string/date"
                 android:textAppearance="?attr/textAppearanceBody2"
                 android:textColor="?android:textColorHint" />
+
+            <TextView
+                android:id="@+id/Reminder"
+                style="@style/TextView.Clickable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="12dp"
+                android:gravity="center_vertical"
+                android:paddingStart="24dp"
+                android:paddingTop="16dp"
+                android:paddingEnd="24dp"
+                android:paddingBottom="16dp"
+                android:textAppearance="?attr/textAppearanceBody2"
+                app:drawableStartCompat="@drawable/reminder_20"
+                app:drawableTint="?attr/colorOnSurface" />
 
             <View
                 android:layout_width="match_parent"

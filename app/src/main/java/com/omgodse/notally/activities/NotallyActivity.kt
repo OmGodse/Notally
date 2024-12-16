@@ -2,6 +2,10 @@ package com.omgodse.notally.activities
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlarmManager
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
@@ -19,6 +23,7 @@ import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,6 +33,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.ActivityNotallyBinding
 import com.omgodse.notally.databinding.DialogProgressBinding
+import com.omgodse.notally.databinding.DialogReminderBinding
 import com.omgodse.notally.image.ImageError
 import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.miscellaneous.Operations
@@ -38,12 +44,15 @@ import com.omgodse.notally.recyclerview.adapter.ErrorAdapter
 import com.omgodse.notally.recyclerview.adapter.PreviewImageAdapter
 import com.omgodse.notally.room.Audio
 import com.omgodse.notally.room.Folder
+import com.omgodse.notally.room.Frequency
 import com.omgodse.notally.room.Image
+import com.omgodse.notally.room.Reminder
 import com.omgodse.notally.room.Type
 import com.omgodse.notally.viewmodels.NotallyModel
 import com.omgodse.notally.widget.WidgetProvider
 import kotlinx.coroutines.launch
 import java.text.DateFormat
+import java.util.Calendar
 
 abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
@@ -53,7 +62,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     override fun finish() {
         lifecycleScope.launch {
             model.saveNote()
-            WidgetProvider.sendBroadcast(application, longArrayOf(model.id))
+            WidgetProvider.sendBroadcast(application, model.id)
             super.finish()
         }
     }
@@ -63,7 +72,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         outState.putLong("id", model.id)
         lifecycleScope.launch {
             model.saveNote()
-            WidgetProvider.sendBroadcast(application, longArrayOf(model.id))
+            WidgetProvider.sendBroadcast(application, model.id)
         }
     }
 
@@ -135,12 +144,25 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
                 }
             }
         }
+        // Bug in Samsung: Even if permission was granted result code is RESULT_CANCELED
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (requestCode == REQUEST_ALARM_PERMISSION) {
+                val manager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+                if (manager.canScheduleExactAlarms()) {
+                    displayReminderDialog()
+                }
+            }
+        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
-            REQUEST_NOTIFICATION_PERMISSION -> selectImages()
+            REQUEST_NOTIFICATION_PERMISSION -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    checkAlarmPermission()
+                }
+            }
             REQUEST_AUDIO_PERMISSION -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     recordAudio()
@@ -201,6 +223,25 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         } else recordAudio()
     }
 
+    private fun checkAlarmPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val manager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            if (manager.canScheduleExactAlarms()) {
+                displayReminderDialog()
+            } else {
+                MaterialAlertDialogBuilder(this)
+                    .setMessage(R.string.please_grant_notally_alarm)
+                    .setNegativeButton(R.string.cancel, null)
+                    .setPositiveButton(R.string.continue_) { _, _ ->
+                        val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+                        intent.data = Uri.parse("package:$packageName")
+                        startActivityForResult(intent, REQUEST_ALARM_PERMISSION)
+                    }
+                    .show()
+            }
+        } else displayReminderDialog()
+    }
+
     private fun checkNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             val permission = Manifest.permission.POST_NOTIFICATIONS
@@ -208,15 +249,14 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
                 if (shouldShowRequestPermissionRationale(permission)) {
                     MaterialAlertDialogBuilder(this)
                         .setMessage(R.string.please_grant_notally_notification)
-                        .setNegativeButton(R.string.cancel) { _, _ -> selectImages() }
+                        .setNegativeButton(R.string.cancel, null)
                         .setPositiveButton(R.string.continue_) { _, _ ->
                             requestPermissions(arrayOf(permission), REQUEST_NOTIFICATION_PERMISSION)
                         }
-                        .setOnDismissListener { selectImages() }
                         .show()
                 } else requestPermissions(arrayOf(permission), REQUEST_NOTIFICATION_PERMISSION)
-            } else selectImages()
-        } else selectImages()
+            } else checkAlarmPermission()
+        } else checkAlarmPermission()
     }
 
 
@@ -383,6 +423,116 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     }
 
 
+    private fun setupReminder() {
+        val padding = (resources.displayMetrics.density * 16).toInt()
+        val formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT)
+        model.reminder.observe(this) { reminder ->
+            if (reminder != null) {
+                val date = formatter.format(reminder.timestamp)
+                binding.Reminder.text = when (reminder.frequency) {
+                    Frequency.ONCE -> date
+                    Frequency.DAILY -> getString(R.string.repeats_daily, date)
+                    Frequency.MONTHLY -> getString(R.string.repeats_monthly, date)
+                }
+                binding.Reminder.visibility = View.VISIBLE
+                binding.DateCreated.updatePadding(bottom = 0)
+            } else {
+                binding.Reminder.visibility = View.GONE
+                binding.DateCreated.updatePadding(bottom = padding)
+            }
+        }
+
+        binding.Reminder.setOnClickListener {
+            MaterialAlertDialogBuilder(this)
+                .setItems(R.array.reminder) { _, which ->
+                    when (which) {
+                        0 -> displayReminderDialog()
+                        1 -> model.deleteReminder()
+                    }
+                }
+                .show()
+        }
+    }
+
+    private fun displayReminderDialog() {
+        val dialogBinding = DialogReminderBinding.inflate(layoutInflater)
+
+        var selectedYear = -1
+        var selectedMonth = -1
+        var selectedDay = -1
+        var selectedHour = -1
+        var selectedMinute = -1
+
+        val dateFormatter = DateFormat.getDateInstance(DateFormat.FULL)
+        val timeFormatter = DateFormat.getTimeInstance(DateFormat.SHORT)
+
+        val dateListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+            selectedYear = year
+            selectedMonth = month
+            selectedDay = dayOfMonth
+            val calendar = Calendar.getInstance()
+            calendar.clear()
+            calendar.set(selectedYear, selectedMonth, selectedDay)
+            dialogBinding.Date.text = dateFormatter.format(calendar.timeInMillis)
+        }
+        val timeListener = TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
+            selectedHour = hourOfDay
+            selectedMinute = minute
+            val calendar = Calendar.getInstance()
+            calendar.clear()
+            calendar.set(Calendar.HOUR_OF_DAY, selectedHour)
+            calendar.set(Calendar.MINUTE, selectedMinute)
+            dialogBinding.Time.text = timeFormatter.format(calendar.timeInMillis)
+        }
+        dialogBinding.Date.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
+            val dialog = DatePickerDialog(this, dateListener, year, month, day)
+            dialog.datePicker.minDate = calendar.timeInMillis
+            dialog.show()
+        }
+        dialogBinding.Time.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            val hour = calendar.get(Calendar.HOUR_OF_DAY)
+            val minute = calendar.get(Calendar.MINUTE)
+            TimePickerDialog(this, timeListener, hour, minute, false).show()
+        }
+
+        var selectedFrequency = 0
+        val labels = resources.getStringArray(R.array.frequencies)
+        dialogBinding.Frequency.text = labels[selectedFrequency]
+        dialogBinding.Frequency.setOnClickListener {
+            MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.select_frequency)
+                .setSingleChoiceItems(labels, selectedFrequency) { dialog, which ->
+                    selectedFrequency = which
+                    dialogBinding.Frequency.text = labels[selectedFrequency]
+                    dialog.dismiss()
+                }
+                .setNegativeButton(R.string.cancel, null)
+                .show()
+        }
+
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.set_reminder)
+            .setView(dialogBinding.root)
+            .setPositiveButton(R.string.save) { _, _ ->
+                if (selectedYear != -1 && selectedHour != -1) {
+                    val frequency = Frequency.entries[selectedFrequency]
+                    val calendar = Calendar.getInstance()
+                    calendar.clear()
+                    calendar.set(selectedYear, selectedMonth, selectedDay, selectedHour, selectedMinute)
+                    val reminder = Reminder(calendar.timeInMillis, frequency)
+                    model.setReminder(reminder)
+                }
+            }
+            .setNegativeButton(R.string.cancel, null)
+            .show()
+    }
+
+
     private fun setColor() {
         val color = Operations.extractColor(model.color, this)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -402,11 +552,13 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
         menu.add(R.string.share, R.drawable.share) { share() }
         menu.add(R.string.labels, R.drawable.label) { label() }
-        menu.add(R.string.add_images, R.drawable.add_images) { checkNotificationPermission() }
+        menu.add(R.string.add_images, R.drawable.add_images) { selectImages() }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             menu.add(R.string.record_audio, R.drawable.record_audio) { checkAudioPermission() }
         }
+
+        menu.add(R.string.set_reminder, R.drawable.reminder) { checkNotificationPermission() }
 
         when (model.folder) {
             Folder.NOTES -> {
@@ -446,6 +598,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
         setupImages()
         setupAudios()
+        setupReminder()
 
         binding.root.isSaveFromParentEnabled = false
     }
@@ -472,5 +625,6 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         private const val REQUEST_RECORD_AUDIO = 34
         private const val REQUEST_PLAY_AUDIO = 35
         private const val REQUEST_AUDIO_PERMISSION = 36
+        private const val REQUEST_ALARM_PERMISSION = 37
     }
 }

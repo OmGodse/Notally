@@ -19,6 +19,7 @@
     <string name="add_images">Add images</string>
     <string name="delete_all">Delete all</string>
     <string name="record_audio">Record audio</string>
+    <string name="set_reminder">Set reminder</string>
     <string name="change_color">Change color</string>
     <string name="make_a_copy">Make a copy</string>
     <string name="delete_forever">Delete forever</string>
@@ -148,7 +149,6 @@
     <string name="unknown_name">Unknown name</string>
     <string name="unknown_error">Unknown error</string>
     <string name="insert_an_sd_card_images">Insert an SD card to add images</string>
-    <string name="please_grant_notally_notification">Please grant Notally the permission to send notifications. This is used to display the progress if operations like deleting images or importing backups take time</string>
 
     <plurals name="cant_add_images">
         <item quantity="one">Can’t add %d image</item>
@@ -172,4 +172,15 @@
     <string name="please_grant_notally_audio">Please grant Notally the permission to record audio. Recordings never leave your device</string>
     <string name="insert_an_sd_card_audio">Insert an SD card to record audio</string>
     <string name="something_went_wrong_audio">Something went wrong. The audio recording may have been moved or deleted.\n\nError : (%1$d, %2$d)</string>
+
+    <!-- Reminder -->
+    <string name="time">Time</string>
+    <string name="select_frequency">Select frequency</string>
+    <string name="does_not_repeat">Does not repeat</string>
+    <string name="daily">Daily</string>
+    <string name="monthly">Monthly</string>
+    <string name="repeats_daily">%1$s, Repeats daily</string>
+    <string name="repeats_monthly">%1$s, Repeats monthly</string>
+    <string name="please_grant_notally_notification">Please grant Notally the permission to send notifications</string>
+    <string name="please_grant_notally_alarm">Please grant Notally the permission to set alarms</string>
 </resources>

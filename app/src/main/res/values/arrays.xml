@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="view">
+        <item>@string/list</item>
+        <item>@string/grid</item>
+    </string-array>
+
+    <string-array name="theme">
+        <item>@string/dark</item>
+        <item>@string/light</item>
+        <item>@string/follow_system</item>
+    </string-array>
+
+    <string-array name="textSize">
+        <item>@string/small</item>
+        <item>@string/medium</item>
+        <item>@string/large</item>
+    </string-array>
+
+    <string-array name="frequencies">
+        <item>@string/does_not_repeat</item>
+        <item>@string/daily</item>
+        <item>@string/monthly</item>
+    </string-array>
+
+    <string-array name="reminder">
+        <item>@string/edit</item>
+        <item>@string/delete</item>
+    </string-array>
+</resources>

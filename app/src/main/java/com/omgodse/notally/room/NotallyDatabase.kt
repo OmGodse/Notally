@@ -31,10 +31,15 @@ abstract class NotallyDatabase : RoomDatabase() {
         @Volatile
         private var instance: NotallyDatabase? = null
 
+        /**
+         * allowMainThreadQueries() is only used in [com.omgodse.notally.ReminderReceiver.onReceive]
+         * when an alarm fires off!
+         */
         fun getDatabase(app: Application): NotallyDatabase {
             return instance ?: synchronized(this) {
                 val instance = Room.databaseBuilder(app, NotallyDatabase::class.java, DatabaseName)
                     .addMigrations(Migration2, Migration3, Migration4, Migration5)
+                    .allowMainThreadQueries()
                     .build()
                 this.instance = instance
                 return instance

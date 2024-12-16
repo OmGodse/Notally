@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.net.Uri
 import android.os.Build
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -91,6 +92,10 @@ object Operations {
         context.startActivity(chooser)
     }
 
+    fun embedIntentExtras(intent: Intent) {
+        val string = intent.toUri(Intent.URI_INTENT_SCHEME)
+        intent.data = Uri.parse(string)
+    }
 
     fun getBody(list: List<ListItem>) = buildString {
         for (item in list) {
