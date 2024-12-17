@@ -1,6 +1,8 @@
 package com.omgodse.notally.viewmodels
 
+import android.app.AlarmManager
 import android.app.Application
+import android.content.Context
 import android.graphics.BitmapFactory
 import android.graphics.Typeface
 import android.media.MediaMetadataRetriever
@@ -84,6 +86,7 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
     var audioRoot = IO.getExternalAudioDirectory(app)
 
     val reminder = MutableLiveData<Reminder>(null)
+    private val manager = app.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
     fun addAudio() {
         viewModelScope.launch {
@@ -231,7 +234,7 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
         viewModelScope.launch {
             val copy = reminder.value
             if (copy != null) {
-                ReminderReceiver.deleteReminder(app, id)
+                ReminderReceiver.deleteReminders(app, manager, listOf(id))
                 reminder.value = null
                 updateReminder()
             }
@@ -240,7 +243,7 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
 
     fun setReminder(reminder: Reminder) {
         viewModelScope.launch {
-            ReminderReceiver.setReminder(app, id, reminder.timestamp)
+            ReminderReceiver.setReminder(app, manager, id, reminder.timestamp)
             this@NotallyModel.reminder.value = reminder
             updateReminder()
         }
@@ -300,7 +303,7 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
         }
         val copy = reminder.value
         if (copy != null) {
-            ReminderReceiver.deleteReminder(app, id)
+            ReminderReceiver.deleteReminders(app, manager, listOf(id))
         }
     }
 

@@ -16,6 +16,7 @@ import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Frequency
+import com.omgodse.notally.room.IdReminder
 import com.omgodse.notally.room.NotallyDatabase
 import com.omgodse.notally.room.Reminder
 import com.omgodse.notally.room.Type
@@ -26,12 +27,12 @@ class ReminderReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == Intent.ACTION_BOOT_COMPLETED || intent.action == AlarmManager.ACTION_SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED) {
+            val manager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                val manager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
                 if (manager.canScheduleExactAlarms()) {
-                    rescheduleReminders(context)
+                    rescheduleReminders(context, manager)
                 }
-            } else rescheduleReminders(context)
+            } else rescheduleReminders(context, manager)
         } else {
             val id = intent.getLongExtra(Constants.SelectedBaseNote, 0)
             val database = NotallyDatabase.getDatabase(context.applicationContext as Application)
@@ -39,12 +40,12 @@ class ReminderReceiver : BroadcastReceiver() {
             if (baseNote != null) {
                 sendNotification(context, baseNote)
                 if (baseNote.reminder != null && baseNote.reminder.frequency != Frequency.ONCE) {
+                    val manager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                        val manager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
                         if (manager.canScheduleExactAlarms()) {
-                            setRecurringReminder(context, id, baseNote.reminder)
+                            setRecurringReminder(context, manager, id, baseNote.reminder)
                         }
-                    } else setRecurringReminder(context, id, baseNote.reminder)
+                    } else setRecurringReminder(context, manager, id, baseNote.reminder)
                 }
             }
         }
@@ -52,17 +53,21 @@ class ReminderReceiver : BroadcastReceiver() {
 
     companion object {
 
-        private fun rescheduleReminders(context: Context) {
+        private fun rescheduleReminders(context: Context, manager: AlarmManager) {
             val database = NotallyDatabase.getDatabase(context.applicationContext as Application)
             val list = database.getBaseNoteDao().getAllReminders()
+            rescheduleReminders(context, manager, list)
+        }
+
+        fun rescheduleReminders(context: Context, manager: AlarmManager, list: List<IdReminder>) {
             list.forEach { idReminder ->
                 val id = idReminder.id
                 val reminder = idReminder.reminder
                 if (reminder.frequency == Frequency.ONCE) {
                     if (reminder.timestamp > System.currentTimeMillis()) {
-                        setReminder(context, id, reminder.timestamp)
+                        setReminder(context, manager, id, reminder.timestamp)
                     }
-                } else setRecurringReminder(context, id, reminder)
+                } else setRecurringReminder(context, manager, id, reminder)
             }
         }
 
@@ -134,16 +139,16 @@ class ReminderReceiver : BroadcastReceiver() {
         }
 
 
-        private fun setRecurringReminder(context: Context, id: Long, reminder: Reminder) {
+        private fun setRecurringReminder(context: Context, manager: AlarmManager, id: Long, reminder: Reminder) {
             if (reminder.frequency == Frequency.DAILY) {
-                setDailyReminder(context, id, reminder.timestamp)
+                setDailyReminder(context, manager, id, reminder.timestamp)
             } else if (reminder.frequency == Frequency.MONTHLY) {
-                setMonthlyReminder(context, id, reminder.timestamp)
+                setMonthlyReminder(context, manager, id, reminder.timestamp)
             }
         }
 
 
-        private fun setDailyReminder(context: Context, id: Long, timestamp: Long) {
+        private fun setDailyReminder(context: Context, manager: AlarmManager, id: Long, timestamp: Long) {
             val calendar = Calendar.getInstance()
             val currentHourOfDay = calendar.get(Calendar.HOUR_OF_DAY)
             val currentMinute = calendar.get(Calendar.MINUTE)
@@ -162,7 +167,7 @@ class ReminderReceiver : BroadcastReceiver() {
                 getReminderForCurrentDay(reminderHourOfDay, reminderMinute)
             } else getReminderForNextDay(reminderHourOfDay, reminderMinute)
 
-            setReminder(context, id, next)
+            setReminder(context, manager, id, next)
         }
 
         private fun getReminderForNextDay(hourOfDay: Int, minute: Int): Long {
@@ -190,7 +195,7 @@ class ReminderReceiver : BroadcastReceiver() {
         }
 
 
-        private fun setMonthlyReminder(context: Context, id: Long, timestamp: Long) {
+        private fun setMonthlyReminder(context: Context, manager: AlarmManager, id: Long, timestamp: Long) {
             val calendar = Calendar.getInstance()
             val currentDayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
             val currentHourOfDay = calendar.get(Calendar.HOUR_OF_DAY)
@@ -214,7 +219,7 @@ class ReminderReceiver : BroadcastReceiver() {
                 getReminderForCurrentMonth(reminderDayOfMonth, reminderHourOfDay, reminderMinute)
             } else getReminderForNextMonth(reminderDayOfMonth, reminderHourOfDay, reminderMinute)
 
-            setReminder(context, id, next)
+            setReminder(context, manager, id, next)
         }
 
         private fun getReminderForNextMonth(dayOfMonth: Int, hourOfDay: Int, minute: Int): Long {
@@ -250,24 +255,20 @@ class ReminderReceiver : BroadcastReceiver() {
         }
 
 
-        fun setReminder(context: Context, id: Long, timestamp: Long) {
-            val manager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            val broadcast = getReminderIntent(context, id)
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, timestamp, broadcast)
-            } else manager.setExact(AlarmManager.RTC_WAKEUP, timestamp, broadcast)
-        }
-
-        fun deleteReminders(context: Context, ids: List<Long>) {
-            val manager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        fun deleteReminders(context: Context, manager: AlarmManager, ids: List<Long>) {
             ids.forEach { id ->
                 val broadcast = getReminderIntent(context, id)
                 manager.cancel(broadcast)
             }
         }
 
-        fun deleteReminder(context: Context, id: Long) = deleteReminders(context, listOf(id))
+        fun setReminder(context: Context, manager: AlarmManager, id: Long, timestamp: Long) {
+            val broadcast = getReminderIntent(context, id)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, timestamp, broadcast)
+            } else manager.setExact(AlarmManager.RTC_WAKEUP, timestamp, broadcast)
+        }
+
 
         private fun getReminderIntent(context: Context, id: Long): PendingIntent {
             val intent = Intent(context, ReminderReceiver::class.java)
