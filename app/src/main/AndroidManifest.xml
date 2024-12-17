@@ -120,17 +120,13 @@
 
         <service
             android:name=".AttachmentDeleteService"
-            android:exported="false"
             android:foregroundServiceType="dataSync" />
 
         <service
             android:name=".audio.AudioRecordService"
-            android:exported="false"
             android:foregroundServiceType="microphone" />
 
-        <service
-            android:name=".audio.AudioPlayService"
-            android:exported="false" />
+        <service android:name=".audio.AudioPlayService" />
 
     </application>
 
