@@ -614,6 +614,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         append("<!DOCTYPE html>")
         append("<html><head>")
         append("<meta charset=\"UTF-8\"><title>$title</title>")
+        append("<style>h1{letter-spacing:0.5px}body{letter-spacing:0.25px;line-height:1.3}</style>")
         append("</head><body>")
         append("<h2>$title</h2>")
 
@@ -632,7 +633,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
                 baseNote.items.forEach { item ->
                     val body = Html.escapeHtml(item.body)
                     val checked = if (item.checked) "checked" else ""
-                    append("<li><input type=\"checkbox\" $checked>$body</li>")
+                    append("<li><input style=\"margin-right:8px;\" type=\"checkbox\" $checked>$body</li>")
                 }
                 append("</ol>")
             }
