@@ -1,6 +1,8 @@
 package com.omgodse.notally.viewmodels
 
+import android.app.AlarmManager
 import android.app.Application
+import android.content.Context
 import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
@@ -106,6 +108,8 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     val exportingBackup = MutableLiveData<Progress>()
 
     val actionMode = ActionMode()
+
+    private val manager = app.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
     init {
         viewModelScope.launch {
@@ -307,6 +311,10 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
                 }
 
                 commonDao.importBackup(baseNotes, labels)
+                val reminders = baseNoteDao.getAllReminders()
+                if (reminders.isNotEmpty()) {
+                    ReminderReceiver.rescheduleReminders(app, manager, reminders)
+                }
             }
 
             finishImporting(backupDir)
@@ -538,7 +546,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
             WidgetProvider.sendBroadcast(app, ids)
         }
         if (reminderIds.isNotEmpty()) {
-            ReminderReceiver.deleteReminders(app, reminderIds)
+            ReminderReceiver.deleteReminders(app, manager, reminderIds)
         }
     }
 
