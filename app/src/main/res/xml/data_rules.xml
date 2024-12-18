@@ -4,10 +4,22 @@
         <exclude
             domain="sharedpref"
             path="." />
+        <exclude
+            domain="root"
+            path="./app_webview" />
+        <exclude
+            domain="root"
+            path="./app_textures" />
     </cloud-backup>
     <device-transfer>
         <exclude
             domain="sharedpref"
             path="." />
+        <exclude
+            domain="root"
+            path="./app_webview" />
+        <exclude
+            domain="root"
+            path="./app_textures" />
     </device-transfer>
 </data-extraction-rules>
