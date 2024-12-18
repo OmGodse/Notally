@@ -24,8 +24,10 @@ import com.omgodse.notally.preferences.TextSize
 import com.omgodse.notally.recyclerview.ItemListener
 import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Color
+import com.omgodse.notally.room.Frequency
 import com.omgodse.notally.room.Image
 import com.omgodse.notally.room.ListItem
+import com.omgodse.notally.room.Reminder
 import com.omgodse.notally.room.SpanRepresentation
 import com.omgodse.notally.room.Type
 import org.ocpsoft.prettytime.PrettyTime
@@ -41,7 +43,8 @@ class BaseNoteVH(
     maxTitle: Int,
     listener: ItemListener,
     private val prettyTime: PrettyTime,
-    private val formatter: java.text.DateFormat,
+    private val fullFormat: java.text.DateFormat,
+    private val shortFormat: java.text.DateFormat
 ) : RecyclerView.ViewHolder(binding.root) {
 
     init {
@@ -51,6 +54,7 @@ class BaseNoteVH(
         binding.Title.setTextSize(TypedValue.COMPLEX_UNIT_SP, title)
         binding.Date.setTextSize(TypedValue.COMPLEX_UNIT_SP, body)
         binding.Note.setTextSize(TypedValue.COMPLEX_UNIT_SP, body)
+        binding.Reminder.setTextSize(TypedValue.COMPLEX_UNIT_SP, body)
 
         binding.LinearLayout.children.forEach { view ->
             view as TextView
@@ -85,6 +89,7 @@ class BaseNoteVH(
         setDate(baseNote.timestamp)
         setColor(baseNote.color)
         setImages(baseNote.images, mediaRoot)
+        setReminder(baseNote.reminder)
 
         binding.Title.text = baseNote.title
         binding.Title.isVisible = baseNote.title.isNotEmpty()
@@ -139,7 +144,7 @@ class BaseNoteVH(
             val date = Date(timestamp)
             when (dateFormat) {
                 DateFormat.relative -> binding.Date.text = prettyTime.format(date)
-                DateFormat.absolute -> binding.Date.text = formatter.format(date)
+                DateFormat.absolute -> binding.Date.text = fullFormat.format(date)
             }
         } else binding.Date.visibility = View.GONE
     }
@@ -199,6 +204,19 @@ class BaseNoteVH(
             binding.Message.visibility = View.GONE
             Glide.with(binding.ImageView).clear(binding.ImageView)
         }
+    }
+
+    private fun setReminder(reminder: Reminder?) {
+        if (reminder != null) {
+            val date = shortFormat.format(reminder.timestamp)
+            val context = binding.root.context
+            binding.Reminder.text = when (reminder.frequency) {
+                Frequency.ONCE -> date
+                Frequency.DAILY -> context.getString(R.string.repeats_daily, date)
+                Frequency.MONTHLY -> context.getString(R.string.repeats_monthly, date)
+            }
+            binding.Reminder.visibility = View.VISIBLE
+        } else binding.Reminder.visibility = View.GONE
     }
 
 

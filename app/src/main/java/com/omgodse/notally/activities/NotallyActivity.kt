@@ -594,6 +594,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
         binding.EnterTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, title)
         binding.DateCreated.setTextSize(TypedValue.COMPLEX_UNIT_SP, date)
+        binding.Reminder.setTextSize(TypedValue.COMPLEX_UNIT_SP, date)
         binding.EnterBody.setTextSize(TypedValue.COMPLEX_UNIT_SP, body)
 
         setupImages()

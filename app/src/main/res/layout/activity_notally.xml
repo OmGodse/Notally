@@ -67,8 +67,7 @@
                 android:paddingEnd="24dp"
                 android:paddingBottom="16dp"
                 android:textAppearance="?attr/textAppearanceBody2"
-                app:drawableStartCompat="@drawable/reminder_20"
-                app:drawableTint="?attr/colorOnSurface" />
+                app:drawableStartCompat="@drawable/reminder_20" />
 
             <View
                 android:layout_width="match_parent"
