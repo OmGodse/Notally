@@ -2,7 +2,8 @@ Notally is a minimalistic note taking app with a beautiful material design and p
 
 <b>Organization</b>
 
-Create lists to stay on track
+Set reminders to be on track
+Create lists to stay organised
 Pin notes to always keep them at the top
 Color and label your notes for quick organisation
 Archive notes to keep them around, but out of your way
