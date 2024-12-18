@@ -18,7 +18,9 @@
     <string name="add_images">Dodaj obrazy</string>
     <string name="delete_all">Usuń wszystkie</string>
     <string name="record_audio">Nagraj notatkę dźwiękową</string>
+    <string name="set_reminder">Ustaw przypomnienie</string>
     <string name="change_color">Zmień kolor</string>
+    <string name="make_a_copy">Utwórz kopię</string>
     <string name="delete_forever">Usunąć na zawsze?</string>
 
     <!-- Pinning -->
@@ -143,7 +145,6 @@
     <string name="unknown_name">Nieznana nazwa</string>
     <string name="unknown_error">Nieznany błąd</string>
     <string name="insert_an_sd_card_images">Włóż kartę SD, aby dodać obrazy</string>
-    <string name="please_grant_notally_notification">Przyznaj programowi Notally uprawnienia do wysyłania powiadomień.</string>
 
     <plurals name="cant_add_images">
         <item quantity="one">Nie można dodać %d obrazu</item>
@@ -169,4 +170,15 @@
     <string name="please_grant_notally_audio">Udziel programowi Notally pozwolenia na nagrywanie dźwięku. Nagrania są zachowywane lokalnie na twoim urządzeniu</string>
     <string name="insert_an_sd_card_audio">Włóż kartę SD, aby móc nagrywać dźwięk</string>
     <string name="something_went_wrong_audio">Coś poszło nie tak. Nagranie audio mogło zostać przeniesione lub usunięte.\n\nBłąd: (%1$d, %2$d)</string>
+
+    <!-- Reminder -->
+    <string name="time">Czas</string>
+    <string name="select_frequency">Zaznacz częstotliwość</string>
+    <string name="does_not_repeat">Nie powtarza się</string>
+    <string name="daily">Codziennie</string>
+    <string name="monthly">Miesięcznie</string>
+    <string name="repeats_daily">%1$s, powtórzeń dziennie</string>
+    <string name="repeats_monthly">%1$s, powtórzeń miesięcznie</string>
+    <string name="please_grant_notally_notification">Przyznaj programowi Notally uprawnienia do wysyłania powiadomień</string>
+    <string name="please_grant_notally_alarm">Przyznaj programowi Notally uprawnienia do ustawiania alarmów</string>
 </resources>
