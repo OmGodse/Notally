@@ -40,7 +40,10 @@ android {
 
     kotlinOptions { jvmTarget = "1.8" }
 
-    buildFeatures { viewBinding true }
+    buildFeatures {
+        viewBinding true
+        buildConfig true
+    }
 
     packagingOptions.resources {
         excludes += ["DebugProbesKt.bin", "META-INF/**.version", "kotlin/**.kotlin_builtins", "kotlin-tooling-metadata.json"]
