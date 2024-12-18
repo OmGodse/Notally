@@ -7,6 +7,7 @@ import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.net.Uri
+import android.os.Build
 import android.print.PostPDFGenerator
 import android.text.Html
 import android.widget.Toast
@@ -312,9 +313,11 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
                 commonDao.importBackup(baseNotes, labels)
                 val reminders = baseNoteDao.getAllReminders()
-                if (reminders.isNotEmpty()) {
-                    ReminderReceiver.rescheduleReminders(app, manager, reminders)
-                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    if (manager.canScheduleExactAlarms()) {
+                        ReminderReceiver.rescheduleReminders(app, manager, reminders)
+                    }
+                } else ReminderReceiver.rescheduleReminders(app, manager, reminders)
             }
 
             finishImporting(backupDir)
