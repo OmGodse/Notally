@@ -18,14 +18,16 @@
     <string name="add_images">Thêm ảnh</string>
     <string name="delete_all">Xóa toàn bộ</string>
     <string name="record_audio">Ghi âm</string>
+    <string name="set_reminder">Nhắc nhở</string>
     <string name="change_color">Đổi màu</string>
+    <string name="make_a_copy">Tạo bản sao</string>
     <string name="delete_forever">Xóa vĩnh viễn</string>
 
     <!-- Pinning -->
     <string name="pin">Ghim</string>
     <string name="unpin">Bỏ ghim</string>
     <string name="pinned">Đã ghim</string>
-    <string name="others">Còn lại</string>
+    <string name="others">Khác</string>
 
     <!-- Chooser dialog hints -->
     <string name="view_note">Xem ghi chú…</string>
@@ -69,8 +71,8 @@
     <!-- Miscellaneous -->
     <string name="saved_to_device">Đã lưu vào thiết bị</string>
     <string name="saved_to_notally">Đã lưu trong Notally</string>
-    <string name="empty_note">Nội dung ghi chú trống</string>
-    <string name="empty_list">Nội dung liệt kê trống</string>
+    <string name="empty_note">Ghi chú trống</string>
+    <string name="empty_list">Liệt kê trống</string>
 
     <!-- Messages -->
     <string name="cant_open_link">Không thể mở liên kết</string>
@@ -91,8 +93,8 @@
     <string name="light">Sáng</string>
     <string name="follow_system">Mặc định hệ thống</string>
 
-    <string name="date_format">Định dạng ngày tháng</string>
-    <string name="none">Không</string>
+    <string name="date_format">Định dạng thời gian</string>
+    <string name="none">Ẩn</string>
 
     <string name="text_size">Cỡ chữ</string>
     <string name="small">Nhỏ</string>
@@ -100,9 +102,9 @@
     <string name="large">Lớn</string>
 
     <string name="content_density">Mật độ hiển thị nội dung</string>
-    <string name="max_items_to_display">Số lượng mục liệt kê tối đa</string>
-    <string name="max_lines_to_display">Số lượng dòng ghi chú tối đa</string>
-    <string name="max_lines_to_display_title">Số lượng dòng tựa đề tối đa</string>
+    <string name="max_items_to_display">Số hàng liệt kê tối đa</string>
+    <string name="max_lines_to_display">Số hàng ghi chú tối đa</string>
+    <string name="max_lines_to_display_title">Số hàng tựa đề tối đa</string>
 
     <!-- Backup -->
     <string name="backup">Sao lưu</string>
@@ -165,4 +167,15 @@
     <string name="please_grant_notally_audio">Xin cho phép Notally ghi âm. Những bản ghi sẽ lưu ở điện thoại của bạn</string>
     <string name="insert_an_sd_card_audio">Gắn thẻ SD trước</string>
     <string name="something_went_wrong_audio">Xảy ra lỗi. Bản ghi âm đã bị xóa hoặc di chuyển.\n\nLỗi : (%1$d, %2$d)</string>
+
+        <!-- Reminder -->
+    <string name="time">Thời điểm</string>
+    <string name="select_frequency">Chọn tần suất</string>
+    <string name="does_not_repeat">Không lặp lại</string>
+    <string name="daily">Hằng ngày</string>
+    <string name="monthly">Hằng tháng</string>
+    <string name="repeats_daily">%1$s, Lặp lại hàng ngày</string>
+    <string name="repeats_monthly">%1$s, Lặp lại hàng tháng</string>
+    <string name="please_grant_notally_notification">Xin cho phép Notally quyền gửi thông báo</string>
+    <string name="please_grant_notally_alarm">Xin cho phép Notally quyền gửi báo thức</string>
 </resources>
