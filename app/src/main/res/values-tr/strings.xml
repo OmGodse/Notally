@@ -15,12 +15,13 @@
     <string name="restore">Geri yükle</string>
     <string name="archive">Arşivle</string>
     <string name="unarchive">Arşivden kaldır</string>
+    <string name="add_images">Resimler ekle</string>
     <string name="delete_all">Hepsini sil</string>
+    <string name="record_audio">Ses kaydet</string>
+    <string name="set_reminder">Hatιrlatıcı ekle</string>
     <string name="change_color">Rengi değiştir</string>
-    <string name="delete_forever">Tamamen sil</string>
-
-    <!-- Chooser dialog hints -->
-    <string name="view_note">Notu önizle…</string>
+    <string name="make_a_copy">Kopya oluştur</string>
+    <string name="delete_forever">Kalıcı olarak sil</string>
 
     <!-- Pinning -->
     <string name="pin">Sabitle</string>
@@ -28,10 +29,15 @@
     <string name="pinned">Sabitlendi</string>
     <string name="others">Diğerleri</string>
 
+    <!-- Chooser dialog hints -->
+    <string name="view_note">Notu önizle…</string>
+
     <!-- Dialogs -->
     <string name="save">Kaydet</string>
     <string name="edit">Düzenle</string>
     <string name="cancel">İptal</string>
+    <string name="continue_">Devam et</string>
+    <string name="open_link">Bağlantıyı aç</string>
     <string name="make_list">Liste yap</string>
     <string name="take_note">Not al</string>
     <string name="add_label">Etiket ekle</string>
@@ -43,8 +49,9 @@
     <string name="delete_label">Etiket silinsin mi?</string>
     <string name="create_new">Henüz etiket yok. Oluşturmaya ne dersin?</string>
     <string name="delete_all_notes">Tüm notlar silinsin mi?</string>
+    <string name="delete_selected_notes">Seçili notlar silinsin mi?</string>
     <string name="delete_note_forever">Notunuz tamamen silinsin mi?</string>
-    <string name="your_notes_associated">Bu etiketle ilgili notlarınız silinmeyecek</string>
+    <string name="your_notes_associated">Bu etikete bağlanmış notlar silinmiyecek</string>
 
     <!-- Lists and Notes -->
     <string name="note">Not</string>
@@ -52,6 +59,7 @@
     <string name="date">Tarih</string>
     <string name="title">Başlık</string>
     <string name="add_item">Öge ekle</string>
+    <string name="audio_recordings">Ses Kayıtları</string>
     <string name="drag_handle">Sürükleme Tutamacı</string>
     <string name="bold">Kalın</string>
     <string name="link">Bağlantı</string>
@@ -65,13 +73,19 @@
     <string name="saved_to_notally">Notally’ye kaydedildi</string>
     <string name="empty_note">Boş not</string>
     <string name="empty_list">Boş liste</string>
+    <string name="select_labels">Etiketleri seç</string>
+
+    <!-- Messages -->
     <string name="cant_open_link">Bağlantı açılmadı</string>
-    <string name="something_went_wrong">Bir terslik oldu. Lütfen tekrar deneyin.</string>
+    <string name="something_went_wrong">Bir terslik oldu. Lütfen tekrar deneyin</string>
+    <string name="install_an_email">Geri bildirim göndermek için bir email uygulaması yükleyin</string>
+    <string name="install_a_browser">Bağlantıyi açmak için bir tarayıcı yükleyin</string>
+    <string name="cant_find_note">Not bulunamadı. Silinmiş olabilir</string>
 
     <!-- Settings Page -->
-    <string name="appearance">Görünüm</string>
+    <string name="appearance">Dış Görünüş</string>
 
-    <string name="view">Ön izleme</string>
+    <string name="view">Görünüm</string>
     <string name="list">Liste</string>
     <string name="grid">Izgara</string>
 
@@ -80,18 +94,90 @@
     <string name="light">Açık</string>
     <string name="follow_system">Sistem varsayılanı</string>
 
-    <string name="date_format">Zaman biçimi</string>
+    <string name="date_format">Tarih biçimi</string>
     <string name="none">Hiçbiri</string>
+
+    <string name="text_size">Yazı boyutu</string>
+    <string name="small">Küçük</string>
+    <string name="medium">Orta</string>
+    <string name="large">Büyük</string>
 
     <string name="content_density">İçerik yoğunluğu</string>
     <string name="max_items_to_display">Listede görüntülenecek azami öge sayısı</string>
     <string name="max_lines_to_display">Notta görüntülenecek azami satır sayısı</string>
+    <string name="max_lines_to_display_title">Başlıkta görüntülenecek azami satır sayısı</string>
 
-    <string name="backup">Yedek</string>
+    <!-- Backup -->
+    <string name="backup">Yedekleme</string>
+    <string name="auto_backup">Otomatik yedekleme</string>
+    <string name="tap_to_set_up">Kurmak için bas</string>
+    <string name="notes_will_be">Notlar telefonunun dahili depolama alanına her gün yedeklenecek.\n\nEğer güç tasarruf modu açıksa çalışmayabilir</string>
+    <string name="choose_folder">Klasör seç</string>
+    <string name="disable_auto_backup">Otomatik yedeklemeyi devre dışı bırak</string>
+    <string name="choose_another_folder">Başka klasör seç</string>
+    <string name="cant_find_folder">Klasör bulunamıyor. Taşınmış yada silinmiş olabilir</string>
+    <string name="invalid_backup">Geçersiz yedek</string>
+    <string name="imported_backup">İçeri aktarılmış yedek</string>
+    <string name="exporting_backup">Dışarı aktarılıyor</string>
+    <string name="importing_backup">İçeri aktarılıyor</string>
+    <string name="calculating">Hesaplanıyor…</string>
+
     <string name="export_backup">Dışarı aktar</string>
     <string name="import_backup">İçeri aktar</string>
 
     <string name="about">Hakkında</string>
     <string name="libraries">Kütüphaneler</string>
     <string name="rate">Uygulamayı değerlendir</string>
+    <string name="send_feedback">Geri bildirim gönder</string>
+
+    <!-- Widget -->
+    <string name="single_note_or_list">Tek not yada liste</string>
+    <string name="select_note">Not seç</string>
+
+    <!-- Images -->
+    <string name="count" translatable="false">%1$d / %2$d</string>
+    <string name="adding_images">Resimler ekleniyor</string>
+    <string name="deleting_images">Resimler siliniyor</string>
+    <string name="invalid_image">Geçersiz resim</string>
+    <string name="error_while_renaming_image">Resim yeniden adlandırırken hata oluştu</string>
+    <string name="image_format_not_supported">Resim biçimi desteklenmiyor</string>
+    <string name="delete_image_forever">Resmi kalıcı olarak sil?</string>
+    <string name="cant_load_image">Resim yüklenemiyor. Taşınmış yada silinmiş olabilir</string>
+    <string name="unknown_name">Bilinmeyen ad</string>
+    <string name="unknown_error">Bilinmeyen hata</string>
+    <string name="insert_an_sd_card_images">Resim eklemek icin SD card takın</string>
+
+    <plurals name="cant_add_images">
+        <item quantity="one">%d tane resim eklenemiyor</item>
+        <item quantity="other">%d tane resim eklenemiyor</item>
+    </plurals>
+
+    <!-- Audio -->
+    <string name="play">Yürüt</string>
+    <string name="stop">Dur</string>
+    <string name="start">Başlat</string>
+    <string name="pause">Bekle</string>
+    <string name="resume">Devam et</string>
+    <string name="paused">Duraklat</string>
+    <string name="recording">Kaydediliyor…</string>
+    <string name="ready_to_record">Kaydetmeye hazır</string>
+    <string name="discard">At</string>
+    <string name="save_recording">Ses kaydını kaydet?</string>
+    <string name="delete_audio_recording_forever">Ses kaydını kalıcı olarak sil?</string>
+    <string name="tap_for_more_options">Daha fazla seçenek için bas</string>
+    <string name="to_record_audio">Ses kaydetmek için, Notally'ye mikrofona erişim izni verin</string>
+    <string name="please_grant_notally_audio">Lütfen Notally'ye ses kaydetme yetkisi verin. Kayıtlar cihazınızdan dışarı çıkmayacak</string>
+    <string name="insert_an_sd_card_audio">Ses kaydetmek için SD card takın</string>
+    <string name="something_went_wrong_audio">Bir şeyler ters gitti. Ses kaydı taşınmış yada silinmiş olabilir.\n\nHata : (%1$d, %2$d)</string>
+
+    <!-- Reminder -->
+    <string name="time">Saat</string>
+    <string name="select_frequency">Sıklık seçin</string>
+    <string name="does_not_repeat">Tekrar etmiyor</string>
+    <string name="daily">Günlük</string>
+    <string name="monthly">Aylık</string>
+    <string name="repeats_daily">%1$s, Günlük tekrar ediyor</string>
+    <string name="repeats_monthly">%1$s, Aylık tekrar ediyor</string>
+    <string name="please_grant_notally_notification">Lütfen Notally'ye bildirim gönderme yetkisi verin</string>
+    <string name="please_grant_notally_alarm">Lütfen Notally'ye alarm kurma yetkisi verin</string>
 </resources>
