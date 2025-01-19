@@ -17,7 +17,10 @@
     <string name="unarchive">Zrušit archivaci</string>
     <string name="add_images">Přidat obrázky</string>
     <string name="delete_all">Smazat vše</string>
+    <string name="record_audio">Zvuková nahrávka</string>
+    <string name="set_reminder">Přidat upomínku</string>
     <string name="change_color">Změnit barvu</string>
+    <string name="make_a_copy">Vytvořit kopii</string>
     <string name="delete_forever">Smazat navždy</string>
 
     <!-- Pinning -->
@@ -56,6 +59,7 @@
     <string name="date">Datum</string>
     <string name="title">Název</string>
     <string name="add_item">Přidat položku</string>
+    <string name="audio_recordings">Zvukové nahrávky</string> 
     <string name="drag_handle">Chytni a přetáhni</string>
     <string name="bold">Tučně</string>
     <string name="link">Odkaz</string>
@@ -69,6 +73,7 @@
     <string name="saved_to_notally">Uloženo do Notally</string>
     <string name="empty_note">Prázdná poznámka</string>
     <string name="empty_list">Prázdný seznam</string>
+    <string name="select_labels">Vybrat štítky</string>
 
     <!-- Messages -->
     <string name="cant_open_link">Odkaz nelze otevřit</string>
@@ -141,11 +146,39 @@
     <string name="unknown_name">Neznámý název</string>
     <string name="unknown_error">Neznámá chyba</string>
     <string name="insert_an_sd_card_images">Vložte kartu SD a přidejte obrázky</string>
-    <string name="please_grant_notally_notification">Udělte Notally oprávnění k zasílání oznámení.</string>
 
     <plurals name="cant_add_images">
         <item quantity="one">Nepodařilo se přidat %d obrázek</item>
         <item quantity="few">Nepodařilo se přidat %d obrázky</item>
         <item quantity="many">Nepodařilo se přidat %d obrázků</item>
     </plurals>
+
+     <!-- Audio -->
+    <string name="play">Přehrát</string>
+    <string name="stop">Zastavit</string>
+    <string name="start">Spustit</string>
+    <string name="pause">Pauza</string>
+    <string name="resume">Pokračovat</string>
+    <string name="paused">Pozastaveno</string>
+    <string name="recording">Nahrávání…</string>
+    <string name="ready_to_record">Připraveno k nahrávání</string>
+    <string name="discard">Zahodit</string>
+    <string name="save_recording">Uložit nahrávku?</string>
+    <string name="delete_audio_recording_forever">Trvale smazat nahrávku?</string>
+    <string name="tap_for_more_options">Zobrazit více možností</string>
+    <string name="to_record_audio">Chcete-li nahrávat zvuk, povolte Notally přístup ke svému mikrofonu. Klepněte na Nastavení > Oprávnění a povolte Mikrofon</string>
+    <string name="please_grant_notally_audio">Udělte prosím Notally povolení k nahrávání zvuku. Nahrávky nikdy neopustí vaše zařízení</string>
+    <string name="insert_an_sd_card_audio">Chcete-li nahrávat zvuk, vložte SD kartu</string>
+    <string name="something_went_wrong_audio">Něco se pokazilo. Zvuková nahrávka mohla být přesunuta nebo smazána.\n\nChyba: (%1$d, %2$d)</string>
+
+    <!-- Reminder -->
+    <string name="time">Čas</string>
+    <string name="select_frequency">Opakování</string>
+    <string name="does_not_repeat">Bez opakování</string>
+    <string name="daily">Denně</string>
+    <string name="monthly">Měsíčně</string>
+    <string name="repeats_daily">%1$s, Opakuje se denně</string>
+    <string name="repeats_monthly">%1$s, Opakuje se měsíčně</string>
+    <string name="please_grant_notally_notification">Udělte prosím Notally oprávnění k zasílání upozornění</string>
+    <string name="please_grant_notally_alarm">Udělte prosím Notally oprávnění nastavovat alarmy</string> 
 </resources>
