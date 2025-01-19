@@ -1,10 +1,13 @@
 package com.omgodse.notally.viewmodels
 
+import android.app.AlarmManager
 import android.app.Application
+import android.content.Context
 import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.net.Uri
+import android.os.Build
 import android.print.PostPDFGenerator
 import android.text.Html
 import android.widget.Toast
@@ -14,10 +17,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.room.withTransaction
 import com.omgodse.notally.ActionMode
-import com.omgodse.notally.BackupProgress
+import com.omgodse.notally.AttachmentDeleteService
 import com.omgodse.notally.Cache
-import com.omgodse.notally.ImageDeleteService
+import com.omgodse.notally.Progress
 import com.omgodse.notally.R
+import com.omgodse.notally.ReminderReceiver
 import com.omgodse.notally.legacy.Migrations
 import com.omgodse.notally.legacy.XMLUtils
 import com.omgodse.notally.miscellaneous.Export
@@ -28,6 +32,8 @@ import com.omgodse.notally.preferences.AutoBackup
 import com.omgodse.notally.preferences.ListInfo
 import com.omgodse.notally.preferences.Preferences
 import com.omgodse.notally.preferences.SeekbarInfo
+import com.omgodse.notally.room.Attachment
+import com.omgodse.notally.room.Audio
 import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Color
 import com.omgodse.notally.room.Converters
@@ -37,6 +43,7 @@ import com.omgodse.notally.room.Image
 import com.omgodse.notally.room.Item
 import com.omgodse.notally.room.Label
 import com.omgodse.notally.room.NotallyDatabase
+import com.omgodse.notally.room.Reminder
 import com.omgodse.notally.room.Type
 import com.omgodse.notally.room.livedata.Content
 import com.omgodse.notally.room.livedata.SearchResult
@@ -96,11 +103,14 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     val preferences = Preferences.getInstance(app)
 
     val mediaRoot = IO.getExternalImagesDirectory(app)
+    private val audioRoot = IO.getExternalAudioDirectory(app)
 
-    val importingBackup = MutableLiveData<BackupProgress>()
-    val exportingBackup = MutableLiveData<BackupProgress>()
+    val importingBackup = MutableLiveData<Progress>()
+    val exportingBackup = MutableLiveData<Progress>()
 
     val actionMode = ActionMode()
+
+    private val manager = app.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
     init {
         viewModelScope.launch {
@@ -163,7 +173,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
     fun exportBackup(uri: Uri) {
         viewModelScope.launch {
-            exportingBackup.value = BackupProgress(true, 0, 0, true)
+            exportingBackup.value = Progress(true, 0, 0, true)
 
             withContext(Dispatchers.IO) {
                 val outputStream = requireNotNull(app.contentResolver.openOutputStream(uri))
@@ -176,22 +186,33 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
                 delay(1000)
 
-                val strings = baseNoteDao.getAllImages()
-                val images = strings.flatMap(Converters::jsonToImages)
+                val images = baseNoteDao.getAllImages().flatMap { string -> Converters.jsonToImages(string) }
+                val audios = baseNoteDao.getAllAudios().flatMap { string -> Converters.jsonToAudios(string) }
+                val total = images.size + audios.size
+
                 images.forEachIndexed { index, image ->
                     try {
-                        Export.backupImage(zipStream, mediaRoot, image)
+                        Export.backupFile(zipStream, mediaRoot, "Images", image.name)
                     } catch (exception: Exception) {
                         Operations.log(app, exception)
                     } finally {
-                        exportingBackup.postValue(BackupProgress(true, index + 1, images.size, false))
+                        exportingBackup.postValue(Progress(true, index + 1, total, false))
+                    }
+                }
+                audios.forEachIndexed { index, audio ->
+                    try {
+                        Export.backupFile(zipStream, audioRoot, "Audios", audio.name)
+                    } catch (exception: Exception) {
+                        Operations.log(app, exception)
+                    } finally {
+                        exportingBackup.postValue(Progress(true, images.size + index + 1, total, false))
                     }
                 }
 
                 zipStream.close()
             }
 
-            exportingBackup.value = BackupProgress(false, 0, 0, false)
+            exportingBackup.value = Progress(false, 0, 0, false)
             Toast.makeText(app, R.string.saved_to_device, Toast.LENGTH_LONG).show()
         }
     }
@@ -224,7 +245,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         }
 
         viewModelScope.launch(exceptionHandler) {
-            importingBackup.value = BackupProgress(true, 0, 0, true)
+            importingBackup.value = Progress(true, 0, 0, true)
 
             withContext(Dispatchers.IO) {
                 val stream = requireNotNull(app.contentResolver.openInputStream(uri))
@@ -243,12 +264,12 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
                 val labelCursor = database.query("Label", null, null, null, null, null, null)
                 val baseNoteCursor = database.query("BaseNote", null, null, null, null, null, null)
 
-                val labels = convertCursorToList(labelCursor, ::convertCursorToLabel)
-                val baseNotes = convertCursorToList(baseNoteCursor, ::convertCursorToBaseNote)
+                val labels = convertCursorToList(labelCursor) { cursor -> convertCursorToLabel(cursor) }
+                val baseNotes = convertCursorToList(baseNoteCursor) { cursor -> convertCursorToBaseNote(cursor) }
 
                 delay(1000)
 
-                val total = baseNotes.fold(0) { acc, baseNote -> return@fold acc + baseNote.images.size }
+                val total = baseNotes.fold(0) { acc, baseNote -> acc + baseNote.images.size + baseNote.audios.size }
                 var current = 1
 
                 // Don't let a single image bring down the entire backup
@@ -267,13 +288,36 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
                         } catch (exception: Exception) {
                             Operations.log(app, exception)
                         } finally {
-                            importingBackup.postValue(BackupProgress(true, current, total, false))
+                            importingBackup.postValue(Progress(true, current, total, false))
+                            current++
+                        }
+                    }
+                    baseNote.audios.forEach { audio ->
+                        try {
+                            val entry = zipFile.getEntry("Audios/${audio.name}")
+                            if (entry != null) {
+                                val name = "${UUID.randomUUID()}.m4a"
+                                val file = File(audioRoot, name)
+                                audio.name = name
+                                val audioStream = zipFile.getInputStream(entry)
+                                IO.copyStreamToFile(audioStream, file)
+                            }
+                        } catch (exception: Exception) {
+                            Operations.log(app, exception)
+                        } finally {
+                            importingBackup.postValue(Progress(true, current, total, false))
                             current++
                         }
                     }
                 }
 
                 commonDao.importBackup(baseNotes, labels)
+                val reminders = baseNoteDao.getAllReminders()
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    if (manager.canScheduleExactAlarms()) {
+                        ReminderReceiver.rescheduleReminders(app, manager, reminders)
+                    }
+                } else ReminderReceiver.rescheduleReminders(app, manager, reminders)
             }
 
             finishImporting(backupDir)
@@ -316,7 +360,20 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
             Converters.jsonToImages(cursor.getString(imagesIndex))
         } else emptyList()
 
-        return BaseNote(0, type, folder, color, title, pinned, timestamp, labels, body, spans, items, images)
+        val audiosIndex = cursor.getColumnIndex("audios")
+        val audios = if (audiosIndex != -1) {
+            Converters.jsonToAudios(cursor.getString(audiosIndex))
+        } else emptyList()
+
+        var reminder: Reminder? = null
+        val reminderIndex = cursor.getColumnIndex("reminder")
+        if (reminderIndex != -1) {
+            if (!cursor.isNull(reminderIndex)) {
+                reminder = Converters.jsonToReminder(cursor.getString(reminderIndex))
+            }
+        }
+
+        return BaseNote(0, type, folder, color, title, pinned, timestamp, labels, body, spans, items, images, audios, reminder)
     }
 
     private fun <T> convertCursorToList(cursor: Cursor, convert: (cursor: Cursor) -> T): ArrayList<T> {
@@ -330,7 +387,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     }
 
     private fun finishImporting(backupDir: File) {
-        importingBackup.value = BackupProgress(false, 0, 0, false)
+        importingBackup.value = Progress(false, 0, 0, false)
         clear(backupDir)
     }
 
@@ -423,6 +480,12 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         executeAsync { baseNoteDao.updateColor(ids, color) }
     }
 
+    fun copyBaseNote() {
+        val ids = actionMode.selectedIds.toLongArray()
+        actionMode.close(true)
+        executeAsync { baseNoteDao.copy(ids) }
+    }
+
     fun moveBaseNotes(folder: Folder) {
         val ids = actionMode.selectedIds.toLongArray()
         actionMode.close(false)
@@ -437,38 +500,56 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
     fun deleteBaseNotes() {
         val ids = LongArray(actionMode.selectedNotes.size)
-        val images = ArrayList<Image>()
+        val reminderIds = ArrayList<Long>()
+        val attachments = ArrayList<Attachment>()
         actionMode.selectedNotes.onEachIndexed { index, entry ->
-            ids[index] = entry.key
-            images.addAll(entry.value.images)
+            val id = entry.key
+            val baseNote = entry.value
+            ids[index] = id
+            if (baseNote.reminder != null) {
+                reminderIds.add(id)
+            }
+            attachments.addAll(baseNote.images)
+            attachments.addAll(baseNote.audios)
         }
         actionMode.close(false)
         viewModelScope.launch {
             withContext(Dispatchers.IO) { baseNoteDao.delete(ids) }
-            informOtherComponents(images, ids)
+            informOtherComponents(attachments, ids, reminderIds)
         }
     }
 
     fun deleteAllBaseNotes() {
         viewModelScope.launch {
             val ids: LongArray
+            val reminderIds: List<Long>
             val images = ArrayList<Image>()
+            val audios = ArrayList<Audio>()
             withContext(Dispatchers.IO) {
                 ids = baseNoteDao.getDeletedNoteIds()
-                val strings = baseNoteDao.getDeletedNoteImages()
-                strings.flatMapTo(images, Converters::jsonToImages)
+                reminderIds = baseNoteDao.getDeletedNoteReminderIds()
+                val imageStrings = baseNoteDao.getDeletedNoteImages()
+                val audioStrings = baseNoteDao.getDeletedNoteAudios()
+                imageStrings.flatMapTo(images) { json -> Converters.jsonToImages(json) }
+                audioStrings.flatMapTo(audios) { json -> Converters.jsonToAudios(json) }
                 baseNoteDao.deleteFrom(Folder.DELETED)
             }
-            informOtherComponents(images, ids)
+            val attachments = ArrayList<Attachment>(images.size + audios.size)
+            attachments.addAll(images)
+            attachments.addAll(audios)
+            informOtherComponents(attachments, ids, reminderIds)
         }
     }
 
-    private fun informOtherComponents(images: ArrayList<Image>, ids: LongArray) {
-        if (images.isNotEmpty()) {
-            ImageDeleteService.start(app, images)
+    private fun informOtherComponents(attachments: ArrayList<Attachment>, ids: LongArray, reminderIds: List<Long>) {
+        if (attachments.isNotEmpty()) {
+            AttachmentDeleteService.start(app, attachments)
         }
         if (ids.isNotEmpty()) {
             WidgetProvider.sendBroadcast(app, ids)
+        }
+        if (reminderIds.isNotEmpty()) {
+            ReminderReceiver.deleteReminders(app, manager, reminderIds)
         }
     }
 
@@ -536,6 +617,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
         append("<!DOCTYPE html>")
         append("<html><head>")
         append("<meta charset=\"UTF-8\"><title>$title</title>")
+        append("<style>h1{letter-spacing:0.5px}body{letter-spacing:0.25px;line-height:1.3}</style>")
         append("</head><body>")
         append("<h2>$title</h2>")
 
@@ -554,7 +636,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
                 baseNote.items.forEach { item ->
                     val body = Html.escapeHtml(item.body)
                     val checked = if (item.checked) "checked" else ""
-                    append("<li><input type=\"checkbox\" $checked>$body</li>")
+                    append("<li><input style=\"margin-right:8px;\" type=\"checkbox\" $checked>$body</li>")
                 }
                 append("</ol>")
             }

@@ -25,16 +25,13 @@ class MenuDialog(context: Context) : BottomSheetDialog(context) {
         setContentView(scrollView)
     }
 
-    fun add(title: String, drawable: Int = 0, onClick: () -> Unit): MenuDialog {
+    fun add(title: Int, onClick: () -> Unit): MenuDialog {
         val item = MenuItemBinding.inflate(layoutInflater, linearLayout, true).root
-        item.text = title
-        item.setCompoundDrawablesRelativeWithIntrinsicBounds(drawable, 0, 0, 0)
+        item.setText(title)
         item.setOnClickListener {
             dismiss()
             onClick()
         }
         return this
     }
-
-    fun add(title: Int, drawable: Int = 0, onClick: () -> Unit) = add(context.getString(title), drawable, onClick)
 }

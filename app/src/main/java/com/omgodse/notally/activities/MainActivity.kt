@@ -5,17 +5,16 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.print.PostPDFGenerator
-import android.transition.TransitionManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.core.view.GravityCompat
 import androidx.core.view.forEach
-import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
@@ -26,8 +25,9 @@ import androidx.navigation.navOptions
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.transition.TransitionManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.transition.platform.MaterialFade
+import com.google.android.material.transition.MaterialFade
 import com.omgodse.notally.MenuDialog
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.ActivityMainBinding
@@ -37,6 +37,7 @@ import com.omgodse.notally.miscellaneous.add
 import com.omgodse.notally.miscellaneous.applySpans
 import com.omgodse.notally.recyclerview.ItemListener
 import com.omgodse.notally.recyclerview.adapter.ColorAdapter
+import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Color
 import com.omgodse.notally.room.Folder
 import com.omgodse.notally.room.Type
@@ -139,6 +140,7 @@ class MainActivity : AppCompatActivity() {
         val export = createExportMenu(menu)
 
         val changeColor = menu.add(R.string.change_color, R.drawable.change_color) { changeColor() }
+        val copy = menu.add(R.string.make_a_copy, R.drawable.copy) { model.copyBaseNote() }
         val delete = menu.add(R.string.delete, R.drawable.delete) { model.moveBaseNotes(Folder.DELETED) }
         val archive = menu.add(R.string.archive, R.drawable.archive) { model.moveBaseNotes(Folder.ARCHIVED) }
         val restore = menu.add(R.string.restore, R.drawable.restore) { model.moveBaseNotes(Folder.NOTES) }
@@ -168,6 +170,7 @@ class MainActivity : AppCompatActivity() {
                 labels.setVisible(count == 1)
                 export.setVisible(count == 1)
                 changeColor.setVisible(true)
+                copy.setVisible(true)
 
                 val folder = baseNote.folder
                 delete.setVisible(folder == Folder.NOTES || folder == Folder.ARCHIVED)
@@ -209,21 +212,6 @@ class MainActivity : AppCompatActivity() {
         Operations.shareNote(this, baseNote.title, body)
     }
 
-    private fun label() {
-        val baseNote = model.actionMode.getFirstNote()
-        lifecycleScope.launch {
-            val labels = model.getAllLabels()
-            if (labels.isNotEmpty()) {
-                Operations.labelNote(this@MainActivity, labels, baseNote.labels) { new ->
-                    model.updateBaseNoteLabels(new, baseNote.id)
-                }
-            } else {
-                model.actionMode.close(true)
-                navigateWithAnimation(R.id.Labels)
-            }
-        }
-    }
-
     private fun changeColor() {
         val dialog = MaterialAlertDialogBuilder(this)
             .setTitle(R.string.change_color)
@@ -251,6 +239,40 @@ class MainActivity : AppCompatActivity() {
             .setMessage(R.string.delete_selected_notes)
             .setPositiveButton(R.string.delete) { _, _ -> model.deleteBaseNotes() }
             .setNegativeButton(R.string.cancel, null)
+            .show()
+    }
+
+
+    private fun label() {
+        val baseNote = model.actionMode.getFirstNote()
+        lifecycleScope.launch {
+            val labels = model.getAllLabels()
+            if (labels.isNotEmpty()) {
+                displaySelectLabelsDialog(labels, baseNote)
+            } else {
+                model.actionMode.close(true)
+                navigateWithAnimation(R.id.Labels)
+            }
+        }
+    }
+
+    private fun displaySelectLabelsDialog(labels: Array<String>, baseNote: BaseNote) {
+        val checkedPositions = BooleanArray(labels.size) { index -> baseNote.labels.contains(labels[index]) }
+
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.labels)
+            .setNegativeButton(R.string.cancel, null)
+            .setMultiChoiceItems(labels, checkedPositions) { _, which, isChecked -> checkedPositions[which] = isChecked }
+            .setPositiveButton(R.string.save) { _, _ ->
+                val new = ArrayList<String>()
+                checkedPositions.forEachIndexed { index, checked ->
+                    if (checked) {
+                        val label = labels[index]
+                        new.add(label)
+                    }
+                }
+                model.updateBaseNoteLabels(new, baseNote.id)
+            }
             .show()
     }
 
@@ -371,7 +393,15 @@ class MainActivity : AppCompatActivity() {
             binding.MakeList.hide()
         }
 
-        binding.EnterSearchKeyword.isVisible = (destination.id == R.id.Search)
+        val inputManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        if (destination.id == R.id.Search) {
+            binding.EnterSearchKeyword.visibility = View.VISIBLE
+            binding.EnterSearchKeyword.requestFocus()
+            inputManager.showSoftInput(binding.EnterSearchKeyword, InputMethodManager.SHOW_IMPLICIT)
+        } else {
+            binding.EnterSearchKeyword.visibility = View.GONE
+            inputManager.hideSoftInputFromWindow(binding.EnterSearchKeyword.windowToken, 0)
+        }
     }
 
     private fun navigateWithAnimation(id: Int) {

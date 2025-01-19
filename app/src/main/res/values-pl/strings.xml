@@ -17,6 +17,7 @@
     <string name="unarchive">Cofnij archiwizację</string>
     <string name="add_images">Dodaj obrazy</string>
     <string name="delete_all">Usuń wszystkie</string>
+    <string name="record_audio">Nagraj notatkę dźwiękową</string>
     <string name="change_color">Zmień kolor</string>
     <string name="delete_forever">Usunąć na zawsze?</string>
 
@@ -46,6 +47,7 @@
     <string name="delete_label">Usunąć etykietę?</string>
     <string name="create_new">Nie masz jeszcze etykiet? Stworzyć jedną?</string>
     <string name="delete_all_notes">Usunąć wszystkie notatki?</string>
+    <string name="delete_selected_notes">Usunąć zaznaczone notatki?</string>
     <string name="delete_note_forever">Usunąć notatkę na zawsze?</string>
     <string name="your_notes_associated">Notatki z tą etykietą nie zostaną usunięte</string>
 
@@ -55,6 +57,7 @@
     <string name="date">Data</string>
     <string name="title">Tytuł</string>
     <string name="add_item">Dodaj element</string>
+    <string name="audio_recordings">Nagrania dźwiękowe</string>
     <string name="drag_handle">Punkt zaczepienia</string>
     <string name="bold">Pogrubienie</string>
     <string name="link">Odnośnik</string>
@@ -68,6 +71,7 @@
     <string name="saved_to_notally">Zapisano w Notally</string>
     <string name="empty_note">Pusta notatka</string>
     <string name="empty_list">Pusta lista</string>
+    <string name="select_labels">Zaznacz etykiety</string>
 
     <!-- Messages -->
     <string name="cant_open_link">Nie można otworzyć odnośnika</string>
@@ -97,8 +101,9 @@
     <string name="large">Duży</string>
 
     <string name="content_density">Zagęszczenie treści</string>
-    <string name="max_items_to_display">Maksymalna ilość elementów w liście do pokazania</string>
-    <string name="max_lines_to_display">Maksymalna ilość linii w notatce do pokazania</string>
+    <string name="max_items_to_display">Maksymalna ilość wyświetlanych elementów na liście</string>
+    <string name="max_lines_to_display">Maksymalna ilość wyświetlanych linii w notatce</string>
+    <string name="max_lines_to_display_title">Maksymalna ilość wyświetlanych linii w tytule</string>
 
     <!-- Backup -->
     <string name="backup">Kopia zapasowa</string>
@@ -123,14 +128,11 @@
     <string name="rate">Oceń aplikację</string>
     <string name="send_feedback">Wyślij opinię</string>
 
-    <string name="github" translatable="false">GitHub</string>
-
     <!-- Widget -->
     <string name="single_note_or_list">Pojedyncza notatka lub lista</string>
     <string name="select_note">Wybierz notatkę</string>
 
     <!-- Images -->
-    <string name="count" translatable="false">%1$d / %2$d</string>
     <string name="adding_images">Dodawanie obrazów</string>
     <string name="deleting_images">Usuwanie obrazów</string>
     <string name="invalid_image">Niewłaściwy obraz</string>
@@ -140,12 +142,31 @@
     <string name="cant_load_image">Nie można załadować obrazu. Mógł zostać przeniesiony lub usunięty</string>
     <string name="unknown_name">Nieznana nazwa</string>
     <string name="unknown_error">Nieznany błąd</string>
-    <string name="insert_an_sd_card">Włóż kartę SD, aby dodać obrazy</string>
-    <string name="please_grant_notally">Przyznaj Notally uprawnienia do wysyłania powiadomień. Umożliwia to wyświetlanie postępu, jeśli operacje takie jak usuwanie obrazów lub przywracanie kopii zapasowych zajmuje więcej czasu</string>
+    <string name="insert_an_sd_card_images">Włóż kartę SD, aby dodać obrazy</string>
+    <string name="please_grant_notally_notification">Przyznaj programowi Notally uprawnienia do wysyłania powiadomień.</string>
 
     <plurals name="cant_add_images">
         <item quantity="one">Nie można dodać %d obrazu</item>
         <item quantity="other">Nie można dodać %d obrazów</item>
+        <item quantity="few">Nie można dodać %d obrazów</item>
+        <item quantity="many">Nie można dodać %d obrazów</item>
     </plurals>
 
+    <!-- Audio -->
+    <string name="play">Odtwórz</string>
+    <string name="stop">Zatrzymaj</string>
+    <string name="start">Uruchom</string>
+    <string name="pause">Wstrzymaj</string>
+    <string name="resume">Wznów</string>
+    <string name="paused">Wstrzymano</string>
+    <string name="recording">Nagrywanie…</string>
+    <string name="ready_to_record">Można nagrywać</string>
+    <string name="discard">Odrzuć</string>
+    <string name="save_recording">Zachować nagranie?</string>
+    <string name="delete_audio_recording_forever">Usunąć nagranie audio na stałe?</string>
+    <string name="tap_for_more_options">Dotknij, aby zobaczyć więcej możliwości</string>
+    <string name="to_record_audio">Aby móc nagrywać dźwięk, zezwól aplikacji Notally na dostęp do mikrofonu. Wejdź do sekcji uprawnień w ustawieniach swojego urządzenia i zezwól programowi Notally na dostęp do mikrofonu</string>
+    <string name="please_grant_notally_audio">Udziel programowi Notally pozwolenia na nagrywanie dźwięku. Nagrania są zachowywane lokalnie na twoim urządzeniu</string>
+    <string name="insert_an_sd_card_audio">Włóż kartę SD, aby móc nagrywać dźwięk</string>
+    <string name="something_went_wrong_audio">Coś poszło nie tak. Nagranie audio mogło zostać przeniesione lub usunięte.\n\nBłąd: (%1$d, %2$d)</string>
 </resources>

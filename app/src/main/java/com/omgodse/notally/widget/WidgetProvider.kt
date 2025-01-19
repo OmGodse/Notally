@@ -6,13 +6,13 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.widget.RemoteViews
 import com.omgodse.notally.R
 import com.omgodse.notally.activities.ConfigureWidget
 import com.omgodse.notally.activities.MakeList
 import com.omgodse.notally.activities.TakeNote
 import com.omgodse.notally.miscellaneous.Constants
+import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.preferences.Preferences
 import com.omgodse.notally.room.NotallyDatabase
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -99,7 +99,7 @@ class WidgetProvider : AppWidgetProvider() {
             // Widgets displaying the same note share the same factory since only the noteId is embedded
             val intent = Intent(context, WidgetService::class.java)
             intent.putExtra(Constants.SelectedBaseNote, noteId)
-            embedIntentExtras(intent)
+            Operations.embedIntentExtras(intent)
 
             val view = RemoteViews(context.packageName, R.layout.widget)
             view.setRemoteAdapter(R.id.ListView, intent)
@@ -122,11 +122,13 @@ class WidgetProvider : AppWidgetProvider() {
             app.sendBroadcast(intent)
         }
 
+        fun sendBroadcast(app: Application, id: Long) = sendBroadcast(app, longArrayOf(id))
+
         // Each widget has it's own intent since the widget id is embedded
         private fun getSelectNoteIntent(context: Context, id: Int): PendingIntent {
             val intent = Intent(context, ConfigureWidget::class.java)
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, id)
-            embedIntentExtras(intent)
+            Operations.embedIntentExtras(intent)
             val flags = PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
             return PendingIntent.getActivity(context, 0, intent, flags)
         }
@@ -134,14 +136,9 @@ class WidgetProvider : AppWidgetProvider() {
         private fun getOpenNoteIntent(context: Context, noteId: Long): PendingIntent {
             val intent = Intent(context, WidgetProvider::class.java)
             intent.putExtra(Constants.SelectedBaseNote, noteId)
-            embedIntentExtras(intent)
+            Operations.embedIntentExtras(intent)
             val flags = PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT or Intent.FILL_IN_ACTION
             return PendingIntent.getBroadcast(context, 0, intent, flags)
-        }
-
-        private fun embedIntentExtras(intent: Intent) {
-            val string = intent.toUri(Intent.URI_INTENT_SCHEME)
-            intent.data = Uri.parse(string)
         }
 
         private const val EXTRA_MODIFIED_NOTES = "com.omgodse.notally.EXTRA_MODIFIED_NOTES"

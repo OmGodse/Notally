@@ -24,7 +24,8 @@ class BaseNoteAdapter(
     private val maxItems: Int,
     private val maxLines: Int,
     private val maxTitle: Int,
-    private val formatter: DateFormat,
+    private val fullFormat: DateFormat,
+    private val shortFormat: DateFormat,
     private val mediaRoot: File?,
     private val listener: ItemListener
 ) : ListAdapter<Item, RecyclerView.ViewHolder>(DiffCallback) {
@@ -60,7 +61,7 @@ class BaseNoteAdapter(
             }
             else -> {
                 val binding = RecyclerBaseNoteBinding.inflate(inflater, parent, false)
-                BaseNoteVH(binding, dateFormat, textSize, maxItems, maxLines, maxTitle, listener, prettyTime, formatter)
+                BaseNoteVH(binding, dateFormat, textSize, maxItems, maxLines, maxTitle, listener, prettyTime, fullFormat, shortFormat)
             }
         }
     }

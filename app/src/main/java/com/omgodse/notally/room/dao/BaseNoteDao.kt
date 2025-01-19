@@ -7,14 +7,15 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.RawQuery
-import androidx.room.Update
 import androidx.sqlite.db.SupportSQLiteQuery
+import com.omgodse.notally.room.Audio
 import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Color
 import com.omgodse.notally.room.Folder
+import com.omgodse.notally.room.IdReminder
 import com.omgodse.notally.room.Image
-import com.omgodse.notally.room.LabelsInBaseNote
 import com.omgodse.notally.room.ListItem
+import com.omgodse.notally.room.Reminder
 
 @Dao
 interface BaseNoteDao {
@@ -29,8 +30,13 @@ interface BaseNoteDao {
     @Insert
     suspend fun insert(baseNotes: List<BaseNote>)
 
-    @Update(entity = BaseNote::class)
-    suspend fun update(labelsInBaseNotes: List<LabelsInBaseNote>)
+
+    @Query(
+        "INSERT INTO BaseNote (type, folder, color, title, pinned, timestamp, labels, body, spans, items, images, audios)\n" +
+                "SELECT type, folder, color, title, pinned, timestamp, labels, body, spans, items, images, audios\n" +
+                "FROM BaseNote WHERE id IN (:ids)"
+    )
+    suspend fun copy(ids: LongArray)
 
 
     @Query("DELETE FROM BaseNote WHERE id = :id")
@@ -58,15 +64,29 @@ interface BaseNoteDao {
     @Query("SELECT images FROM BaseNote WHERE id = :id")
     fun getImages(id: Long): String
 
+
     @Query("SELECT images FROM BaseNote")
     fun getAllImages(): List<String>
+
+    @Query("SELECT audios FROM BaseNote")
+    fun getAllAudios(): List<String>
+
+
+    @Query("SELECT id, reminder FROM BaseNote WHERE reminder IS NOT NULL")
+    fun getAllReminders(): List<IdReminder>
 
 
     @Query("SELECT id FROM BaseNote WHERE folder = 'DELETED'")
     suspend fun getDeletedNoteIds(): LongArray
 
+    @Query("SELECT id FROM BaseNote WHERE folder = 'DELETED' AND reminder IS NOT NULL")
+    suspend fun getDeletedNoteReminderIds(): List<Long>
+
     @Query("SELECT images FROM BaseNote WHERE folder = 'DELETED'")
     suspend fun getDeletedNoteImages(): List<String>
+
+    @Query("SELECT audios FROM BaseNote WHERE folder = 'DELETED'")
+    suspend fun getDeletedNoteAudios(): List<String>
 
 
     @Query("UPDATE BaseNote SET folder = :folder WHERE id IN (:ids)")
@@ -87,6 +107,12 @@ interface BaseNoteDao {
 
     @Query("UPDATE BaseNote SET images = :images WHERE id = :id")
     suspend fun updateImages(id: Long, images: List<Image>)
+
+    @Query("UPDATE BaseNote SET audios = :audios WHERE id = :id")
+    suspend fun updateAudios(id: Long, audios: List<Audio>)
+
+    @Query("UPDATE BaseNote SET reminder = :reminder WHERE id = :id")
+    suspend fun updateReminder(id: Long, reminder: Reminder?)
 
 
     /**

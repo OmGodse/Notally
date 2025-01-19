@@ -1,0 +1,6 @@
+New features
+• Add reminders to notes
+• Create copies of notes
+
+Added Korean translation
+Updated Vietnamese and German translations

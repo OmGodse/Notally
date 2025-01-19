@@ -3,4 +3,10 @@
     <exclude
         domain="sharedpref"
         path="." />
+    <exclude
+        domain="root"
+        path="./app_webview" />
+    <exclude
+        domain="root"
+        path="./app_textures" />
 </full-backup-content>

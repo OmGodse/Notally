@@ -36,6 +36,46 @@ object Converters {
 
 
     @TypeConverter
+    fun audiosToJson(audios: List<Audio>): String {
+        val objects = audios.map { audio ->
+            val jsonObject = JSONObject()
+            jsonObject.put("name", audio.name)
+            jsonObject.put("duration", audio.duration)
+            jsonObject.put("timestamp", audio.timestamp)
+        }
+        return JSONArray(objects).toString()
+    }
+
+    @TypeConverter
+    fun jsonToAudios(json: String): List<Audio> {
+        val iterable = JSONArray(json).iterable<JSONObject>()
+        return iterable.map { jsonObject ->
+            val name = jsonObject.getString("name")
+            val duration = jsonObject.getLong("duration")
+            val timestamp = jsonObject.getLong("timestamp")
+            Audio(name, duration, timestamp)
+        }
+    }
+
+
+    @TypeConverter
+    fun reminderToJson(reminder: Reminder): String {
+        return JSONObject()
+            .put("timestamp", reminder.timestamp)
+            .put("frequency", reminder.frequency.name)
+            .toString()
+    }
+
+    @TypeConverter
+    fun jsonToReminder(json: String): Reminder {
+        val jsonObject = JSONObject(json)
+        val timestamp = jsonObject.getLong("timestamp")
+        val frequency = Frequency.valueOf(jsonObject.getString("frequency"))
+        return Reminder(timestamp, frequency)
+    }
+
+
+    @TypeConverter
     fun jsonToSpans(json: String): List<SpanRepresentation> {
         val iterable = JSONArray(json).iterable<JSONObject>()
         return iterable.map { jsonObject ->

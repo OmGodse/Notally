@@ -33,6 +33,7 @@
     <string name="save">Sauvegarder</string>
     <string name="edit">Modifier</string>
     <string name="cancel">Annuler</string>
+    <string name="continue_">Continuer</string>
     <string name="open_link">Ouvrir le lien</string>
     <string name="make_list">Créer une liste</string>
     <string name="take_note">Prendre des notes</string>
@@ -41,10 +42,11 @@
     <string name="view_file">Voir le fichier</string>
     <string name="save_to_device">Sauvegarder sur l\'appareil</string>
     <string name="edit_label">Modifier l\'étiquette</string>
-    <string name="label_exists">L\'étiquette existe</string>
+    <string name="label_exists">L\'étiquette existe déjà</string>
     <string name="delete_label">Supprimer l\'étiquette ?</string>
     <string name="create_new">Il n\'existe pas encore d\'étiquettes. En créer une ?</string>
     <string name="delete_all_notes">Supprimer toutes les notes ?</string>
+    <string name="delete_selected_notes">Supprimer les notes sélectionnées ?</string>
     <string name="delete_note_forever">Supprimer la note définitivement ?</string>
     <string name="your_notes_associated">Vos notes associées à cette étiquette ne seront pas supprimées</string>
 
@@ -64,19 +66,16 @@
 
     <!-- Miscellaneous -->
     <string name="saved_to_device">Sauvegardé sur l\'appareil</string>
-    <string name="saved_to_notally">Sauvegardé sur Notally</string>
+    <string name="saved_to_notally">Sauvegardé dans Notally</string>
     <string name="empty_note">Note vide</string>
     <string name="empty_list">Liste vide</string>
 
     <!-- Messages -->
     <string name="cant_open_link">Ouverture du lien impossible</string>
-    <string name="invalid_image">Image invalide</string>
-    <string name="invalid_backup">Sauvegarde invalide</string>
-    <string name="imported_backup">Sauvegarde importée</string>
     <string name="something_went_wrong">Quelque chose a mal tourné. Veuillez réessayer.</string>
-    <string name="image_format_not_supported">Format d\'image non supporté</string>
-    <string name="install_an_email">Installez une application de messagerie pour envoyer des commentaires</string>
+    <string name="install_an_email">Installez une application de courriel pour envoyer des commentaires</string>
     <string name="install_a_browser">Installez un navigateur pour ouvrir ce lien</string>
+    <string name="cant_find_note">Impossible de trouver la note. Elle a peut-être été supprimée.</string>
 
     <!-- Settings Page -->
     <string name="appearance">Apparence</string>
@@ -101,10 +100,10 @@
     <string name="content_density">Densité d\'affichage</string>
     <string name="max_items_to_display">Nombre maximum d\'éléments à afficher dans une liste</string>
     <string name="max_lines_to_display">Nombre maximum de lignes à afficher dans une note</string>
-
-    <string name="backup">Sauvegarde</string>
+    <string name="max_lines_to_display_title">Nombre maximum de lignes à afficher pour un titre</string>
 
     <!-- Auto backup -->
+    <string name="backup">Sauvegarde</string>
     <string name="auto_backup">Sauvegarde automatique</string>
     <string name="tap_to_set_up">Cliquer pour régler</string>
     <string name="notes_will_be">Les notes seront sauvegardées dans le stockage interne de votre téléphone tous les jours.\n\nCela peut ne pas fonctionner si le mode d\'économie d\'énergie est activé.</string>
@@ -112,16 +111,40 @@
     <string name="disable_auto_backup">Désactiver la sauvegarde automatique</string>
     <string name="choose_another_folder">Choisir un autre dossier</string>
     <string name="cant_find_folder">Impossible de trouver le dossier. Il a peut-être été déplacé ou supprimé.</string>
+    <string name="invalid_backup">Sauvegarde invalide</string>
+    <string name="imported_backup">Sauvegarde importée</string>
+    <string name="exporting_backup">Exportation de la sauvegarde</string>
+    <string name="importing_backup">Importation de la sauvegarde</string>
+    <string name="calculating">Calcul…</string>
 
     <string name="export_backup">Exporter la sauvegarde</string>
     <string name="import_backup">Importer une sauvegarde</string>
 
     <string name="about">À propos</string>
-    <string name="libraries">Librairies</string>
+    <string name="libraries">Bibliothèques</string>
     <string name="rate">Noter cette application</string>
     <string name="send_feedback">Envoyer des commentaires</string>
 
     <!-- Widget -->
-    <string name="single_note_or_list">Note ou liste seule</string>
+    <string name="single_note_or_list">Note ou liste unique</string>
     <string name="select_note">Sélectionnez une note</string>
+
+    <!-- Images -->
+    <string name="adding_images">Ajout des images</string>
+    <string name="deleting_images">Suppression des images</string>
+    <string name="invalid_image">Image invalide</string>
+    <string name="error_while_renaming_image">Erreur lors du renommage de l\'image</string>
+    <string name="image_format_not_supported">Format d\'image non supporté</string>
+    <string name="delete_image_forever">Supprimer l\'image définitivement ?</string>
+    <string name="cant_load_image">Impossible de charger l\'image. Elle a peut-être été déplacée ou supprimée.</string>
+    <string name="unknown_name">Nom inconnu</string>
+    <string name="unknown_error">Erreur inconnue</string>
+    <string name="insert_an_sd_card_images">Insérez une carte SD pour ajouter des images</string>
+    <string name="please_grant_notally_notification"> Veuillez accordez à Notally l\'autorisation d\'envoyer des notifications.</string>
+
+    <plurals name="cant_add_images">
+        <item quantity="one">Impossible d\'ajouter %d image</item>
+        <item quantity="other">Impossible d\'ajouter %d images</item>
+    </plurals>
+
 </resources>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:installLocation="auto">
+    android:installLocation="internalOnly">
 
     <uses-permission
         android:name="android.permission.ACCESS_NETWORK_STATE"
@@ -9,6 +9,8 @@
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
 
     <application
         android:name=".NotallyApplication"
@@ -18,7 +20,6 @@
         android:fullBackupContent="@xml/backup_content"
         android:icon="@mipmap/notally"
         android:label="@string/app_name"
-        android:localeConfig="@xml/locales"
         android:roundIcon="@mipmap/notally_round"
         android:theme="@style/AppTheme">
 
@@ -69,6 +70,14 @@
 
         <activity android:name=".activities.ViewImage" />
 
+        <activity android:name=".activities.SelectLabels" />
+
+        <activity
+            android:name=".activities.RecordAudio"
+            android:launchMode="singleTask" />
+
+        <activity android:name=".activities.PlayAudio" />
+
         <activity
             android:name=".activities.ConfigureWidget"
             android:exported="false">
@@ -94,14 +103,30 @@
 
         </receiver>
 
+        <receiver
+            android:name=".ReminderReceiver"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.app.action.SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED" />
+            </intent-filter>
+
+        </receiver>
+
         <service
             android:name=".widget.WidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <service
-            android:name=".ImageDeleteService"
-            android:exported="false"
+            android:name=".AttachmentDeleteService"
             android:foregroundServiceType="dataSync" />
+
+        <service
+            android:name=".audio.AudioRecordService"
+            android:foregroundServiceType="microphone" />
+
+        <service android:name=".audio.AudioPlayService" />
 
     </application>
 

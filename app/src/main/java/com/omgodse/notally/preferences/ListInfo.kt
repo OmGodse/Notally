@@ -16,13 +16,6 @@ sealed interface ListInfo {
     fun getEntryValues(): Array<String>
 
     fun getEntries(context: Context): Array<String>
-
-    fun convertToValues(ids: Array<Int>, context: Context): Array<String> {
-        return Array(ids.size) { index ->
-            val id = ids[index]
-            context.getString(id)
-        }
-    }
 }
 
 object View : ListInfo {
@@ -36,8 +29,7 @@ object View : ListInfo {
     override fun getEntryValues() = arrayOf(list, grid)
 
     override fun getEntries(context: Context): Array<String> {
-        val ids = arrayOf(R.string.list, R.string.grid)
-        return convertToValues(ids, context)
+        return context.resources.getStringArray(R.array.view)
     }
 }
 
@@ -53,8 +45,7 @@ object Theme : ListInfo {
     override fun getEntryValues() = arrayOf(dark, light, followSystem)
 
     override fun getEntries(context: Context): Array<String> {
-        val ids = arrayOf(R.string.dark, R.string.light, R.string.follow_system)
-        return convertToValues(ids, context)
+        return context.resources.getStringArray(R.array.theme)
     }
 }
 
@@ -90,8 +81,7 @@ object TextSize : ListInfo {
     override fun getEntryValues() = arrayOf(small, medium, large)
 
     override fun getEntries(context: Context): Array<String> {
-        val ids = arrayOf(R.string.small, R.string.medium, R.string.large)
-        return convertToValues(ids, context)
+        return context.resources.getStringArray(R.array.textSize)
     }
 
 

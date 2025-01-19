@@ -9,4 +9,7 @@
     <external-media-path
         name="images"
         path="/Images" />
+    <external-media-path
+        name="audios"
+        path="/Audios" />
 </paths>
