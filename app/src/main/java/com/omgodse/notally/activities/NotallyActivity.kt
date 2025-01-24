@@ -499,7 +499,8 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
             val calendar = Calendar.getInstance()
             val hour = calendar.get(Calendar.HOUR_OF_DAY)
             val minute = calendar.get(Calendar.MINUTE)
-            TimePickerDialog(this, timeListener, hour, minute, false).show()
+            val is24HourView = android.text.format.DateFormat.is24HourFormat(applicationContext);
+            TimePickerDialog(this, timeListener, hour, minute, is24HourView).show()
         }
 
         var selectedFrequency = 0
