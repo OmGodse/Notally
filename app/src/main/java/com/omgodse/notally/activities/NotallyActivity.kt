@@ -9,6 +9,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
+import android.graphics.Paint
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -436,6 +437,13 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
                     Frequency.DAILY -> getString(R.string.repeats_daily, date)
                     Frequency.MONTHLY -> getString(R.string.repeats_monthly, date)
                 }
+
+                if (Operations.isReminderInPast(reminder)) {
+                    binding.Reminder.paintFlags = binding.Reminder.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                } else {
+                    binding.Reminder.paintFlags = binding.Reminder.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+                }
+
                 binding.Reminder.visibility = View.VISIBLE
                 binding.DateCreated.updatePadding(bottom = 0)
             } else {

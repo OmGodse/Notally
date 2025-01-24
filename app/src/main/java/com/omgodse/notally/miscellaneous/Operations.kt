@@ -21,7 +21,9 @@ import com.omgodse.notally.R
 import com.omgodse.notally.databinding.LabelBinding
 import com.omgodse.notally.preferences.TextSize
 import com.omgodse.notally.room.Color
+import com.omgodse.notally.room.Frequency
 import com.omgodse.notally.room.ListItem
+import com.omgodse.notally.room.Reminder
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStreamWriter
@@ -118,6 +120,13 @@ object Operations {
         }
 
         return dateFormat
+    }
+
+    fun isReminderInPast(reminder: Reminder): Boolean {
+        val future = Calendar.getInstance()
+        val now = Calendar.getInstance()
+        future.timeInMillis = reminder.timestamp
+        return (future < now) and (reminder.frequency == Frequency.ONCE)
     }
 
     fun bindLabels(group: ChipGroup, labels: List<String>, textSize: String) {

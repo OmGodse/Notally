@@ -1,5 +1,6 @@
 package com.omgodse.notally.recyclerview.viewholder
 
+import android.graphics.Paint
 import android.graphics.drawable.Drawable
 import android.text.format.DateUtils
 import android.util.TypedValue
@@ -217,6 +218,13 @@ class BaseNoteVH(
                 Frequency.DAILY -> context.getString(R.string.repeats_daily, date)
                 Frequency.MONTHLY -> context.getString(R.string.repeats_monthly, date)
             }
+
+            if (Operations.isReminderInPast(reminder)) {
+                binding.Reminder.paintFlags = binding.Reminder.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            } else {
+                binding.Reminder.paintFlags = binding.Reminder.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+            }
+
             binding.Reminder.visibility = View.VISIBLE
         } else binding.Reminder.visibility = View.GONE
     }
