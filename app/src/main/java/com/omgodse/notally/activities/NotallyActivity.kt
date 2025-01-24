@@ -14,6 +14,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.text.Editable
+import android.text.format.DateUtils
 import android.util.TypedValue
 import android.view.MenuItem
 import android.view.View
@@ -425,10 +426,11 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
     private fun setupReminder() {
         val padding = (resources.displayMetrics.density * 16).toInt()
-        val formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT)
+
         model.reminder.observe(this) { reminder ->
             if (reminder != null) {
-                val date = formatter.format(reminder.timestamp)
+                val dateFormat = Operations.getReminderDateFormat(reminder.timestamp)
+                val date = DateUtils.formatDateTime(binding.root.context, reminder.timestamp, dateFormat)
                 binding.Reminder.text = when (reminder.frequency) {
                     Frequency.ONCE -> date
                     Frequency.DAILY -> getString(R.string.repeats_daily, date)

@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Build
+import android.text.format.DateUtils
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -26,6 +27,7 @@ import java.io.FileOutputStream
 import java.io.OutputStreamWriter
 import java.io.PrintWriter
 import java.text.DateFormat
+import java.util.Calendar
 
 object Operations {
 
@@ -104,6 +106,19 @@ object Operations {
         }
     }
 
+    fun getReminderDateFormat(timestamp: Long): Int {
+        var dateFormat = DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_ABBREV_MONTH
+        val future = Calendar.getInstance()
+        val now = Calendar.getInstance()
+
+        // If reminder is not in next year, omit the year display.
+        future.timeInMillis = timestamp
+        if (future.get(Calendar.YEAR) == now.get(Calendar.YEAR)) {
+            dateFormat = dateFormat or DateUtils.FORMAT_NO_YEAR
+        }
+
+        return dateFormat
+    }
 
     fun bindLabels(group: ChipGroup, labels: List<String>, textSize: String) {
         if (labels.isEmpty()) {
