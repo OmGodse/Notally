@@ -152,30 +152,33 @@
         <item quantity="few">%d slike niso bile dodane.</item>
         <item quantity="other">%d slik ni bilo dodanih.</item>
     </plurals>
-    <string name="ready_to_record">Pripravljen na snemanje</string>
-    <string name="discard">Zavrzi</string>
-    <string name="save_recording">Shrani posnetek?</string>
-    <string name="delete_audio_recording_forever">Dokončno izbriši posnetek?</string>
-    <string name="something_went_wrong_audio">Nekaj je šlo narobe. Zvočni posnetek je bil premaknjen ali izbrisan.\n\nNapaka: (%1$d, %2$d)</string>
-    <string name="time">Ura</string>
-    <string name="select_frequency">Ponavljanje</string>
-    <string name="does_not_repeat">Se ne ponavlja</string>
-    <string name="daily">Dnevno</string>
-    <string name="monthly">Mesečno</string>
-    <string name="repeats_monthly">%1$s, mesečno</string>
-    <string name="please_grant_notally_notification">Dovolite aplikaciji Notally da vam pošilja obvestila.</string>
-    <string name="please_grant_notally_alarm">Dovolite aplikaciji Notally da nastavlja opomnike</string>
-    <string name="tap_for_more_options">Pritisnite za več možnosti</string>
-    <string name="to_record_audio">Za snemanje zvoka dovolite aplikaciji Notally dostop do mikrofona vaše naprave. Pojdite v Nastavitve -> Dovoljenja -> in omogočite mikrofon.</string>
-    <string name="please_grant_notally_audio">Dovolite aplikaciji Notally da ustvarja zvočne posnetke. Posnetki nikoli ne zapustijo vaše naprave.</string>
-    <string name="insert_an_sd_card_audio">Za snemanje zvoka vstavite kartico SD</string>
+
+    <!-- Audio -->
     <string name="play">Predvajaj</string>
     <string name="stop">Ustavi</string>
     <string name="start">Začni</string>
     <string name="pause">Premor</string>
     <string name="resume">Nadaljuj</string>
     <string name="paused">Zaustavljeno</string>
-    <string name="recording">Snemanje ...</string>
-    <string name="repeats_daily">%1$s, dnevno</string>
+    <string name="recording">Snemanje…</string>
+    <string name="ready_to_record">Pripravljen na snemanje</string>
+    <string name="discard">Zavrzi</string>
+    <string name="save_recording">Shrani posnetek?</string>
+    <string name="delete_audio_recording_forever">Dokončno izbriši posnetek?</string>
+    <string name="tap_for_more_options">Pritisnite za več možnosti</string>
+    <string name="to_record_audio">Za snemanje zvoka dovolite aplikaciji Notally dostop do mikrofona vaše naprave. Pojdite v Nastavitve -> Dovoljenja -> in omogočite mikrofon.</string>
+    <string name="please_grant_notally_audio">Dovolite aplikaciji Notally da ustvarja zvočne posnetke. Posnetki nikoli ne zapustijo vaše naprave.</string>
+    <string name="insert_an_sd_card_audio">Za snemanje zvoka vstavite kartico SD</string>
+    <string name="something_went_wrong_audio">Nekaj je šlo narobe. Zvočni posnetek je bil premaknjen ali izbrisan.\n\nNapaka: (%1$d, %2$d)</string>
 
+    <!-- Reminder -->
+    <string name="time">Ura</string>
+    <string name="select_frequency">Ponavljanje</string>
+    <string name="does_not_repeat">Se ne ponavlja</string>
+    <string name="daily">Dnevno</string>
+    <string name="monthly">Mesečno</string>
+    <string name="repeats_daily">%1$s, dnevno</string>
+    <string name="repeats_monthly">%1$s, mesečno</string>
+    <string name="please_grant_notally_notification">Dovolite aplikaciji Notally da vam pošilja obvestila.</string>
+    <string name="please_grant_notally_alarm">Dovolite aplikaciji Notally da nastavlja opomnike</string>
 </resources>

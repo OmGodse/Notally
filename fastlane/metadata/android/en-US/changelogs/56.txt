@@ -1,0 +1,2 @@
+Fixed app crashing when Record audio is clicked on Android 14 and above
+Updated Polish, Vietnamese, Czech, Slovenian and Turkish translations

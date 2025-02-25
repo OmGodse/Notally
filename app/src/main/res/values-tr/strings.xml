@@ -165,8 +165,8 @@
     <string name="save_recording">Ses kaydını kaydet?</string>
     <string name="delete_audio_recording_forever">Ses kaydını kalıcı olarak sil?</string>
     <string name="tap_for_more_options">Daha fazla seçenek için bas</string>
-    <string name="to_record_audio">Ses kaydetmek için, Notally'ye mikrofona erişim izni verin</string>
-    <string name="please_grant_notally_audio">Lütfen Notally'ye ses kaydetme yetkisi verin. Kayıtlar cihazınızdan dışarı çıkmayacak</string>
+    <string name="to_record_audio">Ses kaydetmek için, Notally’ye mikrofona erişim izni verin</string>
+    <string name="please_grant_notally_audio">Lütfen Notally’ye ses kaydetme yetkisi verin. Kayıtlar cihazınızdan dışarı çıkmayacak</string>
     <string name="insert_an_sd_card_audio">Ses kaydetmek için SD card takın</string>
     <string name="something_went_wrong_audio">Bir şeyler ters gitti. Ses kaydı taşınmış yada silinmiş olabilir.\n\nHata : (%1$d, %2$d)</string>
 
@@ -178,6 +178,6 @@
     <string name="monthly">Aylık</string>
     <string name="repeats_daily">%1$s, Günlük tekrar ediyor</string>
     <string name="repeats_monthly">%1$s, Aylık tekrar ediyor</string>
-    <string name="please_grant_notally_notification">Lütfen Notally'ye bildirim gönderme yetkisi verin</string>
-    <string name="please_grant_notally_alarm">Lütfen Notally'ye alarm kurma yetkisi verin</string>
+    <string name="please_grant_notally_notification">Lütfen Notally’ye bildirim gönderme yetkisi verin</string>
+    <string name="please_grant_notally_alarm">Lütfen Notally’ye alarm kurma yetkisi verin</string>
 </resources>
