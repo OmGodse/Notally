@@ -183,4 +183,7 @@
     <string name="repeats_monthly">%1$s, Repeats monthly</string>
     <string name="please_grant_notally_notification">Please grant Notally the permission to send notifications</string>
     <string name="please_grant_notally_alarm">Please grant Notally the permission to set alarms</string>
+    <string name="channel_backups_images">Backups and Images</string>
+    <string name="channel_reminders">Reminders</string>
+    <string name="channel_recordings">Audio Recordings</string>
 </resources>
