@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <!-- Fragment Titles -->
     <string name="notes">笔记</string>
     <string name="labels">标签</string>
@@ -27,12 +27,13 @@
     <string name="others">其他</string>
 
     <!-- Chooser dialog hints -->
-    <string name="view_note">查看笔记…</string>
+    <string name="view_note">查看笔记</string>
 
     <!-- Dialogs -->
     <string name="save">保存</string>
     <string name="edit">编辑</string>
     <string name="cancel">取消</string>
+    <string name="continue_">继续</string>
     <string name="open_link">打开链接</string>
     <string name="make_list">制作列表</string>
     <string name="take_note">记笔记</string>
@@ -45,6 +46,7 @@
     <string name="delete_label">删除标签？</string>
     <string name="create_new">还没有标签。创建一个？</string>
     <string name="delete_all_notes">删除全部笔记？</string>
+    <string name="delete_selected_notes">删除所选笔记？</string>
     <string name="delete_note_forever">永久性删除笔记？</string>
     <string name="your_notes_associated">不会删除与此标签相关联的笔记</string>
 
@@ -73,6 +75,7 @@
     <string name="something_went_wrong">出错了。请重试。</string>
     <string name="install_an_email">安装电子邮件应用来发送反馈</string>
     <string name="install_a_browser">安装浏览器打开此链接</string>
+    <string name="cant_find_note">找不到笔记。可能已被删除</string>
 
     <!-- Settings Page -->
     <string name="appearance">外观</string>
@@ -97,8 +100,23 @@
     <string name="content_density">内容密度</string>
     <string name="max_items_to_display">列表最多显示多少条目</string>
     <string name="max_lines_to_display">笔记最多显示几行</string>
+    <string name="max_lines_to_display_title">标题最多显示几行</string>
 
-    <string name="backup">备份</string>
+     <!-- Backup -->
+    <string name="backup">Backup</string>
+    <string name="auto_backup">自动备份</string>
+    <string name="tap_to_set_up">轻按进行设置</string>
+    <string name="notes_will_be">笔记每天将备份到你手机的内部存储中。\n\n如果你启用了节电模式，此功能可能无法正常工作。</string>
+    <string name="choose_folder">选择文件夹</string>
+    <string name="disable_auto_backup">禁用自动备份</string>
+    <string name="choose_another_folder">选择另一个文件夹</string>
+    <string name="cant_find_folder">找不到该文件夹。可能被移动或删除了。</string>
+    <string name="invalid_backup">无效备份</string>
+    <string name="imported_backup">已导入备份</string>
+    <string name="exporting_backup">正导出备份</string>
+    <string name="importing_backup">正导入备份</string>
+    <string name="calculating">正在计算…</string>
+
     <string name="export_backup">导出备份</string>
     <string name="import_backup">导入备份</string>
 
@@ -107,22 +125,27 @@
     <string name="rate">给应用打分</string>
     <string name="send_feedback">发送反馈</string>
 
-    <!-- Auto backup -->
-    <string name="auto_backup">自动备份</string>
-    <string name="tap_to_set_up">轻按进行设置</string>
-    <string name="notes_will_be">笔记每天将备份到你手机的内部存储中。\n\n如果你启用了节电模式，此功能可能无法正常工作。</string>
-    <string name="choose_folder">选择文件夹</string>
-    <string name="disable_auto_backup">禁用自动备份</string>
-    <string name="choose_another_folder">选择另一个文件夹</string>
-    <string name="cant_find_folder">找不到该文件夹。可能被移动或删除了。</string>
-    <string name="invalid_backup">无效的备份</string>
-    <string name="imported_backup">已导入备份</string>
 
     <!-- Widget -->
-    <string name="single_note_or_list">单条笔记</string>
+    <string name="single_note_or_list">单条笔记或单个列表</string>
     <string name="select_note">选择笔记</string>
 
     <!-- Images -->
+    <string name="adding_images">正在添加图片</string>
+    <string name="deleting_images">正在删除图片</string>
     <string name="invalid_image">无效图片</string>
-    <string name="image_format_not_supported">不支持该图片格式</string>
+    <string name="error_while_renaming_image">重命名图片出错</string>
+    <string name="image_format_not_supported">图片格式不受支持</string>
+    <string name="delete_image_forever">永久删除图片？</string>
+    <string name="cant_load_image">无法加载图片。可能已被移动或删除。</string>
+    <string name="unknown_name">未知名称</string>
+    <string name="unknown_error">未知错误</string>
+    <string name="insert_an_sd_card">插入 SD 卡添加图片</string>
+    <string name="please_grant_notally">请授予 Notally 发送通知的权限。 此权限用于展示进度，如果像删除图片或导入备份等操作需要一定时间。</string>
+
+    <plurals name="cant_add_images">
+        <item quantity="one">无法添加 %d 张图片</item>
+        <item quantity="other">无法添加 %d 张图片</item>
+    </plurals>
+
 </resources>
