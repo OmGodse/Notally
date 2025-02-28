@@ -152,6 +152,9 @@
         <item quantity="few">%d slike niso bile dodane.</item>
         <item quantity="other">%d slik ni bilo dodanih.</item>
     </plurals>
+    <string name="channel_backups_images">Varnostne kopije in slike</string>
+    <string name="channel_reminders">Opomniki</string>
+    <string name="channel_recordings">Zvočni posnetki</string>
 
     <!-- Audio -->
     <string name="play">Predvajaj</string>

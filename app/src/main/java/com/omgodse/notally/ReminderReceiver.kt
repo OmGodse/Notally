@@ -82,7 +82,7 @@ class ReminderReceiver : BroadcastReceiver() {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 val channelId = "com.omgodse.reminders"
-                val channel = NotificationChannel(channelId, "Reminders", NotificationManager.IMPORTANCE_HIGH)
+                val channel = NotificationChannel(channelId, context.getString(R.string.channel_reminders), NotificationManager.IMPORTANCE_HIGH)
                 manager.createNotificationChannel(channel)
                 builder.setChannelId(channelId)
             } else {

@@ -33,7 +33,7 @@ class AttachmentDeleteService : Service() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channelId = "com.omgodse.fileUpdates"
-            val channel = NotificationChannel(channelId, "Backups and Images", NotificationManager.IMPORTANCE_DEFAULT)
+            val channel = NotificationChannel(channelId, getString(R.string.channel_backups_images), NotificationManager.IMPORTANCE_DEFAULT)
             manager.createNotificationChannel(channel)
             builder.setChannelId(channelId)
         }

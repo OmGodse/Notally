@@ -35,7 +35,7 @@ class AudioRecordService : Service() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channelId = "com.omgodse.audio"
-            val channel = NotificationChannel(channelId, "Audio Recordings", NotificationManager.IMPORTANCE_HIGH)
+            val channel = NotificationChannel(channelId, getString(R.string.channel_recordings), NotificationManager.IMPORTANCE_HIGH)
             manager.createNotificationChannel(channel)
             builder.setChannelId(channelId)
         }
