@@ -115,7 +115,7 @@
     <string name="choose_folder">Klasör seç</string>
     <string name="disable_auto_backup">Otomatik yedeklemeyi devre dışı bırak</string>
     <string name="choose_another_folder">Başka klasör seç</string>
-    <string name="cant_find_folder">Klasör bulunamıyor. Taşınmış yada silinmiş olabilir</string>
+    <string name="cant_find_folder">Klasör bulunamıyor. Taşınmış ya da silinmiş olabilir</string>
     <string name="invalid_backup">Geçersiz yedek</string>
     <string name="imported_backup">İçeri aktarılmış yedek</string>
     <string name="exporting_backup">Dışarı aktarılıyor</string>
@@ -131,7 +131,7 @@
     <string name="send_feedback">Geri bildirim gönder</string>
 
     <!-- Widget -->
-    <string name="single_note_or_list">Tek not yada liste</string>
+    <string name="single_note_or_list">Tek not ya da liste</string>
     <string name="select_note">Not seç</string>
 
     <!-- Images -->
@@ -142,7 +142,7 @@
     <string name="error_while_renaming_image">Resim yeniden adlandırırken hata oluştu</string>
     <string name="image_format_not_supported">Resim biçimi desteklenmiyor</string>
     <string name="delete_image_forever">Resmi kalıcı olarak sil?</string>
-    <string name="cant_load_image">Resim yüklenemiyor. Taşınmış yada silinmiş olabilir</string>
+    <string name="cant_load_image">Resim yüklenemiyor. Taşınmış ya da silinmiş olabilir</string>
     <string name="unknown_name">Bilinmeyen ad</string>
     <string name="unknown_error">Bilinmeyen hata</string>
     <string name="insert_an_sd_card_images">Resim eklemek icin SD card takın</string>
@@ -168,7 +168,7 @@
     <string name="to_record_audio">Ses kaydetmek için, Notally’ye mikrofona erişim izni verin</string>
     <string name="please_grant_notally_audio">Lütfen Notally’ye ses kaydetme yetkisi verin. Kayıtlar cihazınızdan dışarı çıkmayacak</string>
     <string name="insert_an_sd_card_audio">Ses kaydetmek için SD card takın</string>
-    <string name="something_went_wrong_audio">Bir şeyler ters gitti. Ses kaydı taşınmış yada silinmiş olabilir.\n\nHata : (%1$d, %2$d)</string>
+    <string name="something_went_wrong_audio">Bir şeyler ters gitti. Ses kaydı taşınmış ya da silinmiş olabilir.\n\nHata : (%1$d, %2$d)</string>
 
     <!-- Reminder -->
     <string name="time">Saat</string>
