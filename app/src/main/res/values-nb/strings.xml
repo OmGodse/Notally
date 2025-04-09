@@ -17,7 +17,10 @@
     <string name="unarchive">Fjern fra arkivet</string>
     <string name="add_images">Legg til bilder</string>
     <string name="delete_all">Slett alle</string>
+    <string name="record_audio">Ta opp lyd</string>
+    <string name="set_reminder">Angi påminnelse</string>
     <string name="change_color">Endre farge</string>
+    <string name="make_a_copy">Lag en kopi</string>
     <string name="delete_forever">Slett for godt</string>
 
     <!-- Pinning -->
@@ -46,8 +49,9 @@
     <string name="delete_label">Vil du slette etiketten?</string>
     <string name="create_new">Ingen etiketter. Vil du opprette en?</string>
     <string name="delete_all_notes">Vil du slette alle notatene?</string>
+    <string name="delete_selected_notes">Vil du slette de valgte notatene?</string>
     <string name="delete_note_forever">Vil du slette notatet for godt?</string>
-    <string name="your_notes_associated">Notatene assosiert med etikketten vil ikke bli slettet.</string>
+    <string name="your_notes_associated">Notatene tilknyttet etikketten vil ikke bli slettet.</string>
 
     <!-- Lists and Notes -->
     <string name="note">Notat</string>
@@ -55,6 +59,7 @@
     <string name="date">Dato</string>
     <string name="title">Tittel</string>
     <string name="add_item">Legg til element</string>
+    <string name="audio_recordings">Lydopptak</string>
     <string name="drag_handle">Drahåndtak</string>
     <string name="bold">Fet</string>
     <string name="link">Lenke</string>
@@ -68,6 +73,7 @@
     <string name="saved_to_notally">Lagret i Notally</string>
     <string name="empty_note">Tomt notat</string>
     <string name="empty_list">Tom liste</string>
+    <string name="select_labels">Velg etiketter</string>
 
     <!-- Messages -->
     <string name="cant_open_link">Kan ikke åpne lenken</string>
@@ -97,8 +103,9 @@
     <string name="large">Stor</string>
 
     <string name="content_density">Innholdstetthet</string>
-    <string name="max_items_to_display">Maks antall elementer å vise fra lister</string>
-    <string name="max_lines_to_display">Maks antall linjer å vise fra notater</string>
+    <string name="max_items_to_display">Maksimalt antall elementer å vise fra lister</string>
+    <string name="max_lines_to_display">Maksimalt antall linjer å vise fra notater</string>
+    <string name="max_lines_to_display_title">Maksimalt antall linjer å vise fra tittelen</string>
 
     <!-- Backup -->
     <string name="backup">Sikkerhetskopiering</string>
@@ -138,11 +145,38 @@
     <string name="unknown_name">Ukjent navn</string>
     <string name="unknown_error">Ukjent feil</string>
     <string name="insert_an_sd_card_images">Sett inn et SD-kort for å legge til bilder</string>
-    <string name="please_grant_notally_notification">Gi Notally tillatelse til å sende varsler.</string>
 
     <plurals name="cant_add_images">
         <item quantity="one">Kan ikke legge til %d bilde</item>
         <item quantity="other">Kan ikke legge til %d bilder</item>
     </plurals>
 
+    <!-- Audio -->
+    <string name="play">Spill av</string>
+    <string name="stop">Stopp</string>
+    <string name="start">Start</string>
+    <string name="pause">Sett på pause</string>
+    <string name="resume">Gjenoppta</string>
+    <string name="paused">Sett på pause</string>
+    <string name="recording">Tar opp …</string>
+    <string name="ready_to_record">Klar til å ta opp</string>
+    <string name="discard">Forkast</string>
+    <string name="save_recording">Vil du lagre opptaket?</string>
+    <string name="delete_audio_recording_forever">Vil du slette lydopptaket for godt?</string>
+    <string name="tap_for_more_options">Trykk for flere alternativer</string>
+    <string name="to_record_audio">For å ta opp lyd må du gi Notally tilgang til mikrofonen din. Trykk på Innstillinger > Tillatelser og slå på Mikrofon</string>
+    <string name="please_grant_notally_audio">Du må gi Notally tillatelse til å ta opp lyd. Lydopptakene forlater aldri enheten</string>
+    <string name="insert_an_sd_card_audio">Sett inn et SD-kort for å ta opp lyd</string>
+    <string name="something_went_wrong_audio">Noe gikk galt. Lydopptaket kan ha blitt flyttet eller slettet.\n\nFeil : (%1$d, %2$d)</string>
+
+    <!-- Reminder -->
+    <string name="time">Klokkeslett</string>
+    <string name="select_frequency">Gjenta</string>
+    <string name="does_not_repeat">Aldri gjenta</string>
+    <string name="daily">Daglig</string>
+    <string name="monthly">Månedlig</string>
+    <string name="repeats_daily">%1$s, Gjentas daglig</string>
+    <string name="repeats_monthly">%1$s, Gjentas månedlig</string>
+    <string name="please_grant_notally_notification">Du må gi Notally tillatelse til å sende varsler</string>
+    <string name="please_grant_notally_alarm">Du må gi Notally tillatelse til å angi alarmer</string>
 </resources>
