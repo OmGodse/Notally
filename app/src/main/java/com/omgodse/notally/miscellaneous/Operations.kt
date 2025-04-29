@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Build
+import android.text.format.DateUtils
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -20,12 +21,15 @@ import com.omgodse.notally.R
 import com.omgodse.notally.databinding.LabelBinding
 import com.omgodse.notally.preferences.TextSize
 import com.omgodse.notally.room.Color
+import com.omgodse.notally.room.Frequency
 import com.omgodse.notally.room.ListItem
+import com.omgodse.notally.room.Reminder
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStreamWriter
 import java.io.PrintWriter
 import java.text.DateFormat
+import java.util.Calendar
 
 object Operations {
 
@@ -104,6 +108,26 @@ object Operations {
         }
     }
 
+    fun getReminderDateFormat(timestamp: Long): Int {
+        var dateFormat = DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_ABBREV_MONTH
+        val future = Calendar.getInstance()
+        val now = Calendar.getInstance()
+
+        // If reminder is not in next year, omit the year display.
+        future.timeInMillis = timestamp
+        if (future.get(Calendar.YEAR) == now.get(Calendar.YEAR)) {
+            dateFormat = dateFormat or DateUtils.FORMAT_NO_YEAR
+        }
+
+        return dateFormat
+    }
+
+    fun isReminderInPast(reminder: Reminder): Boolean {
+        val future = Calendar.getInstance()
+        val now = Calendar.getInstance()
+        future.timeInMillis = reminder.timestamp
+        return (future < now) and (reminder.frequency == Frequency.ONCE)
+    }
 
     fun bindLabels(group: ChipGroup, labels: List<String>, textSize: String) {
         if (labels.isEmpty()) {

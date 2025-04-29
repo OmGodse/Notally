@@ -15,6 +15,7 @@ import com.omgodse.notally.activities.TakeNote
 import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.room.BaseNote
+import com.omgodse.notally.room.Folder
 import com.omgodse.notally.room.Frequency
 import com.omgodse.notally.room.IdReminder
 import com.omgodse.notally.room.NotallyDatabase
@@ -73,6 +74,11 @@ class ReminderReceiver : BroadcastReceiver() {
 
 
         private fun sendNotification(context: Context, baseNote: BaseNote) {
+            if (baseNote.folder == Folder.DELETED) {
+                // ignore showing notifications for deleted reminders
+                return
+            }
+
             val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             val builder = Notification.Builder(context)
 

@@ -9,11 +9,13 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
+import android.graphics.Paint
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.text.Editable
+import android.text.format.DateUtils
 import android.util.TypedValue
 import android.view.MenuItem
 import android.view.View
@@ -425,15 +427,23 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
     private fun setupReminder() {
         val padding = (resources.displayMetrics.density * 16).toInt()
-        val formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT)
+
         model.reminder.observe(this) { reminder ->
             if (reminder != null) {
-                val date = formatter.format(reminder.timestamp)
+                val dateFormat = Operations.getReminderDateFormat(reminder.timestamp)
+                val date = DateUtils.formatDateTime(binding.root.context, reminder.timestamp, dateFormat)
                 binding.Reminder.text = when (reminder.frequency) {
                     Frequency.ONCE -> date
                     Frequency.DAILY -> getString(R.string.repeats_daily, date)
                     Frequency.MONTHLY -> getString(R.string.repeats_monthly, date)
                 }
+
+                if (Operations.isReminderInPast(reminder)) {
+                    binding.Reminder.paintFlags = binding.Reminder.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                } else {
+                    binding.Reminder.paintFlags = binding.Reminder.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+                }
+
                 binding.Reminder.visibility = View.VISIBLE
                 binding.DateCreated.updatePadding(bottom = 0)
             } else {
@@ -497,7 +507,8 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
             val calendar = Calendar.getInstance()
             val hour = calendar.get(Calendar.HOUR_OF_DAY)
             val minute = calendar.get(Calendar.MINUTE)
-            TimePickerDialog(this, timeListener, hour, minute, false).show()
+            val is24HourView = android.text.format.DateFormat.is24HourFormat(applicationContext);
+            TimePickerDialog(this, timeListener, hour, minute, is24HourView).show()
         }
 
         var selectedFrequency = 0

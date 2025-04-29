@@ -1,6 +1,8 @@
 package com.omgodse.notally.recyclerview.viewholder
 
+import android.graphics.Paint
 import android.graphics.drawable.Drawable
+import android.text.format.DateUtils
 import android.util.TypedValue
 import android.view.View
 import android.widget.TextView
@@ -32,6 +34,7 @@ import com.omgodse.notally.room.SpanRepresentation
 import com.omgodse.notally.room.Type
 import org.ocpsoft.prettytime.PrettyTime
 import java.io.File
+import java.util.Calendar
 import java.util.Date
 
 class BaseNoteVH(
@@ -43,8 +46,7 @@ class BaseNoteVH(
     maxTitle: Int,
     listener: ItemListener,
     private val prettyTime: PrettyTime,
-    private val fullFormat: java.text.DateFormat,
-    private val shortFormat: java.text.DateFormat
+    private val fullFormat: java.text.DateFormat
 ) : RecyclerView.ViewHolder(binding.root) {
 
     init {
@@ -208,13 +210,21 @@ class BaseNoteVH(
 
     private fun setReminder(reminder: Reminder?) {
         if (reminder != null) {
-            val date = shortFormat.format(reminder.timestamp)
+            val dateFormat = Operations.getReminderDateFormat(reminder.timestamp)
             val context = binding.root.context
+            val date = DateUtils.formatDateTime(context, reminder.timestamp, dateFormat)
             binding.Reminder.text = when (reminder.frequency) {
                 Frequency.ONCE -> date
                 Frequency.DAILY -> context.getString(R.string.repeats_daily, date)
                 Frequency.MONTHLY -> context.getString(R.string.repeats_monthly, date)
             }
+
+            if (Operations.isReminderInPast(reminder)) {
+                binding.Reminder.paintFlags = binding.Reminder.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            } else {
+                binding.Reminder.paintFlags = binding.Reminder.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+            }
+
             binding.Reminder.visibility = View.VISIBLE
         } else binding.Reminder.visibility = View.GONE
     }
