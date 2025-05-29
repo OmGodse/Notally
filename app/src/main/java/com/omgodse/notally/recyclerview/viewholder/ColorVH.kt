@@ -9,13 +9,13 @@ import com.omgodse.notally.room.Color
 class ColorVH(private val binding: RecyclerColorBinding, listener: ItemListener) : RecyclerView.ViewHolder(binding.root) {
 
     init {
-        binding.CardView.setOnClickListener {
+        binding.root.setOnClickListener {
             listener.onClick(adapterPosition)
         }
     }
 
     fun bind(color: Color) {
         val value = Operations.extractColor(color, binding.root.context)
-        binding.CardView.setCardBackgroundColor(value)
+        binding.root.setCardBackgroundColor(value)
     }
 }
