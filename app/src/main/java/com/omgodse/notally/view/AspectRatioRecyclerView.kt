@@ -1,4 +1,4 @@
-package com.omgodse.notally.image
+package com.omgodse.notally.view
 
 import android.content.Context
 import android.util.AttributeSet
