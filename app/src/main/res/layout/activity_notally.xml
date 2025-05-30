@@ -74,7 +74,7 @@
                 android:layout_height="1dp"
                 android:background="?android:attr/listDivider" />
 
-            <com.omgodse.notally.OverflowEditText
+            <com.omgodse.notally.view.OverflowEditText
                 android:id="@+id/EnterBody"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
