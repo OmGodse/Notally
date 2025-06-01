@@ -375,7 +375,9 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
             if (progress.inProgress) {
                 dialog.show()
                 dialogBinding.ProgressBar.max = progress.total
-                dialogBinding.ProgressBar.setProgressCompat(progress.current, true)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    dialogBinding.ProgressBar.setProgress(progress.current, true)
+                } else dialogBinding.ProgressBar.progress = progress.current
                 dialogBinding.Count.text = getString(R.string.count, progress.current, progress.total)
             } else dialog.dismiss()
         }
