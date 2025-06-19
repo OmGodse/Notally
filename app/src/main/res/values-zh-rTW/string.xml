@@ -156,31 +156,31 @@
     </plurals>
 
     <!-- Audio -->
-    <string name="play">Play</string>
-    <string name="stop">Stop</string>
-    <string name="start">Start</string>
-    <string name="pause">Pause</string>
-    <string name="resume">Resume</string>
-    <string name="paused">Paused</string>
-    <string name="recording">Recording…</string>
-    <string name="ready_to_record">Ready to record</string>
+    <string name="play">播放</string>
+    <string name="stop">停止</string>
+    <string name="start">開始</string>
+    <string name="pause">暫停</string>
+    <string name="resume">恢復</string>
+    <string name="paused">已暫停</string>
+    <string name="recording">錄音中…</string>
+    <string name="ready_to_record">準備錄音</string>
     <string name="discard">Discard</string>
-    <string name="save_recording">Save recording?</string>
-    <string name="delete_audio_recording_forever">Delete audio recording forever?</string>
-    <string name="tap_for_more_options">Tap for more options</string>
+    <string name="save_recording">保存錄音?</string>
+    <string name="delete_audio_recording_forever">永久刪除錄音?</string>
+    <string name="tap_for_more_options">點擊查看更多選項</string>
     <string name="to_record_audio">To record audio, allow Notally access to your microphone. Tap Settings > Permissions and turn Microphone on</string>
     <string name="please_grant_notally_audio">Please grant Notally the permission to record audio. Recordings never leave your device</string>
-    <string name="insert_an_sd_card_audio">Insert an SD card to record audio</string>
+    <string name="insert_an_sd_card_audio">插入SD卡來錄音</string>
     <string name="something_went_wrong_audio">Something went wrong. The audio recording may have been moved or deleted.\n\nError : (%1$d, %2$d)</string>
 
     <!-- Reminder -->
-    <string name="time">Time</string>
-    <string name="select_frequency">Select frequency</string>
-    <string name="does_not_repeat">Does not repeat</string>
-    <string name="daily">Daily</string>
-    <string name="monthly">Monthly</string>
-    <string name="repeats_daily">%1$s, Repeats daily</string>
-    <string name="repeats_monthly">%1$s, Repeats monthly</string>
-    <string name="please_grant_notally_notification">Please grant Notally the permission to send notifications</string>
-    <string name="please_grant_notally_alarm">Please grant Notally the permission to set alarms</string>
+    <string name="time">時間</string>
+    <string name="select_frequency">選擇頻率</string>
+    <string name="does_not_repeat">不要重複</string>
+    <string name="daily">每天</string>
+    <string name="monthly">每月</string>
+    <string name="repeats_daily">%1$s，每天重複</string>
+    <string name="repeats_monthly">%1$s，每月重複</string>
+    <string name="please_grant_notally_notification">請授予 Notally 傳送通知的權限</string>
+    <string name="please_grant_notally_alarm">請授予 Notally 設定鬧鐘的權限</string>
 </resources>
