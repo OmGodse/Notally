@@ -1,0 +1,186 @@
+<resources>
+    <string name="app_name" translatable="false">Notally</string>
+
+    <!-- Fragment Titles -->
+    <string name="notes">筆記</string>
+    <string name="labels">標籤</string>
+    <string name="deleted">已刪除</string>
+    <string name="archived">已封存</string>
+    <string name="settings">設定</string>
+
+    <!-- Menu Options -->
+    <string name="share">分享</string>
+    <string name="filter">過濾</string>
+    <string name="search">搜尋</string>
+    <string name="delete">刪除</string>
+    <string name="restore">還原</string>
+    <string name="archive">封存</string>
+    <string name="unarchive">取消封存</string>
+    <string name="add_images">新增圖片</string>
+    <string name="delete_all">刪除全部</string>
+    <string name="record_audio">Record audio</string>
+    <string name="set_reminder">Set reminder</string>
+    <string name="change_color">更改色彩</string>
+    <string name="make_a_copy">Make a copy</string>
+    <string name="delete_forever">永久刪除</string>
+
+    <!-- Pinning -->
+    <string name="pin">置頂</string>
+    <string name="unpin">取消置頂</string>
+    <string name="pinned">已置頂</string>
+    <string name="others">其他</string>
+
+    <!-- Chooser dialog hints -->
+    <string name="view_note">查看筆記</string>
+
+    <!-- Dialogs -->
+    <string name="save">保存</string>
+    <string name="edit">編輯</string>
+    <string name="cancel">取消</string>
+    <string name="continue_">繼續</string>
+    <string name="open_link">打開連結</string>
+    <string name="make_list">製作列表</string>
+    <string name="take_note">記筆記</string>
+    <string name="add_label">新增標籤</string>
+    <string name="export">匯出</string>
+    <string name="view_file">查看檔案</string>
+    <string name="save_to_device">保存到設備</string>
+    <string name="edit_label">編輯標籤</string>
+    <string name="label_exists">標籤已存在</string>
+    <string name="delete_label">刪除標籤?</string>
+    <string name="create_new">沒有標籤。建立一個？</string>
+    <string name="delete_all_notes">刪除全部筆記？</string>
+    <string name="delete_selected_notes">Delete selected notes?</string>
+    <string name="delete_note_forever">永久刪除筆記？</string>
+    <string name="your_notes_associated">不會刪除與此標籤相關的筆記</string>
+
+    <!-- Lists and Notes -->
+    <string name="note">筆記</string>
+    <string name="item">項目</string>
+    <string name="date">日期</string>
+    <string name="title">標題</string>
+    <string name="add_item">新增項目</string>
+    <string name="audio_recordings">Audio Recordings</string>
+    <string name="drag_handle">拖動處理</string>
+    <string name="bold">粗體</string>
+    <string name="link">連結</string>
+    <string name="italic">斜體</string>
+    <string name="strikethrough">刪除線</string>
+    <string name="clear_formatting">清除格式</string>
+    <string name="monospace">等寬</string>
+
+    <!-- Miscellaneous -->
+    <string name="saved_to_device">Saved to device</string>
+    <string name="saved_to_notally">Saved to Notally</string>
+    <string name="empty_note">Empty note</string>
+    <string name="empty_list">Empty list</string>
+    <string name="select_labels">Select labels</string>
+
+    <!-- Messages -->
+    <string name="cant_open_link">Can’t open link</string>
+    <string name="something_went_wrong">Something went wrong. Please try again.</string>
+    <string name="install_an_email">Install an email app to send feedback</string>
+    <string name="install_a_browser">Install a browser to open this link</string>
+    <string name="cant_find_note">Can’t find note. It may have been deleted</string>
+
+    <!-- Settings Page -->
+    <string name="appearance">Appearance</string>
+
+    <string name="view">View</string>
+    <string name="list">List</string>
+    <string name="grid">Grid</string>
+
+    <string name="theme">Theme</string>
+    <string name="dark">Dark</string>
+    <string name="light">Light</string>
+    <string name="follow_system">Follow system</string>
+
+    <string name="date_format">Date format</string>
+    <string name="none">None</string>
+
+    <string name="text_size">Text size</string>
+    <string name="small">Small</string>
+    <string name="medium">Medium</string>
+    <string name="large">Large</string>
+
+    <string name="content_density">Content density</string>
+    <string name="max_items_to_display">Max items to display in list</string>
+    <string name="max_lines_to_display">Max lines to display in note</string>
+    <string name="max_lines_to_display_title">Max lines to display in title</string>
+
+    <!-- Backup -->
+    <string name="backup">Backup</string>
+    <string name="auto_backup">Auto backup</string>
+    <string name="tap_to_set_up">Tap to set up</string>
+    <string name="notes_will_be">Notes will be backed up to your phone’s internal storage everyday.\n\nThis may not work if you have power saving mode enabled</string>
+    <string name="choose_folder">Choose folder</string>
+    <string name="disable_auto_backup">Disable auto backup</string>
+    <string name="choose_another_folder">Choose another folder</string>
+    <string name="cant_find_folder">Can’t find folder. It may have been moved or deleted</string>
+    <string name="invalid_backup">Invalid backup</string>
+    <string name="imported_backup">Imported backup</string>
+    <string name="exporting_backup">Exporting backup</string>
+    <string name="importing_backup">Importing backup</string>
+    <string name="calculating">Calculating…</string>
+
+    <string name="export_backup">Export backup</string>
+    <string name="import_backup">Import backup</string>
+
+    <string name="about">About</string>
+    <string name="libraries">Libraries</string>
+    <string name="rate">Rate this app</string>
+    <string name="send_feedback">Send feedback</string>
+
+    <string name="github" translatable="false">GitHub</string>
+
+    <!-- Widget -->
+    <string name="single_note_or_list">Single note or list</string>
+    <string name="select_note">Select note</string>
+
+    <!-- Images -->
+    <string name="count" translatable="false">%1$d / %2$d</string>
+    <string name="adding_images">Adding images</string>
+    <string name="deleting_images">Deleting images</string>
+    <string name="invalid_image">Invalid image</string>
+    <string name="error_while_renaming_image">Error while renaming image</string>
+    <string name="image_format_not_supported">Image format not supported</string>
+    <string name="delete_image_forever">Delete image forever?</string>
+    <string name="cant_load_image">Can’t load image. It may have been moved or deleted</string>
+    <string name="unknown_name">Unknown name</string>
+    <string name="unknown_error">Unknown error</string>
+    <string name="insert_an_sd_card_images">Insert an SD card to add images</string>
+
+    <plurals name="cant_add_images">
+        <item quantity="one">Can’t add %d image</item>
+        <item quantity="other">Can’t add %d images</item>
+    </plurals>
+
+    <!-- Audio -->
+    <string name="play">Play</string>
+    <string name="stop">Stop</string>
+    <string name="start">Start</string>
+    <string name="pause">Pause</string>
+    <string name="resume">Resume</string>
+    <string name="paused">Paused</string>
+    <string name="recording">Recording…</string>
+    <string name="ready_to_record">Ready to record</string>
+    <string name="discard">Discard</string>
+    <string name="save_recording">Save recording?</string>
+    <string name="delete_audio_recording_forever">Delete audio recording forever?</string>
+    <string name="tap_for_more_options">Tap for more options</string>
+    <string name="to_record_audio">To record audio, allow Notally access to your microphone. Tap Settings > Permissions and turn Microphone on</string>
+    <string name="please_grant_notally_audio">Please grant Notally the permission to record audio. Recordings never leave your device</string>
+    <string name="insert_an_sd_card_audio">Insert an SD card to record audio</string>
+    <string name="something_went_wrong_audio">Something went wrong. The audio recording may have been moved or deleted.\n\nError : (%1$d, %2$d)</string>
+
+    <!-- Reminder -->
+    <string name="time">Time</string>
+    <string name="select_frequency">Select frequency</string>
+    <string name="does_not_repeat">Does not repeat</string>
+    <string name="daily">Daily</string>
+    <string name="monthly">Monthly</string>
+    <string name="repeats_daily">%1$s, Repeats daily</string>
+    <string name="repeats_monthly">%1$s, Repeats monthly</string>
+    <string name="please_grant_notally_notification">Please grant Notally the permission to send notifications</string>
+    <string name="please_grant_notally_alarm">Please grant Notally the permission to set alarms</string>
+</resources>
