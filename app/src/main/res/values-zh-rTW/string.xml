@@ -18,10 +18,10 @@
     <string name="unarchive">取消封存</string>
     <string name="add_images">新增圖片</string>
     <string name="delete_all">刪除全部</string>
-    <string name="record_audio">Record audio</string>
-    <string name="set_reminder">Set reminder</string>
+    <string name="record_audio">錄音</string>
+    <string name="set_reminder">設定提醒</string>
     <string name="change_color">更改色彩</string>
-    <string name="make_a_copy">Make a copy</string>
+    <string name="make_a_copy">複製</string>
     <string name="delete_forever">永久刪除</string>
 
     <!-- Pinning -->
@@ -50,7 +50,7 @@
     <string name="delete_label">刪除標籤?</string>
     <string name="create_new">沒有標籤。建立一個？</string>
     <string name="delete_all_notes">刪除全部筆記？</string>
-    <string name="delete_selected_notes">Delete selected notes?</string>
+    <string name="delete_selected_notes">刪除選中的筆記?</string>
     <string name="delete_note_forever">永久刪除筆記？</string>
     <string name="your_notes_associated">不會刪除與此標籤相關的筆記</string>
 
@@ -60,7 +60,7 @@
     <string name="date">日期</string>
     <string name="title">標題</string>
     <string name="add_item">新增項目</string>
-    <string name="audio_recordings">Audio Recordings</string>
+    <string name="audio_recordings">錄音中</string>
     <string name="drag_handle">拖動處理</string>
     <string name="bold">粗體</string>
     <string name="link">連結</string>
@@ -70,89 +70,89 @@
     <string name="monospace">等寬</string>
 
     <!-- Miscellaneous -->
-    <string name="saved_to_device">Saved to device</string>
-    <string name="saved_to_notally">Saved to Notally</string>
-    <string name="empty_note">Empty note</string>
-    <string name="empty_list">Empty list</string>
-    <string name="select_labels">Select labels</string>
+    <string name="saved_to_device">已保存到設備</string>
+    <string name="saved_to_notally">已保存至 Notally</string>
+    <string name="empty_note">空白筆記</string>
+    <string name="empty_list">空白列表</string>
+    <string name="select_labels">選擇標籤</string>
 
     <!-- Messages -->
-    <string name="cant_open_link">Can’t open link</string>
-    <string name="something_went_wrong">Something went wrong. Please try again.</string>
-    <string name="install_an_email">Install an email app to send feedback</string>
-    <string name="install_a_browser">Install a browser to open this link</string>
-    <string name="cant_find_note">Can’t find note. It may have been deleted</string>
+    <string name="cant_open_link">無法開啟連結</string>
+    <string name="something_went_wrong">發生錯誤。請重試。</string>
+    <string name="install_an_email">安裝電子信箱應用來傳送回饋</string>
+    <string name="install_a_browser">安裝瀏覽器打開連結</string>
+    <string name="cant_find_note">找不到筆記。可能已被刪除。</string>
 
     <!-- Settings Page -->
-    <string name="appearance">Appearance</string>
+    <string name="appearance">外觀</string>
 
-    <string name="view">View</string>
-    <string name="list">List</string>
-    <string name="grid">Grid</string>
+    <string name="view">檢視</string>
+    <string name="list">列表</string>
+    <string name="grid">網格</string>
 
-    <string name="theme">Theme</string>
-    <string name="dark">Dark</string>
-    <string name="light">Light</string>
-    <string name="follow_system">Follow system</string>
+    <string name="theme">主題</string>
+    <string name="dark">深色</string>
+    <string name="light">淺色</string>
+    <string name="follow_system">跟隨系統</string>
 
-    <string name="date_format">Date format</string>
-    <string name="none">None</string>
+    <string name="date_format">日期格式</string>
+    <string name="none">無</string>
 
-    <string name="text_size">Text size</string>
-    <string name="small">Small</string>
-    <string name="medium">Medium</string>
-    <string name="large">Large</string>
+    <string name="text_size">文字大小</string>
+    <string name="small">小</string>
+    <string name="medium">中</string>
+    <string name="large">大</string>
 
-    <string name="content_density">Content density</string>
-    <string name="max_items_to_display">Max items to display in list</string>
-    <string name="max_lines_to_display">Max lines to display in note</string>
-    <string name="max_lines_to_display_title">Max lines to display in title</string>
+    <string name="content_density">內容密度</string>
+    <string name="max_items_to_display">列表最多顯示多少項目</string>
+    <string name="max_lines_to_display">筆記最多顯示幾行</string>
+    <string name="max_lines_to_display_title">標題最多顯示幾行</string>
 
     <!-- Backup -->
-    <string name="backup">Backup</string>
-    <string name="auto_backup">Auto backup</string>
-    <string name="tap_to_set_up">Tap to set up</string>
-    <string name="notes_will_be">Notes will be backed up to your phone’s internal storage everyday.\n\nThis may not work if you have power saving mode enabled</string>
-    <string name="choose_folder">Choose folder</string>
-    <string name="disable_auto_backup">Disable auto backup</string>
-    <string name="choose_another_folder">Choose another folder</string>
-    <string name="cant_find_folder">Can’t find folder. It may have been moved or deleted</string>
-    <string name="invalid_backup">Invalid backup</string>
-    <string name="imported_backup">Imported backup</string>
-    <string name="exporting_backup">Exporting backup</string>
-    <string name="importing_backup">Importing backup</string>
-    <string name="calculating">Calculating…</string>
+    <string name="backup">備份</string>
+    <string name="auto_backup">自動備份</string>
+    <string name="tap_to_set_up">點擊進行設定</string>
+    <string name="notes_will_be">筆記每天將備份到你手机的內部儲存中。\n\n如果你啟用了省電模式，此功能可能無法正常運作。</string>
+    <string name="choose_folder">選擇資料夾</string>
+    <string name="disable_auto_backup">進用自動備份</string>
+    <string name="choose_another_folder">選擇其他資料夾</string>
+    <string name="cant_find_folder">找不到該資料夾。可能被移動或刪除。</string>
+    <string name="invalid_backup">無效的備份</string>
+    <string name="imported_backup">已匯入備份</string>
+    <string name="exporting_backup">正在匯出備份</string>
+    <string name="importing_backup">正在匯入備份</string>
+    <string name="calculating">計算中…</string>
 
-    <string name="export_backup">Export backup</string>
-    <string name="import_backup">Import backup</string>
+    <string name="export_backup">匯出備份</string>
+    <string name="import_backup">匯入備份</string>
 
-    <string name="about">About</string>
-    <string name="libraries">Libraries</string>
-    <string name="rate">Rate this app</string>
-    <string name="send_feedback">Send feedback</string>
+    <string name="about">關於</string>
+    <string name="Libraries">庫</string>
+    <string name="rate">評價此應用</string>
+    <string name="send_feedback">傳送回饋</string>
 
     <string name="github" translatable="false">GitHub</string>
 
     <!-- Widget -->
-    <string name="single_note_or_list">Single note or list</string>
-    <string name="select_note">Select note</string>
+    <string name="single_note_or_list">單條筆記或列表</string>
+    <string name="select_note">選擇筆記</string>
 
     <!-- Images -->
     <string name="count" translatable="false">%1$d / %2$d</string>
-    <string name="adding_images">Adding images</string>
-    <string name="deleting_images">Deleting images</string>
-    <string name="invalid_image">Invalid image</string>
-    <string name="error_while_renaming_image">Error while renaming image</string>
-    <string name="image_format_not_supported">Image format not supported</string>
-    <string name="delete_image_forever">Delete image forever?</string>
-    <string name="cant_load_image">Can’t load image. It may have been moved or deleted</string>
-    <string name="unknown_name">Unknown name</string>
-    <string name="unknown_error">Unknown error</string>
-    <string name="insert_an_sd_card_images">Insert an SD card to add images</string>
+    <string name="adding_images">新增圖片</string>
+    <string name="deleting_images">刪除圖片</string>
+    <string name="invalid_image">無效的圖片</string>
+    <string name="error_while_renaming_image">重新命名圖片時發生錯誤</string>
+    <string name="image_format_not_supported">不支持的圖片格式</string>
+    <string name="delete_image_forever">永久刪除圖片？</string>
+    <string name="cant_load_image">無法載入圖片。可能被移動或刪除。</string>
+    <string name="unknown_name">未知名稱</string>
+    <string name="unknown_error">未知錯誤</string>
+    <string name="insert_an_sd_card_images">插入SD卡來新增圖片</string>
 
     <plurals name="cant_add_images">
-        <item quantity="one">Can’t add %d image</item>
-        <item quantity="other">Can’t add %d images</item>
+        <item quantity="one">無法新增 %d 張圖片</item>
+        <item quantity="other">無法新增 %d 張圖片</item>
     </plurals>
 
     <!-- Audio -->
