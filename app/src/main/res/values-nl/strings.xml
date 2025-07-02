@@ -17,7 +17,10 @@
     <string name="unarchive">Actualiseren</string>
     <string name="add_images">Afbeeldingen toevoegen</string>
     <string name="delete_all">Alles verwijderen</string>
+    <string name="record_audio">Geluid openemen</string>
+    <string name="set_reminder">Herinnering instellen</string>
     <string name="change_color">Wijzig kleur</string>
+    <string name="make_a_copy">Maak een kopie</string>
     <string name="delete_forever">Definitief verwijderen</string>
 
     <!-- Pinning -->
@@ -56,6 +59,7 @@
     <string name="date">Datum</string>
     <string name="title">Titel</string>
     <string name="add_item">Voeg item toe</string>
+    <string name="audio_recordings">Geluidsopnames</string>
     <string name="drag_handle">Handvat</string>
     <string name="bold">Vetgedrukt</string>
     <string name="link">Link</string>
@@ -148,4 +152,32 @@
         <item quantity="other">Kan %d afbeeldingen niet toevoegen</item>
     </plurals>
 
+    <!-- Audio -->
+    <string name="play">Afspelen</string>
+    <string name="stop">Stoppen</string>
+    <string name="start">Starten</string>
+    <string name="pause">Pauzeren</string>
+    <string name="resume">Doorgaan</string>
+    <string name="paused">Gepauzeerd</string>
+    <string name="recording">Opnemen…</string>
+    <string name="ready_to_record">Gereed om op te nemen</string>
+    <string name="discard">Verwijderen</string>
+    <string name="save_recording">Opname opslaan?</string>
+    <string name="delete_audio_recording_forever">Opname definitief verwijderen?</string>
+    <string name="tap_for_more_options">Aanraken voor meer opties</string>
+    <string name="to_record_audio">Om geluid op te nemen, sta Notally toe om de microfoon te gebruiken. Ga naar Instellingen > Toegang en zet de microfoon aan</string>
+    <string name="please_grant_notally_audio">Geef a.u.b. Notally toestemming om geluid op te nemen. Opnames zullen nooit het apparaat verlaten</string>
+    <string name="insert_an_sd_card_audio">Plaats een SD kaart om geluid op te nemen</string>
+    <string name="something_went_wrong_audio">Er ging iets mis. De geluidsopname is mogelijk verplaatst of verwijderd.\n\nError : (%1$d, %2$d)</string>
+
+    <!-- Reminder -->
+    <string name="time">Tijd</string>
+    <string name="select_frequency">Selecteer frequentie</string>
+    <string name="does_not_repeat">Wordt niet herhaald</string>
+    <string name="daily">Dagelijks</string>
+    <string name="monthly">Maandelijks</string>
+    <string name="repeats_daily">%1$s, Dagelijks herhalen</string>
+    <string name="repeats_monthly">%1$s, Maandelijks herhalen</string>
+    <string name="please_grant_notally_notification">Geef Notally a.u.b de toestemming om meldingen te versturen</string>
+    <string name="please_grant_notally_alarm">Geef Notally a.u.b. toegang om alarmen in te stellen</string>
 </resources>
