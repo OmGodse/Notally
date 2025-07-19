@@ -2,30 +2,30 @@ Notally is a minimalistic note taking app with a beautiful material design and p
 
 <b>Organization</b>
 
-Set reminders to be on track
-Create lists to stay organised
-Pin notes to always keep them at the top
-Color and label your notes for quick organisation
-Archive notes to keep them around, but out of your way
-Complement your notes with pictures (JPG, PNG, WEBP)
-Create rich text notes with support for bold, italics, mono space and strike-through
-Add clickable links to notes with support for phone numbers, email addresses and web urls
+* Set reminders to be on track
+* Create lists to stay organised
+* Pin notes to always keep them at the top
+* Color and label your notes for quick organisation
+* Archive notes to keep them around, but out of your way
+* Complement your notes with pictures (JPG, PNG, WEBP)
+* Create rich text notes with support for bold, italics, mono space and strike-through
+* Add clickable links to notes with support for phone numbers, email addresses and web urls
 
 <b>Export notes in the following formats</b>
 
-• PDF
-• TXT
-• JSON
-• HTML
+* PDF
+* TXT
+* JSON
+* HTML
 
 <b>Convenience</b>
 
-• Dark mode
-• Completely free
-• Adjustable text size
-• Auto save and backup
-• APK size of 1.4 MB (1.8 MB uncompressed)
-• Add notes and lists to your home screen with widgets
+* Dark mode
+* Completely free
+* Adjustable text size
+* Auto save and backup
+* APK size of 1.4 MB (1.8 MB uncompressed)
+* Add notes and lists to your home screen with widgets
 
 <b>Privacy</b>
 
@@ -33,11 +33,11 @@ There are no ads, trackers or analytics of any kind. All your notes are stored c
 
 <b>Permissions</b>
 
-• show notifications, run foreground service
+* show notifications, run foreground service
 
 Used to display a notification if deleting images or importing backups takes time
 
-• prevent phone from sleeping, run at startup
+* prevent phone from sleeping, run at startup
 
 Used by the auto backup feature to ensure backups keep happening even if your phone is restarted
 
