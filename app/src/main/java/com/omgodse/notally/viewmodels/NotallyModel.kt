@@ -65,7 +65,7 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
 
     var id = 0L
     var folder = Folder.NOTES
-    var color = Color.DEFAULT
+    val color = BetterLiveData(Color.DEFAULT)
 
     var title = String()
     var pinned = false
@@ -260,7 +260,7 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
             if (baseNote != null) {
                 this.id = id
                 folder = baseNote.folder
-                color = baseNote.color
+                color.value = baseNote.color
 
                 title = baseNote.title
                 pinned = baseNote.pinned
@@ -322,7 +322,7 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
         val spans = getFilteredSpans(body)
         val body = this.body.trimEnd().toString()
         val items = this.items.filter { item -> item.body.isNotEmpty() }
-        return BaseNote(id, type, folder, color, title, pinned, timestamp, labels.value, body, spans, items, images.value, audios.value, reminder.value)
+        return BaseNote(id, type, folder, color.value, title, pinned, timestamp, labels.value, body, spans, items, images.value, audios.value, reminder.value)
     }
 
     private fun getFilteredSpans(spanned: Spanned): ArrayList<SpanRepresentation> {

@@ -195,7 +195,6 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         binding.DateCreated.text = formatter.format(model.timestamp)
 
         binding.EnterTitle.setText(model.title)
-        setColor()
     }
 
 
@@ -341,9 +340,17 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
             .show()
     }
 
-    private fun pin(item: MenuItem) {
-        model.pinned = !model.pinned
-        bindPinned(item)
+
+    private fun setupColor() {
+        model.color.observe(this, Observer { color ->
+            val colorInt = Operations.extractColor(color, this)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                window.statusBarColor = colorInt
+            }
+            binding.root.setBackgroundColor(colorInt)
+            binding.RecyclerView.setBackgroundColor(colorInt)
+            binding.Toolbar.backgroundTintList = ColorStateList.valueOf(colorInt)
+        })
     }
 
 
@@ -543,16 +550,6 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     }
 
 
-    private fun setColor() {
-        val color = Operations.extractColor(model.color, this)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            window.statusBarColor = color
-        }
-        binding.root.setBackgroundColor(color)
-        binding.RecyclerView.setBackgroundColor(color)
-        binding.Toolbar.backgroundTintList = ColorStateList.valueOf(color)
-    }
-
     private fun setupToolbar() {
         binding.Toolbar.setNavigationOnClickListener { finish() }
 
@@ -611,6 +608,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
             Operations.bindLabels(binding.LabelGroup, labels, model.textSize)
         })
 
+        setupColor()
         setupImages()
         setupAudios()
         setupReminder()
