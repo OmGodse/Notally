@@ -71,7 +71,7 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
     var pinned = false
     var timestamp = System.currentTimeMillis()
 
-    val labels = ArrayList<String>()
+    val labels = BetterLiveData(ArrayList<String>())
 
     var body: Editable = SpannableStringBuilder()
 
@@ -250,12 +250,6 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
     }
 
 
-    fun setLabels(list: List<String>) {
-        labels.clear()
-        labels.addAll(list)
-    }
-
-
     suspend fun setState(id: Long) {
         if (id != 0L) {
             isNewNote = false
@@ -272,7 +266,7 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
                 pinned = baseNote.pinned
                 timestamp = baseNote.timestamp
 
-                setLabels(baseNote.labels)
+                labels.value = ArrayList(baseNote.labels)
 
                 body = baseNote.body.applySpans(baseNote.spans)
 
@@ -328,7 +322,7 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
         val spans = getFilteredSpans(body)
         val body = this.body.trimEnd().toString()
         val items = this.items.filter { item -> item.body.isNotEmpty() }
-        return BaseNote(id, type, folder, color, title, pinned, timestamp, labels, body, spans, items, images.value, audios.value, reminder.value)
+        return BaseNote(id, type, folder, color, title, pinned, timestamp, labels.value, body, spans, items, images.value, audios.value, reminder.value)
     }
 
     private fun getFilteredSpans(spanned: Spanned): ArrayList<SpanRepresentation> {

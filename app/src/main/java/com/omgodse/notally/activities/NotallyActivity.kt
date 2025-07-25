@@ -141,9 +141,8 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
                 }
                 REQUEST_SELECT_LABELS -> {
                     val list = data?.getStringArrayListExtra(SelectLabels.SELECTED_LABELS)
-                    if (list != null && list != model.labels) {
-                        model.setLabels(list)
-                        Operations.bindLabels(binding.LabelGroup, model.labels, model.textSize)
+                    if (list != null && list != model.labels.value) {
+                        model.labels.value = list
                     }
                 }
                 REQUEST_RECORD_AUDIO -> model.addAudio()
@@ -196,8 +195,6 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         binding.DateCreated.text = formatter.format(model.timestamp)
 
         binding.EnterTitle.setText(model.title)
-        Operations.bindLabels(binding.LabelGroup, model.labels, model.textSize)
-
         setColor()
     }
 
@@ -312,7 +309,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
     private fun label() {
         val intent = Intent(this, SelectLabels::class.java)
-        intent.putStringArrayListExtra(SelectLabels.SELECTED_LABELS, model.labels)
+        intent.putStringArrayListExtra(SelectLabels.SELECTED_LABELS, model.labels.value)
         startActivityForResult(intent, REQUEST_SELECT_LABELS)
     }
 
@@ -609,6 +606,10 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         binding.DateCreated.setTextSize(TypedValue.COMPLEX_UNIT_SP, date)
         binding.Reminder.setTextSize(TypedValue.COMPLEX_UNIT_SP, date)
         binding.EnterBody.setTextSize(TypedValue.COMPLEX_UNIT_SP, body)
+
+        model.labels.observe(this, Observer { labels ->
+            Operations.bindLabels(binding.LabelGroup, labels, model.textSize)
+        })
 
         setupImages()
         setupAudios()
