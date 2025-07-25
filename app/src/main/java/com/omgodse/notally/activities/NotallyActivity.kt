@@ -9,27 +9,38 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.text.Editable
+import android.text.Spannable
+import android.text.style.BackgroundColorSpan
 import android.util.TypedValue
+import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup.LayoutParams
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.text.getSpans
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.Transition
+import androidx.transition.TransitionManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.transition.MaterialFade
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.ActivityNotallyBinding
 import com.omgodse.notally.databinding.DialogProgressBinding
@@ -359,10 +370,10 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         binding.ImagePreview.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
         PagerSnapHelper().attachToRecyclerView(binding.ImagePreview)
 
-        model.images.observe(this) { list ->
+        model.images.observe(this, Observer { list ->
             adapter.submitList(list)
             binding.ImagePreview.isVisible = list.isNotEmpty()
-        }
+        })
 
         val dialogBinding = DialogProgressBinding.inflate(layoutInflater)
         val dialog = MaterialAlertDialogBuilder(this)
@@ -371,7 +382,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
             .setCancelable(false)
             .create()
 
-        model.addingImages.observe(this) { progress ->
+        model.addingImages.observe(this, Observer { progress ->
             if (progress.inProgress) {
                 dialog.show()
                 dialogBinding.ProgressBar.max = progress.total
@@ -380,11 +391,11 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
                 } else dialogBinding.ProgressBar.progress = progress.current
                 dialogBinding.Count.text = getString(R.string.count, progress.current, progress.total)
             } else dialog.dismiss()
-        }
+        })
 
-        model.eventBus.observe(this) { event ->
+        model.eventBus.observe(this, Observer { event ->
             event.handle { errors -> displayImageErrors(errors) }
-        }
+        })
     }
 
     private fun displayImageErrors(errors: List<ImageError>) {
@@ -417,18 +428,18 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         }
         binding.AudioRecyclerView.adapter = adapter
 
-        model.audios.observe(this) { list ->
+        model.audios.observe(this, Observer { list ->
             adapter.submitList(list)
             binding.AudioHeader.isVisible = list.isNotEmpty()
             binding.AudioRecyclerView.isVisible = list.isNotEmpty()
-        }
+        })
     }
 
 
     private fun setupReminder() {
         val padding = (resources.displayMetrics.density * 16).toInt()
         val formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT)
-        model.reminder.observe(this) { reminder ->
+        model.reminder.observe(this, Observer { reminder ->
             if (reminder != null) {
                 val date = formatter.format(reminder.timestamp)
                 binding.Reminder.text = when (reminder.frequency) {
@@ -442,7 +453,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
                 binding.Reminder.visibility = View.GONE
                 binding.DateCreated.updatePadding(bottom = padding)
             }
-        }
+        })
 
         binding.Reminder.setOnClickListener {
             MaterialAlertDialogBuilder(this)
