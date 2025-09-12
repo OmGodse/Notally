@@ -90,7 +90,7 @@
     <string name="monthly">ماهانه</string>
     <string name="repeats_daily">%1$s، روزانه تکرار می‌شود</string>
     <string name="repeats_monthly">%1$s، ماهانه تکرار می‌شود</string>
-    <string name="please_grant_notally_alarm">لطفا به Notally اجازه‌ی گماردن هشدار را بدهید</string>
+    <string name="please_grant_notally_alarm">لطفا به Notally هیشتن گماردن هشدار را بدهید</string>
     <string name="insert_an_sd_card_audio">برای آوانگاری، کارت SD را اندرون کنید</string>
     <string name="delete_all">فروسِتُردن همه</string>
     <string name="delete_forever">سِتُردن برای همیشه</string>
@@ -134,10 +134,10 @@
     <string name="ready_to_record">آماده برای آوانگاری</string>
     <string name="libraries">کتبخانه‌ها</string>
     <string name="single_note_or_list">یک پهرست یا یادداشت یگانه</string>
-    <string name="to_record_audio">برای آوانگاری، به Notally اجازه دسترسی به میکروفون خود را بدهید. پَرماسیدن پیکربندی‌ها &gt; مجوزها و روشن کردن میکروفن</string>
+    <string name="to_record_audio">برای آوانگاری، به Notally هیشتن دسترسی به میکروفون خود را بدهید. پَرماسیدن پیکربندی‌ها &gt; پروانه‌ها و روشن کردن میکروفن</string>
     <string name="play">پخش</string>
-    <string name="please_grant_notally_audio">لطفا به Notally اجازه آوانگاری را بدهید. آوانگاره‌ها هرگز از دستگاه شما بیرون نخواهند رفت</string>
-    <string name="please_grant_notally_notification">لطفا به Notally اجازه‌ی فرستادن آگاهنده را بدهید</string>
+    <string name="please_grant_notally_audio">لطفا به Notally هیشتن آوانگاری را بدهید. آوانگاره‌ها هرگز از دستگاه شما بیرون نخواهند رفت</string>
+    <string name="please_grant_notally_notification">لطفا به Notally هیشتن فرستادن آگاهنده را بدهید</string>
     <string name="invalid_image">نگاره نامعتبر</string>
     <string name="cant_load_image">نمی‌توان نگاره را بارگرفت.شاید جابجا یا فروسِتُرده شده باشد</string>
     <string name="error_while_renaming_image">ایرنگ هنگام بازنامیدن نگاره</string>
