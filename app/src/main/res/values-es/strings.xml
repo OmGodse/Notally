@@ -15,7 +15,7 @@
     <string name="archive">Archivar</string>
     <string name="unarchive">Desarchivar</string>
     <string name="delete_all">Borrar todo</string>
-    <string name="change_color">Change color</string>
+    <string name="change_color">Cambiar color</string>
     <string name="delete_forever">Eliminar para siempre</string>
 
     <!-- Chooser dialog hints -->
