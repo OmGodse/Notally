@@ -18,7 +18,6 @@ import com.google.android.material.shape.ShapeAppearanceModel
 import com.omgodse.notally.BuildConfig
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.LabelBinding
-import com.omgodse.notally.preferences.TextSize
 import com.omgodse.notally.room.Color
 import com.omgodse.notally.room.ListItem
 import java.io.File
@@ -105,7 +104,7 @@ object Operations {
     }
 
 
-    fun bindLabels(group: ViewGroup, labels: List<String>, textSize: String) {
+    fun bindLabels(group: ViewGroup, labels: List<String>, textSize: Float) {
         if (labels.isEmpty()) {
             group.visibility = View.GONE
         } else {
@@ -113,12 +112,11 @@ object Operations {
             group.removeAllViews()
 
             val inflater = LayoutInflater.from(group.context)
-            val labelSize = TextSize.getDisplayBodySize(textSize)
 
             for (label in labels) {
                 val view = LabelBinding.inflate(inflater, group, true).root
                 view.background = getOutlinedDrawable(group.context)
-                view.setTextSize(TypedValue.COMPLEX_UNIT_SP, labelSize)
+                view.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize)
                 view.text = label
             }
         }

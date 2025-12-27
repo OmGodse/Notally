@@ -47,18 +47,17 @@ class BaseNoteVH(
     private val shortFormat: java.text.DateFormat
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    init {
-        val title = TextSize.getDisplayTitleSize(textSize)
-        val body = TextSize.getDisplayBodySize(textSize)
+    val bodySize = TextSize.getDisplayBodySize(textSize)
 
-        binding.Title.setTextSize(TypedValue.COMPLEX_UNIT_SP, title)
-        binding.Date.setTextSize(TypedValue.COMPLEX_UNIT_SP, body)
-        binding.Note.setTextSize(TypedValue.COMPLEX_UNIT_SP, body)
-        binding.Reminder.setTextSize(TypedValue.COMPLEX_UNIT_SP, body)
+    init {
+        binding.Title.setTextSize(TypedValue.COMPLEX_UNIT_SP, TextSize.getDisplayTitleSize(textSize))
+        binding.Date.setTextSize(TypedValue.COMPLEX_UNIT_SP, bodySize)
+        binding.Note.setTextSize(TypedValue.COMPLEX_UNIT_SP, bodySize)
+        binding.Reminder.setTextSize(TypedValue.COMPLEX_UNIT_SP, bodySize)
 
         binding.LinearLayout.children.forEach { view ->
             view as TextView
-            view.setTextSize(TypedValue.COMPLEX_UNIT_SP, body)
+            view.setTextSize(TypedValue.COMPLEX_UNIT_SP, bodySize)
         }
 
         binding.Title.maxLines = maxTitle
@@ -94,7 +93,7 @@ class BaseNoteVH(
         binding.Title.text = baseNote.title
         binding.Title.isVisible = baseNote.title.isNotEmpty()
 
-        Operations.bindLabels(binding.LabelGroup, baseNote.labels, textSize)
+        Operations.bindLabels(binding.LabelGroup, baseNote.labels, bodySize)
 
         if (isEmpty(baseNote)) {
             binding.Title.setText(getEmptyMessage(baseNote))
