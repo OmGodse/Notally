@@ -9,8 +9,8 @@ import android.os.Build
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import com.google.android.material.chip.ChipGroup
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.RelativeCornerSize
 import com.google.android.material.shape.RoundedCornerTreatment
@@ -105,7 +105,7 @@ object Operations {
     }
 
 
-    fun bindLabels(group: ChipGroup, labels: List<String>, textSize: String) {
+    fun bindLabels(group: ViewGroup, labels: List<String>, textSize: String) {
         if (labels.isEmpty()) {
             group.visibility = View.GONE
         } else {

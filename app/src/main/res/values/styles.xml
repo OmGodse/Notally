@@ -20,7 +20,6 @@
         <item name="textAppearancePopupMenuHeader">@style/TextAppearance.Subtitle2.PopupMenu</item>
 
         <item name="toolbarStyle">@style/Toolbar</item>
-        <item name="chipGroupStyle">@style/ChipGroup</item>
 
         <item name="materialAlertDialogTheme">@style/AlertDialog</item>
     </style>
@@ -92,18 +91,17 @@
     </style>
 
 
-    <style name="ChipGroup" parent="Widget.MaterialComponents.ChipGroup">
-        <item name="chipSpacingVertical">8dp</item>
-    </style>
-
-
-    <style name="Chip" parent="Widget.MaterialComponents.Chip.Choice">
-        <item name="android:stateListAnimator">@null</item>
+    <style name="RadioButton.Chip" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:button">@null</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:paddingBottom">6dp</item>
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">12dp</item>
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textColor">@color/navigation_view_item</item>
-        <item name="chipStrokeWidth">1dp</item>
-        <item name="chipStrokeColor">@color/chip_stroke</item>
-        <item name="chipBackgroundColor">@color/chip_background</item>
-        <item name="ensureMinTouchTargetSize">false</item>
+        <item name="android:textAppearance">?attr/textAppearanceBody2</item>
     </style>
 
 
@@ -136,6 +134,10 @@
     </style>
 
 
+    <style name="Circle" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerSize">50%</item>
+    </style>
+
     <style name="RoundedRectangle" parent="ShapeAppearance.MaterialComponents.SmallComponent">
         <item name="cornerSize">16dp</item>
     </style>
@@ -157,7 +159,7 @@
         <item name="android:paddingTop">14dp</item>
         <item name="android:paddingBottom">14dp</item>
         <item name="android:includeFontPadding">false</item>
-        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.MaterialComponents.Chip</item>
+        <item name="shapeAppearanceOverlay">@style/Circle</item>
     </style>
 
 </resources>
