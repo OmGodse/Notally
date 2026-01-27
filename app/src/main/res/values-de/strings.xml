@@ -2,9 +2,9 @@
 <resources>
     <!-- Fragment Titles -->
     <string name="notes">Notizen</string>
-    <string name="labels">Labels</string>
-    <string name="deleted">Papierkorb</string>
-    <string name="archived">Archiv</string>
+    <string name="labels">Label</string>
+    <string name="deleted">Gelöscht</string>
+    <string name="archived">Archiviert</string>
     <string name="settings">Einstellungen</string>
     <!-- Menu Options -->
     <string name="share">Teilen</string>
@@ -13,7 +13,7 @@
     <string name="delete">Löschen</string>
     <string name="restore">Wiederherstellen</string>
     <string name="archive">Archivieren</string>
-    <string name="unarchive">Archivierung aufheben</string>
+    <string name="unarchive">Wiederherstellen</string>
     <string name="add_images">Bilder hinzufügen</string>
     <string name="delete_all">Alles löschen</string>
     <string name="record_audio">Audio aufnehmen</string>
@@ -57,8 +57,8 @@
     <string name="bold">Fett</string>
     <string name="link">Link erstellen</string>
     <string name="italic">Kursiv</string>
-    <string name="strikethrough">Durchstreichen</string>
-    <string name="clear_formatting">Normal</string>
+    <string name="strikethrough">Durchgestrichen</string>
+    <string name="clear_formatting">Formatierung löschen</string>
     <string name="monospace">Monospace</string>
     <!-- Miscellaneous -->
     <string name="saved_to_device">Auf dem Gerät gespeichert</string>
@@ -69,8 +69,8 @@
     <!-- Messages -->
     <string name="cant_open_link">Link konnte nicht geöffnet werden</string>
     <string name="something_went_wrong">Etwas ist schief gelaufen. Bitte erneut versuchen.</string>
-    <string name="install_an_email">Installiere eine E-Mail-App zum Senden von Feedback</string>
-    <string name="install_a_browser">Installiere einen Browser, um diesen Link zu öffnen</string>
+    <string name="install_an_email">E-Mail-App zum Senden von Feedback installieren</string>
+    <string name="install_a_browser">Browser installieren, um diesen Link zu öffnen</string>
     <string name="cant_find_note">Kann Notiz nicht finden. Vielleicht wurde sie gelöscht</string>
     <!-- Settings Page -->
     <string name="appearance">Erscheinungsbild</string>
@@ -116,8 +116,8 @@
     <string name="select_note">Notiz auswählen</string>
     <!-- Images -->
 
-    <string name="adding_images">Bilder hinzufügen</string>
-    <string name="deleting_images">Bilder löschen</string>
+    <string name="adding_images">Bilder werden hinzugefügt</string>
+    <string name="deleting_images">Bilder werden gelöscht</string>
     <string name="invalid_image">Ungültiges Bild</string>
     <string name="error_while_renaming_image">Fehler beim Umbenennen des Bildes</string>
     <string name="image_format_not_supported">Bildformat nicht unterstützt</string>
@@ -147,7 +147,7 @@
     <string name="to_record_audio">Um Audio aufzunehmen, erlaube Notally den Zugriff auf dein Mikrofon. Tippe auf Einstellungen &gt; Berechtigungen und schalte das Mikrofon ein</string>
     <string name="please_grant_notally_audio">Bitte erteile Notally die Berechtigung zur Audioaufnahme. Die Aufnahmen verlassen niemals dein Gerät</string>
     <string name="insert_an_sd_card_audio">SD-Karte für Audioaufnahmen einsetzen</string>
-    <string name="something_went_wrong_audio">Etwas ist schief gelaufen. Die Audioaufnahme wurde möglicherweise verschoben oder gelöscht.\n\nFehler : (%1$d, %2$d)</string>
+    <string name="something_went_wrong_audio">Etwas ist schief gelaufen. Die Audioaufnahme wurde möglicherweise verschoben oder gelöscht.\n\nFehler: (%1$d, %2$d)</string>
     <string name="set_reminder">Erinnerung festlegen</string>
     <string name="make_a_copy">Kopie erstellen</string>
     <string name="time">Zeit</string>
