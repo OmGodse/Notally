@@ -6,7 +6,7 @@
     <string name="settings">پیکربندی</string>
     <string name="share">همرسانی</string>
     <string name="filter">پالایش</string>
-    <string name="search">جست‌و‌جو</string>
+    <string name="search">جستجو</string>
     <string name="delete">سِتُردن</string>
     <string name="restore">بازگردانی</string>
     <string name="archive">بایگانی</string>
@@ -102,7 +102,7 @@
     <string name="empty_note">یادداشت تهی</string>
     <string name="date">هنگامه</string>
     <string name="clear_formatting">پاک‌کردن کارپ‌ها</string>
-    <string name="monospace">بی‌سوایی</string>
+    <string name="monospace">Monospace</string>
     <string name="date_format">کارپ تاریخ</string>
     <string name="your_notes_associated">یادداشت‌هایتان که به این برچسب پیوسته‌اند سِتُرده نخواهند شد</string>
     <string name="title">سرنامه</string>
