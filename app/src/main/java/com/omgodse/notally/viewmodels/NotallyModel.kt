@@ -277,14 +277,9 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
                 audios.value = baseNote.audios
                 reminder.value = baseNote.reminder
             } else {
-                createBaseNote()
                 Toast.makeText(app, R.string.cant_find_note, Toast.LENGTH_LONG).show()
             }
-        } else createBaseNote()
-    }
-
-    private suspend fun createBaseNote() {
-        id = withContext(Dispatchers.IO) { baseNoteDao.insert(getBaseNote()) }
+        }
     }
 
 
@@ -302,7 +297,20 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
     }
 
     suspend fun saveNote(): Long {
-        return withContext(Dispatchers.IO) { baseNoteDao.insert(getBaseNote()) }
+        if (isEmpty()) return 0L
+        return withContext(Dispatchers.IO) {
+            val savedId = baseNoteDao.insert(getBaseNote())
+            if (isNewNote) {
+                id = savedId
+                isNewNote = false
+            }
+            savedId
+        }
+    }
+
+    private fun isEmpty(): Boolean {
+        val bodyText = body.trimEnd().toString()
+        return title.isEmpty() && bodyText.isEmpty() && items.none { it.body.isNotEmpty() }
     }
 
     private suspend fun updateImages() {
