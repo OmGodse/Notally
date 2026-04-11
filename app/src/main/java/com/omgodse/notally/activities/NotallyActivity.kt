@@ -554,7 +554,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         binding.Toolbar.setNavigationOnClickListener { finish() }
 
         val menu = binding.Toolbar.menu
-        val pin = menu.add(R.string.pin, R.drawable.pin) { item -> pin(item) }
+        val pin = menu.add(R.string.pin, R.drawable.pin) { item -> bindPinned(item) }
         bindPinned(pin)
 
         menu.add(R.string.share, R.drawable.share) { share() }
@@ -605,7 +605,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         binding.EnterBody.setTextSize(TypedValue.COMPLEX_UNIT_SP, body)
 
         model.labels.observe(this, Observer { labels ->
-            Operations.bindLabels(binding.LabelGroup, labels, model.textSize)
+            Operations.bindLabels(binding.LabelGroup, labels, TextSize.getDisplayBodySize(model.textSize))
         })
 
         setupColor()
