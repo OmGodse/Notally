@@ -400,6 +400,8 @@ class MainActivity : AppCompatActivity() {
             inputManager.showSoftInput(binding.EnterSearchKeyword, InputMethodManager.SHOW_IMPLICIT)
         } else {
             binding.EnterSearchKeyword.visibility = View.GONE
+            binding.EnterSearchKeyword.setText(String())
+            model.keyword = String()
             inputManager.hideSoftInputFromWindow(binding.EnterSearchKeyword.windowToken, 0)
         }
     }

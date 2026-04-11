@@ -3,6 +3,7 @@ package com.omgodse.notally.activities
 import android.content.Intent
 import android.graphics.Typeface
 import android.net.Uri
+import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.CharacterStyle
 import android.text.style.StrikethroughSpan
@@ -47,7 +48,14 @@ class TakeNote : NotallyActivity(Type.NOTE) {
 
     override fun setStateFromModel() {
         super.setStateFromModel()
-        binding.EnterBody.text = model.body
+        val body = model.body
+        if (searchKeyword.isNotEmpty() && body.isNotEmpty()) {
+            val spannable = SpannableString(body)
+            highlightText(spannable, searchKeyword)
+            binding.EnterBody.setText(spannable)
+        } else {
+            binding.EnterBody.text = body
+        }
     }
 
 

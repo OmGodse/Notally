@@ -138,6 +138,10 @@ abstract class NotallyFragment : Fragment(), ItemListener {
     private fun goToActivity(activity: Class<*>, baseNote: BaseNote) {
         val intent = Intent(requireContext(), activity)
         intent.putExtra(Constants.SelectedBaseNote, baseNote.id)
+        val keyword = model.keyword
+        if (keyword.isNotEmpty()) {
+            intent.putExtra(Constants.SearchKeyword, keyword)
+        }
         startActivity(intent)
     }
 

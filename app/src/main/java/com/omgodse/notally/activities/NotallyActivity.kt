@@ -16,6 +16,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.text.Editable
 import android.text.Spannable
+import android.text.SpannableString
 import android.text.style.BackgroundColorSpan
 import android.util.TypedValue
 import android.view.KeyEvent
@@ -69,6 +70,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
     internal lateinit var binding: ActivityNotallyBinding
     internal val model: NotallyModel by viewModels()
+    internal var searchKeyword: String = String()
 
     override fun finish() {
         lifecycleScope.launch {
@@ -96,6 +98,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
         lifecycleScope.launch {
             if (model.isFirstInstance) {
+                searchKeyword = intent.getStringExtra(Constants.SearchKeyword) ?: String()
                 val persistedId = savedInstanceState?.getLong("id")
                 val selectedId = intent.getLongExtra(Constants.SelectedBaseNote, 0L)
                 val id = persistedId ?: selectedId
@@ -194,7 +197,30 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         val formatter = DateFormat.getDateInstance(DateFormat.FULL)
         binding.DateCreated.text = formatter.format(model.timestamp)
 
-        binding.EnterTitle.setText(model.title)
+        val title = model.title
+        if (searchKeyword.isNotEmpty() && title.isNotEmpty()) {
+            val spannable = SpannableString(title)
+            highlightText(spannable, searchKeyword)
+            binding.EnterTitle.setText(spannable)
+        } else {
+            binding.EnterTitle.setText(title)
+        }
+    }
+
+    protected fun highlightText(spannable: Spannable, keyword: String) {
+        val highlightColor = getColor(R.color.LightBlue100)
+        var index = 0
+        while (index < spannable.length) {
+            val matchIndex = spannable.toString().indexOf(keyword, index, ignoreCase = true)
+            if (matchIndex == -1) break
+            spannable.setSpan(
+                BackgroundColorSpan(highlightColor),
+                matchIndex,
+                matchIndex + keyword.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            index = matchIndex + keyword.length
+        }
     }
 
 

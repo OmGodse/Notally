@@ -10,6 +10,7 @@ import android.net.Uri
 import android.text.Editable
 import android.text.SpannableStringBuilder
 import android.text.Spanned
+import android.text.style.BackgroundColorSpan
 import android.text.style.CharacterStyle
 import android.text.style.StrikethroughSpan
 import android.text.style.StyleSpan
@@ -328,6 +329,8 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
     private fun getFilteredSpans(spanned: Spanned): ArrayList<SpanRepresentation> {
         val representations = LinkedHashSet<SpanRepresentation>()
         spanned.getSpans<CharacterStyle>().forEach { span ->
+            if (span is BackgroundColorSpan) return@forEach
+
             val end = spanned.getSpanEnd(span)
             val start = spanned.getSpanStart(span)
             val representation = SpanRepresentation(false, false, false, false, false, start, end)

@@ -54,7 +54,7 @@ class MakeList : NotallyActivity(Type.LIST) {
             override fun checkedChanged(position: Int, checked: Boolean) {
                 model.items[position].checked = checked
             }
-        })
+        }, searchKeyword)
 
         binding.RecyclerView.adapter = adapter
     }

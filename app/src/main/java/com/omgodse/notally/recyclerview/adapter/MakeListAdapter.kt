@@ -1,9 +1,13 @@
 package com.omgodse.notally.recyclerview.adapter
 
+import android.text.SpannableString
+import android.text.Spannable
+import android.text.style.BackgroundColorSpan
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.omgodse.notally.R
 import com.omgodse.notally.databinding.RecyclerListItemBinding
 import com.omgodse.notally.recyclerview.DragCallback
 import com.omgodse.notally.recyclerview.ListItemListener
@@ -14,7 +18,8 @@ class MakeListAdapter(
     private val textSize: String,
     elevation: Float,
     val list: ArrayList<ListItem>,
-    private val listener: ListItemListener
+    private val listener: ListItemListener,
+    private val searchKeyword: String = String()
 ) : RecyclerView.Adapter<MakeListVH>() {
 
     private val callback = DragCallback(elevation, this)
@@ -29,7 +34,7 @@ class MakeListAdapter(
 
     override fun onBindViewHolder(holder: MakeListVH, position: Int) {
         val item = list[position]
-        holder.bind(item)
+        holder.bind(item, searchKeyword)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MakeListVH {

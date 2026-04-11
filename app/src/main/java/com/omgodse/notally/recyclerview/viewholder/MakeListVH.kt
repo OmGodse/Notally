@@ -1,10 +1,14 @@
 package com.omgodse.notally.recyclerview.viewholder
 
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.BackgroundColorSpan
 import android.util.TypedValue
 import android.view.MotionEvent
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.omgodse.notally.R
 import com.omgodse.notally.databinding.RecyclerListItemBinding
 import com.omgodse.notally.miscellaneous.setOnNextAction
 import com.omgodse.notally.preferences.TextSize
@@ -47,9 +51,31 @@ class MakeListVH(
         }
     }
 
-    fun bind(item: ListItem) {
+    fun bind(item: ListItem, searchKeyword: String = String()) {
         binding.root.reset()
-        binding.EditText.setText(item.body)
+        if (searchKeyword.isNotEmpty() && item.body.isNotEmpty()) {
+            val spannable = SpannableString(item.body)
+            highlightText(spannable, searchKeyword)
+            binding.EditText.setText(spannable)
+        } else {
+            binding.EditText.setText(item.body)
+        }
         binding.CheckBox.isChecked = item.checked
+    }
+
+    private fun highlightText(spannable: Spannable, keyword: String) {
+        val highlightColor = itemView.context.getColor(R.color.LightBlue100)
+        var index = 0
+        while (index < spannable.length) {
+            val matchIndex = spannable.toString().indexOf(keyword, index, ignoreCase = true)
+            if (matchIndex == -1) break
+            spannable.setSpan(
+                BackgroundColorSpan(highlightColor),
+                matchIndex,
+                matchIndex + keyword.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            index = matchIndex + keyword.length
+        }
     }
 }
