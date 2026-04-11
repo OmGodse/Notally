@@ -17,6 +17,7 @@ import com.omgodse.notally.activities.TakeNote
 import com.omgodse.notally.databinding.FragmentNotesBinding
 import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.recyclerview.ItemListener
+import com.omgodse.notally.recyclerview.SwipeSelectionListener
 import com.omgodse.notally.recyclerview.adapter.BaseNoteAdapter
 import com.omgodse.notally.room.BaseNote
 import com.omgodse.notally.room.Item
@@ -132,6 +133,24 @@ abstract class NotallyFragment : Fragment(), ItemListener {
         binding?.RecyclerView?.layoutManager = if (model.preferences.view.value == ViewPref.grid) {
             StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
         } else LinearLayoutManager(requireContext())
+
+        binding?.RecyclerView?.addOnItemTouchListener(SwipeSelectionListener(binding?.RecyclerView) { position ->
+            onItemIntercept(position)
+        })
+    }
+
+    private fun onItemIntercept(position: Int) {
+        if (position != -1) {
+            adapter?.currentList?.getOrNull(position)?.let { item ->
+                if (item is BaseNote) {
+                    if (!model.actionMode.isEnabled()) {
+                        model.actionMode.add(item.id, item)
+                        adapter?.notifyItemChanged(position, 0)
+                    }
+                    handleNoteSelection(item.id, position, item)
+                }
+            }
+        }
     }
 
 
