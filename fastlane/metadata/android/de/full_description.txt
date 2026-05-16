@@ -1,0 +1,48 @@
+Notally ist eine minimalistische Notiz-App mit einem schönen Material-Design und leistungsstarken Funktionen.
+
+<b>Organisation</b>
+
+* Erinnerungen einrichten, um den Überblick zu behalten
+* Listen erstellen, um organisiert zu bleiben
+* Notizen anheften, damit sie immer oben bleiben
+* Notizen mit Farben und Beschriftungen markieren, um sie schnell zu organisieren
+* Notizen archivieren, um sie aufzubewahren, ohne dass sie im Weg sind
+* Notizen mit Bildern (JPG, PNG, WEBP) ergänzen
+* Rich-Text-Notizen mit Unterstützung für Fettdruck, Kursivschrift, Monospace und Durchstreichen erstellen
+* Klickbare Links zu Notizen hinzufügen, mit Unterstützung für Telefonnummern, E-Mail-Adressen und Web-URLs
+
+<b>Notizen in den folgenden Formaten exportieren</b>
+
+* PDF
+* TXT
+* JSON
+* HTML
+
+<b>Komfort</b>
+
+* Dunkelmodus
+* Völlig kostenlos
+* Einstellbare Textgröße
+* Automatisches Speichern und Sichern
+* APK-Größe von 1,4 MB (1,8 MB unkomprimiert)
+* Notizen und Listen mit Widgets zu deinem Startbildschirm hinzufügen
+
+<b>Datenschutz</b>
+
+Es gibt keine Werbung, Tracker oder Analysen jeglicher Art. Alle deine Notizen werden vollständig auf deinem Gerät gespeichert und verlassen dieses niemals.
+
+<b>Berechtigungen</b>
+
+* Benachrichtigungen anzeigen, Vordergrunddienst ausführen
+
+Wird verwendet, um eine Benachrichtigung anzuzeigen, wenn das Löschen von Bildern oder das Importieren von Sicherungen Zeit in Anspruch nimmt
+
+* Telefon am Ruhezustand hindern, beim Start ausführen
+
+Wird von der automatischen Sicherungsfunktion verwendet, um sicherzustellen, dass Sicherungen auch dann weiterhin durchgeführt werden, wenn dein Telefon neu gestartet wird
+
+<b>Hinweis</b>
+
+Aufgrund eines Fehlers seitens Xiaomi können einige MiUI-Geräte möglicherweise nicht auf die Textformatierungsoptionen zugreifen.
+
+https://github.com/OmGodse/Notally

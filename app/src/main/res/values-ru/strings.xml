@@ -6,7 +6,6 @@
     <string name="deleted">Удалённые</string>
     <string name="archived">Архив</string>
     <string name="settings">Настройки</string>
-
     <!-- Menu Options -->
     <string name="share">Поделиться</string>
     <string name="filter">Фильтры</string>
@@ -18,16 +17,13 @@
     <string name="delete_all">Удалить всё</string>
     <string name="change_color">Изменить цвет</string>
     <string name="delete_forever">Удалить навсегда</string>
-
     <!-- Pinning -->
     <string name="pin">Закрепить</string>
     <string name="unpin">Открепить</string>
     <string name="pinned">Закреплённые</string>
     <string name="others">Другие</string>
-
     <!-- Chooser dialog hints -->
-    <string name="view_note">Посмотреть заметку…</string>
-
+    <string name="view_note">Посмотреть заметку</string>
     <!-- Dialogs -->
     <string name="save">Сохранить</string>
     <string name="edit">Редактировать</string>
@@ -46,7 +42,6 @@
     <string name="delete_all_notes">Удалить все заметки?</string>
     <string name="delete_note_forever">Удалить заметку навсегда?</string>
     <string name="your_notes_associated">Ваши заметки, связанные с этой меткой, не будут удалены</string>
-
     <!-- Lists and Notes -->
     <string name="note">Заметка</string>
     <string name="item">Пункт</string>
@@ -57,42 +52,106 @@
     <string name="bold">Жирный</string>
     <string name="link">Ссылка</string>
     <string name="italic">Курсив</string>
-    <string name="strikethrough">Перечёркнутый</string>
+    <string name="strikethrough">Зачёркнутый</string>
     <string name="clear_formatting">Стандартный стиль</string>
     <string name="monospace">Моноширинный</string>
-
     <!-- Miscellaneous -->
     <string name="saved_to_device">Сохранено на устройстве</string>
     <string name="saved_to_notally">Сохранено в Notally</string>
     <string name="empty_note">Пустая заметка</string>
     <string name="empty_list">Пустой список</string>
     <string name="cant_open_link">Невозможно открыть ссылку</string>
-    <string name="something_went_wrong">Что-то пошло не так. Пожалуйста, повторите попытку</string>
-
+    <string name="something_went_wrong">Что-то пошло не так. Пожалуйста, повторите попытку.</string>
     <!-- Settings Page -->
     <string name="appearance">Внешний вид</string>
-
     <string name="view">Вид</string>
     <string name="list">Список</string>
     <string name="grid">Сетка</string>
-
-    <string name="theme">Тема</string>
+    <string name="theme">Тема оформления</string>
     <string name="dark">Тёмная</string>
     <string name="light">Светлая</string>
     <string name="follow_system">Как в системе</string>
-
     <string name="date_format">Формат даты</string>
     <string name="none">Отсутствует</string>
-
-    <string name="content_density">Плотность контента</string>
+    <string name="content_density">Плотность текста</string>
     <string name="max_items_to_display">Максимум отображаемых пунктов в списке</string>
     <string name="max_lines_to_display">Максимум отображаемых строк в заметке</string>
-
     <string name="backup">Резервная копия</string>
     <string name="export_backup">Экспортировать</string>
     <string name="import_backup">Импортировать</string>
-
     <string name="about">О приложении</string>
     <string name="libraries">Библиотеки</string>
     <string name="rate">Оценить приложение</string>
+    <string name="add_images">Добавить изображения</string>
+    <string name="make_a_copy">Сделать копию</string>
+    <string name="continue_">Продолжить</string>
+    <string name="text_size">Размер текста</string>
+    <string name="small">Маленький</string>
+    <string name="medium">Средний</string>
+    <string name="large">Большой</string>
+    <string name="max_lines_to_display_title">Максимальное количество строк для отображения в заголовке</string>
+    <string name="auto_backup">Автоматическое резервное копирование</string>
+    <string name="tap_to_set_up">Нажмите, чтобы установить</string>
+    <string name="notes_will_be">Заметки будут ежедневно сохраняться во внутреннюю память вашего телефона.\n\nЭто может не сработать, если у вас включен режим энергосбережения</string>
+    <string name="choose_folder">Выбрать папку</string>
+    <string name="disable_auto_backup">Отключить автоматическое резервное копирование</string>
+    <string name="choose_another_folder">Выбрать другую папку</string>
+    <string name="cant_find_folder">Не могу найти папку. Она могла быть перенесена или удалена</string>
+    <string name="invalid_backup">Неверный файл резервной копии</string>
+    <string name="imported_backup">Импортированная резервная копия</string>
+    <string name="importing_backup">Импорт резервной копии</string>
+    <string name="calculating">Расчёт…</string>
+    <string name="select_note">Выберите заметку</string>
+    <string name="adding_images">Добавление изображений</string>
+    <string name="deleting_images">Удаление изображений</string>
+    <string name="invalid_image">Неправильное изображение</string>
+    <string name="image_format_not_supported">Формат изображения не поддерживается</string>
+    <string name="delete_image_forever">Удалить изображение навсегда?</string>
+    <string name="unknown_name">Неизвестное название</string>
+    <string name="unknown_error">Неизвестная ошибка</string>
+    <string name="insert_an_sd_card_images">Вставить SD-карту, чтобы добавить изображения</string>
+    <string name="play">Воспроизвести</string>
+    <string name="stop">Остановить</string>
+    <string name="start">Начать</string>
+    <string name="pause">Пауза</string>
+    <string name="resume">Продолжить</string>
+    <string name="paused">Приостановлено</string>
+    <string name="recording">Запись…</string>
+    <string name="ready_to_record">Готово к записи</string>
+    <string name="discard">Отклонить</string>
+    <string name="save_recording">Сохранить запись?</string>
+    <string name="tap_for_more_options">Нажмите для других опций</string>
+    <string name="please_grant_notally_audio">Пожалуйста, дайте Notally разрешение на запись аудио. Записи никогда не покидают ваше устройство</string>
+    <string name="insert_an_sd_card_audio">Вставить SD-карту для записи аудио</string>
+    <string name="time">Время</string>
+    <string name="select_frequency">Выберите частоту</string>
+    <string name="does_not_repeat">Не повторяется</string>
+    <string name="daily">Ежедневно</string>
+    <string name="monthly">Ежемесячно</string>
+    <string name="repeats_daily">%1$s, повторяется ежедневно</string>
+    <string name="repeats_monthly">%1$s, повторяется ежемесячно</string>
+    <string name="please_grant_notally_alarm">Пожалуйста, предоставьте Notally разрешение на установку будильников</string>
+    <string name="record_audio">Записать голосовую</string>
+    <string name="set_reminder">Установить напоминание</string>
+    <string name="delete_selected_notes">Удалить эти заметки?</string>
+    <string name="audio_recordings">Голосовые записи</string>
+    <string name="select_labels">Выбор меток</string>
+    <string name="install_an_email">Установите почтовое приложение для отправки отзыва</string>
+    <string name="install_a_browser">Установите веб-обозреватель для открытия ссылки</string>
+    <string name="cant_find_note">Заметка не найдена. Возможно она удалена</string>
+    <string name="exporting_backup">Экспорт резервной копии</string>
+    <string name="send_feedback">Отправить отзыв</string>
+    <string name="delete_audio_recording_forever">Удалить звукозапись навсегда?</string>
+    <string name="something_went_wrong_audio">Что-то пошло не так. Звукозапись может быть перенесена или удалена.\n\nОшибка: (%1$d, %2$d)</string>
+    <string name="single_note_or_list">Одина заметка или список</string>
+    <string name="error_while_renaming_image">Ошибка при переименовании изображения</string>
+    <string name="to_record_audio">Чтобы записать аудио, разрешите Notally доступ к микрофону. Откройте Настройки &gt; Разрешения и включите микрофон</string>
+    <string name="cant_load_image">Невозможно загрузить изображение. Оно могло быть перемещено или удалено</string>
+    <plurals name="cant_add_images">
+        <item quantity="one">Не может быть добавлено %d изображение</item>
+        <item quantity="few">Не может быть добавлено %d изображения</item>
+        <item quantity="many">Не может быть добавлено %d изображений</item>
+        <item quantity="other">Не может быть добавлено %d изображений</item>
+    </plurals>
+    <string name="please_grant_notally_notification">Пожалуйста, предоставьте Notally разрешение на отправку уведомлений</string>
 </resources>
