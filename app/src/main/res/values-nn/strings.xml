@@ -23,6 +23,10 @@
     <string name="make_a_copy">Lag ein kopi</string>
     <string name="delete_forever">Slett for godt</string>
 
+    <!-- Search -->
+    <string name="previous">Førre</string>
+    <string name="next">Neste</string>
+
     <!-- Pinning -->
     <string name="pin">Fest</string>
     <string name="unpin">Løys</string>
