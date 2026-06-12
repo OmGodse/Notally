@@ -32,7 +32,7 @@ class ActionMode {
         val previous = HashSet(selectedIds)
         selectedNotes.clear()
         refresh()
-        if (notify && selectedNotes.size == 0) {
+        if (notify) {
             closeListener.value = Event(previous)
         }
     }

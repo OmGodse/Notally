@@ -21,3 +21,4 @@
 -renamesourcefileattribute SourceFile
 -keep class ** extends androidx.navigation.Navigator
 -keep class ** implements org.ocpsoft.prettytime.TimeUnit
+-keep class org.ocpsoft.prettytime.** { *; }

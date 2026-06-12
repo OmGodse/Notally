@@ -15,9 +15,9 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.core.text.getSpans
-import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.LinkMovementMethod
+import com.omgodse.notally.MarkerSpan
 import com.omgodse.notally.R
 import com.omgodse.notally.miscellaneous.add
 import com.omgodse.notally.miscellaneous.setOnNextAction
@@ -35,19 +35,6 @@ class TakeNote : NotallyActivity(Type.NOTE) {
         if (model.isNewNote) {
             binding.EnterBody.requestFocus()
         }
-    }
-
-
-    override fun setupListeners() {
-        super.setupListeners()
-        binding.EnterBody.doAfterTextChanged { text ->
-            model.body = requireNotNull(text)
-        }
-    }
-
-    override fun setStateFromModel() {
-        super.setStateFromModel()
-        binding.EnterBody.text = model.body
     }
 
 
@@ -137,7 +124,9 @@ class TakeNote : NotallyActivity(Type.NOTE) {
 
         ifBothNotNullAndInvalid(selectionStart, selectionEnd) { start, end ->
             binding.EnterBody.text?.getSpans<CharacterStyle>(start, end)?.forEach { span ->
-                binding.EnterBody.text?.removeSpan(span)
+                if (span !is MarkerSpan) {
+                    binding.EnterBody.text?.removeSpan(span)
+                }
             }
         }
     }

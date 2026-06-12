@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
@@ -8,21 +6,20 @@ plugins {
 }
 
 android {
-    compileSdk 34
+    compileSdk = 36
     namespace 'com.omgodse.notally'
 
     defaultConfig {
         applicationId 'com.omgodse.notally'
         minSdk 21
-        targetSdk 34
-        versionCode 56
-        versionName "6.1"
+        targetSdk 35
+        versionCode 57
+        versionName "6.2"
         resourceConfigurations += ['en', 'ca', 'cs', 'da', 'de', 'el', 'es', 'fr', 'hu', 'in', 'it', 'ja', 'ko', 'my', 'nb', 'nl', 'nn', 'pl', 'pt-rBR', 'pt-rPT', 'ro', 'ru', 'sk', 'sl', 'sv', 'tl', 'tr', 'uk', 'vi', 'zh-rCN']
         vectorDrawables.generatedDensities = []
     }
 
     ksp {
-        arg("room.generateKotlin", "true")
         arg("room.schemaLocation", "$projectDir/schemas")
     }
 
@@ -38,7 +35,11 @@ android {
         }
     }
 
-    kotlinOptions { jvmTarget = "1.8" }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
+    }
+
 
     buildFeatures {
         viewBinding true
@@ -54,13 +55,9 @@ android {
     }
 }
 
-tasks.withType(KotlinCompile).configureEach {
-    kotlinOptions.jvmTarget = "1.8"
-}
-
 dependencies {
     final def navVersion = "2.3.5"
-    final def roomVersion = "2.6.1"
+    final def roomVersion = "2.7.0"
 
     ksp "androidx.room:room-compiler:$roomVersion"
     implementation "androidx.room:room-ktx:$roomVersion"

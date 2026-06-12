@@ -24,6 +24,10 @@
     <string name="make_a_copy">Make a copy</string>
     <string name="delete_forever">Delete forever</string>
 
+    <!-- Search -->
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
+
     <!-- Pinning -->
     <string name="pin">Pin</string>
     <string name="unpin">Unpin</string>

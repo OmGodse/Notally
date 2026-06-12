@@ -2,19 +2,51 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:fitsSystemWindows="true">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/Toolbar"
+    <FrameLayout
+        android:id="@+id/ToolbarContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:navigationIcon="?attr/homeAsUpIndicator" />
+        android:elevation="4dp">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/Toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:navigationIcon="?attr/homeAsUpIndicator" />
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/Search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:outlineProvider="none"
+            app:navigationIcon="?attr/homeAsUpIndicator">
+
+            <EditText
+                android:id="@+id/EnterSearchKeyword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="@string/search"
+                android:imeOptions="actionSearch"
+                android:inputType="textFilter"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:textAppearance="?attr/textAppearanceBody1" />
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
+    </FrameLayout>
+
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/ScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/Toolbar"
+        android:layout_below="@id/ToolbarContainer"
         android:fillViewport="true"
         android:theme="@style/Colorless"
         android:visibility="gone">
@@ -26,7 +58,7 @@
             android:orientation="vertical"
             android:paddingBottom="16dp">
 
-            <com.omgodse.notally.image.AspectRatioRecyclerView
+            <com.omgodse.notally.view.AspectRatioRecyclerView
                 android:id="@+id/ImagePreview"
                 android:layout_width="match_parent"
                 android:layout_height="0dp" />
@@ -74,7 +106,7 @@
                 android:layout_height="1dp"
                 android:background="?android:attr/listDivider" />
 
-            <com.omgodse.notally.OverflowEditText
+            <com.omgodse.notally.view.OverflowEditText
                 android:id="@+id/EnterBody"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -130,13 +162,15 @@
                 android:overScrollMode="never"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-            <com.google.android.material.chip.ChipGroup
+            <com.omgodse.notally.view.PublicFlowLayout
                 android:id="@+id/LabelGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="24dp"
                 android:paddingTop="16dp"
-                android:paddingEnd="24dp" />
+                android:paddingEnd="24dp"
+                app:itemSpacing="8dp"
+                app:lineSpacing="8dp" />
 
         </LinearLayout>
 

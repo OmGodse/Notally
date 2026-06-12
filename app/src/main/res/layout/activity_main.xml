@@ -78,13 +78,96 @@
 
     </RelativeLayout>
 
-    <com.google.android.material.navigation.NavigationView
+    <com.omgodse.notally.view.NavigationView
         android:id="@+id/NavigationView"
-        android:layout_width="wrap_content"
+        android:layout_width="280dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:headerLayout="@layout/drawer_header"
-        app:itemIconTint="@color/navigation_view_item"
-        app:itemTextColor="@color/navigation_view_item" />
+        android:fitsSystemWindows="true"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="16dp">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/LinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="@string/app_name"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    android:textColor="?attr/colorPrimary" />
+
+                <com.omgodse.notally.view.NavigationViewItem
+                    android:id="@+id/Notes"
+                    style="@style/Button.NavigationView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/notes"
+                    app:icon="@drawable/home" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="8dp"
+                    android:background="?android:attr/listDivider" />
+
+                <com.omgodse.notally.view.NavigationViewItem
+                    android:id="@+id/Labels"
+                    style="@style/Button.NavigationView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/labels"
+                    app:icon="@drawable/label" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="8dp"
+                    android:background="?android:attr/listDivider" />
+
+                <com.omgodse.notally.view.NavigationViewItem
+                    android:id="@+id/Deleted"
+                    style="@style/Button.NavigationView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/deleted"
+                    app:icon="@drawable/delete" />
+
+                <com.omgodse.notally.view.NavigationViewItem
+                    android:id="@+id/Archived"
+                    style="@style/Button.NavigationView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/archived"
+                    app:icon="@drawable/archive" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="8dp"
+                    android:background="?android:attr/listDivider" />
+
+                <com.omgodse.notally.view.NavigationViewItem
+                    android:id="@+id/Settings"
+                    style="@style/Button.NavigationView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings"
+                    app:icon="@drawable/settings" />
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </com.omgodse.notally.view.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>

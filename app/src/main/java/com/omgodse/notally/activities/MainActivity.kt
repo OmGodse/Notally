@@ -70,7 +70,6 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.Toolbar)
         setupFAB()
-        setupMenu()
         setupActionMode()
         setupNavigation()
         setupSearch()
@@ -95,15 +94,6 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, MakeList::class.java)
             startActivity(intent)
         }
-    }
-
-    private fun setupMenu() {
-        val menu = binding.NavigationView.menu
-        menu.add(0, R.id.Notes, 0, R.string.notes).setCheckable(true).setIcon(R.drawable.home)
-        menu.add(1, R.id.Labels, 0, R.string.labels).setCheckable(true).setIcon(R.drawable.label)
-        menu.add(2, R.id.Deleted, 0, R.string.deleted).setCheckable(true).setIcon(R.drawable.delete)
-        menu.add(2, R.id.Archived, 0, R.string.archived).setCheckable(true).setIcon(R.drawable.archive)
-        menu.add(3, R.id.Settings, 0, R.string.settings).setCheckable(true).setIcon(R.drawable.settings)
     }
 
 
@@ -358,14 +348,14 @@ class MainActivity : AppCompatActivity() {
     private fun setupNavigation() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.NavHostFragment) as NavHostFragment
         navController = navHostFragment.navController
-        configuration = AppBarConfiguration(binding.NavigationView.menu, binding.DrawerLayout)
+        val topLevelDestinations = setOf(R.id.Notes, R.id.Labels, R.id.Deleted, R.id.Archived, R.id.Settings)
+        configuration = AppBarConfiguration(topLevelDestinations, binding.DrawerLayout)
         setupActionBarWithNavController(navController, configuration)
 
         var fragmentIdToLoad: Int? = null
-        binding.NavigationView.setNavigationItemSelectedListener { item ->
-            fragmentIdToLoad = item.itemId
+        binding.NavigationView.onItemClickListener = { id ->
+            fragmentIdToLoad = id
             binding.DrawerLayout.closeDrawer(GravityCompat.START)
-            return@setNavigationItemSelectedListener true
         }
 
         binding.DrawerLayout.addDrawerListener(object : DrawerLayout.SimpleDrawerListener() {
@@ -420,9 +410,9 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun setupSearch() {
-        binding.EnterSearchKeyword.setText(model.keyword)
+        binding.EnterSearchKeyword.setText(model.searchQuery.value.first)
         binding.EnterSearchKeyword.doAfterTextChanged { text ->
-            model.keyword = requireNotNull(text).trim().toString()
+            model.updateSearchKeyword(requireNotNull(text).trim().toString())
         }
     }
 

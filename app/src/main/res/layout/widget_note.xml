@@ -6,8 +6,7 @@
     android:orientation="vertical"
     android:paddingStart="16dp"
     android:paddingTop="16dp"
-    android:paddingEnd="16dp"
-    android:theme="@style/AppTheme">
+    android:paddingEnd="16dp">
 
     <TextView
         android:id="@+id/Title"

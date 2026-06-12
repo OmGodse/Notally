@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.core.text.toHtml
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import androidx.room.withTransaction
 import com.omgodse.notally.ActionMode
@@ -29,6 +30,7 @@ import com.omgodse.notally.miscellaneous.IO
 import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.miscellaneous.applySpans
 import com.omgodse.notally.preferences.AutoBackup
+import com.omgodse.notally.preferences.BetterLiveData
 import com.omgodse.notally.preferences.ListInfo
 import com.omgodse.notally.preferences.Preferences
 import com.omgodse.notally.preferences.SeekbarInfo
@@ -46,7 +48,6 @@ import com.omgodse.notally.room.NotallyDatabase
 import com.omgodse.notally.room.Reminder
 import com.omgodse.notally.room.Type
 import com.omgodse.notally.room.livedata.Content
-import com.omgodse.notally.room.livedata.SearchResult
 import com.omgodse.notally.widget.WidgetProvider
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
@@ -80,22 +81,14 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     val deletedNotes = Content(baseNoteDao.getFrom(Folder.DELETED), ::transform)
     val archivedNotes = Content(baseNoteDao.getFrom(Folder.ARCHIVED), ::transform)
 
-    var folder = Folder.NOTES
-        set(value) {
-            if (field != value) {
-                field = value
-                searchResults.fetch(keyword, folder)
-            }
+    val searchQuery = BetterLiveData(Pair(String(), Folder.NOTES))
+    val searchResults = Transformations.switchMap(searchQuery) { (keyword, folder) ->
+        if (keyword.isEmpty()) {
+            MutableLiveData(emptyList())
+        } else {
+            Transformations.map(baseNoteDao.getBaseNotesByKeyword(keyword, folder), ::transform)
         }
-    var keyword = String()
-        set(value) {
-            if (field != value) {
-                field = value
-                searchResults.fetch(keyword, folder)
-            }
-        }
-
-    val searchResults = SearchResult(viewModelScope, baseNoteDao, ::transform)
+    }
 
     private val pinned = Header(app.getString(R.string.pinned))
     private val others = Header(app.getString(R.string.others))
@@ -135,6 +128,21 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
             labelCache[label] = Content(baseNoteDao.getBaseNotesByLabel(label), ::transform)
         }
         return requireNotNull(labelCache[label])
+    }
+
+
+    fun updateSearchKeyword(keyword: String) {
+        val current = searchQuery.value.first
+        if (current != keyword) {
+            searchQuery.value = Pair(keyword, searchQuery.value.second)
+        }
+    }
+
+    fun updateSearchFolder(folder: Folder) {
+        val current = searchQuery.value.second
+        if (current != folder) {
+            searchQuery.value = Pair(searchQuery.value.first, folder)
+        }
     }
 
 

@@ -15,21 +15,29 @@ import android.os.Bundle
 import android.provider.Settings
 import android.text.Editable
 import android.util.TypedValue
+import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup.LayoutParams
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.Transition
+import androidx.transition.TransitionManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.transition.MaterialFade
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.ActivityNotallyBinding
 import com.omgodse.notally.databinding.DialogProgressBinding
@@ -59,6 +67,13 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     internal lateinit var binding: ActivityNotallyBinding
     internal val model: NotallyModel by viewModels()
 
+    override fun onBackPressed() {
+        if (model.searchEnabled.value) {
+            model.closeSearch()
+        } else super.onBackPressed()
+    }
+
+
     override fun finish() {
         lifecycleScope.launch {
             model.saveNote()
@@ -80,6 +95,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         model.type = type
+        model.marker.color = ContextCompat.getColor(this, R.color.highlight)
         initialiseBinding()
         setContentView(binding.root)
 
@@ -97,7 +113,6 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
                 model.isFirstInstance = false
             }
 
-            setupToolbar()
             setupListeners()
             setStateFromModel()
 
@@ -130,9 +145,8 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
                 }
                 REQUEST_SELECT_LABELS -> {
                     val list = data?.getStringArrayListExtra(SelectLabels.SELECTED_LABELS)
-                    if (list != null && list != model.labels) {
-                        model.setLabels(list)
-                        Operations.bindLabels(binding.LabelGroup, model.labels, model.textSize)
+                    if (list != null && list != model.labels.value) {
+                        model.labels.value = list
                     }
                 }
                 REQUEST_RECORD_AUDIO -> model.addAudio()
@@ -185,9 +199,18 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         binding.DateCreated.text = formatter.format(model.timestamp)
 
         binding.EnterTitle.setText(model.title)
-        Operations.bindLabels(binding.LabelGroup, model.labels, model.textSize)
 
-        setColor()
+        binding.EnterBody.setEditableFactory(object : Editable.Factory() {
+
+            override fun newEditable(source: CharSequence?): Editable {
+                return model.body
+            }
+        })
+        val end = model.body.getSpanEnd(model.marker)
+        if (end != -1) {
+            binding.EnterBody.requestFocus()
+            binding.EnterBody.setSelection(end)
+        }
     }
 
 
@@ -301,7 +324,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
     private fun label() {
         val intent = Intent(this, SelectLabels::class.java)
-        intent.putStringArrayListExtra(SelectLabels.SELECTED_LABELS, model.labels)
+        intent.putStringArrayListExtra(SelectLabels.SELECTED_LABELS, model.labels.value)
         startActivityForResult(intent, REQUEST_SELECT_LABELS)
     }
 
@@ -333,9 +356,18 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
             .show()
     }
 
-    private fun pin(item: MenuItem) {
-        model.pinned = !model.pinned
-        bindPinned(item)
+
+    private fun setupColor() {
+        model.color.observe(this, Observer { color ->
+            val colorInt = Operations.extractColor(color, this)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                window.statusBarColor = colorInt
+            }
+            binding.root.setBackgroundColor(colorInt)
+            binding.RecyclerView.setBackgroundColor(colorInt)
+            binding.Toolbar.backgroundTintList = ColorStateList.valueOf(colorInt)
+            binding.Search.backgroundTintList = ColorStateList.valueOf(colorInt)
+        })
     }
 
 
@@ -359,10 +391,10 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         binding.ImagePreview.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
         PagerSnapHelper().attachToRecyclerView(binding.ImagePreview)
 
-        model.images.observe(this) { list ->
+        model.images.observe(this, Observer { list ->
             adapter.submitList(list)
             binding.ImagePreview.isVisible = list.isNotEmpty()
-        }
+        })
 
         val dialogBinding = DialogProgressBinding.inflate(layoutInflater)
         val dialog = MaterialAlertDialogBuilder(this)
@@ -371,18 +403,20 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
             .setCancelable(false)
             .create()
 
-        model.addingImages.observe(this) { progress ->
+        model.addingImages.observe(this, Observer { progress ->
             if (progress.inProgress) {
                 dialog.show()
                 dialogBinding.ProgressBar.max = progress.total
-                dialogBinding.ProgressBar.setProgressCompat(progress.current, true)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    dialogBinding.ProgressBar.setProgress(progress.current, true)
+                } else dialogBinding.ProgressBar.progress = progress.current
                 dialogBinding.Count.text = getString(R.string.count, progress.current, progress.total)
             } else dialog.dismiss()
-        }
+        })
 
-        model.eventBus.observe(this) { event ->
+        model.eventBus.observe(this, Observer { event ->
             event.handle { errors -> displayImageErrors(errors) }
-        }
+        })
     }
 
     private fun displayImageErrors(errors: List<ImageError>) {
@@ -415,18 +449,18 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         }
         binding.AudioRecyclerView.adapter = adapter
 
-        model.audios.observe(this) { list ->
+        model.audios.observe(this, Observer { list ->
             adapter.submitList(list)
             binding.AudioHeader.isVisible = list.isNotEmpty()
             binding.AudioRecyclerView.isVisible = list.isNotEmpty()
-        }
+        })
     }
 
 
     private fun setupReminder() {
         val padding = (resources.displayMetrics.density * 16).toInt()
         val formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT)
-        model.reminder.observe(this) { reminder ->
+        model.reminder.observe(this, Observer { reminder ->
             if (reminder != null) {
                 val date = formatter.format(reminder.timestamp)
                 binding.Reminder.text = when (reminder.frequency) {
@@ -440,7 +474,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
                 binding.Reminder.visibility = View.GONE
                 binding.DateCreated.updatePadding(bottom = padding)
             }
-        }
+        })
 
         binding.Reminder.setOnClickListener {
             MaterialAlertDialogBuilder(this)
@@ -533,25 +567,88 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     }
 
 
-    private fun setColor() {
-        val color = Operations.extractColor(model.color, this)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            window.statusBarColor = color
+    private fun setupSearch() {
+        binding.Search.setNavigationOnClickListener { onBackPressed() }
+
+        val menu = binding.Search.menu
+        menu.add(R.string.previous, R.drawable.previous) { model.findPrevious() }
+        menu.add(R.string.next, R.drawable.next) { model.findNext() }
+
+        val manager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+
+        val transition = MaterialFade()
+        transition.secondaryAnimatorProvider = null
+        transition.addListener(object : Transition.TransitionListener {
+
+            override fun onTransitionEnd(transition: Transition) {
+                if (binding.Search.visibility == View.VISIBLE) {
+                    binding.EnterSearchKeyword.requestFocus()
+                    manager.showSoftInput(binding.EnterSearchKeyword, InputMethodManager.SHOW_IMPLICIT)
+                } else {
+                    binding.EnterSearchKeyword.text.clear()
+                    manager.hideSoftInputFromWindow(binding.EnterSearchKeyword.windowToken, 0)
+                }
+            }
+
+            override fun onTransitionStart(transition: Transition) {}
+
+            override fun onTransitionCancel(transition: Transition) {}
+
+            override fun onTransitionPause(transition: Transition) {}
+
+            override fun onTransitionResume(transition: Transition) {}
+        })
+
+        model.searchEnabled.observe(this, Observer { enabled ->
+            TransitionManager.beginDelayedTransition(binding.ToolbarContainer, transition)
+            if (enabled) {
+                binding.Search.visibility = View.VISIBLE
+            } else {
+                binding.Search.visibility = View.GONE
+            }
+        })
+
+        model.searchBus.observe(this) { event ->
+            event.handle { end ->
+                binding.EnterBody.requestFocus()
+                binding.EnterBody.setSelection(end)
+            }
         }
-        binding.root.setBackgroundColor(color)
-        binding.RecyclerView.setBackgroundColor(color)
-        binding.Toolbar.backgroundTintList = ColorStateList.valueOf(color)
+
+        binding.EnterSearchKeyword.setText(model.query)
+        binding.EnterSearchKeyword.doAfterTextChanged { text ->
+            model.query = requireNotNull(text).trim().toString()
+        }
+
+        binding.EnterSearchKeyword.setOnEditorActionListener { _, actionId, event ->
+            val searchPressed = (actionId == EditorInfo.IME_ACTION_SEARCH)
+            val enterPressed = if (event != null) {
+                event.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN
+            } else false
+
+            if (searchPressed || enterPressed) {
+                model.findNext()
+            }
+
+            return@setOnEditorActionListener false
+        }
     }
 
     private fun setupToolbar() {
         binding.Toolbar.setNavigationOnClickListener { finish() }
 
         val menu = binding.Toolbar.menu
-        val pin = menu.add(R.string.pin, R.drawable.pin) { item -> pin(item) }
-        bindPinned(pin)
+
+        val pin = menu.add(R.string.pin, R.drawable.pin) { model.togglePin() }
+        model.pinned.observe(this, Observer { pinned ->
+            bindPinned(pin, pinned)
+        })
 
         menu.add(R.string.share, R.drawable.share) { share() }
         menu.add(R.string.labels, R.drawable.label) { label() }
+        if (model.type == Type.NOTE) {
+            menu.add(R.string.search, R.drawable.search) { model.searchEnabled.value = true }
+        }
         menu.add(R.string.add_images, R.drawable.add_images) { selectImages() }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -588,26 +685,32 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
             }
         }
 
-        val title = TextSize.getEditTitleSize(model.textSize)
-        val date = TextSize.getDisplayBodySize(model.textSize)
-        val body = TextSize.getEditBodySize(model.textSize)
+        val bodySize = TextSize.getDisplayBodySize(model.textSize)
 
-        binding.EnterTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, title)
-        binding.DateCreated.setTextSize(TypedValue.COMPLEX_UNIT_SP, date)
-        binding.Reminder.setTextSize(TypedValue.COMPLEX_UNIT_SP, date)
-        binding.EnterBody.setTextSize(TypedValue.COMPLEX_UNIT_SP, body)
+        binding.EnterTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, TextSize.getEditTitleSize(model.textSize))
+        binding.DateCreated.setTextSize(TypedValue.COMPLEX_UNIT_SP, bodySize)
+        binding.Reminder.setTextSize(TypedValue.COMPLEX_UNIT_SP, bodySize)
+        binding.EnterBody.setTextSize(TypedValue.COMPLEX_UNIT_SP, TextSize.getEditBodySize(model.textSize))
 
+        model.labels.observe(this, Observer { labels ->
+            Operations.bindLabels(binding.LabelGroup, labels, bodySize)
+        })
+
+        setupColor()
         setupImages()
         setupAudios()
         setupReminder()
+        setupToolbar()
+        setupSearch()
 
         binding.root.isSaveFromParentEnabled = false
     }
 
-    private fun bindPinned(item: MenuItem) {
+
+    private fun bindPinned(item: MenuItem, pinned: Boolean) {
         val icon: Int
         val title: Int
-        if (model.pinned) {
+        if (pinned) {
             icon = R.drawable.unpin
             title = R.string.unpin
         } else {

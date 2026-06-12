@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:colorBackground"
-    android:theme="@style/AppTheme">
+    android:theme="@style/Widget">
 
     <ListView
         android:id="@+id/ListView"
