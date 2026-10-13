@@ -1,0 +1,190 @@
+<resources>
+    <string name="app_name" translatable="false">Notally</string>
+
+    <!-- Fragment Titles -->
+    <string name="notes">筆記</string>
+    <string name="labels">標籤</string>
+    <string name="deleted">已刪除</string>
+    <string name="archived">已封存</string>
+    <string name="settings">設定</string>
+
+    <!-- Menu Options -->
+    <string name="share">分享</string>
+    <string name="filter">篩選</string>
+    <string name="search">搜尋</string>
+    <string name="delete">刪除</string>
+    <string name="restore">還原</string>
+    <string name="archive">封存</string>
+    <string name="unarchive">取消封存</string>
+    <string name="add_images">新增圖片</string>
+    <string name="delete_all">刪除全部</string>
+    <string name="record_audio">錄音</string>
+    <string name="set_reminder">設定提醒</string>
+    <string name="change_color">改變顏色</string>
+    <string name="make_a_copy">建立副本</string>
+    <string name="delete_forever">永久刪除</string>
+
+    <!-- Search -->
+    <string name="previous">上一個</string>
+    <string name="next">下一個</string>
+
+    <!-- Pinning -->
+    <string name="pin">置頂</string>
+    <string name="unpin">取消置頂</string>
+    <string name="pinned">已置頂</string>
+    <string name="others">其他</string>
+
+    <!-- Chooser dialog hints -->
+    <string name="view_note">查看筆記</string>
+
+    <!-- Dialogs -->
+    <string name="save">保存</string>
+    <string name="edit">編輯</string>
+    <string name="cancel">取消</string>
+    <string name="continue_">繼續</string>
+    <string name="open_link">開啟連結</string>
+    <string name="make_list">製作清單</string>
+    <string name="take_note">筆記</string>
+    <string name="add_label">新增標籤</string>
+    <string name="export">匯出</string>
+    <string name="view_file">查看檔案</string>
+    <string name="save_to_device">保存到設備</string>
+    <string name="edit_label">編輯標籤</string>
+    <string name="label_exists">標籤已存在</string>
+    <string name="delete_label">刪除標籤？</string>
+    <string name="create_new">暫無標籤，是否建立？</string>
+    <string name="delete_all_notes">刪除全部筆記？</string>
+    <string name="delete_selected_notes">刪除選擇的筆記？</string>
+    <string name="delete_note_forever">永久刪除筆記？</string>
+    <string name="your_notes_associated">與該標籤關聯的筆記不會被刪除</string>
+
+    <!-- Lists and Notes -->
+    <string name="note">筆記</string>
+    <string name="item">項目</string>
+    <string name="date">日期</string>
+    <string name="title">標題</string>
+    <string name="add_item">新增項目</string>
+    <string name="audio_recordings">錄音</string>
+    <string name="drag_handle">Drag Handle</string>
+    <string name="bold">粗體</string>
+    <string name="link">連結</string>
+    <string name="italic">斜體</string>
+    <string name="strikethrough">刪除線</string>
+    <string name="clear_formatting">清除格式</string>
+    <string name="monospace">等寬</string>
+
+    <!-- Miscellaneous -->
+    <string name="saved_to_device">已保存到設備</string>
+    <string name="saved_to_notally">已保存至 Notally</string>
+    <string name="empty_note">空白筆記</string>
+    <string name="empty_list">空白清單</string>
+    <string name="select_labels">選擇標籤</string>
+
+    <!-- Messages -->
+    <string name="cant_open_link">無法開啟連結</string>
+    <string name="something_went_wrong">出錯了。請重試。</string>
+    <string name="install_an_email">安裝電子郵件應用來傳送回饋</string>
+    <string name="install_a_browser">安裝瀏覽器開啟此連結</string>
+    <string name="cant_find_note">找不到筆記，可能已被刪除</string>
+
+    <!-- Settings Page -->
+    <string name="appearance">外觀</string>
+
+    <string name="view">檢視</string>
+    <string name="list">清單</string>
+    <string name="grid">網格</string>
+
+    <string name="theme">主題</string>
+    <string name="dark">深色</string>
+    <string name="light">亮色</string>
+    <string name="follow_system">跟隨系統</string>
+
+    <string name="date_format">日期格式</string>
+    <string name="none">無</string>
+
+    <string name="text_size">文字大小</string>
+    <string name="small">小</string>
+    <string name="medium">中</string>
+    <string name="large">大</string>
+
+    <string name="content_density">內容密度</string>
+    <string name="max_items_to_display">清單最多可顯示的項目數</string>
+    <string name="max_lines_to_display">筆記最多可顯示的行數</string>
+    <string name="max_lines_to_display_title">標題最多顯示行數</string>
+
+    <!-- Backup -->
+    <string name="backup">備份</string>
+    <string name="auto_backup">自動備份</string>
+    <string name="tap_to_set_up">點擊設定</string>
+    <string name="notes_will_be">筆記將每天備份到手機內部儲存空間。\n\n如果啟用了省電模式，則可能不起作用</string>
+    <string name="choose_folder">選擇資料夾</string>
+    <string name="disable_auto_backup">禁用自動備份</string>
+    <string name="choose_another_folder">選擇另一個資料夾</string>
+    <string name="cant_find_folder">找不到資料夾，可能已被移動或刪除</string>
+    <string name="invalid_backup">無效的備份</string>
+    <string name="imported_backup">已匯入備份</string>
+    <string name="exporting_backup">正在匯出備份</string>
+    <string name="importing_backup">正在匯入備份</string>
+    <string name="calculating">計算中…</string>
+
+    <string name="export_backup">匯出備份</string>
+    <string name="import_backup">匯入備份</string>
+
+    <string name="about">關於</string>
+    <string name="libraries">Libraries</string>
+    <string name="rate">評價此應用</string>
+    <string name="send_feedback">傳送回饋</string>
+
+    <string name="github" translatable="false">GitHub</string>
+
+    <!-- Widget -->
+    <string name="single_note_or_list">單個筆記或清單</string>
+    <string name="select_note">選擇筆記</string>
+
+    <!-- Images -->
+    <string name="count" translatable="false">%1$d / %2$d</string>
+    <string name="adding_images">正在新增圖片</string>
+    <string name="deleting_images">正在刪除圖片</string>
+    <string name="invalid_image">無效的圖片</string>
+    <string name="error_while_renaming_image">重新命名圖片時發生錯誤</string>
+    <string name="image_format_not_supported">圖片格式不支援</string>
+    <string name="delete_image_forever">永久刪除圖片？</string>
+    <string name="cant_load_image">無法載入圖片。可能已被移動或刪除</string>
+    <string name="unknown_name">未知名稱</string>
+    <string name="unknown_error">未知錯誤</string>
+    <string name="insert_an_sd_card_images">插入 SD 卡以新增圖片</string>
+
+    <plurals name="cant_add_images">
+        <item quantity="one">無法新增 %d 張圖片</item>
+        <item quantity="other">無法新增 %d 張圖片</item>
+    </plurals>
+
+    <!-- Audio -->
+    <string name="play">播放</string>
+    <string name="stop">停止</string>
+    <string name="start">開始</string>
+    <string name="pause">暫停</string>
+    <string name="resume">恢復</string>
+    <string name="paused">已暫停</string>
+    <string name="recording">錄音中…</string>
+    <string name="ready_to_record">準備錄音</string>
+    <string name="discard">取消</string>
+    <string name="save_recording">保存錄音？</string>
+    <string name="delete_audio_recording_forever">永久刪除錄音？</string>
+    <string name="tap_for_more_options">點擊查看更多選項</string>
+    <string name="to_record_audio">如需錄音，請允許 Notally 存取麥克風。前往 設定 > 權限 開啟麥克風權限</string>
+    <string name="please_grant_notally_audio">請授予 Notally 錄音的權限。錄音永遠不會離開你的設備</string>
+    <string name="insert_an_sd_card_audio">插入 SD 卡以錄音</string>
+    <string name="something_went_wrong_audio">出錯了，錄音可能已被移動或刪除。\n\錯誤 : (%1$d, %2$d)</string>
+
+    <!-- Reminder -->
+    <string name="time">時間</string>
+    <string name="select_frequency">選擇重複頻率</string>
+    <string name="does_not_repeat">不重複</string>
+    <string name="daily">每天</string>
+    <string name="monthly">每月</string>
+    <string name="repeats_daily">%1$s，每天重複</string>
+    <string name="repeats_monthly">%1$s，每月重複</string>
+    <string name="please_grant_notally_notification">請授予 Notally 發送通知的權限</string>
+    <string name="please_grant_notally_alarm">請授予 Notally 設定鬧鐘的權限</string>
+</resources>
